@@ -264,12 +264,19 @@ namespace GDAL
             return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
         }
 
-        public static Bitmap LoadImage(string file)
+        public static Bitmap LoadImage(string file, int xSize = 16384, int ySize = 16384)
         {
             lock (locker)
             {
                 using (var ds = OSGeo.GDAL.Gdal.Open(file, OSGeo.GDAL.Access.GA_ReadOnly))
                 {
+                    int rasterXSize = ds.RasterXSize;
+                    int rasterYSize = ds.RasterYSize;
+                    while (rasterXSize > xSize || rasterYSize > ySize)
+                    {
+                        rasterXSize = rasterXSize >> 1;
+                        rasterYSize = rasterYSize >> 1;
+                    }
                     // 8bit geotiff - single band
                     if (ds.RasterCount == 1)
                     {
@@ -282,10 +289,10 @@ namespace GDAL
                         PixelFormat format = PixelFormat.Format8bppIndexed;
 
                         // Create a Bitmap to store the GDAL image in
-                        Bitmap bitmap = new Bitmap(ds.RasterXSize, ds.RasterYSize, format);
+                        Bitmap bitmap = new Bitmap(rasterXSize, rasterYSize, format);
 
                         // Obtaining the bitmap buffer
-                        BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, ds.RasterXSize, ds.RasterYSize),
+                        BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, rasterXSize, rasterYSize),
                             ImageLockMode.ReadWrite, format);
                         try
                         {
@@ -309,7 +316,7 @@ namespace GDAL
                             int stride = bitmapData.Stride;
                             IntPtr buf = bitmapData.Scan0;
 
-                            band.ReadRaster(0, 0, ds.RasterXSize, ds.RasterYSize, buf, ds.RasterXSize, ds.RasterYSize,
+                            band.ReadRaster(0, 0, ds.RasterXSize, ds.RasterYSize, buf, rasterXSize, rasterYSize,
                                 DataType.GDT_Byte, 1, stride);
                         }
                         finally
@@ -322,7 +329,7 @@ namespace GDAL
                     }
 
                     {
-                        Bitmap bitmap = new Bitmap(ds.RasterXSize, ds.RasterYSize, PixelFormat.Format32bppArgb);
+                        Bitmap bitmap = new Bitmap(rasterXSize, rasterYSize, PixelFormat.Format32bppArgb);
 
                         for (int a = 1; a <= ds.RasterCount; a++)
                         {
@@ -333,19 +340,19 @@ namespace GDAL
 
                             var cint = band.GetColorInterpretation();
 
-                
+
                             // Obtaining the bitmap buffer
-                            BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, ds.RasterXSize, ds.RasterYSize),
+                            BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, rasterXSize, rasterYSize),
                                 ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
                             try
                             {
 
                                 int stride = bitmapData.Stride;
                                 IntPtr buf = bitmapData.Scan0;
-                                var buffer = new byte[ds.RasterXSize * ds.RasterYSize];
+                                var buffer = new byte[rasterXSize * rasterYSize];
 
-                                band.ReadRaster(0, 0, ds.RasterXSize, ds.RasterYSize, buffer, ds.RasterXSize,
-                                    ds.RasterYSize, 1, ds.RasterXSize);
+                                band.ReadRaster(0, 0, ds.RasterXSize, ds.RasterYSize, buffer, rasterXSize,
+                                    rasterYSize, 1, rasterXSize);
 
                                 int c = 0;
                                 if (cint == ColorInterp.GCI_AlphaBand)
@@ -388,8 +395,6 @@ namespace GDAL
                     }
                 }
             }
-
-            return null;
         }
 
         private static string GDALInfoGetPosition(Dataset ds, double x, double y)
@@ -419,6 +424,8 @@ namespace GDAL
         public class GeoBitmap
         {
             Bitmap _bitmap = null;
+            Bitmap _smallbitmap = null;
+            Bitmap _midBitmap = null;
             // load on demand
             public Bitmap Bitmap
             {
@@ -426,8 +433,35 @@ namespace GDAL
                 {
                     lock (this)
                     {
+                        if (_smallbitmap == null) _smallbitmap = LoadImage(File, 1024, 1024);
+                        if (_midBitmap == null) _midBitmap = LoadImage(File, 4096, 4096);
                         if (_bitmap == null) _bitmap = LoadImage(File);
                         return _bitmap;
+                    }
+                }
+            }
+
+            public Bitmap midBitmap
+            {
+                get
+                {
+                    lock (this)
+                    {
+                        if (_smallbitmap == null) _smallbitmap = LoadImage(File, 1024, 1024);
+                        if (_midBitmap == null) _midBitmap = LoadImage(File, 4096, 4096);
+                        return _midBitmap;
+                    }
+                }
+            }
+
+            public Bitmap smallBitmap
+            {
+                get
+                {
+                    lock (this)
+                    {
+                        if (_smallbitmap == null) _smallbitmap = LoadImage(File, 1024, 1024);
+                        return _smallbitmap;
                     }
                 }
             }

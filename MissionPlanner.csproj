@@ -99,6 +99,7 @@
     <Reference Include="System.Speech" />
     <Reference Include="System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Updater, Version=1.0.7056.19890, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>Updater\bin\Release\Updater.exe</HintPath>
@@ -391,6 +392,12 @@
     </Compile>
     <Compile Include="Controls\Icon\File.cs" />
     <Compile Include="Controls\Icon\Zoom.cs" />
+    <Compile Include="Controls\LayerReader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\LayerReader.Designer.cs">
+      <DependentUpon>LayerReader.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Status.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1042,7 +1049,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Joystick\JoystickSetup.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Joystick\Joy_Button_axis.cs">
       <SubType>Form</SubType>
