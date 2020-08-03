@@ -177,4 +177,16 @@
   <data name="autoHideToolStripMenuItem.Text" xml:space="preserve">
     <value>自动隐藏</value>
   </data>
+  <data name="MenuFlightPlannerClose.Text" xml:space="preserve">
+    <value>关闭飞行计划器</value>
+  </data>
+  <data name="MenuFlightPlannerClose.ToolTipText" xml:space="preserve">
+    <value>关闭飞行计划器</value>
+  </data>
+  <data name="MenuFlightPlannerOpen.Text" xml:space="preserve">
+    <value>打开飞行计划器</value>
+  </data>
+  <data name="MenuFlightPlannerOpen.ToolTipText" xml:space="preserve">
+    <value>打开飞行计划器</value>
+  </data>
 </root>

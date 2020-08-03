@@ -621,4 +621,16 @@
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
     <value>1008, 462</value>
   </data>
+  <data name="BUT_CloseFlightPlanner.Text" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="BUT_CloseFlightPlanner.ToolTip" xml:space="preserve">
+    <value>关闭飞行计划器</value>
+  </data>
+  <data name="flightPlannerCloseToolStripMenuItem.Text" xml:space="preserve">
+    <value>关闭飞行计划器</value>
+  </data>
+  <data name="flightPlannerOpenToolStripMenuItem.Text" xml:space="preserve">
+    <value>打开飞行计划器</value>
+  </data>
 </root>

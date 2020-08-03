@@ -51,6 +51,7 @@
             this.BUT_quickmanual = new MissionPlanner.Controls.MyButton();
             this.BUT_quickrtl = new MissionPlanner.Controls.MyButton();
             this.BUT_quickauto = new MissionPlanner.Controls.MyButton();
+            this.BUT_CloseFlightPlanner = new MissionPlanner.Controls.MyButton();
             this.CMB_setwp = new System.Windows.Forms.ComboBox();
             this.BUT_setwp = new MissionPlanner.Controls.MyButton();
             this.CMB_modes = new System.Windows.Forms.ComboBox();
@@ -156,7 +157,8 @@
             this.pointCameraHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PointCameraCoordsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.triggerCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.flightPlannerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.flightPlannerOpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.flightPlannerCloseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setEKFHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setHomeHereToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -781,14 +783,14 @@
             // 
             // BUT_setwp
             // 
-            this.BUT_setwp.ColorMouseDown = System.Drawing.Color.Empty;
-            this.BUT_setwp.ColorMouseOver = System.Drawing.Color.Empty;
-            this.BUT_setwp.ColorNotEnabled = System.Drawing.Color.Empty;
-            resources.ApplyResources(this.BUT_setwp, "BUT_setwp");
-            this.BUT_setwp.Name = "BUT_setwp";
-            this.toolTip1.SetToolTip(this.BUT_setwp, resources.GetString("BUT_setwp.ToolTip"));
-            this.BUT_setwp.UseVisualStyleBackColor = true;
-            this.BUT_setwp.Click += new System.EventHandler(this.BUT_setwp_Click);
+            this.BUT_CloseFlightPlanner.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_CloseFlightPlanner.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_CloseFlightPlanner.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_CloseFlightPlanner, "BUT_CloseFlightPlanner");
+            this.BUT_CloseFlightPlanner.Name = "BUT_CloseFlightPlanner";
+            this.toolTip1.SetToolTip(this.BUT_CloseFlightPlanner, resources.GetString("BUT_CloseFlightPlanner.ToolTip"));
+            this.BUT_CloseFlightPlanner.UseVisualStyleBackColor = true;
+            this.BUT_CloseFlightPlanner.Click += new System.EventHandler(this.BUT_FlightPlannerClose_Click);
             // 
             // CMB_modes
             // 
@@ -2038,18 +2040,9 @@
             // contextMenuStripMap
             // 
             this.contextMenuStripMap.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.goHereToolStripMenuItem,
-            this.flyToHereAltToolStripMenuItem,
-            this.flyToCoordsToolStripMenuItem,
-            this.addPoiToolStripMenuItem,
-            this.pointCameraHereToolStripMenuItem,
-            this.PointCameraCoordsToolStripMenuItem1,
-            this.triggerCameraToolStripMenuItem,
-            this.flightPlannerToolStripMenuItem,
-            this.setHomeHereToolStripMenuItem,
-            this.takeOffToolStripMenuItem,
-            this.onOffCameraOverlapToolStripMenuItem,
-            this.altitudeAngelSettingsToolStripMenuItem});
+                this.flightPlannerOpenToolStripMenuItem,
+                this.flightPlannerCloseToolStripMenuItem
+                });
             this.contextMenuStripMap.Name = "contextMenuStrip1";
             resources.ApplyResources(this.contextMenuStripMap, "contextMenuStripMap");
             // 
@@ -2126,9 +2119,15 @@
             // 
             // flightPlannerToolStripMenuItem
             // 
-            this.flightPlannerToolStripMenuItem.Name = "flightPlannerToolStripMenuItem";
-            resources.ApplyResources(this.flightPlannerToolStripMenuItem, "flightPlannerToolStripMenuItem");
-            this.flightPlannerToolStripMenuItem.Click += new System.EventHandler(this.flightPlannerToolStripMenuItem_Click);
+            this.flightPlannerOpenToolStripMenuItem.Name = "flightPlannerOpenToolStripMenuItem";
+            resources.ApplyResources(this.flightPlannerOpenToolStripMenuItem, "flightPlannerOpenToolStripMenuItem");
+            this.flightPlannerOpenToolStripMenuItem.Click += new System.EventHandler(this.flightPlannerOpenToolStripMenuItem_Click);
+            // 
+            // flightPlannerToolStripMenuItem
+            // 
+            this.flightPlannerCloseToolStripMenuItem.Name = "flightPlannerCloseToolStripMenuItem";
+            resources.ApplyResources(this.flightPlannerCloseToolStripMenuItem, "flightPlannerCloseToolStripMenuItem");
+            this.flightPlannerCloseToolStripMenuItem.Click += new System.EventHandler(this.flightPlannerCloseToolStripMenuItem_Click);
             // 
             // setHomeHereToolStripMenuItem
             // 
@@ -2500,6 +2499,7 @@
         private System.Windows.Forms.ComboBox CMB_modes;
         private Controls.MyButton BUT_setmode;
         private System.Windows.Forms.ComboBox CMB_setwp;
+        private Controls.MyButton BUT_CloseFlightPlanner;
         private Controls.MyButton BUT_setwp;
         private Controls.MyButton BUT_quickmanual;
         private Controls.MyButton BUT_quickrtl;
@@ -2521,7 +2521,8 @@
         private Controls.QuickView quickView1;
         private Controls.QuickView quickView4;
         private System.Windows.Forms.ToolStripMenuItem flyToHereAltToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem flightPlannerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem flightPlannerOpenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem flightPlannerCloseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem userItemsToolStripMenuItem;
         //private Crom.Controls.Docking.DockContainer dockContainer1;
         private Controls.MyButton BUT_ARM;

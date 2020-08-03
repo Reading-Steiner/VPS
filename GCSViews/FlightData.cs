@@ -137,6 +137,29 @@ namespace MissionPlanner.GCSViews
 
         string updateBindingSourceThreadName = "";
 
+        private bool isFlightPlannerShow = false;
+        public bool IsFlightPlannerShow
+        {
+            get
+            {
+                return isFlightPlannerShow;
+            }
+        }
+        public delegate void delegateHandler();
+        public delegateHandler OpenFlightPlannerHandler;
+        public delegateHandler CloseFlightPlannerHandler;
+        public bool IsOpenFlightPlanner
+        {
+            set
+            {
+                isFlightPlannerShow = value;
+                if (isFlightPlannerShow)
+                    OpenFlightPlannerHandler();
+                else
+                    CloseFlightPlannerHandler();
+            }
+        }
+
         public FlightData()
         {
             log.Info("Ctor Start");
@@ -314,6 +337,10 @@ namespace MissionPlanner.GCSViews
             myhud.skyColor2 = ThemeManager.HudSkyBot;
             myhud.hudcolor = ThemeManager.HudText;
 
+
+            CloseFlightPlannerState();
+            CloseFlightPlannerHandler += CloseFlightPlannerState;
+            OpenFlightPlannerHandler += OpenFlightPlannerState;
         }
 
         public void Activate()
@@ -985,21 +1012,23 @@ namespace MissionPlanner.GCSViews
                 MainV2.comPort.MAV.camerapoints.Clear();
         }
 
-        void but_Click(object sender, EventArgs e)
+        void BUT_FlightPlannerClose_Click(object sender, EventArgs e)
         {
             foreach (MainSwitcher.Screen sc in MainV2.View.screens)
             {
                 if (sc.Name == "FlightPlanner")
                 {
+                    IsOpenFlightPlanner = false;
                     splitContainer1.Panel2.Controls.Remove(sc.Control);
-                    splitContainer1.Panel2.Controls.Remove((Control) sender);
+                    splitContainer1.Panel2.Controls.Remove((Control)BUT_CloseFlightPlanner);
                     sc.Control.Visible = false;
 
                     if (sc.Control is IDeactivate)
                     {
-                        ((IDeactivate) (sc.Control)).Deactivate();
+                        ((IDeactivate)(sc.Control)).Deactivate();
                     }
-
+                    this.gMapControl1.Zoom = FlightPlanner.instance.MainMap.Zoom;
+                    this.gMapControl1.Position = FlightPlanner.instance.MainMap.Position;
                     break;
                 }
             }
@@ -2257,7 +2286,29 @@ namespace MissionPlanner.GCSViews
             //attitudeIndicatorInstrumentControl1;
         }
 
-        private void flightPlannerToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenFlightPlannerState()
+        {
+            this.flightPlannerOpenToolStripMenuItem.Visible = false;
+            this.flightPlannerCloseToolStripMenuItem.Visible = true;
+            this.BUT_CloseFlightPlanner.Visible = true;
+        }
+
+        private void CloseFlightPlannerState()
+        {
+            this.flightPlannerOpenToolStripMenuItem.Visible = true;
+            this.flightPlannerCloseToolStripMenuItem.Visible = false;
+            this.BUT_CloseFlightPlanner.Visible = false;
+        }
+
+        public void OpenFlightPlanner()
+        {
+            if (!IsFlightPlannerShow)
+            {
+                flightPlannerOpenToolStripMenuItem_Click(this, null);
+            }
+        }
+
+        private void flightPlannerOpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (Control ctl in splitContainer1.Panel2.Controls)
             {
@@ -2268,14 +2319,10 @@ namespace MissionPlanner.GCSViews
             {
                 if (sc.Name == "FlightPlanner")
                 {
-                    MyButton but = new MyButton
-                    {
-                        Location = new Point(splitContainer1.Panel2.Width / 2, 0),
-                        Text = "Close"
-                    };
-                    but.Click += but_Click;
+                    IsOpenFlightPlanner = true;
+                    BUT_CloseFlightPlanner.Location = new Point(splitContainer1.Panel2.Width / 2, 0);
 
-                    splitContainer1.Panel2.Controls.Add(but);
+                    splitContainer1.Panel2.Controls.Add(BUT_CloseFlightPlanner);
                     splitContainer1.Panel2.Controls.Add(sc.Control);
                     ThemeManager.ApplyThemeTo(sc.Control);
                     ThemeManager.ApplyThemeTo(this);
@@ -2285,13 +2332,28 @@ namespace MissionPlanner.GCSViews
 
                     if (sc.Control is IActivate)
                     {
-                        ((IActivate) (sc.Control)).Activate();
+                        ((IActivate)(sc.Control)).Activate();
                     }
-
-                    but.BringToFront();
+                    BUT_CloseFlightPlanner.BringToFront();
+                    FlightPlanner.instance.MainMap.Zoom = this.gMapControl1.Zoom;
+                    FlightPlanner.instance.MainMap.Position = this.gMapControl1.Position;
                     break;
                 }
             }
+        }
+
+
+        public void CloseFlightPlanner()
+        {
+            if (IsFlightPlannerShow)
+            {
+                flightPlannerCloseToolStripMenuItem_Click(this, null);
+            }
+        }
+
+        public void flightPlannerCloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BUT_FlightPlannerClose_Click(sender, null);
         }
 
         private void flyToHereAltToolStripMenuItem_Click(object sender, EventArgs e)
