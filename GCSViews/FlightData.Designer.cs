@@ -175,7 +175,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.lbl_hdop = new MissionPlanner.Controls.MyLabel();
             this.lbl_sats = new MissionPlanner.Controls.MyLabel();
-            this.gMapControl1 = new MissionPlanner.Controls.myGMAP();
+            this.MainMap = new MissionPlanner.Controls.myGMAP();
             this.TRK_zoom = new MissionPlanner.Controls.MyTrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
             this.coords1 = new MissionPlanner.Controls.Coords();
@@ -2021,7 +2021,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.label4);
             this.splitContainer1.Panel2.Controls.Add(this.lbl_hdop);
             this.splitContainer1.Panel2.Controls.Add(this.lbl_sats);
-            this.splitContainer1.Panel2.Controls.Add(this.gMapControl1);
+            this.splitContainer1.Panel2.Controls.Add(this.MainMap);
             this.splitContainer1.Panel2.Controls.Add(this.TRK_zoom);
             // 
             // zg1
@@ -2247,34 +2247,34 @@
             // 
             // gMapControl1
             // 
-            this.gMapControl1.BackColor = System.Drawing.Color.Black;
-            this.gMapControl1.Bearing = 0F;
-            this.gMapControl1.CanDragMap = true;
-            this.gMapControl1.ContextMenuStrip = this.contextMenuStripMap;
-            resources.ApplyResources(this.gMapControl1, "gMapControl1");
-            this.gMapControl1.EmptyTileColor = System.Drawing.Color.Gray;
-            this.gMapControl1.GrayScaleMode = false;
-            this.gMapControl1.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
-            this.gMapControl1.HoldInvalidation = false;
-            this.gMapControl1.LevelsKeepInMemmory = 5;
-            this.gMapControl1.MarkersEnabled = true;
-            this.gMapControl1.MaxZoom = 24;
-            this.gMapControl1.MinZoom = 0;
-            this.gMapControl1.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionWithoutCenter;
-            this.gMapControl1.Name = "gMapControl1";
-            this.gMapControl1.NegativeMode = false;
-            this.gMapControl1.PolygonsEnabled = true;
-            this.gMapControl1.RetryLoadTile = 0;
-            this.gMapControl1.RoutesEnabled = true;
-            this.gMapControl1.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Fractional;
-            this.gMapControl1.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
-            this.gMapControl1.ShowTileGridLines = false;
-            this.gMapControl1.Zoom = 3D;
-            this.gMapControl1.OnPositionChanged += new GMap.NET.PositionChanged(this.gMapControl1_OnPositionChanged);
-            this.gMapControl1.Click += new System.EventHandler(this.gMapControl1_Click);
-            this.gMapControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gMapControl1_MouseDown);
-            this.gMapControl1.MouseLeave += new System.EventHandler(this.gMapControl1_MouseLeave);
-            this.gMapControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.gMapControl1_MouseMove);
+            this.MainMap.BackColor = System.Drawing.Color.Black;
+            this.MainMap.Bearing = 0F;
+            this.MainMap.CanDragMap = true;
+            this.MainMap.ContextMenuStrip = this.contextMenuStripMap;
+            resources.ApplyResources(this.MainMap, "gMapControl1");
+            this.MainMap.EmptyTileColor = System.Drawing.Color.Gray;
+            this.MainMap.GrayScaleMode = false;
+            this.MainMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.MainMap.HoldInvalidation = false;
+            this.MainMap.LevelsKeepInMemmory = 5;
+            this.MainMap.MarkersEnabled = true;
+            this.MainMap.MaxZoom = 24;
+            this.MainMap.MinZoom = 0;
+            this.MainMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionWithoutCenter;
+            this.MainMap.Name = "gMapControl1";
+            this.MainMap.NegativeMode = false;
+            this.MainMap.PolygonsEnabled = true;
+            this.MainMap.RetryLoadTile = 0;
+            this.MainMap.RoutesEnabled = true;
+            this.MainMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Fractional;
+            this.MainMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.MainMap.ShowTileGridLines = false;
+            this.MainMap.Zoom = 3D;
+            this.MainMap.OnPositionChanged += new GMap.NET.PositionChanged(this.gMapControl1_OnPositionChanged);
+            this.MainMap.Click += new System.EventHandler(this.gMapControl1_Click);
+            this.MainMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gMapControl1_MouseDown);
+            this.MainMap.MouseLeave += new System.EventHandler(this.gMapControl1_MouseLeave);
+            this.MainMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.gMapControl1_MouseMove);
             // 
             // TRK_zoom
             // 
@@ -2489,7 +2489,7 @@
         private System.Windows.Forms.NumericUpDown Zoomlevel;
         private Controls.MyLabel label1;
         private System.Windows.Forms.CheckBox CHK_autopan;
-        public Controls.myGMAP gMapControl1;
+        public Controls.myGMAP MainMap;
         private ZedGraph.ZedGraphControl zg1;
         public System.Windows.Forms.TabControl tabControlactions;
         public System.Windows.Forms.TabPage tabGauges;

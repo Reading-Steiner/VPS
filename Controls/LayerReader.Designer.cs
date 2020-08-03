@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using System;
 
 namespace MissionPlanner.Controls
 {
@@ -50,10 +51,10 @@ namespace MissionPlanner.Controls
             this.Transparent = new DotSpatial.Symbology.Forms.ColorButton();
             this.TransparentLabel = new System.Windows.Forms.Label();
             this.MapGroup = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.ViewGroup = new System.Windows.Forms.GroupBox();
             this.Accept = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.LayerPrevView)).BeginInit();
             this.OriginGroup.SuspendLayout();
             this.MapGroup.SuspendLayout();
@@ -188,6 +189,12 @@ namespace MissionPlanner.Controls
             this.MapGroup.Name = "MapGroup";
             this.MapGroup.TabStop = false;
             // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label1.Name = "label1";
+            // 
             // ViewGroup
             // 
             resources.ApplyResources(this.ViewGroup, "ViewGroup");
@@ -211,12 +218,6 @@ namespace MissionPlanner.Controls
             this.Cancel.Name = "Cancel";
             this.Cancel.UseVisualStyleBackColor = true;
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label1.Name = "label1";
             // 
             // LayerReader
             // 

@@ -1,14 +1,13 @@
-﻿using MissionPlanner.Utilities;
+﻿using GMap.NET.CacheProviders;
+using MissionPlanner.ArduPilot;
+using MissionPlanner.Comms;
+using MissionPlanner.Controls;
+using MissionPlanner.Utilities;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MissionPlanner.Controls
@@ -48,11 +47,11 @@ namespace MissionPlanner.Controls
             this.FilePath.Text = path;
 
             Func<string, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (filePath) =>
-            {
-                var bitmap = GDAL.GDAL.LoadImageInfo(filePath);
-                Image img = Image.FromHbitmap(bitmap.smallBitmap.GetHbitmap());
-                return bitmap;
-            };
+                {
+                    var bitmap = GDAL.GDAL.LoadImageInfo(filePath);
+                    Image img = Image.FromHbitmap(bitmap.smallBitmap.GetHbitmap());
+                    return bitmap;
+                };
             IAsyncResult iar = GetGeoBitmap.BeginInvoke(path, CallbackWhenDone, this);
         }
 
@@ -86,7 +85,7 @@ namespace MissionPlanner.Controls
 
                 this.Transparent.Color = geobitmap.smallBitmap.GetPixel(0, 0);
 
-
+                
                 using (Bitmap bitmap = (Bitmap)geobitmap.smallBitmap.Clone())
                 {
                     bitmap.MakeTransparent(this.Transparent.Color);
@@ -106,7 +105,7 @@ namespace MissionPlanner.Controls
         {
             if (this.LayerPrevView.Image != null)
             {
-                using (Bitmap bitmap = (Bitmap)geobitmap.smallBitmap.Clone())
+                using(Bitmap bitmap = (Bitmap)geobitmap.smallBitmap.Clone())
                 {
                     bitmap.MakeTransparent(this.Transparent.Color);
 

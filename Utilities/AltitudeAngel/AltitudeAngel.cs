@@ -13,7 +13,7 @@ namespace MissionPlanner.Utilities.AltitudeAngel
         {
             AltitudeAngelPlugin.Configure();
             ServiceLocator.Register<IMissionPlanner>(l => new MissionPlannerAdaptor(
-                new MapAdapter(FlightData.instance.gMapControl1),
+                new MapAdapter(FlightData.instance.MainMap),
                 new MapAdapter(FlightPlanner.instance.MainMap),
                 () => FlightPlanner.instance.GetFlightPlanLocations()));
             ServiceLocator.Register<IMissionPlannerState>(l => new MissionPlannerStateAdapter(

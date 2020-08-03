@@ -398,6 +398,10 @@
     </Compile>
     <Compile Include="Controls\Icon\File.cs" />
     <Compile Include="Controls\Icon\Zoom.cs" />
+    <Compile Include="Controls\LayerManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\LayerManager.Designer.cs" />
     <Compile Include="Controls\LayerReader.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -713,6 +717,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\GMAPCache.resx">
       <DependentUpon>GMAPCache.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerManager.resx" />
+    <EmbeddedResource Include="Controls\LayerManager.zh-CHS.resx" />
+    <EmbeddedResource Include="Controls\LayerManager.zh-Hans.resx" />
+    <EmbeddedResource Include="Controls\LayerReader.resx">
+      <DependentUpon>LayerReader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerReader.zh-CHS.resx">
+      <DependentUpon>LayerReader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerReader.zh-CN.resx">
+      <DependentUpon>LayerReader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Status.resx">
       <DependentUpon>Status.cs</DependentUpon>

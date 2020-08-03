@@ -198,7 +198,7 @@ namespace MissionPlanner.Plugin
         /// </summary>
         public GMapControl FDGMapControl
         {
-            get { return MainV2.instance.FlightData.gMapControl1; }
+            get { return MainV2.instance.FlightData.MainMap; }
         }
 
         /// <summary>

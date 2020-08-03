@@ -72,19 +72,20 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+        static public Object thisLock = new Object();
+        public bool quickadd;
+        internal PointLatLng MouseDownEnd;
+        internal string wpfilename;
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static Propagation prop;
         public static GMapOverlay airportsoverlay;
         public static GMapOverlay objectsoverlay;
         public static GMapOverlay poioverlay = new GMapOverlay("POI");
         public static GMapOverlay polygonsoverlay;
         public static GMapOverlay routesoverlay;
-        static public Object thisLock = new Object();
-        public bool quickadd;
-        internal GMapPolygon drawnpolygon;
-        internal PointLatLng MouseDownEnd;
-        internal string wpfilename;
-        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private static Propagation prop;
         private static GMapOverlay rallypointoverlay;
+        private static GMapOverlay layerPolygonsOverlay;
+        internal GMapPolygon drawnpolygon;
         private static string zone = "50s";
         private readonly Random rnd = new Random();
         public GMapMarker center = new GMarkerGoogle(new PointLatLng(0.0, 0.0), GMarkerGoogleType.none);
@@ -177,6 +178,9 @@ namespace MissionPlanner.GCSViews
             MainMap.MaxZoom = 24;
 
             // draw this layer first
+            layerPolygonsOverlay = new GMapOverlay("layerpolygons");
+            MainMap.Overlays.Add(layerPolygonsOverlay);
+
             kmlpolygonsoverlay = new GMapOverlay("kmlpolygons");
             MainMap.Overlays.Add(kmlpolygonsoverlay);
 
@@ -7275,6 +7279,43 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             MainMap.Position = MainV2.comPort.MAV.cs.HomeLocation;
             if (MainMap.Zoom < 17)
                 MainMap.Zoom = 17;
+        }
+
+        public void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
+        {
+            layerPolygonsOverlay.Polygons.Clear();
+
+            PointLatLngAlt pos1 = new PointLatLngAlt(geoBitmap.Rect.Top, geoBitmap.Rect.Left);
+            PointLatLngAlt pos2 = new PointLatLngAlt(geoBitmap.Rect.Bottom, geoBitmap.Rect.Right);
+            var mark = new GMapMarkerLayer(pos1, pos2, geoBitmap.Bitmap, geoBitmap.midBitmap, geoBitmap.smallBitmap);
+
+            layerPolygonsOverlay.Polygons.Add(mark);
+
+            FlightPlanner.instance.zoomToTiffLayer();
+        }
+
+        public void zoomToTiffLayer()
+        {
+            zoomToTiffToolStripMenuItem_Click(this, null);
+        }
+
+        private void zoomToTiffToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //double Lat = (rect.Left + rect.Right) / 2;
+            //double Lng = (rect.Top + rect.Bottom) / 2;
+            var layerInfo = GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache();
+            if (layerInfo == null)
+                return;
+
+            double lng = MainV2.instance.defaultOrigin.Lng;
+            double lat = MainV2.instance.defaultOrigin.Lat;
+            double alt = MainV2.instance.defaultOrigin.Alt;
+
+            TXT_homealt.Text = alt.ToString();
+            TXT_homelat.Text = lat.ToString();
+            TXT_homelng.Text = lng.ToString();
+
+            MainMap.SetZoomToFitRect(MainV2.instance.diisplayRect);
         }
     }
 }

@@ -189,4 +189,10 @@
   <data name="MenuFlightPlannerOpen.ToolTipText" xml:space="preserve">
     <value>打开飞行计划器</value>
   </data>
+  <data name="MenuLoadLayer.Text" xml:space="preserve">
+    <value>加载图层</value>
+  </data>
+  <data name="MenuLoadLayer.ToolTipText" xml:space="preserve">
+    <value>加载图层</value>
+  </data>
 </root>

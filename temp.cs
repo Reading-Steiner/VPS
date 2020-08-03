@@ -665,7 +665,7 @@ namespace MissionPlanner
         private void but_agemapdata_Click(object sender, EventArgs e)
         {
             var removed = ((PureImageCache)MyImageCache.Instance).DeleteOlderThan(DateTime.Now.AddDays(-30),
-                FlightData.instance.gMapControl1.MapProvider.DbId);
+                FlightData.instance.MainMap.MapProvider.DbId);
 
             CustomMessageBox.Show("Removed " + removed + " images");
 

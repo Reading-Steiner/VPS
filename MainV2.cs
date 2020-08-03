@@ -33,7 +33,9 @@ using MissionPlanner.ArduPilot.Mavlink;
 using MissionPlanner.Utilities.HW;
 using Transitions;
 using AltitudeAngelWings;
-
+using GMap.NET.CacheProviders;
+using System.Runtime.Remoting.Messaging;
+using static GDAL.GDAL;
 
 namespace MissionPlanner
 {
@@ -1330,44 +1332,44 @@ namespace MissionPlanner
         {
             this.MenuFlightPlannerOpen.Visible = false;
             this.MenuFlightPlannerClose.Visible = true;
-            //this.Separator1.Visible = true;
+            this.Separator1.Visible = true;
 
-            //this.MenuLoadLayer.Visible = true;
+            this.MenuLoadLayer.Visible = true;
             //this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible && this.MenuLoadLayer.Checked;
             //this.MenuLayerManager.Visible = true;
-            //this.Separator2.Visible = true;
+            this.Separator2.Visible = true;
 
             //this.MenuDrawPolygon.Visible = true;
             //this.MenuClearPolygon.Visible = true;
-            //this.Separator3.Visible = true;
+            this.Separator3.Visible = true;
 
             //this.MenuSurveyGrid.Visible = true;
             //this.MenuClearWP.Visible = true;
             //this.MenuReadWP.Visible = true;
             //this.MenuSaveWP.Visible = true;
-            //this.Separator4.Visible = true;
+            this.Separator4.Visible = true;
         }
 
         private void SetFlightDataMenu()
         {
             this.MenuFlightPlannerOpen.Visible = true;
             this.MenuFlightPlannerClose.Visible = false;
-            //this.Separator1.Visible = true;
+            this.Separator1.Visible = true;
 
-            //this.MenuLoadLayer.Visible = true;
+            this.MenuLoadLayer.Visible = true;
             //this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible && this.MenuLoadLayer.Checked;
             //this.MenuLayerManager.Visible = true;
-            //this.Separator2.Visible = true;
+            this.Separator2.Visible = true;
 
             //this.MenuDrawPolygon.Visible = false;
             //this.MenuClearPolygon.Visible = false;
-            //this.Separator3.Visible = false;
+            this.Separator3.Visible = false;
 
             //this.MenuSurveyGrid.Visible = false;
             //this.MenuClearWP.Visible = false;
             //this.MenuReadWP.Visible = false;
             //this.MenuSaveWP.Visible = false;
-            //this.Separator4.Visible = false;
+            this.Separator4.Visible = false;
         }
 
         private void FlightPlannerShow(object sender, EventArgs e)
@@ -1393,6 +1395,102 @@ namespace MissionPlanner
         private void FlightDataShow()
         {
             MyView.ShowScreen("FlightData");
+        }
+
+        private void SetLaodLayerState()
+        {
+            this.MenuLoadLayer.Checked = true;
+            //this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible;
+        }
+
+        private void SetNoLaodLayerState()
+        {
+            this.MenuLoadLayer.Checked = false;
+            //this.MenuZoomToLayer.Visible = false;
+        }
+
+        private void MenuLoadLayer_Click(object sender, EventArgs e)
+        {
+            if (MenuLoadLayer.Visible)
+                LoadTiffLayer();
+        }
+
+        #region 图层信息
+        public GMap.NET.RectLatLng diisplayRect = new GMap.NET.RectLatLng();
+        public PointLatLngAlt defaultOrigin = new PointLatLngAlt();
+        public GeoBitmap CurrentLayer;
+        #endregion
+
+        private void LoadTiffLayer()
+        {
+            LayerReader reader = new LayerReader();
+            DialogResult result = reader.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                AddLayerOverlay(reader.GetLayer(), reader.GetOrigin(), reader.GetScale(), reader.GetTransparentColor());
+                reader.Dispose();
+                reader.Close();
+            }
+            else if (result == DialogResult.Cancel)
+            {
+
+                reader.Dispose();
+                reader.Close();
+            }
+        }
+
+        private bool AddLayerOverlay(string path, PointLatLngAlt origin, double scale, Color transparent)
+        {
+            MemoryLayerCache.AddLayerToMemoryCache(new GMap.NET.Internals.LayerInfo(path, origin.Lng, origin.Lat, origin.Alt, scale, transparent));
+            return SetLayerOverlay(path, origin.Lng, origin.Lat, origin.Alt, scale, transparent);
+        }
+
+        private bool SetLayerOverlay(string path, double lng, double lat, double alt, double scale, Color Transparent)
+        {
+            if (File.Exists(path))
+            {
+                var bitmap = GDAL.GDAL.LoadImageInfo(path);
+                if (bitmap != null && !bitmap.Rect.IsEmpty)
+                {
+                    Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (_bitmap, _transparent) =>
+                    {
+                        _bitmap.Bitmap.MakeTransparent(_transparent);
+                        _bitmap.midBitmap.MakeTransparent(_transparent);
+                        _bitmap.smallBitmap.MakeTransparent(_transparent);
+                        return _bitmap;
+                    };
+                    IAsyncResult iar = GetGeoBitmap.BeginInvoke(bitmap, Transparent, CallbackWhenDone, this);
+
+                    this.diisplayRect = bitmap.Rect;
+                    this.defaultOrigin = new PointLatLngAlt(lat, lng, alt);
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+                return false;
+        }
+        private void CallbackWhenDone(IAsyncResult iar)
+        {
+            AsyncResult ar = (AsyncResult)iar;
+            Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> geoFunc = (Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap>)ar.AsyncDelegate;
+
+            var geoBitmap = geoFunc.EndInvoke(iar);
+            if (geoBitmap.Bitmap != null)
+            {
+                CurrentLayer = geoBitmap;
+                ShowLayerOverlay(geoBitmap);
+            }
+        }
+
+        private void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
+        {
+            GCSViews.FlightData.instance.ShowLayerOverlay(geoBitmap);
+            GCSViews.FlightPlanner.instance.ShowLayerOverlay(geoBitmap);
         }
         #endregion
 
