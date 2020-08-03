@@ -390,6 +390,12 @@
     <Compile Include="Controls\GMAPCache.Designer.cs">
       <DependentUpon>GMAPCache.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\HLToolStripButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\HLToolStripButton.Designer.cs">
+      <DependentUpon>HLToolStripButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Icon\File.cs" />
     <Compile Include="Controls\Icon\Zoom.cs" />
     <Compile Include="Controls\LayerReader.cs">
