@@ -17,6 +17,10 @@
                 ReadLayerInfoConfig();
         }
 
+        public MemoryLayerCache()
+        {
+        }
+
         ~MemoryLayerCache()
         {
             SaveLayerInfoConfig();

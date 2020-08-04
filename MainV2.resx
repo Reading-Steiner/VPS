@@ -546,6 +546,87 @@
   <data name="MenuLoadLayer.Size" type="System.Drawing.Size, System.Drawing">
     <value>49, 43</value>
   </data>
+  <data name="MenuZoomToLayer.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAXCAYAAABqBU3hAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH
+        DwAAjA8AAP1SAACBQAAAfXkAAOmLAAA85QAAGcxzPIV3AAAKOWlDQ1BQaG90b3Nob3AgSUNDIHByb2Zp
+        bGUAAEjHnZZ3VFTXFofPvXd6oc0w0hl6ky4wgPQuIB0EURhmBhjKAMMMTWyIqEBEEREBRZCggAGjoUis
+        iGIhKKhgD0gQUGIwiqioZEbWSnx5ee/l5ffHvd/aZ+9z99l7n7UuACRPHy4vBZYCIJkn4Ad6ONNXhUfQ
+        sf0ABniAAaYAMFnpqb5B7sFAJC83F3q6yAn8i94MAUj8vmXo6U+ng/9P0qxUvgAAyF/E5mxOOkvE+SJO
+        yhSkiu0zIqbGJIoZRomZL0pQxHJijlvkpZ99FtlRzOxkHlvE4pxT2clsMfeIeHuGkCNixEfEBRlcTqaI
+        b4tYM0mYzBXxW3FsMoeZDgCKJLYLOKx4EZuImMQPDnQR8XIAcKS4LzjmCxZwsgTiQ7mkpGbzuXHxArou
+        S49uam3NoHtyMpM4AoGhP5OVyOSz6S4pyalMXjYAi2f+LBlxbemiIluaWltaGpoZmX5RqP+6+Dcl7u0i
+        vQr43DOI1veH7a/8UuoAYMyKarPrD1vMfgA6tgIgd/8Pm+YhACRFfWu/8cV5aOJ5iRcIUm2MjTMzM424
+        HJaRuKC/6386/A198T0j8Xa/l4fuyollCpMEdHHdWClJKUI+PT2VyeLQDf88xP848K/zWBrIieXwOTxR
+        RKhoyri8OFG7eWyugJvCo3N5/6mJ/zDsT1qca5Eo9Z8ANcoISN2gAuTnPoCiEAESeVDc9d/75oMPBeKb
+        F6Y6sTj3nwX9+65wifiRzo37HOcSGExnCfkZi2viawnQgAAkARXIAxWgAXSBITADVsAWOAI3sAL4gWAQ
+        DtYCFogHyYAPMkEu2AwKQBHYBfaCSlAD6kEjaAEnQAc4DS6Ay+A6uAnugAdgBIyD52AGvAHzEARhITJE
+        geQhVUgLMoDMIAZkD7lBPlAgFA5FQ3EQDxJCudAWqAgqhSqhWqgR+hY6BV2ArkID0D1oFJqCfoXewwhM
+        gqmwMqwNG8MM2An2hoPhNXAcnAbnwPnwTrgCroOPwe3wBfg6fAcegZ/DswhAiAgNUUMMEQbigvghEUgs
+        wkc2IIVIOVKHtCBdSC9yCxlBppF3KAyKgqKjDFG2KE9UCIqFSkNtQBWjKlFHUe2oHtQt1ChqBvUJTUYr
+        oQ3QNmgv9Cp0HDoTXYAuRzeg29CX0HfQ4+g3GAyGhtHBWGE8MeGYBMw6TDHmAKYVcx4zgBnDzGKxWHms
+        AdYO64dlYgXYAux+7DHsOewgdhz7FkfEqeLMcO64CBwPl4crxzXhzuIGcRO4ebwUXgtvg/fDs/HZ+BJ8
+        Pb4LfwM/jp8nSBN0CHaEYEICYTOhgtBCuER4SHhFJBLVidbEACKXuIlYQTxOvEIcJb4jyZD0SS6kSJKQ
+        tJN0hHSedI/0ikwma5MdyRFkAXknuZF8kfyY/FaCImEk4SXBltgoUSXRLjEo8UISL6kl6SS5VjJHslzy
+        pOQNyWkpvJS2lIsUU2qDVJXUKalhqVlpirSptJ90snSxdJP0VelJGayMtoybDFsmX+awzEWZMQpC0aC4
+        UFiULZR6yiXKOBVD1aF6UROoRdRvqP3UGVkZ2WWyobJZslWyZ2RHaAhNm+ZFS6KV0E7QhmjvlygvcVrC
+        WbJjScuSwSVzcopyjnIcuUK5Vrk7cu/l6fJu8onyu+U75B8poBT0FQIUMhUOKlxSmFakKtoqshQLFU8o
+        3leClfSVApXWKR1W6lOaVVZR9lBOVd6vfFF5WoWm4qiSoFKmclZlSpWiaq/KVS1TPaf6jC5Ld6In0Svo
+        PfQZNSU1TzWhWq1av9q8uo56iHqeeqv6Iw2CBkMjVqNMo1tjRlNV01czV7NZ874WXouhFa+1T6tXa05b
+        RztMe5t2h/akjpyOl06OTrPOQ12yroNumm6d7m09jB5DL1HvgN5NfVjfQj9ev0r/hgFsYGnANThgMLAU
+        vdR6KW9p3dJhQ5Khk2GGYbPhqBHNyMcoz6jD6IWxpnGE8W7jXuNPJhYmSSb1Jg9MZUxXmOaZdpn+aqZv
+        xjKrMrttTjZ3N99o3mn+cpnBMs6yg8vuWlAsfC22WXRbfLS0suRbtlhOWWlaRVtVWw0zqAx/RjHjijXa
+        2tl6o/Vp63c2ljYCmxM2v9ga2ibaNtlOLtdZzllev3zMTt2OaVdrN2JPt4+2P2Q/4qDmwHSoc3jiqOHI
+        dmxwnHDSc0pwOub0wtnEme/c5jznYuOy3uW8K+Lq4Vro2u8m4xbiVun22F3dPc692X3Gw8Jjncd5T7Sn
+        t+duz2EvZS+WV6PXzAqrFetX9HiTvIO8K72f+Oj78H26fGHfFb57fB+u1FrJW9nhB/y8/Pb4PfLX8U/z
+        /z4AE+AfUBXwNNA0MDewN4gSFBXUFPQm2Dm4JPhBiG6IMKQ7VDI0MrQxdC7MNaw0bGSV8ar1q66HK4Rz
+        wzsjsBGhEQ0Rs6vdVu9dPR5pEVkQObRGZ03WmqtrFdYmrT0TJRnFjDoZjY4Oi26K/sD0Y9YxZ2O8Yqpj
+        ZlgurH2s52xHdhl7imPHKeVMxNrFlsZOxtnF7YmbineIL4+f5rpwK7kvEzwTahLmEv0SjyQuJIUltSbj
+        kqOTT/FkeIm8nhSVlKyUgVSD1ILUkTSbtL1pM3xvfkM6lL4mvVNAFf1M9Ql1hVuFoxn2GVUZbzNDM09m
+        SWfxsvqy9bN3ZE/kuOd8vQ61jrWuO1ctd3Pu6Hqn9bUboA0xG7o3amzM3zi+yWPT0c2EzYmbf8gzySvN
+        e70lbEtXvnL+pvyxrR5bmwskCvgFw9tst9VsR23nbu/fYb5j/45PhezCa0UmReVFH4pZxde+Mv2q4quF
+        nbE7+0ssSw7uwuzi7Rra7bD7aKl0aU7p2B7fPe1l9LLCstd7o/ZeLV9WXrOPsE+4b6TCp6Jzv+b+Xfs/
+        VMZX3qlyrmqtVqreUT13gH1g8KDjwZYa5ZqimveHuIfu1nrUttdp15UfxhzOOPy0PrS+92vG140NCg1F
+        DR+P8I6MHA082tNo1djYpNRU0gw3C5unjkUeu/mN6zedLYYtta201qLj4Ljw+LNvo78dOuF9ovsk42TL
+        d1rfVbdR2grbofbs9pmO+I6RzvDOgVMrTnV32Xa1fW/0/ZHTaqerzsieKTlLOJt/duFczrnZ86nnpy/E
+        XRjrjup+cHHVxds9AT39l7wvXbnsfvlir1PvuSt2V05ftbl66hrjWsd1y+vtfRZ9bT9Y/NDWb9nffsPq
+        RudN65tdA8sHzg46DF645Xrr8m2v29fvrLwzMBQydHc4cnjkLvvu5L2key/vZ9yff7DpIfph4SOpR+WP
+        lR7X/aj3Y+uI5ciZUdfRvidBTx6Mscae/5T+04fx/Kfkp+UTqhONk2aTp6fcp24+W/1s/Hnq8/npgp+l
+        f65+ofviu18cf+mbWTUz/pL/cuHX4lfyr468Xva6e9Z/9vGb5Dfzc4Vv5d8efcd41/s+7P3EfOYH7IeK
+        j3ofuz55f3q4kLyw8Bv3hPP74uYdwgAAAAlwSFlzAAALEwAACxMBAJqcGAAABZxJREFUSEutlH1MVXUY
+        xx/Cl1I0JVw5/yhU3LRyNZazSa1SFFJBNHO5JZoBiZbWZqs1zX+s5EUxS5SpARe4EHJfEQGXpSOsdMK9
+        1/sivgxT4Zx7zwERMV799T3n3MM90NXc6m6fPc/v+f3O8/2e5/yAjC4RCHI0IBqcUq4i7akMqT8LDoNK
+        8AZqIYEz6CP3UKOSq/vqnsrghhT/xQBEhFeBAetewJCrnMF6FeKj0tn/28BosBL8ippGVDKgoq6FJsQt
+        6BGO+J8NTETtI3AReRAxNQ+AZ/110Qt2YR2Jul/j4Q08jfxrwAO5KepqY62In+FrbU3oAoXIo4Gs8yAD
+        L4J8/0NBmmkJvq8YHb4nrwdADfI4GAhFPsTAK9ioH/qg9mGlPrS5dm94LZAHn5ZwGXkyUAxY3OIsi0s8
+        iCiaBw8FmgzlH838aOvqnvaMyEwAGt3AZHEJryOS2d1OpHOIMoUOMfyoU9xc4xEv48CwJtp4P4bvK3dH
+        Eq72SC8nZEIjUtETQBvpHa1EYZW8zGNWPmTKcT40rd4XUuAQltd6xN8r3WjkVC9eMAPamnpGAYIML3PV
+        ij/L7Wd9Y2fWeqHBhYZZOZIYdew2xRjzicjEjwdvkYk7RUbORwZuFw48ueK0lw7ZhZer3aKlyi32BZpr
+        DQxHYFZwwiOeLXcKK9PO+Ciymh+BvuvJyHug44bOJsTJZOmh6PIjMGDmVqAoAkZmXsHE3YWRglFmbmbM
+        SS/taRCmHXeLBzHKTmmkWkE1P+YW+jG1ysN2Yd7qOoEmVbVNJIO4jYziTTKL6NsGOsDtbjILWycYbbSk
+        bCsMWHiY4CeQxbsRuVs2YPGqRgZgpHaEmXtt9gkvff6HLxwj/RJCrcqFFRmmcwfmDu1tEKIST/lojIWf
+        ShU3DjxuaOyMMDYylXBDA4s6arDMK8+JTyr7cGqqPmFWekncNKLvPcBNlItYep3oxxuJVHytXp5IwAjD
+        GBvB6hk1fEj6Gd/IMqe4EXdkZ8Z5IWLuT156xMTNhVkzmcS+ScYGlqpfztL0iSylJJEl6+LYB/plA+nF
+        88WUwpg7EO5L0y/FmQQ7UYZtDGXa3qSMxlLKsqVSjnMk7XEQHWiaS0XNRjK09mIyihGzbOQaGfhPJ1fx
+        46bX8BRq4pNQ+23wE1rbWYTBdi+tJIGllsSDxazKUcw6uryM6/iT5dV9w9bqFkniEk6iLPvb4BZgCrbr
+        iF+AiZQNg/s900nXnEsVLR0BI8DEcRBukk1Ja2nP2NpHRVzZC7q8lHR9XE+yLpZVOkqY9PO0NrKb7c1y
+        vvfn7ZjKwkEDEk+Bz0AzYBCWzHSAfcgjaTcm8q3zCcq/uo3Kb96QxQbBZ6pouQ2TefSdewbtdtOcvIzo
+        NP0ill6axG51CexCyzm26kiMvL7b08nONp9iawpjMZ2AAZWxIBmcB/6J2HsxlQowx29kFOVdeg93xUVH
+        Wzg6cmUH7XNFyJ8tyzaFMl0ZYTm/COuKE9imsiTW3uVjzUIT7kAi22ZNZf0DvbKB5PsYUAkF8aAWDAD1
+        89QhJiIS7XWGwsxo+TNl2WajXgT+oiwXC8s5ydbj8q0tXMDqLtfIYxfv8Kyz+5ac/1CfjQkseKABBbm5
+        PRoUgrtA/TweiK4Hscglk/fkPSlmXKqM2q/7ZIM+vmcdLtuOYxtZb1+3LCz9romX2IbSZez94iVD7kBw
+        FAMqz4BdwAv8E/GTDXPZ0gRcL43bU0drit6ZtUG/uB9vyN4tmM9Kzx2QxXv7u9lX1R9j/PIFfOgJaMDo
+        s+zhYDP2riC2IWaCqZQt3QEnLcnfQptKFz4PgQFJJKVkKVuH/wOmxgKWe3qnMnpFXMKlaR6E4AaUerZ9
+        PPJJ/pwo8yI9l5sH8VhC4yiIXAAeSQQmXLh0rrVFi1youaQa4pVUfYL1b6A5T0AhziXnAAAAAElFTkSu
+        QmCC
+</value>
+  </data>
+  <data name="MenuZoomToLayer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 43</value>
+  </data>
+  <data name="MenuLayerManager.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 43</value>
+  </data>
   <data name="Separator2.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 43</value>
   </data>
@@ -792,6 +873,12 @@
   </data>
   <data name="&gt;&gt;MainMenu.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="MenuDrawPolygon.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="MenuClearPolygon.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
   </data>
   <data name="MenuInitConfig.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1083,7 +1170,7 @@
     <value>status1</value>
   </data>
   <data name="&gt;&gt;status1.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.Status, MissionPlanner, Version=1.3.7520.31682, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.Status, MissionPlanner, Version=1.3.7521.23388, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;status1.Parent" xml:space="preserve">
     <value>panel1</value>
@@ -2844,7 +2931,19 @@
     <value>MenuLoadLayer</value>
   </data>
   <data name="&gt;&gt;MenuLoadLayer.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7520.31682, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23388, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;MenuZoomToLayer.Name" xml:space="preserve">
+    <value>MenuZoomToLayer</value>
+  </data>
+  <data name="&gt;&gt;MenuZoomToLayer.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23388, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;MenuLayerManager.Name" xml:space="preserve">
+    <value>MenuLayerManager</value>
+  </data>
+  <data name="&gt;&gt;MenuLayerManager.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23388, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;Separator2.Name" xml:space="preserve">
     <value>Separator2</value>
@@ -2874,7 +2973,19 @@
     <value>toolStripConnectionControl</value>
   </data>
   <data name="&gt;&gt;toolStripConnectionControl.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.ToolStripConnectionControl, MissionPlanner, Version=1.3.7520.31682, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.ToolStripConnectionControl, MissionPlanner, Version=1.3.7521.23388, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;MenuDrawPolygon.Name" xml:space="preserve">
+    <value>MenuDrawPolygon</value>
+  </data>
+  <data name="&gt;&gt;MenuDrawPolygon.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23388, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;MenuClearPolygon.Name" xml:space="preserve">
+    <value>MenuClearPolygon</value>
+  </data>
+  <data name="&gt;&gt;MenuClearPolygon.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23388, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuInitConfig.Name" xml:space="preserve">
     <value>MenuInitConfig</value>

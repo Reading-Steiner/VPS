@@ -520,7 +520,7 @@ namespace MissionPlanner
         /// ie configuration gets reloaded on every click
         /// </summary>
         public GCSViews.FlightData FlightData;
-
+        MemoryLayerCache layerCache;
         public GCSViews.FlightPlanner FlightPlanner;
         GCSViews.SITL Simulation;
 
@@ -1073,8 +1073,14 @@ namespace MissionPlanner
 
             // save config to test we have write access
             SetInitHandler();
-            SetFlightDataMenu();
-            
+            layerCache = new MemoryLayerCache();
+            var layer = MemoryLayerCache.GetSelectedLayerFromMemoryCache();
+            if (layer != null)
+            {
+                GMap.NET.Internals.LayerInfo layerInfo = (GMap.NET.Internals.LayerInfo)layer;
+                SetLayerOverlay(layerInfo.Layer, layerInfo.Lng, layerInfo.Lat, layerInfo.Alt, layerInfo.Scale, layerInfo.Transparent);
+
+            }
             SaveConfig();
         }
 
@@ -1314,19 +1320,64 @@ namespace MissionPlanner
         }
 
         #region new
+
+        private bool isLoadLayer;
+        public delegate void delegateHandler();
+        public delegateHandler LoadLayerHandle;
+        public delegateHandler NoLoadLayerHandle;
+        public bool IsLoadLayer
+        {
+            set
+            {
+                isLoadLayer = value;
+                if (isLoadLayer)
+                {
+                    LoadLayerHandle();
+                }
+                else
+                {
+                    NoLoadLayerHandle();
+                }
+            }
+        }
         private void SetInitHandler()
         {
-            FlightData.OpenFlightPlannerHandler += SetFlightPlannerMenu;
-            FlightData.CloseFlightPlannerHandler += SetFlightDataMenu;
+            GCSViews.FlightData.instance.OpenFlightPlannerHandler += SetFlightPlannerMenu;
+            GCSViews.FlightData.instance.CloseFlightPlannerHandler += SetFlightDataMenu;
 
-            //OutDrawPolygonState();
-            //FlightPlanner.ToDrawPolygonHandle += ToDrawPolygonState;
-            //FlightPlanner.OutDrawPolygonHandle += OutDrawPolygonState;
+            OutDrawPolygonState();
+            FlightPlanner.ToDrawPolygonHandle += ToDrawPolygonState;
+            FlightPlanner.OutDrawPolygonHandle += OutDrawPolygonState;
 
-            //FlightPlanner.NoLoadLayerHandle += SetNoLaodLayerState;
-            //FlightPlanner.LoadLayerHandle += SetLaodLayerState;
+            NoLoadLayerHandle += SetNoLaodLayerState;
+            LoadLayerHandle += SetLaodLayerState;
+
+            SetFlightDataMenu();
         }
 
+        private void SetLaodLayerState()
+        {
+            this.MenuLoadLayer.Checked = true;
+            this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible;
+        }
+
+        private void SetNoLaodLayerState()
+        {
+            this.MenuLoadLayer.Checked = false;
+            this.MenuZoomToLayer.Visible = false;
+        }
+
+        private void ToDrawPolygonState()
+        {
+            this.MenuDrawPolygon.MyChecked = true;
+            //this.MenuClearPolygon.Visible = true;
+        }
+
+        private void OutDrawPolygonState()
+        {
+            this.MenuDrawPolygon.MyChecked = false;
+            //this.MenuClearPolygon.Visible = false;
+        }
 
         private void SetFlightPlannerMenu()
         {
@@ -1335,12 +1386,12 @@ namespace MissionPlanner
             this.Separator1.Visible = true;
 
             this.MenuLoadLayer.Visible = true;
-            //this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible && this.MenuLoadLayer.Checked;
-            //this.MenuLayerManager.Visible = true;
+            this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible && this.MenuLoadLayer.Checked;
+            this.MenuLayerManager.Visible = true;
             this.Separator2.Visible = true;
 
-            //this.MenuDrawPolygon.Visible = true;
-            //this.MenuClearPolygon.Visible = true;
+            this.MenuDrawPolygon.Visible = true;
+            this.MenuClearPolygon.Visible = true;
             this.Separator3.Visible = true;
 
             //this.MenuSurveyGrid.Visible = true;
@@ -1357,12 +1408,12 @@ namespace MissionPlanner
             this.Separator1.Visible = true;
 
             this.MenuLoadLayer.Visible = true;
-            //this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible && this.MenuLoadLayer.Checked;
-            //this.MenuLayerManager.Visible = true;
+            this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible && this.MenuLoadLayer.Checked;
+            this.MenuLayerManager.Visible = true;
             this.Separator2.Visible = true;
 
-            //this.MenuDrawPolygon.Visible = false;
-            //this.MenuClearPolygon.Visible = false;
+            this.MenuDrawPolygon.Visible = false;
+            this.MenuClearPolygon.Visible = false;
             this.Separator3.Visible = false;
 
             //this.MenuSurveyGrid.Visible = false;
@@ -1375,7 +1426,7 @@ namespace MissionPlanner
         private void FlightPlannerShow(object sender, EventArgs e)
         {
             //MyView.ShowScreen("FlightPlanner");
-            if (MenuFlightPlannerOpen.Visible)
+            if (this.MenuFlightPlannerOpen.Visible)
                 GCSViews.FlightData.instance.OpenFlightPlanner();
         }
 
@@ -1397,22 +1448,22 @@ namespace MissionPlanner
             MyView.ShowScreen("FlightData");
         }
 
-        private void SetLaodLayerState()
-        {
-            this.MenuLoadLayer.Checked = true;
-            //this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible;
-        }
-
-        private void SetNoLaodLayerState()
-        {
-            this.MenuLoadLayer.Checked = false;
-            //this.MenuZoomToLayer.Visible = false;
-        }
-
         private void MenuLoadLayer_Click(object sender, EventArgs e)
         {
             if (MenuLoadLayer.Visible)
                 LoadTiffLayer();
+        }
+
+        private void MenuZoomToLayer_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.zoomToTiffLayer();
+            GCSViews.FlightData.instance.zoomToTiffLayer();
+        }
+
+        private void MenuLayerManager_Click(object sender, EventArgs e)
+        {
+            if (MenuLayerManager.Visible)
+                GCSViews.FlightPlanner.instance.TiffLayerManager();
         }
 
         #region 图层信息
@@ -1421,7 +1472,7 @@ namespace MissionPlanner
         public GeoBitmap CurrentLayer;
         #endregion
 
-        private void LoadTiffLayer()
+        public void LoadTiffLayer()
         {
             LayerReader reader = new LayerReader();
             DialogResult result = reader.ShowDialog();
@@ -1463,7 +1514,7 @@ namespace MissionPlanner
 
                     this.diisplayRect = bitmap.Rect;
                     this.defaultOrigin = new PointLatLngAlt(lat, lng, alt);
-
+                    MenuZoomToLayer_Click(this, null);
                     return true;
                 }
                 else
@@ -1482,6 +1533,7 @@ namespace MissionPlanner
             var geoBitmap = geoFunc.EndInvoke(iar);
             if (geoBitmap.Bitmap != null)
             {
+                IsLoadLayer = true;
                 CurrentLayer = geoBitmap;
                 ShowLayerOverlay(geoBitmap);
             }
@@ -1491,6 +1543,23 @@ namespace MissionPlanner
         {
             GCSViews.FlightData.instance.ShowLayerOverlay(geoBitmap);
             GCSViews.FlightPlanner.instance.ShowLayerOverlay(geoBitmap);
+        }
+
+        private void MenuDrawPolygon_Click(object sender, EventArgs e)
+        {
+            if (MenuDrawPolygon.Visible)
+            {
+                if (!this.MenuDrawPolygon.MyChecked)
+                    GCSViews.FlightPlanner.instance.AddPolygon();
+                else
+                    GCSViews.FlightPlanner.instance.NoAddPolygon();
+            }
+        }
+
+        private void MenuClearPolygon_Click(object sender, EventArgs e)
+        {
+            if (MenuClearPolygon.Visible)
+                GCSViews.FlightPlanner.instance.ClearPloygon();
         }
         #endregion
 

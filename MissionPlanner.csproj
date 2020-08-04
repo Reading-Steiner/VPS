@@ -397,6 +397,7 @@
       <DependentUpon>HLToolStripButton.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Icon\File.cs" />
+    <Compile Include="Controls\Icon\WP.cs" />
     <Compile Include="Controls\Icon\Zoom.cs" />
     <Compile Include="Controls\LayerManager.cs">
       <SubType>Form</SubType>
@@ -4433,6 +4434,7 @@
     <Content Include="quaternion.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\default.JPG" />
     <Content Include="rotmat.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

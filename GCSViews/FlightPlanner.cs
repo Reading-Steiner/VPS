@@ -54,11 +54,12 @@ namespace MissionPlanner.GCSViews
         public FlightPlanner()
         {
             InitializeComponent();
+            System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
             Init();
         }
 
 
-        private void but_mincommands_Click(object sender, System.EventArgs e)
+        private void But_mincommands_Click(object sender, System.EventArgs e)
         {
             if (panelWaypoints.Height <= 30)
             {
@@ -101,7 +102,8 @@ namespace MissionPlanner.GCSViews
         public GMapOverlay geofenceoverlay;
         public GMapPolygon geofencepolygon;
         private bool grid;
-        private List<int> groupmarkers = new List<int>();
+        private List<int> wpMarkersGroup = new List<int>();
+        private List<int> polygonMarkersGroup = new List<int>();
         private List<List<Locationwp>> history = new List<List<Locationwp>>();
         private bool isMouseClickOffMenu;
         private bool isMouseDown;
@@ -118,8 +120,8 @@ namespace MissionPlanner.GCSViews
         private PointLatLng MouseDownStart;
         private PointLatLngAlt mouseposdisplay = new PointLatLngAlt(0, 0);
         private WPOverlay overlay;
-        private bool polygongridmode;
         private MissionPlanner.Controls.Icon.Polygon polyicon = new MissionPlanner.Controls.Icon.Polygon();
+        private MissionPlanner.Controls.Icon.WP WPicon = new MissionPlanner.Controls.Icon.WP();
         private MissionPlanner.Controls.Icon.Zoom zoomicon = new MissionPlanner.Controls.Icon.Zoom();
         private ComponentResourceManager rm = new ComponentResourceManager(typeof(FlightPlanner));
         private int selectedrow;
@@ -272,6 +274,7 @@ namespace MissionPlanner.GCSViews
             drawnpolygon.Stroke = new Pen(Color.Red, 2);
             drawnpolygon.Fill = Brushes.Transparent;
 
+            SetInitState();
             /*
             var timer = new System.Timers.Timer();
 
@@ -281,6 +284,57 @@ namespace MissionPlanner.GCSViews
 
             timer.Start();
             */
+        }
+
+        public delegate void delegateHandler();
+        private bool polygongridmode;
+        public delegateHandler ToDrawPolygonHandle;
+        public delegateHandler OutDrawPolygonHandle;
+        public bool IsDrawPolygongridMode
+        {
+            get { return polygongridmode; }
+            set
+            {
+                polygongridmode = value;
+                if (polygongridmode)
+                    ToDrawPolygonHandle();
+                else
+                    OutDrawPolygonHandle();
+            }
+        }
+
+        private void SetInitState()
+        {
+            SetNoDrawPolygonState();
+            this.OutDrawPolygonHandle += SetNoDrawPolygonState;
+            this.ToDrawPolygonHandle += SetDrawPolygonState;
+
+            SetNoLaodLayerState();
+            MainV2.instance.LoadLayerHandle += SetLaodLayerState;
+            MainV2.instance.NoLoadLayerHandle += SetNoLaodLayerState;
+        }
+
+        private void SetDrawPolygonState()
+        {
+            this.polyicon.IsSelected = true;
+            this.addPolygonPointToolStripMenuItem.Checked = true;
+        }
+
+        private void SetNoDrawPolygonState()
+        {
+            this.polyicon.IsSelected = false;
+            this.addPolygonPointToolStripMenuItem.Checked = false;
+        }
+
+
+        private void SetLaodLayerState()
+        {
+            this.zoomicon.IsSelected = true;
+        }
+
+        private void SetNoLaodLayerState()
+        {
+            this.zoomicon.IsSelected = false;
         }
 
         public static FlightPlanner instance { get; set; }
@@ -352,14 +406,14 @@ namespace MissionPlanner.GCSViews
             // open wp file
             if (keyData == (Keys.Control | Keys.O))
             {
-                loadWPFileToolStripMenuItem_Click(null, null);
+                LoadWPFileToolStripMenuItem_Click(null, null);
                 return true;
             }
 
             // save wp file
             if (keyData == (Keys.Control | Keys.S))
             {
-                saveWPFileToolStripMenuItem_Click(null, null);
+                SaveWPFileToolStripMenuItem_Click(null, null);
                 return true;
             }
 
@@ -527,14 +581,14 @@ namespace MissionPlanner.GCSViews
         {
             if (polygongridmode)
             {
-                addPolygonPointToolStripMenuItem_Click(null, null);
+                AddPolygonPointToolStripMenuItem_Click(null, null);
                 return;
             }
 
             if (sethome)
             {
                 sethome = false;
-                callMeDrag("H", lat, lng, alt);
+                CallMeDrag("H", lat, lng, alt);
                 return;
             }
             // creating a WP
@@ -702,7 +756,7 @@ namespace MissionPlanner.GCSViews
         /// <param name="lat"></param>
         /// <param name="lng"></param>
         /// <param name="alt"></param>
-        public void callMeDrag(string pointno, double lat, double lng, int alt)
+        public void CallMeDrag(string pointno, double lat, double lng, int alt)
         {
             if (pointno == "")
             {
@@ -1229,17 +1283,17 @@ namespace MissionPlanner.GCSViews
 
         public void updateDisplayView()
         {
-            rallyPointsToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayRallyPointsMenu;
-            geoFenceToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayGeoFenceMenu;
-            createSplineCircleToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displaySplineCircleAutoWp;
-            textToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayTextAutoWp;
-            createCircleSurveyToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayCircleSurveyAutoWp;
-            pOIToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayPoiMenu;
-            trackerHomeToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayTrackerHomeMenu;
+            //rallyPointsToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayRallyPointsMenu;
+            //geoFenceToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayGeoFenceMenu;
+            //createSplineCircleToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displaySplineCircleAutoWp;
+            //textToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayTextAutoWp;
+            //createCircleSurveyToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayCircleSurveyAutoWp;
+            //pOIToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayPoiMenu;
+            //trackerHomeToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayTrackerHomeMenu;
             CHK_verifyheight.Visible = MainV2.DisplayConfiguration.displayCheckHeightBox;
 
             //hide dynamically generated toolstrip items in the auto WP dropdown (these do not have name objects populated)
-            foreach (ToolStripItem item in autoWPToolStripMenuItem.DropDownItems)
+            foreach (ToolStripItem item in planningWPToolStripMenuItem.DropDownItems)
             {
                 if (item.Name.Equals(""))
                 {
@@ -1273,7 +1327,7 @@ namespace MissionPlanner.GCSViews
 
                     MainV2.comPort.giveComport = false;
 
-                    BUT_read.Enabled = true;
+                    //BUT_read.Enabled = true;
 
                     writeKML();
                 });
@@ -1594,7 +1648,17 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        public void addPolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
+        public void NoAddPolygon()
+        {
+            IsDrawPolygongridMode = false;
+        }
+
+        public void AddPolygon()
+        {
+            AddPolygonPointToolStripMenuItem_Click(this, null);
+        }
+
+        public void AddPolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (polygongridmode == false)
             {
@@ -1730,7 +1794,7 @@ namespace MissionPlanner.GCSViews
                         }
                     }
 
-                    lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
+                    //lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
                 }
             }
         }
@@ -1901,7 +1965,7 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        public void chk_grid_CheckedChanged(object sender, EventArgs e)
+        public void Chk_grid_CheckedChanged(object sender, EventArgs e)
         {
             grid = chk_grid.Checked;
         }
@@ -1911,7 +1975,7 @@ namespace MissionPlanner.GCSViews
             splinemode = CHK_splinedefault.Checked;
         }
 
-        public void clearMissionToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ClearMissionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             quickadd = true;
 
@@ -1929,7 +1993,12 @@ namespace MissionPlanner.GCSViews
             writeKML();
         }
 
-        public void clearPolygonToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ClearPloygon()
+        {
+            ClearPolygonToolStripMenuItem_Click(this, null);
+        }
+
+        public void ClearPolygonToolStripMenuItem_Click(object sender, EventArgs e)
         {
             polygongridmode = false;
             if (drawnpolygon == null)
@@ -2472,58 +2541,83 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        public void contextMenuStrip1_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+        public void ContextMenuStripMain_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
-            //  if (e.CloseReason.ToString() == "AppClicked" || e.CloseReason.ToString() == "AppFocusChange")
-            //     isMouseClickOffMenu = true;
+            //if (e.CloseReason.ToString() == "AppClicked" || e.CloseReason.ToString() == "AppFocusChange")
+            isMouseClickOffMenu = true;
         }
 
-        public void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        public void ContextMenuStripMain_Opening(object sender, CancelEventArgs e)
         {
-            if (CurentRectMarker == null && CurrentRallyPt == null && groupmarkers.Count == 0)
+            if (CurentRectMarker == null && CurrentRallyPt == null && wpMarkersGroup.Count == 0 && polygonMarkersGroup.Count == 0)
             {
-                deleteWPToolStripMenuItem.Enabled = false;
+                deleteMarkerToolStripMenuItem.Enabled = false;
             }
             else
             {
+                deleteMarkerToolStripMenuItem.Enabled = true;
+            }
+
+            if (polygonMarkersGroup.Count > 0 || CurentRectMarker != null && CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
+            {
+                deletePolygonPointToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                deletePolygonPointToolStripMenuItem.Enabled = false;
+            }
+
+            if (wpMarkersGroup.Count > 0 || (CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.InnerMarker.Tag.ToString(), @"^\d+$")))
+            {
                 deleteWPToolStripMenuItem.Enabled = true;
             }
-
-            if (MainV2.comPort != null && MainV2.comPort.MAV != null)
+            else
             {
-                if ((MainV2.comPort.MAV.cs.capabilities & (int)MAVLink.MAV_PROTOCOL_CAPABILITY.MISSION_FENCE) > 0)
-                {
-                    geoFenceToolStripMenuItem.Visible = false;
-                    rallyPointsToolStripMenuItem.Visible = false;
-                }
-                else
-                {
-                    geoFenceToolStripMenuItem.Visible = true;
-                    rallyPointsToolStripMenuItem.Visible = true;
-                }
+                deleteWPToolStripMenuItem.Enabled = false;
             }
 
-            isMouseClickOffMenu = false; // Just incase
+            //if (MainV2.comPort != null && MainV2.comPort.MAV != null)
+            //{
+            //    if ((MainV2.comPort.MAV.cs.capabilities & (int)MAVLink.MAV_PROTOCOL_CAPABILITY.MISSION_FENCE) > 0)
+            //    {
+            //        geoFenceToolStripMenuItem.Visible = false;
+            //        rallyPointsToolStripMenuItem.Visible = false;
+            //    }
+            //    else
+            //    {
+            //        geoFenceToolStripMenuItem.Visible = true;
+            //        rallyPointsToolStripMenuItem.Visible = true;
+            //    }
+            //}
+
+            isMouseClickOffMenu = true; // Just incase
         }
 
         public void ContextMenuStripPoly_Opening(object sender, CancelEventArgs e)
         {
             // update the displayed items
-            if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.RALLY)
-            {
-                fenceInclusionToolStripMenuItem.Visible = false;
-                fenceExclusionToolStripMenuItem.Visible = false;
-            }
-            else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
-            {
-                fenceInclusionToolStripMenuItem.Visible = true;
-                fenceExclusionToolStripMenuItem.Visible = true;
-            }
-            else
-            {
-                fenceInclusionToolStripMenuItem.Visible = false;
-                fenceExclusionToolStripMenuItem.Visible = false;
-            }
+            //if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.RALLY)
+            //{
+            //    fenceInclusionToolStripMenuItem.Visible = false;
+            //    fenceExclusionToolStripMenuItem.Visible = false;
+            //}
+            //else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
+            //{
+            //    fenceInclusionToolStripMenuItem.Visible = true;
+            //    fenceExclusionToolStripMenuItem.Visible = true;
+            //}
+            //else
+            //{
+            //    fenceInclusionToolStripMenuItem.Visible = false;
+            //    fenceExclusionToolStripMenuItem.Visible = false;
+            //}
+            isMouseClickOffMenu = false; // Just incase
+        }
+
+        public void ContextMenuStripPoly_Close(object sender, ToolStripDropDownClosedEventArgs e)
+        {
+            //if (e.CloseReason.ToString() == "AppClicked" || e.CloseReason.ToString() == "AppFocusChange")
+            //    isMouseClickOffMenu = true;
         }
 
         private void convertFromGeographic(double lat, double lng)
@@ -2626,7 +2720,7 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        public void coords1_SystemChanged(object sender, EventArgs e)
+        public void Coords1_SystemChanged(object sender, EventArgs e)
         {
             if (coords1.System == Coords.CoordsSystems.GEO.ToString())
             {
@@ -2894,12 +2988,63 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        public void deleteWPToolStripMenuItem_Click(object sender, EventArgs e)
+        public void DeletePolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int no = 0;
+
             if (CurentRectMarker != null)
             {
-                if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString(), out no))
+                if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", ""), out int no))
+                {
+                    try
+                    {
+                        drawnpolygon.Points.RemoveAt(no - 1);
+                        redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        //CustomMessageBox.Show("Remove point Failed. Please try again.");
+                    }
+                }
+            }
+            if (currentMarker != null)
+                CurentRectMarker = null;
+            writeKML();
+        }
+
+        public void DeleteWPToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (CurentRectMarker != null)
+            {
+                if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString(), out int no))
+                {
+                    try
+                    {
+                        if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue ==
+                            MAVLink.MAV_MISSION_TYPE.FENCE)
+                            ReCalcFence(no - 1, false, true);
+
+                        Commands.Rows.RemoveAt(no - 1); // home is 0
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        //CustomMessageBox.Show("error selecting wp, please try again.");
+                    }
+                }
+            }
+
+            if (currentMarker != null)
+                CurentRectMarker = null;
+
+            writeKML();
+        }
+
+        public void DeleteMarkerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (CurentRectMarker != null)
+            {
+                if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString(), out int no))
                 {
                     try
                     {
@@ -2926,7 +3071,7 @@ namespace MissionPlanner.GCSViews
                     catch (Exception ex)
                     {
                         log.Error(ex);
-                        CustomMessageBox.Show("Remove point Failed. Please try again.");
+                        //CustomMessageBox.Show("Remove point Failed. Please try again.");
                     }
                 }
             }
@@ -2937,13 +3082,13 @@ namespace MissionPlanner.GCSViews
 
                 CurrentRallyPt = null;
             }
-            else if (groupmarkers.Count > 0)
+            if (wpMarkersGroup.Count > 0)
             {
                 for (int a = Commands.Rows.Count; a > 0; a--)
                 {
                     try
                     {
-                        if (groupmarkers.Contains(a)) Commands.Rows.RemoveAt(a - 1); // home is 0
+                        if (wpMarkersGroup.Contains(a)) Commands.Rows.RemoveAt(a - 1); // home is 0
                     }
                     catch (Exception ex)
                     {
@@ -2951,8 +3096,26 @@ namespace MissionPlanner.GCSViews
                         CustomMessageBox.Show("error selecting wp, please try again.");
                     }
                 }
-
-                groupmarkers.Clear();
+                wpMarkersGroupClear();
+            }
+            if (polygonMarkersGroup.Count > 0)
+            {
+                for (int a = drawnpolygon.LocalPoints.Count; a > 0; a--)
+                {
+                    try
+                    {
+                        if (polygonMarkersGroup.Contains(a))
+                        {
+                            drawnpolygon.Points.RemoveAt(a - 1);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        CustomMessageBox.Show("error selecting polygon, please try again.");
+                    }
+                }
+                polygonMarkersGroupClear();
             }
 
 
@@ -3068,7 +3231,7 @@ namespace MissionPlanner.GCSViews
             drawnpolygon.Points.ForEach(a => AddCommand(MAVLink.MAV_CMD.FENCE_POLYGON_VERTEX_EXCLUSION,
                 drawnpolygon.Points.Count, 0, 0, 0, a.Lng, a.Lat, count++));
 
-            clearPolygonToolStripMenuItem_Click(null, null);
+            ClearPolygonToolStripMenuItem_Click(null, null);
         }
 
         public void FenceInclusionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3077,7 +3240,7 @@ namespace MissionPlanner.GCSViews
             drawnpolygon.Points.ForEach(a => AddCommand(MAVLink.MAV_CMD.FENCE_POLYGON_VERTEX_INCLUSION,
                 drawnpolygon.Points.Count, 0, 0, 0, a.Lng, a.Lat, count++));
 
-            clearPolygonToolStripMenuItem_Click(null, null);
+            ClearPolygonToolStripMenuItem_Click(null, null);
         }
 
         private void FetchPath()
@@ -3743,6 +3906,21 @@ namespace MissionPlanner.GCSViews
             writeKML();
         }
 
+        private void TiffOverlayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MainV2.instance.LoadTiffLayer();
+        }
+
+        public void TiffLayerManager()
+        {
+            TiffManagerToolStripMenuItem_Click(null, null);
+        }
+        private void TiffManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LayerManager layerManager = new LayerManager();
+            layerManager.ShowDialog();
+        }
+
         public void kMLOverlayToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog fd = new OpenFileDialog())
@@ -3928,7 +4106,7 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        public void loadAndAppendToolStripMenuItem_Click(object sender, EventArgs e)
+        public void LoadAndAppendToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog fd = new OpenFileDialog())
             {
@@ -4064,7 +4242,7 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        public void loadKMLFileToolStripMenuItem_Click(object sender, EventArgs e)
+        public void LoadKMLFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog fd = new OpenFileDialog())
             {
@@ -4122,7 +4300,7 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        public void loadPolygonToolStripMenuItem_Click(object sender, EventArgs e)
+        public void FromPolygonToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog fd = new OpenFileDialog())
             {
@@ -4312,7 +4490,7 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        public void loadSHPFileToolStripMenuItem_Click(object sender, EventArgs e)
+        public void LoadSHPFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog fd = new OpenFileDialog())
             {
@@ -4332,7 +4510,7 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        public void loadWPFileToolStripMenuItem_Click(object sender, EventArgs e)
+        public void LoadWPFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BUT_loadwpfile_Click(null, null);
         }
@@ -4475,7 +4653,11 @@ namespace MissionPlanner.GCSViews
 
             e.Graphics.ResetTransform();
 
-            zoomicon.Location = new Point(10, polyicon.Location.Y + polyicon.Height + 5);
+            WPicon.Location = new Point(10, polyicon.Location.Y + polyicon.Height + 5);
+            WPicon.Paint(e.Graphics);
+
+            e.Graphics.ResetTransform();
+            zoomicon.Location = new Point(10, WPicon.Location.Y + WPicon.Height + 5);
             zoomicon.Paint(e.Graphics);
 
             e.Graphics.ResetTransform();
@@ -5049,7 +5231,7 @@ namespace MissionPlanner.GCSViews
             writeKML();
         }
 
-        public void savePolygonToolStripMenuItem_Click(object sender, EventArgs e)
+        public void SavePolygonToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (drawnpolygon.Points.Count == 0)
             {
@@ -5315,7 +5497,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         }
                         sw.Close();
 
-                        lbl_wpfile.Text = "Saved " + Path.GetFileName(file);
+                        //lbl_wpfile.Text = "Saved " + Path.GetFileName(file);
                     }
                     catch (Exception)
                     {
@@ -5325,7 +5507,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
-        public void saveWPFileToolStripMenuItem_Click(object sender, EventArgs e)
+        public void SaveWPFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFile_Click(null, null);
         }
@@ -5815,23 +5997,23 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
         public void switchDockingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (panelAction.Dock == DockStyle.Bottom)
-            {
-                panelAction.Dock = DockStyle.Right;
+            //if (panelAction.Dock == DockStyle.Bottom)
+            //{
+            //    panelAction.Dock = DockStyle.Right;
                 panelWaypoints.Dock = DockStyle.Bottom;
-            }
-            else
-            {
-                panelAction.Dock = DockStyle.Bottom;
-                panelAction.Height = 120;
+            //}
+            //else
+            //{
+            //panelAction.Dock = DockStyle.Bottom;
+            //panelAction.Height = 120;
                 panelWaypoints.Dock = DockStyle.Right;
                 panelWaypoints.Width = Width / 2;
-            }
+            //}
 
-            Settings.Instance["FP_docking"] = panelAction.Dock.ToString();
+            //Settings.Instance["FP_docking"] = panelAction.Dock.ToString();
         }
 
-        public void takeoffToolStripMenuItem_Click(object sender, EventArgs e)
+    public void takeoffToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // altitude
             string alt = "10";
@@ -6344,7 +6526,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         private void groupmarkeradd(GMapMarker marker)
         {
             System.Diagnostics.Debug.WriteLine("add marker " + marker.Tag.ToString());
-            groupmarkers.Add(int.Parse(marker.Tag.ToString()));
+            wpMarkersGroup.Add(int.Parse(marker.Tag.ToString()));
             if (marker is GMapMarkerWP)
             {
                 ((GMapMarkerWP)marker).selected = true;
@@ -6352,6 +6534,512 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             if (marker is GMapMarkerRect)
             {
                 ((GMapMarkerWP)((GMapMarkerRect)marker).InnerMarker).selected = true;
+            }
+        }
+
+        private void wpMarkersGroupAdd(GMapMarker marker)
+        {
+
+            if (marker is GMapMarkerWP)
+            {
+                System.Diagnostics.Debug.WriteLine("add marker " + marker.Tag.ToString());
+                if (int.TryParse(((GMapMarkerWP)marker).Tag.ToString(), out int no))
+                {
+                    wpMarkersGroup.Add(int.Parse(marker.Tag.ToString()));
+                    ((GMapMarkerWP)marker).selected = true;
+                }
+            }
+            if (marker is GMapMarkerRect)
+            {
+                System.Diagnostics.Debug.WriteLine("add marker " + ((GMapMarkerWP)((GMapMarkerRect)marker).InnerMarker).Tag.ToString());
+                if (int.TryParse(((GMapMarkerWP)((GMapMarkerRect)marker).InnerMarker).Tag.ToString(), out int no))
+                {
+                    wpMarkersGroup.Add(no);
+                    ((GMapMarkerWP)((GMapMarkerRect)marker).InnerMarker).selected = true;
+                }
+            }
+        }
+
+        private void polygonMarkersGroupAdd(GMapMarker marker)
+        {
+            if (marker is GMapMarkerPolygon)
+            {
+                System.Diagnostics.Debug.WriteLine("add marker " + marker.Tag.ToString());
+                if (int.TryParse(marker.Tag.ToString().Replace("grid", ""), out int no))
+                {
+                    polygonMarkersGroup.Add(no);
+                    ((GMapMarkerPolygon)marker).selected = true;
+                }
+            }
+            if (marker is GMapMarkerRect)
+            {
+                if (int.TryParse(((GMapMarkerRect)marker).InnerMarker.Tag.ToString().Replace("grid", ""), out int no))
+                {
+                    polygonMarkersGroup.Add(no);
+                    ((GMapMarkerPolygon)((GMapMarkerRect)marker).InnerMarker).selected = true;
+                }
+            }
+
+        }
+
+        private void wpMarkersGroupAddAll()
+        {
+            foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
+            {
+                try
+                {
+                    if (marker.Tag != null)
+                    {
+                        wpMarkersGroupAdd(marker);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
+            }
+            writeKML();
+        }
+
+        private void polygonMarkersGroupAddAll()
+        {
+            foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
+            {
+                try
+                {
+                    if (marker.Tag != null)
+                    {
+                        polygonMarkersGroupAdd(marker);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
+            }
+            redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+        }
+
+        private void wpMarkersGroupClear()
+        {
+            if (wpMarkersGroup.Count > 0)
+            {
+                wpMarkersGroup.Clear();
+                writeKML();
+            }
+        }
+
+        private void polygonMarkersGroupClear()
+        {
+            if (polygonMarkersGroup.Count > 0)
+            {
+                polygonMarkersGroup.Clear();
+                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+            }
+        }
+
+        private void wpMarkersGroupFirst()
+        {
+            foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
+            {
+                try
+                {
+                    if (marker.Tag != null && int.TryParse(marker.Tag.ToString(), out int no))
+                    {
+                        wpMarkersGroup.Clear();
+                        wpMarkersGroup.Add(no);
+                        writeKML();
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
+            }
+        }
+
+
+        private void polygonMarkersGroupFirst()
+        {
+            foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
+            {
+                try
+                {
+                    if (marker.Tag != null && int.TryParse(marker.Tag.ToString().Replace("grid", ""), out int no))
+                    {
+                        polygonMarkersGroup.Clear();
+                        polygonMarkersGroup.Add(no);
+                        redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
+            }
+        }
+
+        private void wpMarkersGroupNext()
+        {
+            if (wpMarkersGroup.Count > 0)
+            {
+                int next = (wpMarkersGroup.Max() + 1);
+                bool isEqual = false;
+                foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
+                {
+                    try
+                    {
+                        if (marker.Tag != null && int.TryParse(marker.Tag.ToString(), out int no))
+                        {
+                            if (no == next)
+                            {
+                                isEqual = true;
+                                break;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                    }
+                }
+                wpMarkersGroup.Clear();
+                if (isEqual)
+                    wpMarkersGroup.Add(next);
+                else
+                    wpMarkersGroup.Add(1);
+
+                writeKML();
+            }
+        }
+
+        private void wpMarkersGroupPrev()
+        {
+            if (wpMarkersGroup.Count > 0)
+            {
+                int prev = (wpMarkersGroup.Min() - 1);
+                wpMarkersGroup.Clear();
+                if (prev > 0)
+                    wpMarkersGroup.Add(prev);
+                else
+                {
+                    int maxIndex = 0;
+                    foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
+                    {
+                        try
+                        {
+                            if (marker.Tag != null && int.TryParse(marker.Tag.ToString(), out int no))
+                            {
+                                if (no > maxIndex)
+                                {
+                                    maxIndex = no;
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            log.Error(ex);
+                        }
+                    }
+                    wpMarkersGroup.Add(maxIndex);
+                }
+                writeKML();
+            }
+        }
+
+
+        private void polygonMarkersGroupNext()
+        {
+            if (polygonMarkersGroup.Count > 0)
+            {
+                int next = (polygonMarkersGroup.Max() + 1);
+                bool isEqual = false;
+                foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
+                {
+                    try
+                    {
+                        if (marker.Tag != null && int.TryParse(marker.Tag.ToString().Replace("grid", ""), out int no))
+                        {
+                            if (no == next)
+                            {
+                                isEqual = true;
+                                break;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                    }
+                }
+                polygonMarkersGroup.Clear();
+                if (isEqual)
+                    polygonMarkersGroup.Add(next);
+                else
+                    polygonMarkersGroup.Add(1);
+
+                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+            }
+        }
+
+        private void polygonMarkersGroupPrev()
+        {
+            if (polygonMarkersGroup.Count > 0)
+            {
+                int prev = (polygonMarkersGroup.Min() - 1);
+                polygonMarkersGroup.Clear();
+                if (prev > 0)
+                    polygonMarkersGroup.Add(prev);
+                else
+                {
+                    int maxIndex = 0;
+                    foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
+                    {
+                        try
+                        {
+                            if (marker.Tag != null && int.TryParse(marker.Tag.ToString().Replace("grid", ""), out int no))
+                            {
+                                if (no > maxIndex)
+                                {
+                                    maxIndex = no;
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            log.Error(ex);
+                        }
+                    }
+                    polygonMarkersGroup.Add(maxIndex);
+                }
+                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+            }
+        }
+
+        private void polygonMarkersGroupMoveUp()
+        {
+            if (polygonMarkersGroup.Count > 0)
+            {
+                foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
+                {
+                    try
+                    {
+                        if (marker.Tag != null && int.TryParse(marker.Tag.ToString().Replace("grid", ""), out int no))
+                        {
+                            if (polygonMarkersGroup.Contains(no))
+                            {
+                                GPoint point = MainMap.FromLatLngToLocal(drawnpolygon.Points[no - 1]);
+                                drawnpolygon.Points[no - 1] =
+                                    MainMap.FromLocalToLatLng((int)point.X, (int)point.Y - 1);
+
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                    }
+                }
+                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+            }
+        }
+
+        private void polygonMarkersGroupMoveDown()
+        {
+            if (polygonMarkersGroup.Count > 0)
+            {
+                foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
+                {
+                    try
+                    {
+                        if (marker.Tag != null && int.TryParse(marker.Tag.ToString().Replace("grid", ""), out int no))
+                        {
+                            if (polygonMarkersGroup.Contains(no))
+                            {
+                                GPoint point = MainMap.FromLatLngToLocal(drawnpolygon.Points[no - 1]);
+                                drawnpolygon.Points[no - 1] =
+                                    MainMap.FromLocalToLatLng((int)point.X, (int)point.Y + 1);
+
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                    }
+                }
+                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+            }
+        }
+
+        private void polygonMarkersGroupMoveLeft()
+        {
+            if (polygonMarkersGroup.Count > 0)
+            {
+                foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
+                {
+                    try
+                    {
+                        if (marker.Tag != null && int.TryParse(marker.Tag.ToString().Replace("grid", ""), out int no))
+                        {
+                            if (polygonMarkersGroup.Contains(no))
+                            {
+                                GPoint point = MainMap.FromLatLngToLocal(drawnpolygon.Points[no - 1]);
+                                drawnpolygon.Points[no - 1] =
+                                    MainMap.FromLocalToLatLng((int)point.X - 1, (int)point.Y);
+
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                    }
+                }
+                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+            }
+        }
+
+        private void polygonMarkersGroupMoveRight()
+        {
+            if (polygonMarkersGroup.Count > 0)
+            {
+                foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
+                {
+                    try
+                    {
+                        if (marker.Tag != null && int.TryParse(marker.Tag.ToString().Replace("grid", ""), out int no))
+                        {
+                            if (polygonMarkersGroup.Contains(no))
+                            {
+                                GPoint point = MainMap.FromLatLngToLocal(drawnpolygon.Points[no - 1]);
+                                drawnpolygon.Points[no - 1] =
+                                    MainMap.FromLocalToLatLng((int)point.X + 1, (int)point.Y);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                    }
+                }
+                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+            }
+        }
+
+
+        private void wpMarkersGroupMoveUp()
+        {
+            if (wpMarkersGroup.Count > 0)
+            {
+                foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
+                {
+                    try
+                    {
+                        if (marker.Tag != null && int.TryParse(marker.Tag.ToString(), out int no))
+                        {
+                            if (wpMarkersGroup.Contains(no))
+                            {
+                                GPoint point = MainMap.FromLatLngToLocal(marker.Position);
+                                marker.Position =
+                                    MainMap.FromLocalToLatLng((int)point.X, (int)point.Y - 1);
+                                CallMeDrag(no.ToString(), marker.Position.Lat, marker.Position.Lng, System.Convert.ToInt32(Commands.Rows[no - 1].Cells[Alt.Index].Value.ToString()));
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                    }
+                }
+                writeKML();
+            }
+        }
+
+        private void wpMarkersGroupMoveDown()
+        {
+            if (wpMarkersGroup.Count > 0)
+            {
+                foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
+                {
+                    try
+                    {
+                        if (marker.Tag != null && int.TryParse(marker.Tag.ToString(), out int no))
+                        {
+                            if (wpMarkersGroup.Contains(no))
+                            {
+                                GPoint point = MainMap.FromLatLngToLocal(marker.Position);
+                                marker.Position =
+                                    MainMap.FromLocalToLatLng((int)point.X, (int)point.Y + 1);
+                                CallMeDrag(no.ToString(), marker.Position.Lat, marker.Position.Lng, System.Convert.ToInt32(Commands.Rows[no - 1].Cells[Alt.Index].Value.ToString()));
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                    }
+                }
+                writeKML();
+            }
+        }
+
+        private void wpMarkersGroupMoveLeft()
+        {
+            if (wpMarkersGroup.Count > 0)
+            {
+                foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
+                {
+                    try
+                    {
+                        if (marker.Tag != null && int.TryParse(marker.Tag.ToString(), out int no))
+                        {
+
+                            if (wpMarkersGroup.Contains(no))
+                            {
+                                GPoint point = MainMap.FromLatLngToLocal(marker.Position);
+                                marker.Position =
+                                    MainMap.FromLocalToLatLng((int)point.X - 1, (int)point.Y);
+                                CallMeDrag(no.ToString(), marker.Position.Lat, marker.Position.Lng, System.Convert.ToInt32(Commands.Rows[no - 1].Cells[Alt.Index].Value.ToString()));
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                    }
+                }
+                writeKML();
+            }
+        }
+
+        private void wpMarkersGroupMoveRight()
+        {
+            if (wpMarkersGroup.Count > 0)
+            {
+                foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
+                {
+                    try
+                    {
+                        if (marker.Tag != null && int.TryParse(marker.Tag.ToString(), out int no))
+                        {
+                            if (wpMarkersGroup.Contains(no))
+                            {
+                                GPoint point = MainMap.FromLatLngToLocal(marker.Position);
+                                marker.Position =
+                                    MainMap.FromLocalToLatLng((int)point.X + 1, (int)point.Y);
+                                CallMeDrag(no.ToString(), marker.Position.Lat, marker.Position.Lng, System.Convert.ToInt32(Commands.Rows[no - 1].Cells[Alt.Index].Value.ToString()));
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                    }
+                }
+                writeKML();
             }
         }
 
@@ -6364,7 +7052,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
             //   Console.WriteLine("MainMap MD");
 
-            if (e.Button == MouseButtons.Left && (groupmarkers.Count > 0 || Control.ModifierKeys == Keys.Control))
+            if (e.Button == MouseButtons.Left && (wpMarkersGroup.Count > 0 || Control.ModifierKeys == Keys.Control))
             {
                 // group move
                 isMouseDown = true;
@@ -6417,7 +7105,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                     CurrentRallyPt.Position = pnew;
                 }
-                else if (groupmarkers.Count > 0)
+                else if (wpMarkersGroup.Count > 0)
                 {
                     // group drag
 
@@ -6430,7 +7118,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                     Hashtable seen = new Hashtable();
 
-                    foreach (var markerid in groupmarkers)
+                    foreach (var markerid in wpMarkersGroup)
                     {
                         if (seen.ContainsKey(markerid))
                             continue;
@@ -6565,21 +7253,70 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             {
                 if (e.Button == MouseButtons.Right)
                 {
-                    polyicon.IsSelected = false;
-                    clearPolygonToolStripMenuItem_Click(this, null);
+                    //contextMenuStripMain.Visible = false;
+                    //ClearPolygonToolStripMenuItem_Click(this, null);
 
-                    contextMenuStrip1.Visible = false;
-
-                    return;
                 }
+                else if (e.Button == MouseButtons.Left)
+                {
+                    polyicon.IsSelected = !polyicon.IsSelected;
 
-                contextMenuStripPoly.Show(MainMap, e.Location);
+                }
+                IsDrawPolygongridMode = polyicon.IsSelected ? true : false;
+
+                //contextMenuStripPoly.Show(MainMap, e.Location);
                 return;
             }
+            if (WPicon.Rectangle.Contains(e.Location))
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    contextMenuStripMain.Visible = false;
+                    ClearMissionToolStripMenuItem_Click(this, null);
 
+                }
+                else if (e.Button == MouseButtons.Left)
+                {
+                    surveyGridToolStripMenuItem_Click(this, null);
+                }
+                return;
+            }
             if (zoomicon.Rectangle.Contains(e.Location))
             {
-                contextMenuStripZoom.Show(MainMap, e.Location);
+                //contextMenuStripZoom.Show(MainMap, e.Location);
+                if (layerPolygonsOverlay.Polygons.Count > 0)
+                    zoomicon.IsSelected = true;
+                else
+                    zoomicon.IsSelected = false;
+                if (e.Button == MouseButtons.Left)
+                {
+                    if (zoomicon.IsSelected)
+                    {
+                        zoomToTiffToolStripMenuItem_Click(this, null);
+                    }
+                    else
+                    {
+                        contextMenuStripMain.Visible = false;
+                        TiffOverlayToolStripMenuItem_Click(this, null);
+                    }
+                    if (layerPolygonsOverlay.Polygons.Count > 0)
+                        zoomicon.IsSelected = true;
+                    else
+                        zoomicon.IsSelected = false;
+                    return;
+
+                }
+                else if (e.Button == MouseButtons.Right)
+                {
+                    contextMenuStripMain.Visible = false;
+                    contextMenuStripTiff.Show(MainMap, e.Location);
+                    return;
+                }
+                //else if(e.Button == MouseButtons.Middle)
+                //{
+                //    MissionPlanner.Controls.test dlg = new MissionPlanner.Controls.test();
+                //    dlg.ShowDialog();
+                //}
                 return;
             }
 
@@ -6698,13 +7435,13 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 }
                 else
                 {
-                    if (groupmarkers.Count > 0)
+                    if (wpMarkersGroup.Count > 0)
                     {
                         Dictionary<string, PointLatLng> dest = new Dictionary<string, PointLatLng>();
 
                         var markers = MainMap.Overlays.First(a => a.Id == "WPOverlay");
 
-                        foreach (var markerid in groupmarkers.Distinct())
+                        foreach (var markerid in wpMarkersGroup.Distinct())
                         {
                             for (int a = 0; a < markers.Markers.Count; a++)
                             {
@@ -6722,12 +7459,12 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         {
                             var value = item.Value;
                             quickadd = true;
-                            callMeDrag(item.Key, value.Lat, value.Lng, -1);
+                            CallMeDrag(item.Key, value.Lat, value.Lng, -1);
                             quickadd = false;
                         }
 
                         MainMap.SelectedArea = RectLatLng.Empty;
-                        groupmarkers.Clear();
+                        wpMarkersGroup.Clear();
                         // redraw to remove selection
                         writeKML();
 
@@ -6753,7 +7490,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         }
                         else
                         {
-                            callMeDrag(CurentRectMarker.InnerMarker.Tag.ToString(), currentMarker.Position.Lat,
+                            CallMeDrag(CurentRectMarker.InnerMarker.Tag.ToString(), currentMarker.Position.Lat,
                                 currentMarker.Position.Lng, -2);
                         }
                         CurentRectMarker = null;
@@ -7317,5 +8054,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
             MainMap.SetZoomToFitRect(MainV2.instance.diisplayRect);
         }
+
     }
 }

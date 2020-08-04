@@ -47,11 +47,15 @@ namespace MissionPlanner
             this.MenuFlightPlannerClose = new System.Windows.Forms.ToolStripButton();
             this.Separator1 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuLoadLayer = new MissionPlanner.Controls.HLToolStripButton();
+            this.MenuZoomToLayer = new MissionPlanner.Controls.HLToolStripButton();
+            this.MenuLayerManager = new MissionPlanner.Controls.HLToolStripButton();
             this.Separator2 = new System.Windows.Forms.ToolStripSeparator();
             this.Separator3 = new System.Windows.Forms.ToolStripSeparator();
             this.Separator4 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuConnect = new System.Windows.Forms.ToolStripButton();
             this.toolStripConnectionControl = new MissionPlanner.Controls.ToolStripConnectionControl();
+            this.MenuDrawPolygon = new MissionPlanner.Controls.HLToolStripButton();
+            this.MenuClearPolygon = new MissionPlanner.Controls.HLToolStripButton();
             this.MenuInitConfig = new System.Windows.Forms.ToolStripButton();
             this.MenuConfigTune = new System.Windows.Forms.ToolStripButton();
             this.MenuSimulation = new System.Windows.Forms.ToolStripButton();
@@ -76,6 +80,8 @@ namespace MissionPlanner
             this.MenuFlightPlannerClose,
             this.Separator1,
             this.MenuLoadLayer,
+            this.MenuZoomToLayer,
+            this.MenuLayerManager,
             this.Separator2,
             this.Separator3,
             this.Separator4,
@@ -166,6 +172,33 @@ namespace MissionPlanner
             this.MenuLoadLayer.TopTransparent = 8;
             this.MenuLoadLayer.Click += new System.EventHandler(this.MenuLoadLayer_Click);
             // 
+            // MenuZoomToLayer
+            // 
+            this.MenuZoomToLayer.BottomTransparent = 4;
+            this.MenuZoomToLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MenuZoomToLayer.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuZoomToLayer.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            resources.ApplyResources(this.MenuZoomToLayer, "MenuZoomToLayer");
+            this.MenuZoomToLayer.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuZoomToLayer.MyChecked = false;
+            this.MenuZoomToLayer.Name = "MenuZoomToLayer";
+            this.MenuZoomToLayer.TopTransparent = 8;
+            this.MenuZoomToLayer.Click += new System.EventHandler(this.MenuZoomToLayer_Click);
+            // 
+            // MenuLayerManager
+            // 
+            this.MenuLayerManager.BottomTransparent = 4;
+            this.MenuLayerManager.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MenuLayerManager.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuLayerManager.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.MenuLayerManager.Image = global::MissionPlanner.Properties.Resources._default;
+            this.MenuLayerManager.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuLayerManager.MyChecked = false;
+            this.MenuLayerManager.Name = "MenuLayerManager";
+            resources.ApplyResources(this.MenuLayerManager, "MenuLayerManager");
+            this.MenuLayerManager.TopTransparent = 8;
+            this.MenuLayerManager.Click += new System.EventHandler(this.MenuLayerManager_Click);
+            // 
             // Separator2
             // 
             this.Separator2.Name = "Separator2";
@@ -199,6 +232,32 @@ namespace MissionPlanner
             this.toolStripConnectionControl.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripConnectionControl.Name = "toolStripConnectionControl";
             this.toolStripConnectionControl.MouseLeave += new System.EventHandler(this.MainMenu_MouseLeave);
+            // 
+            // MenuDrawPolygon
+            // 
+            this.MenuDrawPolygon.BottomTransparent = 4;
+            this.MenuDrawPolygon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MenuDrawPolygon.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuDrawPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.MenuDrawPolygon.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuDrawPolygon.MyChecked = false;
+            this.MenuDrawPolygon.Name = "MenuDrawPolygon";
+            resources.ApplyResources(this.MenuDrawPolygon, "MenuDrawPolygon");
+            this.MenuDrawPolygon.TopTransparent = 8;
+            this.MenuDrawPolygon.Click += new System.EventHandler(this.MenuDrawPolygon_Click);
+            // 
+            // MenuClearPolygon
+            // 
+            this.MenuClearPolygon.BottomTransparent = 4;
+            this.MenuClearPolygon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MenuClearPolygon.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuClearPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.MenuClearPolygon.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuClearPolygon.MyChecked = false;
+            this.MenuClearPolygon.Name = "MenuClearPolygon";
+            resources.ApplyResources(this.MenuClearPolygon, "MenuClearPolygon");
+            this.MenuClearPolygon.TopTransparent = 8;
+            this.MenuClearPolygon.Click += new System.EventHandler(this.MenuClearPolygon_Click);
             // 
             // MenuInitConfig
             // 
@@ -296,6 +355,10 @@ namespace MissionPlanner
         public System.Windows.Forms.ToolStripButton MenuFlightPlannerClose;
 
         public Controls.HLToolStripButton MenuLoadLayer;
+        public Controls.HLToolStripButton MenuZoomToLayer;
+        public Controls.HLToolStripButton MenuLayerManager;
+        public Controls.HLToolStripButton MenuDrawPolygon;
+        public Controls.HLToolStripButton MenuClearPolygon;
 
         public System.Windows.Forms.ToolStripButton MenuInitConfig;
         public System.Windows.Forms.ToolStripButton MenuSimulation;
