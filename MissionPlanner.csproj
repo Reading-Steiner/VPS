@@ -868,6 +868,8 @@
     <EmbeddedResource Include="GCSViews\ConfigurationView\ConfigUserDefined.resx">
       <DependentUpon>ConfigUserDefined.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Grid\GridUI.zh-CHT.resx" />
+    <EmbeddedResource Include="Grid\GridUI.zh-Hans.resx" />
     <EmbeddedResource Include="Joystick\JoystickAxis.resx" />
     <EmbeddedResource Include="Log\LogStrings.resx">
       <DependentUpon>LogStrings.cs</DependentUpon>

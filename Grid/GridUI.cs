@@ -131,6 +131,7 @@ namespace MissionPlanner.Grid
             xmlcamera(false, Settings.GetUserDataDirectory() + "cameras.xml");
 
             loading = false;
+            Hide.Parent = null;
         }
 
         private void GridUI_Load(object sender, EventArgs e)
@@ -1357,15 +1358,15 @@ namespace MissionPlanner.Grid
         {
             if (CHK_advanced.Checked)
             {
-                if (!tabControl1.TabPages.Contains(tabGrid))
-                    tabControl1.TabPages.Add(tabGrid);
-                if (!tabControl1.TabPages.Contains(tabCamera))
-                    tabControl1.TabPages.Add(tabCamera);
+                if (!tabControl.TabPages.Contains(tabGrid))
+                    tabControl.TabPages.Add(tabGrid);
+                if (!tabControl.TabPages.Contains(tabCamera))
+                    tabControl.TabPages.Add(tabCamera);
             }
             else
             {
-                tabControl1.TabPages.Remove(tabGrid);
-                tabControl1.TabPages.Remove(tabCamera);
+                tabControl.TabPages.Remove(tabGrid);
+                tabControl.TabPages.Remove(tabCamera);
             }
         }
 
