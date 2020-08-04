@@ -2837,7 +2837,7 @@ namespace MissionPlanner.GCSViews
 
                         //aviwriter.avi_start("test.avi");
                         // add a frame
-                        aviwriter.avi_add(hud1.streamjpg.GetBuffer(), (uint) hud1.streamjpg.Length);
+                        aviwriter.avi_add(hud1.streamjpg.GetBuffer(), (uint)hud1.streamjpg.Length);
                         // write header - so even partial files will play
                         aviwriter.avi_end(hud1.Width, hud1.Height, 25);
                     }
@@ -2890,13 +2890,25 @@ namespace MissionPlanner.GCSViews
                     {
                         if (!MainV2.comPort.giveComport)
                             await MainV2.comPort.readPacketAsync().ConfigureAwait(false);
+
+                        // update currentstate of sysids on the port
+                        foreach (var MAV in MainV2.comPort.MAVlist)
+                        {
+                            try
+                            {
+                                MAV.cs.UpdateCurrentSettings(null, false, MainV2.comPort, MAV);
+                            }
+                            catch (Exception ex)
+                            {
+                                log.Error(ex);
+                            }
+                        }
                     }
                     catch
                     {
                         log.Error("Failed to read log packet");
                     }
 
-                    // time between packets
                     double act = (MainV2.comPort.lastlogread - logplayback).TotalMilliseconds;
 
                     if (act > 9999 || act < 0)
@@ -2938,20 +2950,7 @@ namespace MissionPlanner.GCSViews
                     tsreal = DateTime.Now;
 
                     if (ts > 0 && ts < 1000)
-                        Thread.Sleep((int) ts);
-
-                    // update currentstate of sysids on the port
-                    foreach (var MAV in MainV2.comPort.MAVlist)
-                    {
-                        try
-                        {
-                            MAV.cs.UpdateCurrentSettings(null, false, MainV2.comPort, MAV);
-                        }
-                        catch (Exception ex)
-                        {
-                            log.Error(ex);
-                        }
-                    }
+                        Thread.Sleep((int)ts);
 
                     tracklast = tracklast.AddMilliseconds(ts - act);
                     tunning = tunning.AddMilliseconds(ts - act);
@@ -3034,7 +3033,7 @@ namespace MissionPlanner.GCSViews
                         OpenGLtest2.instance.LocationCenter = new PointLatLngAlt(MainV2.comPort.MAV.cs.lat,
                             MainV2.comPort.MAV.cs.lng, MainV2.comPort.MAV.cs.altasl / CurrentState.multiplieralt,
                             "here");
-                        OpenGLtest2.instance.WPs = MainV2.comPort.MAV.wps.Values.Select(a => (Locationwp) a).ToList();
+                        OpenGLtest2.instance.WPs = MainV2.comPort.MAV.wps.Values.Select(a => (Locationwp)a).ToList();
                     }
 
                     // update vario info
@@ -3066,15 +3065,13 @@ namespace MissionPlanner.GCSViews
                             list10.Add(time, (list10item.GetValue(MainV2.comPort.MAV.cs, null).ConvertToDouble()));
                     }
 
-                    // update map - 0.3sec if connected , 2 sec if not connected
-                    if (((MainV2.comPort.BaseStream.IsOpen || MainV2.comPort.logreadmode) && 
-                         tracklast.AddSeconds(Settings.Instance.GetDouble("FD_MapUpdateDelay", 0.3)) < DateTime.Now) ||
-                        tracklast.AddSeconds(2) < DateTime.Now)
+                    // update map
+                    if (tracklast.AddSeconds(Settings.Instance.GetDouble("FD_MapUpdateDelay", 0.3)) < DateTime.Now)
                     {
                         // show disable joystick button
                         if (MainV2.joystick != null && MainV2.joystick.enabled)
                         {
-                            this.BeginInvoke((MethodInvoker) delegate { but_disablejoystick.Visible = true; });
+                            this.BeginInvoke((MethodInvoker)delegate { but_disablejoystick.Visible = true; });
                         }
 
                         adsb.CurrentPosition = MainV2.comPort.MAV.cs.HomeLocation;
@@ -3137,22 +3134,20 @@ namespace MissionPlanner.GCSViews
 
                                 {
                                     List<Locationwp> mission_items;
-                                    mission_items = MainV2.comPort.MAV.wps.Values.Select(a => (Locationwp) a).ToList();
+                                    mission_items = MainV2.comPort.MAV.wps.Values.Select(a => (Locationwp)a).ToList();
                                     mission_items.RemoveAt(0);
 
                                     if (wps.Count == 1)
                                     {
                                         overlay.CreateOverlay(homeplla,
                                             mission_items,
-                                            0 / CurrentState.multiplieralt, 0 / CurrentState.multiplieralt,
-                                            CurrentState.multiplieralt);
+                                            0 / CurrentState.multiplieralt, 0 / CurrentState.multiplieralt);
                                     }
                                     else
                                     {
                                         overlay.CreateOverlay(homeplla,
                                             mission_items,
-                                            0 / CurrentState.multiplieralt, 0 / CurrentState.multiplieralt,
-                                            CurrentState.multiplieralt);
+                                            0 / CurrentState.multiplieralt, 0 / CurrentState.multiplieralt);
 
                                     }
                                 }
@@ -3182,7 +3177,7 @@ namespace MissionPlanner.GCSViews
 
                                         var dist = lastplla.GetDistance(plla);
 
-                                        distanceBar1.AddWPDist((float) dist);
+                                        distanceBar1.AddWPDist((float)dist);
 
                                         if (i <= MainV2.comPort.MAV.cs.wpno)
                                         {
@@ -3194,7 +3189,7 @@ namespace MissionPlanner.GCSViews
                                 travdist -= MainV2.comPort.MAV.cs.wp_dist;
 
                                 if (MainV2.comPort.MAV.cs.mode.ToUpper() == "AUTO")
-                                    distanceBar1.traveleddist = (float) travdist;
+                                    distanceBar1.traveleddist = (float)travdist;
                             }
 
                             RegeneratePolygon();
@@ -3214,8 +3209,7 @@ namespace MissionPlanner.GCSViews
                             fenceoverlay.overlay.Id = "fence";
 
                             fenceoverlay.CreateOverlay(PointLatLngAlt.Zero,
-                                MainV2.comPort.MAV.fencepoints.Values.Select(a => (Locationwp) a).ToList(), 0, 0,
-                                CurrentState.multiplieralt);
+                                MainV2.comPort.MAV.fencepoints.Values.Select(a => (Locationwp)a).ToList(), 0, 0);
 
                             var fence = mymap.Overlays.Where(a => a.Id == "fence");
                             if (fence.Count() > 0)
@@ -3263,23 +3257,22 @@ namespace MissionPlanner.GCSViews
                         }
 
                         // add gimbal point center
-
                         try
                         {
                             if (MainV2.comPort.MAV.param.ContainsKey("MNT_STAB_TILT")
                                 && MainV2.comPort.MAV.param.ContainsKey("MNT_STAB_ROLL")
                                 && MainV2.comPort.MAV.param.ContainsKey("MNT_TYPE"))
                             {
-                                float temp1 = (float) MainV2.comPort.MAV.param["MNT_STAB_TILT"];
-                                float temp2 = (float) MainV2.comPort.MAV.param["MNT_STAB_ROLL"];
+                                float temp1 = (float)MainV2.comPort.MAV.param["MNT_STAB_TILT"];
+                                float temp2 = (float)MainV2.comPort.MAV.param["MNT_STAB_ROLL"];
 
-                                float temp3 = (float) MainV2.comPort.MAV.param["MNT_TYPE"];
+                                float temp3 = (float)MainV2.comPort.MAV.param["MNT_TYPE"];
 
                                 if (MainV2.comPort.MAV.param.ContainsKey("MNT_STAB_PAN") &&
                                     // (float)MainV2.comPort.MAV.param["MNT_STAB_PAN"] == 1 &&
-                                    ((float) MainV2.comPort.MAV.param["MNT_STAB_TILT"] == 1 &&
-                                     (float) MainV2.comPort.MAV.param["MNT_STAB_ROLL"] == 0) ||
-                                    (float) MainV2.comPort.MAV.param["MNT_TYPE"] == 4) // storm driver
+                                    ((float)MainV2.comPort.MAV.param["MNT_STAB_TILT"] == 1 &&
+                                     (float)MainV2.comPort.MAV.param["MNT_STAB_ROLL"] == 0) ||
+                                    (float)MainV2.comPort.MAV.param["MNT_TYPE"] == 4) // storm driver
                                 {
                                     var marker = GimbalPoint.ProjectPoint(MainV2.comPort);
 
@@ -3295,14 +3288,7 @@ namespace MissionPlanner.GCSViews
                                     }
                                 }
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            log.Error(ex);
-                        }
 
-                        try
-                        {
 
                             // cleanup old - no markers where added, so remove all old 
                             if (MainV2.comPort.MAV.camerapoints.Count < photosoverlay.Markers.Count)
@@ -3348,19 +3334,19 @@ namespace MissionPlanner.GCSViews
                                 {
                                     if (CameraOverlap)
                                     {
-                                        var marker = ((GMapMarkerPhoto) mark);
+                                        var marker = ((GMapMarkerPhoto)mark);
                                         // abandon roll higher than 25 degrees
                                         if (Math.Abs(marker.Roll) < 25)
                                         {
                                             GMapMarkerOverlapCount.Add(
-                                                ((GMapMarkerPhoto) mark).footprintpoly);
+                                                ((GMapMarkerPhoto)mark).footprintpoly);
                                         }
                                     }
 
                                     if (a < (camcount - 4))
-                                        ((GMapMarkerPhoto) mark).drawfootprint = false;
+                                        ((GMapMarkerPhoto)mark).drawfootprint = false;
                                     else
-                                        ((GMapMarkerPhoto) mark).drawfootprint = true;
+                                        ((GMapMarkerPhoto)mark).drawfootprint = true;
                                 }
 
                                 a++;
@@ -3389,7 +3375,7 @@ namespace MissionPlanner.GCSViews
                         // draw AIS
                         updateMarkersAsNeeded<MAVLink.mavlink_ais_vessel_t, GMapMarkerAISBoat>(AIS.Vessels, adsbais,
                             (item) => { return item.MMSI.ToString(); },
-                            (marker) => { return ((MAVLink.mavlink_ais_vessel_t) marker.Tag).MMSI.ToString(); },
+                            (marker) => { return ((MAVLink.mavlink_ais_vessel_t)marker.Tag).MMSI.ToString(); },
                             (item) =>
                             {
                                 return new GMapMarkerAISBoat(new PointLatLngAlt(item.lat / 1e7, item.lon / 1e7, 0),
@@ -3416,16 +3402,16 @@ namespace MissionPlanner.GCSViews
                             {
                                 if (plla.Raw != null)
                                 {
-                                    var msg = ((MAVLink.mavlink_adsb_vehicle_t) plla.Raw);
+                                    var msg = ((MAVLink.mavlink_adsb_vehicle_t)plla.Raw);
                                     if (msg.emitter_type == 255 &&
                                         Encoding.ASCII.GetString(msg.callsign).Trim('\0') == "OA_DB")
                                     {
                                         // cm
                                         var radius = msg.squawk;
 
-                                        if (((DateTime) plla.Time) > DateTime.Now.AddSeconds(-10))
+                                        if (((DateTime)plla.Time) > DateTime.Now.AddSeconds(-10))
                                             addMissionRouteMarker(new GMapMarkerDistance(plla, radius / 100.0, 0)
-                                                {Pen = new Pen(Color.Red, 3)});
+                                            { Pen = new Pen(Color.Red, 3) });
                                         continue;
                                     }
                                 }
@@ -3436,7 +3422,7 @@ namespace MissionPlanner.GCSViews
                             {
                                 if (a.Raw != null)
                                 {
-                                    var msg = ((MAVLink.mavlink_adsb_vehicle_t) a.Raw);
+                                    var msg = ((MAVLink.mavlink_adsb_vehicle_t)a.Raw);
                                     if (msg.emitter_type == 255 &&
                                         Encoding.ASCII.GetString(msg.callsign).Trim('\0') == "OA_DB")
                                     {
@@ -3450,7 +3436,7 @@ namespace MissionPlanner.GCSViews
                             //draw ADSB
                             updateMarkersAsNeeded<adsb.PointLatLngAltHdg, GMapMarkerADSBPlane>(adsbitems, adsbais,
                                 (plla) => { return plla.Tag; },
-                                (marker) => { return ((adsb.PointLatLngAltHdg) marker?.Tag)?.Tag; },
+                                (marker) => { return ((adsb.PointLatLngAltHdg)marker?.Tag)?.Tag; },
                                 (pllac) =>
                                 {
                                     return new GMapMarkerADSBPlane(pllac, pllac.Heading)
@@ -3466,7 +3452,7 @@ namespace MissionPlanner.GCSViews
                                         return;
 
                                     adsbplane.ToolTipText = "ICAO: " + pllau.Tag + "\n" +
-                                                            "CallSign: " + pllau.CallSign + "\n" +
+                                                            "CallSign: " + pllau.CallSign.ToString() + "\n" +
                                                             "Squawk: " + Convert.ToString(pllau.Squawk) + "\n" +
                                                             "Alt: " + pllau.Alt.ToString("0") + "\n" +
                                                             "Speed: " + pllau.Speed.ToString("0") + "\n" +
@@ -3476,7 +3462,7 @@ namespace MissionPlanner.GCSViews
                                     adsbplane.heading = pllau.Heading;
                                     adsbplane.Tag = pllau;
 
-                                    if (((DateTime) pllau.Time) > DateTime.Now.AddSeconds(-30))
+                                    if (((DateTime)pllau.Time) > DateTime.Now.AddSeconds(-30))
                                     {
                                         adsbplane.IsVisible = true;
 
@@ -3513,7 +3499,7 @@ namespace MissionPlanner.GCSViews
                                 MainV2.comPort.MAV.GuidedMode.x != 0)
                             {
                                 addpolygonmarker("Guided Mode", MainV2.comPort.MAV.GuidedMode.y / 1e7,
-                                    MainV2.comPort.MAV.GuidedMode.x / 1e7, (int) MainV2.comPort.MAV.GuidedMode.z,
+                                    MainV2.comPort.MAV.GuidedMode.x / 1e7, (int)MainV2.comPort.MAV.GuidedMode.z,
                                     Color.Blue,
                                     routes);
                             }

@@ -630,6 +630,12 @@
   <data name="Separator2.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 43</value>
   </data>
+  <data name="MenuDrawPolygon.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 43</value>
+  </data>
+  <data name="MenuClearPolygon.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 43</value>
+  </data>
   <data name="Separator3.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 43</value>
   </data>
@@ -873,12 +879,6 @@
   </data>
   <data name="&gt;&gt;MainMenu.ZOrder" xml:space="preserve">
     <value>1</value>
-  </data>
-  <data name="MenuDrawPolygon.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 23</value>
-  </data>
-  <data name="MenuClearPolygon.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 23</value>
   </data>
   <data name="MenuInitConfig.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1170,7 +1170,7 @@
     <value>status1</value>
   </data>
   <data name="&gt;&gt;status1.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.Status, MissionPlanner, Version=1.3.7521.23388, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.Status, MissionPlanner, Version=1.3.7521.23495, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;status1.Parent" xml:space="preserve">
     <value>panel1</value>
@@ -2931,25 +2931,37 @@
     <value>MenuLoadLayer</value>
   </data>
   <data name="&gt;&gt;MenuLoadLayer.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23388, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23495, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuZoomToLayer.Name" xml:space="preserve">
     <value>MenuZoomToLayer</value>
   </data>
   <data name="&gt;&gt;MenuZoomToLayer.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23388, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23495, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuLayerManager.Name" xml:space="preserve">
     <value>MenuLayerManager</value>
   </data>
   <data name="&gt;&gt;MenuLayerManager.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23388, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23495, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;Separator2.Name" xml:space="preserve">
     <value>Separator2</value>
   </data>
   <data name="&gt;&gt;Separator2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MenuDrawPolygon.Name" xml:space="preserve">
+    <value>MenuDrawPolygon</value>
+  </data>
+  <data name="&gt;&gt;MenuDrawPolygon.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23495, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;MenuClearPolygon.Name" xml:space="preserve">
+    <value>MenuClearPolygon</value>
+  </data>
+  <data name="&gt;&gt;MenuClearPolygon.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23495, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;Separator3.Name" xml:space="preserve">
     <value>Separator3</value>
@@ -2973,19 +2985,7 @@
     <value>toolStripConnectionControl</value>
   </data>
   <data name="&gt;&gt;toolStripConnectionControl.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.ToolStripConnectionControl, MissionPlanner, Version=1.3.7521.23388, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;MenuDrawPolygon.Name" xml:space="preserve">
-    <value>MenuDrawPolygon</value>
-  </data>
-  <data name="&gt;&gt;MenuDrawPolygon.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23388, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;MenuClearPolygon.Name" xml:space="preserve">
-    <value>MenuClearPolygon</value>
-  </data>
-  <data name="&gt;&gt;MenuClearPolygon.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23388, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.ToolStripConnectionControl, MissionPlanner, Version=1.3.7521.23495, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuInitConfig.Name" xml:space="preserve">
     <value>MenuInitConfig</value>

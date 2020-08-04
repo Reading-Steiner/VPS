@@ -1019,6 +1019,35 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+        private void Addpolygonmarkergrid(string tag, double lng, double lat, int alt)
+        {
+            try
+            {
+                PointLatLng point = new PointLatLng(lat, lng);
+                GMapMarkerPolygon m = new GMapMarkerPolygon(point);
+                m.ToolTipMode = MarkerTooltipMode.Never;
+                m.ToolTipText = "grid" + tag;
+                m.Tag = "grid" + tag;
+                if (polygonMarkersGroup.Contains(System.Convert.ToInt32(tag)))
+                {
+                    m.selected = true;
+                }
+
+                //MissionPlanner.GMapMarkerRectWPRad mBorders = new MissionPlanner.GMapMarkerRectWPRad(point, (int)float.Parse(TXT_WPRad.Text), MainMap);
+                GMapMarkerRect mBorders = new GMapMarkerRect(point);
+                {
+                    mBorders.InnerMarker = m;
+                }
+
+                drawnpolygonsoverlay.Markers.Add(m);
+                drawnpolygonsoverlay.Markers.Add(mBorders);
+            }
+            catch (Exception ex)
+            {
+                log.Info(ex.ToString());
+            }
+        }
+
         public void redrawPolygonSurvey(List<PointLatLngAlt> list)
         {
             drawnpolygon.Points.Clear();
@@ -1029,12 +1058,13 @@ namespace MissionPlanner.GCSViews
             {
                 tag++;
                 drawnpolygon.Points.Add(x);
-                addpolygonmarkergrid(tag.ToString(), x.Lng, x.Lat, 0);
+                Addpolygonmarkergrid(tag.ToString(), x.Lng, x.Lat, 0);
             });
 
             drawnpolygonsoverlay.Polygons.Add(drawnpolygon);
             MainMap.UpdatePolygonLocalPosition(drawnpolygon);
 
+            if (drawnpolygon.Points.Count > 0)
             {
                 foreach (var pointLatLngAlt in drawnpolygon.Points.CloseLoop().PrevNowNext())
                 {
@@ -1392,9 +1422,33 @@ namespace MissionPlanner.GCSViews
                         overlay.CreateOverlay(home,
                             commandlist,
                             double.Parse(TXT_WPRad.Text) / CurrentState.multiplieralt,
-                            double.Parse(TXT_loiterrad.Text) / CurrentState.multiplieralt, CurrentState.multiplieralt);
+                            double.Parse(TXT_loiterrad.Text) / CurrentState.multiplieralt);
+                        foreach (var marker in overlay.overlay.Markers)
+                        {
+                            try
+                            {
+                                if (marker is GMapMarkerWP)
+                                {
+                                    if (int.TryParse(((GMapMarkerWP)marker).Tag.ToString(), out int no))
+                                    {
+                                        if (wpMarkersGroup.Contains(no))
+                                        {
+                                            ((GMapMarkerWP)marker).selected = true;
+                                        }
+                                    }
+                                }
+                            }
+#pragma warning disable CS0168 // 声明了变量“ex”，但从未使用过
+                            catch (Exception ex)
+#pragma warning restore CS0168 // 声明了变量“ex”，但从未使用过
+                            {
+
+                            }
+                        }
                     }
+#pragma warning disable CS0168 // 声明了变量“ex”，但从未使用过
                     catch (FormatException ex)
+#pragma warning restore CS0168 // 声明了变量“ex”，但从未使用过
                     {
                         CustomMessageBox.Show(Strings.InvalidNumberEntered + "\n" + "WP Radius or Loiter Radius",
                             Strings.ERROR);
@@ -1408,7 +1462,7 @@ namespace MissionPlanner.GCSViews
                         MainMap.Overlays.Remove(b);
                     }
 
-                    MainMap.Overlays.Insert(1, overlay.overlay);
+                    MainMap.Overlays.Add(overlay.overlay);
 
                     overlay.overlay.ForceUpdate();
 
@@ -1424,13 +1478,13 @@ namespace MissionPlanner.GCSViews
 
                     if (overlay.pointlist.Count <= 1)
                     {
-                        RectLatLng? rect = MainMap.GetRectOfAllMarkers(overlay.overlay.Id);
-                        if (rect.HasValue)
-                        {
-                            MainMap.Position = rect.Value.LocationMiddle;
-                        }
+                        //RectLatLng? rect = MainMap.GetRectOfAllMarkers(overlay.overlay.Id);
+                        //if (rect.HasValue)
+                        //{
+                        //    MainMap.Position = rect.Value.LocationMiddle;
+                        //}
 
-                        MainMap_OnMapZoomChanged();
+                        //MainMap_OnMapZoomChanged();
                     }
 
                     pointlist = overlay.pointlist;
@@ -1442,14 +1496,14 @@ namespace MissionPlanner.GCSViews
                             var now = pointLatLngAlt.Item2;
                             var next = pointLatLngAlt.Item3;
 
-                            if(now == null || next == null)
+                            if (now == null || next == null)
                                 continue;
 
                             var mid = new PointLatLngAlt((now.Lat + next.Lat) / 2, (now.Lng + next.Lng) / 2,
                                 (now.Alt + next.Alt) / 2);
 
                             var pnt = new GMapMarkerPlus(mid);
-                            pnt.Tag = new midline() {now = now, next = next};
+                            pnt.Tag = new midline() { now = now, next = next };
                             overlay.overlay.Markers.Add(pnt);
                         }
                     }
@@ -1461,11 +1515,11 @@ namespace MissionPlanner.GCSViews
                         try
                         {
                             fenceoverlay.CreateOverlay(PointLatLngAlt.Zero,
-                            MainV2.comPort.MAV.fencepoints.Values.Select(a => (Locationwp)a).ToList(), 0, 0, CurrentState.multiplieralt);
+                            MainV2.comPort.MAV.fencepoints.Values.Select(a => (Locationwp)a).ToList(), 0, 0);
                         }
                         catch
                         {
-                            
+
                         }
                         fenceoverlay.overlay.Markers.Select(a => a.IsHitTestVisible = false).ToArray();
                         var fence = MainMap.Overlays.Where(a => a.Id == "fence");
@@ -1487,9 +1541,11 @@ namespace MissionPlanner.GCSViews
                     try
                     {
                         overlay.CreateOverlay(PointLatLngAlt.Zero,
-                            commandlist, 0, 0, CurrentState.multiplieralt);
+                            commandlist, 0, 0);
                     }
+#pragma warning disable CS0168 // 声明了变量“ex”，但从未使用过
                     catch (FormatException ex)
+#pragma warning restore CS0168 // 声明了变量“ex”，但从未使用过
                     {
                         CustomMessageBox.Show(Strings.InvalidNumberEntered, Strings.ERROR);
                     }
@@ -1502,11 +1558,12 @@ namespace MissionPlanner.GCSViews
                         MainMap.Overlays.Remove(b);
                     }
 
-                    MainMap.Overlays.Insert(1, overlay.overlay);
+                    MainMap.Overlays.Add(overlay.overlay);
 
                     overlay.overlay.ForceUpdate();
 
-                    if (true) {
+                    if (true)
+                    {
                         foreach (var poly in overlay.overlay.Polygons)
                         {
                             var startwp = int.Parse(poly.Name);
@@ -1517,7 +1574,7 @@ namespace MissionPlanner.GCSViews
                                 var next = pointLatLngAlt.Item3;
 
                                 if (now == null || next == null)
-                                    continue;                              
+                                    continue;
 
                                 var mid = new PointLatLngAlt((now.Lat + next.Lat) / 2, (now.Lng + next.Lng) / 2, 0);
 
@@ -1543,9 +1600,11 @@ namespace MissionPlanner.GCSViews
                     try
                     {
                         overlay.CreateOverlay(PointLatLngAlt.Zero,
-                            commandlist, 0, 0, CurrentState.multiplieralt);
+                            commandlist, 0, 0);
                     }
+#pragma warning disable CS0168 // 声明了变量“ex”，但从未使用过
                     catch (FormatException ex)
+#pragma warning restore CS0168 // 声明了变量“ex”，但从未使用过
                     {
                         CustomMessageBox.Show(Strings.InvalidNumberEntered, Strings.ERROR);
                     }
@@ -1558,7 +1617,7 @@ namespace MissionPlanner.GCSViews
                         MainMap.Overlays.Remove(b);
                     }
 
-                    MainMap.Overlays.Insert(1, overlay.overlay);
+                    MainMap.Overlays.Add(overlay.overlay);
 
                     overlay.overlay.ForceUpdate();
 
@@ -1660,9 +1719,9 @@ namespace MissionPlanner.GCSViews
 
         public void AddPolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (polygongridmode == false)
+            if (!IsDrawPolygongridMode)
             {
-                polygongridmode = true;
+                IsDrawPolygongridMode = true;
                 return;
             }
 
@@ -1679,7 +1738,7 @@ namespace MissionPlanner.GCSViews
             if (drawnpolygon.Points.Count > 1 &&
                 drawnpolygon.Points[0] == drawnpolygon.Points[drawnpolygon.Points.Count - 1])
                 drawnpolygon.Points.RemoveAt(drawnpolygon.Points.Count - 1); // unmake a full loop
-            
+
             drawnpolygon.Points.Add(new PointLatLng(MouseDownStart.Lat, MouseDownStart.Lng));
 
             redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());

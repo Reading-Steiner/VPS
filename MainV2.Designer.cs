@@ -50,12 +50,12 @@ namespace MissionPlanner
             this.MenuZoomToLayer = new MissionPlanner.Controls.HLToolStripButton();
             this.MenuLayerManager = new MissionPlanner.Controls.HLToolStripButton();
             this.Separator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.MenuDrawPolygon = new MissionPlanner.Controls.HLToolStripButton();
+            this.MenuClearPolygon = new MissionPlanner.Controls.HLToolStripButton();
             this.Separator3 = new System.Windows.Forms.ToolStripSeparator();
             this.Separator4 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuConnect = new System.Windows.Forms.ToolStripButton();
             this.toolStripConnectionControl = new MissionPlanner.Controls.ToolStripConnectionControl();
-            this.MenuDrawPolygon = new MissionPlanner.Controls.HLToolStripButton();
-            this.MenuClearPolygon = new MissionPlanner.Controls.HLToolStripButton();
             this.MenuInitConfig = new System.Windows.Forms.ToolStripButton();
             this.MenuConfigTune = new System.Windows.Forms.ToolStripButton();
             this.MenuSimulation = new System.Windows.Forms.ToolStripButton();
@@ -83,6 +83,8 @@ namespace MissionPlanner
             this.MenuZoomToLayer,
             this.MenuLayerManager,
             this.Separator2,
+            this.MenuDrawPolygon,
+            this.MenuClearPolygon,
             this.Separator3,
             this.Separator4,
             this.MenuConnect,
@@ -204,6 +206,34 @@ namespace MissionPlanner
             this.Separator2.Name = "Separator2";
             resources.ApplyResources(this.Separator2, "Separator2");
             // 
+            // MenuDrawPolygon
+            // 
+            this.MenuDrawPolygon.BottomTransparent = 4;
+            this.MenuDrawPolygon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MenuDrawPolygon.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuDrawPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.MenuDrawPolygon.Image = global::MissionPlanner.Properties.Resources._default;
+            this.MenuDrawPolygon.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuDrawPolygon.MyChecked = false;
+            this.MenuDrawPolygon.Name = "MenuDrawPolygon";
+            resources.ApplyResources(this.MenuDrawPolygon, "MenuDrawPolygon");
+            this.MenuDrawPolygon.TopTransparent = 8;
+            this.MenuDrawPolygon.Click += new System.EventHandler(this.MenuDrawPolygon_Click);
+            // 
+            // MenuClearPolygon
+            // 
+            this.MenuClearPolygon.BottomTransparent = 4;
+            this.MenuClearPolygon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MenuClearPolygon.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuClearPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.MenuClearPolygon.Image = global::MissionPlanner.Properties.Resources._default;
+            this.MenuClearPolygon.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuClearPolygon.MyChecked = false;
+            this.MenuClearPolygon.Name = "MenuClearPolygon";
+            resources.ApplyResources(this.MenuClearPolygon, "MenuClearPolygon");
+            this.MenuClearPolygon.TopTransparent = 8;
+            this.MenuClearPolygon.Click += new System.EventHandler(this.MenuClearPolygon_Click);
+            // 
             // Separator3
             // 
             this.Separator3.Name = "Separator3";
@@ -232,32 +262,6 @@ namespace MissionPlanner
             this.toolStripConnectionControl.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripConnectionControl.Name = "toolStripConnectionControl";
             this.toolStripConnectionControl.MouseLeave += new System.EventHandler(this.MainMenu_MouseLeave);
-            // 
-            // MenuDrawPolygon
-            // 
-            this.MenuDrawPolygon.BottomTransparent = 4;
-            this.MenuDrawPolygon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuDrawPolygon.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuDrawPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.MenuDrawPolygon.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuDrawPolygon.MyChecked = false;
-            this.MenuDrawPolygon.Name = "MenuDrawPolygon";
-            resources.ApplyResources(this.MenuDrawPolygon, "MenuDrawPolygon");
-            this.MenuDrawPolygon.TopTransparent = 8;
-            this.MenuDrawPolygon.Click += new System.EventHandler(this.MenuDrawPolygon_Click);
-            // 
-            // MenuClearPolygon
-            // 
-            this.MenuClearPolygon.BottomTransparent = 4;
-            this.MenuClearPolygon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuClearPolygon.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuClearPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.MenuClearPolygon.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuClearPolygon.MyChecked = false;
-            this.MenuClearPolygon.Name = "MenuClearPolygon";
-            resources.ApplyResources(this.MenuClearPolygon, "MenuClearPolygon");
-            this.MenuClearPolygon.TopTransparent = 8;
-            this.MenuClearPolygon.Click += new System.EventHandler(this.MenuClearPolygon_Click);
             // 
             // MenuInitConfig
             // 
