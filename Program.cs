@@ -94,10 +94,6 @@ namespace MissionPlanner
             Console.WriteLine("Debug under mono    MONO_LOG_LEVEL=debug mono MissionPlanner.exe");
             Console.WriteLine("To fix any filename case issues under mono use    export MONO_IOMAP=drive:case");
 
-            Console.WriteLine("Data Dir " + Settings.GetDataDirectory());
-            Console.WriteLine("Log Dir " + Settings.GetDefaultLogDir());
-            Console.WriteLine("Running Dir " + Settings.GetRunningDirectory());
-            Console.WriteLine("User Data Dir " + Settings.GetUserDataDirectory());
 
             var t = Type.GetType("Mono.Runtime");
             MONO = (t != null);
@@ -132,7 +128,7 @@ namespace MissionPlanner
                 return;
             }
 
-            name = "Mission Planner";
+            name = "Visiontek Photogrammetry Simulation System";
 
             try
             {
@@ -196,7 +192,7 @@ namespace MissionPlanner
             string strVersion = File.Exists("version.txt")
                 ? File.ReadAllText("version.txt")
                 : System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Splash.Text = name + " " + Application.ProductVersion + " build " + strVersion;
+            Splash.Text = name + " V" + Application.ProductVersion;
             Splash.Show();
 
             if (Debugger.IsAttached)
