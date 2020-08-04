@@ -38,6 +38,7 @@ namespace MissionPlanner.Grid
 
         GMapOverlay routesOverlay;
         GMapOverlay kmlpolygonsoverlay;
+        GMapOverlay tiffoverlay;
         List<PointLatLngAlt> list = new List<PointLatLngAlt>();
         List<PointLatLngAlt> grid;
         bool loadedfromfile = false;
@@ -74,6 +75,14 @@ namespace MissionPlanner.Grid
             map.MaxZoom = plugin.Host.FDGMapControl.MaxZoom;
             TRK_zoom.Maximum = map.MaxZoom;
 
+            tiffoverlay = new GMapOverlay("layerpolygons");
+            map.Overlays.Add(tiffoverlay);
+            var layer = GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache();
+            if (layer != null)
+            {
+                var layerInfo = (GMap.NET.Internals.LayerInfo)layer;
+                SetLayerOverlay(MainV2.instance.CurrentLayer, layerInfo.Lng, layerInfo.Lat);
+            }
             kmlpolygonsoverlay = new GMapOverlay("kmlpolygons");
             map.Overlays.Add(kmlpolygonsoverlay);
 
@@ -191,6 +200,28 @@ namespace MissionPlanner.Grid
                     }
                 }
             }
+        }
+
+        public bool SetLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap, double lng, double lat)
+        {
+            if (geoBitmap != null)
+            {
+                ShowLayerOverlay(geoBitmap);
+                return true;
+            }
+            else
+                return false;
+        }
+
+        private void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
+        {
+            tiffoverlay.Polygons.Clear();
+            var rect = geoBitmap.Rect;
+            PointLatLngAlt pos1 = new PointLatLngAlt(rect.Top, rect.Left);
+            PointLatLngAlt pos2 = new PointLatLngAlt(rect.Bottom, rect.Right);
+            var mark = new GMapMarkerLayer(pos1, pos2, geoBitmap.Bitmap, geoBitmap.midBitmap, geoBitmap.smallBitmap);
+
+            tiffoverlay.Polygons.Add(mark);
         }
 
         void loadgriddata(GridData griddata)

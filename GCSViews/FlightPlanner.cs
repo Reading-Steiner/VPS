@@ -108,6 +108,8 @@ namespace MissionPlanner.GCSViews
         private bool isMouseClickOffMenu;
         private bool isMouseDown;
         private bool isMouseDraging;
+        private bool isMouseDraggable;
+        private bool isMouseDroppable;
         public GMapOverlay kmlpolygonsoverlay;
 
         /// <summary>
@@ -118,6 +120,8 @@ namespace MissionPlanner.GCSViews
         private DateTime mapupdate = DateTime.MinValue;
         private string mobileGpsLog = string.Empty;
         private PointLatLng MouseDownStart;
+        private GPoint MouseDownStartPoint;
+        private GPoint MouseDownEndPoint;
         private PointLatLngAlt mouseposdisplay = new PointLatLngAlt(0, 0);
         private WPOverlay overlay;
         private MissionPlanner.Controls.Icon.Polygon polyicon = new MissionPlanner.Controls.Icon.Polygon();
@@ -389,7 +393,7 @@ namespace MissionPlanner.GCSViews
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        { 
+        {
             // undo
             if (keyData == (Keys.Control | Keys.Z))
             {
@@ -403,37 +407,194 @@ namespace MissionPlanner.GCSViews
                 return true;
             }
 
-            // open wp file
-            if (keyData == (Keys.Control | Keys.O))
+            if (keyData == (Keys.Delete))
             {
-                LoadWPFileToolStripMenuItem_Click(null, null);
+                DeleteMarkerToolStripMenuItem_Click(null, null);
                 return true;
             }
 
-            // save wp file
-            if (keyData == (Keys.Control | Keys.S))
+            if (keyData == (Keys.Alt | Keys.A))
             {
-                SaveWPFileToolStripMenuItem_Click(null, null);
+                polygonMarkersGroupAddAll();
                 return true;
             }
 
-            if (keyData == (Keys.Control | Keys.M))
+            if (keyData == (Keys.Control | Keys.A))
             {
-                // get the command list from the datagrid
-                var commandlist = GetCommandList();
-                MainV2.comPort.MAV.wps[0] = new Locationwp().Set(MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat,
-                    MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng, MainV2.comPort.MAV.cs.PlannedHomeLocation.Alt, 0);
-                int a = 1;
-                commandlist.ForEach(i =>
+                wpMarkersGroupAddAll();
+                return true;
+            }
+
+            if (keyData == (Keys.Alt | Keys.C))
+            {
+                polygonMarkersGroupClear();
+                return true;
+            }
+
+            if (keyData == (Keys.Control | Keys.C))
+            {
+                wpMarkersGroupClear();
+                return true;
+            }
+
+            if (keyData == (Keys.Control | Keys.F))
+            {
+                wpMarkersGroupFirst();
+                return true;
+            }
+
+            if (keyData == (Keys.Alt | Keys.F))
+            {
+                polygonMarkersGroupFirst();
+                return true;
+            }
+
+            if (keyData == (Keys.Control | Keys.PageUp))
+            {
+                wpMarkersGroupPrev();
+                return true;
+            }
+
+            if (keyData == (Keys.Control | Keys.PageDown))
+            {
+                wpMarkersGroupNext();
+                return true;
+            }
+
+            if (keyData == (Keys.Alt | Keys.PageUp))
+            {
+                polygonMarkersGroupPrev();
+                return true;
+            }
+
+            if (keyData == (Keys.Alt | Keys.PageDown))
+            {
+                polygonMarkersGroupNext();
+                return true;
+            }
+
+            if (keyData == (Keys.PageUp))
+            {
+                wpMarkersGroupPrev();
+                polygonMarkersGroupPrev();
+                return true;
+            }
+
+            if (keyData == (Keys.PageDown))
+            {
+                wpMarkersGroupNext();
+                polygonMarkersGroupNext();
+                return true;
+            }
+
+            if (keyData == (Keys.Alt | Keys.Up) ||
+                keyData == (Keys.Alt | Keys.Down) ||
+                keyData == (Keys.Alt | Keys.Left) ||
+                keyData == (Keys.Alt | Keys.Right))
+            {
+                if (keyData == (Keys.Alt | Keys.Up))
                 {
-                    MAVLink.mavlink_mission_item_int_t item = i;
-                    item.seq = (ushort)a;
-                    MainV2.comPort.MAV.wps[a] = item;
-                    a++;
-                });
+                    polygonMarkersGroupMoveUp();
+                }
 
+                if (keyData == (Keys.Alt | Keys.Down))
+                {
+                    polygonMarkersGroupMoveDown();
+                }
+
+                if (keyData == (Keys.Alt | Keys.Left))
+                {
+                    polygonMarkersGroupMoveLeft();
+                }
+
+                if (keyData == (Keys.Alt | Keys.Right))
+                {
+                    polygonMarkersGroupMoveRight();
+                }
                 return true;
             }
+            if (keyData == (Keys.Control | Keys.Up) ||
+                keyData == (Keys.Control | Keys.Down) ||
+                keyData == (Keys.Control | Keys.Left) ||
+                keyData == (Keys.Control | Keys.Right))
+            {
+                if (keyData == (Keys.Control | Keys.Up))
+                {
+                    wpMarkersGroupMoveUp();
+                }
+
+                if (keyData == (Keys.Control | Keys.Down))
+                {
+                    wpMarkersGroupMoveDown();
+                }
+
+                if (keyData == (Keys.Control | Keys.Left))
+                {
+                    wpMarkersGroupMoveLeft();
+                }
+
+                if (keyData == (Keys.Control | Keys.Right))
+                {
+                    wpMarkersGroupMoveRight();
+                }
+                return true;
+            }
+
+            if (keyData == (Keys.Up) ||
+                keyData == (Keys.Down) ||
+                keyData == (Keys.Left) ||
+                keyData == (Keys.Right))
+            {
+                if (keyData == (Keys.Up))
+                {
+                    wpMarkersGroupMoveUp();
+                    polygonMarkersGroupMoveUp();
+                }
+                if (keyData == (Keys.Down))
+                {
+                    wpMarkersGroupMoveDown();
+                    polygonMarkersGroupMoveDown();
+                }
+                if (keyData == (Keys.Left))
+                {
+                    wpMarkersGroupMoveLeft();
+                    polygonMarkersGroupMoveLeft();
+                }
+
+                if (keyData == (Keys.Right))
+                {
+                    wpMarkersGroupMoveRight();
+                    polygonMarkersGroupMoveRight();
+                }
+                return true;
+            }
+
+            if (keyData == (Keys.Control | Keys.Shift | Keys.A))
+            {
+                return true;
+            }
+
+            if (keyData == (Keys.Alt | Keys.Shift | Keys.A))
+            {
+                return true;
+            }
+            //if (keyData == (Keys.Control | Keys.M))
+            //{
+            //    // get the command list from the datagrid
+            //    var commandlist = GetCommandList();
+            //    MainV2.comPort.MAV.wps[0] = new Locationwp().Set(MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat,
+            //        MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng, MainV2.comPort.MAV.cs.PlannedHomeLocation.Alt, 0);
+            //    int a = 1;
+            //    commandlist.ForEach(i =>
+            //    {
+            //        MAVLink.mavlink_mission_item_int_t item = i;
+            //        item.seq = (ushort)a;
+            //        MainV2.comPort.MAV.wps[a] = item;
+            //        a++;
+            //    });
+
+            //    return true;
+            //}
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
@@ -997,26 +1158,6 @@ namespace MissionPlanner.GCSViews
             FillCommand(this.selectedrow, cmd, p1, p2, p3, p4, x, y, z, tag);
 
             writeKML();
-        }
-
-        public void readQGC110wpfile(string file, bool append = false)
-        {
-
-
-            try
-            {
-                var cmds = WaypointFile.ReadWaypointFile(file);
-
-                processToScreen(cmds, append);
-
-                writeKML();
-
-                MainMap.ZoomAndCenterMarkers("WPOverlay");
-            }
-            catch (Exception ex)
-            {
-                CustomMessageBox.Show("Can't open file! " + ex);
-            }
         }
 
         private void Addpolygonmarkergrid(string tag, double lng, double lat, int alt)
@@ -1746,6 +1887,42 @@ namespace MissionPlanner.GCSViews
             MainMap.Invalidate();
         }
 
+        public void LoadWPFile()
+        {
+            LoadWPFile_Click(this, null);
+        }
+
+        private void LoadWPFile_Click(object sender, EventArgs e)
+        {
+            if (GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache() != null)
+            {
+                loadwaypoints();
+                writeKML();
+            }
+            else
+            {
+                CustomMessageBox.Show("请完善沙盘坐标系信息", Strings.ERROR);
+            }
+        }
+
+        public void SaveWPFile()
+        {
+            SaveWPFile_Click(this, null);
+        }
+
+        private void SaveWPFile_Click(object sender, EventArgs e)
+        {
+            if (GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache() != null)
+            {
+                savewaypoints();
+                writeKML();
+            }
+            else
+            {
+                CustomMessageBox.Show("请完善沙盘坐标系信息", Strings.ERROR);
+            }
+        }
+
         public void areaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             double aream2 = Math.Abs((double)calcpolygonarea(drawnpolygon.Points));
@@ -2032,6 +2209,11 @@ namespace MissionPlanner.GCSViews
         public void CHK_splinedefault_CheckedChanged(object sender, EventArgs e)
         {
             splinemode = CHK_splinedefault.Checked;
+        }
+
+        public void ClearMission()
+        {
+            ClearMissionToolStripMenuItem_Click(this, null);
         }
 
         public void ClearMissionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -5454,6 +5636,302 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
+
+        /// <summary>
+        /// Saves a waypoint writer file
+        /// </summary>
+        private void loadwaypoints()
+        {
+            using (OpenFileDialog fd = new OpenFileDialog())
+            {
+                fd.Filter = "KML|*.kml;|Shapefile|*.shp;|WayPoint|*.waypoints;*.txt";
+                if (Directory.Exists(Settings.Instance["WPFileDirectory"] ?? ""))
+                    fd.InitialDirectory = Settings.Instance["WPFileDirectory"];
+                DialogResult result = fd.ShowDialog();
+                string file = fd.FileName;
+
+                if (File.Exists(file))
+                {
+                    Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
+                    if (file.ToLower().EndsWith(".shp"))
+                    {
+                        try
+                        {
+                            LoadSHPFile(file);
+                        }
+                        catch
+                        {
+                            CustomMessageBox.Show("Error opening File", Strings.ERROR);
+                            return;
+                        }
+                    }
+                    else if (file.ToLower().EndsWith(".kml"))
+                    {
+                        try
+                        {
+                            loadWaypointsKML(file);
+                        }
+                        catch
+                        {
+                            CustomMessageBox.Show("Error opening File", Strings.ERROR);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        string line = "";
+                        using (var fstream = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                        using (var fs = new StreamReader(fstream))
+                        {
+                            line = fs.ReadLine();
+                        }
+
+                        if (line.StartsWith("{"))
+                        {
+                            var format = MissionFile.ReadFile(file);
+
+                            var cmds = MissionFile.ConvertToLocationwps(format);
+
+                            processToScreen(cmds);
+
+                            writeKML();
+
+                            MainMap.ZoomAndCenterMarkers("WPOverlay");
+                        }
+                        else
+                        {
+                            wpfilename = file;
+                            if (line.StartsWith("QGC WPL 111"))
+                                readQGC111wpfile(file);
+                            else if (line.StartsWith("QGC WPL 110"))
+                                readQGC110wpfile(file);
+                        }
+                    }
+
+                    //lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
+                }
+            }
+        }
+
+        private void loadWaypointsKML(string file)
+        {
+            // Create the file and writer.
+            if (!System.IO.File.Exists(file))
+                return;
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(file);
+                XmlNamespaceManager nsMgr = new XmlNamespaceManager(xmlDoc.NameTable);
+                foreach (XmlNode kml in xmlDoc.ChildNodes)
+                {
+                    if (kml.Name.Equals("kml"))
+                    {
+                        nsMgr.AddNamespace("ns", kml.NamespaceURI);
+
+                        foreach (XmlNode doc in kml.ChildNodes)
+                        {
+                            if (doc.Name.Equals("Document"))
+                            {
+                                nsMgr.AddNamespace("ns1", doc.NamespaceURI);
+
+                                XmlNode folder = doc.SelectSingleNode(@"./ns1:Folder", nsMgr);
+
+                                List<Locationwp> cmds = new List<Locationwp>();
+                                foreach (XmlNode point in folder.ChildNodes)
+                                {
+                                    if (point.Name == "Placemark")
+                                    {
+                                        string cmd = "WAYPOINT";
+                                        int altitudeMode = 3;
+                                        double x = 0, y = 0, z = 0;
+                                        double p1 = 0, p2 = 0, p3 = 0, p4 = 0;
+                                        //selectedrow = Commands.Rows.Add();
+                                        foreach (XmlNode info in point.ChildNodes)
+                                        {
+                                            switch (info.Name)
+                                            {
+                                                case "description":
+                                                    //cmd = System.Convert.ToInt32(info.SelectSingleNode(@".//@id").Value);
+                                                    cmd = info.InnerText;
+                                                    break;
+                                                case "Point":
+                                                    nsMgr.AddNamespace("ns2", info.NamespaceURI);
+                                                    var smode = info.SelectSingleNode(@"./ns2:altitudeMode", nsMgr);
+                                                    if (smode != null)
+                                                    {
+                                                        if (smode.InnerText == "relativeToGround")
+                                                            altitudeMode = 3;
+                                                        else if (smode.InnerText == "absolute")
+                                                            altitudeMode = 0;
+                                                        else if (smode.InnerText == "clampedToGround")
+                                                            altitudeMode = 10;
+                                                        else
+                                                            altitudeMode = 3;
+                                                    }
+                                                    else
+                                                    {
+                                                        altitudeMode = 3;
+                                                    }
+                                                    var sWGS84 = info.SelectSingleNode(@"./ns2:coordinates", nsMgr);
+                                                    if (sWGS84 != null)
+                                                    {
+                                                        string WGS84 = sWGS84.InnerText;
+                                                        var splitWGS84 = WGS84.Split(',');
+                                                        x = System.Convert.ToDouble(splitWGS84[0]);
+                                                        y = System.Convert.ToDouble(splitWGS84[1]);
+                                                        z = System.Convert.ToDouble(splitWGS84[2]);
+                                                    }
+                                                    break;
+
+                                                case "ExtendedData":
+                                                    nsMgr.AddNamespace("ns3", info.NamespaceURI);
+                                                    var sp1 = info.SelectSingleNode(@".//ns3:param1", nsMgr);
+                                                    if (sp1 != null)
+                                                        p1 = System.Convert.ToDouble(sp1.InnerText);
+                                                    else
+                                                        p1 = 0;
+                                                    var sp2 = info.SelectSingleNode(@".//ns3:param2", nsMgr);
+                                                    if (sp2 != null)
+                                                        p2 = System.Convert.ToDouble(sp2.InnerText);
+                                                    else
+                                                        p2 = 0;
+                                                    var sp3 = info.SelectSingleNode(@".//ns3:param3", nsMgr);
+                                                    if (sp3 != null)
+                                                        p3 = System.Convert.ToDouble(sp3.InnerText);
+                                                    else
+                                                        p3 = 0;
+                                                    var sp4 = info.SelectSingleNode(@".//ns3:param4", nsMgr);
+                                                    if (sp4 != null)
+                                                        p4 = System.Convert.ToDouble(sp4.InnerText);
+                                                    else
+                                                        p4 = 0;
+                                                    var sMode = info.SelectSingleNode(@"./ns3:mode", nsMgr);
+                                                    if (sMode != null)
+                                                    {
+                                                        if (int.TryParse(sMode.InnerText, out int mode))
+                                                            altitudeMode = mode;
+                                                    }
+                                                    var sCoord = info.SelectSingleNode(@"./ns3:coord", nsMgr);
+                                                    if (sCoord != null)
+                                                    {
+                                                        string coord = sCoord.InnerText;
+                                                        var splitCoord = coord.Split(',');
+                                                        x = System.Convert.ToDouble(splitCoord[0]);
+                                                        y = System.Convert.ToDouble(splitCoord[1]);
+                                                        z = System.Convert.ToDouble(splitCoord[2]);
+                                                    }
+                                                    break;
+
+
+                                            }
+                                        }
+
+
+                                        Locationwp temp = new Locationwp();
+                                        temp.frame = (byte)int.Parse(altitudeMode.ToString(), CultureInfo.InvariantCulture);
+
+                                        if (Enum.TryParse(cmd, false, out MAVLink.MAV_CMD data))
+                                        {
+                                            temp.id = (ushort)data;
+                                        }
+                                        else
+                                        {
+                                            temp.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
+                                        }
+
+                                        if (temp.id == 99)
+                                            temp.id = 0;
+
+                                        temp.alt = (float)(double.Parse(z.ToString(), CultureInfo.InvariantCulture));
+                                        temp.lat = (double.Parse(y.ToString(), CultureInfo.InvariantCulture));
+                                        temp.lng = (double.Parse(x.ToString(), CultureInfo.InvariantCulture));
+
+                                        temp.p1 = float.Parse(p1.ToString(), CultureInfo.InvariantCulture);
+                                        temp.p2 = float.Parse(p2.ToString(), CultureInfo.InvariantCulture);
+                                        temp.p3 = float.Parse(p3.ToString(), CultureInfo.InvariantCulture);
+                                        temp.p4 = float.Parse(p4.ToString(), CultureInfo.InvariantCulture);
+
+                                        cmds.Add(temp);
+                                    }
+                                }
+                                processToScreen(cmds, false);
+                                writeKML();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+
+        }
+
+        public void readQGC110wpfile(string file, bool append = false)
+        {
+
+
+            try
+            {
+                var cmds = WaypointFile.ReadWaypointFile(file);
+
+                processToScreen(cmds, append);
+
+                writeKML();
+
+                MainMap.ZoomAndCenterMarkers("WPOverlay");
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox.Show("Can't open file! " + ex);
+            }
+        }
+
+        public void readQGC111wpfile(string file, bool append = false)
+        {
+
+
+            try
+            {
+                var cmds = WaypointFile.ReadWaypointFile(file);
+
+                for (int i = 0; i < cmds.Count; i++)
+                {
+                    Locationwp temp = new Locationwp();
+                    temp.frame = cmds[i].frame;
+
+                    temp.id = cmds[i].id;
+                    temp.p1 = cmds[i].p1;
+                    temp.p2 = cmds[i].p2;
+                    temp.p3 = cmds[i].p3;
+                    temp.p4 = cmds[i].p4;
+
+                    if (temp.id == 99)
+                        temp.id = 0;
+
+                    CovertFromWorkCoordinate(cmds[i].lng, cmds[i].lat, cmds[i].alt, out double lng, out double lat, out double alt);
+
+                    temp.alt = (float)alt;
+                    temp.lat = lat;
+                    temp.lng = lng;
+
+                    cmds.RemoveAt(i);
+                    cmds.Insert(i, temp);
+                }
+                processToScreen(cmds, append);
+
+                writeKML();
+
+                MainMap.ZoomAndCenterMarkers("WPOverlay");
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox.Show("Can't open file! " + ex);
+            }
+        }
+
         /// <summary>
         /// Saves a waypoint writer file
         /// </summary>
@@ -5461,109 +5939,609 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         {
             using (SaveFileDialog fd = new SaveFileDialog())
             {
-                fd.Filter = "Mission|*.waypoints;*.txt|Mission JSON|*.mission";
-                fd.DefaultExt = ".waypoints";
+                fd.Filter = "KML|*.kml|WorkCoordinates Mission|*.waypoints|Mission|*.waypoints;*.txt";
+                fd.DefaultExt = ".kml";
                 fd.InitialDirectory = Settings.Instance["WPFileDirectory"] ?? "";
                 fd.FileName = wpfilename;
                 DialogResult result = fd.ShowDialog();
                 string file = fd.FileName;
                 if (file != "" && result == DialogResult.OK)
                 {
-                    Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
-                    try
+                    switch (fd.FilterIndex)
                     {
-                        if (file.EndsWith(".mission"))
-                        {
-                            var list = GetCommandList();
-                            Locationwp home = new Locationwp();
-                            try
-                            {
-                                home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-                                home.lat = (double.Parse(TXT_homelat.Text));
-                                home.lng = (double.Parse(TXT_homelng.Text));
-                                home.alt = (float.Parse(TXT_homealt.Text) / CurrentState.multiplieralt); // use saved home
-                            }
-                            catch { }
-
-                            list.Insert(0, home);
-
-                            var format = MissionFile.ConvertFromLocationwps(list, (byte)(altmode)CMB_altmode.SelectedValue);
-
-                            MissionFile.WriteFile(file, format);
-                            return;
-                        }
-
-                        StreamWriter sw = new StreamWriter(file);
-                        sw.WriteLine("QGC WPL 110");
-                        try
-                        {
-                            sw.WriteLine("0\t1\t0\t16\t0\t0\t0\t0\t" +
-                                         double.Parse(TXT_homelat.Text).ToString("0.000000", new CultureInfo("en-US")) +
-                                         "\t" +
-                                         double.Parse(TXT_homelng.Text).ToString("0.000000", new CultureInfo("en-US")) +
-                                         "\t" +
-                                         double.Parse(TXT_homealt.Text).ToString("0.000000", new CultureInfo("en-US")) +
-                                         "\t1");
-                        }
-                        catch (Exception ex)
-                        {
-                            log.Error(ex);
-                            sw.WriteLine("0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t1");
-                        }
-                        for (int a = 0; a < Commands.Rows.Count - 0; a++)
-                        {
-                            ushort mode = 0;
-
-                            if (Commands.Rows[a].Cells[0].Value.ToString() == "UNKNOWN")
-                            {
-                                mode = (ushort)Commands.Rows[a].Cells[Command.Index].Tag;
-                            }
-                            else
-                            {
-                                mode =
-                                    (ushort)
-                                    (MAVLink.MAV_CMD)
-                                    Enum.Parse(typeof(MAVLink.MAV_CMD), Commands.Rows[a].Cells[Command.Index].Value.ToString());
-                            }
-
-                            sw.Write((a + 1)); // seq
-                            sw.Write("\t" + 0); // current
-                            sw.Write("\t" + ((int)Commands.Rows[a].Cells[Frame.Index].Value).ToString()); //frame 
-                            sw.Write("\t" + mode);
-                            sw.Write("\t" +
-                                     double.Parse(Commands.Rows[a].Cells[Param1.Index].Value.ToString())
-                                         .ToString("0.00000000", new CultureInfo("en-US")));
-                            sw.Write("\t" +
-                                     double.Parse(Commands.Rows[a].Cells[Param2.Index].Value.ToString())
-                                         .ToString("0.00000000", new CultureInfo("en-US")));
-                            sw.Write("\t" +
-                                     double.Parse(Commands.Rows[a].Cells[Param3.Index].Value.ToString())
-                                         .ToString("0.00000000", new CultureInfo("en-US")));
-                            sw.Write("\t" +
-                                     double.Parse(Commands.Rows[a].Cells[Param4.Index].Value.ToString())
-                                         .ToString("0.00000000", new CultureInfo("en-US")));
-                            sw.Write("\t" +
-                                     double.Parse(Commands.Rows[a].Cells[Lat.Index].Value.ToString())
-                                         .ToString("0.00000000", new CultureInfo("en-US")));
-                            sw.Write("\t" +
-                                     double.Parse(Commands.Rows[a].Cells[Lon.Index].Value.ToString())
-                                         .ToString("0.00000000", new CultureInfo("en-US")));
-                            sw.Write("\t" +
-                                     (double.Parse(Commands.Rows[a].Cells[Alt.Index].Value.ToString()) /
-                                      CurrentState.multiplieralt).ToString("0.000000", new CultureInfo("en-US")));
-                            sw.Write("\t" + 1);
-                            sw.WriteLine("");
-                        }
-                        sw.Close();
-
-                        //lbl_wpfile.Text = "Saved " + Path.GetFileName(file);
-                    }
-                    catch (Exception)
-                    {
-                        CustomMessageBox.Show(Strings.ERROR);
+                        case 1:
+                            saveWaypointsKML(file);
+                            break;
+                        case 2:
+                            savelocalwaypoints(file);
+                            break;
+                        case 3:
+                            savewaypoints(file);
+                            break;
                     }
                 }
             }
+        }
+
+        private void saveWaypointsKML(string file)
+        {
+            // Create the file and writer.
+            //StreamWriter sw = new StreamWriter(file, false, System.Text.Encoding.UTF8);
+            //XmlWriterSettings settings = new XmlWriterSettings();
+            //settings.Indent = true;
+            //settings.IndentChars = "  ";
+            //settings.NewLineOnAttributes = true;
+            //XmlWriter xmlWriter = XmlWriter.Create(sw, settings);
+            FileStream fs = new FileStream(file, FileMode.Create);
+            XmlTextWriter w = new XmlTextWriter(fs, System.Text.Encoding.UTF8);
+            w.IndentChar = System.Convert.ToChar(" ");
+            w.Indentation = 4;
+            w.Formatting = System.Xml.Formatting.Indented;
+
+            // Start the document.
+            w.WriteStartDocument();
+            w.WriteStartElement("kml", "http://www.opengis.net/kml/2.2");
+            w.WriteStartElement("Document", "");
+            w.WriteStartElement("name");
+            w.WriteString(file);
+            w.WriteEndElement();//name
+            w.WriteStartElement("open");
+            w.WriteString("1");
+            w.WriteEndElement();//open
+
+            //style
+            w.WriteStartElement("Style");
+            w.WriteAttributeString("id", "waylineGreenPoly");
+            w.WriteStartElement("LineStyle");
+            w.WriteStartElement("color");
+            w.WriteString("FF0AEE8B");
+            w.WriteEndElement();//color
+            w.WriteStartElement("width");
+            w.WriteString("6");
+            w.WriteEndElement();//width
+            w.WriteEndElement();//LineStyle
+            w.WriteEndElement();//Style
+
+            w.WriteStartElement("Style");
+            w.WriteAttributeString("id", "waypointStyle");
+            w.WriteStartElement("IconStyle");
+            w.WriteStartElement("Icon");
+            w.WriteStartElement("href");
+            w.WriteString("https://cdnen.dji-flighthub.com/static/app/images/point.png");
+            w.WriteEndElement();//href
+            w.WriteEndElement();//Icon
+            w.WriteEndElement();//IconStyle
+            w.WriteEndElement();//Style
+
+            //MainData Points
+            w.WriteStartElement("Folder");
+            w.WriteStartElement("name");
+            w.WriteString("Waypoints");
+            w.WriteEndElement();//name
+            w.WriteStartElement("description");
+            w.WriteString("Waypoints in the Mission.");
+            w.WriteEndElement();//description
+            {
+                w.WriteStartElement("Placemark");
+
+                // Write Point element
+                w.WriteStartElement("name");
+                w.WriteString(string.Format("Home"));
+                w.WriteEndElement();//name
+                w.WriteStartElement("visibility");
+                w.WriteString("false");
+                w.WriteEndElement();//visibility
+                w.WriteStartElement("description");
+                w.WriteString("HOME");
+                w.WriteEndElement();//description
+                w.WriteStartElement("styleUrl");
+                w.WriteString("#waypointStyle");
+                w.WriteEndElement();//styleUrl
+                w.WriteStartElement("ExtendedData", "www.dji.com");
+
+                var layerInfo = GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache();
+                if (layerInfo != null)
+                {
+                    w.WriteStartElement("local");
+                    w.WriteStartElement("coordinates");
+                    CovertToWorkCoordinate(
+                        System.Convert.ToDouble(TXT_homelng.Text),
+                        System.Convert.ToDouble(TXT_homelat.Text),
+                        System.Convert.ToDouble(TXT_homealt.Text),
+                        out double x, out double y, out double z);
+                    w.WriteString(string.Format("{0},{1},{2}", x, y, z));
+                    w.WriteEndElement();//coordinates
+                    w.WriteStartElement("scale");
+                    w.WriteString(layerInfo.GetValueOrDefault().Scale.ToString());
+                    w.WriteEndElement();//scale
+
+                    w.WriteEndElement();//local
+                }
+                w.WriteStartElement("param1");
+                w.WriteString("0");
+                w.WriteEndElement();//param1
+                w.WriteStartElement("param2");
+                w.WriteString("0");
+                w.WriteEndElement();//param2
+                w.WriteStartElement("param3");
+                w.WriteString("0");
+                w.WriteEndElement();//param3
+                w.WriteStartElement("param4");
+                w.WriteString("0");
+                w.WriteEndElement();//param4
+                w.WriteEndElement();//ExtendedData
+
+                w.WriteStartElement("Point");
+                w.WriteStartElement("altitudeMode");
+                int mode = System.Convert.ToInt32(CMB_altmode.SelectedValue);
+                switch (mode)
+                {
+                    case 3:
+                        w.WriteAttributeString("id", "3");
+                        w.WriteString("relativeToGround");
+                        break;
+                    case 0:
+                        w.WriteAttributeString("id", "0");
+                        w.WriteString("absolute");
+                        break;
+                    case 10:
+                        w.WriteAttributeString("id", "10");
+                        w.WriteString("clampedToGround");
+                        break;
+                    default:
+                        w.WriteAttributeString("id", "0");
+                        w.WriteString("relativeToGround");
+                        break;
+                }
+
+                w.WriteEndElement();//altitudeMode
+                w.WriteStartElement("coordinates");
+                w.WriteString(string.Format("{0},{1},{2}",
+                    TXT_homelng.Text, TXT_homelat.Text, TXT_homealt.Text));
+                w.WriteEndElement();//coordinates
+                w.WriteEndElement();//Point
+                w.WriteEndElement();//Placemark
+            }
+            int index = 0;
+            for (int i = 0; i < Commands.Rows.Count; i++)
+            {
+                bool isVisbility = false;
+                if (Commands.Rows[i].Cells[Command.Index].Value.ToString() == "WAYPOINT")
+                    isVisbility = true;
+                w.WriteStartElement("Placemark");
+
+                // Write Point element
+                w.WriteStartElement("name");
+                if (isVisbility)
+                    w.WriteString(string.Format(Commands.Rows[i].Cells[Command.Index].Value.ToString().Replace("WAYPOINT", "") + (++index).ToString()));
+                else
+                    w.WriteString(string.Format(Commands.Rows[i].Cells[Command.Index].Value.ToString()));
+                w.WriteEndElement();//name
+
+                w.WriteStartElement("visibility");
+                if (isVisbility)
+                    w.WriteString("true");
+                else
+                    w.WriteString("false");
+                w.WriteEndElement();//visibility
+
+                w.WriteStartElement("description");
+                w.WriteString(Commands.Rows[i].Cells[Command.Index].Value.ToString());
+                w.WriteEndElement();//description
+
+                if (isVisbility)
+                {
+                    w.WriteStartElement("styleUrl");
+                    w.WriteString("#waypointStyle");
+                    w.WriteEndElement();//styleUrl
+                }
+
+                w.WriteStartElement("ExtendedData", "www.dji.com");
+                w.WriteStartElement("param1");
+                w.WriteString(Commands.Rows[i].Cells[Param1.Index].Value.ToString());
+                w.WriteEndElement();//param1
+                w.WriteStartElement("param2");
+                w.WriteString(Commands.Rows[i].Cells[Param2.Index].Value.ToString());
+                w.WriteEndElement();//param2
+                w.WriteStartElement("param3");
+                w.WriteString(Commands.Rows[i].Cells[Param3.Index].Value.ToString());
+                w.WriteEndElement();//param3
+                w.WriteStartElement("param4");
+                w.WriteString(Commands.Rows[i].Cells[Param4.Index].Value.ToString());
+                w.WriteEndElement();//param4
+                if (!isVisbility)
+                {
+                    w.WriteStartElement("mode");
+                    w.WriteString(Commands.Rows[i].Cells[Frame.Index].Value.ToString());
+                    w.WriteEndElement();//mode
+                    w.WriteStartElement("coord");
+                    w.WriteString(string.Format("{0},{1},{2}",
+                        Commands.Rows[i].Cells[Lon.Index].Value.ToString(),
+                        Commands.Rows[i].Cells[Lat.Index].Value.ToString(),
+                        Commands.Rows[i].Cells[Alt.Index].Value.ToString()));
+                    w.WriteEndElement();//coord
+                }
+                w.WriteEndElement();//ExtendedData
+
+                if (isVisbility)
+                {
+                    w.WriteStartElement("Point");
+                    w.WriteStartElement("altitudeMode");
+                    int mode = System.Convert.ToInt32(Commands.Rows[i].Cells[Frame.Index].Value.ToString());
+                    switch (mode)
+                    {
+                        case 3:
+                            w.WriteString("relativeToGround");
+                            break;
+                        case 0:
+                            w.WriteString("absolute");
+                            break;
+                        case 10:
+                            w.WriteString("clampedToGround");
+                            break;
+                        default:
+                            w.WriteString("relativeToGround");
+                            break;
+                    }
+
+                    w.WriteEndElement();//altitudeMode
+                    w.WriteStartElement("coordinates");
+                    w.WriteString(string.Format("{0},{1},{2}",
+                        Commands.Rows[i].Cells[Lon.Index].Value.ToString(),
+                        Commands.Rows[i].Cells[Lat.Index].Value.ToString(),
+                        Commands.Rows[i].Cells[Alt.Index].Value.ToString()));
+                    w.WriteEndElement();//coordinates
+                    w.WriteEndElement();//Point
+                }
+                w.WriteEndElement();//Placemark
+            }
+            w.WriteEndElement();//Folder
+
+            for (int i = 1; i < overlay.route.Overlay.Routes.Count; i++)
+            {
+                //MainData Lines
+                w.WriteStartElement("Placemark");
+                // Write Lines element
+                w.WriteStartElement("name");
+                w.WriteString(string.Format("Wayline"));
+                w.WriteEndElement();//name
+                w.WriteStartElement("visibility");
+                w.WriteString("1");
+                w.WriteEndElement();//visibility
+                w.WriteStartElement("description");
+                w.WriteString("Wayline");
+                w.WriteEndElement();//description
+                w.WriteStartElement("styleUrl");
+                w.WriteString("#waylineGreenPoly");
+                w.WriteEndElement();//styleUrl
+
+
+                w.WriteStartElement("LineString");
+                w.WriteStartElement("tessellate");
+                w.WriteString("1");
+                w.WriteEndElement();//tessellate
+                w.WriteStartElement("altitudeMode");
+                switch (CMB_altmode.SelectedIndex)
+                {
+                    case 0:
+                        w.WriteString("relativeToGround");
+                        break;
+                    case 1:
+                        w.WriteString("absolute");
+                        break;
+                    case 2:
+                        w.WriteString("clampedToGround");
+                        break;
+                    default:
+                        w.WriteString("relativeToGround");
+                        break;
+                }
+                w.WriteEndElement();//altitudeMode
+                w.WriteStartElement("coordinates");
+
+                string pointList = "";
+
+                foreach (var marker in overlay.route.Overlay.Routes[i].Overlay.Markers)
+                {
+                    if (marker != null)
+                    {
+                        if (marker.Tag.ToString() == "H")
+                            continue;
+                        string alt = "100";
+                        if (marker is GMapMarkerRect)
+                            alt = ((GMapMarkerRect)marker).InnerMarker.ToolTipText.Replace("Alt: ", "");
+                        else
+                        {
+                            foreach (var coord in overlay.pointlist)
+                            {
+                                if (coord == null)
+                                    continue;
+                                if (coord.Lng == marker.Position.Lng && coord.Lat == marker.Position.Lat)
+                                {
+                                    alt = coord.Alt.ToString();
+                                    break;
+                                }
+                            }
+                        }
+
+                        pointList += string.Format("{0},{1},{2} ", marker.Position.Lng, marker.Position.Lat, alt);
+                    }
+                }
+
+                w.WriteString(pointList);
+                w.WriteEndElement();//coordinates
+                w.WriteEndElement();//LineString
+            }
+            w.WriteEndElement();//Placemark
+
+            w.WriteEndElement();//document
+            w.WriteEndElement();//kml
+
+            // Ends the document.
+            w.WriteEndDocument();
+
+            // close writer
+            w.Close();
+        }
+
+        /// <summary>
+        /// Saves localwp as a waypoint writer file
+        /// </summary>
+        private void savelocalwaypoints(string file)
+        {
+
+            Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
+            try
+            {
+                StreamWriter sw = new StreamWriter(file);
+                sw.WriteLine("QGC WPL 111");
+                try
+                {
+                    CovertToWorkCoordinate(double.Parse(TXT_homelng.Text), double.Parse(TXT_homelat.Text), double.Parse(TXT_homealt.Text), out double x, out double y, out double z);
+                    sw.WriteLine("0\t1\t0\t16\t0\t0\t0\t0\t" +
+                                 y.ToString("0.000000", new CultureInfo("en-US")) +
+                                 "\t" +
+                                 x.ToString("0.000000", new CultureInfo("en-US")) +
+                                 "\t" +
+                                 z.ToString("0.000000", new CultureInfo("en-US")) +
+                                 "\t1");
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    sw.WriteLine("0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t1");
+                }
+                for (int a = 0; a < Commands.Rows.Count - 0; a++)
+                {
+                    ushort mode = 0;
+                    if (double.Parse(Commands.Rows[a].Cells[Lon.Index].Value.ToString()) == 0 &&
+                        double.Parse(Commands.Rows[a].Cells[Lat.Index].Value.ToString()) == 0)
+                    {
+                        continue;
+                    }
+                    if (Commands.Rows[a].Cells[0].Value.ToString() == "UNKNOWN")
+                    {
+                        mode = (ushort)Commands.Rows[a].Cells[Command.Index].Tag;
+                    }
+                    else
+                    {
+                        mode =
+                            (ushort)
+                            (MAVLink.MAV_CMD)
+                            Enum.Parse(typeof(MAVLink.MAV_CMD), Commands.Rows[a].Cells[Command.Index].Value.ToString());
+                    }
+
+                    sw.Write((a + 1)); // seq
+                    sw.Write("\t" + 0); // current
+                    sw.Write("\t" + ((int)Commands.Rows[a].Cells[Frame.Index].Value).ToString()); //frame 
+                    sw.Write("\t" + mode);
+
+                    sw.Write("\t" +
+                             double.Parse(Commands.Rows[a].Cells[Param1.Index].Value.ToString())
+                                 .ToString("0.00000000", new CultureInfo("en-US")));
+                    sw.Write("\t" +
+                             double.Parse(Commands.Rows[a].Cells[Param2.Index].Value.ToString())
+                                 .ToString("0.00000000", new CultureInfo("en-US")));
+                    sw.Write("\t" +
+                             double.Parse(Commands.Rows[a].Cells[Param3.Index].Value.ToString())
+                                 .ToString("0.00000000", new CultureInfo("en-US")));
+                    sw.Write("\t" +
+                             double.Parse(Commands.Rows[a].Cells[Param4.Index].Value.ToString())
+                                 .ToString("0.00000000", new CultureInfo("en-US")));
+
+                    CovertToWorkCoordinate(
+                        double.Parse(Commands.Rows[a].Cells[Lon.Index].Value.ToString()),
+                        double.Parse(Commands.Rows[a].Cells[Lat.Index].Value.ToString()),
+                        double.Parse(Commands.Rows[a].Cells[Alt.Index].Value.ToString()) / CurrentState.multiplieralt,
+                        out double x, out double y, out double z);
+
+                    sw.Write("\t" + y.ToString("0.00000000", new CultureInfo("en-US")));
+                    sw.Write("\t" + x.ToString("0.00000000", new CultureInfo("en-US")));
+                    sw.Write("\t" + z.ToString("0.000000", new CultureInfo("en-US")));
+                    sw.Write("\t" + 1);
+                    sw.WriteLine("");
+                }
+                sw.Close();
+
+                //lbl_wpfile.Text = "Saved " + Path.GetFileName(file);
+            }
+            catch (Exception)
+            {
+                CustomMessageBox.Show(Strings.ERROR);
+            }
+
+        }
+
+        void savewaypoints(string file)
+        {
+            Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
+            try
+            {
+                StreamWriter sw = new StreamWriter(file);
+                sw.WriteLine("QGC WPL 110");
+                try
+                {
+                    sw.WriteLine("0\t1\t0\t16\t0\t0\t0\t0\t" +
+                                 double.Parse(TXT_homelat.Text).ToString("0.000000", new CultureInfo("en-US")) +
+                                 "\t" +
+                                 double.Parse(TXT_homelng.Text).ToString("0.000000", new CultureInfo("en-US")) +
+                                 "\t" +
+                                 double.Parse(TXT_homealt.Text).ToString("0.000000", new CultureInfo("en-US")) +
+                                 "\t1");
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    sw.WriteLine("0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t1");
+                }
+                for (int a = 0; a < Commands.Rows.Count - 0; a++)
+                {
+                    ushort mode = 0;
+
+                    if (Commands.Rows[a].Cells[0].Value.ToString() == "UNKNOWN")
+                    {
+                        mode = (ushort)Commands.Rows[a].Cells[Command.Index].Tag;
+                    }
+                    else
+                    {
+                        mode =
+                            (ushort)
+                            (MAVLink.MAV_CMD)
+                            Enum.Parse(typeof(MAVLink.MAV_CMD), Commands.Rows[a].Cells[Command.Index].Value.ToString());
+                    }
+
+                    sw.Write((a + 1)); // seq
+                    sw.Write("\t" + 0); // current
+                    sw.Write("\t" + ((int)Commands.Rows[a].Cells[Frame.Index].Value).ToString()); //frame 
+                    sw.Write("\t" + mode);
+                    sw.Write("\t" +
+                             double.Parse(Commands.Rows[a].Cells[Param1.Index].Value.ToString())
+                                 .ToString("0.00000000", new CultureInfo("en-US")));
+                    sw.Write("\t" +
+                             double.Parse(Commands.Rows[a].Cells[Param2.Index].Value.ToString())
+                                 .ToString("0.00000000", new CultureInfo("en-US")));
+                    sw.Write("\t" +
+                             double.Parse(Commands.Rows[a].Cells[Param3.Index].Value.ToString())
+                                 .ToString("0.00000000", new CultureInfo("en-US")));
+                    sw.Write("\t" +
+                             double.Parse(Commands.Rows[a].Cells[Param4.Index].Value.ToString())
+                                 .ToString("0.00000000", new CultureInfo("en-US")));
+                    sw.Write("\t" +
+                             double.Parse(Commands.Rows[a].Cells[Lat.Index].Value.ToString())
+                                 .ToString("0.00000000", new CultureInfo("en-US")));
+                    sw.Write("\t" +
+                             double.Parse(Commands.Rows[a].Cells[Lon.Index].Value.ToString())
+                                 .ToString("0.00000000", new CultureInfo("en-US")));
+                    sw.Write("\t" +
+                             (double.Parse(Commands.Rows[a].Cells[Alt.Index].Value.ToString()) /
+                              CurrentState.multiplieralt).ToString("0.000000", new CultureInfo("en-US")));
+                    sw.Write("\t" + 1);
+                    sw.WriteLine("");
+                }
+                sw.Close();
+
+                //lbl_wpfile.Text = "Saved " + Path.GetFileName(file);
+            }
+            catch (Exception)
+            {
+                CustomMessageBox.Show(Strings.ERROR);
+            }
+        }
+
+        /// <summary>
+        /// form WGS84 covert to Local coordinates
+        /// </summary>
+        private void CovertToWorkCoordinate(PointLatLngAlt WGS84Point, out PointLatLngAlt WorkPoint)
+        {
+            var layer = GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache();
+            if (layer == null)
+            {
+            }
+            double Scale = layer.GetValueOrDefault().Scale;
+
+            PointLatLngAlt Origin = new PointLatLngAlt(
+                layer.GetValueOrDefault().Lat,
+                layer.GetValueOrDefault().Lng,
+                layer.GetValueOrDefault().Alt);
+
+            int OriginZone = Origin.GetUTMZone();
+            double[] OriginCoord = Origin.ToUTM(OriginZone);
+
+            int WGS84Zone = WGS84Point.GetUTMZone();
+            double[] WGS84Coord = WGS84Point.ToUTM(OriginZone);
+
+            double WGS84UTMEast = WGS84Coord[0];
+            double WGS84UTMNorth = WGS84Coord[1];
+            if (WGS84Zone < 0)
+                WGS84UTMNorth = WGS84UTMNorth - 10000000;
+            double OriginUTMEast = OriginCoord[0];
+            double OriginUTMNorth = OriginCoord[1];
+            if (OriginZone < 0)
+                OriginUTMNorth = OriginUTMNorth - 10000000;
+
+            double deltaLng, deltaLat, deltaAlt;
+
+            deltaLng = (WGS84UTMEast - OriginUTMEast) / Scale;
+            deltaLat = (WGS84UTMNorth - OriginUTMNorth) / Scale;
+            deltaAlt = (WGS84Point.Alt - Origin.Alt) / Scale;
+
+            // m => mm
+            WorkPoint = new PointLatLngAlt(deltaLat * 1000, deltaLng * 1000, deltaAlt * 1000);
+
+        }
+
+        /// <summary>
+        /// form WGS84 covert to Local coordinates
+        /// </summary>
+        private void CovertToWorkCoordinate(double lng, double lat, double alt, out double x, out double y, out double z)
+        {
+            this.CovertToWorkCoordinate(new PointLatLngAlt(lat, lng, alt), out PointLatLngAlt wgs84);
+            x = wgs84.Lng;
+            y = wgs84.Lat;
+            z = wgs84.Alt;
+        }
+
+
+        private void CovertFromWorkCoordinate(PointLatLngAlt WorkCoordPoint, out PointLatLngAlt WGS84CorrdPoint)
+        {
+            var layer = GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache();
+            if (layer == null)
+            {
+            }
+            double Scale = layer.GetValueOrDefault().Scale;
+
+            PointLatLngAlt Origin = new PointLatLngAlt(
+                layer.GetValueOrDefault().Lat,
+                layer.GetValueOrDefault().Lng,
+                layer.GetValueOrDefault().Alt);
+
+            int OriginZone = Origin.GetUTMZone();
+            double[] OriginCoord = Origin.ToUTM();
+
+            double OriginUTMEast = OriginCoord[0];
+            double OriginUTMNorth = OriginCoord[1];
+            if (OriginZone < 0)
+                OriginUTMNorth = OriginUTMNorth - 10000000;
+
+            // mm => m
+            WorkCoordPoint = new PointLatLngAlt(WorkCoordPoint.Lat / 1000, WorkCoordPoint.Lng / 1000, WorkCoordPoint.Alt / 1000);
+
+            double deltaEast, deltaNorth, deltaAlt;
+
+            deltaEast = (WorkCoordPoint.Lng * Scale + OriginUTMEast);
+            deltaNorth = (WorkCoordPoint.Lat * Scale + OriginUTMNorth);
+            deltaAlt = (WorkCoordPoint.Alt * Scale + Origin.Alt);
+
+            WGS84CorrdPoint = PointLatLngAlt.FromUTM(OriginZone, deltaEast, deltaNorth);
+            WGS84CorrdPoint.Alt = deltaAlt;
+        }
+
+        private void CovertFromWorkCoordinate(double x, double y, double z, out double lng, out double lat, out double alt)
+        {
+            this.CovertFromWorkCoordinate(new PointLatLngAlt(y, x, z), out PointLatLngAlt local);
+            lng = local.Lng;
+            lat = local.Lat;
+            alt = local.Alt;
         }
 
         public void SaveWPFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -6045,6 +7023,10 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             {
                 log.Error(ex);
             }
+        }
+        public void surveyGrid()
+        {
+            surveyGridToolStripMenuItem_Click(this, null);
         }
 
         public void surveyGridToolStripMenuItem_Click(object sender, EventArgs e)
@@ -7107,28 +8089,34 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             if (isMouseClickOffMenu)
                 return;
 
+            //记录鼠标开始位置
             MouseDownStart = MainMap.FromLocalToLatLng(e.X, e.Y);
+            MouseDownStartPoint = new GPoint(e.X, e.Y);
 
-            //   Console.WriteLine("MainMap MD");
+            if (e.Button == MouseButtons.Middle && Control.ModifierKeys != Keys.Alt && Control.ModifierKeys != Keys.Control)
+            {
+                isMouseDown = true;
+                isMouseDroppable = true;
+                return;
+            }
 
-            if (e.Button == MouseButtons.Left && (wpMarkersGroup.Count > 0 || Control.ModifierKeys == Keys.Control))
+            if (e.Button == MouseButtons.Left && (Control.ModifierKeys == Keys.Control) || Control.ModifierKeys == Keys.Alt)
             {
                 // group move
                 isMouseDown = true;
-                isMouseDraging = false;
-
                 return;
             }
 
             if (e.Button == MouseButtons.Left && Control.ModifierKeys != Keys.Alt && Control.ModifierKeys != Keys.Control)
             {
                 isMouseDown = true;
-                isMouseDraging = false;
+                isMouseDraggable = true;
 
                 if (currentMarker.IsVisible)
                 {
                     currentMarker.Position = MainMap.FromLocalToLatLng(e.X, e.Y);
                 }
+                return;
             }
         }
 
@@ -7139,73 +8127,41 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
         private void MainMap_MouseMove(object sender, MouseEventArgs e)
         {
-            PointLatLng point = MainMap.FromLocalToLatLng(e.X, e.Y);
-
-            if (MouseDownStart == point)
-                return;
-
-            //  Console.WriteLine("MainMap MM " + point);
-
-            currentMarker.Position = point;
-
+            //记录鼠标位置
+            PointLatLng mousePoint = MainMap.FromLocalToLatLng(e.X, e.Y);
+            //鼠标没按下
             if (!isMouseDown)
             {
                 // update mouse pos display
-                SetMouseDisplay(point.Lat, point.Lng, 0);
+                SetMouseDisplay(mousePoint.Lat, mousePoint.Lng, 0);
             }
 
-            //draging
-            if (e.Button == MouseButtons.Left && isMouseDown)
+            //鼠标没移动
+            if (MouseDownStart == mousePoint)
+                return;
+            //鼠标移动
+
+            //设置移动点
+            currentMarker.Position = mousePoint;
+
+            //可拖动状态下鼠标按下
+            if (isMouseDraggable && e.Button == MouseButtons.Left)
             {
                 isMouseDraging = true;
-                if (CurrentRallyPt != null)
+
+                if (CurentRectMarker != null) // left click pan
                 {
-                    PointLatLng pnew = MainMap.FromLocalToLatLng(e.X, e.Y);
-
-                    CurrentRallyPt.Position = pnew;
-                }
-                else if (wpMarkersGroup.Count > 0)
-                {
-                    // group drag
-
-                    double latdif = MouseDownStart.Lat - point.Lat;
-                    double lngdif = MouseDownStart.Lng - point.Lng;
-
-                    MouseDownStart = point;
-
-                    var markers = MainMap.Overlays.First(a => a.Id == "WPOverlay");
-
-                    Hashtable seen = new Hashtable();
-
-                    foreach (var markerid in wpMarkersGroup)
-                    {
-                        if (seen.ContainsKey(markerid))
-                            continue;
-
-                        seen[markerid] = 1;
-                        for (int a = 0; a < markers.Markers.Count; a++)
-                        {
-                            var marker = markers.Markers[a];
-
-                            if (marker.Tag != null && marker.Tag.ToString() == markerid.ToString())
-                            {
-                                var temp = new PointLatLng(marker.Position.Lat, marker.Position.Lng);
-                                temp.Offset(latdif, -lngdif);
-                                marker.Position = temp;
-                            }
-                        }
-                    }
-                }
-                else if (CurentRectMarker != null) // left click pan
-                {
+                    //更新Polygon点位置
                     try
                     {
-                        // check if this is a grid point
+                        // 检查polygon点
                         if (CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
                         {
                             drawnpolygon.Points[
-                                    int.Parse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1] =
-                                new PointLatLng(point.Lat, point.Lng);
+                                int.Parse(
+                                    CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1
+                                    ] = new PointLatLng(mousePoint.Lat, mousePoint.Lng);
+
                             redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
                         }
                     }
@@ -7214,22 +8170,22 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         log.Error(ex);
                     }
 
-                    PointLatLng pnew = MainMap.FromLocalToLatLng(e.X, e.Y);
-
-                    // adjust polyline point while we drag
+                    //更新WP位置
                     try
                     {
-                        if (CurrentGMapMarker != null && CurrentGMapMarker.Tag is int)
+                        // 检查WP点
+                        if ((CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.Tag.ToString(), @"^\d+$")))
                         {
                             int? pIndex = (int?)CurentRectMarker.Tag;
                             if (pIndex.HasValue)
                             {
                                 if (pIndex < wppolygon.Points.Count)
                                 {
-                                    wppolygon.Points[pIndex.Value] = pnew;
+                                    wppolygon.Points[pIndex.Value] = mousePoint;
                                     lock (thisLock)
                                     {
                                         MainMap.UpdatePolygonLocalPosition(wppolygon);
+                                        MainMap.Invalidate();
                                     }
                                 }
                             }
@@ -7240,58 +8196,70 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         log.Error(ex);
                     }
 
-                    // update rect and marker pos.
-                    if (currentMarker.IsVisible)
-                    {
-                        currentMarker.Position = pnew;
-                    }
-                    CurentRectMarker.Position = pnew;
 
-                    if (CurentRectMarker.InnerMarker != null)
+                    //随鼠标位置更新当前标记
+                    if (CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
                     {
-                        CurentRectMarker.InnerMarker.Position = pnew;
+                        if (currentMarker.IsVisible)
+                        {
+                            currentMarker.Position = mousePoint;
+                        }
+                        CurentRectMarker.Position = mousePoint;
+                        if (CurentRectMarker.InnerMarker != null)
+                        {
+                            CurentRectMarker.InnerMarker.Position = mousePoint;
+                        }
+                    }
+                    else if (Regex.IsMatch(CurentRectMarker.Tag.ToString(), @"^\d+$"))
+                    {
+                        if (currentMarker.IsVisible)
+                        {
+                            currentMarker.Position = mousePoint;
+                        }
+                        CurentRectMarker.Position = mousePoint;
+                        if (CurentRectMarker.InnerMarker != null)
+                        {
+                            CurentRectMarker.InnerMarker.Position = mousePoint;
+                        }
                     }
                 }
                 else if (CurrentPOIMarker != null)
                 {
-                    PointLatLng pnew = MainMap.FromLocalToLatLng(e.X, e.Y);
-
-                    CurrentPOIMarker.Position = pnew;
+                    CurrentPOIMarker.Position = mousePoint;
                 }
                 else if (CurrentGMapMarker != null)
                 {
-                    PointLatLng pnew = MainMap.FromLocalToLatLng(e.X, e.Y);
-
-                    CurrentGMapMarker.Position = pnew;
+                    CurrentGMapMarker.Position = mousePoint;
                 }
-                else if (Control.ModifierKeys == Keys.Control)
-                {
-                    // draw selection box
-                    double latdif = MouseDownStart.Lat - point.Lat;
-                    double lngdif = MouseDownStart.Lng - point.Lng;
+            }
+            else if (isMouseDroppable && e.Button == MouseButtons.Middle)
+            {
+                double latdif = MouseDownStart.Lat - mousePoint.Lat;
+                double lngdif = MouseDownStart.Lng - mousePoint.Lng;
 
-                    MainMap.SelectedArea = new RectLatLng(Math.Max(MouseDownStart.Lat, point.Lat),
-                        Math.Min(MouseDownStart.Lng, point.Lng), Math.Abs(lngdif), Math.Abs(latdif));
-                }
-                else // left click pan
+                try
                 {
-                    double latdif = MouseDownStart.Lat - point.Lat;
-                    double lngdif = MouseDownStart.Lng - point.Lng;
-
-                    try
+                    lock (thisLock)
                     {
-                        lock (thisLock)
-                        {
-                            if (!isMouseClickOffMenu)
-                                MainMap.Position = new PointLatLng(center.Position.Lat + latdif,
-                                    center.Position.Lng + lngdif);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
+                        if (!isMouseClickOffMenu)
+                            MainMap.Position = new PointLatLng(center.Position.Lat + latdif,
+                                center.Position.Lng + lngdif);
                     }
                 }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
+            }
+            else if (e.Button == MouseButtons.Left &&
+                (Control.ModifierKeys == Keys.Control || Control.ModifierKeys == Keys.Alt))
+            {
+                // draw selection box
+                double latdif = MouseDownStart.Lat - mousePoint.Lat;
+                double lngdif = MouseDownStart.Lng - mousePoint.Lng;
+
+                MainMap.SelectedArea = new RectLatLng(Math.Max(MouseDownStart.Lat, mousePoint.Lat),
+                    Math.Min(MouseDownStart.Lng, mousePoint.Lng), Math.Abs(lngdif), Math.Abs(latdif));
             }
             else if (e.Button == MouseButtons.None)
             {
@@ -7301,263 +8269,275 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
         private void MainMap_MouseUp(object sender, MouseEventArgs e)
         {
-            if (isMouseClickOffMenu)
+            if (e.Button == MouseButtons.Right) // ignore right clicks
             {
-                isMouseClickOffMenu = false;
-                return;
-            }
-
-            // check if the mouse up happend over our button
-            if (polyicon.Rectangle.Contains(e.Location))
-            {
-                if (e.Button == MouseButtons.Right)
-                {
-                    //contextMenuStripMain.Visible = false;
-                    //ClearPolygonToolStripMenuItem_Click(this, null);
-
+                if (polyicon.Rectangle.Contains(e.Location)){
+                    contextMenuStripMain.Visible = false;
+                    ClearPolygonToolStripMenuItem_Click(this, null);
                 }
-                else if (e.Button == MouseButtons.Left)
-                {
-                    polyicon.IsSelected = !polyicon.IsSelected;
-
-                }
-                IsDrawPolygongridMode = polyicon.IsSelected ? true : false;
-
-                //contextMenuStripPoly.Show(MainMap, e.Location);
-                return;
-            }
-            if (WPicon.Rectangle.Contains(e.Location))
-            {
-                if (e.Button == MouseButtons.Right)
+                if (WPicon.Rectangle.Contains(e.Location))
                 {
                     contextMenuStripMain.Visible = false;
                     ClearMissionToolStripMenuItem_Click(this, null);
-
                 }
-                else if (e.Button == MouseButtons.Left)
+                if (zoomicon.Rectangle.Contains(e.Location))
                 {
-                    surveyGridToolStripMenuItem_Click(this, null);
+                    contextMenuStripMain.Visible = false;
+                    contextMenuStripTiff.Show(MainMap, e.Location);
                 }
                 return;
             }
-            if (zoomicon.Rectangle.Contains(e.Location))
+            try
             {
-                //contextMenuStripZoom.Show(MainMap, e.Location);
-                if (layerPolygonsOverlay.Polygons.Count > 0)
-                    zoomicon.IsSelected = true;
-                else
-                    zoomicon.IsSelected = false;
-                if (e.Button == MouseButtons.Left)
+                if (isMouseClickOffMenu)
                 {
-                    if (zoomicon.IsSelected)
+                    isMouseClickOffMenu = false;
+                    return;
+                }
+
+                // check if the mouse up happend over our button
+                if (polyicon.Rectangle.Contains(e.Location))
+                {
+                    if (e.Button == MouseButtons.Left)
                     {
-                        zoomToTiffToolStripMenuItem_Click(this, null);
+                        polyicon.IsSelected = !polyicon.IsSelected;
+
                     }
-                    else
+                    IsDrawPolygongridMode = polyicon.IsSelected ? true : false;
+
+                    //contextMenuStripPoly.Show(MainMap, e.Location);
+                    return;
+                }
+                if (WPicon.Rectangle.Contains(e.Location))
+                {
+                    if (e.Button == MouseButtons.Left)
                     {
-                        contextMenuStripMain.Visible = false;
-                        TiffOverlayToolStripMenuItem_Click(this, null);
+                        surveyGridToolStripMenuItem_Click(this, null);
                     }
+                    return;
+                }
+                if (zoomicon.Rectangle.Contains(e.Location))
+                {
+                    //contextMenuStripZoom.Show(MainMap, e.Location);
                     if (layerPolygonsOverlay.Polygons.Count > 0)
                         zoomicon.IsSelected = true;
                     else
                         zoomicon.IsSelected = false;
-                    return;
-
-                }
-                else if (e.Button == MouseButtons.Right)
-                {
-                    contextMenuStripMain.Visible = false;
-                    contextMenuStripTiff.Show(MainMap, e.Location);
-                    return;
-                }
-                //else if(e.Button == MouseButtons.Middle)
-                //{
-                //    MissionPlanner.Controls.test dlg = new MissionPlanner.Controls.test();
-                //    dlg.ShowDialog();
-                //}
-                return;
-            }
-
-            MouseDownEnd = MainMap.FromLocalToLatLng(e.X, e.Y);
-
-            // Console.WriteLine("MainMap MU");
-
-            if (e.Button == MouseButtons.Right) // ignore right clicks
-            {
-                return;
-            }
-
-            if (isMouseDown) // mouse down on some other object and dragged to here.
-            {
-                // drag finished, update poi db
-                if (CurrentPOIMarker != null)
-                {
-                    POI.POIMove(CurrentPOIMarker);
-                    CurrentPOIMarker = null;
-                }
-
-                if (CurrentMidLine is GMapMarkerPlus)
-                {
-                    int pnt2 = 0;
-                    var midline = CurrentMidLine.Tag as midline;
-                    // var pnt1 = int.Parse(midline.now.Tag);
-
-                    if (polygongridmode && midline.now != null)
+                    if (e.Button == MouseButtons.Left)
                     {
-                        var idx = drawnpolygon.Points.IndexOf(midline.now);
-                        drawnpolygon.Points.Insert(idx + 1,
-                            new PointLatLng(CurrentMidLine.Position.Lat, CurrentMidLine.Position.Lng));
-
-                        redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
-                    }
-                    else
-                    {
-                        if (int.TryParse(midline.next.Tag, out pnt2))
+                        if (zoomicon.IsSelected)
                         {
-                            if ((MAVLink.MAV_MISSION_TYPE) cmb_missiontype.SelectedValue ==
-                                MAVLink.MAV_MISSION_TYPE.FENCE)
-                            {
-                                var prevtype = Commands.Rows[(int)Math.Max(pnt2 - 2, 0)].Cells[Command.Index].Value.ToString();
-                                // match type of prev row
-                                InsertCommand(pnt2 - 1, (MAVLink.MAV_CMD) Enum.Parse(typeof(MAVLink.MAV_CMD), prevtype),
-                                    0, 0, 0, 0,
-                                    CurrentMidLine.Position.Lng,
-                                    CurrentMidLine.Position.Lat, 0);
-
-                                ReCalcFence(pnt2 - 1, true, false);
-                            }
-                            else if ((MAVLink.MAV_MISSION_TYPE) cmb_missiontype.SelectedValue ==
-                                     MAVLink.MAV_MISSION_TYPE.MISSION)
-                            {
-
-                                InsertCommand(pnt2 - 1, MAVLink.MAV_CMD.WAYPOINT, 0, 0, 0, 0,
-                                    CurrentMidLine.Position.Lng,
-                                    CurrentMidLine.Position.Lat, float.Parse(TXT_DefaultAlt.Text));
-                            }
-                        }
-                    }
-
-                    isMouseDown = false;
-                    isMouseDraging = false;
-                    CurrentMidLine = null;
-
-                    writeKML();
-                    return;
-                }
-
-                if (e.Button == MouseButtons.Left)
-                {
-                    isMouseDown = false;
-                }
-                if (Control.ModifierKeys == Keys.Control)
-                {
-                    // group select wps
-                    GMapPolygon poly = new GMapPolygon(new List<PointLatLng>(), "temp");
-
-                    poly.Points.Add(MouseDownStart);
-                    poly.Points.Add(new PointLatLng(MouseDownStart.Lat, MouseDownEnd.Lng));
-                    poly.Points.Add(MouseDownEnd);
-                    poly.Points.Add(new PointLatLng(MouseDownEnd.Lat, MouseDownStart.Lng));
-
-                    foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
-                    {
-                        if (poly.IsInside(marker.Position))
-                        {
-                            try
-                            {
-                                if (marker.Tag != null)
-                                {
-                                    groupmarkeradd(marker);
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                log.Error(ex);
-                            }
-                        }
-                    }
-
-                    isMouseDraging = false;
-                    return;
-                }
-                if (!isMouseDraging)
-                {
-                    if (CurentRectMarker != null)
-                    {
-                        // cant add WP in existing rect
-                    }
-                    else
-                    {
-                        AddWPToMap(currentMarker.Position.Lat, currentMarker.Position.Lng, 0);
-                    }
-                }
-                else
-                {
-                    if (wpMarkersGroup.Count > 0)
-                    {
-                        Dictionary<string, PointLatLng> dest = new Dictionary<string, PointLatLng>();
-
-                        var markers = MainMap.Overlays.First(a => a.Id == "WPOverlay");
-
-                        foreach (var markerid in wpMarkersGroup.Distinct())
-                        {
-                            for (int a = 0; a < markers.Markers.Count; a++)
-                            {
-                                var marker = markers.Markers[a];
-
-                                if (marker.Tag != null && marker.Tag.ToString() == markerid.ToString())
-                                {
-                                    dest[marker.Tag.ToString()] = marker.Position;
-                                    break;
-                                }
-                            }
-                        }
-
-                        foreach (KeyValuePair<string, PointLatLng> item in dest)
-                        {
-                            var value = item.Value;
-                            quickadd = true;
-                            CallMeDrag(item.Key, value.Lat, value.Lng, -1);
-                            quickadd = false;
-                        }
-
-                        MainMap.SelectedArea = RectLatLng.Empty;
-                        wpMarkersGroup.Clear();
-                        // redraw to remove selection
-                        writeKML();
-
-                        CurentRectMarker = null;
-                    }
-
-                    if (CurentRectMarker != null && CurentRectMarker.InnerMarker != null)
-                    {
-                        if (CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
-                        {
-                            try
-                            {
-                                drawnpolygon.Points[
-                                        int.Parse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1] =
-                                    new PointLatLng(MouseDownEnd.Lat, MouseDownEnd.Lng);
-                                MainMap.UpdatePolygonLocalPosition(drawnpolygon);
-                                MainMap.Invalidate();
-                            }
-                            catch (Exception ex)
-                            {
-                                log.Error(ex);
-                            }
+                            zoomToTiffToolStripMenuItem_Click(this, null);
                         }
                         else
                         {
-                            CallMeDrag(CurentRectMarker.InnerMarker.Tag.ToString(), currentMarker.Position.Lat,
-                                currentMarker.Position.Lng, -2);
+                            contextMenuStripMain.Visible = false;
+                            TiffOverlayToolStripMenuItem_Click(this, null);
                         }
-                        CurentRectMarker = null;
+                        if (layerPolygonsOverlay.Polygons.Count > 0)
+                            zoomicon.IsSelected = true;
+                        else
+                            zoomicon.IsSelected = false;
+                        return;
+
                     }
+                    
+                    return;
+                }
+
+                if (e.Button == MouseButtons.Middle)
+                {
+                    return;
+                }
+                else if (e.Button == MouseButtons.None)
+                {
+                    return;
+                }
+
+                MouseDownEnd = MainMap.FromLocalToLatLng(e.X, e.Y);
+                MouseDownEndPoint = new GPoint(e.X, e.Y);
+
+                if (isMouseDown && e.Button == MouseButtons.Left) // mouse down on some other object and dragged to here.
+                {
+                    if (Control.ModifierKeys == Keys.Control)
+                    {
+                        // group select wps
+                        GMapPolygon poly = new GMapPolygon(new List<PointLatLng>(), "temp");
+
+                        poly.Points.Add(MouseDownStart);
+                        poly.Points.Add(new PointLatLng(MouseDownStart.Lat, MouseDownEnd.Lng));
+                        poly.Points.Add(MouseDownEnd);
+                        poly.Points.Add(new PointLatLng(MouseDownEnd.Lat, MouseDownStart.Lng));
+
+                        foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
+                        {
+                            if (poly.IsInside(marker.Position))
+                            {
+                                try
+                                {
+                                    if (marker.Tag != null)
+                                    {
+                                        wpMarkersGroupAdd(marker);
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    log.Error(ex);
+                                }
+                            }
+                        }
+
+                        return;
+                    }
+                    else if (Control.ModifierKeys == Keys.Alt)
+                    {
+                        // group select wps
+                        GMapPolygon poly = new GMapPolygon(new List<PointLatLng>(), "temp");
+
+                        poly.Points.Add(MouseDownStart);
+                        poly.Points.Add(new PointLatLng(MouseDownStart.Lat, MouseDownEnd.Lng));
+                        poly.Points.Add(MouseDownEnd);
+                        poly.Points.Add(new PointLatLng(MouseDownEnd.Lat, MouseDownStart.Lng));
+
+                        foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
+                        {
+                            if (poly.IsInside(marker.Position))
+                            {
+                                try
+                                {
+                                    if (marker.Tag != null)
+                                    {
+                                        polygonMarkersGroupAdd(marker);
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    log.Error(ex);
+                                }
+                            }
+                        }
+
+                        return;
+                    }
+                    else if (CurrentMidLine is GMapMarkerPlus)
+                    {
+                        int pnt2 = 0;
+                        var midline = CurrentMidLine.Tag as midline;
+                        // var pnt1 = int.Parse(midline.now.Tag);
+
+                        if (IsDrawPolygongridMode && midline.now != null)
+                        {
+                            //点击到多边形中线
+                            var idx = drawnpolygon.Points.IndexOf(midline.now);
+                            drawnpolygon.Points.Insert(idx + 1,
+                                new PointLatLng(CurrentMidLine.Position.Lat, CurrentMidLine.Position.Lng));
+
+                            redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
+                        }
+                        else
+                        {
+                            if (int.TryParse(midline.next.Tag, out pnt2))
+                            {
+                                //点击到航点中线
+                                if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue ==
+                                    MAVLink.MAV_MISSION_TYPE.FENCE)
+                                {
+                                    var prevtype = Commands.Rows[(int)Math.Max(pnt2 - 2, 0)].Cells[Command.Index].Value.ToString();
+                                    // match type of prev row
+                                    InsertCommand(pnt2 - 1, (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD), prevtype),
+                                        0, 0, 0, 0,
+                                        CurrentMidLine.Position.Lng,
+                                        CurrentMidLine.Position.Lat, 0);
+
+                                    ReCalcFence(pnt2 - 1, true, false);
+                                }
+                                else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue ==
+                                         MAVLink.MAV_MISSION_TYPE.MISSION)
+                                {
+
+                                    InsertCommand(pnt2 - 1, MAVLink.MAV_CMD.WAYPOINT, 0, 0, 0, 0,
+                                        CurrentMidLine.Position.Lng,
+                                        CurrentMidLine.Position.Lat, float.Parse(TXT_DefaultAlt.Text));
+                                }
+                            }
+                        }
+
+                        CurrentMidLine = null;
+                        writeKML();
+                        return;
+                    }
+
+                    if (wpMarkersGroup.Count > 0 || polygonMarkersGroup.Count > 0)
+                    {
+                        if (wpMarkersGroup.Count > 0)
+                        {
+                            wpMarkersGroupClear();
+                            // redraw to remove selection
+                        }
+                        if (polygonMarkersGroup.Count > 0)
+                        {
+                            polygonMarkersGroupClear();
+                            // redraw to remove selection
+                        }
+                        return;
+                    }
+                    // drag finished, update poi db
+                    if (CurrentPOIMarker != null)
+                    {
+                        POI.POIMove(CurrentPOIMarker);
+                        CurrentPOIMarker = null;
+                    }
+
+                    if (!isMouseDraging)
+                    {
+                        if (CurentRectMarker != null)
+                        {
+                            // cant add WP in existing rect
+                        }
+                        else
+                        {
+                            AddWPToMap(currentMarker.Position.Lat, currentMarker.Position.Lng, 0);
+                        }
+                    }
+                    else
+                    {
+                        if (CurentRectMarker != null && CurentRectMarker.InnerMarker != null)
+                        {
+                            if (CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
+                            {
+                                try
+                                {
+                                    drawnpolygon.Points[
+                                            int.Parse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1
+                                            ] = new PointLatLng(MouseDownEnd.Lat, MouseDownEnd.Lng);
+
+                                    redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
+                                }
+                                catch (Exception ex)
+                                {
+                                    log.Error(ex);
+                                }
+                            }
+                            else if ((CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.Tag.ToString(), @"^\d+$")))
+                            {
+                                CallMeDrag(CurentRectMarker.InnerMarker.Tag.ToString(), currentMarker.Position.Lat,
+                                currentMarker.Position.Lng, -2);
+                            }
+                            CurentRectMarker = null;
+                        }
+                    }
+
                 }
             }
-
-            isMouseDraging = false;
+            finally
+            {
+                MainMap.SelectedArea = RectLatLng.Empty;
+                isMouseDown = false;
+                isMouseDroppable = false;
+                isMouseDraggable = false;
+                isMouseDraging = false;
+                CurentRectMarker = null;
+            }
         }
 
         private void ReCalcFence(int rowno, bool insert, bool delete)
@@ -7734,7 +8714,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         private void MainMap_OnMarkerClick(GMapMarker item, object ei)
         {
             var e = ei as MouseEventArgs;
-            int answer;
+            //int answer;
             try // when dragging item can sometimes be null
             {
                 if (item.Tag == null)
@@ -7747,7 +8727,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 {
                     try
                     {
-                        groupmarkeradd(item);
+                        wpMarkersGroupAdd(item);
 
                         log.Info("add marker to group");
                     }
@@ -7756,7 +8736,20 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         log.Error(ex);
                     }
                 }
-                if (int.TryParse(item.Tag.ToString(), out answer))
+                else if (Control.ModifierKeys == Keys.Alt)
+                {
+                    try
+                    {
+                        polygonMarkersGroupAdd(item);
+
+                        log.Info("add marker to group");
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                    }
+                }
+                if (int.TryParse(item.Tag.ToString(), out int answer))
                 {
                     Commands.CurrentCell = Commands[0, answer - 1];
                 }

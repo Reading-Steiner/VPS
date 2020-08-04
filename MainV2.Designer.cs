@@ -53,6 +53,10 @@ namespace MissionPlanner
             this.MenuDrawPolygon = new MissionPlanner.Controls.HLToolStripButton();
             this.MenuClearPolygon = new MissionPlanner.Controls.HLToolStripButton();
             this.Separator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.MenuSurveyGrid = new MissionPlanner.Controls.HLToolStripButton();
+            this.MenuClearWP = new MissionPlanner.Controls.HLToolStripButton();
+            this.MenuReadWP = new MissionPlanner.Controls.HLToolStripButton();
+            this.MenuSaveWP = new MissionPlanner.Controls.HLToolStripButton();
             this.Separator4 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuConnect = new System.Windows.Forms.ToolStripButton();
             this.toolStripConnectionControl = new MissionPlanner.Controls.ToolStripConnectionControl();
@@ -86,6 +90,10 @@ namespace MissionPlanner
             this.MenuDrawPolygon,
             this.MenuClearPolygon,
             this.Separator3,
+            this.MenuSurveyGrid,
+            this.MenuClearWP,
+            this.MenuReadWP,
+            this.MenuSaveWP,
             this.Separator4,
             this.MenuConnect,
             this.toolStripConnectionControl});
@@ -145,7 +153,7 @@ namespace MissionPlanner
             resources.ApplyResources(this.MenuFlightPlannerOpen, "MenuFlightPlannerOpen");
             this.MenuFlightPlannerOpen.Margin = new System.Windows.Forms.Padding(0);
             this.MenuFlightPlannerOpen.Name = "MenuFlightPlannerOpen";
-            this.MenuFlightPlannerOpen.Click += new System.EventHandler(this.FlightPlannerShow);
+            this.MenuFlightPlannerOpen.Click += new System.EventHandler(this.MenuFlightPlannerOpen_Click);
             // 
             // MenuFlightPlannerClose
             // 
@@ -238,6 +246,62 @@ namespace MissionPlanner
             // 
             this.Separator3.Name = "Separator3";
             resources.ApplyResources(this.Separator3, "Separator3");
+            // 
+            // MenuSurveyGrid
+            // 
+            this.MenuDrawPolygon.BottomTransparent = 4;
+            resources.ApplyResources(this.MenuSurveyGrid, "MenuSurveyGrid");
+            this.MenuSurveyGrid.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MenuSurveyGrid.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuClearPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.MenuSurveyGrid.Image = global::MissionPlanner.Properties.Resources._default;
+            this.MenuSurveyGrid.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuClearPolygon.MyChecked = false;
+            this.MenuSurveyGrid.Name = "MenuSurveyGrid";
+            this.MenuClearPolygon.TopTransparent = 8;
+            this.MenuSurveyGrid.Click += new System.EventHandler(this.MenuSurveyGrid_Click);
+            // 
+            // MenuClearWP
+            // 
+            this.MenuDrawPolygon.BottomTransparent = 4;
+            resources.ApplyResources(this.MenuClearWP, "MenuClearWP");
+            this.MenuClearWP.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MenuClearWP.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuClearPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.MenuClearWP.Image = global::MissionPlanner.Properties.Resources._default;
+            this.MenuClearWP.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuClearPolygon.MyChecked = false;
+            this.MenuClearWP.Name = "MenuClearWP";
+            this.MenuClearPolygon.TopTransparent = 8;
+            this.MenuClearWP.Click += new System.EventHandler(this.MenuClearWP_Click);
+            // 
+            // MenuReadWP
+            // 
+            this.MenuDrawPolygon.BottomTransparent = 4;
+            resources.ApplyResources(this.MenuReadWP, "MenuReadWP");
+            this.MenuReadWP.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MenuReadWP.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuClearPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.MenuReadWP.Image = global::MissionPlanner.Properties.Resources._default;
+            this.MenuReadWP.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuClearPolygon.MyChecked = false;
+            this.MenuReadWP.Name = "MenuReadWP";
+            this.MenuClearPolygon.TopTransparent = 8;
+            this.MenuReadWP.Click += new System.EventHandler(this.MenuReadWP_Click);
+            // 
+            // MenuSaveWP
+            // 
+            this.MenuDrawPolygon.BottomTransparent = 4;
+            resources.ApplyResources(this.MenuSaveWP, "MenuSaveWP");
+            this.MenuSaveWP.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MenuSaveWP.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuClearPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.MenuSaveWP.Image = global::MissionPlanner.Properties.Resources._default;
+            this.MenuSaveWP.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuClearPolygon.MyChecked = false;
+            this.MenuSaveWP.Name = "MenuSaveWP";
+            this.MenuClearPolygon.TopTransparent = 8;
+            this.MenuSaveWP.Click += new System.EventHandler(this.MenuSaveWP_Click);
             // 
             // Separator4
             // 
@@ -363,6 +427,10 @@ namespace MissionPlanner
         public Controls.HLToolStripButton MenuLayerManager;
         public Controls.HLToolStripButton MenuDrawPolygon;
         public Controls.HLToolStripButton MenuClearPolygon;
+        public Controls.HLToolStripButton MenuSurveyGrid;
+        public Controls.HLToolStripButton MenuClearWP;
+        public Controls.HLToolStripButton MenuReadWP;
+        public Controls.HLToolStripButton MenuSaveWP;
 
         public System.Windows.Forms.ToolStripButton MenuInitConfig;
         public System.Windows.Forms.ToolStripButton MenuSimulation;
