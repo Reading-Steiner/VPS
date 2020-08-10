@@ -1180,8 +1180,8 @@ namespace MissionPlanner
 
             MainMenu.BackgroundImage = displayicons.bg;
 
-            MenuFlightPlannerClose.Image = displayicons.fd;
-            MenuFlightPlannerOpen.Image = displayicons.fp;
+            //MenuFlightPlannerClose.Image = displayicons.fd;
+            //MenuFlightPlannerOpen.Image = displayicons.fp;
             MenuInitConfig.Image = displayicons.initsetup;
             MenuSimulation.Image = displayicons.sim;
             MenuConfigTune.Image = displayicons.config_tuning;
@@ -1485,6 +1485,7 @@ namespace MissionPlanner
 
         public void LoadTiffLayer()
         {
+            this.MenuLoadLayer.HightLightBackgroundColor = Color.Red;
             LayerReader reader = new LayerReader();
             DialogResult result = reader.ShowDialog();
             if (result == DialogResult.OK)
@@ -1495,9 +1496,9 @@ namespace MissionPlanner
             }
             else if (result == DialogResult.Cancel)
             {
-
                 reader.Dispose();
                 reader.Close();
+                this.MenuLoadLayer.HightLightBackgroundColor = Color.Lime;
             }
         }
 
@@ -1530,11 +1531,15 @@ namespace MissionPlanner
                 }
                 else
                 {
+                    this.MenuLoadLayer.HightLightBackgroundColor = Color.Lime;
                     return false;
                 }
             }
             else
+            {
+                this.MenuLoadLayer.HightLightBackgroundColor = Color.Lime;
                 return false;
+            }
         }
         private void CallbackWhenDone(IAsyncResult iar)
         {
@@ -1548,6 +1553,7 @@ namespace MissionPlanner
                 CurrentLayer = geoBitmap;
                 ShowLayerOverlay(geoBitmap);
             }
+            this.MenuLoadLayer.HightLightBackgroundColor = Color.Lime;
         }
 
         private void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
@@ -1589,14 +1595,18 @@ namespace MissionPlanner
 
         private void MenuReadWP_Click(object sender, EventArgs e)
         {
+            this.MenuReadWP.MyChecked = true;
             if (MenuReadWP.Visible)
                 GCSViews.FlightPlanner.instance.LoadWPFile();
+            this.MenuReadWP.MyChecked = false;
         }
 
         private void MenuSaveWP_Click(object sender, EventArgs e)
         {
+            this.MenuSaveWP.MyChecked = true;
             if (MenuSaveWP.Visible)
                 GCSViews.FlightPlanner.instance.SaveWPFile();
+            this.MenuSaveWP.MyChecked = false;
         }
         #endregion
 

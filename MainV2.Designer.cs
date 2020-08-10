@@ -177,11 +177,10 @@ namespace MissionPlanner
             this.WPGobalConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.WPGobalConfig.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.WPGobalConfig.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.WPGobalConfig.Image = global::MissionPlanner.Properties.Resources._default;
+            resources.ApplyResources(this.WPGobalConfig, "WPGobalConfig");
             this.WPGobalConfig.Margin = new System.Windows.Forms.Padding(0);
             this.WPGobalConfig.MyChecked = false;
             this.WPGobalConfig.Name = "WPGobalConfig";
-            resources.ApplyResources(this.WPGobalConfig, "WPGobalConfig");
             this.WPGobalConfig.TopTransparent = 8;
             this.WPGobalConfig.Click += new System.EventHandler(this.WPGobalConfig_Click);
             // 
@@ -190,7 +189,7 @@ namespace MissionPlanner
             this.MenuLoadLayer.BottomTransparent = 4;
             this.MenuLoadLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuLoadLayer.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuLoadLayer.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.MenuLoadLayer.HightLightBackgroundColor = System.Drawing.Color.Lime;
             resources.ApplyResources(this.MenuLoadLayer, "MenuLoadLayer");
             this.MenuLoadLayer.Margin = new System.Windows.Forms.Padding(0);
             this.MenuLoadLayer.MyChecked = false;
@@ -203,7 +202,7 @@ namespace MissionPlanner
             this.MenuZoomToLayer.BottomTransparent = 4;
             this.MenuZoomToLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuZoomToLayer.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuZoomToLayer.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.MenuZoomToLayer.HightLightBackgroundColor = System.Drawing.Color.Lime;
             resources.ApplyResources(this.MenuZoomToLayer, "MenuZoomToLayer");
             this.MenuZoomToLayer.Margin = new System.Windows.Forms.Padding(0);
             this.MenuZoomToLayer.MyChecked = false;
@@ -216,12 +215,11 @@ namespace MissionPlanner
             this.MenuLayerManager.BottomTransparent = 4;
             this.MenuLayerManager.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuLayerManager.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuLayerManager.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.MenuLayerManager.Image = global::MissionPlanner.Properties.Resources._default;
+            this.MenuLayerManager.HightLightBackgroundColor = System.Drawing.Color.Lime;
+            resources.ApplyResources(this.MenuLayerManager, "MenuLayerManager");
             this.MenuLayerManager.Margin = new System.Windows.Forms.Padding(0);
             this.MenuLayerManager.MyChecked = false;
             this.MenuLayerManager.Name = "MenuLayerManager";
-            resources.ApplyResources(this.MenuLayerManager, "MenuLayerManager");
             this.MenuLayerManager.TopTransparent = 8;
             this.MenuLayerManager.Click += new System.EventHandler(this.MenuLayerManager_Click);
             // 
@@ -232,29 +230,27 @@ namespace MissionPlanner
             // 
             // MenuDrawPolygon
             // 
+            resources.ApplyResources(this.MenuDrawPolygon, "MenuDrawPolygon");
             this.MenuDrawPolygon.BottomTransparent = 4;
             this.MenuDrawPolygon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuDrawPolygon.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.MenuDrawPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.MenuDrawPolygon.Image = global::MissionPlanner.Properties.Resources._default;
             this.MenuDrawPolygon.Margin = new System.Windows.Forms.Padding(0);
             this.MenuDrawPolygon.MyChecked = false;
             this.MenuDrawPolygon.Name = "MenuDrawPolygon";
-            resources.ApplyResources(this.MenuDrawPolygon, "MenuDrawPolygon");
             this.MenuDrawPolygon.TopTransparent = 8;
             this.MenuDrawPolygon.Click += new System.EventHandler(this.MenuDrawPolygon_Click);
             // 
             // MenuClearPolygon
             // 
+            resources.ApplyResources(this.MenuClearPolygon, "MenuClearPolygon");
             this.MenuClearPolygon.BottomTransparent = 4;
             this.MenuClearPolygon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuClearPolygon.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.MenuClearPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.MenuClearPolygon.Image = global::MissionPlanner.Properties.Resources._default;
             this.MenuClearPolygon.Margin = new System.Windows.Forms.Padding(0);
             this.MenuClearPolygon.MyChecked = false;
             this.MenuClearPolygon.Name = "MenuClearPolygon";
-            resources.ApplyResources(this.MenuClearPolygon, "MenuClearPolygon");
             this.MenuClearPolygon.TopTransparent = 8;
             this.MenuClearPolygon.Click += new System.EventHandler(this.MenuClearPolygon_Click);
             // 
@@ -265,57 +261,53 @@ namespace MissionPlanner
             // 
             // MenuSurveyGrid
             // 
-            this.MenuSurveyGrid.BottomTransparent = 0;
+            this.MenuSurveyGrid.BottomTransparent = 4;
             this.MenuSurveyGrid.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuSurveyGrid.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuSurveyGrid.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.MenuSurveyGrid.Image = global::MissionPlanner.Properties.Resources._default;
+            this.MenuSurveyGrid.HightLightBackgroundColor = System.Drawing.Color.Aqua;
+            resources.ApplyResources(this.MenuSurveyGrid, "MenuSurveyGrid");
             this.MenuSurveyGrid.Margin = new System.Windows.Forms.Padding(0);
             this.MenuSurveyGrid.MyChecked = false;
             this.MenuSurveyGrid.Name = "MenuSurveyGrid";
-            resources.ApplyResources(this.MenuSurveyGrid, "MenuSurveyGrid");
             this.MenuSurveyGrid.TopTransparent = 8;
             this.MenuSurveyGrid.Click += new System.EventHandler(this.MenuSurveyGrid_Click);
             // 
             // MenuClearWP
             // 
-            this.MenuClearWP.BottomTransparent = 0;
+            this.MenuClearWP.BottomTransparent = 4;
             this.MenuClearWP.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuClearWP.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuClearWP.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.MenuClearWP.Image = global::MissionPlanner.Properties.Resources._default;
+            this.MenuClearWP.HightLightBackgroundColor = System.Drawing.Color.Aqua;
+            resources.ApplyResources(this.MenuClearWP, "MenuClearWP");
             this.MenuClearWP.Margin = new System.Windows.Forms.Padding(0);
             this.MenuClearWP.MyChecked = false;
             this.MenuClearWP.Name = "MenuClearWP";
-            resources.ApplyResources(this.MenuClearWP, "MenuClearWP");
             this.MenuClearWP.TopTransparent = 8;
             this.MenuClearWP.Click += new System.EventHandler(this.MenuClearWP_Click);
             // 
             // MenuReadWP
             // 
-            this.MenuReadWP.BottomTransparent = 0;
+            this.MenuReadWP.BottomTransparent = 4;
             this.MenuReadWP.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuReadWP.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuReadWP.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.MenuReadWP.Image = global::MissionPlanner.Properties.Resources._default;
+            this.MenuReadWP.HightLightBackgroundColor = System.Drawing.Color.Aqua;
+            resources.ApplyResources(this.MenuReadWP, "MenuReadWP");
             this.MenuReadWP.Margin = new System.Windows.Forms.Padding(0);
             this.MenuReadWP.MyChecked = false;
             this.MenuReadWP.Name = "MenuReadWP";
-            resources.ApplyResources(this.MenuReadWP, "MenuReadWP");
             this.MenuReadWP.TopTransparent = 8;
             this.MenuReadWP.Click += new System.EventHandler(this.MenuReadWP_Click);
             // 
             // MenuSaveWP
             // 
-            this.MenuSaveWP.BottomTransparent = 0;
+            this.MenuSaveWP.BottomTransparent = 4;
             this.MenuSaveWP.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuSaveWP.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuSaveWP.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.MenuSaveWP.Image = global::MissionPlanner.Properties.Resources._default;
+            this.MenuSaveWP.HightLightBackgroundColor = System.Drawing.Color.Aqua;
+            resources.ApplyResources(this.MenuSaveWP, "MenuSaveWP");
             this.MenuSaveWP.Margin = new System.Windows.Forms.Padding(0);
             this.MenuSaveWP.MyChecked = false;
             this.MenuSaveWP.Name = "MenuSaveWP";
-            resources.ApplyResources(this.MenuSaveWP, "MenuSaveWP");
             this.MenuSaveWP.TopTransparent = 8;
             this.MenuSaveWP.Click += new System.EventHandler(this.MenuSaveWP_Click);
             // 
@@ -327,9 +319,9 @@ namespace MissionPlanner
             // MenuConnect
             // 
             this.MenuConnect.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            resources.ApplyResources(this.MenuConnect, "MenuConnect");
             this.MenuConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuConnect.ForeColor = System.Drawing.SystemColors.ControlLight;
-            resources.ApplyResources(this.MenuConnect, "MenuConnect");
             this.MenuConnect.Margin = new System.Windows.Forms.Padding(0);
             this.MenuConnect.Name = "MenuConnect";
             this.MenuConnect.Click += new System.EventHandler(this.MenuConnect_Click);
