@@ -367,6 +367,24 @@
   <ItemGroup>
     <Compile Include="Antenna\TrackerGeneric.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="Controls\BoardComboBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\BoardComboBox.Designer.cs">
+      <DependentUpon>BoardComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\BoardEditableLabel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\BoardEditableLabel.Designer.cs">
+      <DependentUpon>BoardEditableLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\BoardLabel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\BoardLabel.Designer.cs">
+      <DependentUpon>BoardLabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ConnectionOptions.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -375,6 +393,12 @@
     </Compile>
     <Compile Include="Controls\ControlSensorsStatus.Designer.cs">
       <DependentUpon>ControlSensorsStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ComboDataList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ComboDataList.Designer.cs">
+      <DependentUpon>ComboDataList.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\DevopsUI.cs">
       <SubType>UserControl</SubType>
@@ -406,7 +430,9 @@
     <Compile Include="Controls\LayerManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\LayerManager.Designer.cs" />
+    <Compile Include="Controls\LayerManager.Designer.cs">
+      <DependentUpon>LayerManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LayerReader.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -537,7 +563,19 @@
     <Compile Include="GCSViews\ConfigurationView\DeviceInfo.cs" />
     <Compile Include="GCSViews\ConfigurationView\UAVCANModel.cs" />
     <Compile Include="GCSViews\ConfigurationView\uitype.cs" />
+    <Compile Include="GCSViews\GobalWPConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GCSViews\GobalWPConfig.Designer.cs">
+      <DependentUpon>GobalWPConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Grid\GridUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Grid\GridUI.Designer.cs">
+      <DependentUpon>GridUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Joystick\JoystickAxis.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -711,6 +749,18 @@
     <Compile Include="Log\LogStrings.Designer.cs">
       <DependentUpon>LogStrings.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\BoardComboBox.resx">
+      <DependentUpon>BoardComboBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\BoardEditableLabel.resx">
+      <DependentUpon>BoardEditableLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\BoardLabel.resx">
+      <DependentUpon>BoardLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ComboDataList.resx">
+      <DependentUpon>ComboDataList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlSensorsStatus.resx">
       <DependentUpon>ControlSensorsStatus.cs</DependentUpon>
     </EmbeddedResource>
@@ -723,9 +773,15 @@
     <EmbeddedResource Include="Controls\GMAPCache.resx">
       <DependentUpon>GMAPCache.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\LayerManager.resx" />
-    <EmbeddedResource Include="Controls\LayerManager.zh-CHS.resx" />
-    <EmbeddedResource Include="Controls\LayerManager.zh-Hans.resx" />
+    <EmbeddedResource Include="Controls\LayerManager.resx">
+      <DependentUpon>LayerManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerManager.zh-CHS.resx">
+      <DependentUpon>LayerManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerManager.zh-Hans.resx">
+      <DependentUpon>LayerManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\LayerReader.resx">
       <DependentUpon>LayerReader.cs</DependentUpon>
     </EmbeddedResource>
@@ -868,8 +924,24 @@
     <EmbeddedResource Include="GCSViews\ConfigurationView\ConfigUserDefined.resx">
       <DependentUpon>ConfigUserDefined.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Grid\GridUI.zh-CHT.resx" />
-    <EmbeddedResource Include="Grid\GridUI.zh-Hans.resx" />
+    <EmbeddedResource Include="GCSViews\GobalWPConfig.resx">
+      <DependentUpon>GobalWPConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Grid\GridUI.resx">
+      <DependentUpon>GridUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Grid\GridUI.ru-KZ.resx">
+      <DependentUpon>GridUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Grid\GridUI.tr.resx">
+      <DependentUpon>GridUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Grid\GridUI.zh-CHT.resx">
+      <DependentUpon>GridUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Grid\GridUI.zh-Hans.resx">
+      <DependentUpon>GridUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Joystick\JoystickAxis.resx" />
     <EmbeddedResource Include="Log\LogStrings.resx">
       <DependentUpon>LogStrings.cs</DependentUpon>
@@ -1074,9 +1146,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Grid\GridPlugin.cs" />
-    <Compile Include="Grid\GridUI.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Joystick\JoystickSetup.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1420,9 +1489,6 @@
     </Compile>
     <Compile Include="GeoRef\georefimage.Designer.cs">
       <DependentUpon>georefimage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Grid\GridUI.Designer.cs">
-      <DependentUpon>GridUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Joystick\JoystickSetup.Designer.cs">
       <DependentUpon>JoystickSetup.cs</DependentUpon>
@@ -4034,15 +4100,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GeoRef\georefimage.zh-TW.resx">
       <DependentUpon>georefimage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Grid\GridUI.resx">
-      <DependentUpon>GridUI.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Grid\GridUI.ru-KZ.resx">
-      <DependentUpon>GridUI.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Grid\GridUI.tr.resx">
-      <DependentUpon>GridUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Joystick\JoystickSetup.resx">
       <DependentUpon>JoystickSetup.cs</DependentUpon>

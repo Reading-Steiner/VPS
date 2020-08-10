@@ -470,6 +470,12 @@
   <data name="Separator1.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 43</value>
   </data>
+  <data name="WPGobalConfig.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 43</value>
+  </data>
+  <data name="WPGobalConfig.Text" xml:space="preserve">
+    <value>Config</value>
+  </data>
   <data name="MenuLoadLayer.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAXCAYAAABqBU3hAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH
@@ -638,6 +644,18 @@
   </data>
   <data name="Separator3.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 43</value>
+  </data>
+  <data name="MenuSurveyGrid.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 43</value>
+  </data>
+  <data name="MenuClearWP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 43</value>
+  </data>
+  <data name="MenuReadWP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 43</value>
+  </data>
+  <data name="MenuSaveWP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 43</value>
   </data>
   <data name="Separator4.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 43</value>
@@ -1170,7 +1188,7 @@
     <value>status1</value>
   </data>
   <data name="&gt;&gt;status1.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.Status, MissionPlanner, Version=1.3.7521.23495, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.Status, VPS, Version=1.0.7522.28960, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;status1.Parent" xml:space="preserve">
     <value>panel1</value>
@@ -2927,23 +2945,29 @@
   <data name="&gt;&gt;Separator1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;WPGobalConfig.Name" xml:space="preserve">
+    <value>WPGobalConfig</value>
+  </data>
+  <data name="&gt;&gt;WPGobalConfig.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.HLToolStripButton, VPS, Version=1.0.7522.28960, Culture=neutral, PublicKeyToken=null</value>
+  </data>
   <data name="&gt;&gt;MenuLoadLayer.Name" xml:space="preserve">
     <value>MenuLoadLayer</value>
   </data>
   <data name="&gt;&gt;MenuLoadLayer.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23495, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.HLToolStripButton, VPS, Version=1.0.7522.28960, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuZoomToLayer.Name" xml:space="preserve">
     <value>MenuZoomToLayer</value>
   </data>
   <data name="&gt;&gt;MenuZoomToLayer.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23495, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.HLToolStripButton, VPS, Version=1.0.7522.28960, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuLayerManager.Name" xml:space="preserve">
     <value>MenuLayerManager</value>
   </data>
   <data name="&gt;&gt;MenuLayerManager.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23495, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.HLToolStripButton, VPS, Version=1.0.7522.28960, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;Separator2.Name" xml:space="preserve">
     <value>Separator2</value>
@@ -2955,19 +2979,43 @@
     <value>MenuDrawPolygon</value>
   </data>
   <data name="&gt;&gt;MenuDrawPolygon.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23495, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.HLToolStripButton, VPS, Version=1.0.7522.28960, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuClearPolygon.Name" xml:space="preserve">
     <value>MenuClearPolygon</value>
   </data>
   <data name="&gt;&gt;MenuClearPolygon.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.HLToolStripButton, MissionPlanner, Version=1.3.7521.23495, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.HLToolStripButton, VPS, Version=1.0.7522.28960, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;Separator3.Name" xml:space="preserve">
     <value>Separator3</value>
   </data>
   <data name="&gt;&gt;Separator3.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MenuSurveyGrid.Name" xml:space="preserve">
+    <value>MenuSurveyGrid</value>
+  </data>
+  <data name="&gt;&gt;MenuSurveyGrid.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.HLToolStripButton, VPS, Version=1.0.7522.28960, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;MenuClearWP.Name" xml:space="preserve">
+    <value>MenuClearWP</value>
+  </data>
+  <data name="&gt;&gt;MenuClearWP.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.HLToolStripButton, VPS, Version=1.0.7522.28960, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;MenuReadWP.Name" xml:space="preserve">
+    <value>MenuReadWP</value>
+  </data>
+  <data name="&gt;&gt;MenuReadWP.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.HLToolStripButton, VPS, Version=1.0.7522.28960, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;MenuSaveWP.Name" xml:space="preserve">
+    <value>MenuSaveWP</value>
+  </data>
+  <data name="&gt;&gt;MenuSaveWP.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.HLToolStripButton, VPS, Version=1.0.7522.28960, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;Separator4.Name" xml:space="preserve">
     <value>Separator4</value>
@@ -2985,7 +3033,7 @@
     <value>toolStripConnectionControl</value>
   </data>
   <data name="&gt;&gt;toolStripConnectionControl.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.ToolStripConnectionControl, MissionPlanner, Version=1.3.7521.23495, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.ToolStripConnectionControl, VPS, Version=1.0.7522.28960, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuInitConfig.Name" xml:space="preserve">
     <value>MenuInitConfig</value>

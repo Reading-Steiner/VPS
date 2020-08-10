@@ -173,6 +173,9 @@
   <data name="&gt;&gt;CHK_copter_headinghold.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+  <data name="&gt;&gt;NUM_UpDownFlySpeed.Parent" xml:space="preserve">
+    <value>groupBox6</value>
+  </data>
   <data name="&gt;&gt;num_corridorwidth.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
@@ -259,7 +262,7 @@
     <value>Ground Elevation:</value>
   </data>
   <data name="&gt;&gt;groupBox_copter.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="label41.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -405,9 +408,6 @@
   <data name="groupBox5.Size" type="System.Drawing.Size, System.Drawing">
     <value>755, 80</value>
   </data>
-  <data name="label24.Size" type="System.Drawing.Size, System.Drawing">
-    <value>113, 12</value>
-  </data>
   <data name="&gt;&gt;NUM_spacing.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -416,9 +416,6 @@
   </data>
   <data name="&gt;&gt;lbl_pictures.ZOrder" xml:space="preserve">
     <value>15</value>
-  </data>
-  <data name="BUT_headingholdminus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>204, 46</value>
   </data>
   <data name="LBL_Lane_Dist.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -460,7 +457,7 @@
     <value>29, 12</value>
   </data>
   <data name="&gt;&gt;BUT_save.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;tabSimple.Parent" xml:space="preserve">
     <value>tabControl</value>
@@ -537,17 +534,14 @@
   <data name="lbl_pictures.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 12</value>
   </data>
-  <data name="label32.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 147</value>
   </data>
   <data name="&gt;&gt;CHK_internals.Name" xml:space="preserve">
     <value>CHK_internals</value>
   </data>
-  <data name="&gt;&gt;NUM_UpDownFlySpeed.Parent" xml:space="preserve">
-    <value>groupBox6</value>
+  <data name="label32.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;label21.Name" xml:space="preserve">
     <value>label21</value>
@@ -571,7 +565,7 @@
     <value>51, 21</value>
   </data>
   <data name="&gt;&gt;label37.Parent" xml:space="preserve">
-    <value>groupBox6</value>
+    <value>Hide</value>
   </data>
   <data name="&gt;&gt;NUM_Distance.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -900,9 +894,6 @@
   <data name="label9.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="BUT_headingholdminus.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="NUM_angle.Location" type="System.Drawing.Point, System.Drawing">
     <value>142, 66</value>
   </data>
@@ -948,8 +939,8 @@
   <data name="&gt;&gt;label5.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TXT_fovH.Location" type="System.Drawing.Point, System.Drawing">
-    <value>143, 247</value>
+  <data name="&gt;&gt;label31.ZOrder" xml:space="preserve">
+    <value>9</value>
   </data>
   <data name="label35.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
@@ -1020,8 +1011,8 @@
   <data name="CHK_usespeed.Text" xml:space="preserve">
     <value>Use speed for this mission</value>
   </data>
-  <data name="&gt;&gt;CMB_camera.ZOrder" xml:space="preserve">
-    <value>8</value>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;chk_stopstart.ZOrder" xml:space="preserve">
     <value>7</value>
@@ -1075,7 +1066,7 @@
     <value>groupBox5</value>
   </data>
   <data name="&gt;&gt;CHK_toandland.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="BUT_headingholdplus.Location" type="System.Drawing.Point, System.Drawing">
     <value>180, 46</value>
@@ -1213,7 +1204,7 @@
     <value>26</value>
   </data>
   <data name="&gt;&gt;CHK_usespeed.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;LBL_Alternating_lanes.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1285,7 +1276,7 @@
     <value>tabSimple</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>4</value>
   </data>
   <data name="rad_repeatservo.TabIndex" type="System.Int32, mscorlib">
     <value>27</value>
@@ -1395,9 +1386,6 @@
   <data name="&gt;&gt;CHK_toandland_RTL.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label17.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="chk_spiral.TabIndex" type="System.Int32, mscorlib">
     <value>66</value>
   </data>
@@ -1405,7 +1393,7 @@
     <value>2</value>
   </data>
   <data name="&gt;&gt;BUT_samplephoto.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="CHK_footprints.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 112</value>
@@ -1505,9 +1493,6 @@
   </data>
   <data name="&gt;&gt;num_setservolow.ZOrder" xml:space="preserve">
     <value>4</value>
-  </data>
-  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
   </data>
   <data name="&gt;&gt;tabGrid.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -1629,6 +1614,9 @@
   <data name="lbl_grndres.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
+  <data name="TXT_fovH.Location" type="System.Drawing.Point, System.Drawing">
+    <value>143, 247</value>
+  </data>
   <data name="label36.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
   </data>
@@ -1667,6 +1655,9 @@
   </data>
   <data name="&gt;&gt;label18.Parent" xml:space="preserve">
     <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;CMB_camera.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="&gt;&gt;TXT_cmpixel.ZOrder" xml:space="preserve">
     <value>6</value>
@@ -1792,7 +1783,7 @@
     <value>45</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>9</value>
   </data>
   <data name="label17.TabIndex" type="System.Int32, mscorlib">
     <value>36</value>
@@ -1808,9 +1799,6 @@
   </data>
   <data name="&gt;&gt;TXT_imgwidth.Parent" xml:space="preserve">
     <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;label34.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="lbl_pictures.Text" xml:space="preserve">
     <value>0.00</value>
@@ -1888,7 +1876,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;NUM_UpDownFlySpeed.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>2</value>
   </data>
   <data name="label41.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -2041,7 +2029,7 @@
     <value>groupBox6</value>
   </data>
   <data name="&gt;&gt;NUM_altitude.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>8</value>
   </data>
   <data name="TXT_fovV.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 21</value>
@@ -2163,8 +2151,8 @@
   <data name="&gt;&gt;NUM_leadin.Name" xml:space="preserve">
     <value>NUM_leadin</value>
   </data>
-  <data name="label21.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;label34.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Hide.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2263,7 +2251,7 @@
     <value>True</value>
   </data>
   <data name="&gt;&gt;CHK_toandland_RTL.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="NUM_copter_delay.Location" type="System.Drawing.Point, System.Drawing">
     <value>143, 21</value>
@@ -2361,9 +2349,6 @@
   <data name="label10.Text" xml:space="preserve">
     <value>Sensor Width [mm]</value>
   </data>
-  <data name="map.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
   <data name="&gt;&gt;CHK_toandland.Parent" xml:space="preserve">
     <value>Hide</value>
   </data>
@@ -2434,7 +2419,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;NUM_angle.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>5</value>
   </data>
   <data name="label40.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -2489,9 +2474,6 @@
   </data>
   <data name="NUM_leadin.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 21</value>
-  </data>
-  <data name="label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="&gt;&gt;lbl_photoevery.Parent" xml:space="preserve">
     <value>groupBox5</value>
@@ -2577,8 +2559,8 @@
   <data name="&gt;&gt;lbl_flighttime.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label31.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
+  <data name="&gt;&gt;LBL_Lane_Dist.Parent" xml:space="preserve">
+    <value>groupBox7</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
     <value>StartFrom</value>
@@ -2589,8 +2571,8 @@
   <data name="&gt;&gt;map.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>13</value>
+  <data name="label24.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 12</value>
   </data>
   <data name="&gt;&gt;label37.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2600,6 +2582,9 @@
   </data>
   <data name="lbl_area.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
+  </data>
+  <data name="tabGrid.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;NUM_leadin.ZOrder" xml:space="preserve">
     <value>6</value>
@@ -2674,8 +2659,11 @@
     <value>Control-S to save to file
 Control-O to load form file</value>
   </data>
-  <data name="&gt;&gt;label31.ZOrder" xml:space="preserve">
-    <value>9</value>
+  <data name="label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="label17.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2713,8 +2701,8 @@ Control-O to load form file</value>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Grid Options</value>
   </data>
-  <data name="&gt;&gt;label23.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 121</value>
   </data>
   <data name="&gt;&gt;CHK_copter_headinghold.Parent" xml:space="preserve">
     <value>groupBox_copter</value>
@@ -2735,7 +2723,7 @@ Control-O to load form file</value>
     <value>3, 423</value>
   </data>
   <data name="&gt;&gt;label24.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>1</value>
   </data>
   <data name="num_setservolow.Location" type="System.Drawing.Point, System.Drawing">
     <value>66, 164</value>
@@ -2764,8 +2752,8 @@ Control-O to load form file</value>
   <data name="TXT_imgwidth.Text" xml:space="preserve">
     <value>4608</value>
   </data>
-  <data name="&gt;&gt;map.Name" xml:space="preserve">
-    <value>map</value>
+  <data name="BUT_headingholdminus.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;NUM_overshoot2.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -3032,7 +3020,7 @@ Control-O to load form file</value>
     <value>Top, Bottom, Right</value>
   </data>
   <data name="&gt;&gt;NUM_split.Parent" xml:space="preserve">
-    <value>groupBox6</value>
+    <value>Hide</value>
   </data>
   <data name="chk_Corridor.Location" type="System.Drawing.Point, System.Drawing">
     <value>90, 197</value>
@@ -3088,6 +3076,9 @@ Control-O to load form file</value>
   <data name="&gt;&gt;CHK_usespeed.Name" xml:space="preserve">
     <value>CHK_usespeed</value>
   </data>
+  <data name="chk_stopstart.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 43</value>
   </data>
@@ -3105,6 +3096,9 @@ Control-O to load form file</value>
   </data>
   <data name="CHK_grid.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;NUM_angle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="label35.Location" type="System.Drawing.Point, System.Drawing">
     <value>382, 33</value>
@@ -3142,8 +3136,11 @@ Control-O to load form file</value>
   <data name="TXT_senswidth.Location" type="System.Drawing.Point, System.Drawing">
     <value>143, 97</value>
   </data>
-  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 12</value>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;groupBox7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -3181,8 +3178,8 @@ Control-O to load form file</value>
   <data name="chk_spiral.Text" xml:space="preserve">
     <value>Spiral</value>
   </data>
-  <data name="chk_stopstart.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="label31.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
     <value>17</value>
@@ -3202,8 +3199,8 @@ Control-O to load form file</value>
   <data name="label31.Size" type="System.Drawing.Size, System.Drawing">
     <value>113, 12</value>
   </data>
-  <data name="&gt;&gt;groupBox7.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 12</value>
   </data>
   <data name="label43.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3259,8 +3256,8 @@ Control-O to load form file</value>
   <data name="NUM_Distance.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 21</value>
   </data>
-  <data name="tabGrid.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="map.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
   <data name="&gt;&gt;NUM_Lane_Dist.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -3304,8 +3301,8 @@ Control-O to load form file</value>
   <data name="&gt;&gt;TXT_imgwidth.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="label21.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="NUM_split.TabIndex" type="System.Int32, mscorlib">
     <value>66</value>
@@ -3457,8 +3454,8 @@ Control-O to load form file</value>
   <data name="tabCamera.Size" type="System.Drawing.Size, System.Drawing">
     <value>245, 511</value>
   </data>
-  <data name="&gt;&gt;LBL_Lane_Dist.Parent" xml:space="preserve">
-    <value>groupBox7</value>
+  <data name="BUT_headingholdminus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>204, 46</value>
   </data>
   <data name="TXT_imgheight.Location" type="System.Drawing.Point, System.Drawing">
     <value>143, 71</value>
@@ -3504,6 +3501,9 @@ Control-O to load form file</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
+  </data>
+  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
+    <value>13</value>
   </data>
   <data name="&gt;&gt;lbl_minshutter.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -3623,7 +3623,7 @@ Control-O to load form file</value>
     <value>2</value>
   </data>
   <data name="&gt;&gt;CHK_camdirection.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>7</value>
   </data>
   <data name="label16.TabIndex" type="System.Int32, mscorlib">
     <value>35</value>
@@ -3634,8 +3634,8 @@ Control-O to load form file</value>
   <data name="label20.Text" xml:space="preserve">
     <value>Field of View Horizontal [m]</value>
   </data>
-  <data name="&gt;&gt;NUM_angle.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;map.Name" xml:space="preserve">
+    <value>map</value>
   </data>
   <data name="label24.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3655,8 +3655,8 @@ Control-O to load form file</value>
   <data name="label37.Size" type="System.Drawing.Size, System.Drawing">
     <value>131, 12</value>
   </data>
-  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="&gt;&gt;label23.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;CMB_startfrom.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -3754,8 +3754,8 @@ Control-O to load form file</value>
   <data name="&gt;&gt;lbl_footprint.ZOrder" xml:space="preserve">
     <value>12</value>
   </data>
-  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 121</value>
+  <data name="&gt;&gt;label17.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="LBL_copter_delay.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 23</value>
@@ -3764,7 +3764,7 @@ Control-O to load form file</value>
     <value>NoControl</value>
   </data>
   <data name="&gt;&gt;label26.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>3</value>
   </data>
   <data name="CHK_boundary.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 20</value>

@@ -124,8 +124,6 @@
             this.tabSimple = new System.Windows.Forms.TabPage();
             this.label38 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.label37 = new System.Windows.Forms.Label();
-            this.NUM_split = new System.Windows.Forms.NumericUpDown();
             this.CHK_usespeed = new System.Windows.Forms.CheckBox();
             this.label24 = new System.Windows.Forms.Label();
             this.NUM_UpDownFlySpeed = new System.Windows.Forms.NumericUpDown();
@@ -146,12 +144,8 @@
             this.BUT_Accept = new MissionPlanner.Controls.MyButton();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.Hide = new System.Windows.Forms.TabPage();
-            this.BUT_samplephoto = new MissionPlanner.Controls.MyButton();
-            this.BUT_save = new MissionPlanner.Controls.MyButton();
-            this.CHK_toandland_RTL = new System.Windows.Forms.CheckBox();
-            this.CHK_toandland = new System.Windows.Forms.CheckBox();
-            this.TRK_zoom = new MissionPlanner.Controls.MyTrackBar();
-            this.map = new MissionPlanner.Controls.myGMAP();
+            this.label37 = new System.Windows.Forms.Label();
+            this.NUM_split = new System.Windows.Forms.NumericUpDown();
             this.groupBox_copter = new System.Windows.Forms.GroupBox();
             this.chk_spline = new System.Windows.Forms.CheckBox();
             this.TXT_headinghold = new System.Windows.Forms.TextBox();
@@ -161,6 +155,12 @@
             this.CHK_copter_headinghold = new System.Windows.Forms.CheckBox();
             this.LBL_copter_delay = new System.Windows.Forms.Label();
             this.NUM_copter_delay = new System.Windows.Forms.NumericUpDown();
+            this.BUT_samplephoto = new MissionPlanner.Controls.MyButton();
+            this.BUT_save = new MissionPlanner.Controls.MyButton();
+            this.CHK_toandland_RTL = new System.Windows.Forms.CheckBox();
+            this.CHK_toandland = new System.Windows.Forms.CheckBox();
+            this.TRK_zoom = new MissionPlanner.Controls.MyTrackBar();
+            this.map = new MissionPlanner.Controls.myGMAP();
             this.groupBox5.SuspendLayout();
             this.tabCamera.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -186,16 +186,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.NUM_spacing)).BeginInit();
             this.tabSimple.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NUM_split)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_UpDownFlySpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_angle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_altitude)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.Hide.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TRK_zoom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_split)).BeginInit();
             this.groupBox_copter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_copter_delay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TRK_zoom)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox5
@@ -972,8 +972,6 @@
             // groupBox6
             // 
             resources.ApplyResources(this.groupBox6, "groupBox6");
-            this.groupBox6.Controls.Add(this.label37);
-            this.groupBox6.Controls.Add(this.NUM_split);
             this.groupBox6.Controls.Add(this.CHK_usespeed);
             this.groupBox6.Controls.Add(this.label24);
             this.groupBox6.Controls.Add(this.NUM_UpDownFlySpeed);
@@ -986,32 +984,6 @@
             this.groupBox6.Controls.Add(this.label1);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.TabStop = false;
-            // 
-            // label37
-            // 
-            resources.ApplyResources(this.label37, "label37");
-            this.label37.Name = "label37";
-            // 
-            // NUM_split
-            // 
-            resources.ApplyResources(this.NUM_split, "NUM_split");
-            this.NUM_split.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.NUM_split.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.NUM_split.Name = "NUM_split";
-            this.NUM_split.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.NUM_split.ValueChanged += new System.EventHandler(this.domainUpDown1_ValueChanged);
             // 
             // CHK_usespeed
             // 
@@ -1188,6 +1160,8 @@
             // Hide
             // 
             resources.ApplyResources(this.Hide, "Hide");
+            this.Hide.Controls.Add(this.label37);
+            this.Hide.Controls.Add(this.NUM_split);
             this.Hide.Controls.Add(this.groupBox_copter);
             this.Hide.Controls.Add(this.BUT_samplephoto);
             this.Hide.Controls.Add(this.BUT_save);
@@ -1196,72 +1170,30 @@
             this.Hide.Name = "Hide";
             this.Hide.UseVisualStyleBackColor = true;
             // 
-            // BUT_samplephoto
+            // label37
             // 
-            resources.ApplyResources(this.BUT_samplephoto, "BUT_samplephoto");
-            this.BUT_samplephoto.Name = "BUT_samplephoto";
-            this.BUT_samplephoto.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.label37, "label37");
+            this.label37.Name = "label37";
             // 
-            // BUT_save
+            // NUM_split
             // 
-            resources.ApplyResources(this.BUT_save, "BUT_save");
-            this.BUT_save.Name = "BUT_save";
-            this.BUT_save.UseVisualStyleBackColor = true;
-            // 
-            // CHK_toandland_RTL
-            // 
-            resources.ApplyResources(this.CHK_toandland_RTL, "CHK_toandland_RTL");
-            this.CHK_toandland_RTL.Checked = true;
-            this.CHK_toandland_RTL.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CHK_toandland_RTL.Name = "CHK_toandland_RTL";
-            this.CHK_toandland_RTL.UseVisualStyleBackColor = true;
-            // 
-            // CHK_toandland
-            // 
-            resources.ApplyResources(this.CHK_toandland, "CHK_toandland");
-            this.CHK_toandland.Checked = true;
-            this.CHK_toandland.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CHK_toandland.Name = "CHK_toandland";
-            this.CHK_toandland.UseVisualStyleBackColor = true;
-            // 
-            // TRK_zoom
-            // 
-            resources.ApplyResources(this.TRK_zoom, "TRK_zoom");
-            this.TRK_zoom.LargeChange = 0.005F;
-            this.TRK_zoom.Maximum = 22F;
-            this.TRK_zoom.Minimum = 2F;
-            this.TRK_zoom.Name = "TRK_zoom";
-            this.TRK_zoom.SmallChange = 0.001F;
-            this.TRK_zoom.TickFrequency = 1F;
-            this.TRK_zoom.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.TRK_zoom.Value = 2F;
-            this.TRK_zoom.Scroll += new System.EventHandler(this.trackBar1_Scroll);
-            // 
-            // map
-            // 
-            resources.ApplyResources(this.map, "map");
-            this.map.Bearing = 0F;
-            this.map.CanDragMap = true;
-            this.map.EmptyTileColor = System.Drawing.Color.Gray;
-            this.map.GrayScaleMode = false;
-            this.map.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
-            this.map.HoldInvalidation = false;
-            this.map.LevelsKeepInMemmory = 5;
-            this.map.MarkersEnabled = true;
-            this.map.MaxZoom = 19;
-            this.map.MinZoom = 2;
-            this.map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionWithoutCenter;
-            this.map.Name = "map";
-            this.map.NegativeMode = false;
-            this.map.PolygonsEnabled = true;
-            this.map.RetryLoadTile = 0;
-            this.map.RoutesEnabled = true;
-            this.map.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Fractional;
-            this.map.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
-            this.map.ShowTileGridLines = false;
-            this.map.Zoom = 3D;
-            this.map.MouseDown += new System.Windows.Forms.MouseEventHandler(this.map_MouseDown);
-            this.map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.map_MouseMove);
+            resources.ApplyResources(this.NUM_split, "NUM_split");
+            this.NUM_split.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.NUM_split.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NUM_split.Name = "NUM_split";
+            this.NUM_split.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // groupBox_copter
             // 
@@ -1334,6 +1266,73 @@
             0});
             this.NUM_copter_delay.Name = "NUM_copter_delay";
             // 
+            // BUT_samplephoto
+            // 
+            resources.ApplyResources(this.BUT_samplephoto, "BUT_samplephoto");
+            this.BUT_samplephoto.Name = "BUT_samplephoto";
+            this.BUT_samplephoto.UseVisualStyleBackColor = true;
+            // 
+            // BUT_save
+            // 
+            resources.ApplyResources(this.BUT_save, "BUT_save");
+            this.BUT_save.Name = "BUT_save";
+            this.BUT_save.UseVisualStyleBackColor = true;
+            // 
+            // CHK_toandland_RTL
+            // 
+            resources.ApplyResources(this.CHK_toandland_RTL, "CHK_toandland_RTL");
+            this.CHK_toandland_RTL.Checked = true;
+            this.CHK_toandland_RTL.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CHK_toandland_RTL.Name = "CHK_toandland_RTL";
+            this.CHK_toandland_RTL.UseVisualStyleBackColor = true;
+            // 
+            // CHK_toandland
+            // 
+            resources.ApplyResources(this.CHK_toandland, "CHK_toandland");
+            this.CHK_toandland.Checked = true;
+            this.CHK_toandland.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CHK_toandland.Name = "CHK_toandland";
+            this.CHK_toandland.UseVisualStyleBackColor = true;
+            // 
+            // TRK_zoom
+            // 
+            resources.ApplyResources(this.TRK_zoom, "TRK_zoom");
+            this.TRK_zoom.LargeChange = 0.005F;
+            this.TRK_zoom.Maximum = 22F;
+            this.TRK_zoom.Minimum = 2F;
+            this.TRK_zoom.Name = "TRK_zoom";
+            this.TRK_zoom.SmallChange = 0.001F;
+            this.TRK_zoom.TickFrequency = 1F;
+            this.TRK_zoom.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.TRK_zoom.Value = 2F;
+            this.TRK_zoom.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // map
+            // 
+            resources.ApplyResources(this.map, "map");
+            this.map.Bearing = 0F;
+            this.map.CanDragMap = true;
+            this.map.EmptyTileColor = System.Drawing.Color.Gray;
+            this.map.GrayScaleMode = false;
+            this.map.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.map.HoldInvalidation = false;
+            this.map.LevelsKeepInMemmory = 5;
+            this.map.MarkersEnabled = true;
+            this.map.MaxZoom = 19;
+            this.map.MinZoom = 2;
+            this.map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionWithoutCenter;
+            this.map.Name = "map";
+            this.map.NegativeMode = false;
+            this.map.PolygonsEnabled = true;
+            this.map.RetryLoadTile = 0;
+            this.map.RoutesEnabled = true;
+            this.map.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Fractional;
+            this.map.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.map.ShowTileGridLines = false;
+            this.map.Zoom = 3D;
+            this.map.MouseDown += new System.Windows.Forms.MouseEventHandler(this.map_MouseDown);
+            this.map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.map_MouseMove);
+            // 
             // GridUI
             // 
             resources.ApplyResources(this, "$this");
@@ -1347,6 +1346,7 @@
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.tabCamera.ResumeLayout(false);
+            this.tabCamera.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_setservono)).EndInit();
@@ -1377,7 +1377,6 @@
             this.tabSimple.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NUM_split)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_UpDownFlySpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_angle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_altitude)).EndInit();
@@ -1386,10 +1385,11 @@
             this.tabControl.ResumeLayout(false);
             this.Hide.ResumeLayout(false);
             this.Hide.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TRK_zoom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_split)).EndInit();
             this.groupBox_copter.ResumeLayout(false);
             this.groupBox_copter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_copter_delay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TRK_zoom)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1495,8 +1495,6 @@
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.NumericUpDown NUM_leadin;
-        private System.Windows.Forms.Label label37;
-        private System.Windows.Forms.NumericUpDown NUM_split;
         private System.Windows.Forms.CheckBox chk_stopstart;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label lbl_gndelev;
@@ -1529,5 +1527,7 @@
         private System.Windows.Forms.CheckBox CHK_copter_headinghold;
         private System.Windows.Forms.Label LBL_copter_delay;
         private System.Windows.Forms.NumericUpDown NUM_copter_delay;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.NumericUpDown NUM_split;
     }
 }

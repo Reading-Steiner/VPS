@@ -1448,6 +1448,15 @@ namespace MissionPlanner
             MyView.ShowScreen("FlightData");
         }
 
+        private void WPGobalConfig_Click(object sender, EventArgs e)
+        {
+            if (WPGobalConfig.Visible)
+            {
+                GCSViews.GobalWPConfig dlg = new GCSViews.GobalWPConfig();
+                dlg.ShowDialog();
+            }
+        }
+
         private void MenuLoadLayer_Click(object sender, EventArgs e)
         {
             if (MenuLoadLayer.Visible)
@@ -1462,8 +1471,10 @@ namespace MissionPlanner
 
         private void MenuLayerManager_Click(object sender, EventArgs e)
         {
+            this.MenuLayerManager.MyChecked = true;
             if (MenuLayerManager.Visible)
                 GCSViews.FlightPlanner.instance.TiffLayerManager();
+            this.MenuLayerManager.MyChecked = false;
         }
 
         #region 图层信息
@@ -1564,8 +1575,10 @@ namespace MissionPlanner
 
         private void MenuSurveyGrid_Click(object sender, EventArgs e)
         {
+            this.MenuSurveyGrid.MyChecked = true;
             if (MenuSurveyGrid.Visible)
                 GCSViews.FlightPlanner.instance.surveyGrid();
+            this.MenuSurveyGrid.MyChecked = false;
         }
 
         private void MenuClearWP_Click(object sender, EventArgs e)
