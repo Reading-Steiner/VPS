@@ -91,7 +91,7 @@ namespace MissionPlanner
             Program.args = args;
             Console.WriteLine(
                 "If your error is about Microsoft.DirectX.DirectInput, please install the latest directx redist from here http://www.microsoft.com/en-us/download/details.aspx?id=35 \n\n");
-            Console.WriteLine("Debug under mono    MONO_LOG_LEVEL=debug mono MissionPlanner.exe");
+            Console.WriteLine("Debug under mono    MONO_LOG_LEVEL=debug mono VPS.exe");
             Console.WriteLine("To fix any filename case issues under mono use    export MONO_IOMAP=drive:case");
 
 
@@ -116,17 +116,17 @@ namespace MissionPlanner
 
             System.Windows.Forms.Application.ThreadException += Application_ThreadException;
 
-            if (args.Length > 0 && args[0] == "/update")
-            {
-                Utilities.Update.DoUpdate();
-                return;
-            }
-            if (args.Length > 0 && args[0] == "/updatebeta")
-            {
-                Utilities.Update.dobeta = true;
-                Utilities.Update.DoUpdate();
-                return;
-            }
+            //if (args.Length > 0 && args[0] == "/update")
+            //{
+            //    Utilities.Update.DoUpdate();
+            //    return;
+            //}
+            //if (args.Length > 0 && args[0] == "/updatebeta")
+            //{
+            //    Utilities.Update.dobeta = true;
+            //    Utilities.Update.DoUpdate();
+            //    return;
+            //}
 
             name = "Visiontek Photogrammetry Simulation System";
 

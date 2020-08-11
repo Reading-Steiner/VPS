@@ -4007,7 +4007,7 @@ namespace MissionPlanner
 
             try
             {
-                MissionPlanner.Utilities.Update.CheckForUpdate();
+                //MissionPlanner.Utilities.Update.CheckForUpdate();
             }
             catch (Exception ex)
             {
