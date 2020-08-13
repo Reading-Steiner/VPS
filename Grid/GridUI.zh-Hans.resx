@@ -155,13 +155,13 @@
     <value>航线间距</value>
   </data>
   <data name="label30.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 12</value>
+    <value>41, 12</value>
   </data>
   <data name="label30.Text" xml:space="preserve">
     <value>覆盖区</value>
   </data>
   <data name="label33.Size" type="System.Drawing.Size, System.Drawing">
-    <value>77, 12</value>
+    <value>41, 12</value>
   </data>
   <data name="label33.Text" xml:space="preserve">
     <value>样条数</value>
@@ -179,7 +179,7 @@
     <value>地面分辨率</value>
   </data>
   <data name="label27.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 12</value>
+    <value>53, 12</value>
   </data>
   <data name="label27.Text" xml:space="preserve">
     <value>航摄基线</value>
@@ -475,7 +475,7 @@
     <value>14, 378</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>77, 12</value>
+    <value>83, 12</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
     <value>航摄基线【m】</value>
@@ -530,7 +530,7 @@ Control-O 读取航线</value>
     <value>96, 16</value>
   </data>
   <data name="CHK_camdirection.Text" xml:space="preserve">
-    <value>相机始终向前</value>
+    <value>相机横向安装</value>
   </data>
   <data name="NUM_altitude.Location" type="System.Drawing.Point, System.Drawing">
     <value>162, 40</value>
@@ -551,7 +551,7 @@ Control-O 读取航线</value>
     <value>高级选项</value>
   </data>
   <data name="CHK_footprints.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 16</value>
+    <value>60, 16</value>
   </data>
   <data name="CHK_footprints.Text" xml:space="preserve">
     <value>覆盖区</value>
@@ -577,8 +577,14 @@ Control-O 读取航线</value>
   <data name="CHK_boundary.Text" xml:space="preserve">
     <value>边界</value>
   </data>
+  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 261</value>
+  </data>
   <data name="groupBox3.Text" xml:space="preserve">
     <value>触发方法</value>
+  </data>
+  <data name="label37.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 107</value>
   </data>
   <data name="label37.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 12</value>
@@ -586,8 +592,8 @@ Control-O 读取航线</value>
   <data name="label37.Text" xml:space="preserve">
     <value>航线分段</value>
   </data>
-  <data name="groupBox_copter.Text" xml:space="preserve">
-    <value>copter选项</value>
+  <data name="NUM_split.Location" type="System.Drawing.Point, System.Drawing">
+    <value>141, 105</value>
   </data>
   <data name="chk_spline.Size" type="System.Drawing.Size, System.Drawing">
     <value>84, 16</value>
@@ -613,8 +619,14 @@ Control-O 读取航线</value>
   <data name="LBL_copter_delay.Text" xml:space="preserve">
     <value>航点滞留【sec】</value>
   </data>
+  <data name="groupBox_copter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 132</value>
+  </data>
+  <data name="groupBox_copter.Text" xml:space="preserve">
+    <value>copter选项</value>
+  </data>
   <data name="BUT_samplephoto.Location" type="System.Drawing.Point, System.Drawing">
-    <value>58, 149</value>
+    <value>9, 6</value>
   </data>
   <data name="BUT_samplephoto.TabIndex" type="System.Int32, mscorlib">
     <value>70</value>
@@ -623,7 +635,7 @@ Control-O 读取航线</value>
     <value>加载样本图片</value>
   </data>
   <data name="BUT_save.Location" type="System.Drawing.Point, System.Drawing">
-    <value>83, 178</value>
+    <value>34, 35</value>
   </data>
   <data name="BUT_save.TabIndex" type="System.Int32, mscorlib">
     <value>45</value>
@@ -632,7 +644,7 @@ Control-O 读取航线</value>
     <value>保存</value>
   </data>
   <data name="CHK_toandland_RTL.Location" type="System.Drawing.Point, System.Drawing">
-    <value>29, 194</value>
+    <value>27, 87</value>
   </data>
   <data name="CHK_toandland_RTL.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 16</value>
@@ -644,7 +656,7 @@ Control-O 读取航线</value>
     <value>使用 RTL</value>
   </data>
   <data name="CHK_toandland.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 171</value>
+    <value>9, 64</value>
   </data>
   <data name="CHK_toandland.Size" type="System.Drawing.Size, System.Drawing">
     <value>132, 16</value>

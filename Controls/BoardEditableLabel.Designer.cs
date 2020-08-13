@@ -39,13 +39,12 @@
             this.DisplayText.Location = new System.Drawing.Point(15, 10);
             this.DisplayText.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.DisplayText.Name = "DisplayText";
-            this.DisplayText.Size = new System.Drawing.Size(29, 12);
+            this.DisplayText.Size = new System.Drawing.Size(0, 12);
             this.DisplayText.TabIndex = 1;
-            this.DisplayText.Text = "Text";
             // 
             // EditBox
             // 
-            this.EditBox.Location = new System.Drawing.Point(8, 10);
+            this.EditBox.Location = new System.Drawing.Point(3, 10);
             this.EditBox.Name = "EditBox";
             this.EditBox.Size = new System.Drawing.Size(65, 21);
             this.EditBox.TabIndex = 2;

@@ -32,7 +32,7 @@ namespace MissionPlanner.Controls
         {
             this.Button = new System.Windows.Forms.Label();
             this.DisplayText = new System.Windows.Forms.Label();
-            this.Board = new System.Windows.Forms.Label();
+            this.EditBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // Button
@@ -53,24 +53,25 @@ namespace MissionPlanner.Controls
             this.DisplayText.TabIndex = 3;
             this.DisplayText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Board
+            // EditBox
             // 
-            this.Board.BackColor = System.Drawing.Color.Transparent;
-            this.Board.Location = new System.Drawing.Point(0, 0);
-            this.Board.Name = "Board";
-            this.Board.Size = new System.Drawing.Size(150, 37);
-            this.Board.TabIndex = 4;
+            this.EditBox.Location = new System.Drawing.Point(12, 6);
+            this.EditBox.Name = "EditBox";
+            this.EditBox.Size = new System.Drawing.Size(100, 21);
+            this.EditBox.TabIndex = 4;
+            this.EditBox.Visible = false;
             // 
             // BoardComboBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.EditBox);
             this.Controls.Add(this.DisplayText);
             this.Controls.Add(this.Button);
-            this.Controls.Add(this.Board);
             this.Name = "BoardComboBox";
             this.Size = new System.Drawing.Size(150, 37);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -78,10 +79,9 @@ namespace MissionPlanner.Controls
 
         private System.Windows.Forms.Label Button;
         private System.Windows.Forms.Label DisplayText;
-        private System.Windows.Forms.Label Board;
         private System.Windows.Forms.ToolStripControlHost comboViewHost;
         private System.Windows.Forms.ToolStripDropDown dropDown;
         private MissionPlanner.Controls.ComboDataList dataSourceList;
-
+        private System.Windows.Forms.TextBox EditBox;
     }
 }

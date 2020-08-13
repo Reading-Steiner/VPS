@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Text.RegularExpressions;
 
 namespace MissionPlanner.Controls
 {
@@ -15,6 +16,20 @@ namespace MissionPlanner.Controls
     {
         private bool isDroppable = false;
         //private int selectedIndex = -1;
+        [Category("设置"), Description("选中项")]
+        public string TextString
+        {
+            get { return this.DisplayText.Text; }
+            set
+            {
+                if (Regex.IsMatch(value, Pattern))
+                {
+                    this.DisplayText.Text = value;
+                    this.dataSourceList.SelectedIndex = this.DataSource.IndexOf(TextString);
+                }
+                SelectedChange?.Invoke();
+            }
+        }
         [Category("设置"), Description("数据源")]
         public List<string> DataSource
         {
@@ -22,7 +37,31 @@ namespace MissionPlanner.Controls
             set
             {
                 dataSourceList.DataString = value;
-                dataSourceList.ItemSize = DisplayText.Size;
+                
+                comboViewHost.Size = new Size(
+                this.DisplayText.Width + 5,
+                this.DisplayText.Height * DataSource.Count() + 10);
+                dropDown.Size = new Size(
+                    this.DisplayText.Width + 5,
+                    this.DisplayText.Height * DataSource.Count() + 10);
+            }
+        }
+
+        [Category("设置"), Description("文本正则表达式")]
+        public string Pattern { get; set; } = @"^\S*$";
+
+
+        public bool Contains(string str)
+        {
+            return DataSource.Contains(str);
+        }
+
+        public void Add(string str)
+        {
+            if (Regex.IsMatch(str, Pattern))
+            {
+                DataSource.Add(str);
+
                 comboViewHost.Size = new Size(
                 this.DisplayText.Width + 5,
                 this.DisplayText.Height * DataSource.Count() + 10);
@@ -57,6 +96,12 @@ namespace MissionPlanner.Controls
             }
         }
 
+        [Category("设置"), Description("文本锁定")]
+        public bool AllowEdit { get; set; } = true;
+
+        public delegate void delegateHandler();
+        public delegateHandler SelectedChange;
+        public delegateHandler ChangeSelected;
         public BoardComboBox()
         {
             this.dataSourceList = new ComboDataList();
@@ -70,16 +115,72 @@ namespace MissionPlanner.Controls
                 this.Button.BackColor = Color.Transparent;
             if (this.DisplayText.BackColor != Color.Transparent)
                 this.DisplayText.BackColor = Color.Transparent;
-            if (this.Board.BackColor != Color.Transparent)
-                this.Board.BackColor = Color.Transparent;
             OnSizeChanged(null);
-            this.Board.Paint += Board_Paint;
+            this.DisplayText.Click += DisplayText_Click;
+            this.SelectedChange += CheckAndCloseEdit;
+            this.EditBox.LostFocus += EditBox_LostFocus;
+            this.EditBox.KeyDown += OnKeyDown;
             this.Button.Paint += Button_Paint;
             //this.TextList.Paint += TextList_Paint;
             this.Button.MouseClick += Button_MouseClick;
             this.Button.MouseEnter += Button_MouseEnter;
             this.Button.MouseLeave += Button_MouseLeave;
             this.dataSourceList.SelectedChange += SelectedString;
+            this.dataSourceList.ChangeSelected += StringSelected;
+        }
+
+        private void CheckAndCloseEdit()
+        {
+            if (this.EditBox.Visible == true)
+            {
+                this.EditBox.Text = this.DisplayText.Text;
+                this.EditBox.Visible = false;
+            }
+        }
+
+        private void EditBox_LostFocus(object sender, EventArgs e)
+        {
+            if (this.EditBox.Visible == true)
+            {
+                TextString = this.EditBox.Text;
+                this.EditBox.Visible = false;
+                ChangeSelected?.Invoke();
+                return;
+            }
+        }
+
+        private void DisplayText_Click(object sender, EventArgs e)
+        {
+            if (AllowEdit)
+            {
+                this.EditBox.Text = this.DisplayText.Text;
+                this.EditBox.Left = this.DisplayText.Left;
+                this.EditBox.Top = this.DisplayText.Left;
+                this.EditBox.Width = this.Width - 2 * this.DisplayText.Left;
+                this.EditBox.BackColor = this.BackColor;
+                this.EditBox.Visible = true;
+            }
+        }
+
+        protected void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (this.EditBox.Visible == true)
+                {
+                    TextString = this.EditBox.Text;
+                    this.EditBox.Visible = false;
+                    ChangeSelected?.Invoke();
+                    return;
+                }
+            }
+
+            base.OnKeyUp(e);
+        }
+
+        private void StringSelected()
+        {
+            ChangeSelected?.Invoke();
         }
 
         private void SelectedString()
@@ -87,7 +188,7 @@ namespace MissionPlanner.Controls
             if (this.dataSourceList.SelectedIndex >= 0 &&
                 this.dataSourceList.SelectedIndex < this.dataSourceList.DataString.Count)
             {
-                this.DisplayText.Text = this.dataSourceList.DataString[this.dataSourceList.SelectedIndex];
+                TextString = this.DataSource[this.dataSourceList.SelectedIndex];
                 Invalidate();
             }
         }
@@ -144,10 +245,10 @@ namespace MissionPlanner.Controls
 
         }
 
-        private void Board_Paint(object sender, PaintEventArgs e)
+
+        protected override void OnPaint(PaintEventArgs e)
         {
-            if (this.Board.BackColor != Color.Transparent)
-                this.Board.BackColor = Color.Transparent;
+
             var g = e.Graphics;
             for (int i = 0; i < _rederWidth; i++)
             {
@@ -155,23 +256,15 @@ namespace MissionPlanner.Controls
                 Pen pen = new Pen(Color.FromArgb(_boardColor.A / (i + 1), _boardColor));
                 DrawRound(
                     new Rectangle(rect.X + i, rect.Y + i, rect.Width - i, rect.Height - i),
-                    g, pen, Math.Min(rect.Width, rect.Height) / 3);
+                    g, pen, Math.Min(rect.Width, rect.Height) / 3 * 2 - i);
             }
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            //base.OnPaint(e);
+            base.OnPaint(e);
         }
 
         protected override void OnSizeChanged(EventArgs e)
         {
             int Edge_W = Math.Min(this.Width / 10, 5);
             int Edge_H = Math.Min(this.Height / 10, 5);
-            this.Board.Left = 0;
-            this.Board.Top = 0;
-            this.Board.Width = this.Width;
-            this.Board.Height = this.Height;
             this.DisplayText.Left = Edge_W;
             this.DisplayText.Top = Edge_H;
             this.DisplayText.Width = (this.Width - 2 * Edge_W) - (this.Height - 2 * Edge_H);

@@ -15,6 +15,7 @@ namespace MissionPlanner.Controls
         private int temporary = -1;
         public delegate void delegateHandler();
         public delegateHandler SelectedChange;
+        public delegateHandler ChangeSelected;
         private int selected = -1;
         private bool mouseDown = false; 
         public int SelectedIndex
@@ -24,11 +25,16 @@ namespace MissionPlanner.Controls
             {
                 if (value >= 0 && value < DataString.Count)
                 {
-                    selected = value;
-                    SelectedChange();
+                    if (value != selected)
+                    {
+                        selected = value;
+                        SelectedChange?.Invoke();
+                    }
                 }
                 else
+                {
                     selected = -1;
+                }
             }
         }
 
@@ -63,6 +69,7 @@ namespace MissionPlanner.Controls
         {
             InitializeComponent();
 
+            //DoubleBuffered = true;
             ShowLabel.Paint += ShowLabel_Paint;
             ShowLabel.MouseDown += ShowLabel_MouseDown;
             ShowLabel.MouseMove += ShowLabel_MouseMove;
@@ -101,8 +108,8 @@ namespace MissionPlanner.Controls
                     fore = Color.FromArgb(
                        this.ForeColor.A,
                        255 - this.ForeColor.R / 15,
-                       255 - this.ForeColor.G / 15,
-                       this.ForeColor.B / 5);
+                       this.ForeColor.G / 5,
+                       255 - this.ForeColor.B / 15);
                 else
                     fore = ForeColor;
                 SolidBrush brush = new SolidBrush(fore);
@@ -134,15 +141,40 @@ namespace MissionPlanner.Controls
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            temporary = -1;
             if (e.Button == MouseButtons.Left)
             {
                 mouseDown = true;
                 int index = e.Y / this.ItemSize.Height;
                 if (index >= 0 && index < DataString.Count)
-                    temporary = index;
-                ShowLabel.Invalidate();
+                {
+                    if (temporary != index)
+                    {
+                        int oldIndex = temporary;
+                        int newIndex = index;
+                        temporary = index;
+                        if (oldIndex != -1)
+                            ShowLabel.Invalidate(rect(oldIndex));
+                        ShowLabel.Invalidate(rect(newIndex));
+                    }
+                }
+                else
+                {
+                    if (temporary != -1)
+                    {
+                        ShowLabel.Invalidate(rect(temporary));
+                        temporary = -1;
+                    }
+                }
             }
+            else
+            {
+                if (temporary != -1)
+                {
+                    ShowLabel.Invalidate(rect(temporary));
+                    temporary = -1;
+                }
+            }
+
             base.OnMouseDown(e);
         }
 
@@ -152,25 +184,86 @@ namespace MissionPlanner.Controls
             {
                 int index = e.Y / this.ItemSize.Height;
                 if (index >= 0 && index < DataString.Count)
-                    temporary = index;
-                ShowLabel.Invalidate();
+                {
+                    if (temporary != index)
+                    {
+                        int oldIndex = temporary;
+                        int newIndex = index;
+                        temporary = index;
+                        if (oldIndex != -1)
+                            ShowLabel.Invalidate(rect(oldIndex));
+                        ShowLabel.Invalidate(rect(newIndex));
+                    }
+                }
+                else
+                {
+                    if (temporary != -1)
+                    {
+                        ShowLabel.Invalidate(rect(temporary));
+                        temporary = -1;
+                    }
+                }
             }
             else
-                temporary = -1;
+            {
+                if (temporary != -1)
+                {
+                    ShowLabel.Invalidate(rect(temporary));
+                    temporary = -1;
+                }
+            }
             base.OnMouseMove(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (mouseDown) {
-                SelectedIndex = e.Y / this.ItemSize.Height;
-                temporary = -1;
-                ShowLabel.Invalidate();
+            if (mouseDown)
+            {
+                
+                int index = e.Y / this.ItemSize.Height;
+                if (index >= 0 && index < DataString.Count())
+                {
+                    if (SelectedIndex != index)
+                    {
+                        int oldIndex = SelectedIndex;
+                        int newIndex = index;
+
+                        SelectedIndex = index;
+                        if (oldIndex != -1)
+                            ShowLabel.Invalidate(rect(oldIndex));
+                        ShowLabel.Invalidate(rect(newIndex));
+                        ChangeSelected?.Invoke();
+                    }
+                }
+                else
+                {
+                    if (temporary != -1)
+                    {
+                        ShowLabel.Invalidate(rect(temporary));
+                        temporary = -1;
+                    }
+                }
             }
             else
-                temporary = -1;
+            {
+                if (temporary != -1)
+                {
+                    ShowLabel.Invalidate(rect(temporary));
+                    temporary = -1;
+                }
+            }
             mouseDown = false;
             base.OnMouseDown(e);
+        }
+
+        protected Rectangle rect(int index)
+        {
+            if (index >= 0 && index < DataString.Count())
+                return new Rectangle(
+                    0, index * ItemSize.Height,
+                    ItemSize.Width, ItemSize.Height);
+            else
+                return new Rectangle();
         }
 
     }

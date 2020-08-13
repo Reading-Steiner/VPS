@@ -40,7 +40,6 @@
             this.DisplayText.Name = "DisplayText";
             this.DisplayText.Size = new System.Drawing.Size(49, 19);
             this.DisplayText.TabIndex = 0;
-            this.DisplayText.Text = "Text";
             // 
             // BoardLabel
             // 

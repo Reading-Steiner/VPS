@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace MissionPlanner.Controls
 {
@@ -77,10 +78,16 @@ namespace MissionPlanner.Controls
             get { return DisplayText.Text; }
             set
             {
-                DisplayText.Text = value;
-                Invalidate();
+                if (Regex.IsMatch(value, Pattern))
+                {
+                    DisplayText.Text = value;
+                    Invalidate();
+                }
             }
         }
+
+        [Category("设置"), Description("文本正则表达式")]
+        public string Pattern { get; set; } = @"^\S*$";
 
         protected override void OnPaint(PaintEventArgs e)
         {

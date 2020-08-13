@@ -373,6 +373,12 @@
     <Compile Include="Controls\BoardComboBox.Designer.cs">
       <DependentUpon>BoardComboBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\BoardDecUpBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\BoardDecUpBox.Designer.cs">
+      <DependentUpon>BoardDecUpBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\BoardEditableLabel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -418,6 +424,12 @@
     <Compile Include="Controls\GMAPCache.Designer.cs">
       <DependentUpon>GMAPCache.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GobalWPConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\GobalWPConfig.Designer.cs">
+      <DependentUpon>GobalWPConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\HLToolStripButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -438,6 +450,12 @@
     </Compile>
     <Compile Include="Controls\LayerReader.Designer.cs">
       <DependentUpon>LayerReader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ReturnButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ReturnButton.Designer.cs">
+      <DependentUpon>ReturnButton.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Status.cs">
       <SubType>UserControl</SubType>
@@ -563,12 +581,6 @@
     <Compile Include="GCSViews\ConfigurationView\DeviceInfo.cs" />
     <Compile Include="GCSViews\ConfigurationView\UAVCANModel.cs" />
     <Compile Include="GCSViews\ConfigurationView\uitype.cs" />
-    <Compile Include="GCSViews\GobalWPConfig.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GCSViews\GobalWPConfig.Designer.cs">
-      <DependentUpon>GobalWPConfig.cs</DependentUpon>
-    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Grid\GridUI.cs">
       <SubType>Form</SubType>
@@ -752,6 +764,9 @@
     <EmbeddedResource Include="Controls\BoardComboBox.resx">
       <DependentUpon>BoardComboBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\BoardDecUpBox.resx">
+      <DependentUpon>BoardDecUpBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\BoardEditableLabel.resx">
       <DependentUpon>BoardEditableLabel.cs</DependentUpon>
     </EmbeddedResource>
@@ -773,6 +788,9 @@
     <EmbeddedResource Include="Controls\GMAPCache.resx">
       <DependentUpon>GMAPCache.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GobalWPConfig.resx">
+      <DependentUpon>GobalWPConfig.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\LayerManager.resx">
       <DependentUpon>LayerManager.cs</DependentUpon>
     </EmbeddedResource>
@@ -790,6 +808,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LayerReader.zh-CN.resx">
       <DependentUpon>LayerReader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ReturnButton.resx">
+      <DependentUpon>ReturnButton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Status.resx">
       <DependentUpon>Status.cs</DependentUpon>
@@ -923,9 +944,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GCSViews\ConfigurationView\ConfigUserDefined.resx">
       <DependentUpon>ConfigUserDefined.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\GobalWPConfig.resx">
-      <DependentUpon>GobalWPConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Grid\GridUI.resx">
       <DependentUpon>GridUI.cs</DependentUpon>

@@ -151,6 +151,61 @@ namespace MissionPlanner.Grid
             loading = false;
 
             domainUpDown1_ValueChanged(this, null);
+
+            GridUI_AdjustParam();
+
+            this.CHK_toandland.Checked = false;
+            this.CHK_toandland_RTL.Checked = false;
+        }
+
+        private void GridUI_AdjustParam()
+        {
+            var config = new MissionPlanner.Controls.GobalWPConfig();
+            config.GetCameraInfo = new camerainfo()
+            {
+                name = CMB_camera.Text,
+                focallen = Convert.ToSingle(NUM_focallength.Value),
+                imageheight = Convert.ToSingle(TXT_imgheight.Text),
+                imagewidth = Convert.ToSingle(TXT_imgwidth.Text),
+                sensorheight = Convert.ToSingle(TXT_sensheight.Text),
+                sensorwidth = Convert.ToSingle(TXT_senswidth.Text)
+            };
+            config.GetCameraHeadTop = this.CHK_camdirection.Checked;
+            config.GetOverlay = new float[]
+            {
+                (float)num_overlap.Value,
+                (float)num_sidelap.Value
+            };
+            config.GetAltitude = (int)NUM_altitude.Value;
+            config.GetDist = new float[]
+            {
+                (float)NUM_Distance.Value,
+                (float)NUM_spacing.Value
+            };
+            config.CalculGSD();
+            if (config.ShowDialog() == DialogResult.OK)
+            {
+                var cameraInfo = config.GetCameraInfo;
+                this.CMB_camera.Text = cameraInfo.name;
+                this.NUM_focallength.Value = (decimal)cameraInfo.focallen;
+                this.TXT_imgwidth.Text = cameraInfo.imagewidth.ToString();
+                this.TXT_imgheight.Text = cameraInfo.imageheight.ToString();
+                this.TXT_senswidth.Text = cameraInfo.sensorwidth.ToString();
+                this.TXT_sensheight.Text = cameraInfo.sensorheight.ToString();
+
+                this.CHK_camdirection.Checked = config.GetCameraHeadTop;
+
+                var overlay = config.GetOverlay;
+                this.num_overlap.Value = (decimal)overlay[0];
+                this.num_sidelap.Value = (decimal)overlay[1];
+
+                var flyAlt = config.GetAltitude;
+                this.NUM_altitude.Value = (decimal)flyAlt;
+
+                var dist = config.GetDist;
+                this.NUM_Distance.Value = (decimal)dist[0];
+                this.NUM_spacing.Value = (decimal)dist[1];
+            }
         }
 
         private void GridUI_Resize(object sender, EventArgs e)

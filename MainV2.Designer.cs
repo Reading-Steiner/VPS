@@ -46,7 +46,7 @@ namespace MissionPlanner
             this.MenuFlightPlannerOpen = new System.Windows.Forms.ToolStripButton();
             this.MenuFlightPlannerClose = new System.Windows.Forms.ToolStripButton();
             this.Separator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.WPGobalConfig = new MissionPlanner.Controls.HLToolStripButton();
+            this.MenuWPGobalConfig = new MissionPlanner.Controls.HLToolStripButton();
             this.MenuLoadLayer = new MissionPlanner.Controls.HLToolStripButton();
             this.MenuZoomToLayer = new MissionPlanner.Controls.HLToolStripButton();
             this.MenuLayerManager = new MissionPlanner.Controls.HLToolStripButton();
@@ -84,7 +84,7 @@ namespace MissionPlanner
             this.MenuFlightPlannerOpen,
             this.MenuFlightPlannerClose,
             this.Separator1,
-            this.WPGobalConfig,
+            //this.MenuWPGobalConfig,
             this.MenuLoadLayer,
             this.MenuZoomToLayer,
             this.MenuLayerManager,
@@ -173,16 +173,16 @@ namespace MissionPlanner
             // 
             // WPGobalConfig
             // 
-            this.WPGobalConfig.BottomTransparent = 4;
-            this.WPGobalConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.WPGobalConfig.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.WPGobalConfig.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            resources.ApplyResources(this.WPGobalConfig, "WPGobalConfig");
-            this.WPGobalConfig.Margin = new System.Windows.Forms.Padding(0);
-            this.WPGobalConfig.MyChecked = false;
-            this.WPGobalConfig.Name = "WPGobalConfig";
-            this.WPGobalConfig.TopTransparent = 8;
-            this.WPGobalConfig.Click += new System.EventHandler(this.WPGobalConfig_Click);
+            this.MenuWPGobalConfig.BottomTransparent = 4;
+            this.MenuWPGobalConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MenuWPGobalConfig.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuWPGobalConfig.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            resources.ApplyResources(this.MenuWPGobalConfig, "WPGobalConfig");
+            this.MenuWPGobalConfig.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuWPGobalConfig.MyChecked = false;
+            this.MenuWPGobalConfig.Name = "WPGobalConfig";
+            this.MenuWPGobalConfig.TopTransparent = 8;
+            this.MenuWPGobalConfig.Click += new System.EventHandler(this.WPGobalConfig_Click);
             // 
             // MenuLoadLayer
             // 
@@ -430,7 +430,7 @@ namespace MissionPlanner
         public System.Windows.Forms.ToolStripButton MenuFlightPlannerOpen;
         public System.Windows.Forms.ToolStripButton MenuFlightPlannerClose;
 
-        public Controls.HLToolStripButton WPGobalConfig;
+        public Controls.HLToolStripButton MenuWPGobalConfig;
         public Controls.HLToolStripButton MenuLoadLayer;
         public Controls.HLToolStripButton MenuZoomToLayer;
         public Controls.HLToolStripButton MenuLayerManager;

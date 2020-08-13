@@ -200,6 +200,7 @@
             // 
             // groupBox5
             // 
+            resources.ApplyResources(this.groupBox5, "groupBox5");
             this.groupBox5.Controls.Add(this.lbl_minshutter);
             this.groupBox5.Controls.Add(this.label44);
             this.groupBox5.Controls.Add(this.lbl_gndelev);
@@ -226,7 +227,6 @@
             this.groupBox5.Controls.Add(this.lbl_area);
             this.groupBox5.Controls.Add(this.label23);
             this.groupBox5.Controls.Add(this.label22);
-            resources.ApplyResources(this.groupBox5, "groupBox5");
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.TabStop = false;
             // 
@@ -362,8 +362,8 @@
             // 
             // tabCamera
             // 
-            this.tabCamera.Controls.Add(this.groupBox2);
             resources.ApplyResources(this.tabCamera, "tabCamera");
+            this.tabCamera.Controls.Add(this.groupBox2);
             this.tabCamera.Name = "tabCamera";
             this.tabCamera.UseVisualStyleBackColor = true;
             // 
@@ -451,13 +451,13 @@
             // 
             // NUM_focallength
             // 
+            resources.ApplyResources(this.NUM_focallength, "NUM_focallength");
             this.NUM_focallength.DecimalPlaces = 1;
             this.NUM_focallength.Increment = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-            resources.ApplyResources(this.NUM_focallength, "NUM_focallength");
             this.NUM_focallength.Maximum = new decimal(new int[] {
             500,
             0,
@@ -503,11 +503,11 @@
             // 
             // tabGrid
             // 
+            resources.ApplyResources(this.tabGrid, "tabGrid");
             this.tabGrid.Controls.Add(this.groupBox7);
             this.tabGrid.Controls.Add(this.groupBox1);
             this.tabGrid.Controls.Add(this.label3);
             this.tabGrid.Controls.Add(this.NUM_spacing);
-            resources.ApplyResources(this.tabGrid, "tabGrid");
             this.tabGrid.Name = "tabGrid";
             this.tabGrid.UseVisualStyleBackColor = true;
             // 
@@ -593,8 +593,8 @@
             // 
             // num_corridorwidth
             // 
-            this.num_corridorwidth.DecimalPlaces = 1;
             resources.ApplyResources(this.num_corridorwidth, "num_corridorwidth");
+            this.num_corridorwidth.DecimalPlaces = 1;
             this.num_corridorwidth.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -669,15 +669,15 @@
             // 
             // CMB_startfrom
             // 
-            this.CMB_startfrom.FormattingEnabled = true;
             resources.ApplyResources(this.CMB_startfrom, "CMB_startfrom");
+            this.CMB_startfrom.FormattingEnabled = true;
             this.CMB_startfrom.Name = "CMB_startfrom";
             this.CMB_startfrom.SelectedIndexChanged += new System.EventHandler(this.domainUpDown1_ValueChanged);
             // 
             // num_overlap
             // 
-            this.num_overlap.DecimalPlaces = 1;
             resources.ApplyResources(this.num_overlap, "num_overlap");
+            this.num_overlap.DecimalPlaces = 1;
             this.num_overlap.Name = "num_overlap";
             this.num_overlap.Value = new decimal(new int[] {
             50,
@@ -688,8 +688,8 @@
             // 
             // num_sidelap
             // 
-            this.num_sidelap.DecimalPlaces = 1;
             resources.ApplyResources(this.num_sidelap, "num_sidelap");
+            this.num_sidelap.DecimalPlaces = 1;
             this.num_sidelap.Name = "num_sidelap";
             this.num_sidelap.Value = new decimal(new int[] {
             60,
@@ -721,8 +721,8 @@
             // 
             // NUM_Distance
             // 
-            this.NUM_Distance.DecimalPlaces = 2;
             resources.ApplyResources(this.NUM_Distance, "NUM_Distance");
+            this.NUM_Distance.DecimalPlaces = 2;
             this.NUM_Distance.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -759,11 +759,11 @@
             // 
             // tabSimple
             // 
+            resources.ApplyResources(this.tabSimple, "tabSimple");
             this.tabSimple.Controls.Add(this.label38);
             this.tabSimple.Controls.Add(this.groupBox6);
             this.tabSimple.Controls.Add(this.groupBox4);
             this.tabSimple.Controls.Add(this.BUT_Accept);
-            resources.ApplyResources(this.tabSimple, "tabSimple");
             this.tabSimple.Name = "tabSimple";
             this.tabSimple.UseVisualStyleBackColor = true;
             // 
@@ -838,8 +838,8 @@
             // 
             // CMB_camera
             // 
-            this.CMB_camera.FormattingEnabled = true;
             resources.ApplyResources(this.CMB_camera, "CMB_camera");
+            this.CMB_camera.FormattingEnabled = true;
             this.CMB_camera.Name = "CMB_camera";
             this.CMB_camera.SelectedIndexChanged += new System.EventHandler(this.CMB_camera_SelectedIndexChanged);
             // 
@@ -854,12 +854,12 @@
             // 
             // NUM_altitude
             // 
+            resources.ApplyResources(this.NUM_altitude, "NUM_altitude");
             this.NUM_altitude.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            resources.ApplyResources(this.NUM_altitude, "NUM_altitude");
             this.NUM_altitude.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -952,16 +952,17 @@
             // 
             // tabControl
             // 
+            resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Controls.Add(this.tabSimple);
             this.tabControl.Controls.Add(this.tabGrid);
             this.tabControl.Controls.Add(this.tabCamera);
             this.tabControl.Controls.Add(this.Hide);
-            resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             // 
             // Hide
             // 
+            resources.ApplyResources(this.Hide, "Hide");
             this.Hide.Controls.Add(this.groupBox3);
             this.Hide.Controls.Add(this.label37);
             this.Hide.Controls.Add(this.NUM_split);
@@ -970,12 +971,12 @@
             this.Hide.Controls.Add(this.BUT_save);
             this.Hide.Controls.Add(this.CHK_toandland_RTL);
             this.Hide.Controls.Add(this.CHK_toandland);
-            resources.ApplyResources(this.Hide, "Hide");
             this.Hide.Name = "Hide";
             this.Hide.UseVisualStyleBackColor = true;
             // 
             // groupBox3
             // 
+            resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Controls.Add(this.label42);
             this.groupBox3.Controls.Add(this.num_setservono);
             this.groupBox3.Controls.Add(this.label41);
@@ -993,7 +994,6 @@
             this.groupBox3.Controls.Add(this.rad_digicam);
             this.groupBox3.Controls.Add(this.rad_repeatservo);
             this.groupBox3.Controls.Add(this.rad_trigdist);
-            resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
             // 
@@ -1252,13 +1252,13 @@
             // 
             // NUM_copter_delay
             // 
+            resources.ApplyResources(this.NUM_copter_delay, "NUM_copter_delay");
             this.NUM_copter_delay.DecimalPlaces = 1;
             this.NUM_copter_delay.Increment = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-            resources.ApplyResources(this.NUM_copter_delay, "NUM_copter_delay");
             this.NUM_copter_delay.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -1281,16 +1281,12 @@
             // CHK_toandland_RTL
             // 
             resources.ApplyResources(this.CHK_toandland_RTL, "CHK_toandland_RTL");
-            this.CHK_toandland_RTL.Checked = true;
-            this.CHK_toandland_RTL.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CHK_toandland_RTL.Name = "CHK_toandland_RTL";
             this.CHK_toandland_RTL.UseVisualStyleBackColor = true;
             // 
             // CHK_toandland
             // 
             resources.ApplyResources(this.CHK_toandland, "CHK_toandland");
-            this.CHK_toandland.Checked = true;
-            this.CHK_toandland.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CHK_toandland.Name = "CHK_toandland";
             this.CHK_toandland.UseVisualStyleBackColor = true;
             // 

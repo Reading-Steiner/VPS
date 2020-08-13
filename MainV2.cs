@@ -1450,9 +1450,9 @@ namespace MissionPlanner
 
         private void WPGobalConfig_Click(object sender, EventArgs e)
         {
-            if (WPGobalConfig.Visible)
+            if (MenuWPGobalConfig.Visible)
             {
-                GCSViews.GobalWPConfig dlg = new GCSViews.GobalWPConfig();
+                GobalWPConfig dlg = new GobalWPConfig();
                 dlg.ShowDialog();
             }
         }

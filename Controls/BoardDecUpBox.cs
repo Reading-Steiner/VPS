@@ -11,14 +11,84 @@ using System.Text.RegularExpressions;
 
 namespace MissionPlanner.Controls
 {
-    public partial class BoardEditableLabel : UserControl
+    public partial class BoardDecUpBox : UserControl
     {
-        public BoardEditableLabel()
-        {
+        bool isUpClickable = false;
+        bool isDownClickable = false;
+        public BoardDecUpBox()
+        { 
             InitializeComponent();
-            this.EditBox.KeyDown += OnKeyDown;
-            this.EditBox.LostFocus += EditBox_LostFocus;
-            TextChange += CheckAndCloseEdit;
+            Up.Paint += Up_Paint;
+            Up.MouseEnter += Up_MouseEnter;
+            Up.MouseLeave += Up_MouseLeave;
+
+            Down.Paint += Down_Paint;
+            Down.MouseEnter += Down_MouseEnter;
+            Down.MouseLeave += Down_MouseLeave;
+        }
+
+        private void Down_MouseLeave(object sender, EventArgs e)
+        {
+            isDownClickable = false;
+        }
+
+        private void Down_MouseEnter(object sender, EventArgs e)
+        {
+            isDownClickable = true;
+        }
+
+        private void Down_Paint(object sender, PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            Brush brush;
+            if (!isUpClickable)
+            {
+                brush = new SolidBrush(this._boardColor);
+            }
+            else
+            {
+                brush = new SolidBrush(Color.FromArgb(
+                    this._boardColor.A,
+                    255 - this._boardColor.R / 15,
+                    this._boardColor.G / 5,
+                    this._boardColor.B / 5));
+            }
+            g.FillPolygon(brush, new Point[] {
+                        new Point(Down.Width / 2, Down.Height / 3  *2),
+                        new Point(Down.Width / 3 * 2, Down.Height / 3),
+                        new Point(Down.Width / 3, Down.Height / 3)});
+        }
+
+        private void Up_MouseLeave(object sender, EventArgs e)
+        {
+            isUpClickable = false;
+        }
+
+        private void Up_MouseEnter(object sender, EventArgs e)
+        {
+            isUpClickable = true;
+        }
+
+        private void Up_Paint(object sender, PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            Brush brush;
+            if (!isDownClickable)
+            {
+                brush = new SolidBrush(this._boardColor);
+            }
+            else
+            {
+                brush = new SolidBrush(Color.FromArgb(
+                    this._boardColor.A,
+                    255 - this._boardColor.R / 15,
+                    this._boardColor.G / 5,
+                    this._boardColor.B / 5));
+            }
+            g.FillPolygon(brush, new Point[] {
+                        new Point(Up.Width / 2,Up.Height / 3),
+                        new Point(Up.Width / 3 * 2,Up.Height / 3  *2),
+                        new Point(Up.Width / 3,Up.Height / 3 * 2)});
         }
 
         public enum Style
@@ -102,11 +172,8 @@ namespace MissionPlanner.Controls
         {
             get { return this.DisplayText.TextAlign; }
             set { this.DisplayText.TextAlign = value; }
-            
-        }
 
-        [Category("设置"), Description("文本锁定")]
-        public bool AllowEdit { get; set; } = true;
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -150,16 +217,26 @@ namespace MissionPlanner.Controls
 
         protected override void OnMouseClick(MouseEventArgs e)
         {
-            if (AllowEdit)
-            {
-                this.EditBox.Text = this.DisplayText.Text;
-                this.EditBox.Left = this.DisplayText.Left;
-                this.EditBox.Top = this.DisplayText.Left;
-                this.EditBox.Width = this.Width - 2 * this.DisplayText.Left;
-                this.EditBox.BackColor = this.BackColor;
-                this.EditBox.Visible = true;
-                base.OnMouseClick(e);
-            }
+            this.EditBox.Text = this.DisplayText.Text;
+            this.EditBox.Left = this.DisplayText.Left;
+            this.EditBox.Top = this.DisplayText.Left;
+            this.EditBox.Width = this.Width - 2 * this.DisplayText.Left;
+            this.EditBox.BackColor = this.BackColor;
+            this.EditBox.Visible = true;
+            base.OnMouseClick(e);
+        }
+
+        protected override void OnClientSizeChanged(EventArgs e)
+        {
+            this.Up.Left = this.Width / 10 * 7;
+            this.Up.Top = this.Height / 5;
+            this.Up.Width = this.Width / 5;
+            this.Up.Height = this.Height / 5;
+
+            this.Down.Left = this.Width / 10 * 9;
+            this.Down.Top = this.Height / 5 * 3;
+            this.Down.Width = this.Width / 5;
+            this.Down.Height = this.Height / 5;
         }
 
         private void EditBox_LostFocus(object sender, EventArgs e)
@@ -175,7 +252,7 @@ namespace MissionPlanner.Controls
 
         protected void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 if (this.EditBox.Visible == true)
                 {
