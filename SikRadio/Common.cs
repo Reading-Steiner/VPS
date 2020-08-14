@@ -7,7 +7,7 @@ using log4net;
 // config file
 // dll imports
 
-namespace MissionPlanner
+namespace VPS
 {
     public class Common
     {

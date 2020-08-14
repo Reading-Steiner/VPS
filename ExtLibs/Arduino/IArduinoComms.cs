@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO.Ports;
-using MissionPlanner.Comms;
+using VPS.Comms;
 
-namespace MissionPlanner.Arduino
+namespace VPS.Arduino
 {
     public delegate void ProgressEventHandler(int progress, string status);
 

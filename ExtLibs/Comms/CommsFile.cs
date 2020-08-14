@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading;
 
-namespace MissionPlanner.Comms
+namespace VPS.Comms
 {
     public class CommsFile : CommsBase, ICommsSerial, IDisposable
     {

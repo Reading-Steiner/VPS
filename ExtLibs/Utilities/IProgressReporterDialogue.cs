@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public delegate void DoWorkEventHandler(IProgressReporterDialogue sender);
 

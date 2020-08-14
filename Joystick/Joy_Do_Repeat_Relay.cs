@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Joystick
+namespace VPS.Joystick
 {
     public partial class Joy_Do_Repeat_Relay : Form
     {

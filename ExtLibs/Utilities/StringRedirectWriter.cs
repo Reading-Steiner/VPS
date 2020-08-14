@@ -2,7 +2,7 @@
 using System.Text;
 using System.IO;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public delegate void StringWrittenEvent(object sender, string writtenString);
 

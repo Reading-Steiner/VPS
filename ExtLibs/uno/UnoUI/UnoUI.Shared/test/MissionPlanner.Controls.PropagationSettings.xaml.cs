@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class PropagationSettings{public PropagationSettings(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class PropagationSettings{public PropagationSettings(){this.InitializeComponent();}}}

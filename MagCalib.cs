@@ -1,6 +1,6 @@
 ﻿using log4net;
-using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+using VPS.Controls;
+using VPS.Utilities;
 using netDxf.Entities;
 using netDxf.Tables;
 using System;
@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MissionPlanner
+namespace VPS
 {
     public class MagCalib
     {

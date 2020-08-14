@@ -24,7 +24,7 @@ using System.Drawing.Text;
 using Xamarin.Controls;
 
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public partial class AGauge : UserControl
     {

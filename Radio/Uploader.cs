@@ -1,4 +1,4 @@
-using MissionPlanner.Comms;
+using VPS.Comms;
 using System;
 using System.Threading;
 

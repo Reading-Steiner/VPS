@@ -1,9 +1,9 @@
-﻿using MissionPlanner.Controls;
+﻿using VPS.Controls;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigHWParachute : MyUserControl, IActivate
     {

@@ -1,12 +1,12 @@
-﻿using MissionPlanner.ArduPilot;
-using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+﻿using VPS.ArduPilot;
+using VPS.Controls;
+using VPS.Utilities;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigFailSafe : MyUserControl, IActivate, IDeactivate
     {

@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace MissionPlanner.Log
+namespace VPS.Log
 {
     public partial class LogStrings : Component
     {

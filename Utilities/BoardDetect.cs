@@ -1,6 +1,6 @@
 ﻿using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Comms;
+using VPS.ArduPilot;
+using VPS.Comms;
 using px4uploader;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class BoardDetect
     {

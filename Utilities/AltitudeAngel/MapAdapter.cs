@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using Feature = GeoJSON.Net.Feature.Feature;
 using Unit = System.Reactive.Unit;
 
-namespace MissionPlanner.Utilities.AltitudeAngel
+namespace VPS.Utilities.AltitudeAngel
 {
     internal class MapAdapter : IMap, IDisposable
     {

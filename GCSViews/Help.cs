@@ -1,11 +1,11 @@
-﻿using MissionPlanner.Controls;
-using MissionPlanner.Properties;
-using MissionPlanner.Utilities;
+﻿using VPS.Controls;
+using VPS.Properties;
+using VPS.Utilities;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews
+namespace VPS.GCSViews
 {
     public partial class Help : MyUserControl, IActivate
     {

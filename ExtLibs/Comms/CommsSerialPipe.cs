@@ -7,7 +7,7 @@ using System.Threading;
 using log4net;
 using Microsoft.Win32.SafeHandles;
 
-namespace MissionPlanner.Comms
+namespace VPS.Comms
 {
     public class CommsSerialPipe : ICommsSerial
     {

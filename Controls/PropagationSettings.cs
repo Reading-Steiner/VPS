@@ -1,8 +1,8 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using System;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public class PropagationSettings : Form
     {

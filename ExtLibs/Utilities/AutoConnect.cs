@@ -10,9 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using ClipperLib;
 using log4net;
-using MissionPlanner.Comms;
+using VPS.Comms;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class AutoConnect
     {

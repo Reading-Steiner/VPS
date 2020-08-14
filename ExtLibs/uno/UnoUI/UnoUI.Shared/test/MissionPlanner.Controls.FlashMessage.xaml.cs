@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class FlashMessage{public FlashMessage(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class FlashMessage{public FlashMessage(){this.InitializeComponent();}}}

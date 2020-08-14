@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Controls
+﻿namespace VPS.Controls
 {
     partial class GMAPCache
     {
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.myDataGridView1 = new MissionPlanner.Controls.MyDataGridView();
+            this.myDataGridView1 = new VPS.Controls.MyDataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.myDataGridView1)).BeginInit();
             this.SuspendLayout();
             // 

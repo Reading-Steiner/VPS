@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public interface IMAVLinkInterface
     {

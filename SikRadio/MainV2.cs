@@ -1,7 +1,7 @@
 ﻿using System;
-using MissionPlanner.Comms;
+using VPS.Comms;
 
-namespace MissionPlanner
+namespace VPS
 {
     internal class Settings
     {

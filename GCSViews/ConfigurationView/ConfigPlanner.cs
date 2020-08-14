@@ -1,7 +1,7 @@
 ﻿using DirectShowLib;
-using MissionPlanner.Controls;
-using MissionPlanner.Joystick;
-using MissionPlanner.Utilities;
+using VPS.Controls;
+using VPS.Joystick;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,7 +13,7 @@ using System.Threading;
 using System.Windows.Forms;
 using WebCamService;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigPlanner : MyUserControl, IActivate
     {
@@ -778,7 +778,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
             Settings.Instance["beta_updates"] = CHK_beta.Checked.ToString();
 
-            MissionPlanner.Utilities.Update.dobeta = CHK_beta.Checked;
+            VPS.Utilities.Update.dobeta = CHK_beta.Checked;
         }
 
         private void CHK_Password_CheckedChanged(object sender, EventArgs e)

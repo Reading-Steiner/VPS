@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MissionPlanner.Warnings
+namespace VPS.Warnings
 {
     public class CustomWarning
     {

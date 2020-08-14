@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews.ConfigurationView
+﻿namespace VPS.GCSViews.ConfigurationView
 {
    partial class ConfigADSB
    {
@@ -30,9 +30,9 @@
       {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigADSB));
             this.tableLayoutPanel1 = new System.Windows.Forms.Panel();
-            this.BUT_rerequestparams = new MissionPlanner.Controls.MyButton();
-            this.BUT_writePIDS = new MissionPlanner.Controls.MyButton();
-            this.BUT_Find = new MissionPlanner.Controls.MyButton();
+            this.BUT_rerequestparams = new VPS.Controls.MyButton();
+            this.BUT_writePIDS = new VPS.Controls.MyButton();
+            this.BUT_Find = new VPS.Controls.MyButton();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1

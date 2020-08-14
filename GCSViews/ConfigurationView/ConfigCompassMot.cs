@@ -1,4 +1,4 @@
-﻿using MissionPlanner.Controls;
+﻿using VPS.Controls;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using ZedGraph;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigCompassMot : MyUserControl, IActivate, IDeactivate
     {

@@ -1,4 +1,4 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using UAVCAN;
 using ZedGraph;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public class UAVCANInspector : Form
     {
@@ -175,10 +175,10 @@ namespace MissionPlanner.Controls
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.treeView1 = new MissionPlanner.Controls.UAVCANInspector.MyTreeView();
+            this.treeView1 = new VPS.Controls.UAVCANInspector.MyTreeView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.but_graphit = new MissionPlanner.Controls.MyButton();
+            this.but_graphit = new VPS.Controls.MyButton();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 

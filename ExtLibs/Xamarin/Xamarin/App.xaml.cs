@@ -1,7 +1,7 @@
 ﻿using log4net;
-using MissionPlanner;
-using MissionPlanner.Comms;
-using MissionPlanner.Utilities;
+using VPS;
+using VPS.Comms;
+using VPS.Utilities;
 using System;
 using System.Net;
 using System.Net.Sockets;

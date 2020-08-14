@@ -1,7 +1,7 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using Newtonsoft.Json;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public class DeviceInfo
     {

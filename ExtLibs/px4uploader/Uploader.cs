@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Threading;
 using System.Xml;
-using MissionPlanner.Comms;
+using VPS.Comms;
 
 namespace px4uploader
 {

@@ -7,9 +7,9 @@ using System.Text;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 
-namespace MissionPlanner.Maps
+namespace VPS.Maps
 {
     public class MyImageCache : PureImageCache
     {

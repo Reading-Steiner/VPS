@@ -5,7 +5,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public static class TCPConsole
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using GeoUtility.GeoSystem;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public partial class Coords : MyUserControl
     {

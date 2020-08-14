@@ -1,7 +1,7 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using System.Collections.Generic;
 
-namespace MissionPlanner.Swarm
+namespace VPS.Swarm
 {
     /// <summary>
     /// Follow the trail of the leader

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
    partial class ValuesControl
    {

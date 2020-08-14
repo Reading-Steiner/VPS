@@ -7,11 +7,11 @@ using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.GCSViews;
-using MissionPlanner.Maps;
-using MissionPlanner.Properties;
-using MissionPlanner.Utilities;
+using VPS.ArduPilot;
+using VPS.GCSViews;
+using VPS.Maps;
+using VPS.Properties;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -22,7 +22,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace MissionPlanner
+namespace VPS
 {
     public partial class FaceMapUI : Form
     {
@@ -1227,7 +1227,7 @@ namespace MissionPlanner
 
             string camname = "Default";
 
-            if (MissionPlanner.Controls.InputBox.Show("Camera Name", "Please and a camera name", ref camname) != System.Windows.Forms.DialogResult.OK)
+            if (VPS.Controls.InputBox.Show("Camera Name", "Please and a camera name", ref camname) != System.Windows.Forms.DialogResult.OK)
                 return;
 
             CMB_camera.Text = camname;

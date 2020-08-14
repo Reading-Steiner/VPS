@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Text;
 using log4net;
 using System.Threading;
-using MissionPlanner.ArduPilot;
+using VPS.ArduPilot;
 
-namespace MissionPlanner.Comms
+namespace VPS.Comms
 {
     /// <summary>
     /// this is a proxy port for SERIAL_CONTROL messages

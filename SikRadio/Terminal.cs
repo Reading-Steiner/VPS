@@ -4,9 +4,9 @@ using System.IO.Ports;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using MissionPlanner;
-using MissionPlanner.Comms;
-using MissionPlanner.MsgBox;
+using VPS;
+using VPS.Comms;
+using VPS.MsgBox;
 
 namespace SikRadio
 {

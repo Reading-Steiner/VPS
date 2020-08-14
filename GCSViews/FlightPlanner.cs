@@ -9,13 +9,13 @@ using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using Ionic.Zip;
 using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Controls;
-using MissionPlanner.Grid;
-using MissionPlanner.Maps;
-using MissionPlanner.Plugin;
-using MissionPlanner.Properties;
-using MissionPlanner.Utilities;
+using VPS.ArduPilot;
+using VPS.Controls;
+using VPS.Grid;
+using VPS.Maps;
+using VPS.Plugin;
+using VPS.Properties;
+using VPS.Utilities;
 using ProjNet.CoordinateSystems;
 using ProjNet.CoordinateSystems.Transformations;
 using SharpKml.Base;
@@ -47,7 +47,7 @@ using ILog = log4net.ILog;
 using Placemark = SharpKml.Dom.Placemark;
 using Point = System.Drawing.Point;
 
-namespace MissionPlanner.GCSViews
+namespace VPS.GCSViews
 {
     public partial class FlightPlanner : MyUserControl, IDeactivate, IActivate
     {
@@ -124,9 +124,9 @@ namespace MissionPlanner.GCSViews
         private GPoint MouseDownEndPoint;
         private PointLatLngAlt mouseposdisplay = new PointLatLngAlt(0, 0);
         private WPOverlay overlay;
-        private MissionPlanner.Controls.Icon.Polygon polyicon = new MissionPlanner.Controls.Icon.Polygon();
-        private MissionPlanner.Controls.Icon.WP WPicon = new MissionPlanner.Controls.Icon.WP();
-        private MissionPlanner.Controls.Icon.Zoom zoomicon = new MissionPlanner.Controls.Icon.Zoom();
+        private VPS.Controls.Icon.Polygon polyicon = new VPS.Controls.Icon.Polygon();
+        private VPS.Controls.Icon.WP WPicon = new VPS.Controls.Icon.WP();
+        private VPS.Controls.Icon.Zoom zoomicon = new VPS.Controls.Icon.Zoom();
         private ComponentResourceManager rm = new ComponentResourceManager(typeof(FlightPlanner));
         private int selectedrow;
         private bool sethome;

@@ -3,14 +3,14 @@ using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Controls;
-using MissionPlanner.GeoRef;
-using MissionPlanner.Joystick;
-using MissionPlanner.Log;
-using MissionPlanner.Maps;
-using MissionPlanner.Utilities;
-using MissionPlanner.Warnings;
+using VPS.ArduPilot;
+using VPS.Controls;
+using VPS.GeoRef;
+using VPS.Joystick;
+using VPS.Log;
+using VPS.Maps;
+using VPS.Utilities;
+using VPS.Warnings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,13 +27,13 @@ using System.Windows.Forms;
 using Microsoft.Scripting.Utils;
 using WebCamService;
 using ZedGraph;
-using LogAnalyzer = MissionPlanner.Utilities.LogAnalyzer;
+using LogAnalyzer = VPS.Utilities.LogAnalyzer;
 using TableLayoutPanelCellPosition = System.Windows.Forms.TableLayoutPanelCellPosition;
 using UnauthorizedAccessException = System.UnauthorizedAccessException;
 
 // written by michael oborne
 
-namespace MissionPlanner.GCSViews
+namespace VPS.GCSViews
 {
     public partial class FlightData : MyUserControl, IActivate, IDeactivate
     {
@@ -432,7 +432,7 @@ namespace MissionPlanner.GCSViews
             // make sure the hud user items/warnings/checklist are using the current state
             HUD.Custom.src = MainV2.comPort.MAV.cs;
             CustomWarning.defaultsrc = MainV2.comPort.MAV.cs;
-            MissionPlanner.Controls.PreFlight.CheckListItem.defaultsrc = MainV2.comPort.MAV.cs;
+            VPS.Controls.PreFlight.CheckListItem.defaultsrc = MainV2.comPort.MAV.cs;
 
             if (Settings.Instance["maplast_lat"] != "")
             {
@@ -691,7 +691,7 @@ namespace MissionPlanner.GCSViews
 
                 scriptChecker_Tick(null, null);
 
-                MissionPlanner.Utilities.Tracking.AddPage(
+                VPS.Utilities.Tracking.AddPage(
                     System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString(),
                     System.Reflection.MethodBase.GetCurrentMethod().Name);
             }

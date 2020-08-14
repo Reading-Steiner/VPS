@@ -1,8 +1,8 @@
 ﻿using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Comms;
-using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+using VPS.ArduPilot;
+using VPS.Comms;
+using VPS.Controls;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,7 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     partial class ConfigFirmware : MyUserControl, IActivate, IDeactivate
     {

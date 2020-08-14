@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Controls
+﻿namespace VPS.Controls
 {
     partial class EKFStatus
     {
@@ -30,14 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EKFStatus));
-            this.ekfvel = new MissionPlanner.Controls.VerticalProgressBar2();
-            this.ekfposv = new MissionPlanner.Controls.VerticalProgressBar2();
-            this.ekfposh = new MissionPlanner.Controls.VerticalProgressBar2();
+            this.ekfvel = new VPS.Controls.VerticalProgressBar2();
+            this.ekfposv = new VPS.Controls.VerticalProgressBar2();
+            this.ekfposh = new VPS.Controls.VerticalProgressBar2();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.ekfcompass = new MissionPlanner.Controls.VerticalProgressBar2();
-            this.ekfterrain = new MissionPlanner.Controls.VerticalProgressBar2();
+            this.ekfcompass = new VPS.Controls.VerticalProgressBar2();
+            this.ekfterrain = new VPS.Controls.VerticalProgressBar2();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();

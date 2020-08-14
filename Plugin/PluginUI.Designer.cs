@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Controls
+﻿namespace VPS.Controls
 {
     partial class PluginUI
     {
@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.bSave = new MissionPlanner.Controls.MyButton();
-            this.btnLoadPlugin = new MissionPlanner.Controls.MyButton();
+            this.bSave = new VPS.Controls.MyButton();
+            this.btnLoadPlugin = new VPS.Controls.MyButton();
             this.labelWarning = new System.Windows.Forms.Label();
-            this.dgvPlugins = new MissionPlanner.Controls.MyDataGridView();
+            this.dgvPlugins = new VPS.Controls.MyDataGridView();
             this.pluginName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pluginAuthor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pluginVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();

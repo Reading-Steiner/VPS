@@ -13,9 +13,9 @@ using KMLib;
 using KMLib.Feature;
 using KMLib.Geometry;
 using log4net;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 
-namespace MissionPlanner.Log
+namespace VPS.Log
 {
     public class LogOutput
     {

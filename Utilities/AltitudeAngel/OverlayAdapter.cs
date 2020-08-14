@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Utilities.AltitudeAngel
+namespace VPS.Utilities.AltitudeAngel
 {
     internal class OverlayAdapter : IOverlay
     {

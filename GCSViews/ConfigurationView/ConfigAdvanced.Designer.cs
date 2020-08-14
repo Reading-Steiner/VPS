@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews.ConfigurationView
+﻿namespace VPS.GCSViews.ConfigurationView
 {
     partial class ConfigAdvanced
     {
@@ -30,14 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigAdvanced));
             this.label1 = new System.Windows.Forms.Label();
-            this.but_mavinspector = new MissionPlanner.Controls.MyButton();
-            this.but_warningmanager = new MissionPlanner.Controls.MyButton();
-            this.but_proximity = new MissionPlanner.Controls.MyButton();
-            this.but_signkey = new MissionPlanner.Controls.MyButton();
-            this.BUT_outputMavlink = new MissionPlanner.Controls.MyButton();
-            this.BUT_outputnmea = new MissionPlanner.Controls.MyButton();
+            this.but_mavinspector = new VPS.Controls.MyButton();
+            this.but_warningmanager = new VPS.Controls.MyButton();
+            this.but_proximity = new VPS.Controls.MyButton();
+            this.but_signkey = new VPS.Controls.MyButton();
+            this.BUT_outputMavlink = new VPS.Controls.MyButton();
+            this.BUT_outputnmea = new VPS.Controls.MyButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.but_fft = new MissionPlanner.Controls.MyButton();
+            this.but_fft = new VPS.Controls.MyButton();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -45,13 +45,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.BUT_follow_me = new MissionPlanner.Controls.MyButton();
+            this.BUT_follow_me = new VPS.Controls.MyButton();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.BUT_paramgen = new MissionPlanner.Controls.MyButton();
+            this.BUT_paramgen = new VPS.Controls.MyButton();
             this.label10 = new System.Windows.Forms.Label();
-            this.BUT_movingbase = new MissionPlanner.Controls.MyButton();
-            this.but_anonlog = new MissionPlanner.Controls.MyButton();
+            this.BUT_movingbase = new VPS.Controls.MyButton();
+            this.but_anonlog = new VPS.Controls.MyButton();
             this.label12 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();

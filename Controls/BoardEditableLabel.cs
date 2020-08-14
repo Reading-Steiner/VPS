@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public partial class BoardEditableLabel : UserControl
     {

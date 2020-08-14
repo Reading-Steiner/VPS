@@ -1,7 +1,7 @@
 ﻿using log4net;
 using System.Reflection;
 
-namespace MissionPlanner.Swarm
+namespace VPS.Swarm
 {
     abstract class Swarm
     {

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Configuration;
 using System.IO;
-using MissionPlanner.Controls;
+using VPS.Controls;
 using System.Windows.Forms;
-using MissionPlanner.Utilities;
-using MissionPlanner.Warnings;
+using VPS.Utilities;
+using VPS.Warnings;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigAdvanced : MyUserControl, IActivate
     {

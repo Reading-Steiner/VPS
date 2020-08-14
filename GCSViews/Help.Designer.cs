@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews
+﻿namespace VPS.GCSViews
 {
     partial class Help
     {
@@ -31,9 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Help));
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.CHK_showconsole = new System.Windows.Forms.CheckBox();
-            this.BUT_updatecheck = new MissionPlanner.Controls.MyButton();
+            this.BUT_updatecheck = new VPS.Controls.MyButton();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.BUT_betaupdate = new MissionPlanner.Controls.MyButton();
+            this.BUT_betaupdate = new VPS.Controls.MyButton();
             this.SuspendLayout();
             // 
             // richTextBox1

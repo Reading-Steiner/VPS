@@ -1,6 +1,6 @@
 ﻿using SharpDX.DirectInput;
 
-namespace MissionPlanner.Joystick
+namespace VPS.Joystick
 {
     public class MyJoystickState
     {

@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using MissionPlanner.ArduPilot.Mavlink;
+using VPS.ArduPilot.Mavlink;
 
-namespace MissionPlanner.ArduPilot
+namespace VPS.ArduPilot
 {
     public class AP_REPL
     {

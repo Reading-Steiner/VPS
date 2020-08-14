@@ -1,6 +1,6 @@
 ﻿using log4net;
-using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+using VPS.Controls;
+using VPS.Utilities;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections;
@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZedGraph; // Graphs
 
-namespace MissionPlanner.Log
+namespace VPS.Log
 {
     public partial class MavlinkLog : Form
     {
@@ -47,7 +47,7 @@ namespace MissionPlanner.Log
             zg1.GraphPane.XAxis.Scale.MinorUnit = DateUnit.Second;
             zg1.PointDateFormat = "HH:mm:ss";
 
-            MissionPlanner.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
+            VPS.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
         }
 
         private async void BUT_redokml_Click(object sender, EventArgs e)

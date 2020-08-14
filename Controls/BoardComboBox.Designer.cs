@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     partial class BoardComboBox
     {
@@ -81,7 +81,7 @@ namespace MissionPlanner.Controls
         private System.Windows.Forms.Label DisplayText;
         private System.Windows.Forms.ToolStripControlHost comboViewHost;
         private System.Windows.Forms.ToolStripDropDown dropDown;
-        private MissionPlanner.Controls.ComboDataList dataSourceList;
+        private VPS.Controls.ComboDataList dataSourceList;
         private System.Windows.Forms.TextBox EditBox;
     }
 }

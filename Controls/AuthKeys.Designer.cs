@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Controls
+﻿namespace VPS.Controls
 {
     partial class AuthKeys
     {
@@ -33,9 +33,9 @@
             this.FName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Use = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Key = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.but_save = new MissionPlanner.Controls.MyButton();
-            this.but_add = new MissionPlanner.Controls.MyButton();
-            this.but_disablesigning = new MissionPlanner.Controls.MyButton();
+            this.but_save = new VPS.Controls.MyButton();
+            this.but_add = new VPS.Controls.MyButton();
+            this.but_disablesigning = new VPS.Controls.MyButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 

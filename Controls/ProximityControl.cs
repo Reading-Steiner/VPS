@@ -1,7 +1,7 @@
 ﻿using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Properties;
-using MissionPlanner.Utilities;
+using VPS.ArduPilot;
+using VPS.Properties;
+using VPS.Utilities;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using static MAVLink;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public class ProximityControl : Form
     {

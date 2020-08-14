@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class ImageProjection
     {

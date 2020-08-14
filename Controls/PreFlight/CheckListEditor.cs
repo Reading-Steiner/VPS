@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Controls.PreFlight
+namespace VPS.Controls.PreFlight
 {
     public partial class CheckListEditor : Form
     {

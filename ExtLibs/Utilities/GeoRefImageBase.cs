@@ -15,12 +15,12 @@ using com.drew.imaging.tiff;
 using com.drew.metadata;
 using ExifLibrary;
 using log4net;
-using MissionPlanner.Comms;
-using MissionPlanner.Utilities;
+using VPS.Comms;
+using VPS.Utilities;
 using SharpKml.Base;
 using SharpKml.Dom;
 
-namespace MissionPlanner.GeoRef
+namespace VPS.GeoRef
 {
     public enum PROCESSING_MODE
     {

@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using log4net;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     /// <summary>
     /// read log and extract log

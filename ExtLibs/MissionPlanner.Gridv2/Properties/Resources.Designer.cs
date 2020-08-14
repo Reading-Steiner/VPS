@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MissionPlanner.Properties {
+namespace VPS.Properties {
     using System;
     
     

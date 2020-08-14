@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace MissionPlanner.Controls.Icon
+namespace VPS.Controls.Icon
 {
     public abstract class Icon
     {

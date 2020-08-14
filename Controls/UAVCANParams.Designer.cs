@@ -1,6 +1,6 @@
-﻿using MissionPlanner.Controls;
+﻿using VPS.Controls;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     partial class UAVCANParams
     {
@@ -36,19 +36,19 @@ namespace MissionPlanner.Controls
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.BUT_compare = new MissionPlanner.Controls.MyButton();
-            this.BUT_rerequestparams = new MissionPlanner.Controls.MyButton();
-            this.BUT_writePIDS = new MissionPlanner.Controls.MyButton();
-            this.BUT_save = new MissionPlanner.Controls.MyButton();
-            this.BUT_load = new MissionPlanner.Controls.MyButton();
+            this.BUT_compare = new VPS.Controls.MyButton();
+            this.BUT_rerequestparams = new VPS.Controls.MyButton();
+            this.BUT_writePIDS = new VPS.Controls.MyButton();
+            this.BUT_save = new VPS.Controls.MyButton();
+            this.BUT_load = new VPS.Controls.MyButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.txt_search = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.BUT_commitToFlash = new MissionPlanner.Controls.MyButton();
+            this.BUT_commitToFlash = new VPS.Controls.MyButton();
             this.chk_modified = new System.Windows.Forms.CheckBox();
-            this.BUT_reset_params = new MissionPlanner.Controls.MyButton();
-            this.Params = new MissionPlanner.Controls.MyDataGridView();
+            this.BUT_reset_params = new VPS.Controls.MyButton();
+            this.Params = new VPS.Controls.MyDataGridView();
             this.Command = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Min = new System.Windows.Forms.DataGridViewTextBoxColumn();

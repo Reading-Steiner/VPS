@@ -7,7 +7,7 @@ using SharpKml.Dom;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class Spectrogram
     {

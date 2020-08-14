@@ -1,1 +1,1 @@
-namespace MissionPlanner.GCSViews.ConfigurationView { public partial class ConfigHWOptFlow{public ConfigHWOptFlow(){this.InitializeComponent();}}}
+namespace VPS.GCSViews.ConfigurationView { public partial class ConfigHWOptFlow{public ConfigHWOptFlow(){this.InitializeComponent();}}}

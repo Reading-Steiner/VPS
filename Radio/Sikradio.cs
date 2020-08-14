@@ -1,6 +1,6 @@
 ﻿using log4net;
-using MissionPlanner.Comms;
-using MissionPlanner.Utilities;
+using VPS.Comms;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,15 +11,15 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
-using MissionPlanner.Comms;
-using MissionPlanner.Controls;
-using MissionPlanner.MsgBox;
-using MissionPlanner.Radio;
-using MissionPlanner.Utilities;
+using VPS.Comms;
+using VPS.Controls;
+using VPS.MsgBox;
+using VPS.Radio;
+using VPS.Utilities;
 using uploader;
 using Microsoft.VisualBasic;
 
-namespace MissionPlanner.Radio
+namespace VPS.Radio
 {
     public partial class Sikradio : UserControl, SikRadio.ISikRadioForm
     {

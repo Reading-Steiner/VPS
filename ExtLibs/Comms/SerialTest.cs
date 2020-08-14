@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
-namespace MissionPlanner.Comms
+namespace VPS.Comms
 {
     public class SerialTest
     {

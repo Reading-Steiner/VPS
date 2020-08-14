@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class Vibration{public Vibration(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class Vibration{public Vibration(){this.InitializeComponent();}}}

@@ -19,7 +19,7 @@ using gsize = System.UInt64;
 using GstClockTime = System.UInt64;
 using guint = System.UInt32;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class GStreamer
     {

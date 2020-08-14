@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class GimbalPoint
     {

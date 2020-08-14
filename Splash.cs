@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace MissionPlanner
+namespace VPS
 {
     public partial class Splash : Form
     {
@@ -14,7 +14,7 @@ namespace MissionPlanner
 
             if (Program.Logo != null)
             {
-                pictureBox1.BackgroundImage = MissionPlanner.Properties.Resources.bgdark;
+                pictureBox1.BackgroundImage = VPS.Properties.Resources.bgdark;
                 pictureBox1.Image = Program.Logo;
                 pictureBox1.Visible = true;
             }

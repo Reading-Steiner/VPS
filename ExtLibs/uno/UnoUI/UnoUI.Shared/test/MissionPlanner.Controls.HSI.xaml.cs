@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class HSI{public HSI(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class HSI{public HSI(){this.InitializeComponent();}}}

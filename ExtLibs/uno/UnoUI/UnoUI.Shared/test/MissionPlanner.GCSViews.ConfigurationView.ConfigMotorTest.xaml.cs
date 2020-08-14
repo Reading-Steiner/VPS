@@ -1,1 +1,1 @@
-namespace MissionPlanner.GCSViews.ConfigurationView { public partial class ConfigMotorTest{public ConfigMotorTest(){this.InitializeComponent();}}}
+namespace VPS.GCSViews.ConfigurationView { public partial class ConfigMotorTest{public ConfigMotorTest(){this.InitializeComponent();}}}

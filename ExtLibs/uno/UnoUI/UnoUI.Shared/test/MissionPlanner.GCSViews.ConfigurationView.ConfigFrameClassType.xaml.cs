@@ -1,1 +1,1 @@
-namespace MissionPlanner.GCSViews.ConfigurationView { public partial class ConfigFrameClassType{public ConfigFrameClassType(){this.InitializeComponent();}}}
+namespace VPS.GCSViews.ConfigurationView { public partial class ConfigFrameClassType{public ConfigFrameClassType(){this.InitializeComponent();}}}

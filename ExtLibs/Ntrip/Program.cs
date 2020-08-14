@@ -1,5 +1,5 @@
-﻿using MissionPlanner.Comms;
-using MissionPlanner.Utilities;
+﻿using VPS.Comms;
+using VPS.Utilities;
 using Mono.Unix;
 using System;
 using System.IO;

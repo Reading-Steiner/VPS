@@ -7,7 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class DigitalSky
     {

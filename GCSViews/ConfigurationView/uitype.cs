@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews.ConfigurationView
+﻿namespace VPS.GCSViews.ConfigurationView
 {
     public enum uitype  
     {

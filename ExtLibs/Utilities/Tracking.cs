@@ -7,7 +7,7 @@ using log4net;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.DataContracts;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class Tracking
     {

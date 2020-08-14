@@ -2,15 +2,15 @@
 
 using GMap.NET.WindowsForms;
 using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Comms;
-using MissionPlanner.Controls;
-using MissionPlanner.GCSViews.ConfigurationView;
-using MissionPlanner.Log;
-using MissionPlanner.Maps;
-using MissionPlanner.Utilities;
-using MissionPlanner.Utilities.AltitudeAngel;
-using MissionPlanner.Warnings;
+using VPS.ArduPilot;
+using VPS.Comms;
+using VPS.Controls;
+using VPS.GCSViews.ConfigurationView;
+using VPS.Log;
+using VPS.Maps;
+using VPS.Utilities;
+using VPS.Utilities.AltitudeAngel;
+using VPS.Warnings;
 using SkiaSharp;
 using System;
 using System.Collections;
@@ -29,15 +29,15 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MissionPlanner.ArduPilot.Mavlink;
-using MissionPlanner.Utilities.HW;
+using VPS.ArduPilot.Mavlink;
+using VPS.Utilities.HW;
 using Transitions;
 using AltitudeAngelWings;
 using GMap.NET.CacheProviders;
 using System.Runtime.Remoting.Messaging;
 using static GDAL.GDAL;
 
-namespace MissionPlanner
+namespace VPS
 {
     public partial class MainV2 : Form
     {
@@ -72,7 +72,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "light_flightdata_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "light_flightdata_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.light_flightdata_icon;
+                        return global::VPS.Properties.Resources.light_flightdata_icon;
                 }
             }
 
@@ -83,7 +83,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "light_flightplan_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "light_flightplan_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.light_flightplan_icon;
+                        return global::VPS.Properties.Resources.light_flightplan_icon;
                 }
             }
 
@@ -94,7 +94,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "light_initialsetup_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "light_initialsetup_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.light_initialsetup_icon;
+                        return global::VPS.Properties.Resources.light_initialsetup_icon;
                 }
             }
 
@@ -105,7 +105,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "light_tuningconfig_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "light_tuningconfig_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.light_tuningconfig_icon;
+                        return global::VPS.Properties.Resources.light_tuningconfig_icon;
                 }
             }
 
@@ -116,7 +116,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "light_simulation_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "light_simulation_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.light_simulation_icon;
+                        return global::VPS.Properties.Resources.light_simulation_icon;
                 }
             }
 
@@ -127,7 +127,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "light_terminal_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "light_terminal_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.light_terminal_icon;
+                        return global::VPS.Properties.Resources.light_terminal_icon;
                 }
             }
 
@@ -138,7 +138,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "light_help_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "light_help_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.light_help_icon;
+                        return global::VPS.Properties.Resources.light_help_icon;
                 }
             }
 
@@ -149,7 +149,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "light_donate_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "light_donate_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.donate;
+                        return global::VPS.Properties.Resources.donate;
                 }
             }
 
@@ -160,7 +160,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "light_connect_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "light_connect_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.light_connect_icon;
+                        return global::VPS.Properties.Resources.light_connect_icon;
                 }
             }
 
@@ -171,7 +171,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "light_disconnect_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "light_disconnect_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.light_disconnect_icon;
+                        return global::VPS.Properties.Resources.light_disconnect_icon;
                 }
             }
 
@@ -182,7 +182,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "light_icon_background.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "light_icon_background.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.bgdark;
+                        return global::VPS.Properties.Resources.bgdark;
                 }
             }
             public override Image wizard
@@ -192,7 +192,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "light_wizard_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "light_wizard_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.wizardicon;
+                        return global::VPS.Properties.Resources.wizardicon;
                 }
             }
         }
@@ -206,7 +206,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "dark_flightdata_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "dark_flightdata_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.dark_flightdata_icon;
+                        return global::VPS.Properties.Resources.dark_flightdata_icon;
                 }
             }
 
@@ -217,7 +217,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "dark_flightplan_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "dark_flightplan_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.dark_flightplan_icon;
+                        return global::VPS.Properties.Resources.dark_flightplan_icon;
                 }
             }
 
@@ -228,7 +228,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "dark_initialsetup_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "dark_initialsetup_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.dark_initialsetup_icon;
+                        return global::VPS.Properties.Resources.dark_initialsetup_icon;
                 }
             }
 
@@ -239,7 +239,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "dark_tuningconfig_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "dark_tuningconfig_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.dark_tuningconfig_icon;
+                        return global::VPS.Properties.Resources.dark_tuningconfig_icon;
                 }
             }
 
@@ -250,7 +250,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "dark_simulation_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "dark_simulation_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.dark_simulation_icon;
+                        return global::VPS.Properties.Resources.dark_simulation_icon;
                 }
             }
 
@@ -261,7 +261,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "dark_terminal_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "dark_terminal_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.dark_terminal_icon;
+                        return global::VPS.Properties.Resources.dark_terminal_icon;
                 }
             }
 
@@ -272,7 +272,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "dark_help_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "dark_help_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.dark_help_icon;
+                        return global::VPS.Properties.Resources.dark_help_icon;
                 }
             }
 
@@ -283,7 +283,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "dark_donate_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "dark_donate_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.donate;
+                        return global::VPS.Properties.Resources.donate;
                 }
             }
 
@@ -294,7 +294,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "dark_connect_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "dark_connect_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.dark_connect_icon;
+                        return global::VPS.Properties.Resources.dark_connect_icon;
                 }
             }
 
@@ -305,7 +305,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "dark_disconnect_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "dark_disconnect_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.dark_disconnect_icon;
+                        return global::VPS.Properties.Resources.dark_disconnect_icon;
                 }
             }
 
@@ -326,7 +326,7 @@ namespace MissionPlanner
                     if (File.Exists(Settings.GetRunningDirectory() + "dark_wizard_icon.png"))
                         return Image.FromFile(Settings.GetRunningDirectory() + "dark_wizard_icon.png");
                     else
-                        return global::MissionPlanner.Properties.Resources.wizardicon;
+                        return global::VPS.Properties.Resources.wizardicon;
                 }
             }
         }
@@ -466,8 +466,8 @@ namespace MissionPlanner
         {
             get
             {
-                if (MissionPlanner.GCSViews.SITL.SITLSEND == null) return false;
-                if (MissionPlanner.GCSViews.SITL.SITLSEND.Client.Connected) return true;
+                if (VPS.GCSViews.SITL.SITLSEND == null) return false;
+                if (VPS.GCSViews.SITL.SITLSEND.Client.Connected) return true;
                 return false;
             }
         }
@@ -540,7 +540,7 @@ namespace MissionPlanner
         {
             MenuSimulation.Visible = DisplayConfiguration.displaySimulation;
             MenuHelp.Visible = DisplayConfiguration.displayHelp;
-            MissionPlanner.Controls.BackstageView.BackstageView.Advanced = DisplayConfiguration.isAdvancedMode;
+            VPS.Controls.BackstageView.BackstageView.Advanced = DisplayConfiguration.isAdvancedMode;
 
             if (Settings.Instance.GetBoolean("menu_autohide") != DisplayConfiguration.autoHideMenuForce)
             {
@@ -794,7 +794,7 @@ namespace MissionPlanner
                 comPortBaud = int.Parse(temp2);
             }
 
-            MissionPlanner.Utilities.Tracking.cid = new Guid(Settings.Instance["guid"].ToString());
+            VPS.Utilities.Tracking.cid = new Guid(Settings.Instance["guid"].ToString());
 
             if (Settings.Instance.ContainsKey("language") && !string.IsNullOrEmpty(Settings.Instance["language"]))
             {
@@ -990,7 +990,7 @@ namespace MissionPlanner
                     MainV2.speechEnable = Settings.Instance.GetBoolean("speechenable");
 
                 if (Settings.Instance["analyticsoptout"] != null)
-                    MissionPlanner.Utilities.Tracking.OptOut = Settings.Instance.GetBoolean("analyticsoptout");
+                    VPS.Utilities.Tracking.OptOut = Settings.Instance.GetBoolean("analyticsoptout");
 
                 try
                 {
@@ -1097,7 +1097,7 @@ namespace MissionPlanner
 
             CustomWarning.defaultsrc = MainV2.comPort.MAV.cs;
 
-            MissionPlanner.Controls.PreFlight.CheckListItem.defaultsrc = MainV2.comPort.MAV.cs;
+            VPS.Controls.PreFlight.CheckListItem.defaultsrc = MainV2.comPort.MAV.cs;
 
             // when uploading a firmware we dont want to reload this screen.
             if (instance.MyView.current.Control != null && instance.MyView.current.Control.GetType() == typeof(GCSViews.InitialSetup))
@@ -1198,7 +1198,7 @@ namespace MissionPlanner
             MenuHelp.ForeColor = ThemeManager.TextColor;
         }
 
-        void adsb_UpdatePlanePosition(object sender, MissionPlanner.Utilities.adsb.PointLatLngAltHdg adsb)
+        void adsb_UpdatePlanePosition(object sender, VPS.Utilities.adsb.PointLatLngAltHdg adsb)
         {
             lock (adsblock)
             {
@@ -1718,7 +1718,7 @@ namespace MissionPlanner
                {
                    try
                    {
-                       MissionPlanner.Log.LogSort.SortLogs(Directory.GetFiles(Settings.Instance.LogDir, "*.tlog"));
+                       VPS.Log.LogSort.SortLogs(Directory.GetFiles(Settings.Instance.LogDir, "*.tlog"));
                    }
                    catch
                    {
@@ -1730,7 +1730,7 @@ namespace MissionPlanner
             {
             }
 
-            this.MenuConnect.Image = global::MissionPlanner.Properties.Resources.light_connect_icon;
+            this.MenuConnect.Image = global::VPS.Properties.Resources.light_connect_icon;
         }
 
         public void doConnect(MAVLinkInterface comPort, string portname, string baud, bool getparams = true)
@@ -2165,7 +2165,7 @@ namespace MissionPlanner
                     comPort.MAV.param.ContainsKey("INS_GYR3_ID") && comPort.MAV.param["INS_GYR3_ID"].Value == 0 &&
                     comPort.MAV.param.ContainsKey("INS_ENABLE_MASK") && comPort.MAV.param["INS_ENABLE_MASK"].Value >= 7)
                 {
-                    MissionPlanner.Controls.SB.Show("Param Scan");
+                    VPS.Controls.SB.Show("Param Scan");
                 }
             }
             catch { }
@@ -2202,7 +2202,7 @@ namespace MissionPlanner
                             if (bad1)
                                 this.BeginInvoke(method: (Action)delegate
                                {
-                                   MissionPlanner.Controls.SB.Show("SPI Scan");
+                                   VPS.Controls.SB.Show("SPI Scan");
                                });
                         });
                 }
@@ -2365,7 +2365,7 @@ namespace MissionPlanner
                    {
                        try
                        {
-                           MissionPlanner.Log.LogSort.SortLogs(Directory.GetFiles(Settings.Instance.LogDir, "*.tlog"));
+                           VPS.Log.LogSort.SortLogs(Directory.GetFiles(Settings.Instance.LogDir, "*.tlog"));
                        }
                        catch
                        {
@@ -2606,7 +2606,7 @@ namespace MissionPlanner
                                     {
                                         if (sitl)
                                         {
-                                            MissionPlanner.GCSViews.SITL.rcinput();
+                                            VPS.GCSViews.SITL.rcinput();
                                         }
                                         else
                                         {
@@ -2641,7 +2641,7 @@ namespace MissionPlanner
                                     {
                                         if (sitl)
                                         {
-                                            MissionPlanner.GCSViews.SITL.rcinput();
+                                            VPS.GCSViews.SITL.rcinput();
                                         }
                                         else
                                         {
@@ -3602,7 +3602,7 @@ namespace MissionPlanner
             Program.Splash?.Close();
 
             log.Info("appload time");
-            MissionPlanner.Utilities.Tracking.AddTiming("AppLoad", "Load Time",
+            VPS.Utilities.Tracking.AddTiming("AppLoad", "Load Time",
                 (DateTime.Now - Program.starttime).TotalMilliseconds, "");
 
             int p = (int) Environment.OSVersion.Platform;
@@ -3633,7 +3633,7 @@ namespace MissionPlanner
                 }
                 else if (Settings.Instance.GetBoolean("beta_updates") == true)
                 {
-                    MissionPlanner.Utilities.Update.dobeta = true;
+                    VPS.Utilities.Update.dobeta = true;
                     System.Threading.ThreadPool.QueueUserWorkItem(checkupdate);
                 }
             }
@@ -3957,9 +3957,9 @@ namespace MissionPlanner
             // sort logs
             try
             {
-                MissionPlanner.Log.LogSort.SortLogs(Directory.GetFiles(Settings.Instance.LogDir, "*.tlog"));
+                VPS.Log.LogSort.SortLogs(Directory.GetFiles(Settings.Instance.LogDir, "*.tlog"));
 
-                MissionPlanner.Log.LogSort.SortLogs(Directory.GetFiles(Settings.Instance.LogDir, "*.rlog"));
+                VPS.Log.LogSort.SortLogs(Directory.GetFiles(Settings.Instance.LogDir, "*.rlog"));
             }
             catch (Exception ex)
             {
@@ -4568,7 +4568,7 @@ namespace MissionPlanner
                         }
                     }
 
-                    foreach (var item in MissionPlanner.Plugin.PluginLoader.Plugins)
+                    foreach (var item in VPS.Plugin.PluginLoader.Plugins)
                     {
                         item.Host.ProcessDeviceChanged((WM_DEVICECHANGE_enum)m.WParam);
                     }

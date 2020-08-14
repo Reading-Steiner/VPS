@@ -1,5 +1,5 @@
-﻿using MissionPlanner.Controls;
-namespace MissionPlanner.Warnings
+﻿using VPS.Controls;
+namespace VPS.Warnings
 {
     partial class WarningsManager
     {
@@ -38,7 +38,7 @@ namespace MissionPlanner.Warnings
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.warningControl1 = new MissionPlanner.Warnings.WarningControl();
+            this.warningControl1 = new VPS.Warnings.WarningControl();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 

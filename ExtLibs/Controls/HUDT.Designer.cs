@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MissionPlanner.Controls {
+namespace VPS.Controls {
     using System;
     
     

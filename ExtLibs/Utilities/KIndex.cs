@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class KIndex
     {

@@ -5,7 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Utilities.AltitudeAngel
+namespace VPS.Utilities.AltitudeAngel
 {
     internal partial class AASettings : Form
     {

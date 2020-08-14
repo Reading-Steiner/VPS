@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class Vector3f : Vector3<float>
     {

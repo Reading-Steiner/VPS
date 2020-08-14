@@ -7,7 +7,7 @@ using System.Text;
 using Ionic.Zlib;
 using Newtonsoft.Json;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class apj_tool
     {

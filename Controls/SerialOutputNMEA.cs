@@ -1,12 +1,12 @@
-﻿using MissionPlanner.Comms;
-using MissionPlanner.Utilities;
+﻿using VPS.Comms;
+using VPS.Utilities;
 using System;
 using System.Globalization;
 using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public partial class SerialOutputNMEA : Form
     {
@@ -34,7 +34,7 @@ namespace MissionPlanner.Controls
                 BUT_connect.Text = Strings.Stop;
             }
 
-            MissionPlanner.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
+            VPS.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
         }
 
         private void BUT_connect_Click(object sender, EventArgs e)

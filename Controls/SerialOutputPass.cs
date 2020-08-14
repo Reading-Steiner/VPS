@@ -1,10 +1,10 @@
-﻿using MissionPlanner.Comms;
+﻿using VPS.Comms;
 using System;
 using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public partial class SerialOutputPass : Form
     {
@@ -29,7 +29,7 @@ namespace MissionPlanner.Controls
                 BUT_connect.Text = Strings.Stop;
             }
 
-            MissionPlanner.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
+            VPS.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
         }
 
         private void BUT_connect_Click(object sender, EventArgs e)

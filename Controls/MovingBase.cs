@@ -1,12 +1,12 @@
-﻿using MissionPlanner.Comms;
-using MissionPlanner.Utilities;
+﻿using VPS.Comms;
+using VPS.Utilities;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Net.Sockets;
 using System.Windows.Forms;
 
-namespace MissionPlanner
+namespace VPS
 {
     public partial class MovingBase : Form
     {
@@ -45,7 +45,7 @@ namespace MissionPlanner
                 CMB_updaterate.Text = updaterate.ToString();
             }
 
-            MissionPlanner.Utilities.Tracking.AddPage(
+            VPS.Utilities.Tracking.AddPage(
                 System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString(),
                 System.Reflection.MethodBase.GetCurrentMethod().Name);
         }

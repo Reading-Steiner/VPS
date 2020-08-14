@@ -1,14 +1,14 @@
 ﻿using GMap.NET;
 using GMap.NET.WindowsForms;
 using Ionic.Zip;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 using SharpKml.Dom;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 
-namespace MissionPlanner.NoFly
+namespace VPS.NoFly
 {
     public class NoFly
     {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MissionPlanner.ArduPilot;
+using VPS.ArduPilot;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class Fence
     {

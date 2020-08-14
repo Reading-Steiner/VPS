@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -10,9 +10,9 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace MissionPlanner.Stats
+namespace VPS.Stats
 {
-    public class StatsPlugin : MissionPlanner.Plugin.Plugin
+    public class StatsPlugin : VPS.Plugin.Plugin
     {
         whattostat statsoverall = new whattostat();
         whattostat statssession = new whattostat();

@@ -19,14 +19,14 @@ using System.Xml; // config file
 using System.Runtime.InteropServices; // dll imports
 using log4net;
 
-using MissionPlanner;
+using VPS;
 using System.Reflection;
 
 using System.IO;
 
 using System.Drawing.Drawing2D;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public class HorizontalProgressBar2:  BSE.Windows.Forms.ProgressBar
     {

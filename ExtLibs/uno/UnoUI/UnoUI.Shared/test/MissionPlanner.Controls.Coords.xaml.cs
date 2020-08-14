@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class Coords{public Coords(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class Coords{public Coords(){this.InitializeComponent();}}}

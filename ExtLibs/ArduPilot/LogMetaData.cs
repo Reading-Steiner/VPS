@@ -1,6 +1,6 @@
 ﻿using ExifLibrary;
 using log4net;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace MissionPlanner.ArduPilot
+namespace VPS.ArduPilot
 {
     public class LogMetaData
     {

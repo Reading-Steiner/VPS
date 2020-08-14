@@ -3,11 +3,11 @@ using System.IO.Ports;
 using System.Reflection;
 using System.Threading;
 using log4net;
-using MissionPlanner.Comms;
+using VPS.Comms;
 
 // Written by Michael Oborne
 
-namespace MissionPlanner.Arduino
+namespace VPS.Arduino
 {
     public class ArduinoSTK : Comms.SerialPort, IArduinoComms
     {

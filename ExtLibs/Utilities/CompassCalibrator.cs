@@ -1,4 +1,4 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +11,7 @@ using uint32_t = System.UInt32;
 using staticuint16_t = System.UInt16;
 using staticfloat = System.Single;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class CompassCalibrator : Utils
     {

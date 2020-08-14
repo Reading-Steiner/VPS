@@ -1,7 +1,7 @@
 ﻿using log4net;
 using System.Threading;
 
-namespace MissionPlanner.Swarm.Sequence
+namespace VPS.Swarm.Sequence
 {
     public class Controller
     {

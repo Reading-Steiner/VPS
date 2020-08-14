@@ -4,10 +4,10 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Reflection;
 using log4net;
-using MissionPlanner.MsgBox;
-using MissionPlanner.Utilities;
+using VPS.MsgBox;
+using VPS.Utilities;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     /// <summary>
     /// Form that is shown to the user during a background operation

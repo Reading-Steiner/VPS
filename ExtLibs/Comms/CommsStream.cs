@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace MissionPlanner.Comms
+namespace VPS.Comms
 {
     public class CommsStream : Stream
     {

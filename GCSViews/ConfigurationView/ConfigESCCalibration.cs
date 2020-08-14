@@ -1,9 +1,9 @@
-﻿using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+﻿using VPS.Controls;
+using VPS.Utilities;
 using System;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigESCCalibration : MyUserControl, IActivate
     {

@@ -1,8 +1,8 @@
 ﻿using BrightIdeasSoftware;
 using log4net;
-using MissionPlanner.Controls;
-using MissionPlanner.Controls.BackstageView;
-using MissionPlanner.Controls.PreFlight;
+using VPS.Controls;
+using VPS.Controls.BackstageView;
+using VPS.Controls.PreFlight;
 using System;
 using System.Drawing;
 using System.IO;
@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Xml;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
 
     //ThemeColor class is describe an item in a theme. 
@@ -514,7 +514,7 @@ mc:Ignorable=""d""
             foreach (Control ctl in control.Controls)
             {
                 if (ctl is QuickView || ctl is ServoOptions || ctl is ModifyandSet
-                    || ctl is Coords /*|| ctl is AGaugeApp.AGauge*/|| ctl is MissionPlanner.Controls.HUD
+                    || ctl is Coords /*|| ctl is AGaugeApp.AGauge*/|| ctl is VPS.Controls.HUD
                     || ctl is ImageLabel || ctl is RelayOptions || ctl is CheckListControl
                     || ctl is MavlinkCheckBox)
                 {

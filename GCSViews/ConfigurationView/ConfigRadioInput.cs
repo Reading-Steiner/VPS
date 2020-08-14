@@ -1,13 +1,13 @@
-﻿using MissionPlanner.ArduPilot;
-using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+﻿using VPS.ArduPilot;
+using VPS.Controls;
+using VPS.Utilities;
 using System;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using Timer = System.Windows.Forms.Timer;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigRadioInput : MyUserControl, IActivate, IDeactivate
     {

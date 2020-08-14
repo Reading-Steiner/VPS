@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Grid
+namespace VPS.Grid
 {
-    public class GridPlugin : MissionPlanner.Plugin.Plugin
+    public class GridPlugin : VPS.Plugin.Plugin
     {
 
 
@@ -61,7 +61,7 @@ namespace MissionPlanner.Grid
         {
             using (var gridui = new GridUI(this))
             {
-                MissionPlanner.Utilities.ThemeManager.ApplyThemeTo(gridui);
+                VPS.Utilities.ThemeManager.ApplyThemeTo(gridui);
 
                 if (Host.FPDrawnPolygon != null && Host.FPDrawnPolygon.Points.Count > 2)
                 {

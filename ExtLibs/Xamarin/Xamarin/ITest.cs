@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Comms;
+using VPS.ArduPilot;
+using VPS.Comms;
 
 namespace Xamarin
 {

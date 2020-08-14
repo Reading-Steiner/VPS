@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Controls
+﻿namespace VPS.Controls
 {
     partial class ConnectionControl
     {
@@ -75,7 +75,7 @@
             // 
             resources.ApplyResources(this.linkLabel1, "linkLabel1");
             this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.linkLabel1.Image = global::MissionPlanner.Properties.Resources.bgdark;
+            this.linkLabel1.Image = global::VPS.Properties.Resources.bgdark;
             this.linkLabel1.LinkColor = System.Drawing.Color.White;
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.TabStop = true;
@@ -93,7 +93,7 @@
             // 
             // ConnectionControl
             // 
-            this.BackgroundImage = global::MissionPlanner.Properties.Resources.bgdark;
+            this.BackgroundImage = global::VPS.Properties.Resources.bgdark;
             this.Controls.Add(this.cmb_sysid);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.cmb_Connection);

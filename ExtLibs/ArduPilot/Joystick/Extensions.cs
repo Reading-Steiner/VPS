@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Joystick
+﻿namespace VPS.Joystick
 {
     public static class Extensions
     {

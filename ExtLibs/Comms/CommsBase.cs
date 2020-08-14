@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace MissionPlanner.Comms
+namespace VPS.Comms
 {
     public delegate string SettingsOption(string name, string value, bool set = false);
 

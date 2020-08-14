@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public class MAVLinkParamChanged : EventArgs
     {

@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner
+﻿namespace VPS
 {
     public enum altitudes
     {

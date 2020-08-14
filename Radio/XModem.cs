@@ -1,10 +1,10 @@
-﻿using MissionPlanner.Comms;
+﻿using VPS.Comms;
 using System;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Radio
+namespace VPS.Radio
 {
     public class XModem
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     internal class AP_HAL
     {

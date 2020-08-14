@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.ArduPilot
+﻿namespace VPS.ArduPilot
 {
     public struct DeviceInfo
     {

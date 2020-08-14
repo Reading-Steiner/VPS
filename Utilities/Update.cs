@@ -1,6 +1,6 @@
 ﻿using ICSharpCode.SharpZipLib.Checksum;
 using log4net;
-using MissionPlanner.Controls;
+using VPS.Controls;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     class Update
     {
@@ -639,7 +639,7 @@ namespace MissionPlanner.Utilities
 
                 if (dns.Length != 0)
                 {
-                    if (MissionPlanner.Utilities.Update.dobeta)
+                    if (VPS.Utilities.Update.dobeta)
                         ParameterMetaDataParser.GetParameterInformation(
                             ConfigurationManager.AppSettings["ParameterLocationsBleeding"], "ParameterMetaData.xml");
                     else

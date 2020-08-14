@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using MissionPlanner.Comms;
+using VPS.Comms;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class StreamCombiner
     {

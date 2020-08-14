@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MissionPlanner.Comms
+namespace VPS.Comms
 {
     public class CommsInjection : ICommsSerial
     {

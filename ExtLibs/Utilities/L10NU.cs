@@ -1,11 +1,11 @@
-﻿using MissionPlanner.Utilities.Properties;
+﻿using VPS.Utilities.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public static class L10NU
     {

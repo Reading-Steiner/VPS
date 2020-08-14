@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Controls
+﻿namespace VPS.Controls
 {
     partial class fftui
     {
@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
-            this.BUT_run = new MissionPlanner.Controls.MyButton();
-            this.myButton1 = new MissionPlanner.Controls.MyButton();
+            this.BUT_run = new VPS.Controls.MyButton();
+            this.myButton1 = new VPS.Controls.MyButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.zedGraphControl6 = new ZedGraph.ZedGraphControl();
             this.zedGraphControl5 = new ZedGraph.ZedGraphControl();
@@ -42,9 +42,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.NUM_startfreq = new System.Windows.Forms.NumericUpDown();
-            this.BUT_log2 = new MissionPlanner.Controls.MyButton();
-            this.but_fftimu = new MissionPlanner.Controls.MyButton();
-            this.but_ISBH = new MissionPlanner.Controls.MyButton();
+            this.BUT_log2 = new VPS.Controls.MyButton();
+            this.but_fftimu = new VPS.Controls.MyButton();
+            this.but_ISBH = new VPS.Controls.MyButton();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_bins)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_startfreq)).BeginInit();

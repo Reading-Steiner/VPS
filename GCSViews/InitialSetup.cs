@@ -1,16 +1,16 @@
 ﻿using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Controls;
-using MissionPlanner.Controls.BackstageView;
-using MissionPlanner.GCSViews.ConfigurationView;
-using MissionPlanner.Radio;
-using MissionPlanner.Utilities;
+using VPS.ArduPilot;
+using VPS.Controls;
+using VPS.Controls.BackstageView;
+using VPS.GCSViews.ConfigurationView;
+using VPS.Radio;
+using VPS.Utilities;
 using System;
 using System.Reflection;
 using System.Resources;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews
+namespace VPS.GCSViews
 {
     public partial class InitialSetup : MyUserControl, IActivate
     {

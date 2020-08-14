@@ -1,8 +1,8 @@
 ﻿using BrightIdeasSoftware;
 using log4net;
 using Microsoft.Scripting.Utils;
-using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+using VPS.Controls;
+using VPS.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigRawParamsTree : MyUserControl, IActivate, IDeactivate
     {

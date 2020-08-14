@@ -11,11 +11,11 @@ namespace RFD.RFD900
     public class TSession : IDisposable
     {
         TMode _Mode = TMode.INIT;
-        MissionPlanner.Comms.ICommsSerial _Port;
+        VPS.Comms.ICommsSerial _Port;
         public uploader.Uploader.Board Board = uploader.Uploader.Board.FAILED;
         const int BOOTLOADER_BAUD = 115200;
 
-        public TSession(MissionPlanner.Comms.ICommsSerial Port)
+        public TSession(VPS.Comms.ICommsSerial Port)
         {
             _Port = Port;
         }
@@ -182,7 +182,7 @@ namespace RFD.RFD900
             }
         }
 
-        public MissionPlanner.Comms.ICommsSerial Port
+        public VPS.Comms.ICommsSerial Port
         {
             get
             {
@@ -1110,8 +1110,8 @@ namespace RFD.RFD900
                 {
                     try
                     {
-                        MissionPlanner.Radio.XModem.ProgressEvent += (d) => Progress(d);
-                        MissionPlanner.Radio.XModem.Upload(FilePath, _Session.Port);
+                        VPS.Radio.XModem.ProgressEvent += (d) => Progress(d);
+                        VPS.Radio.XModem.Upload(FilePath, _Session.Port);
                         return true;
                     }
                     catch

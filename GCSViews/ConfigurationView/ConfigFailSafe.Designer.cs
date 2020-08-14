@@ -1,5 +1,5 @@
-﻿using MissionPlanner.Controls;
-namespace MissionPlanner.GCSViews.ConfigurationView
+﻿using VPS.Controls;
+namespace VPS.GCSViews.ConfigurationView
 {
     partial class ConfigFailSafe
     {
@@ -37,42 +37,42 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             this.currentStateBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.LNK_wiki = new System.Windows.Forms.LinkLabel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.mavlinkNumericUpDownlow_voltage = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkCheckBoxlong_fs = new MissionPlanner.Controls.MavlinkCheckBox();
-            this.mavlinkCheckBoxshort_fs = new MissionPlanner.Controls.MavlinkCheckBox();
-            this.mavlinkCheckBoxgcs_fs = new MissionPlanner.Controls.MavlinkCheckBox();
-            this.mavlinkCheckBoxthr_fs_action = new MissionPlanner.Controls.MavlinkCheckBox();
-            this.mavlinkNumericUpDownfs_thr_value = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkNumericUpDownthr_fs_value = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkCheckBoxthr_fs = new MissionPlanner.Controls.MavlinkCheckBox();
-            this.mavlinkComboBox_fs_thr_enable = new MissionPlanner.Controls.MavlinkComboBox();
-            this.mavlinkComboBoxfs_batt_enable = new MissionPlanner.Controls.MavlinkComboBox();
-            this.mavlinkCheckBoxFS_GCS_ENABLE = new MissionPlanner.Controls.MavlinkCheckBox();
+            this.mavlinkNumericUpDownlow_voltage = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkCheckBoxlong_fs = new VPS.Controls.MavlinkCheckBox();
+            this.mavlinkCheckBoxshort_fs = new VPS.Controls.MavlinkCheckBox();
+            this.mavlinkCheckBoxgcs_fs = new VPS.Controls.MavlinkCheckBox();
+            this.mavlinkCheckBoxthr_fs_action = new VPS.Controls.MavlinkCheckBox();
+            this.mavlinkNumericUpDownfs_thr_value = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownthr_fs_value = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkCheckBoxthr_fs = new VPS.Controls.MavlinkCheckBox();
+            this.mavlinkComboBox_fs_thr_enable = new VPS.Controls.MavlinkComboBox();
+            this.mavlinkComboBoxfs_batt_enable = new VPS.Controls.MavlinkComboBox();
+            this.mavlinkCheckBoxFS_GCS_ENABLE = new VPS.Controls.MavlinkCheckBox();
             this.pnlmah = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
-            this.mavlinkNumericUpDownFS_BATT_MAH = new MissionPlanner.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownFS_BATT_MAH = new VPS.Controls.MavlinkNumericUpDown();
             this.PNL_low_bat = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.PNL_thr_fs_value = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
-            this.lbl_armed = new MissionPlanner.Controls.MyLabel();
-            this.lbl_gpslock = new MissionPlanner.Controls.MyLabel();
-            this.horizontalProgressBar9 = new MissionPlanner.Controls.HorizontalProgressBar();
-            this.horizontalProgressBar10 = new MissionPlanner.Controls.HorizontalProgressBar();
-            this.horizontalProgressBar11 = new MissionPlanner.Controls.HorizontalProgressBar();
-            this.horizontalProgressBar12 = new MissionPlanner.Controls.HorizontalProgressBar();
-            this.horizontalProgressBar13 = new MissionPlanner.Controls.HorizontalProgressBar();
-            this.horizontalProgressBar14 = new MissionPlanner.Controls.HorizontalProgressBar();
-            this.horizontalProgressBar15 = new MissionPlanner.Controls.HorizontalProgressBar();
-            this.horizontalProgressBar16 = new MissionPlanner.Controls.HorizontalProgressBar();
-            this.horizontalProgressBar8 = new MissionPlanner.Controls.HorizontalProgressBar();
-            this.horizontalProgressBar7 = new MissionPlanner.Controls.HorizontalProgressBar();
-            this.horizontalProgressBar6 = new MissionPlanner.Controls.HorizontalProgressBar();
-            this.horizontalProgressBar5 = new MissionPlanner.Controls.HorizontalProgressBar();
-            this.horizontalProgressBar4 = new MissionPlanner.Controls.HorizontalProgressBar();
-            this.horizontalProgressBar3 = new MissionPlanner.Controls.HorizontalProgressBar();
-            this.horizontalProgressBar2 = new MissionPlanner.Controls.HorizontalProgressBar();
-            this.horizontalProgressBar1 = new MissionPlanner.Controls.HorizontalProgressBar();
+            this.lbl_armed = new VPS.Controls.MyLabel();
+            this.lbl_gpslock = new VPS.Controls.MyLabel();
+            this.horizontalProgressBar9 = new VPS.Controls.HorizontalProgressBar();
+            this.horizontalProgressBar10 = new VPS.Controls.HorizontalProgressBar();
+            this.horizontalProgressBar11 = new VPS.Controls.HorizontalProgressBar();
+            this.horizontalProgressBar12 = new VPS.Controls.HorizontalProgressBar();
+            this.horizontalProgressBar13 = new VPS.Controls.HorizontalProgressBar();
+            this.horizontalProgressBar14 = new VPS.Controls.HorizontalProgressBar();
+            this.horizontalProgressBar15 = new VPS.Controls.HorizontalProgressBar();
+            this.horizontalProgressBar16 = new VPS.Controls.HorizontalProgressBar();
+            this.horizontalProgressBar8 = new VPS.Controls.HorizontalProgressBar();
+            this.horizontalProgressBar7 = new VPS.Controls.HorizontalProgressBar();
+            this.horizontalProgressBar6 = new VPS.Controls.HorizontalProgressBar();
+            this.horizontalProgressBar5 = new VPS.Controls.HorizontalProgressBar();
+            this.horizontalProgressBar4 = new VPS.Controls.HorizontalProgressBar();
+            this.horizontalProgressBar3 = new VPS.Controls.HorizontalProgressBar();
+            this.horizontalProgressBar2 = new VPS.Controls.HorizontalProgressBar();
+            this.horizontalProgressBar1 = new VPS.Controls.HorizontalProgressBar();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -108,7 +108,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             // 
             // currentStateBindingSource
             // 
-            this.currentStateBindingSource.DataSource = typeof(MissionPlanner.CurrentState);
+            this.currentStateBindingSource.DataSource = typeof(VPS.CurrentState);
             // 
             // LNK_wiki
             // 

@@ -61,9 +61,7 @@
     <ProjectReference Include="..\..\ExtLibs\Utilities\MissionPlanner.Utilities.csproj">
       <Private>false</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\MissionPlanner.csproj">
-      <Private>false</Private>
-    </ProjectReference>
+    <ProjectReference Include="..\..\VPS.csproj" />
   </ItemGroup>
 
   <ItemGroup>

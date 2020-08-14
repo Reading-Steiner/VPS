@@ -1,6 +1,6 @@
 ﻿using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Controls;
+using VPS.ArduPilot;
+using VPS.Controls;
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigAteryx : MyUserControl, IActivate
     {

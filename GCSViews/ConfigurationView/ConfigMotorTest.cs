@@ -1,11 +1,11 @@
-﻿using MissionPlanner.Controls;
-using MissionPlanner.HIL;
+﻿using VPS.Controls;
+using VPS.HIL;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigMotorTest : MyUserControl, IActivate
     {

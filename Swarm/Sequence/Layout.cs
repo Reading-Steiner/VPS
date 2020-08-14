@@ -1,9 +1,9 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 
-namespace MissionPlanner.Swarm.Sequence
+namespace VPS.Swarm.Sequence
 {
     public class Sequence
     {

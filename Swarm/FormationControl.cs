@@ -1,4 +1,4 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using ProjNet.CoordinateSystems;
 using ProjNet.CoordinateSystems.Transformations;
 using System;
@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using GeoAPI.CoordinateSystems;
 using GeoAPI.CoordinateSystems.Transformations;
 
-namespace MissionPlanner.Swarm
+namespace VPS.Swarm
 {
     public partial class FormationControl : Form
     {
@@ -48,7 +48,7 @@ namespace MissionPlanner.Swarm
 
             MessageBox.Show("this is beta, use at own risk");
 
-            MissionPlanner.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
+            VPS.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
         }
 
         void FollowLeaderControl_MouseWheel(object sender, MouseEventArgs e)

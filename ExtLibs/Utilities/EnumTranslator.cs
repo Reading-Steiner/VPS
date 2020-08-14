@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using MissionPlanner.Attributes;
+using VPS.Attributes;
 
 #endregion
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
    public static class EnumTranslator
    {

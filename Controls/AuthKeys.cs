@@ -1,9 +1,9 @@
-﻿using MissionPlanner.Mavlink;
-using MissionPlanner.Utilities;
+﻿using VPS.Mavlink;
+using VPS.Utilities;
 using System;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public partial class AuthKeys : Form
     {

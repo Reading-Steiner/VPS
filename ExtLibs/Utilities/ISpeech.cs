@@ -1,4 +1,4 @@
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public interface ISpeech
     {

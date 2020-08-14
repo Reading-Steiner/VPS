@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class DistanceBar{public DistanceBar(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class DistanceBar{public DistanceBar(){this.InitializeComponent();}}}

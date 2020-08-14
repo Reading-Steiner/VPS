@@ -1,6 +1,6 @@
 using ICSharpCode.SharpZipLib.Zip;
 using log4net;
-using MissionPlanner.Controls;
+using VPS.Controls;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +8,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class LogAnalyzer
     {

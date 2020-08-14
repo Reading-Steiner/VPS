@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Xml.Serialization;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     [Serializable]
     public enum DisplayNames

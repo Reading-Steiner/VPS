@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ZedGraph;
 
-namespace MissionPlanner.Swarm.WaypointLeader
+namespace VPS.Swarm.WaypointLeader
 {
     public partial class WPControl : Form
     {

@@ -6,17 +6,17 @@ using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using log4net;
 using Microsoft.Scripting.Utils;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Comms;
-using MissionPlanner.Controls;
-using MissionPlanner.GCSViews;
-using MissionPlanner.GCSViews.ConfigurationView;
-using MissionPlanner.GeoRef;
-using MissionPlanner.Log;
-using MissionPlanner.Maps;
-using MissionPlanner.Swarm;
-using MissionPlanner.Utilities;
-using MissionPlanner.Warnings;
+using VPS.ArduPilot;
+using VPS.Comms;
+using VPS.Controls;
+using VPS.GCSViews;
+using VPS.GCSViews.ConfigurationView;
+using VPS.GeoRef;
+using VPS.Log;
+using VPS.Maps;
+using VPS.Swarm;
+using VPS.Utilities;
+using VPS.Warnings;
 using resedit;
 using System;
 using System.Collections;
@@ -38,12 +38,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
-using MissionPlanner.ArduPilot.Mavlink;
-using static MissionPlanner.Utilities.Firmware;
+using VPS.ArduPilot.Mavlink;
+using static VPS.Utilities.Firmware;
 using Formatting = Newtonsoft.Json.Formatting;
 using ILog = log4net.ILog;
 
-namespace MissionPlanner
+namespace VPS
 {
     public partial class temp : Form
     {
@@ -909,11 +909,11 @@ namespace MissionPlanner
 
         private void but_sortlogs_Click(object sender, EventArgs e)
         {
-            MissionPlanner.Log.LogSort.SortLogs(Directory.GetFiles(Settings.Instance.LogDir, "*.tlog",
+            VPS.Log.LogSort.SortLogs(Directory.GetFiles(Settings.Instance.LogDir, "*.tlog",
                 SearchOption.AllDirectories), Settings.Instance.LogDir);
-            MissionPlanner.Log.LogSort.SortLogs(Directory.GetFiles(Settings.Instance.LogDir, "*.bin",
+            VPS.Log.LogSort.SortLogs(Directory.GetFiles(Settings.Instance.LogDir, "*.bin",
                 SearchOption.AllDirectories), Settings.Instance.LogDir);
-            MissionPlanner.Log.LogSort.SortLogs(Directory.GetFiles(Settings.Instance.LogDir, "*.log",
+            VPS.Log.LogSort.SortLogs(Directory.GetFiles(Settings.Instance.LogDir, "*.log",
                 SearchOption.AllDirectories), Settings.Instance.LogDir);
         }
 

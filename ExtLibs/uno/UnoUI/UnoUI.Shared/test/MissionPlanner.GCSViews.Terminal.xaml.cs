@@ -1,1 +1,1 @@
-namespace MissionPlanner.GCSViews { public partial class Terminal{public Terminal(){this.InitializeComponent();}}}
+namespace VPS.GCSViews { public partial class Terminal{public Terminal(){this.InitializeComponent();}}}

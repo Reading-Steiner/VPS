@@ -16,16 +16,16 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Linq;
 using System.Runtime.InteropServices;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 using SvgNet.SvgGdi;
-using MathHelper = MissionPlanner.Utilities.MathHelper;
+using MathHelper = VPS.Utilities.MathHelper;
 using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
 
 
 // Control written by Michael Oborne 2011
 // dual opengl and GDI+
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public class HUD : GLControl
     {

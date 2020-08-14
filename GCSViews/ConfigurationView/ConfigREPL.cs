@@ -1,6 +1,6 @@
 ﻿using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Controls;
+using VPS.ArduPilot;
+using VPS.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews
+namespace VPS.GCSViews
 {
     public partial class ConfigREPL : MyUserControl, IActivate, IDeactivate
     {

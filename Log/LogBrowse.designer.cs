@@ -1,6 +1,6 @@
-﻿using MissionPlanner.Controls;
+﻿using VPS.Controls;
 
-namespace MissionPlanner.Log
+namespace VPS.Log
 {
     partial class LogBrowse
     {
@@ -34,9 +34,9 @@ namespace MissionPlanner.Log
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LogBrowse));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exportVisibleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.BUT_Graphit = new MissionPlanner.Controls.MyButton();
-            this.BUT_cleargraph = new MissionPlanner.Controls.MyButton();
-            this.BUT_loadlog = new MissionPlanner.Controls.MyButton();
+            this.BUT_Graphit = new VPS.Controls.MyButton();
+            this.BUT_cleargraph = new VPS.Controls.MyButton();
+            this.BUT_loadlog = new VPS.Controls.MyButton();
             this.splitContainerZgGrid = new System.Windows.Forms.SplitContainer();
             this.splitContainerZgMap = new System.Windows.Forms.SplitContainer();
             this.zg1 = new ZedGraph.ZedGraphControl();
@@ -44,19 +44,19 @@ namespace MissionPlanner.Log
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.myGMAP1 = new MissionPlanner.Controls.myGMAP();
+            this.myGMAP1 = new VPS.Controls.myGMAP();
             this.splitContainerButGrid = new System.Windows.Forms.SplitContainer();
             this.chk_events = new System.Windows.Forms.CheckBox();
             this.chk_datagrid = new System.Windows.Forms.CheckBox();
             this.chk_msg = new System.Windows.Forms.CheckBox();
             this.chk_errors = new System.Windows.Forms.CheckBox();
             this.chk_mode = new System.Windows.Forms.CheckBox();
-            this.BUT_Graphit_R = new MissionPlanner.Controls.MyButton();
+            this.BUT_Graphit_R = new VPS.Controls.MyButton();
             this.chk_time = new System.Windows.Forms.CheckBox();
             this.CHK_map = new System.Windows.Forms.CheckBox();
             this.CMB_preselect = new System.Windows.Forms.ComboBox();
-            this.BUT_removeitem = new MissionPlanner.Controls.MyButton();
-            this.dataGridView1 = new MissionPlanner.Controls.MyDataGridView();
+            this.BUT_removeitem = new VPS.Controls.MyButton();
+            this.dataGridView1 = new VPS.Controls.MyDataGridView();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainerAllTree = new System.Windows.Forms.SplitContainer();
             this.contextMenuStrip1.SuspendLayout();

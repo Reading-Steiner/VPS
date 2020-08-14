@@ -1,4 +1,4 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -89,7 +89,7 @@ namespace resedit
 
             ProcessAssembly(thisAssembly);
 
-            foreach (var item in MissionPlanner.Plugin.PluginLoader.Plugins)
+            foreach (var item in VPS.Plugin.PluginLoader.Plugins)
             {
                 // silent fail
                 try

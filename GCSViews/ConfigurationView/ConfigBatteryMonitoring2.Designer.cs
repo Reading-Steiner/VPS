@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews.ConfigurationView
+﻿namespace VPS.GCSViews.ConfigurationView
 {
     partial class ConfigBatteryMonitoring2
     {
@@ -53,9 +53,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txt_meascurrent = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.mavlinkComboBox1 = new MissionPlanner.Controls.MavlinkComboBox();
-            this.mavlinkComboBox2 = new MissionPlanner.Controls.MavlinkComboBox();
-            this.mavlinkComboBox3 = new MissionPlanner.Controls.MavlinkComboBox();
+            this.mavlinkComboBox1 = new VPS.Controls.MavlinkComboBox();
+            this.mavlinkComboBox2 = new VPS.Controls.MavlinkComboBox();
+            this.mavlinkComboBox3 = new VPS.Controls.MavlinkComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
@@ -84,7 +84,7 @@
             // pictureBox5
             // 
             this.pictureBox5.BackColor = System.Drawing.Color.White;
-            this.pictureBox5.BackgroundImage = global::MissionPlanner.Properties.Resources.BR_APMPWRDEAN_2;
+            this.pictureBox5.BackgroundImage = global::VPS.Properties.Resources.BR_APMPWRDEAN_2;
             resources.ApplyResources(this.pictureBox5, "pictureBox5");
             this.pictureBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox5.Name = "pictureBox5";

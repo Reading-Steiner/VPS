@@ -1,9 +1,9 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public partial class RelayOptions : UserControl
     {
@@ -129,7 +129,7 @@ namespace MissionPlanner.Controls
             Control sourcectl = ((ContextMenuStrip)renameToolStripMenuItem.Owner).SourceControl;
 
             string desc = sourcectl.Text;
-            MissionPlanner.Controls.InputBox.Show("Description", "Enter new Description", ref desc);
+            VPS.Controls.InputBox.Show("Description", "Enter new Description", ref desc);
             sourcectl.Text = desc;
 
             if (sourcectl == BUT_High)

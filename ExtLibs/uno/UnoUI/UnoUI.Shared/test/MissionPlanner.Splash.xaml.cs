@@ -1,1 +1,1 @@
-namespace MissionPlanner { public partial class Splash{public Splash(){this.InitializeComponent();}}}
+namespace VPS { public partial class Splash{public Splash(){this.InitializeComponent();}}}

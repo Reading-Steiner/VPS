@@ -5,11 +5,11 @@ using log4net;
 using System.Reflection;
 using System.IO;
 using System.Threading;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Utilities;
+using VPS.ArduPilot;
+using VPS.Utilities;
 using SharpDX.DirectInput;
 
-namespace MissionPlanner.Joystick
+namespace VPS.Joystick
 {
     public class Joystick : IDisposable
     {

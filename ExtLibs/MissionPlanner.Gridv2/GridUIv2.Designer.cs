@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner
+﻿namespace VPS
 {
     partial class GridUIv2
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GridUIv2));
-            this.BUT_Accept = new MissionPlanner.Controls.MyButton();
+            this.BUT_Accept = new VPS.Controls.MyButton();
             this.label4 = new System.Windows.Forms.Label();
             this.NUM_angle = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -49,7 +49,7 @@
             this.chk_grid = new System.Windows.Forms.CheckBox();
             this.chk_markers = new System.Windows.Forms.CheckBox();
             this.chk_boundary = new System.Windows.Forms.CheckBox();
-            this.map = new MissionPlanner.Controls.myGMAP();
+            this.map = new VPS.Controls.myGMAP();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label32 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
@@ -66,10 +66,10 @@
             this.lbl_distance = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.quickViewimagecount = new MissionPlanner.Controls.QuickView();
-            this.quickViewgroundres = new MissionPlanner.Controls.QuickView();
-            this.quickViewflighttime = new MissionPlanner.Controls.QuickView();
-            this.quickViewarea = new MissionPlanner.Controls.QuickView();
+            this.quickViewimagecount = new VPS.Controls.QuickView();
+            this.quickViewgroundres = new VPS.Controls.QuickView();
+            this.quickViewflighttime = new VPS.Controls.QuickView();
+            this.quickViewarea = new VPS.Controls.QuickView();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.RAD_camdirectionport = new System.Windows.Forms.RadioButton();
             this.RAD_camdirectionland = new System.Windows.Forms.RadioButton();

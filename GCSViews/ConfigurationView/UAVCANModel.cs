@@ -1,7 +1,7 @@
 ﻿using System;
 using UAVCAN;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public class UAVCANModel
     {

@@ -1,11 +1,11 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Controls.PreFlight
+namespace VPS.Controls.PreFlight
 {
     public partial class CheckListControl : UserControl
     {
@@ -32,7 +32,7 @@ namespace MissionPlanner.Controls.PreFlight
 
             try
             {
-                MissionPlanner.Controls.PreFlight.CheckListItem.defaultsrc = MainV2.comPort.MAV.cs;
+                VPS.Controls.PreFlight.CheckListItem.defaultsrc = MainV2.comPort.MAV.cs;
 
                 LoadConfig();
             }

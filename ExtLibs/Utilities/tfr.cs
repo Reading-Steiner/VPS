@@ -9,7 +9,7 @@ using System.Xml.Linq;
 using System.Globalization;
 using GMap.NET;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class tfr
     {

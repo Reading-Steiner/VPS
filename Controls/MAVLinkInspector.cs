@@ -1,5 +1,5 @@
 ﻿using Microsoft.Scripting.Utils;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using ZedGraph;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public class MAVLinkInspector : Form
     {
@@ -175,12 +175,12 @@ namespace MissionPlanner.Controls
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.treeView1 = new MissionPlanner.Controls.MAVLinkInspector.MyTreeView();
+            this.treeView1 = new VPS.Controls.MAVLinkInspector.MyTreeView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.but_graphit = new MissionPlanner.Controls.MyButton();
+            this.but_graphit = new VPS.Controls.MyButton();
             this.chk_gcstraffic = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();

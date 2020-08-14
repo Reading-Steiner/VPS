@@ -1,4 +1,4 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ZedGraph;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public partial class fftui : Form
     {

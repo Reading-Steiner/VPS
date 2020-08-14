@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class DashWare
     {

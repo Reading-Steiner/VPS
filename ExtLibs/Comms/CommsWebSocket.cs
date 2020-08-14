@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using log4net;
 using Exception = System.Exception;
 
-namespace MissionPlanner.Comms
+namespace VPS.Comms
 {
     public class WebSocket : CommsBase, ICommsSerial, IDisposable
     {

@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MissionPlanner
+namespace VPS
 {
     public partial class OSDVideo : Form, ISampleGrabberCB
     {
@@ -80,7 +80,7 @@ namespace MissionPlanner
 
             hud1.SixteenXNine = true;
 
-            MissionPlanner.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
+            VPS.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
         }
 
         void OSDVideo_camimage(Image camimage)

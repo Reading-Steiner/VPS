@@ -2,7 +2,7 @@
 using System;
 using System.Drawing;
 
-namespace MissionPlanner.Swarm
+namespace VPS.Swarm
 {
     public class PaintEventArgsI : EventArgs, IDisposable
     {

@@ -1,8 +1,8 @@
 ﻿using GMap.NET;
 using GMap.NET.WindowsForms;
-using MissionPlanner.Controls;
-using MissionPlanner.Maps;
-using MissionPlanner.Utilities;
+using VPS.Controls;
+using VPS.Maps;
+using VPS.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -16,7 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews
+namespace VPS.GCSViews
 {
     public partial class SITL : MyUserControl, IActivate
     {
@@ -119,7 +119,7 @@ namespace MissionPlanner.GCSViews
 
             Utilities.ThemeManager.ApplyThemeTo(this);
 
-            MissionPlanner.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
+            VPS.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
         }
 
         private async void pictureBoxplane_Click(object sender, EventArgs e)

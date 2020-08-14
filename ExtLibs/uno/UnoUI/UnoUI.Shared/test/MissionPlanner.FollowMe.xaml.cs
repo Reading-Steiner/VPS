@@ -1,1 +1,1 @@
-namespace MissionPlanner { public partial class FollowMe{public FollowMe(){this.InitializeComponent();}}}
+namespace VPS { public partial class FollowMe{public FollowMe(){this.InitializeComponent();}}}

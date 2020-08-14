@@ -1,10 +1,10 @@
-﻿using MissionPlanner.Grid;
+﻿using VPS.Grid;
 using System;
 using System.Windows.Forms;
 
-namespace MissionPlanner
+namespace VPS
 {
-    public class FaceMapPlugin : MissionPlanner.Plugin.Plugin
+    public class FaceMapPlugin : VPS.Plugin.Plugin
     {
 
 
@@ -61,7 +61,7 @@ namespace MissionPlanner
         {
             using (var gridui = new FaceMapUI(this))
             {
-                MissionPlanner.Utilities.ThemeManager.ApplyThemeTo(gridui);
+                VPS.Utilities.ThemeManager.ApplyThemeTo(gridui);
 
                 if ((GCSViews.FlightPlanner.altmode)Host.MainForm.FlightPlanner.CMB_altmode.SelectedValue == GCSViews.FlightPlanner.altmode.Terrain)
                 {

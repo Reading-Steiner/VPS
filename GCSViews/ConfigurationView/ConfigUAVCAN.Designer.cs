@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews.ConfigurationView
+﻿namespace VPS.GCSViews.ConfigurationView
 {
     partial class ConfigUAVCAN
     {
@@ -32,12 +32,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.but_slcanmode1 = new MissionPlanner.Controls.MyButton();
-            this.myDataGridView1 = new MissionPlanner.Controls.MyDataGridView();
+            this.but_slcanmode1 = new VPS.Controls.MyButton();
+            this.myDataGridView1 = new VPS.Controls.MyDataGridView();
             this.uAVCANModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label1 = new System.Windows.Forms.Label();
-            this.but_slcanmode2 = new MissionPlanner.Controls.MyButton();
-            this.but_uavcaninspector = new MissionPlanner.Controls.MyButton();
+            this.but_slcanmode2 = new VPS.Controls.MyButton();
+            this.but_uavcaninspector = new VPS.Controls.MyButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox13 = new System.Windows.Forms.TextBox();
@@ -56,7 +56,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.chk_log = new System.Windows.Forms.CheckBox();
-            this.but_uavcanfilebrowser = new MissionPlanner.Controls.MyButton();
+            this.but_uavcanfilebrowser = new VPS.Controls.MyButton();
             this.iDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.modeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -137,7 +137,7 @@
             // 
             // uAVCANModelBindingSource
             // 
-            this.uAVCANModelBindingSource.DataSource = typeof(MissionPlanner.GCSViews.ConfigurationView.UAVCANModel);
+            this.uAVCANModelBindingSource.DataSource = typeof(VPS.GCSViews.ConfigurationView.UAVCANModel);
             this.uAVCANModelBindingSource.CurrentChanged += new System.EventHandler(this.uAVCANModelBindingSource_CurrentChanged);
             // 
             // label1

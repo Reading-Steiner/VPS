@@ -5,10 +5,10 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using MissionPlanner.ArduPilot;
+using VPS.ArduPilot;
 using static MAVLink;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class Proximity : IDisposable
     {

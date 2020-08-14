@@ -1,15 +1,15 @@
 ﻿using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Maps;
-using MissionPlanner.Utilities;
+using VPS.ArduPilot;
+using VPS.Maps;
+using VPS.Utilities;
 using System;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace MissionPlanner
+namespace VPS
 {
     public static class Common
     {

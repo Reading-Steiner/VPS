@@ -1,8 +1,8 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using System;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Joystick
+namespace VPS.Joystick
 {
     public partial class Joy_Mount_Mode : Form
     {

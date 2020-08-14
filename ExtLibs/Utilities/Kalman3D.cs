@@ -15,7 +15,7 @@ using System.Linq;
 using System.Text;
 
 // Namespace.
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     /// <summary>
     /// Kalman 3D.

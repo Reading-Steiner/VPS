@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     /// <summary>
     /// Matrix math class, simple very basic.

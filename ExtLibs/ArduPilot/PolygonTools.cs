@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MissionPlanner.ArduPilot
+namespace VPS.ArduPilot
 {
     public class PolygonTools
     {

@@ -1,10 +1,10 @@
-﻿using MissionPlanner.Comms;
-using MissionPlanner.Utilities;
+﻿using VPS.Comms;
+using VPS.Utilities;
 using System;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace MissionPlanner
+namespace VPS
 {
     public partial class ConnectionOptions : Form
     {
@@ -23,7 +23,7 @@ namespace MissionPlanner
 
             ThemeManager.ApplyThemeTo(this);
 
-            MissionPlanner.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
+            VPS.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
         }
 
         private void BUT_connect_Click(object sender, EventArgs e)

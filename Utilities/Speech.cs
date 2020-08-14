@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Speech.Synthesis;
 using System.Text.RegularExpressions;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class Speech : IDisposable, ISpeech
     {

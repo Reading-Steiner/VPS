@@ -9,10 +9,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using MissionPlanner.Comms;
+using VPS.Comms;
 using Newtonsoft.Json;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public static class Extensions
     {

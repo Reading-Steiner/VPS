@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public static class CultureInfoEx
     {

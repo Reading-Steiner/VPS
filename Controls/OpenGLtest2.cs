@@ -2,8 +2,8 @@
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using Microsoft.Scripting.Utils;
-using MissionPlanner.GCSViews;
-using MissionPlanner.Utilities;
+using VPS.GCSViews;
+using VPS.Utilities;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.ES20;
@@ -20,12 +20,12 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using MathHelper = MissionPlanner.Utilities.MathHelper;
+using MathHelper = VPS.Utilities.MathHelper;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 using Timer = System.Windows.Forms.Timer;
 using Vector3 = OpenTK.Vector3;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public class OpenGLtest2 : GLControl, IDeactivate
     {

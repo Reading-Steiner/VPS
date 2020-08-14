@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace MissionPlanner.Comms
+namespace VPS.Comms
 {
     public interface ICommsSerial : IDisposable
     {

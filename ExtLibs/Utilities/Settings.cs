@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     /// <summary>
     /// This class loads and saves some handy app level settings so UI state is preserved across sessions.

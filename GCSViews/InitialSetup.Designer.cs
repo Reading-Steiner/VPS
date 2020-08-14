@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews
+namespace VPS.GCSViews
 {
     partial class InitialSetup
     {
@@ -31,7 +31,7 @@ namespace MissionPlanner.GCSViews
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InitialSetup));
-            this.backstageView = new MissionPlanner.Controls.BackstageView.BackstageView();
+            this.backstageView = new VPS.Controls.BackstageView.BackstageView();
             this.backstageViewPageaccel = new System.Windows.Forms.Label();
             this.backstageViewPageairspeed = new System.Windows.Forms.Label();
             this.backstageViewPageAntTrack = new System.Windows.Forms.Label();

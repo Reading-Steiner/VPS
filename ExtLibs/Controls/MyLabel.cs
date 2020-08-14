@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using SkiaSharp;
 using SkiaSharp.Views.Desktop;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     /// <summary>
     /// profiling showed that the built in Label function was using alot of call time.

@@ -1,7 +1,7 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using System;
 
-namespace MissionPlanner.Swarm
+namespace VPS.Swarm
 {
     public class DroneBase
     {

@@ -1,6 +1,6 @@
 ﻿using log4net;
-using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+using VPS.Controls;
+using VPS.Utilities;
 using Renci.SshNet;
 using Renci.SshNet.Sftp;
 using System;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Log
+namespace VPS.Log
 {
     public partial class LogDownloadscp : Form
     {
@@ -48,7 +48,7 @@ namespace MissionPlanner.Log
 
             ThemeManager.ApplyThemeTo(this);
 
-            MissionPlanner.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
+            VPS.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
         }
 
         private void Log_Load(object sender, EventArgs e)

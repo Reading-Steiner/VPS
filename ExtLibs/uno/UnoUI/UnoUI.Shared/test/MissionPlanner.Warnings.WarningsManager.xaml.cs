@@ -1,1 +1,1 @@
-namespace MissionPlanner.Warnings { public partial class WarningsManager{public WarningsManager(){this.InitializeComponent();}}}
+namespace VPS.Warnings { public partial class WarningsManager{public WarningsManager(){this.InitializeComponent();}}}

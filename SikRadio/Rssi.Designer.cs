@@ -1,4 +1,4 @@
-﻿using MissionPlanner.Controls;
+﻿using VPS.Controls;
 namespace SikRadio
 {
     partial class Rssi
@@ -32,8 +32,8 @@ namespace SikRadio
             this.components = new System.ComponentModel.Container();
             this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.BUT_disconnect = new MissionPlanner.Controls.MyButton();
-            this.BUT_connect = new MissionPlanner.Controls.MyButton();
+            this.BUT_disconnect = new VPS.Controls.MyButton();
+            this.BUT_connect = new VPS.Controls.MyButton();
             this.SuspendLayout();
             // 
             // zedGraphControl1

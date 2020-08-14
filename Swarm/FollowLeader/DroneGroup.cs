@@ -1,9 +1,9 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MissionPlanner.Swarm.FollowLeader
+namespace VPS.Swarm.FollowLeader
 {
     public class DroneGroup
     {

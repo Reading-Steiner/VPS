@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews.ConfigurationView
+﻿namespace VPS.GCSViews.ConfigurationView
 {
     partial class ConfigRawParamsTree
     {
@@ -39,16 +39,16 @@
             this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn5 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.BUT_compare = new MissionPlanner.Controls.MyButton();
-            this.BUT_rerequestparams = new MissionPlanner.Controls.MyButton();
-            this.BUT_writePIDS = new MissionPlanner.Controls.MyButton();
-            this.BUT_save = new MissionPlanner.Controls.MyButton();
-            this.BUT_load = new MissionPlanner.Controls.MyButton();
-            this.BUT_paramfileload = new MissionPlanner.Controls.MyButton();
-            this.BUT_reset_params = new MissionPlanner.Controls.MyButton();
+            this.BUT_compare = new VPS.Controls.MyButton();
+            this.BUT_rerequestparams = new VPS.Controls.MyButton();
+            this.BUT_writePIDS = new VPS.Controls.MyButton();
+            this.BUT_save = new VPS.Controls.MyButton();
+            this.BUT_load = new VPS.Controls.MyButton();
+            this.BUT_paramfileload = new VPS.Controls.MyButton();
+            this.BUT_reset_params = new VPS.Controls.MyButton();
             this.txt_search = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.BUT_commitToFlash = new MissionPlanner.Controls.MyButton();
+            this.BUT_commitToFlash = new VPS.Controls.MyButton();
             this.chk_modified = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.Params)).BeginInit();
             this.SuspendLayout();

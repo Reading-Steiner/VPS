@@ -5,10 +5,10 @@ using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.GCSViews;
-using MissionPlanner.Maps;
-using MissionPlanner.Utilities;
+using VPS.ArduPilot;
+using VPS.GCSViews;
+using VPS.Maps;
+using VPS.Utilities;
 using ProjNet.CoordinateSystems;
 using ProjNet.CoordinateSystems.Transformations;
 using System;
@@ -23,7 +23,7 @@ using System.Xml;
 using GeoAPI.CoordinateSystems;
 using GeoAPI.CoordinateSystems.Transformations;
 
-namespace MissionPlanner.Grid
+namespace VPS.Grid
 {
     public partial class GridUI : Form
     {
@@ -160,7 +160,7 @@ namespace MissionPlanner.Grid
 
         private void GridUI_AdjustParam()
         {
-            var config = new MissionPlanner.Controls.GobalWPConfig();
+            var config = new VPS.Controls.GobalWPConfig();
             config.GetCameraInfo = new camerainfo()
             {
                 name = CMB_camera.Text,
@@ -1598,7 +1598,7 @@ namespace MissionPlanner.Grid
 
             string camname = "Default";
 
-            if (MissionPlanner.Controls.InputBox.Show("Camera Name", "Please and a camera name", ref camname) != System.Windows.Forms.DialogResult.OK)
+            if (VPS.Controls.InputBox.Show("Camera Name", "Please and a camera name", ref camname) != System.Windows.Forms.DialogResult.OK)
                 return;
 
             CMB_camera.Text = camname;

@@ -1,7 +1,7 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using System.Collections.Generic;
 
-namespace MissionPlanner.Swarm.WaypointLeader
+namespace VPS.Swarm.WaypointLeader
 {
     public class Path
     {

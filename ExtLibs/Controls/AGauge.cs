@@ -25,7 +25,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
-using MissionPlanner.Controls;
+using VPS.Controls;
 
 namespace AGaugeApp
 {

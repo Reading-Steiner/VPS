@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class MavlinkCheckBox{public MavlinkCheckBox(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class MavlinkCheckBox{public MavlinkCheckBox(){this.InitializeComponent();}}}

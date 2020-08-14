@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews.ConfigurationView
+﻿namespace VPS.GCSViews.ConfigurationView
 {
     partial class ConfigSerialInjectGPS
     {
@@ -45,10 +45,10 @@
             this.label8 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.chk_movingbase = new System.Windows.Forms.CheckBox();
-            this.but_restartsvin = new MissionPlanner.Controls.MyButton();
+            this.but_restartsvin = new VPS.Controls.MyButton();
             this.chk_m8p_130p = new System.Windows.Forms.CheckBox();
-            this.but_save_basepos = new MissionPlanner.Controls.MyButton();
-            this.dg_basepos = new MissionPlanner.Controls.MyDataGridView();
+            this.but_save_basepos = new VPS.Controls.MyButton();
+            this.dg_basepos = new VPS.Controls.MyDataGridView();
             this.Lat = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Long = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Alt = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -60,7 +60,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txt_surveyinDur = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.BUT_connect = new MissionPlanner.Controls.MyButton();
+            this.BUT_connect = new VPS.Controls.MyButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.lbl_status2 = new System.Windows.Forms.Label();
             this.lbl_status3 = new System.Windows.Forms.Label();
@@ -82,7 +82,7 @@
             this.labelgps = new System.Windows.Forms.Label();
             this.labelbase = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.myGMAP1 = new MissionPlanner.Controls.myGMAP();
+            this.myGMAP1 = new VPS.Controls.myGMAP();
             this.chk_sendgga = new System.Windows.Forms.CheckBox();
             this.groupBoxm8p.SuspendLayout();
             this.groupBox1.SuspendLayout();

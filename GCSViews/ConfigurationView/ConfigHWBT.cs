@@ -1,13 +1,13 @@
 ﻿using log4net;
-using MissionPlanner.Comms;
-using MissionPlanner.Controls;
+using VPS.Comms;
+using VPS.Controls;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigHWBT : MyUserControl, IActivate
     {

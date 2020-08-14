@@ -4,9 +4,9 @@ using System.Text;
 using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
-using MissionPlanner;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Maps;
+using VPS;
+using VPS.ArduPilot;
+using VPS.Maps;
 using SkiaSharp;
 
 namespace SvgNet.SvgGdi
@@ -41,7 +41,7 @@ namespace GMap.NET.Drawing.Properties
     }
 }
 
-namespace MissionPlanner.Maps
+namespace VPS.Maps
 {
     internal class Resources: Xamarin.Properties.Resources
     {

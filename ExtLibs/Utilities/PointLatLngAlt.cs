@@ -12,7 +12,7 @@ using GeoUtility;
 using GeoUtility.GeoSystem;
 using System.Collections;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
 
     public class PointLatLngAlt: IComparable

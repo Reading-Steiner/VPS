@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Radio
+﻿namespace VPS.Radio
 {
     partial class Sikradio
     {
@@ -161,13 +161,13 @@
             this.RTI2 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.BUT_SetPPMFailSafe = new MissionPlanner.Controls.MyButton();
-            this.BUT_loadcustom = new MissionPlanner.Controls.MyButton();
-            this.BUT_resettodefault = new MissionPlanner.Controls.MyButton();
-            this.BUT_savesettings = new MissionPlanner.Controls.MyButton();
-            this.BUT_getcurrent = new MissionPlanner.Controls.MyButton();
-            this.BUT_upload = new MissionPlanner.Controls.MyButton();
-            this.BUT_Syncoptions = new MissionPlanner.Controls.MyButton();
+            this.BUT_SetPPMFailSafe = new VPS.Controls.MyButton();
+            this.BUT_loadcustom = new VPS.Controls.MyButton();
+            this.BUT_resettodefault = new VPS.Controls.MyButton();
+            this.BUT_savesettings = new VPS.Controls.MyButton();
+            this.BUT_getcurrent = new VPS.Controls.MyButton();
+            this.BUT_upload = new VPS.Controls.MyButton();
+            this.BUT_Syncoptions = new VPS.Controls.MyButton();
             this.groupBoxLocal.SuspendLayout();
             this.groupBoxRemote.SuspendLayout();
             this.SuspendLayout();

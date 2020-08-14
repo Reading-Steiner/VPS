@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Comms
+﻿namespace VPS.Comms
 {
     internal class MAVLinkSerialPort : SerialPort
     {

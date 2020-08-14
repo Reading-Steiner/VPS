@@ -1,10 +1,10 @@
 ﻿using log4net;
-using MissionPlanner.test;
+using VPS.test;
 using System;
 using System.Windows.Forms;
 using Xamarin.Forms;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public static class ExtensionsMP
     {
@@ -129,9 +129,9 @@ namespace MissionPlanner.Utilities
 
         private static void Frm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (((Form)sender).Tag is MissionPlanner.Controls.IDeactivate)
+            if (((Form)sender).Tag is VPS.Controls.IDeactivate)
             {
-                ((MissionPlanner.Controls.IDeactivate)((Form)sender).Tag).Deactivate();
+                ((VPS.Controls.IDeactivate)((Form)sender).Tag).Deactivate();
             }
 
             if (((Form)sender).Tag is MyUserControl)
@@ -142,9 +142,9 @@ namespace MissionPlanner.Utilities
 
         private static void Frm_Load(object sender, EventArgs e)
         {
-            if (((Form)sender).Tag is MissionPlanner.Controls.IActivate)
+            if (((Form)sender).Tag is VPS.Controls.IActivate)
             {
-                ((MissionPlanner.Controls.IActivate)((Form)sender).Tag).Activate();
+                ((VPS.Controls.IActivate)((Form)sender).Tag).Activate();
             }
         }
     }

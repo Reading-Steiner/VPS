@@ -1,1 +1,1 @@
-namespace MissionPlanner.GCSViews.ConfigurationView { public partial class ConfigRadioInput{public ConfigRadioInput(){this.InitializeComponent();}}}
+namespace VPS.GCSViews.ConfigurationView { public partial class ConfigRadioInput{public ConfigRadioInput(){this.InitializeComponent();}}}

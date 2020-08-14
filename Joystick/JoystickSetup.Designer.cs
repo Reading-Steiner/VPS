@@ -1,7 +1,7 @@
-﻿using MissionPlanner.Controls;
+﻿using VPS.Controls;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Joystick
+namespace VPS.Joystick
 {
     partial class JoystickSetup
     {
@@ -41,8 +41,8 @@ namespace MissionPlanner.Joystick
             this.label9 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.CHK_elevons = new System.Windows.Forms.CheckBox();
-            this.BUT_enable = new MissionPlanner.Controls.MyButton();
-            this.BUT_save = new MissionPlanner.Controls.MyButton();
+            this.BUT_enable = new VPS.Controls.MyButton();
+            this.BUT_save = new VPS.Controls.MyButton();
             this.label14 = new System.Windows.Forms.Label();
             this.chk_manualcontrol = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();

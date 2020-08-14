@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews.ConfigurationView
+﻿namespace VPS.GCSViews.ConfigurationView
 {
     partial class ConfigMotorTest
     {
@@ -36,10 +36,10 @@
             this.NUM_duration = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.but_mot_spin_arm = new MissionPlanner.Controls.MyButton();
+            this.but_mot_spin_arm = new VPS.Controls.MyButton();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.but_mot_spin_min = new MissionPlanner.Controls.MyButton();
+            this.but_mot_spin_min = new VPS.Controls.MyButton();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_thr_percent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_duration)).BeginInit();
             this.groupBox1.SuspendLayout();

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MissionPlanner.Maps {
+namespace VPS.Maps {
     using System;
     
     

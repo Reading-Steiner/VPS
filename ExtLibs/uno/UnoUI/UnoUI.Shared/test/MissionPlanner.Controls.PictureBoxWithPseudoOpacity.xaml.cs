@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class PictureBoxWithPseudoOpacity{public PictureBoxWithPseudoOpacity(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class PictureBoxWithPseudoOpacity{public PictureBoxWithPseudoOpacity(){this.InitializeComponent();}}}

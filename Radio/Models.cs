@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Radio
+namespace VPS.Radio
 {
     /// <summary>
     /// The radio firmware variant.

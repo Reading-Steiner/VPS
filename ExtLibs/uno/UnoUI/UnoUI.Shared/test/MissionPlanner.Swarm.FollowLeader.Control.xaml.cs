@@ -1,1 +1,1 @@
-namespace MissionPlanner.Swarm.FollowLeader { public partial class Control{public Control(){this.InitializeComponent();}}}
+namespace VPS.Swarm.FollowLeader { public partial class Control{public Control(){this.InitializeComponent();}}}

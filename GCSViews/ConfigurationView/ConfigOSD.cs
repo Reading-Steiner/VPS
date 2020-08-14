@@ -1,4 +1,4 @@
-﻿using MissionPlanner.Controls;
+﻿using VPS.Controls;
 using OSDConfigurator.Models;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigOSD : MyUserControl, IActivate, IDeactivate
     {
@@ -93,7 +93,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 CustomMessageBox.Show("No Onboard OSD parameters found");
             }
 
-            MissionPlanner.Utilities.ThemeManager.ApplyThemeTo(this);
+            VPS.Utilities.ThemeManager.ApplyThemeTo(this);
         }
 
         public void Deactivate()

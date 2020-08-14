@@ -8,7 +8,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using uint8_t = System.Byte;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     /// <summary>
     /// Convert a binary log to an assci log

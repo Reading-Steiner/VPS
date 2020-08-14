@@ -1,6 +1,6 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigFriendlyParamsAdv : ConfigFriendlyParams
     {

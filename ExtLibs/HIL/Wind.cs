@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 
-namespace MissionPlanner.HIL
+namespace VPS.HIL
 {
     public class Wind : Utils
     {

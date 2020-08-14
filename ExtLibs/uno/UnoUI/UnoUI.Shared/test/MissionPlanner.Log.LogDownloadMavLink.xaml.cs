@@ -1,1 +1,1 @@
-namespace MissionPlanner.Log { public partial class LogDownloadMavLink{public LogDownloadMavLink(){this.InitializeComponent();}}}
+namespace VPS.Log { public partial class LogDownloadMavLink{public LogDownloadMavLink(){this.InitializeComponent();}}}

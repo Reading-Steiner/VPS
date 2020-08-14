@@ -1,7 +1,7 @@
-﻿using MissionPlanner.Controls;
+﻿using VPS.Controls;
 using System;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class GStreamerUI
     {

@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews.ConfigurationView
+﻿namespace VPS.GCSViews.ConfigurationView
 {
    partial class ConfigFriendlyParams
    {
@@ -30,9 +30,9 @@
       {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigFriendlyParams));
             this.tableLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.BUT_rerequestparams = new MissionPlanner.Controls.MyButton();
-            this.BUT_writePIDS = new MissionPlanner.Controls.MyButton();
-            this.BUT_Find = new MissionPlanner.Controls.MyButton();
+            this.BUT_rerequestparams = new VPS.Controls.MyButton();
+            this.BUT_writePIDS = new VPS.Controls.MyButton();
+            this.BUT_Find = new VPS.Controls.MyButton();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1

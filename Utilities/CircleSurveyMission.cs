@@ -1,7 +1,7 @@
-﻿using MissionPlanner.Controls;
-using MissionPlanner.GCSViews;
+﻿using VPS.Controls;
+using VPS.GCSViews;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class CircleSurveyMission
     {

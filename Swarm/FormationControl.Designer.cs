@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Swarm
+﻿namespace VPS.Swarm
 {
     partial class FormationControl
     {
@@ -31,19 +31,19 @@
             this.components = new System.ComponentModel.Container();
             this.CMB_mavs = new System.Windows.Forms.ComboBox();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.grid1 = new MissionPlanner.Swarm.Grid();
-            this.BUT_Start = new MissionPlanner.Controls.MyButton();
-            this.BUT_leader = new MissionPlanner.Controls.MyButton();
-            this.BUT_Land = new MissionPlanner.Controls.MyButton();
-            this.BUT_Takeoff = new MissionPlanner.Controls.MyButton();
-            this.BUT_Disarm = new MissionPlanner.Controls.MyButton();
-            this.BUT_Arm = new MissionPlanner.Controls.MyButton();
+            this.grid1 = new VPS.Swarm.Grid();
+            this.BUT_Start = new VPS.Controls.MyButton();
+            this.BUT_leader = new VPS.Controls.MyButton();
+            this.BUT_Land = new VPS.Controls.MyButton();
+            this.BUT_Takeoff = new VPS.Controls.MyButton();
+            this.BUT_Disarm = new VPS.Controls.MyButton();
+            this.BUT_Arm = new VPS.Controls.MyButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.BUT_Updatepos = new MissionPlanner.Controls.MyButton();
+            this.BUT_Updatepos = new VPS.Controls.MyButton();
             this.PNL_status = new System.Windows.Forms.FlowLayoutPanel();
             this.timer_status = new System.Windows.Forms.Timer(this.components);
-            this.but_guided = new MissionPlanner.Controls.MyButton();
+            this.but_guided = new VPS.Controls.MyButton();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -67,7 +67,7 @@
             this.grid1.Size = new System.Drawing.Size(755, 388);
             this.grid1.TabIndex = 8;
             this.grid1.Vertical = false;
-            this.grid1.UpdateOffsets += new MissionPlanner.Swarm.Grid.UpdateOffsetsEvent(this.grid1_UpdateOffsets);
+            this.grid1.UpdateOffsets += new VPS.Swarm.Grid.UpdateOffsetsEvent(this.grid1_UpdateOffsets);
             // 
             // BUT_Start
             // 
@@ -76,7 +76,7 @@
             this.BUT_Start.Name = "BUT_Start";
             this.BUT_Start.Size = new System.Drawing.Size(75, 23);
             this.BUT_Start.TabIndex = 6;
-            this.BUT_Start.Text = global::MissionPlanner.Strings.Start;
+            this.BUT_Start.Text = global::VPS.Strings.Start;
             this.BUT_Start.UseVisualStyleBackColor = true;
             this.BUT_Start.Click += new System.EventHandler(this.BUT_Start_Click);
             // 

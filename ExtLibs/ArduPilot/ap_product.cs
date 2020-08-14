@@ -1,6 +1,6 @@
-﻿using MissionPlanner.Attributes;
+﻿using VPS.Attributes;
 
-namespace MissionPlanner.ArduPilot
+namespace VPS.ArduPilot
 {
     public enum ap_product
     {

@@ -1,10 +1,10 @@
-﻿using MissionPlanner.Controls;
+﻿using VPS.Controls;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Swarm
+namespace VPS.Swarm
 {
     public partial class Grid : MyUserControl
     {

@@ -11,7 +11,7 @@ using SharpKml.Base;
 using SharpKml.Dom;
 using Newtonsoft.Json;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class httpserver
     {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 
-namespace MissionPlanner.HIL
+namespace VPS.HIL
 {
     public delegate void sendPacketHandler(object packet, int sysid, int compid);
 

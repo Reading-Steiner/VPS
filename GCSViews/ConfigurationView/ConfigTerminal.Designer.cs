@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews
+﻿namespace VPS.GCSViews
 {
     partial class ConfigTerminal
     {
@@ -30,13 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigTerminal));
             this.TXT_terminal = new System.Windows.Forms.RichTextBox();
-            this.BUTsetupshow = new MissionPlanner.Controls.MyButton();
-            this.BUTradiosetup = new MissionPlanner.Controls.MyButton();
-            this.BUTtests = new MissionPlanner.Controls.MyButton();
-            this.Logs = new MissionPlanner.Controls.MyButton();
-            this.BUT_logbrowse = new MissionPlanner.Controls.MyButton();
-            this.BUT_ConnectAPM = new MissionPlanner.Controls.MyButton();
-            this.BUT_disconnect = new MissionPlanner.Controls.MyButton();
+            this.BUTsetupshow = new VPS.Controls.MyButton();
+            this.BUTradiosetup = new VPS.Controls.MyButton();
+            this.BUTtests = new VPS.Controls.MyButton();
+            this.Logs = new VPS.Controls.MyButton();
+            this.BUT_logbrowse = new VPS.Controls.MyButton();
+            this.BUT_ConnectAPM = new VPS.Controls.MyButton();
+            this.BUT_disconnect = new VPS.Controls.MyButton();
             this.CMB_boardtype = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 

@@ -1,12 +1,12 @@
 ﻿using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Controls;
+using VPS.ArduPilot;
+using VPS.Controls;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
 using Transitions;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigFrameType : MyUserControl, IActivate, IDeactivate
     {

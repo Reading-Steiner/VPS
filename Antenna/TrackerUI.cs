@@ -1,8 +1,8 @@
 ﻿using System.Windows.Forms;
-using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+using VPS.Controls;
+using VPS.Utilities;
 
-namespace MissionPlanner.Antenna
+namespace VPS.Antenna
 {
     public partial class TrackerUI : UserControl, IDeactivate, IActivate
     {

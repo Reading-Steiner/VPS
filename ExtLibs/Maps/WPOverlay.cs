@@ -1,16 +1,16 @@
 ﻿using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
-using MissionPlanner.Controls.Waypoints;
-using MissionPlanner.Maps;
-using MissionPlanner.Utilities;
+using VPS.Controls.Waypoints;
+using VPS.Maps;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 
-namespace MissionPlanner.ArduPilot
+namespace VPS.ArduPilot
 {
     public class WPOverlay
     {

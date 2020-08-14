@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MissionPlanner.Comms;
+using VPS.Comms;
 
-namespace MissionPlanner.Antenna
+namespace VPS.Antenna
 {
     public class Maestro : ITrackerOutput
     {

@@ -15,7 +15,7 @@ using RectangleF = System.Drawing.RectangleF;
 using Point = System.Drawing.Point;
 using SizeF = System.Drawing.SizeF;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public class GraphicsWeb : IGraphics
     {

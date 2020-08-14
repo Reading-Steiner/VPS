@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public static class NativeLibrary
     {

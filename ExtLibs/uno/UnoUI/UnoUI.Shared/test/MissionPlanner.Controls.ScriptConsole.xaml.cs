@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class ScriptConsole{public ScriptConsole(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class ScriptConsole{public ScriptConsole(){this.InitializeComponent();}}}

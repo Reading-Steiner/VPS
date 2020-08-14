@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews.ConfigurationView
+﻿namespace VPS.GCSViews.ConfigurationView
 {
     partial class ConfigPlanner
     {
@@ -75,17 +75,17 @@
             this.CHK_maprotation = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.CHK_disttohomeflightdata = new System.Windows.Forms.CheckBox();
-            this.BUT_Joystick = new MissionPlanner.Controls.MyButton();
-            this.BUT_videostop = new MissionPlanner.Controls.MyButton();
-            this.BUT_videostart = new MissionPlanner.Controls.MyButton();
+            this.BUT_Joystick = new VPS.Controls.MyButton();
+            this.BUT_videostop = new VPS.Controls.MyButton();
+            this.BUT_videostart = new VPS.Controls.MyButton();
             this.label3 = new System.Windows.Forms.Label();
             this.txt_log_dir = new System.Windows.Forms.TextBox();
-            this.BUT_logdirbrowse = new MissionPlanner.Controls.MyButton();
+            this.BUT_logdirbrowse = new VPS.Controls.MyButton();
             this.label4 = new System.Windows.Forms.Label();
             this.CMB_theme = new System.Windows.Forms.ComboBox();
-            this.BUT_themecustom = new MissionPlanner.Controls.MyButton();
+            this.BUT_themecustom = new VPS.Controls.MyButton();
             this.CHK_speecharmdisarm = new System.Windows.Forms.CheckBox();
-            this.BUT_Vario = new MissionPlanner.Controls.MyButton();
+            this.BUT_Vario = new VPS.Controls.MyButton();
             this.chk_analytics = new System.Windows.Forms.CheckBox();
             this.CHK_beta = new System.Windows.Forms.CheckBox();
             this.CHK_Password = new System.Windows.Forms.CheckBox();
@@ -95,7 +95,7 @@
             this.chk_tfr = new System.Windows.Forms.CheckBox();
             this.chk_temp = new System.Windows.Forms.CheckBox();
             this.chk_norcreceiver = new System.Windows.Forms.CheckBox();
-            this.but_AAsignin = new MissionPlanner.Controls.MyButton();
+            this.but_AAsignin = new VPS.Controls.MyButton();
             this.CMB_Layout = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.CHK_AutoParamCommit = new System.Windows.Forms.CheckBox();

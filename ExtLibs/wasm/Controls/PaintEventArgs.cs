@@ -3,7 +3,7 @@ using System;
 using System.Drawing;
 using IGraphics = MPDrawing::System.Drawing.IGraphics;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public class PaintEventArgs : EventArgs
     {

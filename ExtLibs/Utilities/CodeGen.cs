@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CSharp;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
@@ -12,7 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace MissionPlanner
+namespace VPS
 {
     public static class CodeGenRoslyn
     {

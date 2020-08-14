@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace MissionPlanner.Swarm
+namespace VPS.Swarm
 {
     public partial class Status : UserControl
     {

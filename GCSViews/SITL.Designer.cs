@@ -1,6 +1,6 @@
-﻿using MissionPlanner.Controls;
+﻿using VPS.Controls;
 
-namespace MissionPlanner.GCSViews
+namespace VPS.GCSViews
 {
     partial class SITL
     {
@@ -31,24 +31,24 @@ namespace MissionPlanner.GCSViews
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SITL));
-            this.myGMAP1 = new MissionPlanner.Controls.myGMAP();
+            this.myGMAP1 = new VPS.Controls.myGMAP();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.pictureBoxheli = new MissionPlanner.Controls.PictureBoxMouseOver();
-            this.pictureBoxquad = new MissionPlanner.Controls.PictureBoxMouseOver();
-            this.pictureBoxrover = new MissionPlanner.Controls.PictureBoxMouseOver();
-            this.pictureBoxplane = new MissionPlanner.Controls.PictureBoxMouseOver();
+            this.pictureBoxheli = new VPS.Controls.PictureBoxMouseOver();
+            this.pictureBoxquad = new VPS.Controls.PictureBoxMouseOver();
+            this.pictureBoxrover = new VPS.Controls.PictureBoxMouseOver();
+            this.pictureBoxplane = new VPS.Controls.PictureBoxMouseOver();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.NUM_heading = new System.Windows.Forms.NumericUpDown();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.but_swarmseq = new MissionPlanner.Controls.MyButton();
-            this.but_swarmlink = new MissionPlanner.Controls.MyButton();
+            this.but_swarmseq = new VPS.Controls.MyButton();
+            this.but_swarmlink = new VPS.Controls.MyButton();
             this.chk_wipe = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txt_cmdline = new System.Windows.Forms.TextBox();

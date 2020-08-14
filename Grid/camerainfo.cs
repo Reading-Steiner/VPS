@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Grid
+﻿namespace VPS.Grid
 {
     public struct camerainfo
     {

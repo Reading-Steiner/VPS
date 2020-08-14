@@ -1,6 +1,6 @@
 ﻿using GMap.NET.MapProviders;
-using MissionPlanner.GCSViews;
-using MissionPlanner.Utilities; // GE xml alt reader
+using VPS.GCSViews;
+using VPS.Utilities; // GE xml alt reader
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Xml;
 using ZedGraph;
 
-namespace MissionPlanner
+namespace VPS
 {
     public partial class ElevationProfile : Form
     {
@@ -72,7 +72,7 @@ namespace MissionPlanner
 
             frm.Close();
 
-            MissionPlanner.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
+            VPS.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
         }
 
         private void ElevationProfile_Load(object sender, EventArgs e)

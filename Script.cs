@@ -1,12 +1,12 @@
 ﻿using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace MissionPlanner
+namespace VPS
 {
     public class Script
     {

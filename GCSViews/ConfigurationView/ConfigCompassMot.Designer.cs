@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews.ConfigurationView
+﻿namespace VPS.GCSViews.ConfigurationView
 {
     partial class ConfigCompassMot
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.BUT_compassmot = new MissionPlanner.Controls.MyButton();
+            this.BUT_compassmot = new VPS.Controls.MyButton();
             this.txt_status = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lbl_start = new System.Windows.Forms.Label();

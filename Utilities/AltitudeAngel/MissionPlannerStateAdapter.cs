@@ -1,7 +1,7 @@
 ﻿using AltitudeAngelWings.Extra;
 using System;
 
-namespace MissionPlanner.Utilities.AltitudeAngel
+namespace VPS.Utilities.AltitudeAngel
 {
     internal class MissionPlannerStateAdapter : IMissionPlannerState
     {

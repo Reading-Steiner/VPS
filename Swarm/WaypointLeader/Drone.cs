@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Swarm.WaypointLeader
+﻿namespace VPS.Swarm.WaypointLeader
 {
     public class Drone : DroneBase
     {

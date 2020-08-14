@@ -1,17 +1,17 @@
-﻿namespace MissionPlanner.Wizard
+﻿namespace VPS.Wizard
 {
     class Class1
     {
         
     }
 }
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     class Class2
     {
     }
 }
-namespace MissionPlanner.Controls.BackstageView
+namespace VPS.Controls.BackstageView
 {
     class Class3
     {

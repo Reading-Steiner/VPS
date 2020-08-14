@@ -1,1 +1,1 @@
-namespace MissionPlanner { public partial class ConnectionOptions{public ConnectionOptions(){this.InitializeComponent();}}}
+namespace VPS { public partial class ConnectionOptions{public ConnectionOptions(){this.InitializeComponent();}}}

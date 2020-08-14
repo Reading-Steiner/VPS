@@ -1,7 +1,7 @@
 ﻿using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Attributes;
-using MissionPlanner.Utilities;
+using VPS.ArduPilot;
+using VPS.Attributes;
+using VPS.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace MissionPlanner
+namespace VPS
 {
     public class CurrentState : ICloneable, IDisposable
     {

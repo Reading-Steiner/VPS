@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class MyTrackBar{public MyTrackBar(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class MyTrackBar{public MyTrackBar(){this.InitializeComponent();}}}

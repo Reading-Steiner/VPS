@@ -5,9 +5,9 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Flurl.Util;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 
-namespace MissionPlanner.ArduPilot
+namespace VPS.ArduPilot
 {
     //from px4firmwareplugin.cc
 

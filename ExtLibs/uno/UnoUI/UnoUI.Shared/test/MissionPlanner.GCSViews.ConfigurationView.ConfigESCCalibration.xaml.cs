@@ -1,1 +1,1 @@
-namespace MissionPlanner.GCSViews.ConfigurationView { public partial class ConfigESCCalibration{public ConfigESCCalibration(){this.InitializeComponent();}}}
+namespace VPS.GCSViews.ConfigurationView { public partial class ConfigESCCalibration{public ConfigESCCalibration(){this.InitializeComponent();}}}

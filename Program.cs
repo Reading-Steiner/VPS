@@ -1,9 +1,9 @@
 ﻿using GMap.NET.MapProviders;
 using log4net;
 using log4net.Config;
-using MissionPlanner.Comms;
-using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+using VPS.Comms;
+using VPS.Controls;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,7 +24,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Architecture = System.Runtime.InteropServices.Architecture;
 
-namespace MissionPlanner
+namespace VPS
 {
     public static class Program
     {
@@ -153,7 +153,7 @@ namespace MissionPlanner
             }
             else
             {
-                IconFile = MissionPlanner.Properties.Resources.mpdesktop.ToBitmap();
+                IconFile = VPS.Properties.Resources.mpdesktop.ToBitmap();
             }
 
             if (File.Exists(Settings.GetRunningDirectory() + "splashbg.png")) // 600*375
@@ -179,7 +179,7 @@ namespace MissionPlanner
                 log.Error(ex);
             }
 
-            Splash = new MissionPlanner.Splash();
+            Splash = new VPS.Splash();
             if (SplashBG != null)
             {
                 Splash.BackgroundImage = SplashBG;
@@ -208,21 +208,21 @@ namespace MissionPlanner
                 };
 
             // setup theme provider
-            MsgBox.CustomMessageBox.ApplyTheme += MissionPlanner.Utilities.ThemeManager.ApplyThemeTo;
-            Controls.MainSwitcher.ApplyTheme += MissionPlanner.Utilities.ThemeManager.ApplyThemeTo;
-            MissionPlanner.Controls.InputBox.ApplyTheme += MissionPlanner.Utilities.ThemeManager.ApplyThemeTo;
-            Controls.BackstageView.BackstageViewPage.ApplyTheme += MissionPlanner.Utilities.ThemeManager.ApplyThemeTo;
+            MsgBox.CustomMessageBox.ApplyTheme += VPS.Utilities.ThemeManager.ApplyThemeTo;
+            Controls.MainSwitcher.ApplyTheme += VPS.Utilities.ThemeManager.ApplyThemeTo;
+            VPS.Controls.InputBox.ApplyTheme += VPS.Utilities.ThemeManager.ApplyThemeTo;
+            Controls.BackstageView.BackstageViewPage.ApplyTheme += VPS.Utilities.ThemeManager.ApplyThemeTo;
 
-            Controls.MainSwitcher.Tracking += MissionPlanner.Utilities.Tracking.AddPage;
-            Controls.BackstageView.BackstageView.Tracking += MissionPlanner.Utilities.Tracking.AddPage;
+            Controls.MainSwitcher.Tracking += VPS.Utilities.Tracking.AddPage;
+            Controls.BackstageView.BackstageView.Tracking += VPS.Utilities.Tracking.AddPage;
 
             // setup settings provider
-            MissionPlanner.Comms.CommsBase.Settings += CommsBase_Settings;
-            MissionPlanner.Comms.CommsBase.InputBoxShow += CommsBaseOnInputBoxShow;
-            MissionPlanner.Comms.CommsBase.ApplyTheme += MissionPlanner.Utilities.ThemeManager.ApplyThemeTo;
-            MissionPlanner.Comms.SerialPort.GetDeviceName += SerialPort_GetDeviceName;
+            VPS.Comms.CommsBase.Settings += CommsBase_Settings;
+            VPS.Comms.CommsBase.InputBoxShow += CommsBaseOnInputBoxShow;
+            VPS.Comms.CommsBase.ApplyTheme += VPS.Utilities.ThemeManager.ApplyThemeTo;
+            VPS.Comms.SerialPort.GetDeviceName += SerialPort_GetDeviceName;
 
-            MissionPlanner.Utilities.Extensions.MessageLoop = new Action(() => Application.DoEvents());
+            VPS.Utilities.Extensions.MessageLoop = new Action(() => Application.DoEvents());
 
             // set the cache provider to my custom version
             GMap.NET.GMaps.Instance.PrimaryCache = new Maps.MyImageCache();
@@ -554,7 +554,7 @@ namespace MissionPlanner
             if (MainV2.instance != null && MainV2.instance.IsDisposed)
                 return;
 
-            MissionPlanner.Utilities.Tracking.AddException(ex);
+            VPS.Utilities.Tracking.AddException(ex);
 
             log.Debug(ex.ToString());
 

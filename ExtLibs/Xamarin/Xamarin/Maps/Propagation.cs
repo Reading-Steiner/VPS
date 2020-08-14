@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 using GMap.NET;
 using GMap.NET.WindowsForms;
 using log4net;
-using MissionPlanner.Utilities;
-using Extensions = MissionPlanner.Utilities.Extensions;
+using VPS.Utilities;
+using Extensions = VPS.Utilities.Extensions;
 
-namespace MissionPlanner.Maps
+namespace VPS.Maps
 {
     public class Propagation: IDisposable
     {

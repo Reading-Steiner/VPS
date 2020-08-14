@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MissionPlanner.UserPanel
+namespace VPS.UserPanel
 {
     public partial class UserPanel : UserControl
     {

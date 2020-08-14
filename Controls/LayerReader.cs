@@ -1,8 +1,8 @@
 ﻿using GMap.NET.CacheProviders;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Comms;
-using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+using VPS.ArduPilot;
+using VPS.Comms;
+using VPS.Controls;
+using VPS.Utilities;
 using System;
 using System.Drawing;
 using System.Globalization;
@@ -10,7 +10,7 @@ using System.IO;
 using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public partial class LayerReader : Form
     {

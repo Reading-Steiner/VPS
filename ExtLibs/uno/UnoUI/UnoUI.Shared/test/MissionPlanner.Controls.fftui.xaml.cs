@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class fftui{public fftui(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class fftui{public fftui(){this.InitializeComponent();}}}

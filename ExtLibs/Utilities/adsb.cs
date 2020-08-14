@@ -11,7 +11,7 @@ using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class adsb
     {
@@ -28,7 +28,7 @@ namespace MissionPlanner.Utilities
         /// <summary>
         /// When a plane position has been updated. you will need to age your own entries
         /// </summary>
-        public static event EventHandler<MissionPlanner.Utilities.adsb.PointLatLngAltHdg> UpdatePlanePosition;
+        public static event EventHandler<VPS.Utilities.adsb.PointLatLngAltHdg> UpdatePlanePosition;
 
         public static PointLatLngAlt CurrentPosition = PointLatLngAlt.Zero;
 
@@ -190,7 +190,7 @@ namespace MissionPlanner.Utilities
 
                             foreach (var acList in result.acList)
                             {
-                                var plane = new MissionPlanner.Utilities.adsb.PointLatLngAltHdg(acList.Lat, acList.Long,
+                                var plane = new VPS.Utilities.adsb.PointLatLngAltHdg(acList.Lat, acList.Long,
                                     acList.Alt * 0.3048,
                                     (float) acList.Trak, acList.Spd, acList.Icao, DateTime.Now);
 

@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Controls
+﻿namespace VPS.Controls
 {
     partial class ProgressStep
     {
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.progressBar1 = new MissionPlanner.Controls.MyProgressBar();
+            this.progressBar1 = new VPS.Controls.MyProgressBar();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -75,7 +75,7 @@
 
         #endregion
 
-        private MissionPlanner.Controls.MyProgressBar progressBar1;
+        private VPS.Controls.MyProgressBar progressBar1;
         private System.Windows.Forms.Label label1;
     }
 }

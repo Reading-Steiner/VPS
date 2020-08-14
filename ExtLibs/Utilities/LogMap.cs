@@ -1,7 +1,7 @@
 ﻿using GMap.NET;
 using GMap.NET.MapProviders;
-using MissionPlanner.Comms;
-using MissionPlanner.Utilities;
+using VPS.Comms;
+using VPS.Utilities;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MissionPlanner.Log
+namespace VPS.Log
 {
     public class LogMap
     {

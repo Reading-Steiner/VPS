@@ -11,10 +11,10 @@ using System.Windows.Forms;
 using GMap.NET;
 using GMap.NET.Internals;
 using GMap.NET.WindowsForms;
-using MissionPlanner.Maps;
+using VPS.Maps;
 using GMap.NET.MapProviders;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public partial class GMAPCache : UserControl, IActivate
     {

@@ -14,14 +14,14 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Comms;
-using MissionPlanner.Mavlink;
-using MissionPlanner.Utilities;
+using VPS.ArduPilot;
+using VPS.Comms;
+using VPS.Mavlink;
+using VPS.Utilities;
 using Newtonsoft.Json;
 using Timer = System.Timers.Timer;
 
-namespace MissionPlanner
+namespace VPS
 {
     public class MAVLinkInterface : MAVLink, IDisposable, IMAVLinkInterface, IMAVLinkInterfaceLogRead
     {

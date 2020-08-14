@@ -1,1 +1,1 @@
-namespace MissionPlanner { public partial class MovingBase{public MovingBase(){this.InitializeComponent();}}}
+namespace VPS { public partial class MovingBase{public MovingBase(){this.InitializeComponent();}}}

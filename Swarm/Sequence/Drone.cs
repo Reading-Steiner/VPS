@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Swarm.Sequence
+﻿namespace VPS.Swarm.Sequence
 {
     public class Drone : DroneBase
     {

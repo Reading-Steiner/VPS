@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MissionPlanner.HIL;
-using MissionPlanner.Utilities;
+using VPS.HIL;
+using VPS.Utilities;
 
-namespace MissionPlanner.HIL
+namespace VPS.HIL
 {
     public class Aircraft : Utils
     {

@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class LabelWithPseudoOpacity{public LabelWithPseudoOpacity(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class LabelWithPseudoOpacity{public LabelWithPseudoOpacity(){this.InitializeComponent();}}}

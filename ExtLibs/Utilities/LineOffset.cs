@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class LineOffset
     {

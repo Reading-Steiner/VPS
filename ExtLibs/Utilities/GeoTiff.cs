@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using GMap.NET;
 using log4net;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class GeoTiff
     {

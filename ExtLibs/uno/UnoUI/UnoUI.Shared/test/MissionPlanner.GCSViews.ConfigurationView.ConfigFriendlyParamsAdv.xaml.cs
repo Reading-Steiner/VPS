@@ -1,1 +1,1 @@
-namespace MissionPlanner.GCSViews.ConfigurationView { public partial class ConfigFriendlyParamsAdv{public ConfigFriendlyParamsAdv(){this.InitializeComponent();}}}
+namespace VPS.GCSViews.ConfigurationView { public partial class ConfigFriendlyParamsAdv{public ConfigFriendlyParamsAdv(){this.InitializeComponent();}}}

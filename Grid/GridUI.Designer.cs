@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Grid
+﻿namespace VPS.Grid
 {
     partial class GridUI
     {
@@ -123,7 +123,7 @@
             this.CHK_grid = new System.Windows.Forms.CheckBox();
             this.CHK_markers = new System.Windows.Forms.CheckBox();
             this.CHK_boundary = new System.Windows.Forms.CheckBox();
-            this.BUT_Accept = new MissionPlanner.Controls.MyButton();
+            this.BUT_Accept = new VPS.Controls.MyButton();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.Hide = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -155,12 +155,12 @@
             this.CHK_copter_headinghold = new System.Windows.Forms.CheckBox();
             this.LBL_copter_delay = new System.Windows.Forms.Label();
             this.NUM_copter_delay = new System.Windows.Forms.NumericUpDown();
-            this.BUT_samplephoto = new MissionPlanner.Controls.MyButton();
-            this.BUT_save = new MissionPlanner.Controls.MyButton();
+            this.BUT_samplephoto = new VPS.Controls.MyButton();
+            this.BUT_save = new VPS.Controls.MyButton();
             this.CHK_toandland_RTL = new System.Windows.Forms.CheckBox();
             this.CHK_toandland = new System.Windows.Forms.CheckBox();
-            this.TRK_zoom = new MissionPlanner.Controls.MyTrackBar();
-            this.map = new MissionPlanner.Controls.myGMAP();
+            this.TRK_zoom = new VPS.Controls.MyTrackBar();
+            this.map = new VPS.Controls.myGMAP();
             this.groupBox5.SuspendLayout();
             this.tabCamera.SuspendLayout();
             this.groupBox2.SuspendLayout();

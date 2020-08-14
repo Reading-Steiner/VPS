@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using MissionPlanner.Plugin;
+using VPS.Plugin;
 
 namespace MavlinkMessagePlugin
 {

@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class EKFStatus{public EKFStatus(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class EKFStatus{public EKFStatus(){this.InitializeComponent();}}}

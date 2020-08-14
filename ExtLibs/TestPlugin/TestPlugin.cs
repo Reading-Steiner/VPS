@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MissionPlanner.Plugin;
-using MissionPlanner;
+using VPS.Plugin;
+using VPS;
 using System.Windows.Forms;
 using System.IO;
 using System.Security.Authentication;
 using System.Threading.Tasks;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 using MQTTnet;
 using MQTTnet.Client.Receiving;
 using MQTTnet.Server;

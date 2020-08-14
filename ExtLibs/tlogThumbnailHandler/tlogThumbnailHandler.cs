@@ -10,9 +10,9 @@ using System.Threading;
 using GMap.NET;
 using GMap.NET.Internals;
 using GMap.NET.MapProviders;
-using MissionPlanner.Log;
+using VPS.Log;
 
-namespace MissionPlanner.Log
+namespace VPS.Log
 {
 
 }
@@ -132,7 +132,7 @@ namespace tlogThumbnailHandler
                 GMaps.Instance.UseMemoryCache = false;
                 GMaps.Instance.CacheOnIdleRead = false;
                 GMaps.Instance.BoostCacheEngine = true;
-                GMap.NET.GMaps.Instance.PrimaryCache = new MissionPlanner.Maps.MyImageCache();
+                GMap.NET.GMaps.Instance.PrimaryCache = new VPS.Maps.MyImageCache();
                 Core.Provider = GMapProviders.GoogleSatelliteMap;
 
                 if (!File.Exists(jpgfile))

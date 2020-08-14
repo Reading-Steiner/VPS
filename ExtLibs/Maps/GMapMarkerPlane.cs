@@ -2,21 +2,21 @@
 using System.Drawing;
 using GMap.NET;
 using GMap.NET.WindowsForms;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 
-namespace MissionPlanner.Maps
+namespace VPS.Maps
 {
     [Serializable]
     public class GMapMarkerPlane : GMapMarkerBase
     {
-        private readonly Bitmap icon = global::MissionPlanner.Maps.Resources.planeicon;
+        private readonly Bitmap icon = global::VPS.Maps.Resources.planeicon;
 
-        private readonly Bitmap icon1 = global::MissionPlanner.Maps.Resources.planeicon1;
-        private readonly Bitmap icon2 = global::MissionPlanner.Maps.Resources.planeicon2;
-        private readonly Bitmap icon3 = global::MissionPlanner.Maps.Resources.planeicon3;
-        private readonly Bitmap icon4 = global::MissionPlanner.Maps.Resources.planeicon4;
-        private readonly Bitmap icon5 = global::MissionPlanner.Maps.Resources.planeicon5;
-        private readonly Bitmap icon6 = global::MissionPlanner.Maps.Resources.planeicon6;
+        private readonly Bitmap icon1 = global::VPS.Maps.Resources.planeicon1;
+        private readonly Bitmap icon2 = global::VPS.Maps.Resources.planeicon2;
+        private readonly Bitmap icon3 = global::VPS.Maps.Resources.planeicon3;
+        private readonly Bitmap icon4 = global::VPS.Maps.Resources.planeicon4;
+        private readonly Bitmap icon5 = global::VPS.Maps.Resources.planeicon5;
+        private readonly Bitmap icon6 = global::VPS.Maps.Resources.planeicon6;
 
         float cog = -1;
         float heading = 0;

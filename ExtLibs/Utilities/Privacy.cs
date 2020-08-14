@@ -4,9 +4,9 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using MissionPlanner.Comms;
+using VPS.Comms;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class Privacy
     {

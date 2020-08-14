@@ -1,13 +1,13 @@
-﻿using MissionPlanner.ArduPilot;
-using MissionPlanner.Utilities;
+﻿using VPS.ArduPilot;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using DeviceInfo = MissionPlanner.ArduPilot.DeviceInfo;
+using DeviceInfo = VPS.ArduPilot.DeviceInfo;
 
-namespace MissionPlanner.test
+namespace VPS.test
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FirmwareSelection : ContentPage, IClose

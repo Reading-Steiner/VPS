@@ -1,1 +1,1 @@
-namespace MissionPlanner.Swarm { public partial class FormationControl{public FormationControl(){this.InitializeComponent();}}}
+namespace VPS.Swarm { public partial class FormationControl{public FormationControl(){this.InitializeComponent();}}}

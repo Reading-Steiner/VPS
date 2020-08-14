@@ -1,13 +1,13 @@
 ﻿using log4net;
-using MissionPlanner.Controls;
-using MissionPlanner.GCSViews.ConfigurationView;
-using MissionPlanner.Utilities;
+using VPS.Controls;
+using VPS.GCSViews.ConfigurationView;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 
-namespace MissionPlanner.Swarm.SRB
+namespace VPS.Swarm.SRB
 {
     public class DroneGroup
     {

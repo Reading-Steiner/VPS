@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Zeroconf;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class ZeroConf
     {

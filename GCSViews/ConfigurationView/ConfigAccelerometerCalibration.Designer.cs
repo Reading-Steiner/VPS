@@ -1,6 +1,6 @@
-﻿using MissionPlanner.Controls;
+﻿using VPS.Controls;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     partial class ConfigAccelerometerCalibration
     {
@@ -34,9 +34,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lbl_Accel_user = new System.Windows.Forms.Label();
-            this.BUT_calib_accell = new MissionPlanner.Controls.MyButton();
-            this.lineSeparator2 = new MissionPlanner.Controls.LineSeparator();
-            this.BUT_level = new MissionPlanner.Controls.MyButton();
+            this.BUT_calib_accell = new VPS.Controls.MyButton();
+            this.lineSeparator2 = new VPS.Controls.LineSeparator();
+            this.BUT_level = new VPS.Controls.MyButton();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 

@@ -1,9 +1,9 @@
 ﻿using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Comms;
-using MissionPlanner.Controls;
-using MissionPlanner.test;
-using MissionPlanner.Utilities;
+using VPS.ArduPilot;
+using VPS.Comms;
+using VPS.Controls;
+using VPS.test;
+using VPS.Utilities;
 using System;
 using System.Data;
 using System.IO;
@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigFirmwareManifest : UserControl, IActivate, IDeactivate
     {
@@ -292,7 +292,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                         return;
                     }
 
-                    MissionPlanner.Utilities.Tracking.AddFW(mavtype.ToString(), deviceInfo.board);
+                    VPS.Utilities.Tracking.AddFW(mavtype.ToString(), deviceInfo.board);
 
                     var fw = new Firmware();
                     fw.Progress += fw_Progress1;

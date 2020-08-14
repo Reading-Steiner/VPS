@@ -1,8 +1,8 @@
 ﻿using Flurl.Util;
 using log4net;
-using MissionPlanner.Comms;
-using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+using VPS.Comms;
+using VPS.Controls;
+using VPS.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,10 +17,10 @@ using System.Xml.Serialization;
 using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
-using MissionPlanner.Maps;
+using VPS.Maps;
 using UAVCAN;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigSerialInjectGPS : UserControl, IActivate, IDeactivate
     {
@@ -125,7 +125,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             rtcm3.ObsMessage += Rtcm3_ObsMessage;
 
-            MissionPlanner.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
+            VPS.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
         }
 
         private void Rtcm3_ObsMessage(object sender, EventArgs e)

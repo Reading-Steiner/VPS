@@ -9,9 +9,9 @@ using com.drew.imaging.jpg;
 using com.drew.imaging.tiff;
 using com.drew.metadata;
 using log4net;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 
-namespace MissionPlanner.GeoRef
+namespace VPS.GeoRef
 {
     partial class Georefimage
     {
@@ -25,12 +25,12 @@ namespace MissionPlanner.GeoRef
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.TXT_outputlog = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.BUT_Geotagimages = new MissionPlanner.Controls.MyButton();
-            this.BUT_estoffset = new MissionPlanner.Controls.MyButton();
-            this.BUT_doit = new MissionPlanner.Controls.MyButton();
-            this.BUT_browsedir = new MissionPlanner.Controls.MyButton();
-            this.BUT_browselog = new MissionPlanner.Controls.MyButton();
-            this.BUT_networklinkgeoref = new MissionPlanner.Controls.MyButton();
+            this.BUT_Geotagimages = new VPS.Controls.MyButton();
+            this.BUT_estoffset = new VPS.Controls.MyButton();
+            this.BUT_doit = new VPS.Controls.MyButton();
+            this.BUT_browsedir = new VPS.Controls.MyButton();
+            this.BUT_browselog = new VPS.Controls.MyButton();
+            this.BUT_networklinkgeoref = new VPS.Controls.MyButton();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.RDIO_TimeOffset = new System.Windows.Forms.RadioButton();
@@ -52,7 +52,7 @@ namespace MissionPlanner.GeoRef
             this.label27 = new System.Windows.Forms.Label();
             this.chk_cammsg = new System.Windows.Forms.CheckBox();
             this.RDIO_trigmsg = new System.Windows.Forms.RadioButton();
-            this.myGMAP1 = new MissionPlanner.Controls.myGMAP();
+            this.myGMAP1 = new VPS.Controls.myGMAP();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.chk_camusegpsalt = new System.Windows.Forms.CheckBox();
             this.chk_trigusergpsalt = new System.Windows.Forms.CheckBox();

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TimeSpan = System.TimeSpan;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public partial class Status : UserControl
     {

@@ -3,7 +3,7 @@
 using GMap.NET.CacheProviders;
 using System;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     partial class LayerManager
     {

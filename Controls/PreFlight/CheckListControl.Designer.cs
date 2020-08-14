@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Controls.PreFlight
+﻿namespace VPS.Controls.PreFlight
 {
     partial class CheckListControl
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.BUT_edit = new MissionPlanner.Controls.MyButton();
+            this.BUT_edit = new VPS.Controls.MyButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();

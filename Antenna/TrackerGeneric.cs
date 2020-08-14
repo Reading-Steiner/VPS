@@ -1,9 +1,9 @@
-﻿using MissionPlanner.Comms;
-using MissionPlanner.Utilities;
+﻿using VPS.Comms;
+using VPS.Utilities;
 using System;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Antenna
+namespace VPS.Antenna
 {
     public class TrackerGeneric
     {

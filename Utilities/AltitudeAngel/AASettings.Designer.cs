@@ -1,6 +1,6 @@
-﻿using MissionPlanner.Controls;
+﻿using VPS.Controls;
 
-namespace MissionPlanner.Utilities.AltitudeAngel
+namespace VPS.Utilities.AltitudeAngel
 {
     internal partial class AASettings
     {
@@ -30,8 +30,8 @@ namespace MissionPlanner.Utilities.AltitudeAngel
         /// </summary>
         private void InitializeComponent()
         {
-            this.but_enable = new MissionPlanner.Controls.MyButton();
-            this.but_disable = new MissionPlanner.Controls.MyButton();
+            this.but_enable = new VPS.Controls.MyButton();
+            this.but_disable = new VPS.Controls.MyButton();
             this.chk_airdata = new System.Windows.Forms.CheckBox();
             this.chk_grounddata = new System.Windows.Forms.CheckBox();
             this.chklb_layers = new System.Windows.Forms.CheckedListBox();

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MissionPlanner.ArduPilot.Properties {
+namespace VPS.ArduPilot.Properties {
     using System;
     
     

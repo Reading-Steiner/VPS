@@ -1,8 +1,8 @@
 ﻿using log4net;
 using ManagedNativeWifi.Simple;
-using MissionPlanner.Arduino;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Comms;
+using VPS.Arduino;
+using VPS.ArduPilot;
+using VPS.Comms;
 using px4uploader;
 using SharpAdbClient;
 using solo;
@@ -20,7 +20,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class Firmware
     {
@@ -635,7 +635,7 @@ namespace MissionPlanner.Utilities
                 return false;
             }
 
-            MissionPlanner.Utilities.Tracking.AddFW(temp.name, board.ToString());
+            VPS.Utilities.Tracking.AddFW(temp.name, board.ToString());
 
             var uploadstarttime = DateTime.Now;
 

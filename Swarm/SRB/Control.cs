@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Swarm.SRB
+namespace VPS.Swarm.SRB
 {
     public partial class Control : Form
     {

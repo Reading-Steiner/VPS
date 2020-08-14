@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class DefaultSettings{public DefaultSettings(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class DefaultSettings{public DefaultSettings(){this.InitializeComponent();}}}

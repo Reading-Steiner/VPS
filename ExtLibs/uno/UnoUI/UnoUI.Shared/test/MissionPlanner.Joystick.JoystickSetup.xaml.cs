@@ -1,1 +1,1 @@
-namespace MissionPlanner.Joystick { public partial class JoystickSetup{public JoystickSetup(){this.InitializeComponent();}}}
+namespace VPS.Joystick { public partial class JoystickSetup{public JoystickSetup(){this.InitializeComponent();}}}

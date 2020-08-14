@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     internal class GCSViews
     {

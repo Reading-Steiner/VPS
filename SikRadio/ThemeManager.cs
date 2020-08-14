@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using log4net;
-using MissionPlanner.Controls;
+using VPS.Controls;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     /// <summary>
     ///     Helper class for the stylng 'theming' of forms and controls, and provides MessageBox

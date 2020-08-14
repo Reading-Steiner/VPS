@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Controls
+﻿namespace VPS.Controls
 {
     partial class SerialOutputPass
     {
@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SerialOutputPass));
             this.CMB_serialport = new System.Windows.Forms.ComboBox();
-            this.BUT_connect = new MissionPlanner.Controls.MyButton();
+            this.BUT_connect = new VPS.Controls.MyButton();
             this.CMB_baudrate = new System.Windows.Forms.ComboBox();
             this.chk_write = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();

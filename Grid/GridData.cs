@@ -1,7 +1,7 @@
-﻿using MissionPlanner.Utilities;
+﻿using VPS.Utilities;
 using System.Collections.Generic;
 
-namespace MissionPlanner.Grid
+namespace VPS.Grid
 {
     public struct GridData
     {

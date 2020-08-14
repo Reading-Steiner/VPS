@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class SerialOutputPass{public SerialOutputPass(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class SerialOutputPass{public SerialOutputPass(){this.InitializeComponent();}}}

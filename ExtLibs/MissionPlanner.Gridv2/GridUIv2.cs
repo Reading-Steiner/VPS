@@ -12,12 +12,12 @@ using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Utilities;
+using VPS.ArduPilot;
+using VPS.Utilities;
 using ProjNet.CoordinateSystems;
 using ProjNet.CoordinateSystems.Transformations;
 
-namespace MissionPlanner
+namespace VPS
 {
     public partial class GridUIv2 : Form
     {

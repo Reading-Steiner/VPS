@@ -1,1 +1,1 @@
-namespace MissionPlanner.GCSViews.ConfigurationView { public partial class ConfigAccelerometerCalibration{public ConfigAccelerometerCalibration(){this.InitializeComponent();}}}
+namespace VPS.GCSViews.ConfigurationView { public partial class ConfigAccelerometerCalibration{public ConfigAccelerometerCalibration(){this.InitializeComponent();}}}

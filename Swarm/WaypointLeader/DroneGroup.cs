@@ -1,13 +1,13 @@
 ﻿using log4net;
-using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+using VPS.Controls;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ZedGraph;
 
-namespace MissionPlanner.Swarm.WaypointLeader
+namespace VPS.Swarm.WaypointLeader
 {
     public class DroneGroup
     {

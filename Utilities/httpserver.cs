@@ -1,5 +1,5 @@
 ﻿using log4net;
-using MissionPlanner.GCSViews;
+using VPS.GCSViews;
 using Newtonsoft.Json;
 using SharpKml.Base;
 using SharpKml.Dom;
@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class httpserver
     {

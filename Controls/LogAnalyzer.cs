@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public partial class LogAnalyzer : Form
     {
-        public LogAnalyzer(MissionPlanner.Utilities.LogAnalyzer.analysis analysis)
+        public LogAnalyzer(VPS.Utilities.LogAnalyzer.analysis analysis)
         {
             InitializeComponent();
 

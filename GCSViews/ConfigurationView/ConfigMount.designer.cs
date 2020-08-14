@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
-using MissionPlanner.Controls;
+using VPS.Controls;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     partial class ConfigMount
     {
@@ -66,66 +66,66 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.CMB_inputch_pan = new MissionPlanner.Controls.MavlinkComboBox();
-            this.CMB_inputch_roll = new MissionPlanner.Controls.MavlinkComboBox();
-            this.CMB_inputch_tilt = new MissionPlanner.Controls.MavlinkComboBox();
-            this.mavlinkNumericUpDownTAM = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkNumericUpDownTAMX = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkNumericUpDownTSM = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkNumericUpDownTSMX = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkCheckBoxTR = new MissionPlanner.Controls.MavlinkCheckBox();
-            this.mavlinkNumericUpDownPAM = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkNumericUpDownPAMX = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkNumericUpDownPSM = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkNumericUpDownPSMX = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkCheckBoxPR = new MissionPlanner.Controls.MavlinkCheckBox();
-            this.mavlinkNumericUpDownRAM = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkNumericUpDownRAMX = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkNumericUpDownRSM = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkNumericUpDownRSMX = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkCheckBoxRR = new MissionPlanner.Controls.MavlinkCheckBox();
+            this.CMB_inputch_pan = new VPS.Controls.MavlinkComboBox();
+            this.CMB_inputch_roll = new VPS.Controls.MavlinkComboBox();
+            this.CMB_inputch_tilt = new VPS.Controls.MavlinkComboBox();
+            this.mavlinkNumericUpDownTAM = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownTAMX = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownTSM = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownTSMX = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkCheckBoxTR = new VPS.Controls.MavlinkCheckBox();
+            this.mavlinkNumericUpDownPAM = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownPAMX = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownPSM = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownPSMX = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkCheckBoxPR = new VPS.Controls.MavlinkCheckBox();
+            this.mavlinkNumericUpDownRAM = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownRAMX = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownRSM = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownRSMX = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkCheckBoxRR = new VPS.Controls.MavlinkCheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label27 = new System.Windows.Forms.Label();
-            this.NUD_RETRACT_z = new MissionPlanner.Controls.MavlinkNumericUpDown();
+            this.NUD_RETRACT_z = new VPS.Controls.MavlinkNumericUpDown();
             this.label26 = new System.Windows.Forms.Label();
-            this.NUD_RETRACT_y = new MissionPlanner.Controls.MavlinkNumericUpDown();
+            this.NUD_RETRACT_y = new VPS.Controls.MavlinkNumericUpDown();
             this.label25 = new System.Windows.Forms.Label();
-            this.NUD_RETRACT_x = new MissionPlanner.Controls.MavlinkNumericUpDown();
+            this.NUD_RETRACT_x = new VPS.Controls.MavlinkNumericUpDown();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label28 = new System.Windows.Forms.Label();
-            this.NUD_NEUTRAL_z = new MissionPlanner.Controls.MavlinkNumericUpDown();
+            this.NUD_NEUTRAL_z = new VPS.Controls.MavlinkNumericUpDown();
             this.label29 = new System.Windows.Forms.Label();
-            this.NUD_NEUTRAL_y = new MissionPlanner.Controls.MavlinkNumericUpDown();
+            this.NUD_NEUTRAL_y = new VPS.Controls.MavlinkNumericUpDown();
             this.label30 = new System.Windows.Forms.Label();
-            this.NUD_NEUTRAL_x = new MissionPlanner.Controls.MavlinkNumericUpDown();
+            this.NUD_NEUTRAL_x = new VPS.Controls.MavlinkNumericUpDown();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label31 = new System.Windows.Forms.Label();
-            this.NUD_CONTROL_z = new MissionPlanner.Controls.MavlinkNumericUpDown();
+            this.NUD_CONTROL_z = new VPS.Controls.MavlinkNumericUpDown();
             this.label32 = new System.Windows.Forms.Label();
-            this.NUD_CONTROL_y = new MissionPlanner.Controls.MavlinkNumericUpDown();
+            this.NUD_CONTROL_y = new VPS.Controls.MavlinkNumericUpDown();
             this.label33 = new System.Windows.Forms.Label();
-            this.NUD_CONTROL_x = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.CHK_stab_tilt = new MissionPlanner.Controls.MavlinkCheckBox();
-            this.CHK_stab_roll = new MissionPlanner.Controls.MavlinkCheckBox();
-            this.CHK_stab_pan = new MissionPlanner.Controls.MavlinkCheckBox();
+            this.NUD_CONTROL_x = new VPS.Controls.MavlinkNumericUpDown();
+            this.CHK_stab_tilt = new VPS.Controls.MavlinkCheckBox();
+            this.CHK_stab_roll = new VPS.Controls.MavlinkCheckBox();
+            this.CHK_stab_pan = new VPS.Controls.MavlinkCheckBox();
             this.CMB_shuttertype =  new ComboBox();
             this.label35 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
-            this.mavlinkNumericUpDownshut_pushed = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkNumericUpDownshut_notpushed = new MissionPlanner.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownshut_pushed = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownshut_notpushed = new VPS.Controls.MavlinkNumericUpDown();
             this.label39 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
-            this.mavlinkNumericUpDownShutM = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkNumericUpDownShutMX = new MissionPlanner.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownShutM = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownShutMX = new VPS.Controls.MavlinkNumericUpDown();
             this.label41 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.label34 = new System.Windows.Forms.Label();
-            this.mavlinkNumericUpDownshut_duration = new MissionPlanner.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownshut_duration = new VPS.Controls.MavlinkNumericUpDown();
             this.label42 = new System.Windows.Forms.Label();
-            this.CMB_mnt_type = new MissionPlanner.Controls.MavlinkComboBox();
+            this.CMB_mnt_type = new VPS.Controls.MavlinkComboBox();
             this.label43 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -166,7 +166,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.BackgroundImage = global::MissionPlanner.Properties.Resources.cameraGimalPitch1;
+            this.pictureBox1.BackgroundImage = global::VPS.Properties.Resources.cameraGimalPitch1;
             resources.ApplyResources(this.pictureBox1, "pictureBox1");
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
@@ -179,7 +179,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             // 
             // pictureBox2
             // 
-            this.pictureBox2.BackgroundImage = global::MissionPlanner.Properties.Resources.cameraGimalRoll1;
+            this.pictureBox2.BackgroundImage = global::VPS.Properties.Resources.cameraGimalRoll1;
             resources.ApplyResources(this.pictureBox2, "pictureBox2");
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.TabStop = false;
@@ -222,7 +222,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             // 
             // pictureBox3
             // 
-            this.pictureBox3.BackgroundImage = global::MissionPlanner.Properties.Resources.cameraGimalYaw;
+            this.pictureBox3.BackgroundImage = global::VPS.Properties.Resources.cameraGimalYaw;
             resources.ApplyResources(this.pictureBox3, "pictureBox3");
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.TabStop = false;
@@ -1219,7 +1219,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             // 
             // pictureBox4
             // 
-            this.pictureBox4.BackgroundImage = global::MissionPlanner.Properties.Resources.Shutter;
+            this.pictureBox4.BackgroundImage = global::VPS.Properties.Resources.Shutter;
             resources.ApplyResources(this.pictureBox4, "pictureBox4");
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.TabStop = false;

@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews
+﻿namespace VPS.GCSViews
 {
     partial class FlightData
     {
@@ -10,7 +10,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FlightData));
             this.MainH = new System.Windows.Forms.SplitContainer();
             this.SubMainLeft = new System.Windows.Forms.SplitContainer();
-            this.hud1 = new MissionPlanner.Controls.HUD();
+            this.hud1 = new VPS.Controls.HUD();
             this.contextMenuStripHud = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.videoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recordHudToAVIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -31,106 +31,106 @@
             this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabQuick = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelQuick = new System.Windows.Forms.TableLayoutPanel();
-            this.quickView6 = new MissionPlanner.Controls.QuickView();
+            this.quickView6 = new VPS.Controls.QuickView();
             this.contextMenuStripQuickView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setViewCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bindingSourceQuickTab = new System.Windows.Forms.BindingSource(this.components);
-            this.quickView5 = new MissionPlanner.Controls.QuickView();
-            this.quickView4 = new MissionPlanner.Controls.QuickView();
-            this.quickView3 = new MissionPlanner.Controls.QuickView();
-            this.quickView2 = new MissionPlanner.Controls.QuickView();
-            this.quickView1 = new MissionPlanner.Controls.QuickView();
+            this.quickView5 = new VPS.Controls.QuickView();
+            this.quickView4 = new VPS.Controls.QuickView();
+            this.quickView3 = new VPS.Controls.QuickView();
+            this.quickView2 = new VPS.Controls.QuickView();
+            this.quickView1 = new VPS.Controls.QuickView();
             this.tabActions = new System.Windows.Forms.TabPage();
-            this.modifyandSetLoiterRad = new MissionPlanner.Controls.ModifyandSet();
-            this.BUT_abortland = new MissionPlanner.Controls.MyButton();
-            this.BUT_resumemis = new MissionPlanner.Controls.MyButton();
+            this.modifyandSetLoiterRad = new VPS.Controls.ModifyandSet();
+            this.BUT_abortland = new VPS.Controls.MyButton();
+            this.BUT_resumemis = new VPS.Controls.MyButton();
             this.CMB_mountmode = new System.Windows.Forms.ComboBox();
-            this.BUT_mountmode = new MissionPlanner.Controls.MyButton();
-            this.BUT_ARM = new MissionPlanner.Controls.MyButton();
-            this.BUT_joystick = new MissionPlanner.Controls.MyButton();
-            this.BUT_quickmanual = new MissionPlanner.Controls.MyButton();
-            this.BUT_quickrtl = new MissionPlanner.Controls.MyButton();
-            this.BUT_quickauto = new MissionPlanner.Controls.MyButton();
-            this.BUT_CloseFlightPlanner = new MissionPlanner.Controls.MyButton();
+            this.BUT_mountmode = new VPS.Controls.MyButton();
+            this.BUT_ARM = new VPS.Controls.MyButton();
+            this.BUT_joystick = new VPS.Controls.MyButton();
+            this.BUT_quickmanual = new VPS.Controls.MyButton();
+            this.BUT_quickrtl = new VPS.Controls.MyButton();
+            this.BUT_quickauto = new VPS.Controls.MyButton();
+            this.BUT_CloseFlightPlanner = new VPS.Controls.MyButton();
             this.CMB_setwp = new System.Windows.Forms.ComboBox();
-            this.BUT_setwp = new MissionPlanner.Controls.MyButton();
+            this.BUT_setwp = new VPS.Controls.MyButton();
             this.CMB_modes = new System.Windows.Forms.ComboBox();
-            this.BUT_setmode = new MissionPlanner.Controls.MyButton();
-            this.BUT_clear_track = new MissionPlanner.Controls.MyButton();
+            this.BUT_setmode = new VPS.Controls.MyButton();
+            this.BUT_clear_track = new VPS.Controls.MyButton();
             this.CMB_action = new System.Windows.Forms.ComboBox();
-            this.BUT_Homealt = new MissionPlanner.Controls.MyButton();
-            this.BUT_RAWSensor = new MissionPlanner.Controls.MyButton();
-            this.BUTrestartmission = new MissionPlanner.Controls.MyButton();
-            this.BUTactiondo = new MissionPlanner.Controls.MyButton();
-            this.modifyandSetSpeed = new MissionPlanner.Controls.ModifyandSet();
-            this.modifyandSetAlt = new MissionPlanner.Controls.ModifyandSet();
+            this.BUT_Homealt = new VPS.Controls.MyButton();
+            this.BUT_RAWSensor = new VPS.Controls.MyButton();
+            this.BUTrestartmission = new VPS.Controls.MyButton();
+            this.BUTactiondo = new VPS.Controls.MyButton();
+            this.modifyandSetSpeed = new VPS.Controls.ModifyandSet();
+            this.modifyandSetAlt = new VPS.Controls.ModifyandSet();
             this.tabActionsSimple = new System.Windows.Forms.TabPage();
-            this.myButton1 = new MissionPlanner.Controls.MyButton();
-            this.myButton2 = new MissionPlanner.Controls.MyButton();
-            this.myButton3 = new MissionPlanner.Controls.MyButton();
+            this.myButton1 = new VPS.Controls.MyButton();
+            this.myButton2 = new VPS.Controls.MyButton();
+            this.myButton3 = new VPS.Controls.MyButton();
             this.tabPagePreFlight = new System.Windows.Forms.TabPage();
-            this.checkListControl1 = new MissionPlanner.Controls.PreFlight.CheckListControl();
+            this.checkListControl1 = new VPS.Controls.PreFlight.CheckListControl();
             this.tabGauges = new System.Windows.Forms.TabPage();
             this.Gvspeed = new AGaugeApp.AGauge();
             this.bindingSourceGaugesTab = new System.Windows.Forms.BindingSource(this.components);
-            this.Gheading = new MissionPlanner.Controls.HSI();
+            this.Gheading = new VPS.Controls.HSI();
             this.Galt = new AGaugeApp.AGauge();
             this.Gspeed = new AGaugeApp.AGauge();
             this.tabStatus = new System.Windows.Forms.TabPage();
             this.tabServo = new System.Windows.Forms.TabPage();
             this.flowLayoutPanelServos = new System.Windows.Forms.FlowLayoutPanel();
-            this.servoOptions1 = new MissionPlanner.Controls.ServoOptions();
-            this.servoOptions2 = new MissionPlanner.Controls.ServoOptions();
-            this.servoOptions3 = new MissionPlanner.Controls.ServoOptions();
-            this.servoOptions4 = new MissionPlanner.Controls.ServoOptions();
-            this.servoOptions5 = new MissionPlanner.Controls.ServoOptions();
-            this.servoOptions6 = new MissionPlanner.Controls.ServoOptions();
-            this.servoOptions7 = new MissionPlanner.Controls.ServoOptions();
-            this.servoOptions8 = new MissionPlanner.Controls.ServoOptions();
-            this.servoOptions9 = new MissionPlanner.Controls.ServoOptions();
-            this.servoOptions10 = new MissionPlanner.Controls.ServoOptions();
-            this.relayOptions1 = new MissionPlanner.Controls.RelayOptions();
-            this.relayOptions2 = new MissionPlanner.Controls.RelayOptions();
-            this.relayOptions3 = new MissionPlanner.Controls.RelayOptions();
-            this.relayOptions4 = new MissionPlanner.Controls.RelayOptions();
+            this.servoOptions1 = new VPS.Controls.ServoOptions();
+            this.servoOptions2 = new VPS.Controls.ServoOptions();
+            this.servoOptions3 = new VPS.Controls.ServoOptions();
+            this.servoOptions4 = new VPS.Controls.ServoOptions();
+            this.servoOptions5 = new VPS.Controls.ServoOptions();
+            this.servoOptions6 = new VPS.Controls.ServoOptions();
+            this.servoOptions7 = new VPS.Controls.ServoOptions();
+            this.servoOptions8 = new VPS.Controls.ServoOptions();
+            this.servoOptions9 = new VPS.Controls.ServoOptions();
+            this.servoOptions10 = new VPS.Controls.ServoOptions();
+            this.relayOptions1 = new VPS.Controls.RelayOptions();
+            this.relayOptions2 = new VPS.Controls.RelayOptions();
+            this.relayOptions3 = new VPS.Controls.RelayOptions();
+            this.relayOptions4 = new VPS.Controls.RelayOptions();
             this.tabTLogs = new System.Windows.Forms.TabPage();
             this.tableLayoutPaneltlogs = new System.Windows.Forms.TableLayoutPanel();
-            this.BUT_loadtelem = new MissionPlanner.Controls.MyButton();
-            this.lbl_playbackspeed = new MissionPlanner.Controls.MyLabel();
-            this.lbl_logpercent = new MissionPlanner.Controls.MyLabel();
+            this.BUT_loadtelem = new VPS.Controls.MyButton();
+            this.lbl_playbackspeed = new VPS.Controls.MyLabel();
+            this.lbl_logpercent = new VPS.Controls.MyLabel();
             this.tracklog = new System.Windows.Forms.TrackBar();
-            this.LBL_logfn = new MissionPlanner.Controls.MyLabel();
-            this.BUT_log2kml = new MissionPlanner.Controls.MyButton();
-            this.BUT_playlog = new MissionPlanner.Controls.MyButton();
+            this.LBL_logfn = new VPS.Controls.MyLabel();
+            this.BUT_log2kml = new VPS.Controls.MyButton();
+            this.BUT_playlog = new VPS.Controls.MyButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.BUT_speed10 = new MissionPlanner.Controls.MyButton();
-            this.BUT_speed5 = new MissionPlanner.Controls.MyButton();
-            this.BUT_speed2 = new MissionPlanner.Controls.MyButton();
-            this.BUT_speed1 = new MissionPlanner.Controls.MyButton();
-            this.BUT_speed1_2 = new MissionPlanner.Controls.MyButton();
-            this.BUT_speed1_4 = new MissionPlanner.Controls.MyButton();
-            this.BUT_speed1_10 = new MissionPlanner.Controls.MyButton();
+            this.BUT_speed10 = new VPS.Controls.MyButton();
+            this.BUT_speed5 = new VPS.Controls.MyButton();
+            this.BUT_speed2 = new VPS.Controls.MyButton();
+            this.BUT_speed1 = new VPS.Controls.MyButton();
+            this.BUT_speed1_2 = new VPS.Controls.MyButton();
+            this.BUT_speed1_4 = new VPS.Controls.MyButton();
+            this.BUT_speed1_10 = new VPS.Controls.MyButton();
             this.tablogbrowse = new System.Windows.Forms.TabPage();
-            this.BUT_georefimage = new MissionPlanner.Controls.MyButton();
-            this.BUT_loganalysis = new MissionPlanner.Controls.MyButton();
-            this.BUT_DFMavlink = new MissionPlanner.Controls.MyButton();
-            this.but_dflogtokml = new MissionPlanner.Controls.MyButton();
-            this.but_bintolog = new MissionPlanner.Controls.MyButton();
-            this.BUT_matlab = new MissionPlanner.Controls.MyButton();
-            this.BUT_logbrowse = new MissionPlanner.Controls.MyButton();
+            this.BUT_georefimage = new VPS.Controls.MyButton();
+            this.BUT_loganalysis = new VPS.Controls.MyButton();
+            this.BUT_DFMavlink = new VPS.Controls.MyButton();
+            this.but_dflogtokml = new VPS.Controls.MyButton();
+            this.but_bintolog = new VPS.Controls.MyButton();
+            this.BUT_matlab = new VPS.Controls.MyButton();
+            this.BUT_logbrowse = new VPS.Controls.MyButton();
             this.tabScripts = new System.Windows.Forms.TabPage();
             this.checkBoxRedirectOutput = new System.Windows.Forms.CheckBox();
-            this.BUT_edit_selected = new MissionPlanner.Controls.MyButton();
+            this.BUT_edit_selected = new VPS.Controls.MyButton();
             this.labelSelectedScript = new System.Windows.Forms.Label();
-            this.BUT_run_script = new MissionPlanner.Controls.MyButton();
-            this.BUT_abort_script = new MissionPlanner.Controls.MyButton();
+            this.BUT_run_script = new VPS.Controls.MyButton();
+            this.BUT_abort_script = new VPS.Controls.MyButton();
             this.labelScriptStatus = new System.Windows.Forms.Label();
-            this.BUT_select_script = new MissionPlanner.Controls.MyButton();
+            this.BUT_select_script = new VPS.Controls.MyButton();
             this.tabPagemessages = new System.Windows.Forms.TabPage();
             this.txt_messagebox = new System.Windows.Forms.TextBox();
             this.tabPayload = new System.Windows.Forms.TabPage();
-            this.BUT_PayloadFolder = new MissionPlanner.Controls.MyButton();
+            this.BUT_PayloadFolder = new VPS.Controls.MyButton();
             this.groupBoxRoll = new System.Windows.Forms.GroupBox();
             this.TXT_gimbalRollPos = new System.Windows.Forms.TextBox();
             this.bindingSourcePayloadTab = new System.Windows.Forms.BindingSource(this.components);
@@ -138,7 +138,7 @@
             this.groupBoxYaw = new System.Windows.Forms.GroupBox();
             this.TXT_gimbalYawPos = new System.Windows.Forms.TextBox();
             this.trackBarYaw = new System.Windows.Forms.TrackBar();
-            this.BUT_resetGimbalPos = new MissionPlanner.Controls.MyButton();
+            this.BUT_resetGimbalPos = new VPS.Controls.MyButton();
             this.groupBoxPitch = new System.Windows.Forms.GroupBox();
             this.trackBarPitch = new System.Windows.Forms.TrackBar();
             this.TXT_gimbalPitchPos = new System.Windows.Forms.TextBox();
@@ -165,22 +165,22 @@
             this.takeOffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.onOffCameraOverlapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.altitudeAngelSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.but_disablejoystick = new MissionPlanner.Controls.MyButton();
-            this.distanceBar1 = new MissionPlanner.Controls.DistanceBar();
-            this.windDir1 = new MissionPlanner.Controls.WindDir();
+            this.but_disablejoystick = new VPS.Controls.MyButton();
+            this.distanceBar1 = new VPS.Controls.DistanceBar();
+            this.windDir1 = new VPS.Controls.WindDir();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.lbl_hdop = new MissionPlanner.Controls.MyLabel();
-            this.lbl_sats = new MissionPlanner.Controls.MyLabel();
-            this.MainMap = new MissionPlanner.Controls.myGMAP();
-            this.TRK_zoom = new MissionPlanner.Controls.MyTrackBar();
+            this.lbl_hdop = new VPS.Controls.MyLabel();
+            this.lbl_sats = new VPS.Controls.MyLabel();
+            this.MainMap = new VPS.Controls.myGMAP();
+            this.TRK_zoom = new VPS.Controls.MyTrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.coords1 = new MissionPlanner.Controls.Coords();
+            this.coords1 = new VPS.Controls.Coords();
             this.Zoomlevel = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new MissionPlanner.Controls.MyLabel();
+            this.label1 = new VPS.Controls.MyLabel();
             this.CHK_autopan = new System.Windows.Forms.CheckBox();
             this.CB_tuning = new System.Windows.Forms.CheckBox();
             this.ZedGraphTimer = new System.Windows.Forms.Timer(this.components);
@@ -474,7 +474,7 @@
             // 
             // bindingSourceHud
             // 
-            this.bindingSourceHud.DataSource = typeof(MissionPlanner.CurrentState);
+            this.bindingSourceHud.DataSource = typeof(VPS.CurrentState);
             // 
             // tabControlactions
             // 
@@ -558,7 +558,7 @@
             // 
             // bindingSourceQuickTab
             // 
-            this.bindingSourceQuickTab.DataSource = typeof(MissionPlanner.CurrentState);
+            this.bindingSourceQuickTab.DataSource = typeof(VPS.CurrentState);
             // 
             // quickView5
             // 
@@ -1140,7 +1140,7 @@
             // 
             // bindingSourceGaugesTab
             // 
-            this.bindingSourceGaugesTab.DataSource = typeof(MissionPlanner.CurrentState);
+            this.bindingSourceGaugesTab.DataSource = typeof(VPS.CurrentState);
             // 
             // Gheading
             // 
@@ -1924,7 +1924,7 @@
             // 
             // bindingSourcePayloadTab
             // 
-            this.bindingSourcePayloadTab.DataSource = typeof(MissionPlanner.CurrentState);
+            this.bindingSourcePayloadTab.DataSource = typeof(VPS.CurrentState);
             // 
             // trackBarRoll
             // 
@@ -2198,7 +2198,7 @@
             // 
             // bindingSource1
             // 
-            this.bindingSource1.DataSource = typeof(MissionPlanner.CurrentState);
+            this.bindingSource1.DataSource = typeof(VPS.CurrentState);
             // 
             // label6
             // 
@@ -2389,7 +2389,7 @@
             // 
             // bindingSourceStatusTab
             // 
-            this.bindingSourceStatusTab.DataSource = typeof(MissionPlanner.CurrentState);
+            this.bindingSourceStatusTab.DataSource = typeof(VPS.CurrentState);
             // 
             // FlightData
             // 
@@ -2578,7 +2578,7 @@
         private System.Windows.Forms.BindingSource bindingSourceStatusTab;
         private System.Windows.Forms.BindingSource bindingSourceGaugesTab;
         private System.Windows.Forms.ToolStripMenuItem setHomeHereToolStripMenuItem;
-        private MissionPlanner.Controls.Coords coords1;
+        private VPS.Controls.Coords coords1;
         private Controls.MyButton BUT_matlab;
         private System.Windows.Forms.ComboBox CMB_mountmode;
         private Controls.MyButton BUT_mountmode;

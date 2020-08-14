@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using MissionPlanner;
+using VPS;
 using UAVCAN;
 
 namespace UAVCANFlasher
@@ -28,7 +28,7 @@ namespace UAVCANFlasher
             var portname = args[0];
             var firmware_name = args[1];
 
-            var port = new MissionPlanner.Comms.SerialPort(args[0], 115200);
+            var port = new VPS.Comms.SerialPort(args[0], 115200);
 
             port.Open();
 

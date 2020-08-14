@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     partial class FlashMessage
     {

@@ -1,14 +1,14 @@
 ﻿using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using log4net;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GeoRef
+namespace VPS.GeoRef
 {
     partial class Georefimage : Form
     {
@@ -33,7 +33,7 @@ namespace MissionPlanner.GeoRef
 
             selectedProcessingMode = PROCESSING_MODE.CAM_MSG;
 
-            MissionPlanner.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
+            VPS.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
 
             myGMAP1.MapProvider = MainV2.instance.FlightData.MainMap.MapProvider;
             myGMAP1.MinZoom = MainV2.instance.FlightData.MainMap.MinZoom;

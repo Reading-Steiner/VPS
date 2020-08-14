@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using log4net;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class srtm : IDisposable
     {

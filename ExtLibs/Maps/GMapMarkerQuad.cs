@@ -2,14 +2,14 @@
 using System.Drawing;
 using GMap.NET;
 using GMap.NET.WindowsForms;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 
-namespace MissionPlanner.Maps
+namespace VPS.Maps
 {
     [Serializable]
     public class GMapMarkerQuad : GMapMarkerBase
     {
-        private readonly Bitmap icon = global::MissionPlanner.Maps.Resources.quadicon;
+        private readonly Bitmap icon = global::VPS.Maps.Resources.quadicon;
 
         float heading = 0;
         float cog = -1;

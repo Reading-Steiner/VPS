@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 using org.mariuszgromada.math.mxparser;
 using org.mariuszgromada.math.mxparser.mathcollection;
 
-namespace MissionPlanner.Log
+namespace VPS.Log
 {
     public class DFLogScript : Utils
     {

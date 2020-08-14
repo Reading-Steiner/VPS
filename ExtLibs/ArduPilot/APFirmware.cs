@@ -8,9 +8,9 @@ using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using log4net;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 
-namespace MissionPlanner.ArduPilot
+namespace VPS.ArduPilot
 {
     public class APFirmware
     {

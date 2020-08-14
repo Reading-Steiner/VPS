@@ -5,12 +5,12 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using log4net;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.HIL;
-using MissionPlanner.Utilities;
+using VPS.ArduPilot;
+using VPS.HIL;
+using VPS.Utilities;
 
 
-namespace MissionPlanner.HIL
+namespace VPS.HIL
 {
     public class Motor : Utils
     {

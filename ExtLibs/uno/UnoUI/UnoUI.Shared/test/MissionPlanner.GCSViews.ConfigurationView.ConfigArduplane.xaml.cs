@@ -1,1 +1,1 @@
-namespace MissionPlanner.GCSViews.ConfigurationView { public partial class ConfigArduplane{public ConfigArduplane(){this.InitializeComponent();}}}
+namespace VPS.GCSViews.ConfigurationView { public partial class ConfigArduplane{public ConfigArduplane(){this.InitializeComponent();}}}

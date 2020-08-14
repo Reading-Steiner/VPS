@@ -1,17 +1,17 @@
 ﻿using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using MathHelper = MissionPlanner.Utilities.MathHelper;
+using MathHelper = VPS.Utilities.MathHelper;
 using Vector3 = OpenTK.Vector3;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public class OpenGLtest : GLControl
     {

@@ -1,1 +1,1 @@
-namespace MissionPlanner.GCSViews.ConfigurationView { public partial class ConfigAteryxSensors{public ConfigAteryxSensors(){this.InitializeComponent();}}}
+namespace VPS.GCSViews.ConfigurationView { public partial class ConfigAteryxSensors{public ConfigAteryxSensors(){this.InitializeComponent();}}}

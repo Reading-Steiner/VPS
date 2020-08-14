@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class FileBrowse{public FileBrowse(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class FileBrowse{public FileBrowse(){this.InitializeComponent();}}}

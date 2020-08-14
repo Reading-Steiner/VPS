@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Swarm
+﻿namespace VPS.Swarm
 {
     partial class FollowPathControl
     {

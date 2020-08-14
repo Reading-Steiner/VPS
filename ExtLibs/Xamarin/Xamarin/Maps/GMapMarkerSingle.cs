@@ -2,14 +2,14 @@
 using System.Drawing;
 using GMap.NET;
 using GMap.NET.WindowsForms;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 
-namespace MissionPlanner.Maps
+namespace VPS.Maps
 {
     [Serializable]
     public class GMapMarkerSingle : GMapMarkerBase
     {
-        private readonly Bitmap icon = global::MissionPlanner.Maps.Resources.redsinglecopter2;
+        private readonly Bitmap icon = global::VPS.Maps.Resources.redsinglecopter2;
 
         float heading = 0;
         float cog = -1;

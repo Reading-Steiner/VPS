@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class SerialOutputNMEA{public SerialOutputNMEA(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class SerialOutputNMEA{public SerialOutputNMEA(){this.InitializeComponent();}}}

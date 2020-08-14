@@ -7,9 +7,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using GMap.NET;
-using MissionPlanner.Controls;
+using VPS.Controls;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class SightGen
     {

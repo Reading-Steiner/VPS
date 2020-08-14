@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Acr.UserDialogs;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 
 namespace Xamarin
 {

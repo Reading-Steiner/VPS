@@ -1,1 +1,1 @@
-namespace MissionPlanner.Swarm { public partial class Status{public Status(){this.InitializeComponent();}}}
+namespace VPS.Swarm { public partial class Status{public Status(){this.InitializeComponent();}}}

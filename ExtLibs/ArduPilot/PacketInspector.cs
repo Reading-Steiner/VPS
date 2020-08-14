@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 
-namespace MissionPlanner
+namespace VPS
 {
     /// <summary>
     /// Used for packet collection to later display

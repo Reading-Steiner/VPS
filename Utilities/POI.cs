@@ -1,6 +1,6 @@
 ﻿using GMap.NET.WindowsForms;
-using MissionPlanner.Controls;
-using MissionPlanner.Maps;
+using VPS.Controls;
+using VPS.Maps;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class POI
     {

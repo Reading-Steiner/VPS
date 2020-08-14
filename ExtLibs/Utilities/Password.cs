@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     // one way encryption
     public static class Password

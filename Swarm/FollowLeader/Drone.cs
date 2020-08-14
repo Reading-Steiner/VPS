@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Swarm.FollowLeader
+﻿namespace VPS.Swarm.FollowLeader
 {
     public class Drone : DroneBase
     {

@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class SerialOutputMD{public SerialOutputMD(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class SerialOutputMD{public SerialOutputMD(){this.InitializeComponent();}}}

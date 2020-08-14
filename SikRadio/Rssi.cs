@@ -3,9 +3,9 @@ using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using MissionPlanner;
-using MissionPlanner.MsgBox;
-using MissionPlanner.Radio;
+using VPS;
+using VPS.MsgBox;
+using VPS.Radio;
 using ZedGraph;
 
 namespace SikRadio

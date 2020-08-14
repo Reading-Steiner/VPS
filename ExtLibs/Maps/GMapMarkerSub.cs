@@ -2,16 +2,16 @@
 using System.Drawing;
 using GMap.NET;
 using GMap.NET.WindowsForms;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 
-namespace MissionPlanner.Maps
+namespace VPS.Maps
 {
     [Serializable]
     public class GMapMarkerSub : GMapMarkerBase
     {
         private static readonly System.Drawing.Size SizeSt = new System.Drawing.Size(59, 59);
 
-        private static Bitmap imagecache = new Bitmap(global::MissionPlanner.Maps.Resources.sub, SizeSt);
+        private static Bitmap imagecache = new Bitmap(global::VPS.Maps.Resources.sub, SizeSt);
 
         float heading = 0;
         float cog = -1;

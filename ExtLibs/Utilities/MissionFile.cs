@@ -9,7 +9,7 @@ using System.Text;
 using log4net;
 using Newtonsoft.Json;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class WaypointFile
     {

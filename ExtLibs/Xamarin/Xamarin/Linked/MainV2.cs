@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using log4net;
-using MissionPlanner.Comms;
+using VPS.Comms;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class MainV2
     {

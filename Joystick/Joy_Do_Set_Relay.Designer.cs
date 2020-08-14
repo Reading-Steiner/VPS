@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Joystick
+﻿namespace VPS.Joystick
 {
     partial class Joy_Do_Set_Relay
     {

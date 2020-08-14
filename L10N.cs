@@ -1,8 +1,8 @@
 ﻿using log4net;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 using System.Globalization;
 
-namespace MissionPlanner
+namespace VPS
 {
     public class L10N
     {

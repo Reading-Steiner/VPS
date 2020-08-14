@@ -1,5 +1,5 @@
-﻿using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+﻿using VPS.Controls;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,9 +10,9 @@ using System.Text;
 using System.Windows.Forms;
 using UAVCAN;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
-    public partial class ConfigUAVCAN : UserControl, MissionPlanner.Controls.IDeactivate, IActivate
+    public partial class ConfigUAVCAN : UserControl, VPS.Controls.IDeactivate, IActivate
     {
         public ConfigUAVCAN()
         {

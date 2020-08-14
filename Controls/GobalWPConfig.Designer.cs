@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Controls
+﻿namespace VPS.Controls
 {
     partial class GobalWPConfig
     {
@@ -29,50 +29,50 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GobalWPConfig));
-            this.returnButton1 = new MissionPlanner.Controls.ReturnButton();
-            this.CameraTopHead = new MissionPlanner.Controls.BoardComboBox();
-            this.boardLabel4 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel27 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel14 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel29 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel28 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel9 = new MissionPlanner.Controls.BoardLabel();
-            this.Dy = new MissionPlanner.Controls.BoardEditableLabel();
-            this.Bx = new MissionPlanner.Controls.BoardEditableLabel();
-            this.boardLabel26 = new MissionPlanner.Controls.BoardLabel();
-            this.SideOverlap = new MissionPlanner.Controls.BoardEditableLabel();
-            this.GSD = new MissionPlanner.Controls.BoardEditableLabel();
-            this.RelativeAltitude = new MissionPlanner.Controls.BoardEditableLabel();
-            this.boardLabel10 = new MissionPlanner.Controls.BoardLabel();
-            this.boardEditableLabel2 = new MissionPlanner.Controls.BoardEditableLabel();
-            this.CourseOverlap = new MissionPlanner.Controls.BoardEditableLabel();
-            this.PresetScale = new MissionPlanner.Controls.BoardComboBox();
-            this.CameraFocus = new MissionPlanner.Controls.BoardEditableLabel();
-            this.CMB_camera = new MissionPlanner.Controls.BoardComboBox();
-            this.boardLabel25 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel24 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel23 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel22 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel21 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel20 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel19 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel18 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel12 = new MissionPlanner.Controls.BoardLabel();
-            this.CameraSensorHeight = new MissionPlanner.Controls.BoardEditableLabel();
-            this.CameraSensorWidth = new MissionPlanner.Controls.BoardEditableLabel();
-            this.boardLabel15 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel16 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel17 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel11 = new MissionPlanner.Controls.BoardLabel();
-            this.ImageHeight = new MissionPlanner.Controls.BoardEditableLabel();
-            this.ImageWidth = new MissionPlanner.Controls.BoardEditableLabel();
-            this.boardLabel8 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel7 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel6 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel5 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel3 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel2 = new MissionPlanner.Controls.BoardLabel();
-            this.boardLabel1 = new MissionPlanner.Controls.BoardLabel();
+            this.returnButton1 = new VPS.Controls.ReturnButton();
+            this.CameraTopHead = new VPS.Controls.BoardComboBox();
+            this.boardLabel4 = new VPS.Controls.BoardLabel();
+            this.boardLabel27 = new VPS.Controls.BoardLabel();
+            this.boardLabel14 = new VPS.Controls.BoardLabel();
+            this.boardLabel29 = new VPS.Controls.BoardLabel();
+            this.boardLabel28 = new VPS.Controls.BoardLabel();
+            this.boardLabel9 = new VPS.Controls.BoardLabel();
+            this.Dy = new VPS.Controls.BoardEditableLabel();
+            this.Bx = new VPS.Controls.BoardEditableLabel();
+            this.boardLabel26 = new VPS.Controls.BoardLabel();
+            this.SideOverlap = new VPS.Controls.BoardEditableLabel();
+            this.GSD = new VPS.Controls.BoardEditableLabel();
+            this.RelativeAltitude = new VPS.Controls.BoardEditableLabel();
+            this.boardLabel10 = new VPS.Controls.BoardLabel();
+            this.boardEditableLabel2 = new VPS.Controls.BoardEditableLabel();
+            this.CourseOverlap = new VPS.Controls.BoardEditableLabel();
+            this.PresetScale = new VPS.Controls.BoardComboBox();
+            this.CameraFocus = new VPS.Controls.BoardEditableLabel();
+            this.CMB_camera = new VPS.Controls.BoardComboBox();
+            this.boardLabel25 = new VPS.Controls.BoardLabel();
+            this.boardLabel24 = new VPS.Controls.BoardLabel();
+            this.boardLabel23 = new VPS.Controls.BoardLabel();
+            this.boardLabel22 = new VPS.Controls.BoardLabel();
+            this.boardLabel21 = new VPS.Controls.BoardLabel();
+            this.boardLabel20 = new VPS.Controls.BoardLabel();
+            this.boardLabel19 = new VPS.Controls.BoardLabel();
+            this.boardLabel18 = new VPS.Controls.BoardLabel();
+            this.boardLabel12 = new VPS.Controls.BoardLabel();
+            this.CameraSensorHeight = new VPS.Controls.BoardEditableLabel();
+            this.CameraSensorWidth = new VPS.Controls.BoardEditableLabel();
+            this.boardLabel15 = new VPS.Controls.BoardLabel();
+            this.boardLabel16 = new VPS.Controls.BoardLabel();
+            this.boardLabel17 = new VPS.Controls.BoardLabel();
+            this.boardLabel11 = new VPS.Controls.BoardLabel();
+            this.ImageHeight = new VPS.Controls.BoardEditableLabel();
+            this.ImageWidth = new VPS.Controls.BoardEditableLabel();
+            this.boardLabel8 = new VPS.Controls.BoardLabel();
+            this.boardLabel7 = new VPS.Controls.BoardLabel();
+            this.boardLabel6 = new VPS.Controls.BoardLabel();
+            this.boardLabel5 = new VPS.Controls.BoardLabel();
+            this.boardLabel3 = new VPS.Controls.BoardLabel();
+            this.boardLabel2 = new VPS.Controls.BoardLabel();
+            this.boardLabel1 = new VPS.Controls.BoardLabel();
             this.SuspendLayout();
             // 
             // returnButton1
@@ -113,7 +113,7 @@
             this.boardLabel4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.boardLabel4.Name = "boardLabel4";
             this.boardLabel4.Pattern = "^\\S*$";
-            this.boardLabel4.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel4.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel4.RederWidth = 2;
             this.boardLabel4.Size = new System.Drawing.Size(74, 29);
             this.boardLabel4.TabIndex = 55;
@@ -130,7 +130,7 @@
             this.boardLabel27.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.boardLabel27.Name = "boardLabel27";
             this.boardLabel27.Pattern = "^\\S*$";
-            this.boardLabel27.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel27.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel27.RederWidth = 2;
             this.boardLabel27.Size = new System.Drawing.Size(25, 25);
             this.boardLabel27.TabIndex = 54;
@@ -147,7 +147,7 @@
             this.boardLabel14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.boardLabel14.Name = "boardLabel14";
             this.boardLabel14.Pattern = "^\\S*$";
-            this.boardLabel14.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel14.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel14.RederWidth = 2;
             this.boardLabel14.Size = new System.Drawing.Size(25, 25);
             this.boardLabel14.TabIndex = 53;
@@ -164,7 +164,7 @@
             this.boardLabel29.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.boardLabel29.Name = "boardLabel29";
             this.boardLabel29.Pattern = "^\\S*$";
-            this.boardLabel29.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel29.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel29.RederWidth = 2;
             this.boardLabel29.Size = new System.Drawing.Size(25, 25);
             this.boardLabel29.TabIndex = 52;
@@ -181,7 +181,7 @@
             this.boardLabel28.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.boardLabel28.Name = "boardLabel28";
             this.boardLabel28.Pattern = "^\\S*$";
-            this.boardLabel28.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel28.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel28.RederWidth = 2;
             this.boardLabel28.Size = new System.Drawing.Size(25, 25);
             this.boardLabel28.TabIndex = 51;
@@ -198,7 +198,7 @@
             this.boardLabel9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.boardLabel9.Name = "boardLabel9";
             this.boardLabel9.Pattern = "^\\S*$";
-            this.boardLabel9.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel9.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel9.RederWidth = 2;
             this.boardLabel9.Size = new System.Drawing.Size(25, 25);
             this.boardLabel9.TabIndex = 50;
@@ -215,7 +215,7 @@
             this.Dy.Location = new System.Drawing.Point(486, 474);
             this.Dy.Name = "Dy";
             this.Dy.Pattern = "^\\d+[.]?\\d*$";
-            this.Dy.RederStyle = MissionPlanner.Controls.BoardEditableLabel.Style.Inner;
+            this.Dy.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.Dy.RederWidth = 2;
             this.Dy.Size = new System.Drawing.Size(103, 25);
             this.Dy.TabIndex = 44;
@@ -233,7 +233,7 @@
             this.Bx.Location = new System.Drawing.Point(486, 438);
             this.Bx.Name = "Bx";
             this.Bx.Pattern = "^\\d+[.]?\\d*$";
-            this.Bx.RederStyle = MissionPlanner.Controls.BoardEditableLabel.Style.Inner;
+            this.Bx.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.Bx.RederWidth = 2;
             this.Bx.Size = new System.Drawing.Size(103, 25);
             this.Bx.TabIndex = 42;
@@ -251,7 +251,7 @@
             this.boardLabel26.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.boardLabel26.Name = "boardLabel26";
             this.boardLabel26.Pattern = "^\\S*$";
-            this.boardLabel26.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel26.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel26.RederWidth = 2;
             this.boardLabel26.Size = new System.Drawing.Size(25, 25);
             this.boardLabel26.TabIndex = 41;
@@ -268,7 +268,7 @@
             this.SideOverlap.Location = new System.Drawing.Point(486, 402);
             this.SideOverlap.Name = "SideOverlap";
             this.SideOverlap.Pattern = "^\\d+[.]?\\d*$";
-            this.SideOverlap.RederStyle = MissionPlanner.Controls.BoardEditableLabel.Style.Inner;
+            this.SideOverlap.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.SideOverlap.RederWidth = 2;
             this.SideOverlap.Size = new System.Drawing.Size(103, 25);
             this.SideOverlap.TabIndex = 40;
@@ -286,7 +286,7 @@
             this.GSD.Location = new System.Drawing.Point(486, 366);
             this.GSD.Name = "GSD";
             this.GSD.Pattern = "^\\d+[.]?\\d*$";
-            this.GSD.RederStyle = MissionPlanner.Controls.BoardEditableLabel.Style.Inner;
+            this.GSD.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.GSD.RederWidth = 2;
             this.GSD.Size = new System.Drawing.Size(103, 25);
             this.GSD.TabIndex = 38;
@@ -304,7 +304,7 @@
             this.RelativeAltitude.Location = new System.Drawing.Point(177, 474);
             this.RelativeAltitude.Name = "RelativeAltitude";
             this.RelativeAltitude.Pattern = "^\\d+$";
-            this.RelativeAltitude.RederStyle = MissionPlanner.Controls.BoardEditableLabel.Style.Inner;
+            this.RelativeAltitude.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.RelativeAltitude.RederWidth = 2;
             this.RelativeAltitude.Size = new System.Drawing.Size(103, 25);
             this.RelativeAltitude.TabIndex = 36;
@@ -322,7 +322,7 @@
             this.boardLabel10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.boardLabel10.Name = "boardLabel10";
             this.boardLabel10.Pattern = "^\\S*$";
-            this.boardLabel10.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel10.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel10.RederWidth = 2;
             this.boardLabel10.Size = new System.Drawing.Size(25, 25);
             this.boardLabel10.TabIndex = 35;
@@ -339,7 +339,7 @@
             this.boardEditableLabel2.Location = new System.Drawing.Point(177, 438);
             this.boardEditableLabel2.Name = "boardEditableLabel2";
             this.boardEditableLabel2.Pattern = "^\\d+[.]?\\d*$";
-            this.boardEditableLabel2.RederStyle = MissionPlanner.Controls.BoardEditableLabel.Style.Inner;
+            this.boardEditableLabel2.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.boardEditableLabel2.RederWidth = 2;
             this.boardEditableLabel2.Size = new System.Drawing.Size(103, 25);
             this.boardEditableLabel2.TabIndex = 34;
@@ -357,7 +357,7 @@
             this.CourseOverlap.Location = new System.Drawing.Point(177, 402);
             this.CourseOverlap.Name = "CourseOverlap";
             this.CourseOverlap.Pattern = "^\\d+[.]?\\d*$";
-            this.CourseOverlap.RederStyle = MissionPlanner.Controls.BoardEditableLabel.Style.Inner;
+            this.CourseOverlap.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.CourseOverlap.RederWidth = 2;
             this.CourseOverlap.Size = new System.Drawing.Size(103, 25);
             this.CourseOverlap.TabIndex = 32;
@@ -385,7 +385,7 @@
             this.CameraFocus.Location = new System.Drawing.Point(445, 146);
             this.CameraFocus.Name = "CameraFocus";
             this.CameraFocus.Pattern = "^\\d+[.]?\\d*$";
-            this.CameraFocus.RederStyle = MissionPlanner.Controls.BoardEditableLabel.Style.Inner;
+            this.CameraFocus.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.CameraFocus.RederWidth = 5;
             this.CameraFocus.Size = new System.Drawing.Size(119, 23);
             this.CameraFocus.TabIndex = 30;
@@ -417,7 +417,7 @@
             this.boardLabel25.Location = new System.Drawing.Point(334, 469);
             this.boardLabel25.Name = "boardLabel25";
             this.boardLabel25.Pattern = "^\\S*$";
-            this.boardLabel25.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel25.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel25.RederWidth = 2;
             this.boardLabel25.Size = new System.Drawing.Size(119, 30);
             this.boardLabel25.TabIndex = 24;
@@ -433,7 +433,7 @@
             this.boardLabel24.Location = new System.Drawing.Point(334, 433);
             this.boardLabel24.Name = "boardLabel24";
             this.boardLabel24.Pattern = "^\\S*$";
-            this.boardLabel24.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel24.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel24.RederWidth = 2;
             this.boardLabel24.Size = new System.Drawing.Size(119, 30);
             this.boardLabel24.TabIndex = 23;
@@ -449,7 +449,7 @@
             this.boardLabel23.Location = new System.Drawing.Point(334, 397);
             this.boardLabel23.Name = "boardLabel23";
             this.boardLabel23.Pattern = "^\\S*$";
-            this.boardLabel23.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel23.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel23.RederWidth = 2;
             this.boardLabel23.Size = new System.Drawing.Size(119, 30);
             this.boardLabel23.TabIndex = 22;
@@ -465,7 +465,7 @@
             this.boardLabel22.Location = new System.Drawing.Point(334, 361);
             this.boardLabel22.Name = "boardLabel22";
             this.boardLabel22.Pattern = "^\\S*$";
-            this.boardLabel22.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel22.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel22.RederWidth = 2;
             this.boardLabel22.Size = new System.Drawing.Size(119, 30);
             this.boardLabel22.TabIndex = 21;
@@ -481,7 +481,7 @@
             this.boardLabel21.Location = new System.Drawing.Point(27, 469);
             this.boardLabel21.Name = "boardLabel21";
             this.boardLabel21.Pattern = "^\\S*$";
-            this.boardLabel21.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel21.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel21.RederWidth = 2;
             this.boardLabel21.Size = new System.Drawing.Size(119, 30);
             this.boardLabel21.TabIndex = 20;
@@ -497,7 +497,7 @@
             this.boardLabel20.Location = new System.Drawing.Point(27, 433);
             this.boardLabel20.Name = "boardLabel20";
             this.boardLabel20.Pattern = "^\\S*$";
-            this.boardLabel20.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel20.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel20.RederWidth = 2;
             this.boardLabel20.Size = new System.Drawing.Size(119, 30);
             this.boardLabel20.TabIndex = 19;
@@ -513,7 +513,7 @@
             this.boardLabel19.Location = new System.Drawing.Point(27, 397);
             this.boardLabel19.Name = "boardLabel19";
             this.boardLabel19.Pattern = "^\\S*$";
-            this.boardLabel19.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel19.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel19.RederWidth = 2;
             this.boardLabel19.Size = new System.Drawing.Size(119, 30);
             this.boardLabel19.TabIndex = 18;
@@ -529,7 +529,7 @@
             this.boardLabel18.Location = new System.Drawing.Point(27, 361);
             this.boardLabel18.Name = "boardLabel18";
             this.boardLabel18.Pattern = "^\\S*$";
-            this.boardLabel18.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel18.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel18.RederWidth = 2;
             this.boardLabel18.Size = new System.Drawing.Size(119, 30);
             this.boardLabel18.TabIndex = 17;
@@ -545,7 +545,7 @@
             this.boardLabel12.Location = new System.Drawing.Point(323, 268);
             this.boardLabel12.Name = "boardLabel12";
             this.boardLabel12.Pattern = "^\\S*$";
-            this.boardLabel12.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel12.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel12.RederWidth = 2;
             this.boardLabel12.Size = new System.Drawing.Size(24, 25);
             this.boardLabel12.TabIndex = 16;
@@ -562,7 +562,7 @@
             this.CameraSensorHeight.Location = new System.Drawing.Point(353, 268);
             this.CameraSensorHeight.Name = "CameraSensorHeight";
             this.CameraSensorHeight.Pattern = "^\\d+[.]?\\d*$";
-            this.CameraSensorHeight.RederStyle = MissionPlanner.Controls.BoardEditableLabel.Style.Inner;
+            this.CameraSensorHeight.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.CameraSensorHeight.RederWidth = 2;
             this.CameraSensorHeight.Size = new System.Drawing.Size(61, 25);
             this.CameraSensorHeight.TabIndex = 15;
@@ -580,7 +580,7 @@
             this.CameraSensorWidth.Location = new System.Drawing.Point(255, 268);
             this.CameraSensorWidth.Name = "CameraSensorWidth";
             this.CameraSensorWidth.Pattern = "^\\d+[.]?\\d*$";
-            this.CameraSensorWidth.RederStyle = MissionPlanner.Controls.BoardEditableLabel.Style.Inner;
+            this.CameraSensorWidth.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.CameraSensorWidth.RederWidth = 2;
             this.CameraSensorWidth.Size = new System.Drawing.Size(62, 25);
             this.CameraSensorWidth.TabIndex = 14;
@@ -597,7 +597,7 @@
             this.boardLabel15.Location = new System.Drawing.Point(372, 237);
             this.boardLabel15.Name = "boardLabel15";
             this.boardLabel15.Pattern = "^\\S*$";
-            this.boardLabel15.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel15.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel15.RederWidth = 2;
             this.boardLabel15.Size = new System.Drawing.Size(24, 25);
             this.boardLabel15.TabIndex = 13;
@@ -613,7 +613,7 @@
             this.boardLabel16.Location = new System.Drawing.Point(275, 237);
             this.boardLabel16.Name = "boardLabel16";
             this.boardLabel16.Pattern = "^\\S*$";
-            this.boardLabel16.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel16.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel16.RederWidth = 2;
             this.boardLabel16.Size = new System.Drawing.Size(24, 25);
             this.boardLabel16.TabIndex = 12;
@@ -629,7 +629,7 @@
             this.boardLabel17.Location = new System.Drawing.Point(255, 206);
             this.boardLabel17.Name = "boardLabel17";
             this.boardLabel17.Pattern = "^\\S*$";
-            this.boardLabel17.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel17.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel17.RederWidth = 2;
             this.boardLabel17.Size = new System.Drawing.Size(159, 25);
             this.boardLabel17.TabIndex = 11;
@@ -645,7 +645,7 @@
             this.boardLabel11.Location = new System.Drawing.Point(323, 175);
             this.boardLabel11.Name = "boardLabel11";
             this.boardLabel11.Pattern = "^\\S*$";
-            this.boardLabel11.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel11.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel11.RederWidth = 2;
             this.boardLabel11.Size = new System.Drawing.Size(24, 25);
             this.boardLabel11.TabIndex = 10;
@@ -662,7 +662,7 @@
             this.ImageHeight.Location = new System.Drawing.Point(353, 175);
             this.ImageHeight.Name = "ImageHeight";
             this.ImageHeight.Pattern = "^\\d+[.]?\\d*$";
-            this.ImageHeight.RederStyle = MissionPlanner.Controls.BoardEditableLabel.Style.Inner;
+            this.ImageHeight.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.ImageHeight.RederWidth = 2;
             this.ImageHeight.Size = new System.Drawing.Size(61, 25);
             this.ImageHeight.TabIndex = 9;
@@ -680,7 +680,7 @@
             this.ImageWidth.Location = new System.Drawing.Point(255, 175);
             this.ImageWidth.Name = "ImageWidth";
             this.ImageWidth.Pattern = "^\\d+[.]?\\d*$";
-            this.ImageWidth.RederStyle = MissionPlanner.Controls.BoardEditableLabel.Style.Inner;
+            this.ImageWidth.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.ImageWidth.RederWidth = 2;
             this.ImageWidth.Size = new System.Drawing.Size(62, 25);
             this.ImageWidth.TabIndex = 8;
@@ -697,7 +697,7 @@
             this.boardLabel8.Location = new System.Drawing.Point(372, 144);
             this.boardLabel8.Name = "boardLabel8";
             this.boardLabel8.Pattern = "^\\S*$";
-            this.boardLabel8.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel8.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel8.RederWidth = 2;
             this.boardLabel8.Size = new System.Drawing.Size(24, 25);
             this.boardLabel8.TabIndex = 7;
@@ -713,7 +713,7 @@
             this.boardLabel7.Location = new System.Drawing.Point(275, 144);
             this.boardLabel7.Name = "boardLabel7";
             this.boardLabel7.Pattern = "^\\S*$";
-            this.boardLabel7.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel7.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel7.RederWidth = 2;
             this.boardLabel7.Size = new System.Drawing.Size(24, 25);
             this.boardLabel7.TabIndex = 6;
@@ -729,7 +729,7 @@
             this.boardLabel6.Location = new System.Drawing.Point(445, 113);
             this.boardLabel6.Name = "boardLabel6";
             this.boardLabel6.Pattern = "^\\S*$";
-            this.boardLabel6.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel6.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel6.RederWidth = 2;
             this.boardLabel6.Size = new System.Drawing.Size(119, 25);
             this.boardLabel6.TabIndex = 5;
@@ -745,7 +745,7 @@
             this.boardLabel5.Location = new System.Drawing.Point(255, 113);
             this.boardLabel5.Name = "boardLabel5";
             this.boardLabel5.Pattern = "^\\S*$";
-            this.boardLabel5.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel5.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel5.RederWidth = 2;
             this.boardLabel5.Size = new System.Drawing.Size(159, 25);
             this.boardLabel5.TabIndex = 4;
@@ -762,7 +762,7 @@
             this.boardLabel3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.boardLabel3.Name = "boardLabel3";
             this.boardLabel3.Pattern = "^\\S*$";
-            this.boardLabel3.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Inner;
+            this.boardLabel3.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel3.RederWidth = 2;
             this.boardLabel3.Size = new System.Drawing.Size(74, 29);
             this.boardLabel3.TabIndex = 2;
@@ -779,7 +779,7 @@
             this.boardLabel2.Margin = new System.Windows.Forms.Padding(5);
             this.boardLabel2.Name = "boardLabel2";
             this.boardLabel2.Pattern = "^\\S*$";
-            this.boardLabel2.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Outside;
+            this.boardLabel2.RederStyle = VPS.Controls.BoardLabel.Style.Outside;
             this.boardLabel2.RederWidth = 5;
             this.boardLabel2.Size = new System.Drawing.Size(197, 38);
             this.boardLabel2.TabIndex = 1;
@@ -796,7 +796,7 @@
             this.boardLabel1.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.boardLabel1.Name = "boardLabel1";
             this.boardLabel1.Pattern = "^\\S*$";
-            this.boardLabel1.RederStyle = MissionPlanner.Controls.BoardLabel.Style.Outside;
+            this.boardLabel1.RederStyle = VPS.Controls.BoardLabel.Style.Outside;
             this.boardLabel1.RederWidth = 5;
             this.boardLabel1.Size = new System.Drawing.Size(197, 38);
             this.boardLabel1.TabIndex = 0;

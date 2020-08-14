@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.ArduPilot
+﻿namespace VPS.ArduPilot
 {
     /// <summary>
     /// define.*I2C_ADD

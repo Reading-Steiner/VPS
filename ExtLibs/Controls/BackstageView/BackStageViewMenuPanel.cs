@@ -2,7 +2,7 @@
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Controls.BackstageView
+namespace VPS.Controls.BackstageView
 {
     public class BackStageViewMenuPanel : Panel
     {

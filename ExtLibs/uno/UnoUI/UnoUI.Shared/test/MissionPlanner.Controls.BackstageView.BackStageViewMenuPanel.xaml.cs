@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls.BackstageView { public partial class BackStageViewMenuPanel{public BackStageViewMenuPanel(){this.InitializeComponent();}}}
+namespace VPS.Controls.BackstageView { public partial class BackStageViewMenuPanel{public BackStageViewMenuPanel(){this.InitializeComponent();}}}

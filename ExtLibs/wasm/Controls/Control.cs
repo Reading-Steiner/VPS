@@ -5,7 +5,7 @@ using Blazor.Extensions.Canvas.Canvas2D;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public static class Extension
     {

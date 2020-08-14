@@ -1,5 +1,5 @@
 ﻿using log4net;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,9 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using MissionPlanner.Controls;
+using VPS.Controls;
 
-namespace MissionPlanner.Plugin
+namespace VPS.Plugin
 {
     public class PluginLoader
     {
@@ -139,7 +139,7 @@ namespace MissionPlanner.Plugin
             try
             {
                 Type[] types = asm.GetTypes();
-                Type type = typeof(MissionPlanner.Plugin.Plugin);
+                Type type = typeof(VPS.Plugin.Plugin);
                 foreach (var t in types)
                     if (type.IsAssignableFrom((Type) t))
                     {

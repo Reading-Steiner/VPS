@@ -1,9 +1,9 @@
 ﻿using System;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 using System.IO;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Log
+namespace VPS.Log
 {
     public class MatLabForms
     {
@@ -29,7 +29,7 @@ namespace MissionPlanner.Log
                     {
                         try
                         {
-                            MissionPlanner.Log.MatLab.tlog(logfile);
+                            VPS.Log.MatLab.tlog(logfile);
                         }
                         catch (Exception ex)
                         {
@@ -62,7 +62,7 @@ namespace MissionPlanner.Log
                     {
                         try
                         {
-                            MissionPlanner.Log.MatLab.ProcessLog(logfile);
+                            VPS.Log.MatLab.ProcessLog(logfile);
                         }
                         catch (Exception ex)
                         {

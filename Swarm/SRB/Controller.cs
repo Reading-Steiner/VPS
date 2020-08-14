@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Swarm.SRB
+﻿namespace VPS.Swarm.SRB
 {
     public class Controller
     {

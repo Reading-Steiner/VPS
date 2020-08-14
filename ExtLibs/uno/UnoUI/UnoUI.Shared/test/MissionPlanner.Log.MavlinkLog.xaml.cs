@@ -1,1 +1,1 @@
-namespace MissionPlanner.Log { public partial class MavlinkLog{public MavlinkLog(){this.InitializeComponent();}}}
+namespace VPS.Log { public partial class MavlinkLog{public MavlinkLog(){this.InitializeComponent();}}}

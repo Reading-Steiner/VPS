@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews.ConfigurationView
+﻿namespace VPS.GCSViews.ConfigurationView
 {
     partial class ConfigHWParachute
     {
@@ -38,11 +38,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.mavlinkComboBoxServoNum = new System.Windows.Forms.ComboBox();
-            this.mavlinkNumericUpDownMinAlt = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkNumericUpDownDeploy = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkNumericUpDownResting = new MissionPlanner.Controls.MavlinkNumericUpDown();
-            this.mavlinkComboBoxType = new MissionPlanner.Controls.MavlinkComboBox();
-            this.mavlinkCheckBoxEnable = new MissionPlanner.Controls.MavlinkCheckBox();
+            this.mavlinkNumericUpDownMinAlt = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownDeploy = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkNumericUpDownResting = new VPS.Controls.MavlinkNumericUpDown();
+            this.mavlinkComboBoxType = new VPS.Controls.MavlinkComboBox();
+            this.mavlinkCheckBoxEnable = new VPS.Controls.MavlinkCheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mavlinkNumericUpDownMinAlt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mavlinkNumericUpDownDeploy)).BeginInit();
@@ -64,9 +64,9 @@
             // 
             resources.ApplyResources(this.pictureBox3, "pictureBox3");
             this.pictureBox3.BackColor = System.Drawing.Color.White;
-            this.pictureBox3.BackgroundImage = global::MissionPlanner.Properties.Resources.sonar;
+            this.pictureBox3.BackgroundImage = global::VPS.Properties.Resources.sonar;
             this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox3.Image = global::MissionPlanner.Properties.Resources.Parachute;
+            this.pictureBox3.Image = global::VPS.Properties.Resources.Parachute;
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.TabStop = false;
             // 

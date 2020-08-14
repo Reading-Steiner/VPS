@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace MissionPlanner
+namespace VPS
 {
     partial class MainV2
     {
@@ -46,29 +46,29 @@ namespace MissionPlanner
             this.MenuFlightPlannerOpen = new System.Windows.Forms.ToolStripButton();
             this.MenuFlightPlannerClose = new System.Windows.Forms.ToolStripButton();
             this.Separator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuWPGobalConfig = new MissionPlanner.Controls.HLToolStripButton();
-            this.MenuLoadLayer = new MissionPlanner.Controls.HLToolStripButton();
-            this.MenuZoomToLayer = new MissionPlanner.Controls.HLToolStripButton();
-            this.MenuLayerManager = new MissionPlanner.Controls.HLToolStripButton();
+            this.MenuWPGobalConfig = new VPS.Controls.HLToolStripButton();
+            this.MenuLoadLayer = new VPS.Controls.HLToolStripButton();
+            this.MenuZoomToLayer = new VPS.Controls.HLToolStripButton();
+            this.MenuLayerManager = new VPS.Controls.HLToolStripButton();
             this.Separator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuDrawPolygon = new MissionPlanner.Controls.HLToolStripButton();
-            this.MenuClearPolygon = new MissionPlanner.Controls.HLToolStripButton();
+            this.MenuDrawPolygon = new VPS.Controls.HLToolStripButton();
+            this.MenuClearPolygon = new VPS.Controls.HLToolStripButton();
             this.Separator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuSurveyGrid = new MissionPlanner.Controls.HLToolStripButton();
-            this.MenuClearWP = new MissionPlanner.Controls.HLToolStripButton();
-            this.MenuReadWP = new MissionPlanner.Controls.HLToolStripButton();
-            this.MenuSaveWP = new MissionPlanner.Controls.HLToolStripButton();
+            this.MenuSurveyGrid = new VPS.Controls.HLToolStripButton();
+            this.MenuClearWP = new VPS.Controls.HLToolStripButton();
+            this.MenuReadWP = new VPS.Controls.HLToolStripButton();
+            this.MenuSaveWP = new VPS.Controls.HLToolStripButton();
             this.Separator4 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuConnect = new System.Windows.Forms.ToolStripButton();
-            this.toolStripConnectionControl = new MissionPlanner.Controls.ToolStripConnectionControl();
+            this.toolStripConnectionControl = new VPS.Controls.ToolStripConnectionControl();
             this.MenuInitConfig = new System.Windows.Forms.ToolStripButton();
             this.MenuConfigTune = new System.Windows.Forms.ToolStripButton();
             this.MenuSimulation = new System.Windows.Forms.ToolStripButton();
             this.MenuHelp = new System.Windows.Forms.ToolStripButton();
             this.MenuArduPilot = new System.Windows.Forms.ToolStripButton();
-            this.menu = new MissionPlanner.Controls.MyButton();
+            this.menu = new VPS.Controls.MyButton();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.status1 = new MissionPlanner.Controls.Status();
+            this.status1 = new VPS.Controls.Status();
             this.MainMenu.SuspendLayout();
             this.CTX_mainmenu.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -374,7 +374,7 @@ namespace MissionPlanner
             this.MenuArduPilot.BackColor = System.Drawing.Color.Transparent;
             this.MenuArduPilot.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuArduPilot.ForeColor = System.Drawing.Color.White;
-            this.MenuArduPilot.Image = global::MissionPlanner.Properties.Resources._0d92fed790a3a70170e61a86db103f399a595c70;
+            this.MenuArduPilot.Image = global::VPS.Properties.Resources._0d92fed790a3a70170e61a86db103f399a595c70;
             this.MenuArduPilot.Margin = new System.Windows.Forms.Padding(0);
             this.MenuArduPilot.Name = "MenuArduPilot";
             this.MenuArduPilot.Click += new System.EventHandler(this.MenuArduPilot_Click);

@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class ThemeColors{public ThemeColors(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class ThemeColors{public ThemeColors(){this.InitializeComponent();}}}

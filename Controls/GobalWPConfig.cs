@@ -1,5 +1,5 @@
-﻿using MissionPlanner.Grid;
-using MissionPlanner.Utilities;
+﻿using VPS.Grid;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public partial class GobalWPConfig : Form
     {

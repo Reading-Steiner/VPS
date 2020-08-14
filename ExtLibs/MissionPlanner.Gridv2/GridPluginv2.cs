@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using GMap.NET.WindowsForms;
-using MissionPlanner.Plugin;
+using VPS.Plugin;
 
-namespace MissionPlanner
+namespace VPS
 {
-    public class GridPluginv2 : MissionPlanner.Plugin.Plugin
+    public class GridPluginv2 : VPS.Plugin.Plugin
     {
         ToolStripMenuItem but;
 
@@ -68,7 +68,7 @@ namespace MissionPlanner
         {
             using (var gridui = new GridUIv2(this))
             {
-                MissionPlanner.Utilities.ThemeManager.ApplyThemeTo(gridui);
+                VPS.Utilities.ThemeManager.ApplyThemeTo(gridui);
 
                 gridui.ShowDialog();
             }

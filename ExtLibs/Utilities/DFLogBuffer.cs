@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace MissionPlanner.Utilities
+namespace VPS.Utilities
 {
     public class DFLogBuffer : IEnumerable<String>, IDisposable
     {

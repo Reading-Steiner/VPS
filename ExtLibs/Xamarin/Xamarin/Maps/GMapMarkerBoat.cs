@@ -3,14 +3,14 @@ using System.Drawing;
 using GMap.NET;
 using GMap.NET.Drawing;
 using GMap.NET.WindowsForms;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 
-namespace MissionPlanner.Maps
+namespace VPS.Maps
 {
     [Serializable]
     public class GMapMarkerBoat : GMapMarkerBase
     {
-        static readonly System.Drawing.Size SizeSt = global::MissionPlanner.Maps.Resources.boat.ToBitmap().Size;
+        static readonly System.Drawing.Size SizeSt = global::VPS.Maps.Resources.boat.ToBitmap().Size;
 
         float heading = 0;
         float cog = -1;
@@ -68,7 +68,7 @@ namespace MissionPlanner.Maps
             {
             }
 
-            g.DrawImageUnscaled(global::MissionPlanner.Maps.Resources.boat.ToBitmap(),
+            g.DrawImageUnscaled(global::VPS.Maps.Resources.boat.ToBitmap(),
                 Size.Width / -2,
                 Size.Height / -2);
 

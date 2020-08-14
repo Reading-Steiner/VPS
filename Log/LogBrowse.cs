@@ -4,11 +4,11 @@ using GMap.NET.WindowsForms.Markers;
 using IronPython.Hosting;
 using log4net;
 using Microsoft.Scripting.Runtime;
-using MissionPlanner.ArduPilot;
-using MissionPlanner.Controls;
-using MissionPlanner.Log;
-using MissionPlanner.Maps;
-using MissionPlanner.Utilities;
+using VPS.ArduPilot;
+using VPS.Controls;
+using VPS.Log;
+using VPS.Maps;
+using VPS.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ using ZedGraph; // Graphs
 
 [assembly: ExtensionType(typeof(Dictionary<string, object>), typeof(LogBrowse.ext))]
 
-namespace MissionPlanner.Log
+namespace VPS.Log
 {
     public partial class LogBrowse : Form
     {
@@ -197,7 +197,7 @@ namespace MissionPlanner.Log
 
             dataGridView1.RowUnshared += dataGridView1_RowUnshared;
 
-            MissionPlanner.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
+            VPS.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
         }
 
 
@@ -3019,8 +3019,8 @@ main()
                 if (lri != null)
                 {
                     //cerco il punto più vicino
-                    MissionPlanner.Utilities.PointLatLngAlt pt2 =
-                        new MissionPlanner.Utilities.PointLatLngAlt(myGMAP1.FromLocalToLatLng(e.X, e.Y));
+                    VPS.Utilities.PointLatLngAlt pt2 =
+                        new VPS.Utilities.PointLatLngAlt(myGMAP1.FromLocalToLatLng(e.X, e.Y));
                     double dBest = double.MaxValue;
                     int nBest = 0;
                     for (int i = 0; i < item.LocalPoints.Count; i++)
@@ -3059,7 +3059,7 @@ main()
             PointLatLng pt1;
             if (GetGPSFromRow(SampleID, out pt1))
             {
-                MissionPlanner.Utilities.PointLatLngAlt pt3 = new MissionPlanner.Utilities.PointLatLngAlt(pt1);
+                VPS.Utilities.PointLatLngAlt pt3 = new VPS.Utilities.PointLatLngAlt(pt1);
                 GMapMarker pos3 = new GMarkerGoogle(pt3, GMarkerGoogleType.pink_dot);
                 markeroverlay.Markers.Add(pos3);
                 if (movemap)

@@ -1,1 +1,1 @@
-namespace MissionPlanner.GCSViews.ConfigurationView { public partial class ConfigAntennaTracker{public ConfigAntennaTracker(){this.InitializeComponent();}}}
+namespace VPS.GCSViews.ConfigurationView { public partial class ConfigAntennaTracker{public ConfigAntennaTracker(){this.InitializeComponent();}}}

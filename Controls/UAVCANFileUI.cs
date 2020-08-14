@@ -1,5 +1,5 @@
 ﻿using log4net;
-using MissionPlanner.Utilities;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UAVCAN;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public partial class UAVCANFileUI : UserControl
     {

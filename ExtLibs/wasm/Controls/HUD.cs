@@ -16,7 +16,7 @@ using PointF = System.Drawing.PointF;
 using Rectangle = System.Drawing.Rectangle;
 using RectangleF = System.Drawing.RectangleF;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public class HUD: Control
     {

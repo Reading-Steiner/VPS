@@ -1,13 +1,13 @@
-﻿using MissionPlanner.ArduPilot;
-using MissionPlanner.Comms;
-using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+﻿using VPS.ArduPilot;
+using VPS.Comms;
+using VPS.Controls;
+using VPS.Utilities;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
-namespace MissionPlanner
+namespace VPS
 {
     public partial class FollowMe : Form
     {
@@ -38,7 +38,7 @@ namespace MissionPlanner
                 CMB_updaterate.Text = updaterate.ToString();
             }
 
-            MissionPlanner.Utilities.Tracking.AddPage(
+            VPS.Utilities.Tracking.AddPage(
                 System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString(),
                 System.Reflection.MethodBase.GetCurrentMethod().Name);
         }

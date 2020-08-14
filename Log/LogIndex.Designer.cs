@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Log
+﻿namespace VPS.Log
 {
     partial class LogIndex
     {
@@ -40,10 +40,10 @@
             this.olvColumnHome = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumnTimeInAir = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumnDistTraveled = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.BUT_changedir = new MissionPlanner.Controls.MyButton();
+            this.BUT_changedir = new VPS.Controls.MyButton();
             this.olvColumnCamMSG = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.btnDeleteLog = new MissionPlanner.Controls.MyButton();
-            this.lbStats = new MissionPlanner.Controls.MyLabel();
+            this.btnDeleteLog = new VPS.Controls.MyButton();
+            this.lbStats = new VPS.Controls.MyLabel();
             ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
             this.SuspendLayout();
             // 

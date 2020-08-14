@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.GCSViews
+﻿namespace VPS.GCSViews
 {
     partial class SoftwareConfig
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SoftwareConfig));
-            this.backstageView = new MissionPlanner.Controls.BackstageView.BackstageView();
+            this.backstageView = new VPS.Controls.BackstageView.BackstageView();
             this.SuspendLayout();
             // 
             // backstageView

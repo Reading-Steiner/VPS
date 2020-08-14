@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.UserPanel
+﻿namespace VPS.UserPanel
 {
     partial class UserPanel
     {

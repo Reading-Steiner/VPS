@@ -1,4 +1,4 @@
-﻿namespace MissionPlanner.Controls
+﻿namespace VPS.Controls
 {
     partial class DigitalSkyUI
     {
@@ -31,10 +31,10 @@
             this.cmb_drones = new System.Windows.Forms.ComboBox();
             this.cmb_applications = new System.Windows.Forms.ComboBox();
             this.lbl_approvedstatus = new System.Windows.Forms.Label();
-            this.but_dlartifact = new MissionPlanner.Controls.MyButton();
-            this.but_login = new MissionPlanner.Controls.MyButton();
-            this.myGMAP1 = new MissionPlanner.Controls.myGMAP();
-            this.but_uploadflightlog = new MissionPlanner.Controls.MyButton();
+            this.but_dlartifact = new VPS.Controls.MyButton();
+            this.but_login = new VPS.Controls.MyButton();
+            this.myGMAP1 = new VPS.Controls.myGMAP();
+            this.but_uploadflightlog = new VPS.Controls.MyButton();
             this.SuspendLayout();
             // 
             // cmb_drones

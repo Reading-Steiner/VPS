@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class myGMAP{public myGMAP(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class myGMAP{public myGMAP(){this.InitializeComponent();}}}

@@ -1,1 +1,1 @@
-namespace MissionPlanner.Controls { public partial class MyButton{public MyButton(){this.InitializeComponent();}}}
+namespace VPS.Controls { public partial class MyButton{public MyButton(){this.InitializeComponent();}}}

@@ -1,14 +1,14 @@
 ﻿using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
-using MissionPlanner.GCSViews;
-using MissionPlanner.Utilities;
+using VPS.GCSViews;
+using VPS.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace MissionPlanner.Plugin
+namespace VPS.Plugin
 {
     public abstract class Plugin
     {

@@ -1,1 +1,1 @@
-namespace MissionPlanner.Log { public partial class LogIndex{public LogIndex(){this.InitializeComponent();}}}
+namespace VPS.Log { public partial class LogIndex{public LogIndex(){this.InitializeComponent();}}}

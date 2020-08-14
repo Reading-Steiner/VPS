@@ -1,1 +1,1 @@
-namespace MissionPlanner.GCSViews.ConfigurationView { public partial class ConfigSerialInjectGPS{public ConfigSerialInjectGPS(){this.InitializeComponent();}}}
+namespace VPS.GCSViews.ConfigurationView { public partial class ConfigSerialInjectGPS{public ConfigSerialInjectGPS(){this.InitializeComponent();}}}

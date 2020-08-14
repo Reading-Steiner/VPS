@@ -1,1 +1,1 @@
-namespace MissionPlanner.GCSViews.ConfigurationView { public partial class ConfigCompassMot{public ConfigCompassMot(){this.InitializeComponent();}}}
+namespace VPS.GCSViews.ConfigurationView { public partial class ConfigCompassMot{public ConfigCompassMot(){this.InitializeComponent();}}}

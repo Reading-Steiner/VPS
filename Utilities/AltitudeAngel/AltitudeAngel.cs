@@ -1,11 +1,11 @@
 ﻿using AltitudeAngelWings;
 using AltitudeAngelWings.Extra;
 using AltitudeAngelWings.Service;
-using MissionPlanner.GCSViews;
+using VPS.GCSViews;
 using System;
 using System.Threading.Tasks;
 
-namespace MissionPlanner.Utilities.AltitudeAngel
+namespace VPS.Utilities.AltitudeAngel
 {
     internal static class AltitudeAngel
     {

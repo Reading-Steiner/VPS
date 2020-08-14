@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Text.RegularExpressions;
 
-namespace MissionPlanner.Controls
+namespace VPS.Controls
 {
     public partial class BoardComboBox : UserControl
     {

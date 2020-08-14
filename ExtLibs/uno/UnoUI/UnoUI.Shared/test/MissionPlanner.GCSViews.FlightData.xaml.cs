@@ -1,1 +1,1 @@
-namespace MissionPlanner.GCSViews { public partial class FlightData{public FlightData(){this.InitializeComponent();}}}
+namespace VPS.GCSViews { public partial class FlightData{public FlightData(){this.InitializeComponent();}}}

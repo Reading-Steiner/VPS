@@ -1,13 +1,13 @@
-﻿using MissionPlanner.ArduPilot;
-using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+﻿using VPS.ArduPilot;
+using VPS.Controls;
+using VPS.Utilities;
 using System;
 using System.Collections;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigAntennaTracker : MyUserControl, IActivate, IDeactivate
     {

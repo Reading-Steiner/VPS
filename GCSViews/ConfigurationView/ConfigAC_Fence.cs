@@ -1,8 +1,8 @@
-﻿using MissionPlanner.Controls;
-using MissionPlanner.Utilities;
+﻿using VPS.Controls;
+using VPS.Utilities;
 using System.Windows.Forms;
 
-namespace MissionPlanner.GCSViews.ConfigurationView
+namespace VPS.GCSViews.ConfigurationView
 {
     public partial class ConfigAC_Fence : MyUserControl, IActivate
     {
