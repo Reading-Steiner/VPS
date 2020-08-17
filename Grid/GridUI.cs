@@ -148,14 +148,19 @@ namespace VPS.Grid
             label1.Text += " (" + CurrentState.DistanceUnit + ")";
             label24.Text += " (" + CurrentState.SpeedUnit + ")";
 
-            loading = false;
-
             domainUpDown1_ValueChanged(this, null);
-
-            GridUI_AdjustParam();
 
             this.CHK_toandland.Checked = false;
             this.CHK_toandland_RTL.Checked = false;
+            this.NUM_split.Value = 1;
+            this.CHK_copter_headinghold.Checked = false;
+            this.CHK_copter_headingholdlock.Checked = false;
+            this.chk_spline.Checked = false;
+            this.NUM_angle.Value = 1;
+            
+            loading = false;
+
+            GridUI_AdjustParam();
         }
 
         private void GridUI_AdjustParam()
