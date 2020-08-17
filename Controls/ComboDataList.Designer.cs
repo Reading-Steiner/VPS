@@ -29,14 +29,25 @@
         private void InitializeComponent()
         {
             this.ShowLabel = new System.Windows.Forms.Panel();
+            this.DisplayLabel = new System.Windows.Forms.Label();
+            this.ShowLabel.SuspendLayout();
             this.SuspendLayout();
             // 
             // ShowLabel
             // 
+            this.ShowLabel.AutoScroll = true;
+            this.ShowLabel.Controls.Add(this.DisplayLabel);
             this.ShowLabel.Location = new System.Drawing.Point(0, 0);
             this.ShowLabel.Name = "ShowLabel";
             this.ShowLabel.Size = new System.Drawing.Size(150, 150);
             this.ShowLabel.TabIndex = 0;
+            // 
+            // DisplayLabel
+            // 
+            this.DisplayLabel.Location = new System.Drawing.Point(-2, 0);
+            this.DisplayLabel.Name = "DisplayLabel";
+            this.DisplayLabel.Size = new System.Drawing.Size(152, 150);
+            this.DisplayLabel.TabIndex = 0;
             // 
             // ComboDataList
             // 
@@ -44,6 +55,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.ShowLabel);
             this.Name = "ComboDataList";
+            this.ShowLabel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -52,5 +64,6 @@
         #endregion
 
         private System.Windows.Forms.Panel ShowLabel;
+        private System.Windows.Forms.Label DisplayLabel;
     }
 }

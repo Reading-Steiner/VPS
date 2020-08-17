@@ -49,6 +49,7 @@
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(68, 30);
             this.Cancel.TabIndex = 1;
+            this.Cancel.TabStop = false;
             this.Cancel.Text = "取消";
             this.Cancel.UseVisualStyleBackColor = true;
             // 

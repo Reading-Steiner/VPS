@@ -38,7 +38,7 @@
             this.DisplayText.Location = new System.Drawing.Point(24, 6);
             this.DisplayText.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.DisplayText.Name = "DisplayText";
-            this.DisplayText.Size = new System.Drawing.Size(49, 19);
+            this.DisplayText.Size = new System.Drawing.Size(0, 19);
             this.DisplayText.TabIndex = 0;
             // 
             // BoardLabel
@@ -47,6 +47,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.DisplayText);
+            this.Enabled = false;
             this.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Margin = new System.Windows.Forms.Padding(5);

@@ -86,7 +86,7 @@
             this.returnButton1.RederBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(180)))), ((int)(((byte)(128)))));
             this.returnButton1.RederWidth = System.Drawing.Color.CornflowerBlue;
             this.returnButton1.Size = new System.Drawing.Size(641, 51);
-            this.returnButton1.TabIndex = 57;
+            this.returnButton1.TabIndex = 43;
             // 
             // CameraTopHead
             // 
@@ -100,13 +100,14 @@
             this.CameraTopHead.Pattern = "^.*$";
             this.CameraTopHead.RederWidth = 6;
             this.CameraTopHead.Size = new System.Drawing.Size(106, 29);
-            this.CameraTopHead.TabIndex = 56;
+            this.CameraTopHead.TabIndex = 4;
             this.CameraTopHead.TextString = "";
             // 
             // boardLabel4
             // 
             this.boardLabel4.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.boardLabel4.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel4.Enabled = false;
             this.boardLabel4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel4.Location = new System.Drawing.Point(27, 109);
@@ -116,7 +117,7 @@
             this.boardLabel4.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel4.RederWidth = 2;
             this.boardLabel4.Size = new System.Drawing.Size(74, 29);
-            this.boardLabel4.TabIndex = 55;
+            this.boardLabel4.TabIndex = 3;
             this.boardLabel4.TextPosition = new System.Drawing.Point(24, 8);
             this.boardLabel4.TextString = "安装";
             // 
@@ -124,6 +125,7 @@
             // 
             this.boardLabel27.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel27.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel27.Enabled = false;
             this.boardLabel27.Font = new System.Drawing.Font("Times New Roman", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.boardLabel27.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel27.Location = new System.Drawing.Point(585, 474);
@@ -133,7 +135,7 @@
             this.boardLabel27.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel27.RederWidth = 2;
             this.boardLabel27.Size = new System.Drawing.Size(25, 25);
-            this.boardLabel27.TabIndex = 54;
+            this.boardLabel27.TabIndex = 42;
             this.boardLabel27.TextPosition = new System.Drawing.Point(4, 3);
             this.boardLabel27.TextString = "m";
             // 
@@ -141,6 +143,7 @@
             // 
             this.boardLabel14.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel14.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel14.Enabled = false;
             this.boardLabel14.Font = new System.Drawing.Font("Times New Roman", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.boardLabel14.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel14.Location = new System.Drawing.Point(585, 438);
@@ -150,7 +153,7 @@
             this.boardLabel14.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel14.RederWidth = 2;
             this.boardLabel14.Size = new System.Drawing.Size(25, 25);
-            this.boardLabel14.TabIndex = 53;
+            this.boardLabel14.TabIndex = 39;
             this.boardLabel14.TextPosition = new System.Drawing.Point(4, 3);
             this.boardLabel14.TextString = "m";
             // 
@@ -158,6 +161,7 @@
             // 
             this.boardLabel29.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel29.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel29.Enabled = false;
             this.boardLabel29.Font = new System.Drawing.Font("Times New Roman", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.boardLabel29.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel29.Location = new System.Drawing.Point(585, 366);
@@ -167,7 +171,7 @@
             this.boardLabel29.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel29.RederWidth = 2;
             this.boardLabel29.Size = new System.Drawing.Size(25, 25);
-            this.boardLabel29.TabIndex = 52;
+            this.boardLabel29.TabIndex = 33;
             this.boardLabel29.TextPosition = new System.Drawing.Point(4, 3);
             this.boardLabel29.TextString = "m";
             // 
@@ -175,6 +179,7 @@
             // 
             this.boardLabel28.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel28.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel28.Enabled = false;
             this.boardLabel28.Font = new System.Drawing.Font("Times New Roman", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.boardLabel28.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel28.Location = new System.Drawing.Point(276, 474);
@@ -184,7 +189,7 @@
             this.boardLabel28.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel28.RederWidth = 2;
             this.boardLabel28.Size = new System.Drawing.Size(25, 25);
-            this.boardLabel28.TabIndex = 51;
+            this.boardLabel28.TabIndex = 30;
             this.boardLabel28.TextPosition = new System.Drawing.Point(4, 3);
             this.boardLabel28.TextString = "m";
             // 
@@ -192,6 +197,7 @@
             // 
             this.boardLabel9.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel9.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel9.Enabled = false;
             this.boardLabel9.Font = new System.Drawing.Font("Times New Roman", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.boardLabel9.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel9.Location = new System.Drawing.Point(276, 402);
@@ -201,7 +207,7 @@
             this.boardLabel9.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel9.RederWidth = 2;
             this.boardLabel9.Size = new System.Drawing.Size(25, 25);
-            this.boardLabel9.TabIndex = 50;
+            this.boardLabel9.TabIndex = 24;
             this.boardLabel9.TextPosition = new System.Drawing.Point(3, 4);
             this.boardLabel9.TextString = "%";
             // 
@@ -218,7 +224,7 @@
             this.Dy.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.Dy.RederWidth = 2;
             this.Dy.Size = new System.Drawing.Size(103, 25);
-            this.Dy.TabIndex = 44;
+            this.Dy.TabIndex = 41;
             this.Dy.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.Dy.TextPosition = new System.Drawing.Point(4, 6);
             this.Dy.TextString = "96";
@@ -236,7 +242,7 @@
             this.Bx.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.Bx.RederWidth = 2;
             this.Bx.Size = new System.Drawing.Size(103, 25);
-            this.Bx.TabIndex = 42;
+            this.Bx.TabIndex = 38;
             this.Bx.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.Bx.TextPosition = new System.Drawing.Point(4, 6);
             this.Bx.TextString = "32";
@@ -245,6 +251,7 @@
             // 
             this.boardLabel26.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel26.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel26.Enabled = false;
             this.boardLabel26.Font = new System.Drawing.Font("Times New Roman", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.boardLabel26.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel26.Location = new System.Drawing.Point(585, 402);
@@ -254,7 +261,7 @@
             this.boardLabel26.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel26.RederWidth = 2;
             this.boardLabel26.Size = new System.Drawing.Size(25, 25);
-            this.boardLabel26.TabIndex = 41;
+            this.boardLabel26.TabIndex = 36;
             this.boardLabel26.TextPosition = new System.Drawing.Point(3, 4);
             this.boardLabel26.TextString = "%";
             // 
@@ -271,7 +278,7 @@
             this.SideOverlap.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.SideOverlap.RederWidth = 2;
             this.SideOverlap.Size = new System.Drawing.Size(103, 25);
-            this.SideOverlap.TabIndex = 40;
+            this.SideOverlap.TabIndex = 35;
             this.SideOverlap.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.SideOverlap.TextPosition = new System.Drawing.Point(4, 6);
             this.SideOverlap.TextString = "30";
@@ -289,7 +296,7 @@
             this.GSD.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.GSD.RederWidth = 2;
             this.GSD.Size = new System.Drawing.Size(103, 25);
-            this.GSD.TabIndex = 38;
+            this.GSD.TabIndex = 32;
             this.GSD.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.GSD.TextPosition = new System.Drawing.Point(4, 6);
             this.GSD.TextString = "0.040";
@@ -307,7 +314,7 @@
             this.RelativeAltitude.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.RelativeAltitude.RederWidth = 2;
             this.RelativeAltitude.Size = new System.Drawing.Size(103, 25);
-            this.RelativeAltitude.TabIndex = 36;
+            this.RelativeAltitude.TabIndex = 29;
             this.RelativeAltitude.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.RelativeAltitude.TextPosition = new System.Drawing.Point(4, 6);
             this.RelativeAltitude.TextString = "100";
@@ -316,6 +323,7 @@
             // 
             this.boardLabel10.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel10.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel10.Enabled = false;
             this.boardLabel10.Font = new System.Drawing.Font("Times New Roman", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.boardLabel10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel10.Location = new System.Drawing.Point(276, 438);
@@ -325,7 +333,7 @@
             this.boardLabel10.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel10.RederWidth = 2;
             this.boardLabel10.Size = new System.Drawing.Size(25, 25);
-            this.boardLabel10.TabIndex = 35;
+            this.boardLabel10.TabIndex = 27;
             this.boardLabel10.TextPosition = new System.Drawing.Point(4, 3);
             this.boardLabel10.TextString = "m";
             // 
@@ -342,7 +350,7 @@
             this.boardEditableLabel2.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.boardEditableLabel2.RederWidth = 2;
             this.boardEditableLabel2.Size = new System.Drawing.Size(103, 25);
-            this.boardEditableLabel2.TabIndex = 34;
+            this.boardEditableLabel2.TabIndex = 26;
             this.boardEditableLabel2.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.boardEditableLabel2.TextPosition = new System.Drawing.Point(4, 6);
             this.boardEditableLabel2.TextString = "20";
@@ -360,7 +368,7 @@
             this.CourseOverlap.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.CourseOverlap.RederWidth = 2;
             this.CourseOverlap.Size = new System.Drawing.Size(103, 25);
-            this.CourseOverlap.TabIndex = 32;
+            this.CourseOverlap.TabIndex = 23;
             this.CourseOverlap.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.CourseOverlap.TextPosition = new System.Drawing.Point(4, 6);
             this.CourseOverlap.TextString = "60";
@@ -375,7 +383,7 @@
             this.PresetScale.Pattern = "^\\d+[:]\\d*$";
             this.PresetScale.RederWidth = 6;
             this.PresetScale.Size = new System.Drawing.Size(124, 30);
-            this.PresetScale.TabIndex = 31;
+            this.PresetScale.TabIndex = 21;
             this.PresetScale.TextString = "1:500";
             // 
             // CameraFocus
@@ -388,7 +396,7 @@
             this.CameraFocus.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.CameraFocus.RederWidth = 5;
             this.CameraFocus.Size = new System.Drawing.Size(119, 23);
-            this.CameraFocus.TabIndex = 30;
+            this.CameraFocus.TabIndex = 18;
             this.CameraFocus.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.CameraFocus.TextPosition = new System.Drawing.Point(5, 5);
             this.CameraFocus.TextString = "0";
@@ -404,14 +412,15 @@
             this.CMB_camera.Name = "CMB_camera";
             this.CMB_camera.Pattern = "^.*$";
             this.CMB_camera.RederWidth = 6;
-            this.CMB_camera.Size = new System.Drawing.Size(196, 29);
-            this.CMB_camera.TabIndex = 28;
+            this.CMB_camera.Size = new System.Drawing.Size(226, 29);
+            this.CMB_camera.TabIndex = 2;
             this.CMB_camera.TextString = "";
             // 
             // boardLabel25
             // 
             this.boardLabel25.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel25.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel25.Enabled = false;
             this.boardLabel25.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel25.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel25.Location = new System.Drawing.Point(334, 469);
@@ -420,7 +429,7 @@
             this.boardLabel25.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel25.RederWidth = 2;
             this.boardLabel25.Size = new System.Drawing.Size(119, 30);
-            this.boardLabel25.TabIndex = 24;
+            this.boardLabel25.TabIndex = 40;
             this.boardLabel25.TextPosition = new System.Drawing.Point(27, 9);
             this.boardLabel25.TextString = "航线间距Dy";
             // 
@@ -428,6 +437,7 @@
             // 
             this.boardLabel24.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel24.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel24.Enabled = false;
             this.boardLabel24.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel24.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel24.Location = new System.Drawing.Point(334, 433);
@@ -436,7 +446,7 @@
             this.boardLabel24.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel24.RederWidth = 2;
             this.boardLabel24.Size = new System.Drawing.Size(119, 30);
-            this.boardLabel24.TabIndex = 23;
+            this.boardLabel24.TabIndex = 37;
             this.boardLabel24.TextPosition = new System.Drawing.Point(27, 9);
             this.boardLabel24.TextString = "摄影基线Bx";
             // 
@@ -444,6 +454,7 @@
             // 
             this.boardLabel23.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel23.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel23.Enabled = false;
             this.boardLabel23.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel23.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel23.Location = new System.Drawing.Point(334, 397);
@@ -452,7 +463,7 @@
             this.boardLabel23.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel23.RederWidth = 2;
             this.boardLabel23.Size = new System.Drawing.Size(119, 30);
-            this.boardLabel23.TabIndex = 22;
+            this.boardLabel23.TabIndex = 34;
             this.boardLabel23.TextPosition = new System.Drawing.Point(27, 9);
             this.boardLabel23.TextString = "旁向重叠度";
             // 
@@ -460,6 +471,7 @@
             // 
             this.boardLabel22.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel22.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel22.Enabled = false;
             this.boardLabel22.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel22.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel22.Location = new System.Drawing.Point(334, 361);
@@ -468,7 +480,7 @@
             this.boardLabel22.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel22.RederWidth = 2;
             this.boardLabel22.Size = new System.Drawing.Size(119, 30);
-            this.boardLabel22.TabIndex = 21;
+            this.boardLabel22.TabIndex = 31;
             this.boardLabel22.TextPosition = new System.Drawing.Point(21, 9);
             this.boardLabel22.TextString = "地面采样间隔";
             // 
@@ -476,6 +488,7 @@
             // 
             this.boardLabel21.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel21.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel21.Enabled = false;
             this.boardLabel21.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel21.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel21.Location = new System.Drawing.Point(27, 469);
@@ -484,7 +497,7 @@
             this.boardLabel21.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel21.RederWidth = 2;
             this.boardLabel21.Size = new System.Drawing.Size(119, 30);
-            this.boardLabel21.TabIndex = 20;
+            this.boardLabel21.TabIndex = 28;
             this.boardLabel21.TextPosition = new System.Drawing.Point(33, 9);
             this.boardLabel21.TextString = "相对航高";
             // 
@@ -492,6 +505,7 @@
             // 
             this.boardLabel20.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel20.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel20.Enabled = false;
             this.boardLabel20.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel20.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel20.Location = new System.Drawing.Point(27, 433);
@@ -500,7 +514,7 @@
             this.boardLabel20.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel20.RederWidth = 2;
             this.boardLabel20.Size = new System.Drawing.Size(119, 30);
-            this.boardLabel20.TabIndex = 19;
+            this.boardLabel20.TabIndex = 25;
             this.boardLabel20.TextPosition = new System.Drawing.Point(33, 9);
             this.boardLabel20.TextString = "航摄基准";
             // 
@@ -508,6 +522,7 @@
             // 
             this.boardLabel19.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel19.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel19.Enabled = false;
             this.boardLabel19.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel19.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel19.Location = new System.Drawing.Point(27, 397);
@@ -516,7 +531,7 @@
             this.boardLabel19.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel19.RederWidth = 2;
             this.boardLabel19.Size = new System.Drawing.Size(119, 30);
-            this.boardLabel19.TabIndex = 18;
+            this.boardLabel19.TabIndex = 22;
             this.boardLabel19.TextPosition = new System.Drawing.Point(27, 9);
             this.boardLabel19.TextString = "航向重叠度";
             // 
@@ -524,6 +539,7 @@
             // 
             this.boardLabel18.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel18.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel18.Enabled = false;
             this.boardLabel18.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel18.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel18.Location = new System.Drawing.Point(27, 361);
@@ -532,7 +548,7 @@
             this.boardLabel18.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel18.RederWidth = 2;
             this.boardLabel18.Size = new System.Drawing.Size(119, 30);
-            this.boardLabel18.TabIndex = 17;
+            this.boardLabel18.TabIndex = 20;
             this.boardLabel18.TextPosition = new System.Drawing.Point(27, 9);
             this.boardLabel18.TextString = "成图比例尺";
             // 
@@ -540,6 +556,7 @@
             // 
             this.boardLabel12.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel12.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel12.Enabled = false;
             this.boardLabel12.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel12.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel12.Location = new System.Drawing.Point(323, 268);
@@ -548,7 +565,7 @@
             this.boardLabel12.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel12.RederWidth = 2;
             this.boardLabel12.Size = new System.Drawing.Size(24, 25);
-            this.boardLabel12.TabIndex = 16;
+            this.boardLabel12.TabIndex = 15;
             this.boardLabel12.TextPosition = new System.Drawing.Point(5, 6);
             this.boardLabel12.TextString = "×";
             // 
@@ -565,7 +582,7 @@
             this.CameraSensorHeight.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.CameraSensorHeight.RederWidth = 2;
             this.CameraSensorHeight.Size = new System.Drawing.Size(61, 25);
-            this.CameraSensorHeight.TabIndex = 15;
+            this.CameraSensorHeight.TabIndex = 16;
             this.CameraSensorHeight.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.CameraSensorHeight.TextPosition = new System.Drawing.Point(4, 6);
             this.CameraSensorHeight.TextString = "24";
@@ -592,6 +609,7 @@
             // 
             this.boardLabel15.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel15.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel15.Enabled = false;
             this.boardLabel15.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel15.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel15.Location = new System.Drawing.Point(372, 237);
@@ -608,6 +626,7 @@
             // 
             this.boardLabel16.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel16.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel16.Enabled = false;
             this.boardLabel16.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel16.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel16.Location = new System.Drawing.Point(275, 237);
@@ -624,6 +643,7 @@
             // 
             this.boardLabel17.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel17.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel17.Enabled = false;
             this.boardLabel17.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel17.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel17.Location = new System.Drawing.Point(255, 206);
@@ -640,6 +660,7 @@
             // 
             this.boardLabel11.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel11.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel11.Enabled = false;
             this.boardLabel11.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel11.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel11.Location = new System.Drawing.Point(323, 175);
@@ -648,7 +669,7 @@
             this.boardLabel11.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel11.RederWidth = 2;
             this.boardLabel11.Size = new System.Drawing.Size(24, 25);
-            this.boardLabel11.TabIndex = 10;
+            this.boardLabel11.TabIndex = 9;
             this.boardLabel11.TextPosition = new System.Drawing.Point(5, 6);
             this.boardLabel11.TextString = "×";
             // 
@@ -665,7 +686,7 @@
             this.ImageHeight.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.ImageHeight.RederWidth = 2;
             this.ImageHeight.Size = new System.Drawing.Size(61, 25);
-            this.ImageHeight.TabIndex = 9;
+            this.ImageHeight.TabIndex = 10;
             this.ImageHeight.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.ImageHeight.TextPosition = new System.Drawing.Point(4, 6);
             this.ImageHeight.TextString = "4000";
@@ -692,6 +713,7 @@
             // 
             this.boardLabel8.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel8.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel8.Enabled = false;
             this.boardLabel8.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel8.Location = new System.Drawing.Point(372, 144);
@@ -708,6 +730,7 @@
             // 
             this.boardLabel7.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel7.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel7.Enabled = false;
             this.boardLabel7.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel7.Location = new System.Drawing.Point(275, 144);
@@ -724,6 +747,7 @@
             // 
             this.boardLabel6.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel6.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel6.Enabled = false;
             this.boardLabel6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel6.Location = new System.Drawing.Point(445, 113);
@@ -732,7 +756,7 @@
             this.boardLabel6.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel6.RederWidth = 2;
             this.boardLabel6.Size = new System.Drawing.Size(119, 25);
-            this.boardLabel6.TabIndex = 5;
+            this.boardLabel6.TabIndex = 17;
             this.boardLabel6.TextPosition = new System.Drawing.Point(23, 6);
             this.boardLabel6.TextString = "镜头焦距[mm]";
             // 
@@ -740,6 +764,7 @@
             // 
             this.boardLabel5.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel5.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel5.Enabled = false;
             this.boardLabel5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel5.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel5.Location = new System.Drawing.Point(255, 113);
@@ -748,7 +773,7 @@
             this.boardLabel5.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel5.RederWidth = 2;
             this.boardLabel5.Size = new System.Drawing.Size(159, 25);
-            this.boardLabel5.TabIndex = 4;
+            this.boardLabel5.TabIndex = 5;
             this.boardLabel5.TextPosition = new System.Drawing.Point(22, 6);
             this.boardLabel5.TextString = "图像最高分辨率[pix]";
             // 
@@ -756,6 +781,7 @@
             // 
             this.boardLabel3.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.boardLabel3.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardLabel3.Enabled = false;
             this.boardLabel3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.boardLabel3.Location = new System.Drawing.Point(27, 65);
@@ -765,7 +791,7 @@
             this.boardLabel3.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel3.RederWidth = 2;
             this.boardLabel3.Size = new System.Drawing.Size(74, 29);
-            this.boardLabel3.TabIndex = 2;
+            this.boardLabel3.TabIndex = 1;
             this.boardLabel3.TextPosition = new System.Drawing.Point(24, 8);
             this.boardLabel3.TextString = "型号";
             // 
@@ -773,6 +799,7 @@
             // 
             this.boardLabel2.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel2.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(180)))), ((int)(((byte)(128)))));
+            this.boardLabel2.Enabled = false;
             this.boardLabel2.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel2.ForeColor = System.Drawing.Color.Coral;
             this.boardLabel2.Location = new System.Drawing.Point(15, 313);
@@ -782,7 +809,7 @@
             this.boardLabel2.RederStyle = VPS.Controls.BoardLabel.Style.Outside;
             this.boardLabel2.RederWidth = 5;
             this.boardLabel2.Size = new System.Drawing.Size(197, 38);
-            this.boardLabel2.TabIndex = 1;
+            this.boardLabel2.TabIndex = 19;
             this.boardLabel2.TextPosition = new System.Drawing.Point(44, 10);
             this.boardLabel2.TextString = "重叠度参数";
             // 
@@ -790,6 +817,7 @@
             // 
             this.boardLabel1.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel1.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(180)))), ((int)(((byte)(128)))));
+            this.boardLabel1.Enabled = false;
             this.boardLabel1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.boardLabel1.ForeColor = System.Drawing.Color.Coral;
             this.boardLabel1.Location = new System.Drawing.Point(15, 16);

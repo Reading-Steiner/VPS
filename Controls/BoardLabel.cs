@@ -123,6 +123,16 @@ namespace VPS.Controls
             
         }
 
+        protected override void OnGotFocus(EventArgs e)
+        {
+            base.OnGotFocus(e);
+        }
+
+        protected override void OnLostFocus(EventArgs e)
+        {
+            base.OnLostFocus(e);
+        }
+
         protected override void OnSizeChanged(EventArgs e)
         {
             

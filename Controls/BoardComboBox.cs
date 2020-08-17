@@ -14,6 +14,7 @@ namespace VPS.Controls
 {
     public partial class BoardComboBox : UserControl
     {
+
         private bool isDroppable = false;
         //private int selectedIndex = -1;
         [Category("设置"), Description("选中项")]
@@ -37,13 +38,8 @@ namespace VPS.Controls
             set
             {
                 dataSourceList.DataString = value;
-                
-                comboViewHost.Size = new Size(
-                this.DisplayText.Width + 5,
-                this.DisplayText.Height * DataSource.Count() + 10);
-                dropDown.Size = new Size(
-                    this.DisplayText.Width + 5,
-                    this.DisplayText.Height * DataSource.Count() + 10);
+
+                OnSizeChanged(null);
             }
         }
 
@@ -60,14 +56,9 @@ namespace VPS.Controls
         {
             if (Regex.IsMatch(str, Pattern))
             {
-                DataSource.Add(str);
+                this.dataSourceList.Add(str);
 
-                comboViewHost.Size = new Size(
-                this.DisplayText.Width + 5,
-                this.DisplayText.Height * DataSource.Count() + 10);
-                dropDown.Size = new Size(
-                    this.DisplayText.Width + 5,
-                    this.DisplayText.Height * DataSource.Count() + 10);
+                OnSizeChanged(null);
             }
         }
 
@@ -109,6 +100,7 @@ namespace VPS.Controls
             this.dropDown = new System.Windows.Forms.ToolStripDropDown();
             InitializeComponent();
             this.dropDown.AutoSize = false;
+            this.comboViewHost.AutoSize = false;
             dropDown.Items.Add(comboViewHost);
 
             if (this.Button.BackColor != Color.Transparent)
@@ -120,6 +112,7 @@ namespace VPS.Controls
             this.SelectedChange += CheckAndCloseEdit;
             this.EditBox.LostFocus += EditBox_LostFocus;
             this.EditBox.KeyDown += OnKeyDown;
+            //this.EditBox.TextChanged
             this.Button.Paint += Button_Paint;
             //this.TextList.Paint += TextList_Paint;
             this.Button.MouseClick += Button_MouseClick;
@@ -159,8 +152,21 @@ namespace VPS.Controls
                 this.EditBox.Width = this.Width - 2 * this.DisplayText.Left;
                 this.EditBox.BackColor = this.BackColor;
                 this.EditBox.Visible = true;
+                this.EditBox.Focus();
             }
         }
+
+        //protected override void OnGotFocus(EventArgs e)
+        //{
+        //    this.EditBox.Text = this.DisplayText.Text;
+        //    this.EditBox.Left = this.DisplayText.Left;
+        //    this.EditBox.Top = this.DisplayText.Left;
+        //    this.EditBox.Width = this.Width - 2 * this.DisplayText.Left;
+        //    this.EditBox.BackColor = this.BackColor;
+        //    this.EditBox.Visible = true;
+        //    this.EditBox.Focus();
+        //    base.OnGotFocus(e);
+        //}
 
         protected void OnKeyDown(object sender, KeyEventArgs e)
         {
@@ -210,10 +216,15 @@ namespace VPS.Controls
             if (isDroppable)
             {
                 this.dataSourceList.ForeColor = _boardColor;
+                int index = this.dataSourceList.SelectedIndex;
+                if (this.DataSource.Count * this.dataSourceList.ItemSize.Height > 250)
+                {
+                    index = -1;
+                }
                 dropDown.Show(
                     this,
                     this.DisplayText.Left,
-                    this.DisplayText.Top - this.dataSourceList.SelectedIndex * this.DisplayText.Height);
+                    this.DisplayText.Top - index * this.DisplayText.Height);
                 Invalidate();
             }
         }
@@ -275,11 +286,11 @@ namespace VPS.Controls
             this.Button.Height = (this.Height - 2 * Edge_H);
             dataSourceList.ItemSize = DisplayText.Size;
             comboViewHost.Size = new Size(
-                this.DisplayText.Width,
-                this.DisplayText.Height * DataSource.Count());
+                this.DisplayText.Height * DataSource.Count() > 250 ? this.DisplayText.Width + 20 : this.DisplayText.Width,
+                Math.Min(this.DisplayText.Height * DataSource.Count(), 250));
             dropDown.Size = new Size(
-                this.DisplayText.Width + 5,
-                this.DisplayText.Height * DataSource.Count() + 10);
+                this.DisplayText.Height * DataSource.Count() > 250 ? this.DisplayText.Width + 22 : this.DisplayText.Width + 2,
+                Math.Min(this.DisplayText.Height * DataSource.Count() + 5, 255));
             base.OnSizeChanged(e);
         }
 

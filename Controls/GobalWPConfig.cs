@@ -405,7 +405,9 @@ namespace VPS.Controls
                 foreach (var camera in cameras.Values)
                 {
                     if (!CMB_camera.Contains(camera.name))
+                    {
                         CMB_camera.Add(camera.name);
+                    }
                 }
             }
         }

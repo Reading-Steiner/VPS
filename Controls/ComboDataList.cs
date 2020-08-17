@@ -46,10 +46,34 @@ namespace VPS.Controls
             set
             {
                 _list = value;
+                if (ItemSize.Height * DataString.Count > 250)
+                {
+                    this.Width = ItemSize.Width + 20;
+                    this.Height = 250;
+                }
+                else
+                {
+                    this.Width = ItemSize.Width;
+                    this.Height = ItemSize.Height * DataString.Count;
+                }
+                OnSizeChanged(null);
+            }
+        }
+
+        public void Add(string value)
+        {
+            _list.Add(value);
+            if (ItemSize.Height * DataString.Count > 250)
+            {
+                this.Width = ItemSize.Width + 20;
+                this.Height = 250;
+            }
+            else
+            {
                 this.Width = ItemSize.Width;
                 this.Height = ItemSize.Height * DataString.Count;
-                //Invalidate();
             }
+            OnSizeChanged(null);
         }
 
         Size _itemSize;
@@ -60,35 +84,171 @@ namespace VPS.Controls
             set
             {
                 _itemSize = value;
-                this.Width = value.Width;
-                this.Height = value.Height * DataString.Count;
-                Invalidate();
+                if (ItemSize.Height * DataString.Count > 250)
+                {
+                    this.Width = ItemSize.Width + 20;
+                    this.Height = 250;
+                }
+                else
+                {
+                    this.Width = ItemSize.Width;
+                    this.Height = ItemSize.Height * DataString.Count;
+                }
+                OnSizeChanged(null);
+
             }
         }
+
         public ComboDataList()
         {
             InitializeComponent();
 
             //DoubleBuffered = true;
-            ShowLabel.Paint += ShowLabel_Paint;
-            ShowLabel.MouseDown += ShowLabel_MouseDown;
-            ShowLabel.MouseMove += ShowLabel_MouseMove;
-            ShowLabel.MouseUp += ShowLabel_MouseUp;
+            DisplayLabel.Paint += ShowLabel_Paint;
+            DisplayLabel.MouseDown += ShowLabel_MouseDown;
+            DisplayLabel.MouseMove += ShowLabel_MouseMove;
+            DisplayLabel.MouseUp += ShowLabel_MouseUp;
         }
 
         private void ShowLabel_MouseUp(object sender, MouseEventArgs e)
         {
-            OnMouseUp(e);
+            if (mouseDown)
+            {
+                if (sender is Control)
+                    if (!((Control)sender).DisplayRectangle.Contains(e.Location))
+                    {
+                        mouseDown = false;
+                        if (temporary != -1)
+                        {
+                            ((Control)sender).Invalidate(rect(temporary));
+                            temporary = -1;
+                        }
+                        return;
+                    }
+                int index = e.Y / this.ItemSize.Height;
+                if (index >= 0 && index < DataString.Count())
+                {
+                    if (SelectedIndex != index)
+                    {
+                        int oldIndex = SelectedIndex;
+                        int newIndex = index;
+
+                        SelectedIndex = index;
+                        if (sender is Control)
+                        {
+                            if (oldIndex != -1)
+                                ((Control)sender).Invalidate(rect(oldIndex));
+                            ((Control)sender).Invalidate(rect(newIndex));
+                        }
+                        ChangeSelected?.Invoke();
+                    }
+                }
+                else
+                {
+                    if (temporary != -1)
+                    {
+                        if (sender is Control)
+                            ((Control)sender).Invalidate(rect(temporary));
+                        temporary = -1;
+                    }
+                }
+            }
+            else
+            {
+                if (temporary != -1)
+                {
+                    if (sender is Control)
+                        ((Control)sender).Invalidate(rect(temporary));
+                    temporary = -1;
+                }
+            }
+            mouseDown = false;
         }
 
         private void ShowLabel_MouseMove(object sender, MouseEventArgs e)
         {
-            OnMouseMove(e);
+            if (mouseDown)
+            {
+                if (sender is Control)
+                    if (!((Control)sender).DisplayRectangle.Contains(e.Location))
+                        return;
+                int index = e.Y / this.ItemSize.Height;
+                if (index >= 0 && index < DataString.Count)
+                {
+                    if (temporary != index)
+                    {
+                        int oldIndex = temporary;
+                        int newIndex = index;
+                        temporary = index;
+                        if (sender is Control)
+                        {
+                            if (oldIndex != -1)
+                                ((Control)sender).Invalidate(rect(oldIndex));
+                            ((Control)sender).Invalidate(rect(newIndex));
+                        }
+                    }
+                }
+                else
+                {
+                    if (temporary != -1)
+                    {
+                        if (sender is Control)
+                            ((Control)sender).Invalidate(rect(temporary));
+                        temporary = -1;
+                    }
+                }
+            }
+            else
+            {
+                if (temporary != -1)
+                {
+                    if (sender is Control)
+                        ((Control)sender).Invalidate(rect(temporary));
+                    temporary = -1;
+                }
+            }
         }
 
         private void ShowLabel_MouseDown(object sender, MouseEventArgs e)
         {
-            OnMouseDown(e);
+            if (e.Button == MouseButtons.Left)
+            {
+                mouseDown = true;
+                int index = e.Y / this.ItemSize.Height;
+                if (index >= 0 && index < DataString.Count)
+                {
+                    if (temporary != index)
+                    {
+                        int oldIndex = temporary;
+                        int newIndex = index;
+                        temporary = index;
+                        if (sender is Control)
+                        {
+                            if (oldIndex != -1)
+                                ((Control)sender).Invalidate(rect(oldIndex));
+                            ((Control)sender).Invalidate(rect(newIndex));
+                        }
+                    }
+                }
+                else
+                {
+                    if (temporary != -1)
+                    {
+                        if (sender is Control)
+                            ((Control)sender).Invalidate(rect(temporary));
+                        temporary = -1;
+                    }
+                }
+            }
+            else
+            {
+                if (temporary != -1)
+                {
+                    if (sender is Control)
+                        ((Control)sender).Invalidate(rect(temporary));
+                    temporary = -1;
+                }
+            }
         }
 
         private void ShowLabel_Paint(object sender, PaintEventArgs e)
@@ -121,7 +281,7 @@ namespace VPS.Controls
                     new Rectangle(0, i * _itemSize.Height, _itemSize.Width, _itemSize.Height),
                     SF);
                 Pen pen = new Pen(this.ForeColor);
-                g.DrawLine(pen, 0, (i + 1) * _itemSize.Height, _itemSize.Width, (i + 1) * _itemSize.Height);
+                g.DrawLine(pen, _itemSize.Width / 7, (i + 1) * _itemSize.Height, _itemSize.Width / 7 * 6 + 2, (i + 1) * _itemSize.Height);
             }
         }
 
@@ -131,137 +291,27 @@ namespace VPS.Controls
             this.ShowLabel.Top = 0;
             this.ShowLabel.Width = this.Width;
             this.ShowLabel.Height = this.Height;
+            this.DisplayLabel.Left = 0;
+            this.DisplayLabel.Top = 0;
+            this.DisplayLabel.Width = this.ItemSize.Width;
+            this.DisplayLabel.Height = this.ItemSize.Height * this.DataString.Count;
+            //this.DisplayLabel
             base.OnSizeChanged(e);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            this.ShowLabel.Left = 0;
+            this.ShowLabel.Top = 0;
             base.OnPaint(e);
-        }
-
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                mouseDown = true;
-                int index = e.Y / this.ItemSize.Height;
-                if (index >= 0 && index < DataString.Count)
-                {
-                    if (temporary != index)
-                    {
-                        int oldIndex = temporary;
-                        int newIndex = index;
-                        temporary = index;
-                        if (oldIndex != -1)
-                            ShowLabel.Invalidate(rect(oldIndex));
-                        ShowLabel.Invalidate(rect(newIndex));
-                    }
-                }
-                else
-                {
-                    if (temporary != -1)
-                    {
-                        ShowLabel.Invalidate(rect(temporary));
-                        temporary = -1;
-                    }
-                }
-            }
-            else
-            {
-                if (temporary != -1)
-                {
-                    ShowLabel.Invalidate(rect(temporary));
-                    temporary = -1;
-                }
-            }
-
-            base.OnMouseDown(e);
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            if (mouseDown)
-            {
-                int index = e.Y / this.ItemSize.Height;
-                if (index >= 0 && index < DataString.Count)
-                {
-                    if (temporary != index)
-                    {
-                        int oldIndex = temporary;
-                        int newIndex = index;
-                        temporary = index;
-                        if (oldIndex != -1)
-                            ShowLabel.Invalidate(rect(oldIndex));
-                        ShowLabel.Invalidate(rect(newIndex));
-                    }
-                }
-                else
-                {
-                    if (temporary != -1)
-                    {
-                        ShowLabel.Invalidate(rect(temporary));
-                        temporary = -1;
-                    }
-                }
-            }
-            else
-            {
-                if (temporary != -1)
-                {
-                    ShowLabel.Invalidate(rect(temporary));
-                    temporary = -1;
-                }
-            }
-            base.OnMouseMove(e);
-        }
-
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
-            if (mouseDown)
-            {
-                
-                int index = e.Y / this.ItemSize.Height;
-                if (index >= 0 && index < DataString.Count())
-                {
-                    if (SelectedIndex != index)
-                    {
-                        int oldIndex = SelectedIndex;
-                        int newIndex = index;
-
-                        SelectedIndex = index;
-                        if (oldIndex != -1)
-                            ShowLabel.Invalidate(rect(oldIndex));
-                        ShowLabel.Invalidate(rect(newIndex));
-                        ChangeSelected?.Invoke();
-                    }
-                }
-                else
-                {
-                    if (temporary != -1)
-                    {
-                        ShowLabel.Invalidate(rect(temporary));
-                        temporary = -1;
-                    }
-                }
-            }
-            else
-            {
-                if (temporary != -1)
-                {
-                    ShowLabel.Invalidate(rect(temporary));
-                    temporary = -1;
-                }
-            }
-            mouseDown = false;
-            base.OnMouseDown(e);
         }
 
         protected Rectangle rect(int index)
         {
             if (index >= 0 && index < DataString.Count())
                 return new Rectangle(
-                    0, index * ItemSize.Height,
-                    ItemSize.Width, ItemSize.Height);
+                    0, index * ItemSize.Height + 1,
+                    ItemSize.Width, ItemSize.Height - 2);
             else
                 return new Rectangle();
         }

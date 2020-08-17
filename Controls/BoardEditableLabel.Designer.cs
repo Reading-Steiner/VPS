@@ -44,7 +44,7 @@
             // 
             // EditBox
             // 
-            this.EditBox.Location = new System.Drawing.Point(3, 10);
+            this.EditBox.Location = new System.Drawing.Point(8, 10);
             this.EditBox.Name = "EditBox";
             this.EditBox.Size = new System.Drawing.Size(65, 21);
             this.EditBox.TabIndex = 2;

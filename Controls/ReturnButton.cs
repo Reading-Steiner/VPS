@@ -30,6 +30,10 @@ namespace VPS.Controls
             this.Cancel.Paint += Cancel_Paint;
             this.OK.Click += OK_Click;
             this.Cancel.Click += Cancel_Click;
+            this.OK.GotFocus += OK_GotFocus;
+            this.Cancel.GotFocus += Cancel_GotFocus;
+            this.OK.LostFocus += OK_LostFocus;
+            this.Cancel.LostFocus += Cancel_LostFocus;
         }
 
         private void Cancel_Click(object sender, EventArgs e)
@@ -66,11 +70,72 @@ namespace VPS.Controls
             g.DrawString(OKText, this.Font, brush, OK.DisplayRectangle, SF);
         }
 
+
+        protected override void OnGotFocus(EventArgs e)
+        {
+            Invalidate();
+            base.OnGotFocus(e);
+        }
+
+        private void Cancel_GotFocus(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
+        private void OK_GotFocus(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
+        private void Cancel_LostFocus(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
+        private void OK_LostFocus(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
+
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
             g.Clear(_rederBackColor);
+            Pen normalPen = new Pen(Color.FromArgb(
+                255,
+                (_rederBackColor.R + _rederButtonColor.R) / 2,
+                (_rederBackColor.G + _rederButtonColor.G) / 2,
+                (_rederBackColor.B + _rederButtonColor.B) / 2), 2);
+            Pen selectedPen = new Pen(Color.FromArgb(
+                255,
+                (_rederBackColor.R + _rederButtonColor.R) / 10,
+                255 - (_rederBackColor.G + _rederButtonColor.G) / 30,
+                (_rederBackColor.B + _rederButtonColor.B) / 10), 2);
+            Pen whitePen = new Pen(Color.White);
+            g.DrawRectangle(whitePen,
+                    this.OK.Left - 1, this.OK.Top - 1,
+                    this.OK.Width + 1, this.OK.Height + 1);
+            if (this.OK.Focused)
+                g.DrawRectangle(selectedPen,
+                    this.OK.Left - 2, this.OK.Top - 2, 
+                    this.OK.Width + 4, this.OK.Height + 4);
+            else
+                g.DrawRectangle(normalPen,
+                    this.OK.Left - 2, this.OK.Top - 2, 
+                    this.OK.Width + 4, this.OK.Height + 4);
 
+            g.DrawRectangle(whitePen,
+                    this.Cancel.Left - 1, this.Cancel.Top - 1,
+                    this.Cancel.Width + 1, this.Cancel.Height + 1);
+            if (this.Cancel.Focused)
+                g.DrawRectangle(selectedPen,
+                    this.Cancel.Left - 2, this.Cancel.Top - 2, 
+                    this.Cancel.Width + 4, this.Cancel.Height + 4);
+            else
+                g.DrawRectangle(normalPen,
+                    this.Cancel.Left - 2, this.Cancel.Top - 2, 
+                    this.Cancel.Width + 4, this.Cancel.Height + 4);
             base.OnPaint(e);
         }
 

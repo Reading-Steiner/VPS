@@ -158,8 +158,22 @@ namespace VPS.Controls
                 this.EditBox.Width = this.Width - 2 * this.DisplayText.Left;
                 this.EditBox.BackColor = this.BackColor;
                 this.EditBox.Visible = true;
+                this.EditBox.Focus();
                 base.OnMouseClick(e);
             }
+        }
+
+
+        protected override void OnGotFocus(EventArgs e)
+        {
+            this.EditBox.Text = this.DisplayText.Text;
+            this.EditBox.Left = this.DisplayText.Left;
+            this.EditBox.Top = this.DisplayText.Left;
+            this.EditBox.Width = this.Width - 2 * this.DisplayText.Left;
+            this.EditBox.BackColor = this.BackColor;
+            this.EditBox.Visible = true;
+            this.EditBox.Focus();
+            base.OnGotFocus(e);
         }
 
         private void EditBox_LostFocus(object sender, EventArgs e)

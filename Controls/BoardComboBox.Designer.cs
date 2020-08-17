@@ -51,7 +51,7 @@ namespace VPS.Controls
             this.DisplayText.Name = "DisplayText";
             this.DisplayText.Size = new System.Drawing.Size(107, 24);
             this.DisplayText.TabIndex = 3;
-            this.DisplayText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.DisplayText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // EditBox
             // 
