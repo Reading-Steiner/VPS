@@ -63,7 +63,7 @@ namespace VPS.Utilities
 
             pnt.Tag = tag + "\n" + pnt.ToString();
 
-            POI.POIs.Add(pnt);
+            //POI.POIs.Add(pnt);
 
             if (_POIModified != null)
                 _POIModified(null, null);
@@ -210,14 +210,14 @@ namespace VPS.Utilities
 
             poioverlay.Clear();
 
-            foreach (var pnt in POIs)
-            {
-                poioverlay.Markers.Add(new GMapMarkerPOI(pnt)
-                {
-                    ToolTipMode = MarkerTooltipMode.OnMouseOver,
-                    ToolTipText = pnt.Tag
-                });
-            }
+            //foreach (var pnt in POIs)
+            //{
+            //    poioverlay.Markers.Add(new GMapMarkerPOI(pnt)
+            //    {
+            //        ToolTipMode = MarkerTooltipMode.OnMouseOver,
+            //        ToolTipText = pnt.Tag
+            //    });
+            //}
         }
     }
 }

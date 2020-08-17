@@ -1977,63 +1977,63 @@ namespace VPS.GCSViews
         {
         }
 
-        public void BUT_loadwpfile_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog fd = new OpenFileDialog())
-            {
-                fd.Filter = "All Supported Types|*.txt;*.waypoints;*.shp;*.plan";
-                if (Directory.Exists(Settings.Instance["WPFileDirectory"] ?? ""))
-                    fd.InitialDirectory = Settings.Instance["WPFileDirectory"];
-                DialogResult result = fd.ShowDialog();
-                string file = fd.FileName;
+        //public void BUT_loadwpfile_Click(object sender, EventArgs e)
+        //{
+        //    using (OpenFileDialog fd = new OpenFileDialog())
+        //    {
+        //        fd.Filter = "All Supported Types|*.txt;*.waypoints;*.shp;*.plan";
+        //        if (Directory.Exists(Settings.Instance["WPFileDirectory"] ?? ""))
+        //            fd.InitialDirectory = Settings.Instance["WPFileDirectory"];
+        //        DialogResult result = fd.ShowDialog();
+        //        string file = fd.FileName;
 
-                if (File.Exists(file))
-                {
-                    Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
-                    if (file.ToLower().EndsWith(".shp"))
-                    {
-                        try
-                        {
-                            LoadSHPFile(file);
-                        }
-                        catch
-                        {
-                            CustomMessageBox.Show("Error opening File", Strings.ERROR);
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        string line = "";
-                        using (var fstream = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                        using (var fs = new StreamReader(fstream))
-                        {
-                            line = fs.ReadLine();
-                        }
+        //        if (File.Exists(file))
+        //        {
+        //            Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
+        //            if (file.ToLower().EndsWith(".shp"))
+        //            {
+        //                try
+        //                {
+        //                    LoadSHPFile(file);
+        //                }
+        //                catch
+        //                {
+        //                    CustomMessageBox.Show("Error opening File", Strings.ERROR);
+        //                    return;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                string line = "";
+        //                using (var fstream = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+        //                using (var fs = new StreamReader(fstream))
+        //                {
+        //                    line = fs.ReadLine();
+        //                }
 
-                        if (line.StartsWith("{"))
-                        {
-                            var format = MissionFile.ReadFile(file);
+        //                if (line.StartsWith("{"))
+        //                {
+        //                    var format = MissionFile.ReadFile(file);
 
-                            var cmds = MissionFile.ConvertToLocationwps(format);
+        //                    var cmds = MissionFile.ConvertToLocationwps(format);
 
-                            processToScreen(cmds);
+        //                    processToScreen(cmds);
 
-                            writeKML();
+        //                    writeKML();
 
-                            MainMap.ZoomAndCenterMarkers("WPOverlay");
-                        }
-                        else
-                        {
-                            wpfilename = file;
-                            readQGC110wpfile(file);
-                        }
-                    }
+        //                    MainMap.ZoomAndCenterMarkers("WPOverlay");
+        //                }
+        //                else
+        //                {
+        //                    wpfilename = file;
+        //                    readQGC110wpfile(file);
+        //                }
+        //            }
 
-                    //lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
-                }
-            }
-        }
+        //            //lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
+        //        }
+        //    }
+        //}
 
         private void BUT_Prefetch_Click(object sender, EventArgs e)
         {
@@ -4753,7 +4753,8 @@ namespace VPS.GCSViews
 
         public void LoadWPFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BUT_loadwpfile_Click(null, null);
+            loadwaypoints();
+            //BUT_loadwpfile_Click(null, null);
         }
 
         public void loitercirclesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -5180,11 +5181,11 @@ namespace VPS.GCSViews
             }
             else if (pm != null)
             {
-                if (pm.Geometry is SharpKml.Dom.Point)
-                {
-                    var point = ((SharpKml.Dom.Point)pm.Geometry).Coordinate;
-                    POI.POIAdd(new PointLatLngAlt(point.Latitude, point.Longitude), pm.Name);
-                }
+                //if (pm.Geometry is SharpKml.Dom.Point)
+                //{
+                //    var point = ((SharpKml.Dom.Point)pm.Geometry).Coordinate;
+                //    POI.POIAdd(new PointLatLngAlt(point.Latitude, point.Longitude), pm.Name);
+                //}
             }
             else if (polygon != null)
             {
@@ -5644,7 +5645,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         {
             using (OpenFileDialog fd = new OpenFileDialog())
             {
-                fd.Filter = "KML|*.kml;|Shapefile|*.shp;|WayPoint|*.waypoints;*.txt";
+                fd.Filter = "WP KML|*.kml;|WP File|*.waypoints;*.txt";
                 if (Directory.Exists(Settings.Instance["WPFileDirectory"] ?? ""))
                     fd.InitialDirectory = Settings.Instance["WPFileDirectory"];
                 DialogResult result = fd.ShowDialog();

@@ -787,9 +787,10 @@ namespace VPS.GCSViews
             // 
             this.loadWPToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadWPFileToolStripMenuItem,
-            this.loadAndAppendToolStripMenuItem,
+            //this.loadAndAppendToolStripMenuItem,
             this.loadKMLFileToolStripMenuItem,
-            this.loadSHPFileToolStripMenuItem});
+            this.loadSHPFileToolStripMenuItem
+            });
             this.loadWPToolStripMenuItem.Name = "loadWPToolStripMenuItem";
             resources.ApplyResources(this.loadWPToolStripMenuItem, "loadWPToolStripMenuItem");
             // 
