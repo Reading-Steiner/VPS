@@ -430,6 +430,12 @@
     <Compile Include="Controls\GobalWPConfig.Designer.cs">
       <DependentUpon>GobalWPConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GradualButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\GradualButton.Designer.cs">
+      <DependentUpon>GradualButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\HLToolStripButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -786,6 +792,9 @@
       <DependentUpon>LayerReader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LayerReader.zh-CN.resx">
+      <DependentUpon>LayerReader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerReader.zh-Hans.resx">
       <DependentUpon>LayerReader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ReturnButton.resx">

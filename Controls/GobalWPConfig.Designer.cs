@@ -84,7 +84,7 @@
             this.returnButton1.Name = "returnButton1";
             this.returnButton1.OKText = "确定";
             this.returnButton1.RederBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(180)))), ((int)(((byte)(128)))));
-            this.returnButton1.RederWidth = System.Drawing.Color.CornflowerBlue;
+            this.returnButton1.RederButtonColor = System.Drawing.Color.CornflowerBlue;
             this.returnButton1.Size = new System.Drawing.Size(641, 51);
             this.returnButton1.TabIndex = 43;
             // 

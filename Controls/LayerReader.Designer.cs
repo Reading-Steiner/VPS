@@ -32,7 +32,7 @@ namespace VPS.Controls
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LayerReader));
-            this.FileOpen = new System.Windows.Forms.Button();
+            this.FileOpen = new VPS.Controls.GradualButton();
             this.FilePath = new System.Windows.Forms.TextBox();
             this.TopLabel = new System.Windows.Forms.Label();
             this.RightLabel = new System.Windows.Forms.Label();
@@ -53,8 +53,7 @@ namespace VPS.Controls
             this.MapGroup = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.ViewGroup = new System.Windows.Forms.GroupBox();
-            this.Accept = new System.Windows.Forms.Button();
-            this.Cancel = new System.Windows.Forms.Button();
+            this.returnButton1 = new VPS.Controls.ReturnButton();
             ((System.ComponentModel.ISupportInitialize)(this.LayerPrevView)).BeginInit();
             this.OriginGroup.SuspendLayout();
             this.MapGroup.SuspendLayout();
@@ -64,8 +63,15 @@ namespace VPS.Controls
             // FileOpen
             // 
             resources.ApplyResources(this.FileOpen, "FileOpen");
+            this.FileOpen.ColorGradualStyle = VPS.Controls.GradualButton.GradualStyle.Square;
+            this.FileOpen.DownBottomColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.FileOpen.DownTopColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.FileOpen.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FileOpen.Name = "FileOpen";
+            this.FileOpen.NormalBottomColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.FileOpen.NormalTopColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.FileOpen.StayBottomColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.FileOpen.StayTopColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.FileOpen.UseVisualStyleBackColor = true;
             this.FileOpen.Click += new System.EventHandler(this.FileOpen_Click);
             // 
@@ -143,18 +149,20 @@ namespace VPS.Controls
             this.OriginGroup.Controls.Add(this.LongitudeLabel);
             this.OriginGroup.Controls.Add(this.Latitude);
             this.OriginGroup.Controls.Add(this.Altitude);
-            this.OriginGroup.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.OriginGroup.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.OriginGroup.Name = "OriginGroup";
             this.OriginGroup.TabStop = false;
             // 
             // AltitudeLabel
             // 
             resources.ApplyResources(this.AltitudeLabel, "AltitudeLabel");
+            this.AltitudeLabel.ForeColor = System.Drawing.Color.Black;
             this.AltitudeLabel.Name = "AltitudeLabel";
             // 
             // LatitudeLabel
             // 
             resources.ApplyResources(this.LatitudeLabel, "LatitudeLabel");
+            this.LatitudeLabel.ForeColor = System.Drawing.Color.Black;
             this.LatitudeLabel.Name = "LatitudeLabel";
             // 
             // ScaleLabel
@@ -183,9 +191,11 @@ namespace VPS.Controls
             // MapGroup
             // 
             resources.ApplyResources(this.MapGroup, "MapGroup");
+            this.MapGroup.BackColor = System.Drawing.Color.Transparent;
             this.MapGroup.Controls.Add(this.Scale);
             this.MapGroup.Controls.Add(this.ScaleLabel);
             this.MapGroup.Controls.Add(this.label1);
+            this.MapGroup.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.MapGroup.Name = "MapGroup";
             this.MapGroup.TabStop = false;
             // 
@@ -200,31 +210,24 @@ namespace VPS.Controls
             resources.ApplyResources(this.ViewGroup, "ViewGroup");
             this.ViewGroup.Controls.Add(this.TransparentLabel);
             this.ViewGroup.Controls.Add(this.Transparent);
+            this.ViewGroup.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.ViewGroup.Name = "ViewGroup";
             this.ViewGroup.TabStop = false;
             // 
-            // Accept
+            // returnButton1
             // 
-            resources.ApplyResources(this.Accept, "Accept");
-            this.Accept.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Accept.Name = "Accept";
-            this.Accept.UseVisualStyleBackColor = true;
-            this.Accept.Click += new System.EventHandler(this.Accept_Click);
-            // 
-            // Cancel
-            // 
-            resources.ApplyResources(this.Cancel, "Cancel");
-            this.Cancel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Cancel.Name = "Cancel";
-            this.Cancel.UseVisualStyleBackColor = true;
-            this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
+            resources.ApplyResources(this.returnButton1, "returnButton1");
+            this.returnButton1.CancelText = "取消";
+            this.returnButton1.Name = "returnButton1";
+            this.returnButton1.OKText = "确定";
+            this.returnButton1.RederBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.returnButton1.RederButtonColor = System.Drawing.Color.CornflowerBlue;
             // 
             // LayerReader
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.Cancel);
-            this.Controls.Add(this.Accept);
+            this.Controls.Add(this.returnButton1);
             this.Controls.Add(this.ViewGroup);
             this.Controls.Add(this.MapGroup);
             this.Controls.Add(this.OriginGroup);
@@ -236,6 +239,7 @@ namespace VPS.Controls
             this.Controls.Add(this.FilePath);
             this.Controls.Add(this.FileOpen);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "LayerReader";
             ((System.ComponentModel.ISupportInitialize)(this.LayerPrevView)).EndInit();
             this.OriginGroup.ResumeLayout(false);
@@ -251,7 +255,7 @@ namespace VPS.Controls
 
         #endregion
 
-        private System.Windows.Forms.Button FileOpen;
+        private GradualButton FileOpen;
         private System.Windows.Forms.TextBox FilePath;
         private System.Windows.Forms.Label TopLabel;
         private System.Windows.Forms.Label RightLabel;
@@ -273,8 +277,7 @@ namespace VPS.Controls
         private Label TransparentLabel;
         private GroupBox MapGroup;
         private GroupBox ViewGroup;
-        private Button Accept;
-        private Button Cancel;
         private Label label1;
+        private ReturnButton returnButton1;
     }
 }

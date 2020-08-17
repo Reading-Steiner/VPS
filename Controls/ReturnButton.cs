@@ -177,7 +177,7 @@ namespace VPS.Controls
 
         private Color _rederButtonColor;
         [Category("设置"), Description("按钮颜色")]
-        public Color RederWidth
+        public Color RederButtonColor
         {
             get { return _rederButtonColor; }
             set
