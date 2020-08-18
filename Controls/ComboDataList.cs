@@ -228,6 +228,7 @@ namespace VPS.Controls
                                 ((Control)sender).Invalidate(rect(oldIndex));
                             ((Control)sender).Invalidate(rect(newIndex));
                         }
+                        
                     }
                 }
                 else

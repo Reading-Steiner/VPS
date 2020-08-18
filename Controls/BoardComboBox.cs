@@ -187,6 +187,7 @@ namespace VPS.Controls
         private void StringSelected()
         {
             ChangeSelected?.Invoke();
+            dropDown.Close();
         }
 
         private void SelectedString()
@@ -228,8 +229,6 @@ namespace VPS.Controls
                 Invalidate();
             }
         }
-
-
 
         private void Button_Paint(object sender, PaintEventArgs e)
         {
