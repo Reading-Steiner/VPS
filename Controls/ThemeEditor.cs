@@ -99,7 +99,7 @@ namespace VPS.Controls
         private void btnRestore_Click(object sender, EventArgs e)
         {
             //Restore the theme from disk
-            ThemeManager.LoadTheme(ThemeManager.thmColor.strThemeName);
+            ThemeManager.LoadTheme(Settings.Instance["theme"]);
             ThemeManager.ApplyThemeTo(MainV2.instance);
         }
 
@@ -119,7 +119,7 @@ namespace VPS.Controls
             {
             }
 
-            ThemeManager.LoadTheme(ThemeManager.thmColor.strThemeName);
+            ThemeManager.LoadTheme(Settings.Instance["theme"]);
             ThemeManager.ApplyThemeTo(MainV2.instance);
             CustomMessageBox.Show("You may need to select another tab or restart to see the full effect.");
             this.Close();

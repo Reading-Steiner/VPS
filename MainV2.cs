@@ -707,7 +707,8 @@ namespace VPS
 
  
 
-            if (Settings.Instance["theme"] == null) Settings.Instance["theme"] = "BurntKermit.mpsystheme";
+            if (Settings.Instance["theme"] == null) Settings.Instance["theme"] = "HighContrast.mpsystheme";
+            if (Settings.Instance["theme"] == "BurntKermit.mpsystheme") Settings.Instance["theme"] = "HighContrast.mpsystheme";
 
             ThemeManager.LoadTheme(Settings.Instance["theme"]);
 

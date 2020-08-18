@@ -155,9 +155,9 @@ namespace VPS.Utilities
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // Initialize to the default theme (BurntKermit)
-        public static Color BGColor = Color.FromArgb(0x26, 0x27, 0x28);
-        public static Color ControlBGColor = Color.FromArgb(0x43, 0x44, 0x45);
-        public static Color TextColor = Color.White;
+        public static Color BGColor = SystemColors.Control;
+        public static Color ControlBGColor = SystemColors.Control;
+        public static Color TextColor = Color.Black;
         public static Color BGColorTextBox;
         public static Color ButBG;
         public static Color ButBGBot;

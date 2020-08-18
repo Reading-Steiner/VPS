@@ -722,7 +722,7 @@ namespace VPS.GCSViews.ConfigurationView
             if (startup)
                 return;
 
-            ThemeManager.LoadTheme(CMB_theme.Text);
+            ThemeManager.LoadTheme(Settings.Instance["theme"]);
             ThemeManager.ApplyThemeTo(MainV2.instance);
             CustomMessageBox.Show("You may need to select another tab or restart to see the full effect.");
         }
