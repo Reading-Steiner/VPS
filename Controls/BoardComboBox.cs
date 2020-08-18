@@ -18,7 +18,7 @@ namespace VPS.Controls
         private bool isDroppable = false;
         //private int selectedIndex = -1;
         [Category("设置"), Description("选中项")]
-        public string TextString
+        public string TextContent
         {
             get { return this.DisplayText.Text; }
             set
@@ -26,7 +26,7 @@ namespace VPS.Controls
                 if (Regex.IsMatch(value, Pattern))
                 {
                     this.DisplayText.Text = value;
-                    this.dataSourceList.SelectedIndex = this.DataSource.IndexOf(TextString);
+                    this.dataSourceList.SelectedIndex = this.DataSource.IndexOf(TextContent);
                 }
                 SelectedChange?.Invoke();
             }
@@ -135,7 +135,7 @@ namespace VPS.Controls
         {
             if (this.EditBox.Visible == true)
             {
-                TextString = this.EditBox.Text;
+                TextContent = this.EditBox.Text;
                 this.EditBox.Visible = false;
                 ChangeSelected?.Invoke();
                 return;
@@ -174,7 +174,7 @@ namespace VPS.Controls
             {
                 if (this.EditBox.Visible == true)
                 {
-                    TextString = this.EditBox.Text;
+                    TextContent = this.EditBox.Text;
                     this.EditBox.Visible = false;
                     ChangeSelected?.Invoke();
                     return;
@@ -194,7 +194,7 @@ namespace VPS.Controls
             if (this.dataSourceList.SelectedIndex >= 0 &&
                 this.dataSourceList.SelectedIndex < this.dataSourceList.DataString.Count)
             {
-                TextString = this.DataSource[this.dataSourceList.SelectedIndex];
+                TextContent = this.DataSource[this.dataSourceList.SelectedIndex];
                 Invalidate();
             }
         }

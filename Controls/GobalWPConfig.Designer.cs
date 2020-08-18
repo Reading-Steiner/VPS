@@ -101,7 +101,7 @@
             this.CameraTopHead.RederWidth = 6;
             this.CameraTopHead.Size = new System.Drawing.Size(106, 29);
             this.CameraTopHead.TabIndex = 4;
-            this.CameraTopHead.TextString = "";
+            this.CameraTopHead.TextContent = "";
             // 
             // boardLabel4
             // 
@@ -119,7 +119,7 @@
             this.boardLabel4.Size = new System.Drawing.Size(74, 29);
             this.boardLabel4.TabIndex = 3;
             this.boardLabel4.TextPosition = new System.Drawing.Point(24, 8);
-            this.boardLabel4.TextString = "安装";
+            this.boardLabel4.TextContent = "安装";
             // 
             // boardLabel27
             // 
@@ -137,7 +137,7 @@
             this.boardLabel27.Size = new System.Drawing.Size(25, 25);
             this.boardLabel27.TabIndex = 42;
             this.boardLabel27.TextPosition = new System.Drawing.Point(4, 3);
-            this.boardLabel27.TextString = "m";
+            this.boardLabel27.TextContent = "m";
             // 
             // boardLabel14
             // 
@@ -155,7 +155,7 @@
             this.boardLabel14.Size = new System.Drawing.Size(25, 25);
             this.boardLabel14.TabIndex = 39;
             this.boardLabel14.TextPosition = new System.Drawing.Point(4, 3);
-            this.boardLabel14.TextString = "m";
+            this.boardLabel14.TextContent = "m";
             // 
             // boardLabel29
             // 
@@ -173,7 +173,7 @@
             this.boardLabel29.Size = new System.Drawing.Size(25, 25);
             this.boardLabel29.TabIndex = 33;
             this.boardLabel29.TextPosition = new System.Drawing.Point(4, 3);
-            this.boardLabel29.TextString = "m";
+            this.boardLabel29.TextContent = "m";
             // 
             // boardLabel28
             // 
@@ -191,7 +191,7 @@
             this.boardLabel28.Size = new System.Drawing.Size(25, 25);
             this.boardLabel28.TabIndex = 30;
             this.boardLabel28.TextPosition = new System.Drawing.Point(4, 3);
-            this.boardLabel28.TextString = "m";
+            this.boardLabel28.TextContent = "m";
             // 
             // boardLabel9
             // 
@@ -209,7 +209,7 @@
             this.boardLabel9.Size = new System.Drawing.Size(25, 25);
             this.boardLabel9.TabIndex = 24;
             this.boardLabel9.TextPosition = new System.Drawing.Point(3, 4);
-            this.boardLabel9.TextString = "%";
+            this.boardLabel9.TextContent = "%";
             // 
             // Dy
             // 
@@ -227,7 +227,7 @@
             this.Dy.TabIndex = 41;
             this.Dy.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.Dy.TextPosition = new System.Drawing.Point(4, 6);
-            this.Dy.TextString = "96";
+            this.Dy.TextContent = "96";
             // 
             // Bx
             // 
@@ -245,7 +245,7 @@
             this.Bx.TabIndex = 38;
             this.Bx.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.Bx.TextPosition = new System.Drawing.Point(4, 6);
-            this.Bx.TextString = "32";
+            this.Bx.TextContent = "32";
             // 
             // boardLabel26
             // 
@@ -263,7 +263,7 @@
             this.boardLabel26.Size = new System.Drawing.Size(25, 25);
             this.boardLabel26.TabIndex = 36;
             this.boardLabel26.TextPosition = new System.Drawing.Point(3, 4);
-            this.boardLabel26.TextString = "%";
+            this.boardLabel26.TextContent = "%";
             // 
             // SideOverlap
             // 
@@ -281,7 +281,7 @@
             this.SideOverlap.TabIndex = 35;
             this.SideOverlap.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.SideOverlap.TextPosition = new System.Drawing.Point(4, 6);
-            this.SideOverlap.TextString = "30";
+            this.SideOverlap.TextContent = "30";
             // 
             // GSD
             // 
@@ -299,7 +299,7 @@
             this.GSD.TabIndex = 32;
             this.GSD.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.GSD.TextPosition = new System.Drawing.Point(4, 6);
-            this.GSD.TextString = "0.040";
+            this.GSD.TextContent = "0.040";
             // 
             // RelativeAltitude
             // 
@@ -317,7 +317,7 @@
             this.RelativeAltitude.TabIndex = 29;
             this.RelativeAltitude.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.RelativeAltitude.TextPosition = new System.Drawing.Point(4, 6);
-            this.RelativeAltitude.TextString = "100";
+            this.RelativeAltitude.TextContent = "100";
             // 
             // boardLabel10
             // 
@@ -335,7 +335,7 @@
             this.boardLabel10.Size = new System.Drawing.Size(25, 25);
             this.boardLabel10.TabIndex = 27;
             this.boardLabel10.TextPosition = new System.Drawing.Point(4, 3);
-            this.boardLabel10.TextString = "m";
+            this.boardLabel10.TextContent = "m";
             // 
             // boardEditableLabel2
             // 
@@ -353,7 +353,7 @@
             this.boardEditableLabel2.TabIndex = 26;
             this.boardEditableLabel2.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.boardEditableLabel2.TextPosition = new System.Drawing.Point(4, 6);
-            this.boardEditableLabel2.TextString = "20";
+            this.boardEditableLabel2.TextContent = "20";
             // 
             // CourseOverlap
             // 
@@ -371,7 +371,7 @@
             this.CourseOverlap.TabIndex = 23;
             this.CourseOverlap.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.CourseOverlap.TextPosition = new System.Drawing.Point(4, 6);
-            this.CourseOverlap.TextString = "60";
+            this.CourseOverlap.TextContent = "60";
             // 
             // PresetScale
             // 
@@ -384,7 +384,7 @@
             this.PresetScale.RederWidth = 6;
             this.PresetScale.Size = new System.Drawing.Size(124, 30);
             this.PresetScale.TabIndex = 21;
-            this.PresetScale.TextString = "1:500";
+            this.PresetScale.TextContent = "1:500";
             // 
             // CameraFocus
             // 
@@ -399,7 +399,7 @@
             this.CameraFocus.TabIndex = 18;
             this.CameraFocus.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.CameraFocus.TextPosition = new System.Drawing.Point(5, 5);
-            this.CameraFocus.TextString = "0";
+            this.CameraFocus.TextContent = "0";
             // 
             // CMB_camera
             // 
@@ -414,7 +414,7 @@
             this.CMB_camera.RederWidth = 6;
             this.CMB_camera.Size = new System.Drawing.Size(226, 29);
             this.CMB_camera.TabIndex = 2;
-            this.CMB_camera.TextString = "";
+            this.CMB_camera.TextContent = "";
             // 
             // boardLabel25
             // 
@@ -431,7 +431,7 @@
             this.boardLabel25.Size = new System.Drawing.Size(119, 30);
             this.boardLabel25.TabIndex = 40;
             this.boardLabel25.TextPosition = new System.Drawing.Point(27, 9);
-            this.boardLabel25.TextString = "航线间距Dy";
+            this.boardLabel25.TextContent = "航线间距Dy";
             // 
             // boardLabel24
             // 
@@ -448,7 +448,7 @@
             this.boardLabel24.Size = new System.Drawing.Size(119, 30);
             this.boardLabel24.TabIndex = 37;
             this.boardLabel24.TextPosition = new System.Drawing.Point(27, 9);
-            this.boardLabel24.TextString = "摄影基线Bx";
+            this.boardLabel24.TextContent = "摄影基线Bx";
             // 
             // boardLabel23
             // 
@@ -465,7 +465,7 @@
             this.boardLabel23.Size = new System.Drawing.Size(119, 30);
             this.boardLabel23.TabIndex = 34;
             this.boardLabel23.TextPosition = new System.Drawing.Point(27, 9);
-            this.boardLabel23.TextString = "旁向重叠度";
+            this.boardLabel23.TextContent = "旁向重叠度";
             // 
             // boardLabel22
             // 
@@ -482,7 +482,7 @@
             this.boardLabel22.Size = new System.Drawing.Size(119, 30);
             this.boardLabel22.TabIndex = 31;
             this.boardLabel22.TextPosition = new System.Drawing.Point(21, 9);
-            this.boardLabel22.TextString = "地面采样间隔";
+            this.boardLabel22.TextContent = "地面采样间隔";
             // 
             // boardLabel21
             // 
@@ -499,7 +499,7 @@
             this.boardLabel21.Size = new System.Drawing.Size(119, 30);
             this.boardLabel21.TabIndex = 28;
             this.boardLabel21.TextPosition = new System.Drawing.Point(33, 9);
-            this.boardLabel21.TextString = "相对航高";
+            this.boardLabel21.TextContent = "相对航高";
             // 
             // boardLabel20
             // 
@@ -516,7 +516,7 @@
             this.boardLabel20.Size = new System.Drawing.Size(119, 30);
             this.boardLabel20.TabIndex = 25;
             this.boardLabel20.TextPosition = new System.Drawing.Point(33, 9);
-            this.boardLabel20.TextString = "航摄基准";
+            this.boardLabel20.TextContent = "航摄基准";
             // 
             // boardLabel19
             // 
@@ -533,7 +533,7 @@
             this.boardLabel19.Size = new System.Drawing.Size(119, 30);
             this.boardLabel19.TabIndex = 22;
             this.boardLabel19.TextPosition = new System.Drawing.Point(27, 9);
-            this.boardLabel19.TextString = "航向重叠度";
+            this.boardLabel19.TextContent = "航向重叠度";
             // 
             // boardLabel18
             // 
@@ -550,7 +550,7 @@
             this.boardLabel18.Size = new System.Drawing.Size(119, 30);
             this.boardLabel18.TabIndex = 20;
             this.boardLabel18.TextPosition = new System.Drawing.Point(27, 9);
-            this.boardLabel18.TextString = "成图比例尺";
+            this.boardLabel18.TextContent = "成图比例尺";
             // 
             // boardLabel12
             // 
@@ -567,7 +567,7 @@
             this.boardLabel12.Size = new System.Drawing.Size(24, 25);
             this.boardLabel12.TabIndex = 15;
             this.boardLabel12.TextPosition = new System.Drawing.Point(5, 6);
-            this.boardLabel12.TextString = "×";
+            this.boardLabel12.TextContent = "×";
             // 
             // CameraSensorHeight
             // 
@@ -585,7 +585,7 @@
             this.CameraSensorHeight.TabIndex = 16;
             this.CameraSensorHeight.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.CameraSensorHeight.TextPosition = new System.Drawing.Point(4, 6);
-            this.CameraSensorHeight.TextString = "24";
+            this.CameraSensorHeight.TextContent = "24";
             // 
             // CameraSensorWidth
             // 
@@ -603,7 +603,7 @@
             this.CameraSensorWidth.TabIndex = 14;
             this.CameraSensorWidth.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.CameraSensorWidth.TextPosition = new System.Drawing.Point(4, 6);
-            this.CameraSensorWidth.TextString = "35.9";
+            this.CameraSensorWidth.TextContent = "35.9";
             // 
             // boardLabel15
             // 
@@ -620,7 +620,7 @@
             this.boardLabel15.Size = new System.Drawing.Size(24, 25);
             this.boardLabel15.TabIndex = 13;
             this.boardLabel15.TextPosition = new System.Drawing.Point(4, 6);
-            this.boardLabel15.TextString = "宽";
+            this.boardLabel15.TextContent = "宽";
             // 
             // boardLabel16
             // 
@@ -637,7 +637,7 @@
             this.boardLabel16.Size = new System.Drawing.Size(24, 25);
             this.boardLabel16.TabIndex = 12;
             this.boardLabel16.TextPosition = new System.Drawing.Point(4, 6);
-            this.boardLabel16.TextString = "长";
+            this.boardLabel16.TextContent = "长";
             // 
             // boardLabel17
             // 
@@ -654,7 +654,7 @@
             this.boardLabel17.Size = new System.Drawing.Size(159, 25);
             this.boardLabel17.TabIndex = 11;
             this.boardLabel17.TextPosition = new System.Drawing.Point(23, 6);
-            this.boardLabel17.TextString = "相机传感器尺寸[mm]";
+            this.boardLabel17.TextContent = "相机传感器尺寸[mm]";
             // 
             // boardLabel11
             // 
@@ -671,7 +671,7 @@
             this.boardLabel11.Size = new System.Drawing.Size(24, 25);
             this.boardLabel11.TabIndex = 9;
             this.boardLabel11.TextPosition = new System.Drawing.Point(5, 6);
-            this.boardLabel11.TextString = "×";
+            this.boardLabel11.TextContent = "×";
             // 
             // ImageHeight
             // 
@@ -689,7 +689,7 @@
             this.ImageHeight.TabIndex = 10;
             this.ImageHeight.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.ImageHeight.TextPosition = new System.Drawing.Point(4, 6);
-            this.ImageHeight.TextString = "4000";
+            this.ImageHeight.TextContent = "4000";
             // 
             // ImageWidth
             // 
@@ -707,7 +707,7 @@
             this.ImageWidth.TabIndex = 8;
             this.ImageWidth.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.ImageWidth.TextPosition = new System.Drawing.Point(4, 6);
-            this.ImageWidth.TextString = "6000";
+            this.ImageWidth.TextContent = "6000";
             // 
             // boardLabel8
             // 
@@ -724,7 +724,7 @@
             this.boardLabel8.Size = new System.Drawing.Size(24, 25);
             this.boardLabel8.TabIndex = 7;
             this.boardLabel8.TextPosition = new System.Drawing.Point(4, 6);
-            this.boardLabel8.TextString = "宽";
+            this.boardLabel8.TextContent = "宽";
             // 
             // boardLabel7
             // 
@@ -741,7 +741,7 @@
             this.boardLabel7.Size = new System.Drawing.Size(24, 25);
             this.boardLabel7.TabIndex = 6;
             this.boardLabel7.TextPosition = new System.Drawing.Point(4, 6);
-            this.boardLabel7.TextString = "长";
+            this.boardLabel7.TextContent = "长";
             // 
             // boardLabel6
             // 
@@ -758,7 +758,7 @@
             this.boardLabel6.Size = new System.Drawing.Size(119, 25);
             this.boardLabel6.TabIndex = 17;
             this.boardLabel6.TextPosition = new System.Drawing.Point(23, 6);
-            this.boardLabel6.TextString = "镜头焦距[mm]";
+            this.boardLabel6.TextContent = "镜头焦距[mm]";
             // 
             // boardLabel5
             // 
@@ -775,7 +775,7 @@
             this.boardLabel5.Size = new System.Drawing.Size(159, 25);
             this.boardLabel5.TabIndex = 5;
             this.boardLabel5.TextPosition = new System.Drawing.Point(22, 6);
-            this.boardLabel5.TextString = "图像最高分辨率[pix]";
+            this.boardLabel5.TextContent = "图像最高分辨率[pix]";
             // 
             // boardLabel3
             // 
@@ -793,7 +793,7 @@
             this.boardLabel3.Size = new System.Drawing.Size(74, 29);
             this.boardLabel3.TabIndex = 1;
             this.boardLabel3.TextPosition = new System.Drawing.Point(24, 8);
-            this.boardLabel3.TextString = "型号";
+            this.boardLabel3.TextContent = "型号";
             // 
             // boardLabel2
             // 
@@ -811,7 +811,7 @@
             this.boardLabel2.Size = new System.Drawing.Size(197, 38);
             this.boardLabel2.TabIndex = 19;
             this.boardLabel2.TextPosition = new System.Drawing.Point(44, 10);
-            this.boardLabel2.TextString = "重叠度参数";
+            this.boardLabel2.TextContent = "重叠度参数";
             // 
             // boardLabel1
             // 
@@ -829,7 +829,7 @@
             this.boardLabel1.Size = new System.Drawing.Size(197, 38);
             this.boardLabel1.TabIndex = 0;
             this.boardLabel1.TextPosition = new System.Drawing.Point(35, 10);
-            this.boardLabel1.TextString = "相机型号参数";
+            this.boardLabel1.TextContent = "相机型号参数";
             // 
             // GobalWPConfig
             // 

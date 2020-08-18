@@ -17,7 +17,10 @@ namespace VPS.Controls
         public LayerReader()
         {
             InitializeComponent();
+
         }
+
+        VPS.Controls.BoardLabel MainTitle;
 
         public LayerReader(string path)
         {
@@ -39,12 +42,12 @@ namespace VPS.Controls
 
         private void OpenFile(string path)
         {
-            this.Longitude.Text = 0.ToString();
-            this.Latitude.Text = 0.ToString();
-            this.Altitude.Text = 0.ToString();
-            this.Scale.Text = 100.ToString();
+            this.Longitude.TextContent = 0.ToString();
+            this.Latitude.TextContent = 0.ToString();
+            this.Altitude.TextContent = 0.ToString();
+            this.MapScale.TextContent = 100.ToString();
 
-            this.FilePath.Text = path;
+            this.FilePath.TextContent = path;
 
             Func<string, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (filePath) =>
                 {
@@ -77,11 +80,11 @@ namespace VPS.Controls
                 this.LeftLabel.Text = string.Format(LeftFormat, rect.Left > 0 ? rect.Left.ToString("f2") + "E" : (-rect.Left).ToString("f2") + "W");
                 this.RightLabel.Text = string.Format(RightFormat, rect.Right >= 0 ? rect.Right.ToString("f2") + "E" : (-rect.Right).ToString("f2") + "W");
 
-                this.Longitude.Text = rect.Lng.ToString();
-                this.Latitude.Text = rect.Lat.ToString();
-                this.Altitude.Text = 0.ToString();
+                this.Longitude.TextContent = rect.Lng.ToString();
+                this.Latitude.TextContent = rect.Lat.ToString();
+                this.Altitude.TextContent = 0.ToString();
 
-                this.Scale.Text = 100.ToString();
+                this.MapScale.TextContent = 100.ToString();
 
                 this.Transparent.Color = geobitmap.smallBitmap.GetPixel(0, 0);
 
@@ -135,7 +138,7 @@ namespace VPS.Controls
         {
             if (IsLoadLayer)
             {
-                return this.FilePath.Text;
+                return this.FilePath.TextContent;
             }
             else
                 return null;
@@ -146,9 +149,9 @@ namespace VPS.Controls
             if (IsLoadLayer)
             {
                 return new PointLatLngAlt(
-                    System.Convert.ToDouble(this.Latitude.Text),
-                    System.Convert.ToDouble(this.Longitude.Text),
-                    System.Convert.ToDouble(this.Altitude.Text));
+                    System.Convert.ToDouble(this.Latitude.TextContent),
+                    System.Convert.ToDouble(this.Longitude.TextContent),
+                    System.Convert.ToDouble(this.Altitude.TextContent));
             }
             else
                 return null;
@@ -159,7 +162,7 @@ namespace VPS.Controls
         {
             if (IsLoadLayer)
             {
-                return System.Convert.ToDouble(this.Scale.Text);
+                return System.Convert.ToDouble(this.MapScale.TextContent);
             }
             else
                 return 0.0;

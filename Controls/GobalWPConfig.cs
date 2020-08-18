@@ -22,22 +22,22 @@ namespace VPS.Controls
             {
                 return new camerainfo()
                 {
-                    name = CMB_camera.TextString,
-                    focallen = Convert.ToSingle(CameraFocus.TextString),
-                    imageheight = Convert.ToSingle(ImageHeight.TextString),
-                    imagewidth = Convert.ToSingle(ImageWidth.TextString),
-                    sensorheight = Convert.ToSingle(CameraSensorHeight.TextString),
-                    sensorwidth = Convert.ToSingle(CameraSensorWidth.TextString)
+                    name = CMB_camera.TextContent,
+                    focallen = Convert.ToSingle(CameraFocus.TextContent),
+                    imageheight = Convert.ToSingle(ImageHeight.TextContent),
+                    imagewidth = Convert.ToSingle(ImageWidth.TextContent),
+                    sensorheight = Convert.ToSingle(CameraSensorHeight.TextContent),
+                    sensorwidth = Convert.ToSingle(CameraSensorWidth.TextContent)
                 };
             }
             set
             {
-                CMB_camera.TextString = value.name;
-                CameraFocus.TextString = value.focallen.ToString("0.00");
-                ImageHeight.TextString = value.imageheight.ToString();
-                ImageWidth.TextString = value.imagewidth.ToString();
-                CameraSensorHeight.TextString = value.sensorheight.ToString("0.00");
-                CameraSensorWidth.TextString = value.sensorwidth.ToString("0.00");
+                CMB_camera.TextContent = value.name;
+                CameraFocus.TextContent = value.focallen.ToString("0.00");
+                ImageHeight.TextContent = value.imageheight.ToString();
+                ImageWidth.TextContent = value.imagewidth.ToString();
+                CameraSensorHeight.TextContent = value.sensorheight.ToString("0.00");
+                CameraSensorWidth.TextContent = value.sensorwidth.ToString("0.00");
             }
         }
 
@@ -46,14 +46,14 @@ namespace VPS.Controls
             get
             {
                 return new float[] {
-                    Convert.ToSingle(CourseOverlap.TextString),
-                    Convert.ToSingle(SideOverlap.TextString)
+                    Convert.ToSingle(CourseOverlap.TextContent),
+                    Convert.ToSingle(SideOverlap.TextContent)
                 };
             }
             set
             {
-                CourseOverlap.TextString = value[0].ToString();
-                SideOverlap.TextString = value[1].ToString();
+                CourseOverlap.TextContent = value[0].ToString();
+                SideOverlap.TextContent = value[1].ToString();
             }
         }
 
@@ -61,11 +61,11 @@ namespace VPS.Controls
         {
             get
             {
-                return Convert.ToInt32(this.RelativeAltitude.TextString);
+                return Convert.ToInt32(this.RelativeAltitude.TextContent);
             }
             set
             {
-                this.RelativeAltitude.TextString = value.ToString();
+                this.RelativeAltitude.TextContent = value.ToString();
             }
         }
 
@@ -74,14 +74,14 @@ namespace VPS.Controls
             get
             {
                 return new float[] {
-                    Convert.ToSingle(Dy.TextString),
-                    Convert.ToSingle(Bx.TextString)
+                    Convert.ToSingle(Dy.TextContent),
+                    Convert.ToSingle(Bx.TextContent)
                 };
             }
             set
             {
-                Dy.TextString = value[0].ToString("0.00");
-                Bx.TextString = value[1].ToString("0.00");
+                Dy.TextContent = value[0].ToString("0.00");
+                Bx.TextContent = value[1].ToString("0.00");
             }
         }
 
@@ -89,14 +89,14 @@ namespace VPS.Controls
         {
             get
             {
-                return this.CameraTopHead.TextString == "横放";
+                return this.CameraTopHead.TextContent == "横放";
             }
             set
             {
                 if (value)
-                    this.CameraTopHead.TextString = "横放";
+                    this.CameraTopHead.TextContent = "横放";
                 else
-                    this.CameraTopHead.TextString = "纵放";
+                    this.CameraTopHead.TextContent = "纵放";
             }
         }
 
@@ -140,13 +140,13 @@ namespace VPS.Controls
         {
             try
             {
-                string selectedCamera = this.CMB_camera.TextString;
+                string selectedCamera = this.CMB_camera.TextContent;
                 var cameraInfo = cameras[selectedCamera];
-                this.ImageWidth.TextString = cameraInfo.imagewidth.ToString();
-                this.ImageHeight.TextString = cameraInfo.imageheight.ToString();
-                this.CameraSensorWidth.TextString = cameraInfo.sensorwidth.ToString();
-                this.CameraSensorHeight.TextString = cameraInfo.sensorheight.ToString();
-                this.CameraFocus.TextString = cameraInfo.focallen.ToString();
+                this.ImageWidth.TextContent = cameraInfo.imagewidth.ToString();
+                this.ImageHeight.TextContent = cameraInfo.imageheight.ToString();
+                this.CameraSensorWidth.TextContent = cameraInfo.sensorwidth.ToString();
+                this.CameraSensorHeight.TextContent = cameraInfo.sensorheight.ToString();
+                this.CameraFocus.TextContent = cameraInfo.focallen.ToString();
                 CalculRelativeAltitude();
                 CalculBx();
                 CalculDy();
@@ -201,66 +201,66 @@ namespace VPS.Controls
 
         private void CalculGSDFromScale()
         {
-            if (!string.IsNullOrEmpty(PresetScale.TextString))
+            if (!string.IsNullOrEmpty(PresetScale.TextContent))
             {
-                string[] data = PresetScale.TextString.Split(':');
+                string[] data = PresetScale.TextContent.Split(':');
                 float gsd = System.Convert.ToSingle(data[1]) / (System.Convert.ToSingle(data[0]) * 10000) * 0.8f;
-                this.GSD.TextString = gsd.ToString("0.000");
+                this.GSD.TextContent = gsd.ToString("0.000");
             }
         }
 
         private void CalculRelativeAltitude()
         {
-            if (!string.IsNullOrEmpty(GSD.TextString) &&
-                !string.IsNullOrEmpty(CameraFocus.TextString))
+            if (!string.IsNullOrEmpty(GSD.TextContent) &&
+                !string.IsNullOrEmpty(CameraFocus.TextContent))
             {
-                float gsd = System.Convert.ToSingle(this.GSD.TextString);
-                float f = System.Convert.ToSingle(this.CameraFocus.TextString);
-                float a = System.Convert.ToSingle(this.CameraSensorWidth.TextString) /
-                    System.Convert.ToSingle(this.ImageWidth.TextString);
+                float gsd = System.Convert.ToSingle(this.GSD.TextContent);
+                float f = System.Convert.ToSingle(this.CameraFocus.TextContent);
+                float a = System.Convert.ToSingle(this.CameraSensorWidth.TextContent) /
+                    System.Convert.ToSingle(this.ImageWidth.TextContent);
 
                 int ra = (int)(f * gsd / a);
 
-                this.RelativeAltitude.TextString = ra.ToString();
+                this.RelativeAltitude.TextContent = ra.ToString();
             }
         }
 
         public void CalculGSD()
         {
-            if (!string.IsNullOrEmpty(RelativeAltitude.TextString) &&
-                !string.IsNullOrEmpty(CameraFocus.TextString))
+            if (!string.IsNullOrEmpty(RelativeAltitude.TextContent) &&
+                !string.IsNullOrEmpty(CameraFocus.TextContent))
             {
-                int ra = System.Convert.ToInt32(this.RelativeAltitude.TextString);
-                float f = System.Convert.ToSingle(this.CameraFocus.TextString);
-                float a = System.Convert.ToSingle(this.CameraSensorWidth.TextString) /
-                    System.Convert.ToSingle(this.ImageWidth.TextString);
+                int ra = System.Convert.ToInt32(this.RelativeAltitude.TextContent);
+                float f = System.Convert.ToSingle(this.CameraFocus.TextContent);
+                float a = System.Convert.ToSingle(this.CameraSensorWidth.TextContent) /
+                    System.Convert.ToSingle(this.ImageWidth.TextContent);
 
                 float gsd = (ra * a / f);
 
-                this.GSD.TextString = gsd.ToString("0.000");
+                this.GSD.TextContent = gsd.ToString("0.000");
             }
         }
 
         private void CalculBx()
         {
-            if (!string.IsNullOrEmpty(CourseOverlap.TextString) &&
-                !string.IsNullOrEmpty(CameraFocus.TextString) &&
-                !string.IsNullOrEmpty(RelativeAltitude.TextString))
+            if (!string.IsNullOrEmpty(CourseOverlap.TextContent) &&
+                !string.IsNullOrEmpty(CameraFocus.TextContent) &&
+                !string.IsNullOrEmpty(RelativeAltitude.TextContent))
             {
-                if (!string.IsNullOrEmpty(CameraSensorHeight.TextString))
+                if (!string.IsNullOrEmpty(CameraSensorHeight.TextContent))
                 {
-                    float flyalt = (float)CurrentState.fromDistDisplayUnit(System.Convert.ToSingle(RelativeAltitude.TextString));
+                    float flyalt = (float)CurrentState.fromDistDisplayUnit(System.Convert.ToSingle(RelativeAltitude.TextContent));
                     double viewwidth = 0, viewheight = 0;
                     getFOV(flyalt, ref viewwidth, ref viewheight);
-                    if (CameraTopHead.TextString == "纵放")
+                    if (CameraTopHead.TextContent == "纵放")
                     {
-                        double bx = (1 - System.Convert.ToSingle(CourseOverlap.TextString) / 100) * viewwidth;
-                        this.Bx.TextString = bx.ToString("0.00");
+                        double bx = (1 - System.Convert.ToSingle(CourseOverlap.TextContent) / 100) * viewwidth;
+                        this.Bx.TextContent = bx.ToString("0.00");
                     }
                     else
                     {
-                        double bx = (1 - System.Convert.ToSingle(CourseOverlap.TextString) / 100) * viewheight;
-                        this.Bx.TextString = bx.ToString("0.00");
+                        double bx = (1 - System.Convert.ToSingle(CourseOverlap.TextContent) / 100) * viewheight;
+                        this.Bx.TextContent = bx.ToString("0.00");
                     }
                 }
             }
@@ -268,24 +268,24 @@ namespace VPS.Controls
 
         private void CalculDy()
         {
-            if (!string.IsNullOrEmpty(SideOverlap.TextString) &&
-                !string.IsNullOrEmpty(CameraFocus.TextString) &&
-                !string.IsNullOrEmpty(RelativeAltitude.TextString))
+            if (!string.IsNullOrEmpty(SideOverlap.TextContent) &&
+                !string.IsNullOrEmpty(CameraFocus.TextContent) &&
+                !string.IsNullOrEmpty(RelativeAltitude.TextContent))
             {
-                if (!string.IsNullOrEmpty(CameraSensorWidth.TextString))
+                if (!string.IsNullOrEmpty(CameraSensorWidth.TextContent))
                 {
-                    float flyalt = (float)CurrentState.fromDistDisplayUnit(System.Convert.ToSingle(RelativeAltitude.TextString));
+                    float flyalt = (float)CurrentState.fromDistDisplayUnit(System.Convert.ToSingle(RelativeAltitude.TextContent));
                     double viewwidth = 0, viewheight = 0;
                     getFOV(flyalt, ref viewwidth, ref viewheight);
-                    if (CameraTopHead.TextString == "纵放")
+                    if (CameraTopHead.TextContent == "纵放")
                     {
-                        double dy = (1 - System.Convert.ToSingle(SideOverlap.TextString) / 100) * viewheight;
-                        this.Dy.TextString = dy.ToString("0.00");
+                        double dy = (1 - System.Convert.ToSingle(SideOverlap.TextContent) / 100) * viewheight;
+                        this.Dy.TextContent = dy.ToString("0.00");
                     }
                     else
                     {
-                        double dy = (1 - System.Convert.ToSingle(SideOverlap.TextString) / 100) * viewwidth;
-                        this.Dy.TextString = dy.ToString("0.00");
+                        double dy = (1 - System.Convert.ToSingle(SideOverlap.TextContent) / 100) * viewwidth;
+                        this.Dy.TextContent = dy.ToString("0.00");
                     }
                 }
             }
@@ -428,7 +428,7 @@ namespace VPS.Controls
                 PresetScale.Add("1:10000");
             if (!PresetScale.Contains("1:20000"))
                 PresetScale.Add("1:20000");
-            PresetScale.TextString = "1:500";
+            PresetScale.TextContent = "1:500";
         }
 
         private void SetCameraTop()
@@ -437,7 +437,7 @@ namespace VPS.Controls
                 CameraTopHead.Add("横放");
             if (!CameraTopHead.Contains("纵放"))
                 CameraTopHead.Add("纵放");
-            CameraTopHead.TextString = "纵放";
+            CameraTopHead.TextContent = "纵放";
         }
 
         //void doCalc()
@@ -473,9 +473,9 @@ namespace VPS.Controls
 
         void getFOV(double flyalt, ref double fovh, ref double fovv)
         {
-            double focallen = double.Parse(CameraFocus.TextString);
-            double sensorwidth = double.Parse(CameraSensorWidth.TextString);
-            double sensorheight = double.Parse(CameraSensorHeight.TextString);
+            double focallen = double.Parse(CameraFocus.TextContent);
+            double sensorwidth = double.Parse(CameraSensorWidth.TextContent);
+            double sensorheight = double.Parse(CameraSensorHeight.TextContent);
 
             // scale      mm / mm
             double flscale = (1000 * flyalt) / focallen;

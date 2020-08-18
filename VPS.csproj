@@ -17,7 +17,6 @@
     <Product>Mission Planner</Product>
     <Description>Mission Planner ground control station for ardupilot</Description>
     <Copyright>Copyright © Michael Oborne 2010-2018</Copyright>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -60,6 +59,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyName>VPS</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="APMPlannerXplanes\**" />
@@ -786,12 +788,6 @@
       <DependentUpon>LayerManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LayerReader.resx">
-      <DependentUpon>LayerReader.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\LayerReader.zh-CHS.resx">
-      <DependentUpon>LayerReader.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\LayerReader.zh-CN.resx">
       <DependentUpon>LayerReader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LayerReader.zh-Hans.resx">

@@ -73,7 +73,7 @@ namespace VPS.Controls
         }
 
         [Category("设置"), Description("文本内容")]
-        public string TextString
+        public string TextContent
         {
             get { return DisplayText.Text; }
             set

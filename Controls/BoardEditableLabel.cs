@@ -80,7 +80,7 @@ namespace VPS.Controls
         }
 
         [Category("设置"), Description("文本内容")]
-        public string TextString
+        public string TextContent
         {
             get { return DisplayText.Text; }
             set
@@ -180,7 +180,7 @@ namespace VPS.Controls
         {
             if (this.EditBox.Visible == true)
             {
-                TextString = this.EditBox.Text;
+                TextContent = this.EditBox.Text;
                 this.EditBox.Visible = false;
                 ChangeText?.Invoke();
                 return;
@@ -193,7 +193,7 @@ namespace VPS.Controls
             {
                 if (this.EditBox.Visible == true)
                 {
-                    TextString = this.EditBox.Text;
+                    TextContent = this.EditBox.Text;
                     this.EditBox.Visible = false;
                     ChangeText?.Invoke();
                     return;
