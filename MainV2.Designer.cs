@@ -97,7 +97,6 @@ namespace VPS
             this.MenuReadWP,
             this.MenuSaveWP,
             this.Separator4,
-            //this.MenuConfigTune,
             this.Separator5,
             this.MenuConnect,
             this.toolStripConnectionControl});
@@ -179,13 +178,11 @@ namespace VPS
             // 
             resources.ApplyResources(this.MenuLoadLayer, "MenuLoadLayer");
             this.MenuLoadLayer.BottomTransparent = 5;
-            this.MenuLoadLayer.Checked = true;
-            this.MenuLoadLayer.CheckState = System.Windows.Forms.CheckState.Checked;
             this.MenuLoadLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuLoadLayer.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.MenuLoadLayer.HightLightBackgroundColor = System.Drawing.Color.Lime;
             this.MenuLoadLayer.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuLoadLayer.MyChecked = true;
+            this.MenuLoadLayer.MyChecked = false;
             this.MenuLoadLayer.Name = "MenuLoadLayer";
             this.MenuLoadLayer.Padding = new System.Windows.Forms.Padding(0, 0, 43, 38);
             this.MenuLoadLayer.TopTransparent = 8;
