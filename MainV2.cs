@@ -1491,6 +1491,7 @@ namespace VPS
             DialogResult result = reader.ShowDialog();
             if (result == DialogResult.OK)
             {
+                
                 AddLayerOverlay(reader.GetLayer(), reader.GetOrigin(), reader.GetScale(), reader.GetTransparentColor());
                 reader.Dispose();
                 reader.Close();

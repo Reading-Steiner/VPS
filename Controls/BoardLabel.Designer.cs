@@ -38,9 +38,8 @@
             this.DisplayText.Location = new System.Drawing.Point(24, 6);
             this.DisplayText.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.DisplayText.Name = "DisplayText";
-            this.DisplayText.Size = new System.Drawing.Size(49, 19);
+            this.DisplayText.Size = new System.Drawing.Size(0, 19);
             this.DisplayText.TabIndex = 0;
-            this.DisplayText.Text = "test";
             // 
             // BoardLabel
             // 

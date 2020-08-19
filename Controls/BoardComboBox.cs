@@ -91,6 +91,7 @@ namespace VPS.Controls
         public bool AllowEdit { get; set; } = true;
 
         public delegate void delegateHandler();
+        private delegateHandler EditOver;
         public delegateHandler SelectedChange;
         public delegateHandler ChangeSelected;
         public BoardComboBox()
@@ -109,12 +110,10 @@ namespace VPS.Controls
                 this.DisplayText.BackColor = Color.Transparent;
             OnSizeChanged(null);
             this.DisplayText.Click += DisplayText_Click;
-            this.SelectedChange += CheckAndCloseEdit;
+            this.EditOver += CheckAndCloseEdit;
             this.EditBox.LostFocus += EditBox_LostFocus;
             this.EditBox.KeyDown += OnKeyDown;
-            //this.EditBox.TextChanged
             this.Button.Paint += Button_Paint;
-            //this.TextList.Paint += TextList_Paint;
             this.Button.MouseClick += Button_MouseClick;
             this.Button.MouseEnter += Button_MouseEnter;
             this.Button.MouseLeave += Button_MouseLeave;
@@ -137,6 +136,7 @@ namespace VPS.Controls
             {
                 TextContent = this.EditBox.Text;
                 this.EditBox.Visible = false;
+                EditOver?.Invoke();
                 ChangeSelected?.Invoke();
                 return;
             }
@@ -148,7 +148,7 @@ namespace VPS.Controls
             {
                 this.EditBox.Text = this.DisplayText.Text;
                 this.EditBox.Left = this.DisplayText.Left;
-                this.EditBox.Top = this.DisplayText.Left;
+                this.EditBox.Top = this.DisplayText.Top;
                 this.EditBox.Width = this.Width - 2 * this.DisplayText.Left;
                 this.EditBox.BackColor = this.BackColor;
                 this.EditBox.Visible = true;
@@ -156,17 +156,20 @@ namespace VPS.Controls
             }
         }
 
-        //protected override void OnGotFocus(EventArgs e)
-        //{
-        //    this.EditBox.Text = this.DisplayText.Text;
-        //    this.EditBox.Left = this.DisplayText.Left;
-        //    this.EditBox.Top = this.DisplayText.Left;
-        //    this.EditBox.Width = this.Width - 2 * this.DisplayText.Left;
-        //    this.EditBox.BackColor = this.BackColor;
-        //    this.EditBox.Visible = true;
-        //    this.EditBox.Focus();
-        //    base.OnGotFocus(e);
-        //}
+        protected override void OnGotFocus(EventArgs e)
+        {
+            if (AllowEdit)
+            {
+                this.EditBox.Text = this.DisplayText.Text;
+                this.EditBox.Left = this.DisplayText.Left;
+                this.EditBox.Top = this.DisplayText.Top;
+                this.EditBox.Width = this.Width - 2 * this.DisplayText.Left;
+                this.EditBox.BackColor = this.BackColor;
+                this.EditBox.Visible = true;
+                this.EditBox.Focus();
+                base.OnGotFocus(e);
+            }
+        }
 
         protected void OnKeyDown(object sender, KeyEventArgs e)
         {
@@ -176,6 +179,7 @@ namespace VPS.Controls
                 {
                     TextContent = this.EditBox.Text;
                     this.EditBox.Visible = false;
+                    EditOver?.Invoke();
                     ChangeSelected?.Invoke();
                     return;
                 }

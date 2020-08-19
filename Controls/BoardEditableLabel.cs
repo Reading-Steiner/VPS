@@ -16,9 +16,26 @@ namespace VPS.Controls
         public BoardEditableLabel()
         {
             InitializeComponent();
+            SetForeColor();
+            this.ForeColorChanged += OnForeColorChanged;
             this.EditBox.KeyDown += OnKeyDown;
             this.EditBox.LostFocus += EditBox_LostFocus;
-            TextChange += CheckAndCloseEdit;
+            EditOver += CheckAndCloseEdit;
+        }
+
+        private void OnForeColorChanged(object sender, EventArgs e)
+        {
+            SetForeColor();
+        }
+
+        private void SetForeColor()
+        {
+            this.EditBox.ForeColor = Color.FromArgb(
+                this.ForeColor.A,
+                255 - this.ForeColor.R / 15,
+                this.ForeColor.G / 5,
+                this.ForeColor.B / 5);
+            this.DisplayText.ForeColor = this.ForeColor;
         }
 
         public enum Style
@@ -29,6 +46,7 @@ namespace VPS.Controls
         }
 
         public delegate void delegateHandler();
+        private delegateHandler EditOver;
         public delegateHandler TextChange;
         public delegateHandler ChangeText;
 
@@ -154,7 +172,7 @@ namespace VPS.Controls
             {
                 this.EditBox.Text = this.DisplayText.Text;
                 this.EditBox.Left = this.DisplayText.Left;
-                this.EditBox.Top = this.DisplayText.Left;
+                this.EditBox.Top = this.DisplayText.Top;
                 this.EditBox.Width = this.Width - 2 * this.DisplayText.Left;
                 this.EditBox.BackColor = this.BackColor;
                 this.EditBox.Visible = true;
@@ -163,17 +181,19 @@ namespace VPS.Controls
             }
         }
 
-
         protected override void OnGotFocus(EventArgs e)
         {
-            this.EditBox.Text = this.DisplayText.Text;
-            this.EditBox.Left = this.DisplayText.Left;
-            this.EditBox.Top = this.DisplayText.Left;
-            this.EditBox.Width = this.Width - 2 * this.DisplayText.Left;
-            this.EditBox.BackColor = this.BackColor;
-            this.EditBox.Visible = true;
-            this.EditBox.Focus();
-            base.OnGotFocus(e);
+            if (AllowEdit)
+            {
+                this.EditBox.Text = this.DisplayText.Text;
+                this.EditBox.Left = this.DisplayText.Left;
+                this.EditBox.Top = this.DisplayText.Top;
+                this.EditBox.Width = this.Width - 2 * this.DisplayText.Left;
+                this.EditBox.BackColor = this.BackColor;
+                this.EditBox.Visible = true;
+                this.EditBox.Focus();
+                base.OnGotFocus(e);
+            }
         }
 
         private void EditBox_LostFocus(object sender, EventArgs e)
@@ -182,6 +202,7 @@ namespace VPS.Controls
             {
                 TextContent = this.EditBox.Text;
                 this.EditBox.Visible = false;
+                EditOver?.Invoke();
                 ChangeText?.Invoke();
                 return;
             }
@@ -195,6 +216,7 @@ namespace VPS.Controls
                 {
                     TextContent = this.EditBox.Text;
                     this.EditBox.Visible = false;
+                    EditOver?.Invoke();
                     ChangeText?.Invoke();
                     return;
                 }

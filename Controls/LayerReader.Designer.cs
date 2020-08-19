@@ -31,6 +31,7 @@ namespace VPS.Controls
         /// </summary>
         private void InitializeComponent()
         {
+            VPS.Controls.BoardLabel MainTitle;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LayerReader));
             this.TopLabel = new System.Windows.Forms.Label();
             this.RightLabel = new System.Windows.Forms.Label();
@@ -50,7 +51,7 @@ namespace VPS.Controls
             this.ScaleLabel = new VPS.Controls.BoardLabel();
             this.ViewGroup = new System.Windows.Forms.GroupBox();
             this.TransparentLabel = new VPS.Controls.BoardLabel();
-            this.returnButton1 = new VPS.Controls.ReturnButton();
+            this.RetButton = new VPS.Controls.ReturnButton();
             this.FilePath = new VPS.Controls.BoardEditableLabel();
             this.FileOpen = new VPS.Controls.GradualButton();
             MainTitle = new VPS.Controls.BoardLabel();
@@ -59,6 +60,21 @@ namespace VPS.Controls
             this.MapGroup.SuspendLayout();
             this.ViewGroup.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // MainTitle
+            // 
+            resources.ApplyResources(MainTitle, "MainTitle");
+            MainTitle.BackColor = System.Drawing.SystemColors.Control;
+            MainTitle.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            MainTitle.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            MainTitle.Name = "MainTitle";
+            MainTitle.Pattern = "^\\S*$";
+            MainTitle.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
+            MainTitle.RederWidth = 2;
+            MainTitle.TabStop = false;
+            MainTitle.Tag = "oad the geographic image file";
+            MainTitle.TextContent = "加载地理图像文件";
+            MainTitle.TextPosition = new System.Drawing.Point(24, 6);
             // 
             // TopLabel
             // 
@@ -115,7 +131,7 @@ namespace VPS.Controls
             this.AltitudeLabel.Pattern = "^\\S*$";
             this.AltitudeLabel.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.AltitudeLabel.RederWidth = 1;
-            this.AltitudeLabel.TextContent = "相对高度";
+            this.AltitudeLabel.TextContent = "地面高程";
             this.AltitudeLabel.TextPosition = new System.Drawing.Point(10, 5);
             // 
             // LatitudeLabel
@@ -137,12 +153,12 @@ namespace VPS.Controls
             this.Longitude.AllowEdit = true;
             this.Longitude.BoardColor = System.Drawing.SystemColors.InactiveCaption;
             this.Longitude.Name = "Longitude";
-            this.Longitude.Pattern = "^\\S*$";
+            this.Longitude.Pattern = "^[+-]?\\d+[.]?\\d*$";
             this.Longitude.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.Longitude.RederWidth = 2;
             this.Longitude.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.Longitude.TextContent = "";
-            this.Longitude.TextPosition = new System.Drawing.Point(122, 89);
+            this.Longitude.TextContent = "0";
+            this.Longitude.TextPosition = new System.Drawing.Point(3, 6);
             // 
             // LongitudeLabel
             // 
@@ -163,12 +179,12 @@ namespace VPS.Controls
             this.Latitude.AllowEdit = true;
             this.Latitude.BoardColor = System.Drawing.SystemColors.InactiveCaption;
             this.Latitude.Name = "Latitude";
-            this.Latitude.Pattern = "^\\S*$";
+            this.Latitude.Pattern = "^[+-]?\\d+[.]?\\d*$";
             this.Latitude.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.Latitude.RederWidth = 2;
             this.Latitude.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.Latitude.TextContent = "";
-            this.Latitude.TextPosition = new System.Drawing.Point(122, 89);
+            this.Latitude.TextContent = "0";
+            this.Latitude.TextPosition = new System.Drawing.Point(3, 6);
             // 
             // Altitude
             // 
@@ -176,12 +192,12 @@ namespace VPS.Controls
             this.Altitude.AllowEdit = true;
             this.Altitude.BoardColor = System.Drawing.SystemColors.InactiveCaption;
             this.Altitude.Name = "Altitude";
-            this.Altitude.Pattern = "^\\S*$";
+            this.Altitude.Pattern = "^[+-]?\\d+[.]?\\d*$";
             this.Altitude.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.Altitude.RederWidth = 2;
             this.Altitude.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.Altitude.TextContent = "";
-            this.Altitude.TextPosition = new System.Drawing.Point(122, 89);
+            this.Altitude.TextContent = "0";
+            this.Altitude.TextPosition = new System.Drawing.Point(3, 6);
             // 
             // Transparent
             // 
@@ -210,12 +226,12 @@ namespace VPS.Controls
             this.MapScale.AllowEdit = true;
             this.MapScale.BoardColor = System.Drawing.SystemColors.InactiveCaption;
             this.MapScale.Name = "MapScale";
-            this.MapScale.Pattern = "^\\S*$";
+            this.MapScale.Pattern = "^(\\d+[.]?\\d*)\\s*[:：]\\s*(\\d*[.]?\\d*)$";
             this.MapScale.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
             this.MapScale.RederWidth = 2;
             this.MapScale.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.MapScale.TextContent = "";
-            this.MapScale.TextPosition = new System.Drawing.Point(122, 89);
+            this.MapScale.TextContent = "1：200";
+            this.MapScale.TextPosition = new System.Drawing.Point(3, 6);
             // 
             // ScaleLabel
             // 
@@ -252,14 +268,14 @@ namespace VPS.Controls
             this.TransparentLabel.TextContent = "透明色";
             this.TransparentLabel.TextPosition = new System.Drawing.Point(18, 5);
             // 
-            // returnButton1
+            // RetButton
             // 
-            resources.ApplyResources(this.returnButton1, "returnButton1");
-            this.returnButton1.CancelText = "取消";
-            this.returnButton1.Name = "returnButton1";
-            this.returnButton1.OKText = "确定";
-            this.returnButton1.RederBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.returnButton1.RederButtonColor = System.Drawing.Color.CornflowerBlue;
+            resources.ApplyResources(this.RetButton, "RetButton");
+            this.RetButton.CancelText = "取消";
+            this.RetButton.Name = "RetButton";
+            this.RetButton.OKText = "确定";
+            this.RetButton.RederBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.RetButton.RederButtonColor = System.Drawing.Color.CornflowerBlue;
             // 
             // FilePath
             // 
@@ -273,7 +289,7 @@ namespace VPS.Controls
             this.FilePath.TabStop = false;
             this.FilePath.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.FilePath.TextContent = "";
-            this.FilePath.TextPosition = new System.Drawing.Point(15, 10);
+            this.FilePath.TextPosition = new System.Drawing.Point(5, 5);
             // 
             // FileOpen
             // 
@@ -290,27 +306,12 @@ namespace VPS.Controls
             this.FileOpen.UseVisualStyleBackColor = true;
             this.FileOpen.Click += new System.EventHandler(this.FileOpen_Click);
             // 
-            // MainTitle
-            // 
-            resources.ApplyResources(MainTitle, "MainTitle");
-            MainTitle.BackColor = System.Drawing.SystemColors.Control;
-            MainTitle.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            MainTitle.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            MainTitle.Name = "MainTitle";
-            MainTitle.Pattern = "^\\S*$";
-            MainTitle.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
-            MainTitle.RederWidth = 2;
-            MainTitle.TabStop = false;
-            MainTitle.Tag = "oad the geographic image file";
-            MainTitle.TextContent = "加载地理图像文件";
-            MainTitle.TextPosition = new System.Drawing.Point(24, 6);
-            // 
             // LayerReader
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(MainTitle);
-            this.Controls.Add(this.returnButton1);
+            this.Controls.Add(this.RetButton);
             this.Controls.Add(this.ViewGroup);
             this.Controls.Add(this.MapGroup);
             this.Controls.Add(this.OriginGroup);
@@ -363,6 +364,6 @@ namespace VPS.Controls
         private System.Windows.Forms.Label BottomLabel;
         private System.Windows.Forms.Label LeftLabel;
 
-        private ReturnButton returnButton1;
+        private ReturnButton RetButton;
     }
 }

@@ -490,7 +490,7 @@ namespace VPS.Controls
             fovh = viewwidth;
             fovv = viewheight;
         }
-
+        
         const double rad2deg = (180 / Math.PI);
         const double deg2rad = (1.0 / rad2deg);
     }

@@ -47,6 +47,7 @@ namespace VPS.Controls
             // DisplayText
             // 
             this.DisplayText.BackColor = System.Drawing.Color.Transparent;
+            this.DisplayText.Enabled = true;
             this.DisplayText.Location = new System.Drawing.Point(5, 6);
             this.DisplayText.Name = "DisplayText";
             this.DisplayText.Size = new System.Drawing.Size(107, 24);

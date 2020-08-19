@@ -144,11 +144,14 @@
   <data name="Longitude.Location" type="System.Drawing.Point, System.Drawing">
     <value>96, 25</value>
   </data>
+  <data name="&gt;&gt;LayerPrevView.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
   <data name="AltitudeLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>17, 94</value>
   </data>
   <data name="&gt;&gt;Longitude.Type" xml:space="preserve">
-    <value>VPS.Controls.BoardEditableLabel, VPS, Version=1.0.7535.24823, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.BoardEditableLabel, VPS, Version=1.0.7536.17809, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;Longitude.Parent" xml:space="preserve">
     <value>OriginGroup</value>
@@ -160,7 +163,7 @@
     <value>71, 23</value>
   </data>
   <data name="&gt;&gt;returnButton1.Type" xml:space="preserve">
-    <value>VPS.Controls.ReturnButton, VPS, Version=1.0.7535.24823, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.ReturnButton, VPS, Version=1.0.7535.31790, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="boardLabel1.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -179,6 +182,9 @@
   </data>
   <data name="&gt;&gt;LatitudeLabel.Parent" xml:space="preserve">
     <value>OriginGroup</value>
+  </data>
+  <data name="&gt;&gt;RetButton.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;label1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -204,11 +210,14 @@
   <data name="Latitude.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 21</value>
   </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
+  <data name="&gt;&gt;LeftLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
   <data name="AltitudeLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>565, 428</value>
   </data>
   <data name="&gt;&gt;RightLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -218,6 +227,9 @@
   </data>
   <data name="TransparentLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>17, 28</value>
+  </data>
+  <data name="&gt;&gt;RightLabel.ZOrder" xml:space="preserve">
+    <value>8</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>LayerReader</value>
@@ -235,13 +247,10 @@
     <value>False</value>
   </data>
   <data name="&gt;&gt;ScaleLabel.Type" xml:space="preserve">
-    <value>VPS.Controls.BoardLabel, VPS, Version=1.0.7535.24823, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.BoardLabel, VPS, Version=1.0.7536.17809, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="boardLabel1.TabIndex" type="System.Int32, mscorlib">
     <value>136</value>
-  </data>
-  <data name="ViewGroup.Location" type="System.Drawing.Point, System.Drawing">
-    <value>357, 303</value>
   </data>
   <data name="&gt;&gt;label1.Name" xml:space="preserve">
     <value>label1</value>
@@ -273,9 +282,6 @@
   <data name="LongitudeLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;FileOpen.Type" xml:space="preserve">
-    <value>VPS.Controls.GradualButton, VPS, Version=1.0.7535.24823, Culture=neutral, PublicKeyToken=null</value>
-  </data>
   <data name="&gt;&gt;LayerPrevView.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
@@ -304,7 +310,7 @@
     <value>Origin</value>
   </data>
   <data name="&gt;&gt;MainTitle.Type" xml:space="preserve">
-    <value>VPS.Controls.BoardLabel, VPS, Version=1.0.7535.24823, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.BoardLabel, VPS, Version=1.0.7536.17809, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;RightLabel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -322,13 +328,10 @@
     <value>True</value>
   </data>
   <data name="&gt;&gt;Altitude.Type" xml:space="preserve">
-    <value>VPS.Controls.BoardEditableLabel, VPS, Version=1.0.7535.24823, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.BoardEditableLabel, VPS, Version=1.0.7536.17809, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="LatitudeLabel.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>MapGroup</value>
   </data>
   <data name="&gt;&gt;FilePath.ZOrder" xml:space="preserve">
     <value>10</value>
@@ -348,9 +351,6 @@
   <data name="Latitude.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
-  <data name="MapScale.Location" type="System.Drawing.Point, System.Drawing">
-    <value>94, 20</value>
-  </data>
   <data name="&gt;&gt;Transparent.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
@@ -359,9 +359,6 @@
   </data>
   <data name="Latitude.Location" type="System.Drawing.Point, System.Drawing">
     <value>96, 58</value>
-  </data>
-  <data name="&gt;&gt;Transparent.Type" xml:space="preserve">
-    <value>DotSpatial.Symbology.Forms.ColorButton, DotSpatial.Symbology.Forms, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0544cdeefb662382</value>
   </data>
   <data name="&gt;&gt;BottomLabel.Name" xml:space="preserve">
     <value>BottomLabel</value>
@@ -390,6 +387,9 @@
   <data name="ViewGroup.Size" type="System.Drawing.Size, System.Drawing">
     <value>200, 52</value>
   </data>
+  <data name="&gt;&gt;OriginGroup.Name" xml:space="preserve">
+    <value>OriginGroup</value>
+  </data>
   <data name="AltitudeLabel.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -407,6 +407,9 @@
   </data>
   <data name="&gt;&gt;BottomLabel.Parent" xml:space="preserve">
     <value>$this</value>
+  </data>
+  <data name="&gt;&gt;FilePath.Name" xml:space="preserve">
+    <value>FilePath</value>
   </data>
   <data name="LatitudeLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
@@ -429,6 +432,9 @@
   <data name="LatitudeLabel.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
   </data>
+  <data name="&gt;&gt;RetButton.Name" xml:space="preserve">
+    <value>RetButton</value>
+  </data>
   <data name="&gt;&gt;returnButton1.Name" xml:space="preserve">
     <value>returnButton1</value>
   </data>
@@ -439,10 +445,16 @@
     <value>5, 5, 5, 5</value>
   </data>
   <data name="&gt;&gt;Latitude.Type" xml:space="preserve">
-    <value>VPS.Controls.BoardEditableLabel, VPS, Version=1.0.7535.24823, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.BoardEditableLabel, VPS, Version=1.0.7536.17809, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="ScaleLabel.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="FileOpen.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
+  </data>
+  <data name="&gt;&gt;LeftLabel.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="AltitudeLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 23</value>
@@ -450,26 +462,26 @@
   <data name="MapGroup.Location" type="System.Drawing.Point, System.Drawing">
     <value>357, 120</value>
   </data>
+  <data name="LatitudeLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 61</value>
+  </data>
   <data name="&gt;&gt;returnButton1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;Altitude.Name" xml:space="preserve">
     <value>Altitude</value>
   </data>
-  <data name="&gt;&gt;TopLabel.Name" xml:space="preserve">
-    <value>TopLabel</value>
-  </data>
-  <data name="&gt;&gt;TransparentLabel.Parent" xml:space="preserve">
-    <value>ViewGroup</value>
-  </data>
   <data name="&gt;&gt;FilePath.Type" xml:space="preserve">
-    <value>VPS.Controls.BoardEditableLabel, VPS, Version=1.0.7535.24823, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.BoardEditableLabel, VPS, Version=1.0.7536.17809, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MapScale.Type" xml:space="preserve">
-    <value>VPS.Controls.BoardEditableLabel, VPS, Version=1.0.7535.24823, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.BoardEditableLabel, VPS, Version=1.0.7536.17809, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;LatitudeLabel.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="TopLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>124, 120</value>
   </data>
   <data name="LongitudeLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -479,6 +491,9 @@
   </data>
   <data name="&gt;&gt;Transparent.Name" xml:space="preserve">
     <value>Transparent</value>
+  </data>
+  <data name="Transparent.Text" xml:space="preserve">
+    <value>colorButton1</value>
   </data>
   <data name="ViewGroup.Text" xml:space="preserve">
     <value>View</value>
@@ -498,17 +513,11 @@
   <data name="&gt;&gt;RightLabel.Name" xml:space="preserve">
     <value>RightLabel</value>
   </data>
-  <data name="&gt;&gt;LayerPrevView.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="TopLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="&gt;&gt;TopLabel.Name" xml:space="preserve">
+    <value>TopLabel</value>
   </data>
   <data name="BottomLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </data>
-  <data name="TransparentLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="LongitudeLabel.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -538,7 +547,7 @@
     <value>430, 21</value>
   </data>
   <data name="&gt;&gt;TransparentLabel.Type" xml:space="preserve">
-    <value>VPS.Controls.BoardLabel, VPS, Version=1.0.7535.24823, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.BoardLabel, VPS, Version=1.0.7536.17809, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;FileOpen.Name" xml:space="preserve">
     <value>FileOpen</value>
@@ -615,11 +624,14 @@
   <data name="Altitude.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 21</value>
   </data>
+  <data name="RetButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>-1, 410</value>
+  </data>
   <data name="FilePath.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;LeftLabel.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>MapGroup</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -642,17 +654,17 @@
   <data name="BottomLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>103, 365</value>
   </data>
+  <data name="&gt;&gt;RetButton.Type" xml:space="preserve">
+    <value>VPS.Controls.ReturnButton, VPS, Version=1.0.7536.17809, Culture=neutral, PublicKeyToken=null</value>
+  </data>
   <data name="&gt;&gt;MapGroup.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Transparent.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+  <data name="MapScale.Location" type="System.Drawing.Point, System.Drawing">
+    <value>94, 20</value>
   </data>
-  <data name="&gt;&gt;RightLabel.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 23</value>
+  <data name="&gt;&gt;Transparent.Type" xml:space="preserve">
+    <value>DotSpatial.Symbology.Forms.ColorButton, DotSpatial.Symbology.Forms, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0544cdeefb662382</value>
   </data>
   <data name="LongitudeLabel.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -660,11 +672,11 @@
   <data name="ScaleLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 23</value>
   </data>
-  <data name="LatitudeLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 61</value>
+  <data name="ViewGroup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>357, 303</value>
   </data>
   <data name="&gt;&gt;LatitudeLabel.Type" xml:space="preserve">
-    <value>VPS.Controls.BoardLabel, VPS, Version=1.0.7535.24823, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.BoardLabel, VPS, Version=1.0.7536.17809, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ViewGroup.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -712,6 +724,9 @@
   <data name="returnButton1.TabIndex" type="System.Int32, mscorlib">
     <value>135</value>
   </data>
+  <data name="RetButton.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
@@ -724,26 +739,26 @@
   <data name="Longitude.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
+  <data name="&gt;&gt;RetButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
   <data name="FileOpen.Text" xml:space="preserve">
     <value>FileOpen</value>
   </data>
-  <data name="TopLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>124, 120</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>565, 428</value>
   </data>
   <data name="&gt;&gt;ScaleLabel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="&gt;&gt;AltitudeLabel.Type" xml:space="preserve">
-    <value>VPS.Controls.BoardLabel, VPS, Version=1.0.7535.24823, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="boardLabel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 14</value>
+    <value>VPS.Controls.BoardLabel, VPS, Version=1.0.7536.17809, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;LayerPrevView.Type" xml:space="preserve">
     <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;FilePath.Name" xml:space="preserve">
-    <value>FilePath</value>
+  <data name="&gt;&gt;TransparentLabel.Parent" xml:space="preserve">
+    <value>ViewGroup</value>
   </data>
   <data name="FileOpen.Size" type="System.Drawing.Size, System.Drawing">
     <value>105, 23</value>
@@ -766,14 +781,17 @@
   <data name="&gt;&gt;MapGroup.Name" xml:space="preserve">
     <value>MapGroup</value>
   </data>
-  <data name="&gt;&gt;OriginGroup.Name" xml:space="preserve">
-    <value>OriginGroup</value>
+  <data name="TopLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="LongitudeLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 23</value>
   </data>
   <data name="&gt;&gt;LongitudeLabel.Type" xml:space="preserve">
-    <value>VPS.Controls.BoardLabel, VPS, Version=1.0.7535.24823, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.BoardLabel, VPS, Version=1.0.7536.17809, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="Transparent.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
   <data name="&gt;&gt;TransparentLabel.Name" xml:space="preserve">
     <value>TransparentLabel</value>
@@ -781,17 +799,17 @@
   <data name="&gt;&gt;AltitudeLabel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;LeftLabel.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="boardLabel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 14</value>
   </data>
-  <data name="ScaleLabel.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="TransparentLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="TopLabel.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
   </data>
-  <data name="Transparent.Text" xml:space="preserve">
-    <value>colorButton1</value>
+  <data name="&gt;&gt;FileOpen.Type" xml:space="preserve">
+    <value>VPS.Controls.GradualButton, VPS, Version=1.0.7536.17809, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;LayerPrevView.Name" xml:space="preserve">
     <value>LayerPrevView</value>
