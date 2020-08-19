@@ -1400,6 +1400,7 @@ namespace VPS
             this.MenuReadWP.Visible = true;
             this.MenuSaveWP.Visible = true;
             this.Separator4.Visible = true;
+            this.Separator5.Visible = true;
         }
 
         private void SetFlightDataMenu()
@@ -1422,6 +1423,7 @@ namespace VPS
             this.MenuReadWP.Visible = false;
             this.MenuSaveWP.Visible = false;
             this.Separator4.Visible = false;
+            this.Separator5.Visible = true;
         }
 
         private void MenuFlightPlannerOpen_Click(object sender, EventArgs e)
@@ -4690,6 +4692,7 @@ namespace VPS
             if (File.Exists(openFileDialog.FileName))
             {
                 var lines = File.ReadAllLines(openFileDialog.FileName);
+                openFileDialog.Dispose();
 
                 Regex tcp = new Regex("tcp://(.*):([0-9]+)");
                 Regex udp = new Regex("udp://(.*):([0-9]+)");
