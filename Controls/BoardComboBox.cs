@@ -148,7 +148,7 @@ namespace VPS.Controls
             {
                 this.EditBox.Text = this.DisplayText.Text;
                 this.EditBox.Left = this.DisplayText.Left;
-                this.EditBox.Top = this.DisplayText.Top;
+                this.EditBox.Top = this.DisplayText.Top + (this.DisplayText.Height - this.EditBox.Height) / 2;
                 this.EditBox.Width = this.Width - 2 * this.DisplayText.Left;
                 this.EditBox.BackColor = this.BackColor;
                 this.EditBox.Visible = true;

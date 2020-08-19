@@ -199,13 +199,19 @@ namespace VPS.Controls
                 this.DialogResult = DialogResult.OK;
             else
                 this.DialogResult = DialogResult.Cancel;
-            this.Hide();
+            //this.Hide();
+
+            //this.Opacity = 0;
+            //this.Visible = false;
         }
 
         private void Cancel_Click()
         {
             this.DialogResult = DialogResult.Cancel;
-            this.Hide();
+            //this.Hide();
+
+            //this.Opacity = 0;
+            //this.Visible = false;
         }
 
         public string GetLayer()

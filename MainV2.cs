@@ -36,6 +36,7 @@ using AltitudeAngelWings;
 using GMap.NET.CacheProviders;
 using System.Runtime.Remoting.Messaging;
 using static GDAL.GDAL;
+using System.Linq;
 
 namespace VPS
 {
@@ -1428,7 +1429,8 @@ namespace VPS
 
         private void MenuFlightPlannerOpen_Click(object sender, EventArgs e)
         {
-            //MyView.ShowScreen("FlightPlanner");
+            if (MyView.current != MyView.screens.Single(s => s.Name == "FlightData"))
+                FlightDataShow();
             if (this.MenuFlightPlannerOpen.Visible)
                 GCSViews.FlightData.instance.OpenFlightPlanner();
         }
@@ -1442,6 +1444,8 @@ namespace VPS
         private void MenuFlightPlannerClose_Click(object sender, EventArgs e)
         {
             //MyView.ShowScreen("FlightData");
+            if (MyView.current != MyView.screens.Single(s => s.Name == "FlightData"))
+                FlightDataShow();
             if (MenuFlightPlannerClose.Visible)
                 GCSViews.FlightData.instance.CloseFlightPlanner();
         }
@@ -1680,7 +1684,7 @@ namespace VPS
 
         public void doDisconnect(MAVLinkInterface comPort)
         {
-            log.Info("We are disconnecting");
+            log.Info("正在断开连接");
             try
             {
                 if (speechEngine != null) // cancel all pending speech
@@ -1740,7 +1744,7 @@ namespace VPS
         public void doConnect(MAVLinkInterface comPort, string portname, string baud, bool getparams = true)
         {
             bool skipconnectcheck = false;
-            log.Info("We are connecting to " + portname + " " + baud);
+            log.Info("连接到 " + portname + " " + baud);
             switch (portname)
             {
                 case "preset":

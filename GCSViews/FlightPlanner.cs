@@ -2665,7 +2665,7 @@ namespace VPS.GCSViews
                 if (((ComboBox)sender).Text == "UNKNOWN")
                 {
                     string cmdid = "-1";
-                    if (InputBox.Show("Mavlink ID", "Please enter the command ID", ref cmdid) == DialogResult.OK)
+                    if (InputBox.Show("Mavlink ID", "请输入指令 ID", ref cmdid) == DialogResult.OK)
                     {
                         if (cmdid != "-1")
                         {
@@ -3442,7 +3442,7 @@ namespace VPS.GCSViews
             string easting = "578994";
             string northing = "6126244";
 
-            if (InputBox.Show("Zone", "Enter Zone. (eg 50S, 11N)", ref zone) != DialogResult.OK)
+            if (InputBox.Show("Zone", "输入 Zone. (eg 50S, 11N)", ref zone) != DialogResult.OK)
                 return;
             if (InputBox.Show("Easting", "Easting", ref easting) != DialogResult.OK)
                 return;
@@ -4160,6 +4160,8 @@ namespace VPS.GCSViews
         {
             LayerManager layerManager = new LayerManager();
             layerManager.ShowDialog();
+            layerManager.Dispose();
+            layerManager.Close();
         }
 
         public void kMLOverlayToolStripMenuItem_Click(object sender, EventArgs e)
@@ -4216,7 +4218,7 @@ namespace VPS.GCSViews
                     else if (file.ToLower().EndsWith("dxf"))
                     {
                         string zone = "-99";
-                        InputBox.Show("Zone", "Please enter the UTM zone, or cancel to not change", ref zone);
+                        InputBox.Show("Zone", "请输入 UTM zone，或放弃更改", ref zone);
 
                         dxf dxf = new dxf();
                         if (zone != "-99")
@@ -4316,7 +4318,7 @@ namespace VPS.GCSViews
             else
             {
                 CustomMessageBox.Show(
-                    "If you're at the field, connect to your APM and wait for GPS lock. Then click 'Home Location' link to set home to your location");
+                    "如果你在现场，连接你的APM并等待GPS锁定。然后单击“Home Location”链接将Home设置为您的位置");
             }
         }
 
@@ -4343,7 +4345,7 @@ namespace VPS.GCSViews
             }
             catch
             {
-                CustomMessageBox.Show("Failed to open url http://127.0.0.1:56781/network.kml");
+                CustomMessageBox.Show("打开 url http://127.0.0.1:56781/network.kml 失败");
             }
         }
 
@@ -4745,7 +4747,7 @@ namespace VPS.GCSViews
                 }
                 catch
                 {
-                    CustomMessageBox.Show("Error opening File", Strings.ERROR);
+                    CustomMessageBox.Show("文件打开时出错", Strings.ERROR);
                     return;
                 }
             }
@@ -4913,7 +4915,7 @@ namespace VPS.GCSViews
         public void modifyAltToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string altdif = "0";
-            InputBox.Show("Alt Change", "Please enter the alitude change you require.\n(20 = up 20, *2 = up by alt * 2)",
+            InputBox.Show("修改高度", "请输入高度.\n(20 = up 20, *2 = up by alt * 2)",
                 ref altdif);
 
             float altchange = 0;
@@ -5041,7 +5043,7 @@ namespace VPS.GCSViews
             if (!area.IsEmpty)
             {
                 string maxzoomstring = "20";
-                if (InputBox.Show("max zoom", "Enter the max zoom to prefetch to.", ref maxzoomstring) != DialogResult.OK)
+                if (InputBox.Show("max zoom", "输入 max zoom.", ref maxzoomstring) != DialogResult.OK)
                     return;
 
                 int maxzoom = 20;
@@ -5071,7 +5073,7 @@ namespace VPS.GCSViews
             }
             else
             {
-                CustomMessageBox.Show("Select map area holding ALT", "GMap.NET", MessageBoxButtons.OK,
+                CustomMessageBox.Show("按住 ALT 选择区域", "GMap.NET", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
             }
         }
@@ -7264,7 +7266,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         public void TXT_homelat_Enter(object sender, EventArgs e)
         {
             if (!sethome)
-                CustomMessageBox.Show("Click on the Map to set Home ");
+                CustomMessageBox.Show("点击地图设置 Home ");
             sethome = true;
 
         }
@@ -8681,7 +8683,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 string url = "";
                 if (Settings.Instance["WMSserver"] != null)
                     url = Settings.Instance["WMSserver"];
-                if (DialogResult.Cancel == InputBox.Show("WMS Server", "Enter the WMS server URL", ref url))
+                if (DialogResult.Cancel == InputBox.Show("WMS Server", "请输入 WMS server URL", ref url))
                     return;
 
                 // Build get capability request.
@@ -9031,7 +9033,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         public void zoomToToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string place = "Perth Airport, Australia";
-            if (DialogResult.OK == InputBox.Show("Location", "Enter your location", ref place))
+            if (DialogResult.OK == InputBox.Show("Location", "请输入你的 location", ref place))
             {
                 GeoCoderStatusCode status = MainMap.SetPositionByKeywords(place);
                 if (status != GeoCoderStatusCode.G_GEO_SUCCESS)

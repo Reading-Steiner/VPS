@@ -83,7 +83,7 @@ namespace VPS.Controls
                 ThemeManager.ApplyThemeTo(paramCompareForm);
                 if (paramCompareForm.ShowDialog() == DialogResult.OK)
                 {
-                    CustomMessageBox.Show("Loaded parameters!", "Loaded");
+                    CustomMessageBox.Show("加载参数!", "加载");
                 }
 
                 if (OnChange != null)

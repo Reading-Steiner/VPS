@@ -97,6 +97,7 @@ namespace VPS
             this.MenuReadWP,
             this.MenuSaveWP,
             this.Separator4,
+            //this.MenuConfigTune,
             this.Separator5,
             this.MenuConnect,
             this.toolStripConnectionControl});

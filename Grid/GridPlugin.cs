@@ -70,7 +70,7 @@ namespace VPS.Grid
                 else
                 {
                     if (
-                        CustomMessageBox.Show("No polygon defined. Load a file?", "Load File", MessageBoxButtons.YesNo) ==
+                        CustomMessageBox.Show("区域未划定. 是否加载区域文件?", "加载文件", MessageBoxButtons.YesNo) ==
                         (int)DialogResult.Yes)
                     {
                         gridui.LoadGrid();
@@ -78,7 +78,7 @@ namespace VPS.Grid
                     }
                     else
                     {
-                        CustomMessageBox.Show("Please define a polygon.", "Error");
+                        CustomMessageBox.Show("请划定区域.", "警告");
                     }
                 }
             }
