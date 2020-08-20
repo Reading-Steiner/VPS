@@ -1,5 +1,5 @@
 ﻿using log4net;
-using VPS.test;
+//using VPS.test;
 using System;
 using System.Windows.Forms;
 using Xamarin.Forms;
@@ -81,10 +81,10 @@ namespace VPS.Utilities
             var app = new Xamarin.Forms.Application() { MainPage = ctl };
             f.LoadApplication(app);
             ThemeManager.ApplyThemeTo(f);
-            if (ctl is IClose)
-            {
-                ((IClose)ctl).CloseAction = () => f.Close();
-            }
+            //if (ctl is IClose)
+            //{
+            //    ((IClose)ctl).CloseAction = () => f.Close();
+            //}
 
             f.ShowDialog();
 

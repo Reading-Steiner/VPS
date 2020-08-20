@@ -641,9 +641,6 @@
     <Compile Include="temp.Designer.cs">
       <DependentUpon>temp.cs</DependentUpon>
     </Compile>
-    <Compile Include="test\FirmwareSelection.xaml.cs">
-      <DependentUpon>FirmwareSelection.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserPanel\UserPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -4868,11 +4865,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="test\FirmwareSelection.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

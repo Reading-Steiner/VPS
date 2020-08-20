@@ -123,12 +123,12 @@
     </ThemeColor>
     <ThemeColor>
       <strColorItemName>HUD Ground top</strColorItemName>
-      <clrColor Web="Black" />
+      <clrColor Web="#9bb824" />
       <strVariableName>HudGroundTop</strVariableName>
     </ThemeColor>
     <ThemeColor>
       <strColorItemName>HUD Ground bottom</strColorItemName>
-      <clrColor Web="Black" />
+      <clrColor Web="#414f07" />
       <strVariableName>HudGroundBot</strVariableName>
     </ThemeColor>
     <ThemeColor>

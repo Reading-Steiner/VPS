@@ -2,7 +2,7 @@
 using VPS.ArduPilot;
 using VPS.Comms;
 using VPS.Controls;
-using VPS.test;
+//using VPS.test;
 using VPS.Utilities;
 using System;
 using System.Data;
@@ -203,14 +203,14 @@ namespace VPS.GCSViews.ConfigurationView
                     }
                     else if (fwitems?.Count > 0)
                     {
-                        FirmwareSelection fws = new FirmwareSelection(fwitems, deviceInfo);
-                        fws.ShowXamarinControl(550, 400);
-                        baseurl = fws.FinalResult;
-                        if (fws.FinalResult == null)
-                        {
-                            // user canceled
-                            return;
-                        }
+                        //FirmwareSelection fws = new FirmwareSelection(fwitems, deviceInfo);
+                        //fws.ShowXamarinControl(550, 400);
+                        //baseurl = fws.FinalResult;
+                        //if (fws.FinalResult == null)
+                        //{
+                        //    // user canceled
+                        //    return;
+                        //}
                     }
                     else
                     {
