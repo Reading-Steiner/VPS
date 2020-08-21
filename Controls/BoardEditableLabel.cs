@@ -8,19 +8,55 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Drawing.Imaging;
 
 namespace VPS.Controls
 {
     public partial class BoardEditableLabel : UserControl
     {
+        private Bitmap _background;
         public BoardEditableLabel()
         {
             InitializeComponent();
             SetForeColor();
+            DrawBackground();
             this.ForeColorChanged += OnForeColorChanged;
             this.EditBox.KeyDown += OnKeyDown;
             this.EditBox.LostFocus += EditBox_LostFocus;
             EditOver += CheckAndCloseEdit;
+        }
+
+        private void DrawBackground()
+        {
+            Bitmap background = new Bitmap(this.Width, this.Height, PixelFormat.Format32bppRgb);
+            var g = Graphics.FromImage(background);
+            g.Clear(this.BackColor);
+            for (int i = 0; i < _rederWidth; i++)
+            {
+                switch (_rederStyle)
+                {
+                    case Style.Inner:
+                        {
+                            Pen pen = new Pen(Color.FromArgb(_boardColor.A / (i + 1), _boardColor));
+                            g.DrawRectangle(pen, i, i, this.Width - 1 - 2 * i, this.Height - 1 - 2 * i);
+                        }
+                        break;
+                    case Style.Outside:
+                        {
+                            Pen pen = new Pen(Color.FromArgb(_boardColor.A / (_rederWidth - i), _boardColor));
+                            g.DrawRectangle(pen, i, i, this.Width - 1 - 2 * i, this.Height - 1 - 2 * i);
+                        }
+                        break;
+                    default:
+                        {
+                            Pen pen = new Pen(_boardColor);
+                            g.DrawRectangle(pen, i, i, this.Width - 1 - 2 * i, this.Height - 1 - 2 * i);
+                        }
+                        break;
+                }
+            }
+            _background = background;
+            Invalidate();
         }
 
         private void OnForeColorChanged(object sender, EventArgs e)
@@ -60,7 +96,7 @@ namespace VPS.Controls
             set
             {
                 _boardColor = value;
-                Invalidate();
+                DrawBackground();
             }
         }
 
@@ -71,7 +107,7 @@ namespace VPS.Controls
             set
             {
                 _rederStyle = value;
-                Invalidate();
+                DrawBackground();
             }
         }
 
@@ -82,7 +118,7 @@ namespace VPS.Controls
             set
             {
                 _rederWidth = value;
-                Invalidate();
+                DrawBackground();
             }
         }
 
@@ -93,7 +129,7 @@ namespace VPS.Controls
             set
             {
                 DisplayText.Location = value;
-                Invalidate();
+                DisplayText.Invalidate();
             }
         }
 
@@ -107,7 +143,7 @@ namespace VPS.Controls
                 {
                     DisplayText.Text = value;
                     TextChange?.Invoke();
-                    Invalidate();
+                    DisplayText.Invalidate();
                 }
             }
         }
@@ -126,43 +162,27 @@ namespace VPS.Controls
         [Category("设置"), Description("文本锁定")]
         public bool AllowEdit { get; set; } = true;
 
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            base.OnPaintBackground(e);
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             if (this.DisplayText.BackColor != Color.Transparent)
                 this.DisplayText.BackColor = Color.Transparent;
-            base.OnPaint(e);
+            //var bufferGraphic = new BufferedGraphicsContext().Allocate(CreateGraphics(), DisplayRectangle);
+            //var g = bufferGraphic.Graphics;
             var g = e.Graphics;
-            //g.Clear(Color.White);
-            for (int i = 0; i < _rederWidth; i++)
-            {
-                switch (_rederStyle)
-                {
-                    case Style.Inner:
-                        {
-                            Pen pen = new Pen(Color.FromArgb(_boardColor.A / (i + 1), _boardColor));
-                            g.DrawRectangle(pen, i, i, this.Width - 1 - 2 * i, this.Height - 1 - 2 * i);
-                        }
-                        break;
-                    case Style.Outside:
-                        {
-                            Pen pen = new Pen(Color.FromArgb(_boardColor.A / (_rederWidth - i), _boardColor));
-                            g.DrawRectangle(pen, i, i, this.Width - 1 - 2 * i, this.Height - 1 - 2 * i);
-                        }
-                        break;
-                    default:
-                        {
-                            Pen pen = new Pen(_boardColor);
-                            g.DrawRectangle(pen, i, i, this.Width - 1 - 2 * i, this.Height - 1 - 2 * i);
-                        }
-                        break;
-                }
-            }
+            g.DrawImage(_background, 0, 0);
 
+            //bufferGraphic.Render();
+            base.OnPaint(e);
         }
 
         protected override void OnSizeChanged(EventArgs e)
         {
-
+            DrawBackground();
             base.OnSizeChanged(e);
         }
 

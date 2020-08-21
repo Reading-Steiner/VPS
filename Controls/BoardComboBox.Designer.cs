@@ -30,24 +30,14 @@ namespace VPS.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            this.Button = new System.Windows.Forms.Label();
             this.DisplayText = new System.Windows.Forms.Label();
             this.EditBox = new System.Windows.Forms.TextBox();
+            this.Button = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // Button
-            // 
-            this.Button.BackColor = System.Drawing.Color.Transparent;
-            this.Button.Location = new System.Drawing.Point(118, 6);
-            this.Button.Name = "Button";
-            this.Button.Size = new System.Drawing.Size(23, 24);
-            this.Button.TabIndex = 2;
-            this.Button.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // DisplayText
             // 
             this.DisplayText.BackColor = System.Drawing.Color.Transparent;
-            this.DisplayText.Enabled = true;
             this.DisplayText.Location = new System.Drawing.Point(5, 6);
             this.DisplayText.Name = "DisplayText";
             this.DisplayText.Size = new System.Drawing.Size(107, 24);
@@ -62,6 +52,15 @@ namespace VPS.Controls
             this.EditBox.TabIndex = 4;
             this.EditBox.Visible = false;
             // 
+            // Button
+            // 
+            this.Button.BackColor = System.Drawing.Color.Transparent;
+            this.Button.Location = new System.Drawing.Point(118, 6);
+            this.Button.Name = "Button";
+            this.Button.Size = new System.Drawing.Size(23, 24);
+            this.Button.TabIndex = 2;
+            this.Button.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // BoardComboBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -69,6 +68,7 @@ namespace VPS.Controls
             this.Controls.Add(this.EditBox);
             this.Controls.Add(this.DisplayText);
             this.Controls.Add(this.Button);
+            this.DoubleBuffered = true;
             this.Name = "BoardComboBox";
             this.Size = new System.Drawing.Size(150, 37);
             this.ResumeLayout(false);
@@ -77,12 +77,11 @@ namespace VPS.Controls
         }
 
         #endregion
-
-        private System.Windows.Forms.Label Button;
         private System.Windows.Forms.Label DisplayText;
         private System.Windows.Forms.ToolStripControlHost comboViewHost;
         private System.Windows.Forms.ToolStripDropDown dropDown;
         private VPS.Controls.ComboDataList dataSourceList;
         private System.Windows.Forms.TextBox EditBox;
+        private System.Windows.Forms.Label Button;
     }
 }

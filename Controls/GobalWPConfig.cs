@@ -14,7 +14,7 @@ using System.Xml;
 
 namespace VPS.Controls
 {
-    public partial class GobalWPConfig : Form
+    public partial class GobalWPConfig : CCWin.CCSkinMain
     {
         public camerainfo GetCameraInfo
         {

@@ -93,6 +93,9 @@
       <HintPath>.\extlibs\BitMiracle.LibTiff.NetStandard.dll</HintPath>
       <Private>true</Private>
     </Reference>
+    <Reference Include="CSkin">
+      <HintPath>ExtLibs\CSkin\CSkin.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />

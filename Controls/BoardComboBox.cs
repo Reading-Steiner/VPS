@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Text.RegularExpressions;
+using System.Drawing.Imaging;
 
 namespace VPS.Controls
 {
@@ -71,7 +72,7 @@ namespace VPS.Controls
             set
             {
                 _boardColor = value;
-                Invalidate();
+                DrawBackground();
             }
         }
 
@@ -83,7 +84,7 @@ namespace VPS.Controls
             set
             {
                 _rederWidth = value;
-                Invalidate();
+                DrawBackground();
             }
         }
 
@@ -94,6 +95,8 @@ namespace VPS.Controls
         private delegateHandler EditOver;
         public delegateHandler SelectedChange;
         public delegateHandler ChangeSelected;
+
+        Bitmap _background;
         public BoardComboBox()
         {
             this.dataSourceList = new ComboDataList();
@@ -230,7 +233,7 @@ namespace VPS.Controls
                     this,
                     this.DisplayText.Left,
                     this.DisplayText.Top - index * this.DisplayText.Height);
-                Invalidate();
+                DrawBackground();
             }
         }
 
@@ -260,10 +263,12 @@ namespace VPS.Controls
         }
 
 
-        protected override void OnPaint(PaintEventArgs e)
+        protected void DrawBackground()
         {
+            Bitmap background = new Bitmap(this.Width, this.Height, PixelFormat.Format32bppRgb);
+            var g = Graphics.FromImage(background);
+            g.Clear(this.BackColor);
 
-            var g = e.Graphics;
             for (int i = 0; i < _rederWidth; i++)
             {
                 var rect = this.DisplayRectangle;
@@ -272,6 +277,17 @@ namespace VPS.Controls
                     new Rectangle(rect.X + i, rect.Y + i, rect.Width - i, rect.Height - i),
                     g, pen, Math.Min(rect.Width, rect.Height) / 3 * 2 - i);
             }
+
+            _background = background;
+            Invalidate();
+        }
+
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+
+            var g = e.Graphics;
+            g.DrawImage(_background, 0, 0);
             base.OnPaint(e);
         }
 
@@ -294,6 +310,7 @@ namespace VPS.Controls
             dropDown.Size = new Size(
                 this.DisplayText.Height * DataSource.Count() > 250 ? this.DisplayText.Width + 22 : this.DisplayText.Width + 2,
                 Math.Min(this.DisplayText.Height * DataSource.Count() + 5, 255));
+            DrawBackground();
             base.OnSizeChanged(e);
         }
 

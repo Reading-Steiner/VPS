@@ -28,15 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.OK = new System.Windows.Forms.Button();
-            this.Cancel = new System.Windows.Forms.Button();
+            this.components = new System.ComponentModel.Container();
+            this.OK = new CCWin.SkinControl.SkinButton();
+            this.Cancel = new CCWin.SkinControl.SkinButton();
             this.SuspendLayout();
             // 
             // OK
             // 
+            this.OK.BackColor = System.Drawing.Color.Transparent;
+            this.OK.BaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(255)))));
+            this.OK.BorderColor = System.Drawing.Color.Transparent;
+            this.OK.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.OK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.OK.DownBack = null;
+            this.OK.DownBaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(180)))));
+            this.OK.ForeColorSuit = true;
+            this.OK.GlowColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(255)))));
+            this.OK.InnerBorderColor = System.Drawing.Color.Transparent;
+            this.OK.IsDrawGlass = false;
             this.OK.Location = new System.Drawing.Point(45, 7);
+            this.OK.MouseBack = null;
+            this.OK.MouseBaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(255)))));
             this.OK.Name = "OK";
+            this.OK.NormlBack = null;
+            this.OK.RoundStyle = CCWin.SkinClass.RoundStyle.All;
             this.OK.Size = new System.Drawing.Size(68, 30);
             this.OK.TabIndex = 0;
             this.OK.Text = "确定";
@@ -44,9 +59,21 @@
             // 
             // Cancel
             // 
+            this.Cancel.BackColor = System.Drawing.Color.Transparent;
+            this.Cancel.BaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(255)))));
+            this.Cancel.BorderColor = System.Drawing.Color.Transparent;
+            this.Cancel.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.Cancel.DownBack = null;
+            this.Cancel.DownBaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(180)))));
+            this.Cancel.InnerBorderColor = System.Drawing.Color.Transparent;
+            this.Cancel.IsDrawGlass = false;
             this.Cancel.Location = new System.Drawing.Point(177, 7);
+            this.Cancel.MouseBack = null;
+            this.Cancel.MouseBaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(255)))));
             this.Cancel.Name = "Cancel";
+            this.Cancel.NormlBack = null;
+            this.Cancel.RoundStyle = CCWin.SkinClass.RoundStyle.All;
             this.Cancel.Size = new System.Drawing.Size(68, 30);
             this.Cancel.TabIndex = 1;
             this.Cancel.TabStop = false;
@@ -59,6 +86,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.OK);
+            this.DoubleBuffered = true;
             this.Name = "ReturnButton";
             this.Size = new System.Drawing.Size(294, 44);
             this.ResumeLayout(false);
@@ -67,7 +95,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button OK;
-        private System.Windows.Forms.Button Cancel;
+        private CCWin.SkinControl.SkinButton OK;
+        private CCWin.SkinControl.SkinButton Cancel;
     }
 }

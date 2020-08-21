@@ -44,7 +44,7 @@
             // 
             // EditBox
             // 
-            this.EditBox.Location = new System.Drawing.Point(7, 7);
+            this.EditBox.Location = new System.Drawing.Point(37, 3);
             this.EditBox.Name = "EditBox";
             this.EditBox.Size = new System.Drawing.Size(65, 21);
             this.EditBox.TabIndex = 2;
@@ -56,8 +56,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.EditBox);
             this.Controls.Add(this.DisplayText);
+            this.DoubleBuffered = true;
             this.Name = "BoardEditableLabel";
-            this.Size = new System.Drawing.Size(76, 39);
+            this.Size = new System.Drawing.Size(105, 26);
             this.ResumeLayout(false);
             this.PerformLayout();
 

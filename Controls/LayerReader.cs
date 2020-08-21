@@ -9,19 +9,34 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
+using CCWin;
 
 namespace VPS.Controls
 {
-    public partial class LayerReader : Form
+    public partial class LayerReader : CCSkinMain
     {
+
         public LayerReader()
         {
             InitializeComponent();
             this.Latitude.TextChange += GetOriginAlt;
             this.Longitude.TextChange += GetOriginAlt;
-            this.RetButton.OnOK += Accept_Click;
-            this.RetButton.OnCancel += Cancel_Click;
+            this.RetButton.OnOK += OnAccept;
+            this.RetButton.OnCancel += OnCancel;
+        }
 
+        private void OnAccept()
+        {
+            if (this.IsLoadLayer)
+                this.DialogResult = DialogResult.OK;
+            else
+                this.DialogResult = DialogResult.Cancel;
+        }
+
+
+        private void OnCancel()
+        {
+            this.DialogResult = DialogResult.Cancel;
         }
 
 
@@ -193,27 +208,6 @@ namespace VPS.Controls
             }
         }
 
-        private void Accept_Click()
-        {
-            if (this.IsLoadLayer)
-                this.DialogResult = DialogResult.OK;
-            else
-                this.DialogResult = DialogResult.Cancel;
-            //this.Hide();
-
-            //this.Opacity = 0;
-            //this.Visible = false;
-        }
-
-        private void Cancel_Click()
-        {
-            this.DialogResult = DialogResult.Cancel;
-            //this.Hide();
-
-            //this.Opacity = 0;
-            //this.Visible = false;
-        }
-
         public string GetLayer()
         {
             if (IsLoadLayer)
@@ -277,5 +271,6 @@ namespace VPS.Controls
         GDAL.GDAL.GeoBitmap geobitmap;
         bool IsLoadLayer = false;
         bool IsLoadInfo = false;
+
     }
 }

@@ -31,50 +31,38 @@ namespace VPS.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            VPS.Controls.BoardLabel MainTitle;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LayerReader));
             this.TopLabel = new System.Windows.Forms.Label();
             this.RightLabel = new System.Windows.Forms.Label();
             this.BottomLabel = new System.Windows.Forms.Label();
             this.LeftLabel = new System.Windows.Forms.Label();
-            this.LayerPrevView = new System.Windows.Forms.PictureBox();
-            this.OriginGroup = new System.Windows.Forms.GroupBox();
+            this.LayerPrevView = new CCWin.SkinControl.SkinPictureBox();
+            this.Transparent = new DotSpatial.Symbology.Forms.ColorButton();
+            this.skinGroupBox1 = new CCWin.SkinControl.SkinGroupBox();
+            this.skinCheckBox1 = new CCWin.SkinControl.SkinCheckBox();
+            this.skinGroupBox2 = new CCWin.SkinControl.SkinGroupBox();
+            this.skinGroupBox3 = new CCWin.SkinControl.SkinGroupBox();
+            this.RetButton = new VPS.Controls.ReturnButton();
+            this.boardEditableLabel1 = new VPS.Controls.BoardEditableLabel();
+            this.boardLabel2 = new VPS.Controls.BoardLabel();
+            this.MapScale = new VPS.Controls.BoardEditableLabel();
+            this.boardEditableLabel2 = new VPS.Controls.BoardEditableLabel();
+            this.boardLabel1 = new VPS.Controls.BoardLabel();
+            this.ScaleLabel = new VPS.Controls.BoardLabel();
             this.AltitudeLabel = new VPS.Controls.BoardLabel();
             this.LatitudeLabel = new VPS.Controls.BoardLabel();
             this.Longitude = new VPS.Controls.BoardEditableLabel();
             this.LongitudeLabel = new VPS.Controls.BoardLabel();
             this.Latitude = new VPS.Controls.BoardEditableLabel();
             this.Altitude = new VPS.Controls.BoardEditableLabel();
-            this.Transparent = new DotSpatial.Symbology.Forms.ColorButton();
-            this.MapGroup = new System.Windows.Forms.GroupBox();
-            this.MapScale = new VPS.Controls.BoardEditableLabel();
-            this.ScaleLabel = new VPS.Controls.BoardLabel();
-            this.ViewGroup = new System.Windows.Forms.GroupBox();
             this.TransparentLabel = new VPS.Controls.BoardLabel();
-            this.RetButton = new VPS.Controls.ReturnButton();
             this.FilePath = new VPS.Controls.BoardEditableLabel();
             this.FileOpen = new VPS.Controls.GradualButton();
-            MainTitle = new VPS.Controls.BoardLabel();
             ((System.ComponentModel.ISupportInitialize)(this.LayerPrevView)).BeginInit();
-            this.OriginGroup.SuspendLayout();
-            this.MapGroup.SuspendLayout();
-            this.ViewGroup.SuspendLayout();
+            this.skinGroupBox1.SuspendLayout();
+            this.skinGroupBox2.SuspendLayout();
+            this.skinGroupBox3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // MainTitle
-            // 
-            resources.ApplyResources(MainTitle, "MainTitle");
-            MainTitle.BackColor = System.Drawing.SystemColors.Control;
-            MainTitle.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            MainTitle.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            MainTitle.Name = "MainTitle";
-            MainTitle.Pattern = "^\\S*$";
-            MainTitle.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
-            MainTitle.RederWidth = 2;
-            MainTitle.TabStop = false;
-            MainTitle.Tag = "oad the geographic image file";
-            MainTitle.TextContent = "加载地理图像文件";
-            MainTitle.TextPosition = new System.Drawing.Point(24, 6);
             // 
             // TopLabel
             // 
@@ -104,22 +92,190 @@ namespace VPS.Controls
             // 
             resources.ApplyResources(this.LayerPrevView, "LayerPrevView");
             this.LayerPrevView.BackColor = System.Drawing.Color.Transparent;
-            this.LayerPrevView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.LayerPrevView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.LayerPrevView.Name = "LayerPrevView";
             this.LayerPrevView.TabStop = false;
             // 
-            // OriginGroup
+            // Transparent
             // 
-            resources.ApplyResources(this.OriginGroup, "OriginGroup");
-            this.OriginGroup.Controls.Add(this.AltitudeLabel);
-            this.OriginGroup.Controls.Add(this.LatitudeLabel);
-            this.OriginGroup.Controls.Add(this.Longitude);
-            this.OriginGroup.Controls.Add(this.LongitudeLabel);
-            this.OriginGroup.Controls.Add(this.Latitude);
-            this.OriginGroup.Controls.Add(this.Altitude);
-            this.OriginGroup.ForeColor = System.Drawing.Color.Black;
-            this.OriginGroup.Name = "OriginGroup";
-            this.OriginGroup.TabStop = false;
+            resources.ApplyResources(this.Transparent, "Transparent");
+            this.Transparent.BevelRadius = 0;
+            this.Transparent.Color = System.Drawing.Color.Black;
+            this.Transparent.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Transparent.LaunchDialogOnClick = true;
+            this.Transparent.Name = "Transparent";
+            this.Transparent.RoundingRadius = 0;
+            this.Transparent.ColorChanged += new System.EventHandler(this.Transparent_ColorChanged);
+            // 
+            // skinGroupBox1
+            // 
+            resources.ApplyResources(this.skinGroupBox1, "skinGroupBox1");
+            this.skinGroupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.skinGroupBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.skinGroupBox1.Controls.Add(this.skinCheckBox1);
+            this.skinGroupBox1.Controls.Add(this.TransparentLabel);
+            this.skinGroupBox1.Controls.Add(this.Transparent);
+            this.skinGroupBox1.ForeColor = System.Drawing.Color.Black;
+            this.skinGroupBox1.Name = "skinGroupBox1";
+            this.skinGroupBox1.Radius = 8;
+            this.skinGroupBox1.RectBackColor = System.Drawing.Color.Transparent;
+            this.skinGroupBox1.RoundStyle = CCWin.SkinClass.RoundStyle.All;
+            this.skinGroupBox1.TabStop = false;
+            this.skinGroupBox1.TitleBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.skinGroupBox1.TitleRadius = 6;
+            this.skinGroupBox1.TitleRectBackColor = System.Drawing.SystemColors.Control;
+            this.skinGroupBox1.TitleRoundStyle = CCWin.SkinClass.RoundStyle.All;
+            // 
+            // skinCheckBox1
+            // 
+            resources.ApplyResources(this.skinCheckBox1, "skinCheckBox1");
+            this.skinCheckBox1.BackColor = System.Drawing.Color.Transparent;
+            this.skinCheckBox1.BaseColor = System.Drawing.Color.Black;
+            this.skinCheckBox1.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.skinCheckBox1.DownBack = null;
+            this.skinCheckBox1.ForeColor = System.Drawing.Color.Black;
+            this.skinCheckBox1.LightEffectBack = System.Drawing.Color.Transparent;
+            this.skinCheckBox1.MouseBack = null;
+            this.skinCheckBox1.Name = "skinCheckBox1";
+            this.skinCheckBox1.NormlBack = null;
+            this.skinCheckBox1.SelectedDownBack = null;
+            this.skinCheckBox1.SelectedMouseBack = null;
+            this.skinCheckBox1.SelectedNormlBack = null;
+            this.skinCheckBox1.UseVisualStyleBackColor = false;
+            // 
+            // skinGroupBox2
+            // 
+            resources.ApplyResources(this.skinGroupBox2, "skinGroupBox2");
+            this.skinGroupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.skinGroupBox2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.skinGroupBox2.Controls.Add(this.AltitudeLabel);
+            this.skinGroupBox2.Controls.Add(this.LatitudeLabel);
+            this.skinGroupBox2.Controls.Add(this.Longitude);
+            this.skinGroupBox2.Controls.Add(this.LongitudeLabel);
+            this.skinGroupBox2.Controls.Add(this.Latitude);
+            this.skinGroupBox2.Controls.Add(this.Altitude);
+            this.skinGroupBox2.ForeColor = System.Drawing.Color.Black;
+            this.skinGroupBox2.Name = "skinGroupBox2";
+            this.skinGroupBox2.RectBackColor = System.Drawing.Color.Transparent;
+            this.skinGroupBox2.RoundStyle = CCWin.SkinClass.RoundStyle.All;
+            this.skinGroupBox2.TabStop = false;
+            this.skinGroupBox2.TitleBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.skinGroupBox2.TitleRectBackColor = System.Drawing.SystemColors.Control;
+            this.skinGroupBox2.TitleRoundStyle = CCWin.SkinClass.RoundStyle.All;
+            // 
+            // skinGroupBox3
+            // 
+            resources.ApplyResources(this.skinGroupBox3, "skinGroupBox3");
+            this.skinGroupBox3.BackColor = System.Drawing.Color.Transparent;
+            this.skinGroupBox3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.skinGroupBox3.Controls.Add(this.boardEditableLabel1);
+            this.skinGroupBox3.Controls.Add(this.boardLabel2);
+            this.skinGroupBox3.Controls.Add(this.MapScale);
+            this.skinGroupBox3.Controls.Add(this.boardEditableLabel2);
+            this.skinGroupBox3.Controls.Add(this.boardLabel1);
+            this.skinGroupBox3.Controls.Add(this.ScaleLabel);
+            this.skinGroupBox3.ForeColor = System.Drawing.Color.Black;
+            this.skinGroupBox3.Name = "skinGroupBox3";
+            this.skinGroupBox3.RectBackColor = System.Drawing.Color.Transparent;
+            this.skinGroupBox3.RoundStyle = CCWin.SkinClass.RoundStyle.All;
+            this.skinGroupBox3.TabStop = false;
+            this.skinGroupBox3.TitleBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.skinGroupBox3.TitleRectBackColor = System.Drawing.SystemColors.Control;
+            this.skinGroupBox3.TitleRoundStyle = CCWin.SkinClass.RoundStyle.All;
+            // 
+            // RetButton
+            // 
+            this.RetButton.BottomRederBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.RetButton.CancelText = "取消";
+            this.RetButton.DownButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            resources.ApplyResources(this.RetButton, "RetButton");
+            this.RetButton.GlowButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.RetButton.MouseButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.RetButton.Name = "RetButton";
+            this.RetButton.OKText = "确定";
+            this.RetButton.RederButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(255)))));
+            this.RetButton.TopRederBackColor = System.Drawing.Color.Transparent;
+            // 
+            // boardEditableLabel1
+            // 
+            this.boardEditableLabel1.AllowEdit = true;
+            resources.ApplyResources(this.boardEditableLabel1, "boardEditableLabel1");
+            this.boardEditableLabel1.BackColor = System.Drawing.SystemColors.Control;
+            this.boardEditableLabel1.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardEditableLabel1.Name = "boardEditableLabel1";
+            this.boardEditableLabel1.Pattern = "^[+-]?\\d+[.]?\\d*$";
+            this.boardEditableLabel1.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
+            this.boardEditableLabel1.RederWidth = 2;
+            this.boardEditableLabel1.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
+            this.boardEditableLabel1.TextContent = "0";
+            this.boardEditableLabel1.TextPosition = new System.Drawing.Point(3, 5);
+            // 
+            // boardLabel2
+            // 
+            this.boardLabel2.BackColor = System.Drawing.SystemColors.Control;
+            this.boardLabel2.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            resources.ApplyResources(this.boardLabel2, "boardLabel2");
+            this.boardLabel2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.boardLabel2.Name = "boardLabel2";
+            this.boardLabel2.Pattern = "^\\S*$";
+            this.boardLabel2.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
+            this.boardLabel2.RederWidth = 1;
+            this.boardLabel2.TextContent = "×";
+            this.boardLabel2.TextPosition = new System.Drawing.Point(1, 1);
+            // 
+            // MapScale
+            // 
+            this.MapScale.AllowEdit = true;
+            resources.ApplyResources(this.MapScale, "MapScale");
+            this.MapScale.BackColor = System.Drawing.SystemColors.Control;
+            this.MapScale.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.MapScale.Name = "MapScale";
+            this.MapScale.Pattern = "^(\\d+[.]?\\d*)\\s*[:：]\\s*(\\d*[.]?\\d*)$";
+            this.MapScale.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
+            this.MapScale.RederWidth = 2;
+            this.MapScale.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
+            this.MapScale.TextContent = "1：200";
+            this.MapScale.TextPosition = new System.Drawing.Point(3, 5);
+            // 
+            // boardEditableLabel2
+            // 
+            this.boardEditableLabel2.AllowEdit = true;
+            resources.ApplyResources(this.boardEditableLabel2, "boardEditableLabel2");
+            this.boardEditableLabel2.BackColor = System.Drawing.SystemColors.Control;
+            this.boardEditableLabel2.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.boardEditableLabel2.Name = "boardEditableLabel2";
+            this.boardEditableLabel2.Pattern = "^[+-]?\\d+[.]?\\d*$";
+            this.boardEditableLabel2.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
+            this.boardEditableLabel2.RederWidth = 2;
+            this.boardEditableLabel2.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
+            this.boardEditableLabel2.TextContent = "0";
+            this.boardEditableLabel2.TextPosition = new System.Drawing.Point(3, 5);
+            // 
+            // boardLabel1
+            // 
+            resources.ApplyResources(this.boardLabel1, "boardLabel1");
+            this.boardLabel1.BackColor = System.Drawing.SystemColors.Control;
+            this.boardLabel1.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.boardLabel1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.boardLabel1.Name = "boardLabel1";
+            this.boardLabel1.Pattern = "^\\S*$";
+            this.boardLabel1.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
+            this.boardLabel1.RederWidth = 1;
+            this.boardLabel1.TextContent = "沙盘规模";
+            this.boardLabel1.TextPosition = new System.Drawing.Point(7, 3);
+            // 
+            // ScaleLabel
+            // 
+            resources.ApplyResources(this.ScaleLabel, "ScaleLabel");
+            this.ScaleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.ScaleLabel.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.ScaleLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.ScaleLabel.Name = "ScaleLabel";
+            this.ScaleLabel.Pattern = "^\\S*$";
+            this.ScaleLabel.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
+            this.ScaleLabel.RederWidth = 1;
+            this.ScaleLabel.TextContent = "沙盘比例尺";
+            this.ScaleLabel.TextPosition = new System.Drawing.Point(2, 3);
             // 
             // AltitudeLabel
             // 
@@ -132,7 +288,7 @@ namespace VPS.Controls
             this.AltitudeLabel.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.AltitudeLabel.RederWidth = 1;
             this.AltitudeLabel.TextContent = "地面高程";
-            this.AltitudeLabel.TextPosition = new System.Drawing.Point(10, 5);
+            this.AltitudeLabel.TextPosition = new System.Drawing.Point(11, 4);
             // 
             // LatitudeLabel
             // 
@@ -149,8 +305,9 @@ namespace VPS.Controls
             // 
             // Longitude
             // 
-            resources.ApplyResources(this.Longitude, "Longitude");
             this.Longitude.AllowEdit = true;
+            resources.ApplyResources(this.Longitude, "Longitude");
+            this.Longitude.BackColor = System.Drawing.SystemColors.Control;
             this.Longitude.BoardColor = System.Drawing.SystemColors.InactiveCaption;
             this.Longitude.Name = "Longitude";
             this.Longitude.Pattern = "^[+-]?\\d+[.]?\\d*$";
@@ -158,7 +315,7 @@ namespace VPS.Controls
             this.Longitude.RederWidth = 2;
             this.Longitude.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.Longitude.TextContent = "0";
-            this.Longitude.TextPosition = new System.Drawing.Point(3, 6);
+            this.Longitude.TextPosition = new System.Drawing.Point(3, 5);
             // 
             // LongitudeLabel
             // 
@@ -175,8 +332,9 @@ namespace VPS.Controls
             // 
             // Latitude
             // 
-            resources.ApplyResources(this.Latitude, "Latitude");
             this.Latitude.AllowEdit = true;
+            resources.ApplyResources(this.Latitude, "Latitude");
+            this.Latitude.BackColor = System.Drawing.SystemColors.Control;
             this.Latitude.BoardColor = System.Drawing.SystemColors.InactiveCaption;
             this.Latitude.Name = "Latitude";
             this.Latitude.Pattern = "^[+-]?\\d+[.]?\\d*$";
@@ -184,12 +342,13 @@ namespace VPS.Controls
             this.Latitude.RederWidth = 2;
             this.Latitude.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.Latitude.TextContent = "0";
-            this.Latitude.TextPosition = new System.Drawing.Point(3, 6);
+            this.Latitude.TextPosition = new System.Drawing.Point(3, 5);
             // 
             // Altitude
             // 
-            resources.ApplyResources(this.Altitude, "Altitude");
             this.Altitude.AllowEdit = true;
+            resources.ApplyResources(this.Altitude, "Altitude");
+            this.Altitude.BackColor = System.Drawing.SystemColors.Control;
             this.Altitude.BoardColor = System.Drawing.SystemColors.InactiveCaption;
             this.Altitude.Name = "Altitude";
             this.Altitude.Pattern = "^[+-]?\\d+[.]?\\d*$";
@@ -197,63 +356,7 @@ namespace VPS.Controls
             this.Altitude.RederWidth = 2;
             this.Altitude.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.Altitude.TextContent = "0";
-            this.Altitude.TextPosition = new System.Drawing.Point(3, 6);
-            // 
-            // Transparent
-            // 
-            resources.ApplyResources(this.Transparent, "Transparent");
-            this.Transparent.BevelRadius = 0;
-            this.Transparent.Color = System.Drawing.Color.Black;
-            this.Transparent.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Transparent.LaunchDialogOnClick = true;
-            this.Transparent.Name = "Transparent";
-            this.Transparent.RoundingRadius = 0;
-            this.Transparent.ColorChanged += new System.EventHandler(this.Transparent_ColorChanged);
-            // 
-            // MapGroup
-            // 
-            resources.ApplyResources(this.MapGroup, "MapGroup");
-            this.MapGroup.BackColor = System.Drawing.Color.Transparent;
-            this.MapGroup.Controls.Add(this.MapScale);
-            this.MapGroup.Controls.Add(this.ScaleLabel);
-            this.MapGroup.ForeColor = System.Drawing.Color.Black;
-            this.MapGroup.Name = "MapGroup";
-            this.MapGroup.TabStop = false;
-            // 
-            // MapScale
-            // 
-            resources.ApplyResources(this.MapScale, "MapScale");
-            this.MapScale.AllowEdit = true;
-            this.MapScale.BoardColor = System.Drawing.SystemColors.InactiveCaption;
-            this.MapScale.Name = "MapScale";
-            this.MapScale.Pattern = "^(\\d+[.]?\\d*)\\s*[:：]\\s*(\\d*[.]?\\d*)$";
-            this.MapScale.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
-            this.MapScale.RederWidth = 2;
-            this.MapScale.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.MapScale.TextContent = "1：200";
-            this.MapScale.TextPosition = new System.Drawing.Point(3, 6);
-            // 
-            // ScaleLabel
-            // 
-            resources.ApplyResources(this.ScaleLabel, "ScaleLabel");
-            this.ScaleLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.ScaleLabel.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.ScaleLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ScaleLabel.Name = "ScaleLabel";
-            this.ScaleLabel.Pattern = "^\\S*$";
-            this.ScaleLabel.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
-            this.ScaleLabel.RederWidth = 1;
-            this.ScaleLabel.TextContent = "比例尺";
-            this.ScaleLabel.TextPosition = new System.Drawing.Point(18, 5);
-            // 
-            // ViewGroup
-            // 
-            resources.ApplyResources(this.ViewGroup, "ViewGroup");
-            this.ViewGroup.Controls.Add(this.TransparentLabel);
-            this.ViewGroup.Controls.Add(this.Transparent);
-            this.ViewGroup.ForeColor = System.Drawing.Color.Black;
-            this.ViewGroup.Name = "ViewGroup";
-            this.ViewGroup.TabStop = false;
+            this.Altitude.TextPosition = new System.Drawing.Point(3, 5);
             // 
             // TransparentLabel
             // 
@@ -266,21 +369,12 @@ namespace VPS.Controls
             this.TransparentLabel.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.TransparentLabel.RederWidth = 1;
             this.TransparentLabel.TextContent = "透明色";
-            this.TransparentLabel.TextPosition = new System.Drawing.Point(18, 5);
-            // 
-            // RetButton
-            // 
-            resources.ApplyResources(this.RetButton, "RetButton");
-            this.RetButton.CancelText = "取消";
-            this.RetButton.Name = "RetButton";
-            this.RetButton.OKText = "确定";
-            this.RetButton.RederBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.RetButton.RederButtonColor = System.Drawing.Color.CornflowerBlue;
+            this.TransparentLabel.TextPosition = new System.Drawing.Point(16, 4);
             // 
             // FilePath
             // 
-            resources.ApplyResources(this.FilePath, "FilePath");
             this.FilePath.AllowEdit = true;
+            resources.ApplyResources(this.FilePath, "FilePath");
             this.FilePath.BoardColor = System.Drawing.Color.CornflowerBlue;
             this.FilePath.Name = "FilePath";
             this.FilePath.Pattern = "^\\S*$";
@@ -310,11 +404,14 @@ namespace VPS.Controls
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(MainTitle);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BorderColor = System.Drawing.Color.Navy;
+            this.CaptionBackColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.CloseBoxSize = new System.Drawing.Size(25, 18);
             this.Controls.Add(this.RetButton);
-            this.Controls.Add(this.ViewGroup);
-            this.Controls.Add(this.MapGroup);
-            this.Controls.Add(this.OriginGroup);
+            this.Controls.Add(this.skinGroupBox3);
+            this.Controls.Add(this.skinGroupBox2);
+            this.Controls.Add(this.skinGroupBox1);
             this.Controls.Add(this.LayerPrevView);
             this.Controls.Add(this.LeftLabel);
             this.Controls.Add(this.BottomLabel);
@@ -322,16 +419,22 @@ namespace VPS.Controls
             this.Controls.Add(this.TopLabel);
             this.Controls.Add(this.FilePath);
             this.Controls.Add(this.FileOpen);
-            this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.EffectBack = System.Drawing.SystemColors.Window;
+            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.InnerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "LayerReader";
+            this.Radius = 20;
+            this.TitleCenter = true;
             ((System.ComponentModel.ISupportInitialize)(this.LayerPrevView)).EndInit();
-            this.OriginGroup.ResumeLayout(false);
-            this.OriginGroup.PerformLayout();
-            this.MapGroup.ResumeLayout(false);
-            this.MapGroup.PerformLayout();
-            this.ViewGroup.ResumeLayout(false);
-            this.ViewGroup.PerformLayout();
+            this.skinGroupBox1.ResumeLayout(false);
+            this.skinGroupBox1.PerformLayout();
+            this.skinGroupBox2.ResumeLayout(false);
+            this.skinGroupBox2.PerformLayout();
+            this.skinGroupBox3.ResumeLayout(false);
+            this.skinGroupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -340,30 +443,31 @@ namespace VPS.Controls
         #endregion
         private GradualButton FileOpen;
         private BoardEditableLabel FilePath;
-
-        private GroupBox MapGroup;
         private BoardLabel ScaleLabel;
         private BoardEditableLabel MapScale;
-
-        private GroupBox OriginGroup;
-        private BoardLabel LongitudeLabel;
-        private BoardEditableLabel Longitude;
-        private BoardEditableLabel Latitude;
-        private BoardLabel LatitudeLabel;
-        private BoardEditableLabel Altitude;
-        private BoardLabel AltitudeLabel;
         
-
-        private GroupBox ViewGroup;
         private BoardLabel TransparentLabel;
         private DotSpatial.Symbology.Forms.ColorButton Transparent;
 
-        private System.Windows.Forms.PictureBox LayerPrevView;
+        private CCWin.SkinControl.SkinPictureBox LayerPrevView;
         private System.Windows.Forms.Label TopLabel;
         private System.Windows.Forms.Label RightLabel;
         private System.Windows.Forms.Label BottomLabel;
         private System.Windows.Forms.Label LeftLabel;
-
+        private BoardEditableLabel boardEditableLabel2;
+        private BoardEditableLabel boardEditableLabel1;
+        private BoardLabel boardLabel1;
+        private BoardLabel boardLabel2;
+        private CCWin.SkinControl.SkinGroupBox skinGroupBox1;
+        private CCWin.SkinControl.SkinCheckBox skinCheckBox1;
+        private CCWin.SkinControl.SkinGroupBox skinGroupBox2;
+        private BoardLabel AltitudeLabel;
+        private BoardLabel LatitudeLabel;
+        private BoardEditableLabel Longitude;
+        private BoardLabel LongitudeLabel;
+        private BoardEditableLabel Latitude;
+        private BoardEditableLabel Altitude;
+        private CCWin.SkinControl.SkinGroupBox skinGroupBox3;
         private ReturnButton RetButton;
     }
 }
