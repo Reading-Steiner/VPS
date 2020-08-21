@@ -103,28 +103,51 @@ namespace VPS.Controls
         {
             InitializeComponent();
 
-            //DoubleBuffered = true;
             DisplayLabel.Paint += ShowLabel_Paint;
             DisplayLabel.MouseDown += ShowLabel_MouseDown;
             DisplayLabel.MouseMove += ShowLabel_MouseMove;
             DisplayLabel.MouseUp += ShowLabel_MouseUp;
         }
 
+        private bool InBounds(Point location)
+        {
+            if(this.DisplayLabel.Height - this.ShowLabel.Height > 0)
+            {
+                int Y = location.Y + this.DisplayLabel.Top;
+                int X = location.X;
+                if (Y < this.ShowLabel.Height && Y > 0 && 
+                    X < this.DisplayLabel.Width && X > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            else
+            {
+                if (this.ShowLabel.DisplayRectangle.Contains(location))
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
         private void ShowLabel_MouseUp(object sender, MouseEventArgs e)
         {
             if (mouseDown)
             {
-                if (sender is Control)
-                    if (!((Control)sender).DisplayRectangle.Contains(e.Location))
+
+                if (!InBounds(e.Location))
+                {
+                    mouseDown = false;
+                    if (temporary != -1)
                     {
-                        mouseDown = false;
-                        if (temporary != -1)
-                        {
+                        if (sender is Control)
                             ((Control)sender).Invalidate(rect(temporary));
-                            temporary = -1;
-                        }
-                        return;
+                        temporary = -1;
                     }
+                    return;
+                }
                 int index = e.Y / this.ItemSize.Height;
                 if (index >= 0 && index < DataString.Count())
                 {
@@ -170,7 +193,7 @@ namespace VPS.Controls
             if (mouseDown)
             {
                 if (sender is Control)
-                    if (!((Control)sender).DisplayRectangle.Contains(e.Location))
+                    if (!InBounds(e.Location))
                         return;
                 int index = e.Y / this.ItemSize.Height;
                 if (index >= 0 && index < DataString.Count)

@@ -219,6 +219,34 @@ namespace VPS.Controls
             Invalidate();
         }
 
+        protected void DrawBackground()
+        {
+            Bitmap background = new Bitmap(this.Width, this.Height, PixelFormat.Format32bppRgb);
+            var g = Graphics.FromImage(background);
+            g.Clear(this.BackColor);
+
+            for (int i = 0; i < _rederWidth; i++)
+            {
+                var rect = this.DisplayRectangle;
+                Pen pen = new Pen(Color.FromArgb(_boardColor.A / (i + 1), _boardColor));
+                DrawRound(
+                    new Rectangle(rect.X + i, rect.Y + i, rect.Width - i, rect.Height - i),
+                    g, pen, Math.Min(rect.Width, rect.Height) / 3 * 2 - i);
+            }
+
+            _background = background;
+            Invalidate();
+        }
+
+        #region 重绘
+        protected override void OnPaint(PaintEventArgs e)
+        {
+
+            var g = e.Graphics;
+            g.DrawImage(_background, 0, 0);
+            base.OnPaint(e);
+        }
+
         private void Button_MouseClick(object sender, MouseEventArgs e)
         {
             if (isDroppable)
@@ -261,35 +289,7 @@ namespace VPS.Controls
                         new Point(Button.Width / 3,Button.Height / 3 * 2)});
 
         }
-
-
-        protected void DrawBackground()
-        {
-            Bitmap background = new Bitmap(this.Width, this.Height, PixelFormat.Format32bppRgb);
-            var g = Graphics.FromImage(background);
-            g.Clear(this.BackColor);
-
-            for (int i = 0; i < _rederWidth; i++)
-            {
-                var rect = this.DisplayRectangle;
-                Pen pen = new Pen(Color.FromArgb(_boardColor.A / (i + 1), _boardColor));
-                DrawRound(
-                    new Rectangle(rect.X + i, rect.Y + i, rect.Width - i, rect.Height - i),
-                    g, pen, Math.Min(rect.Width, rect.Height) / 3 * 2 - i);
-            }
-
-            _background = background;
-            Invalidate();
-        }
-
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-
-            var g = e.Graphics;
-            g.DrawImage(_background, 0, 0);
-            base.OnPaint(e);
-        }
+        #endregion
 
         protected override void OnSizeChanged(EventArgs e)
         {
@@ -314,13 +314,13 @@ namespace VPS.Controls
             base.OnSizeChanged(e);
         }
 
+        #region 画圆角矩形
         private void DrawRound(Rectangle rectangle, Graphics g, Pen pen, int _radius)
         {
             g.DrawPath(pen, DrawRoundRect(rectangle.X,
                 rectangle.Y, rectangle.Width - 2,
                 rectangle.Height - 1, _radius));
         }
-
         private void FillRound(Rectangle rectangle, Graphics g, Brush br, int _radius)
         {
             g.FillPath(br, DrawRoundRect(rectangle.X,
@@ -340,5 +340,6 @@ namespace VPS.Controls
             gp.CloseAllFigures();
             return gp;
         }
+        #endregion
     }
 }
