@@ -16,7 +16,7 @@ namespace VPS.Utilities
     {
         static Settings _instance;
 
-        public static string AppConfigName { get; set; } = "Mission Planner";
+        public static string AppConfigName { get; set; } = "VPS";
 
         public static Settings Instance
         {

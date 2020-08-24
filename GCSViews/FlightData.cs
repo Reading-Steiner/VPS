@@ -2441,7 +2441,7 @@ namespace VPS.GCSViews
 
             if (ModifierKeys == Keys.Control)
             {
-                goHereToolStripMenuItem_Click(null, null);
+                //goHereToolStripMenuItem_Click(null, null);
                 return;
             }
 
@@ -2473,7 +2473,7 @@ namespace VPS.GCSViews
 
         private void gMapControl1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Middle)
             {
                 PointLatLng point = MainMap.FromLocalToLatLng(e.X, e.Y);
 
