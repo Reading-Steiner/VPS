@@ -6251,20 +6251,11 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         if (marker.Tag.ToString() == "H")
                             continue;
                         string alt = "100";
-                        if (marker is GMapMarkerRect)
-                            alt = ((GMapMarkerRect)marker).InnerMarker.ToolTipText.Replace("Alt: ", "");
+                        if (marker is VPS.Maps.GMapMarkerWP)
+                            alt = ((GMapMarkerWP)marker).ToolTipText.Replace("Alt: ", "");
                         else
                         {
-                            foreach (var coord in overlay.pointlist)
-                            {
-                                if (coord == null)
-                                    continue;
-                                if (coord.Lng == marker.Position.Lng && coord.Lat == marker.Position.Lat)
-                                {
-                                    alt = coord.Alt.ToString();
-                                    break;
-                                }
-                            }
+                            continue;
                         }
 
                         pointList += string.Format("{0},{1},{2} ", marker.Position.Lng, marker.Position.Lat, alt);
