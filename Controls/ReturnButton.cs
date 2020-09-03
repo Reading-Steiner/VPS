@@ -18,10 +18,37 @@ namespace VPS.Controls
         public delegateHandler OnOK;
         public delegateHandler OnCancel;
 
+        string _ok = "确定";
         [Category("设置"), Description("确定")]
-        public string OKText { get; set; } = "确定";
+        public string OKText
+        {
+            get
+            {
+                return _ok;
+            }
+            set
+            {
+                _ok = value;
+                OK.Text = value;
+                OK.Invalidate();
+            }
+        }
+
+        string _cancle = "取消";
         [Category("设置"), Description("取消")]
-        public string CancelText { get; set; } = "取消";
+        public string CancelText
+        {
+            get
+            {
+                return _cancle;
+            }
+            set
+            {
+                _cancle = value;
+                Cancel.Text = value;
+                Cancel.Invalidate();
+            }
+        }
         private Color _topRederBackColor;
         [Category("设置"), Description("顶部背景颜色")]
         public Color TopRederBackColor

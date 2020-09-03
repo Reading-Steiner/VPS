@@ -28,25 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.DisplayText = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // DisplayText
-            // 
-            this.DisplayText.AutoSize = true;
-            this.DisplayText.BackColor = System.Drawing.Color.Transparent;
-            this.DisplayText.Location = new System.Drawing.Point(24, 6);
-            this.DisplayText.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.DisplayText.Name = "DisplayText";
-            this.DisplayText.Size = new System.Drawing.Size(0, 19);
-            this.DisplayText.TabIndex = 0;
             // 
             // BoardLabel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.Controls.Add(this.DisplayText);
             this.DoubleBuffered = true;
             this.Enabled = false;
             this.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -55,13 +44,10 @@
             this.Name = "BoardLabel";
             this.Size = new System.Drawing.Size(96, 31);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label DisplayText;
 
     }
 }

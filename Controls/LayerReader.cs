@@ -10,6 +10,7 @@ using System.IO;
 using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 using CCWin;
+using System.Runtime.InteropServices;
 
 namespace VPS.Controls
 {
@@ -25,10 +26,25 @@ namespace VPS.Controls
             this.RetButton.OnCancel += OnCancel;
         }
 
+
+        [DllImport("user32.dll", EntryPoint = "AnimateWindow")]
+        private static extern bool AnimateWindow(IntPtr handle, int ms, int flags);
+        public const Int32 AW_HOR_POSITIVE = 0x00000001;
+        public const Int32 AW_HOR_NEGATIVE = 0x00000002;
+        public const Int32 AW_VER_POSITIVE = 0x00000004;
+        public const Int32 AW_VER_NEGATIVE = 0x00000008;
+        public const Int32 AW_CENTER = 0x00000010;
+        public const Int32 AW_HIDE = 0x00010000;
+        public const Int32 AW_ACTIVATE = 0x00020000;
+        public const Int32 AW_SLIDE = 0x00040000;
+        public const Int32 AW_BLEND = 0x00080000;
+
         private void OnAccept()
         {
             if (this.IsLoadLayer)
+            {
                 this.DialogResult = DialogResult.OK;
+            }
             else
                 this.DialogResult = DialogResult.Cancel;
         }
@@ -42,11 +58,11 @@ namespace VPS.Controls
 
         private void GetOriginAlt()
         {
-            this.Altitude.TextContent = 
+            this.Altitude.SetTextContent(
                 srtm.getAltitude(
-                    System.Convert.ToDouble(this.Latitude.TextContent),
-                    System.Convert.ToDouble(this.Longitude.TextContent)
-                    ).alt.ToString();
+                    System.Convert.ToDouble(this.Latitude.GetTextContent()),
+                    System.Convert.ToDouble(this.Longitude.GetTextContent())
+                    ).alt.ToString());
         }
 
         public LayerReader(string path)
@@ -72,12 +88,12 @@ namespace VPS.Controls
             this.Latitude.TextChange -= GetOriginAlt;
             this.Longitude.TextChange -= GetOriginAlt;
 
-            this.Longitude.TextContent = 0.ToString();
-            this.Latitude.TextContent = 0.ToString();
-            this.Altitude.TextContent = 0.ToString();
-            this.MapScale.TextContent = "1:200";
+            this.Longitude.SetTextContent(0.ToString());
+            this.Latitude.SetTextContent(0.ToString());
+            this.Altitude.SetTextContent(0.ToString());
+            this.MapScale.SetTextContent("1:200");
 
-            this.FilePath.TextContent = path;
+            this.FilePath.SetTextContent(path);
 
             this.Latitude.TextChange += GetOriginAlt;
             this.Longitude.TextChange += GetOriginAlt;
@@ -88,64 +104,6 @@ namespace VPS.Controls
                     return bitmap;
                 };
             IAsyncResult iarLoadBitmap = GetGeoBitmap.BeginInvoke(path, CallbackWhenLoadBitmapDone, this);
-            Func<string, double[]> AnalyzeAlt = (filePath) =>
-            {
-                var bitmap = GDAL.GDAL.LoadImageInfo(filePath);
-                double deltaX = (bitmap.Rect.Right - bitmap.Rect.Left) / 1000;
-                double deltaY = (bitmap.Rect.Top - bitmap.Rect.Bottom) / 1000;
-                double maxLat = bitmap.Rect.Left;
-                double maxLng = bitmap.Rect.Bottom;
-                double maxAlt = srtm.getAltitude(bitmap.Rect.Left, bitmap.Rect.Bottom).alt;
-                double minLat = bitmap.Rect.Left;
-                double minLng = bitmap.Rect.Bottom;
-                double minAlt = srtm.getAltitude(bitmap.Rect.Left, bitmap.Rect.Bottom).alt;
-                for (int i = 1; i < 1000; i++)
-                {
-                    for (int j = 1; j < 1000; j++)
-                    {
-                        double alt = srtm.getAltitude(bitmap.Rect.Left + i * deltaX, bitmap.Rect.Bottom + j * deltaY).alt;
-                        if(alt < minAlt)
-                        {
-                            minAlt = alt;
-                            minLat = bitmap.Rect.Bottom + j * deltaY;
-                            minLng = bitmap.Rect.Left + i * deltaX;
-                        }else if(alt > maxAlt)
-                        {
-                            maxAlt = alt;
-                            maxLat = bitmap.Rect.Bottom + j * deltaY;
-                            maxLng = bitmap.Rect.Left + i * deltaX;
-                        }
-                    }
-                }
-                return new double[] { minLng, minLat, minAlt, maxLng, maxLat, maxAlt };
-            };
-
-            IAsyncResult iar = AnalyzeAlt.BeginInvoke(path, CallbackWhenAnalyzeAltDone, this);
-        }
-
-        double _maxLat = 0;
-        double _maxLng = 0;
-        double _maxAlt = 0;
-        double _minLat = 0;
-        double _minLng = 0;
-        double _minAlt = 0;
-        private void CallbackWhenAnalyzeAltDone(IAsyncResult iar)
-        {
-            AsyncResult ar = (AsyncResult)iar;
-            Func<string, double[]> geoFunc = (Func<string, double[]>)ar.AsyncDelegate;
-            var data = geoFunc.EndInvoke(iar);
-
-            if (data == null)
-            {
-                IsLoadInfo = false;
-                return;
-            }
-            else
-            {
-                IsLoadInfo = true;
-                _minLng = data[0]; _minLat = data[1]; _minAlt = data[2];
-                _maxLng = data[3]; _maxLat = data[4]; _maxAlt = data[5];
-            }
         }
 
 
@@ -165,22 +123,19 @@ namespace VPS.Controls
                 IsLoadLayer = true;
 
                 var rect = geobitmap.Rect;
-                this.TopLabel.Text = string.Format(TopFormat, rect.Top >= 0 ? rect.Top.ToString("f2") + "N" : (-rect.Top).ToString("f2") + "S");
-                this.BottomLabel.Text = string.Format(BottomFormat, rect.Bottom >= 0 ? rect.Bottom.ToString("f2") + "N" : (-rect.Bottom).ToString("f2") + "S");
-                this.LeftLabel.Text = string.Format(LeftFormat, rect.Left > 0 ? rect.Left.ToString("f2") + "E" : (-rect.Left).ToString("f2") + "W");
-                this.RightLabel.Text = string.Format(RightFormat, rect.Right >= 0 ? rect.Right.ToString("f2") + "E" : (-rect.Right).ToString("f2") + "W");
+                SetLimitBox(rect.Top, rect.Bottom, rect.Left, rect.Right);
 
-                this.Longitude.TextContent = rect.Lng.ToString();
-                this.Latitude.TextContent = rect.Lat.ToString();
+                this.Longitude.SetTextContent(rect.Lng.ToString());
+                this.Latitude.SetTextContent(rect.Lat.ToString());
 
-                this.MapScale.TextContent = "1:100";
+                this.MapScale.SetTextContent("1:100");
 
-                this.Transparent.Color = geobitmap.smallBitmap.GetPixel(0, 0);
+                SetTransparent(geobitmap.smallBitmap.GetPixel(0, 0));
 
-                
+
                 using (Bitmap bitmap = (Bitmap)geobitmap.smallBitmap.Clone())
                 {
-                    bitmap.MakeTransparent(this.Transparent.Color);
+                    bitmap.MakeTransparent(GetTransparent());
 
                     Image img = Image.FromHbitmap(bitmap.GetHbitmap());
                     this.LayerPrevView.Image = img;
@@ -193,13 +148,63 @@ namespace VPS.Controls
             }
         }
 
+        private delegate void SetTransparentCallback(Color color);
+        private void SetTransparent(Color color)
+        {
+            if (this.InvokeRequired)
+            {
+                SetTransparentCallback callbak = new SetTransparentCallback(SetTransparent);
+                this.Invoke(callbak, new object[] { color });
+            }
+            else
+            {
+                this.Transparent.Color = color;
+            }
+        }
+
+        private delegate Color GetTransparentCallback();
+        private Color GetTransparent()
+        {
+            if (this.InvokeRequired)
+            {
+                GetTransparentCallback callbak = new GetTransparentCallback(GetTransparent);
+                IAsyncResult ir = this.BeginInvoke(callbak);
+                return (Color)this.EndInvoke(ir);
+            }
+            else
+            {
+                return this.Transparent.Color;
+            }
+        }
+
+        private delegate void SetLimitBoxCallbak(double top, double bottom, double left, double right);
+        private void SetLimitBox(double top, double bottom, double left, double right)
+        {
+            if (this.InvokeRequired)
+            {
+                SetLimitBoxCallbak callbak = new SetLimitBoxCallbak(SetLimitBox);
+                this.Invoke(callbak, new object[] { top, bottom, left, right });
+            }
+            else
+            {
+                this.TopLabel.Text = string.Format(TopFormat,
+                    top >= 0 ? top.ToString("f2") + "N" : (-top).ToString("f2") + "S");
+                this.BottomLabel.Text = string.Format(BottomFormat,
+                    bottom >= 0 ? bottom.ToString("f2") + "N" : (-bottom).ToString("f2") + "S");
+                this.LeftLabel.Text = string.Format(LeftFormat,
+                    left > 0 ? left.ToString("f2") + "E" : (-left).ToString("f2") + "W");
+                this.RightLabel.Text = string.Format(RightFormat,
+                    right >= 0 ? right.ToString("f2") + "E" : (-right).ToString("f2") + "W");
+            }
+        }
+
         private void Transparent_ColorChanged(object sender, EventArgs e)
         {
             if (this.LayerPrevView.Image != null)
             {
                 using(Bitmap bitmap = (Bitmap)geobitmap.smallBitmap.Clone())
                 {
-                    bitmap.MakeTransparent(this.Transparent.Color);
+                    bitmap.MakeTransparent(GetTransparent());
 
                     Image img = Image.FromHbitmap(bitmap.GetHbitmap());
                     this.LayerPrevView.Image = img;
@@ -212,7 +217,7 @@ namespace VPS.Controls
         {
             if (IsLoadLayer)
             {
-                return this.FilePath.TextContent;
+                return this.FilePath.GetTextContent();
             }
             else
                 return null;
@@ -223,9 +228,9 @@ namespace VPS.Controls
             if (IsLoadLayer)
             {
                 return new PointLatLngAlt(
-                    System.Convert.ToDouble(this.Latitude.TextContent),
-                    System.Convert.ToDouble(this.Longitude.TextContent),
-                    System.Convert.ToDouble(this.Altitude.TextContent));
+                    System.Convert.ToDouble(this.Latitude.GetTextContent()),
+                    System.Convert.ToDouble(this.Longitude.GetTextContent()),
+                    System.Convert.ToDouble(this.Altitude.GetTextContent()));
             }
             else
                 return null;
@@ -236,16 +241,16 @@ namespace VPS.Controls
         {
             if (IsLoadLayer)
             {
-                if (MapScale.TextContent.Contains(":"))
+                if (MapScale.GetTextContent().Contains(":"))
                 {
-                    string[] data = MapScale.TextContent.Split(':');
+                    string[] data = MapScale.GetTextContent().Split(':');
                     return System.Convert.ToDouble(data[1]) / System.Convert.ToDouble(data[0]);
-                }else if (MapScale.TextContent.Contains("："))
+                }else if (MapScale.GetTextContent().Contains("："))
                 {
-                    string[] data = MapScale.TextContent.Split('：');
+                    string[] data = MapScale.GetTextContent().Split('：');
                     return System.Convert.ToDouble(data[1]) / System.Convert.ToDouble(data[0]);
                 }else
-                    return System.Convert.ToDouble(this.MapScale.TextContent);
+                    return System.Convert.ToDouble(this.MapScale.GetTextContent());
             }
             else
                 return 0.0;
@@ -262,7 +267,10 @@ namespace VPS.Controls
                 return Color.Black;
         }
 
-
+        public bool GetApplyTile()
+        {
+            return this.ImageTileBox.Checked;
+        }
 
         string TopFormat = "Top：{0}";
         string BottomFormat = "Bottom：{0}";
@@ -270,7 +278,12 @@ namespace VPS.Controls
         string RightFormat = "Right：\n\n{0}";
         GDAL.GDAL.GeoBitmap geobitmap;
         bool IsLoadLayer = false;
-        bool IsLoadInfo = false;
 
     }
 }
+
+
+
+
+
+

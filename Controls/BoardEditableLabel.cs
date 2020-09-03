@@ -26,11 +26,58 @@ namespace VPS.Controls
             EditOver += CheckAndCloseEdit;
         }
 
+        //[System.Runtime.InteropServices.DllImportAttribute("gdi32.dll")]
+        //private static extern bool BitBlt(
+        //    IntPtr hdcDest, // 目标 DC的句柄 
+        //    int nXDest,
+        //    int nYDest,
+        //    int nWidth,
+        //    int nHeight,
+        //    IntPtr hdcSrc, // 源DC的句柄 
+        //    int nXSrc,
+        //    int nYSrc,
+        //    System.Int32 dwRop // 光栅的处理数值 
+        //);
+
+        //private static Bitmap GetFormDC(Control form)
+        //{
+        //    Graphics g1 = form.CreateGraphics();
+        //    Bitmap MyImage = new Bitmap(form.Width, form.Height, g1);
+        //    Graphics g2 = Graphics.FromImage(MyImage);
+        //    //得到屏幕的DC
+        //    IntPtr dc1 = g1.GetHdc();
+        //    //得到Bitmap的DC
+        //    IntPtr dc2 = g2.GetHdc();
+
+        //    BitBlt(dc2, 0, 0, form.Width, form.Height, dc1, 0, 0, 13369376);
+
+        //    //释放掉屏幕的DC 
+        //    g1.ReleaseHdc(dc1);
+        //    //释放掉Bitmap的DC 
+        //    g2.ReleaseHdc(dc2);
+        //    return MyImage;
+        //}
+
+        //private void GetParentBackColor(Graphics g)
+        //{
+        //    var backColor = GetFormDC(this.Parent);
+
+        //    g.DrawImage(backColor, 
+        //        new Rectangle(0,0,this.Width,this.Height),
+        //        new Rectangle(this.Left,this.Top,this.Width,this.Height),
+        //        GraphicsUnit.Pixel);
+        //}
+
         private void DrawBackground()
         {
             Bitmap background = new Bitmap(this.Width, this.Height, PixelFormat.Format32bppRgb);
             var g = Graphics.FromImage(background);
-            g.Clear(this.BackColor);
+            if (this.AllowEdit)
+                g.Clear(this.BackColor);
+            else {
+                g.Clear(SystemColors.Control);
+            }
+            //GetParentBackColor(g);
             for (int i = 0; i < _rederWidth; i++)
             {
                 switch (_rederStyle)
@@ -148,6 +195,35 @@ namespace VPS.Controls
             }
         }
 
+        private delegate void SetTextContentCallback(string text);
+        public void SetTextContent(string value)
+        {
+            if (this.InvokeRequired)
+            {
+                SetTextContentCallback setText = new SetTextContentCallback(SetTextContent);
+                this.Invoke(setText, new object[] { value });
+            }
+            else
+            {
+                this.TextContent = value;
+            }
+        }
+
+        private delegate string GetTextContentCallback();
+        public string GetTextContent()
+        {
+            if (this.InvokeRequired)
+            {
+                GetTextContentCallback getText = new GetTextContentCallback(GetTextContent);
+                IAsyncResult iar = this.BeginInvoke(getText);
+                return (string)this.EndInvoke(iar);
+            }
+            else
+            {
+                return this.TextContent;
+            }
+        }
+
         [Category("设置"), Description("文本正则表达式")]
         public string Pattern { get; set; } = @"^\S*$";
 
@@ -159,8 +235,19 @@ namespace VPS.Controls
             
         }
 
+        bool _allowEdit = true;
         [Category("设置"), Description("文本锁定")]
-        public bool AllowEdit { get; set; } = true;
+        public bool AllowEdit {
+            get
+            {
+                return _allowEdit;
+            }
+            set
+            {
+                _allowEdit = value;
+                DrawBackground();
+            }
+        }
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
@@ -220,7 +307,7 @@ namespace VPS.Controls
         {
             if (this.EditBox.Visible == true)
             {
-                TextContent = this.EditBox.Text;
+                SetTextContent(this.EditBox.Text);
                 this.EditBox.Visible = false;
                 EditOver?.Invoke();
                 ChangeText?.Invoke();
@@ -234,7 +321,7 @@ namespace VPS.Controls
             {
                 if (this.EditBox.Visible == true)
                 {
-                    TextContent = this.EditBox.Text;
+                    SetTextContent(this.EditBox.Text);
                     this.EditBox.Visible = false;
                     EditOver?.Invoke();
                     ChangeText?.Invoke();

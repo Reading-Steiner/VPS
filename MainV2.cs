@@ -1357,27 +1357,56 @@ namespace VPS
             SetFlightDataMenu();
         }
 
+        private delegate void SetCheckedCallback(HLToolStripButton stripButton, bool value);
+        private void SetHLToolStripButtonChecked(HLToolStripButton stripButton, bool value)
+        {
+            if (MainMenu.InvokeRequired)
+            {
+                SetCheckedCallback setCallback = new SetCheckedCallback(SetHLToolStripButtonChecked);
+                MainMenu.Invoke(setCallback, new object[] { stripButton, value });
+            }
+            else
+            {
+                stripButton.MyChecked = value;
+            }
+        }
+
+        private delegate bool GetCheckedCallback(HLToolStripButton stripButton);
+        private bool GetHLToolStripButtonChecked(HLToolStripButton stripButton)
+        {
+            if (MainMenu.InvokeRequired)
+            {
+                GetCheckedCallback setCallback = new GetCheckedCallback(GetHLToolStripButtonChecked);
+                IAsyncResult ia = MainMenu.BeginInvoke(setCallback);
+                return (bool)MainMenu.EndInvoke(ia);
+            }
+            else
+            {
+                return stripButton.MyChecked;
+            }
+        }
+
         private void SetLaodLayerState()
         {
-            this.MenuLoadLayer.Checked = true;
+            SetHLToolStripButtonChecked(this.MenuLoadLayer, true);
             this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible;
         }
 
         private void SetNoLaodLayerState()
         {
-            this.MenuLoadLayer.Checked = false;
+            SetHLToolStripButtonChecked(this.MenuLoadLayer, false);
             this.MenuZoomToLayer.Visible = false;
         }
 
         private void ToDrawPolygonState()
         {
-            this.MenuDrawPolygon.MyChecked = true;
+            SetHLToolStripButtonChecked(this.MenuDrawPolygon, true);
             //this.MenuClearPolygon.Visible = true;
         }
 
         private void OutDrawPolygonState()
         {
-            this.MenuDrawPolygon.MyChecked = false;
+            SetHLToolStripButtonChecked(this.MenuDrawPolygon, false);
             //this.MenuClearPolygon.Visible = false;
         }
 
@@ -1478,10 +1507,10 @@ namespace VPS
 
         private void MenuLayerManager_Click(object sender, EventArgs e)
         {
-            this.MenuLayerManager.MyChecked = true;
+            SetHLToolStripButtonChecked(this.MenuLayerManager, true);
             if (MenuLayerManager.Visible)
                 GCSViews.FlightPlanner.instance.TiffLayerManager();
-            this.MenuLayerManager.MyChecked = false;
+            SetHLToolStripButtonChecked(this.MenuLayerManager, false);
         }
 
         #region 图层信息
@@ -1492,21 +1521,35 @@ namespace VPS
 
         public void LoadTiffLayer()
         {
-            this.MenuLoadLayer.HightLightBackgroundColor = Color.Red;
             LayerReader reader = new LayerReader();
-            DialogResult result = reader.ShowDialog();
-            if (result == DialogResult.OK)
+            DialogResult readerResult = reader.ShowDialog();
+            if (readerResult == DialogResult.OK)
             {
-                
+                if (reader.GetApplyTile())
+                {
+                    LayerTile tile = new LayerTile(reader.GetLayer());
+                    tile.SetDesktopBounds(reader.Left, reader.Top, reader.Width, reader.Height);
+                    DialogResult tileResult = tile.ShowDialog(this);
+                    if(tileResult == DialogResult.OK)
+                    {
+
+                        tile.Dispose();
+                        tile.Close();
+                    }
+                    else if (readerResult == DialogResult.Cancel)
+                    {
+                        tile.Dispose();
+                        tile.Close();
+                    }
+                }
                 AddLayerOverlay(reader.GetLayer(), reader.GetOrigin(), reader.GetScale(), reader.GetTransparentColor());
                 reader.Dispose();
                 reader.Close();
             }
-            else if (result == DialogResult.Cancel)
+            else if (readerResult == DialogResult.Cancel)
             {
                 reader.Dispose();
                 reader.Close();
-                this.MenuLoadLayer.HightLightBackgroundColor = Color.Lime;
             }
         }
 
@@ -1539,13 +1582,11 @@ namespace VPS
                 }
                 else
                 {
-                    this.MenuLoadLayer.HightLightBackgroundColor = Color.Lime;
                     return false;
                 }
             }
             else
             {
-                this.MenuLoadLayer.HightLightBackgroundColor = Color.Lime;
                 return false;
             }
         }
@@ -1561,7 +1602,6 @@ namespace VPS
                 CurrentLayer = geoBitmap;
                 ShowLayerOverlay(geoBitmap);
             }
-            this.MenuLoadLayer.HightLightBackgroundColor = Color.Lime;
         }
 
         private void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
@@ -1574,7 +1614,7 @@ namespace VPS
         {
             if (MenuDrawPolygon.Visible)
             {
-                if (!this.MenuDrawPolygon.MyChecked)
+                if (!GetHLToolStripButtonChecked(this.MenuDrawPolygon))
                     GCSViews.FlightPlanner.instance.AddPolygon();
                 else
                     GCSViews.FlightPlanner.instance.NoAddPolygon();
@@ -1589,10 +1629,10 @@ namespace VPS
 
         private void MenuSurveyGrid_Click(object sender, EventArgs e)
         {
-            this.MenuSurveyGrid.MyChecked = true;
+            SetHLToolStripButtonChecked(this.MenuSurveyGrid, true);
             if (MenuSurveyGrid.Visible)
                 GCSViews.FlightPlanner.instance.surveyGrid();
-            this.MenuSurveyGrid.MyChecked = false;
+            SetHLToolStripButtonChecked(this.MenuSurveyGrid, false);
         }
 
         private void MenuClearWP_Click(object sender, EventArgs e)
@@ -1603,18 +1643,18 @@ namespace VPS
 
         private void MenuReadWP_Click(object sender, EventArgs e)
         {
-            this.MenuReadWP.MyChecked = true;
+            SetHLToolStripButtonChecked(this.MenuReadWP, true);
             if (MenuReadWP.Visible)
                 GCSViews.FlightPlanner.instance.LoadWPFile();
-            this.MenuReadWP.MyChecked = false;
+            SetHLToolStripButtonChecked(this.MenuReadWP, false);
         }
 
         private void MenuSaveWP_Click(object sender, EventArgs e)
         {
-            this.MenuSaveWP.MyChecked = true;
+            SetHLToolStripButtonChecked(this.MenuSaveWP, true);
             if (MenuSaveWP.Visible)
                 GCSViews.FlightPlanner.instance.SaveWPFile();
-            this.MenuSaveWP.MyChecked = false;
+            SetHLToolStripButtonChecked(this.MenuSaveWP, false);
         }
         #endregion
 

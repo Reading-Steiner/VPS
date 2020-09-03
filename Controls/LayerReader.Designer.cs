@@ -39,23 +39,23 @@ namespace VPS.Controls
             this.LayerPrevView = new CCWin.SkinControl.SkinPictureBox();
             this.Transparent = new DotSpatial.Symbology.Forms.ColorButton();
             this.skinGroupBox1 = new CCWin.SkinControl.SkinGroupBox();
-            this.skinCheckBox1 = new CCWin.SkinControl.SkinCheckBox();
+            this.ImageTileBox = new CCWin.SkinControl.SkinCheckBox();
+            this.TransparentLabel = new VPS.Controls.BoardLabel();
             this.skinGroupBox2 = new CCWin.SkinControl.SkinGroupBox();
-            this.skinGroupBox3 = new CCWin.SkinControl.SkinGroupBox();
-            this.RetButton = new VPS.Controls.ReturnButton();
-            this.boardEditableLabel1 = new VPS.Controls.BoardEditableLabel();
-            this.boardLabel2 = new VPS.Controls.BoardLabel();
-            this.MapScale = new VPS.Controls.BoardEditableLabel();
-            this.boardEditableLabel2 = new VPS.Controls.BoardEditableLabel();
-            this.boardLabel1 = new VPS.Controls.BoardLabel();
-            this.ScaleLabel = new VPS.Controls.BoardLabel();
             this.AltitudeLabel = new VPS.Controls.BoardLabel();
             this.LatitudeLabel = new VPS.Controls.BoardLabel();
             this.Longitude = new VPS.Controls.BoardEditableLabel();
             this.LongitudeLabel = new VPS.Controls.BoardLabel();
             this.Latitude = new VPS.Controls.BoardEditableLabel();
             this.Altitude = new VPS.Controls.BoardEditableLabel();
-            this.TransparentLabel = new VPS.Controls.BoardLabel();
+            this.skinGroupBox3 = new CCWin.SkinControl.SkinGroupBox();
+            this.boardEditableLabel1 = new VPS.Controls.BoardEditableLabel();
+            this.boardLabel2 = new VPS.Controls.BoardLabel();
+            this.MapScale = new VPS.Controls.BoardEditableLabel();
+            this.boardEditableLabel2 = new VPS.Controls.BoardEditableLabel();
+            this.boardLabel1 = new VPS.Controls.BoardLabel();
+            this.ScaleLabel = new VPS.Controls.BoardLabel();
+            this.RetButton = new VPS.Controls.ReturnButton();
             this.FilePath = new VPS.Controls.BoardEditableLabel();
             this.FileOpen = new VPS.Controls.GradualButton();
             ((System.ComponentModel.ISupportInitialize)(this.LayerPrevView)).BeginInit();
@@ -112,7 +112,7 @@ namespace VPS.Controls
             resources.ApplyResources(this.skinGroupBox1, "skinGroupBox1");
             this.skinGroupBox1.BackColor = System.Drawing.Color.Transparent;
             this.skinGroupBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.skinGroupBox1.Controls.Add(this.skinCheckBox1);
+            this.skinGroupBox1.Controls.Add(this.ImageTileBox);
             this.skinGroupBox1.Controls.Add(this.TransparentLabel);
             this.skinGroupBox1.Controls.Add(this.Transparent);
             this.skinGroupBox1.ForeColor = System.Drawing.Color.Black;
@@ -126,22 +126,35 @@ namespace VPS.Controls
             this.skinGroupBox1.TitleRectBackColor = System.Drawing.SystemColors.Control;
             this.skinGroupBox1.TitleRoundStyle = CCWin.SkinClass.RoundStyle.All;
             // 
-            // skinCheckBox1
+            // ImageTileBox
             // 
-            resources.ApplyResources(this.skinCheckBox1, "skinCheckBox1");
-            this.skinCheckBox1.BackColor = System.Drawing.Color.Transparent;
-            this.skinCheckBox1.BaseColor = System.Drawing.Color.Black;
-            this.skinCheckBox1.ControlState = CCWin.SkinClass.ControlState.Normal;
-            this.skinCheckBox1.DownBack = null;
-            this.skinCheckBox1.ForeColor = System.Drawing.Color.Black;
-            this.skinCheckBox1.LightEffectBack = System.Drawing.Color.Transparent;
-            this.skinCheckBox1.MouseBack = null;
-            this.skinCheckBox1.Name = "skinCheckBox1";
-            this.skinCheckBox1.NormlBack = null;
-            this.skinCheckBox1.SelectedDownBack = null;
-            this.skinCheckBox1.SelectedMouseBack = null;
-            this.skinCheckBox1.SelectedNormlBack = null;
-            this.skinCheckBox1.UseVisualStyleBackColor = false;
+            resources.ApplyResources(this.ImageTileBox, "ImageTileBox");
+            this.ImageTileBox.BackColor = System.Drawing.Color.Transparent;
+            this.ImageTileBox.BaseColor = System.Drawing.Color.Black;
+            this.ImageTileBox.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.ImageTileBox.DownBack = null;
+            this.ImageTileBox.ForeColor = System.Drawing.Color.Black;
+            this.ImageTileBox.LightEffectBack = System.Drawing.Color.Transparent;
+            this.ImageTileBox.MouseBack = null;
+            this.ImageTileBox.Name = "ImageTileBox";
+            this.ImageTileBox.NormlBack = null;
+            this.ImageTileBox.SelectedDownBack = null;
+            this.ImageTileBox.SelectedMouseBack = null;
+            this.ImageTileBox.SelectedNormlBack = null;
+            this.ImageTileBox.UseVisualStyleBackColor = false;
+            // 
+            // TransparentLabel
+            // 
+            resources.ApplyResources(this.TransparentLabel, "TransparentLabel");
+            this.TransparentLabel.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
+            this.TransparentLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.TransparentLabel.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.TransparentLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.TransparentLabel.Name = "TransparentLabel";
+            this.TransparentLabel.Pattern = "^\\S*$";
+            this.TransparentLabel.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
+            this.TransparentLabel.RederWidth = 1;
+            this.TransparentLabel.TextContent = "透明色";
             // 
             // skinGroupBox2
             // 
@@ -163,6 +176,87 @@ namespace VPS.Controls
             this.skinGroupBox2.TitleRectBackColor = System.Drawing.SystemColors.Control;
             this.skinGroupBox2.TitleRoundStyle = CCWin.SkinClass.RoundStyle.All;
             // 
+            // AltitudeLabel
+            // 
+            resources.ApplyResources(this.AltitudeLabel, "AltitudeLabel");
+            this.AltitudeLabel.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
+            this.AltitudeLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.AltitudeLabel.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.AltitudeLabel.ForeColor = System.Drawing.Color.Black;
+            this.AltitudeLabel.Name = "AltitudeLabel";
+            this.AltitudeLabel.Pattern = "^\\S*$";
+            this.AltitudeLabel.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
+            this.AltitudeLabel.RederWidth = 1;
+            this.AltitudeLabel.TextContent = "地面高程";
+            // 
+            // LatitudeLabel
+            // 
+            resources.ApplyResources(this.LatitudeLabel, "LatitudeLabel");
+            this.LatitudeLabel.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
+            this.LatitudeLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.LatitudeLabel.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.LatitudeLabel.ForeColor = System.Drawing.Color.Black;
+            this.LatitudeLabel.Name = "LatitudeLabel";
+            this.LatitudeLabel.Pattern = "^\\S*$";
+            this.LatitudeLabel.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
+            this.LatitudeLabel.RederWidth = 1;
+            this.LatitudeLabel.TextContent = "纬度";
+            // 
+            // Longitude
+            // 
+            resources.ApplyResources(this.Longitude, "Longitude");
+            this.Longitude.AllowEdit = true;
+            this.Longitude.BackColor = System.Drawing.SystemColors.Control;
+            this.Longitude.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.Longitude.Name = "Longitude";
+            this.Longitude.Pattern = "^[+-]?\\d+[.]?\\d*$";
+            this.Longitude.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
+            this.Longitude.RederWidth = 2;
+            this.Longitude.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
+            this.Longitude.TextContent = "0";
+            this.Longitude.TextPosition = new System.Drawing.Point(3, 5);
+            // 
+            // LongitudeLabel
+            // 
+            resources.ApplyResources(this.LongitudeLabel, "LongitudeLabel");
+            this.LongitudeLabel.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
+            this.LongitudeLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.LongitudeLabel.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.LongitudeLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.LongitudeLabel.Name = "LongitudeLabel";
+            this.LongitudeLabel.Pattern = "^\\S*$";
+            this.LongitudeLabel.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
+            this.LongitudeLabel.RederWidth = 1;
+            this.LongitudeLabel.TextContent = "经度";
+            // 
+            // Latitude
+            // 
+            resources.ApplyResources(this.Latitude, "Latitude");
+            this.Latitude.AllowEdit = true;
+            this.Latitude.BackColor = System.Drawing.SystemColors.Control;
+            this.Latitude.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.Latitude.Name = "Latitude";
+            this.Latitude.Pattern = "^[+-]?\\d+[.]?\\d*$";
+            this.Latitude.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
+            this.Latitude.RederWidth = 2;
+            this.Latitude.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
+            this.Latitude.TextContent = "0";
+            this.Latitude.TextPosition = new System.Drawing.Point(3, 5);
+            // 
+            // Altitude
+            // 
+            resources.ApplyResources(this.Altitude, "Altitude");
+            this.Altitude.AllowEdit = true;
+            this.Altitude.BackColor = System.Drawing.SystemColors.Control;
+            this.Altitude.BoardColor = System.Drawing.SystemColors.InactiveCaption;
+            this.Altitude.Name = "Altitude";
+            this.Altitude.Pattern = "^[+-]?\\d+[.]?\\d*$";
+            this.Altitude.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
+            this.Altitude.RederWidth = 2;
+            this.Altitude.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
+            this.Altitude.TextContent = "0";
+            this.Altitude.TextPosition = new System.Drawing.Point(3, 5);
+            // 
             // skinGroupBox3
             // 
             resources.ApplyResources(this.skinGroupBox3, "skinGroupBox3");
@@ -183,23 +277,10 @@ namespace VPS.Controls
             this.skinGroupBox3.TitleRectBackColor = System.Drawing.SystemColors.Control;
             this.skinGroupBox3.TitleRoundStyle = CCWin.SkinClass.RoundStyle.All;
             // 
-            // RetButton
-            // 
-            this.RetButton.BottomRederBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.RetButton.CancelText = "取消";
-            this.RetButton.DownButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            resources.ApplyResources(this.RetButton, "RetButton");
-            this.RetButton.GlowButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.RetButton.MouseButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.RetButton.Name = "RetButton";
-            this.RetButton.OKText = "确定";
-            this.RetButton.RederButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(255)))));
-            this.RetButton.TopRederBackColor = System.Drawing.Color.Transparent;
-            // 
             // boardEditableLabel1
             // 
-            this.boardEditableLabel1.AllowEdit = true;
             resources.ApplyResources(this.boardEditableLabel1, "boardEditableLabel1");
+            this.boardEditableLabel1.AllowEdit = true;
             this.boardEditableLabel1.BackColor = System.Drawing.SystemColors.Control;
             this.boardEditableLabel1.BoardColor = System.Drawing.SystemColors.InactiveCaption;
             this.boardEditableLabel1.Name = "boardEditableLabel1";
@@ -212,21 +293,21 @@ namespace VPS.Controls
             // 
             // boardLabel2
             // 
+            resources.ApplyResources(this.boardLabel2, "boardLabel2");
+            this.boardLabel2.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.boardLabel2.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel2.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            resources.ApplyResources(this.boardLabel2, "boardLabel2");
             this.boardLabel2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.boardLabel2.Name = "boardLabel2";
             this.boardLabel2.Pattern = "^\\S*$";
             this.boardLabel2.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel2.RederWidth = 1;
             this.boardLabel2.TextContent = "×";
-            this.boardLabel2.TextPosition = new System.Drawing.Point(1, 1);
             // 
             // MapScale
             // 
-            this.MapScale.AllowEdit = true;
             resources.ApplyResources(this.MapScale, "MapScale");
+            this.MapScale.AllowEdit = true;
             this.MapScale.BackColor = System.Drawing.SystemColors.Control;
             this.MapScale.BoardColor = System.Drawing.SystemColors.InactiveCaption;
             this.MapScale.Name = "MapScale";
@@ -239,8 +320,8 @@ namespace VPS.Controls
             // 
             // boardEditableLabel2
             // 
-            this.boardEditableLabel2.AllowEdit = true;
             resources.ApplyResources(this.boardEditableLabel2, "boardEditableLabel2");
+            this.boardEditableLabel2.AllowEdit = true;
             this.boardEditableLabel2.BackColor = System.Drawing.SystemColors.Control;
             this.boardEditableLabel2.BoardColor = System.Drawing.SystemColors.InactiveCaption;
             this.boardEditableLabel2.Name = "boardEditableLabel2";
@@ -254,6 +335,7 @@ namespace VPS.Controls
             // boardLabel1
             // 
             resources.ApplyResources(this.boardLabel1, "boardLabel1");
+            this.boardLabel1.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.boardLabel1.BackColor = System.Drawing.SystemColors.Control;
             this.boardLabel1.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.boardLabel1.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -262,11 +344,11 @@ namespace VPS.Controls
             this.boardLabel1.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.boardLabel1.RederWidth = 1;
             this.boardLabel1.TextContent = "沙盘规模";
-            this.boardLabel1.TextPosition = new System.Drawing.Point(7, 3);
             // 
             // ScaleLabel
             // 
             resources.ApplyResources(this.ScaleLabel, "ScaleLabel");
+            this.ScaleLabel.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.ScaleLabel.BackColor = System.Drawing.SystemColors.Control;
             this.ScaleLabel.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.ScaleLabel.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -275,106 +357,24 @@ namespace VPS.Controls
             this.ScaleLabel.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
             this.ScaleLabel.RederWidth = 1;
             this.ScaleLabel.TextContent = "沙盘比例尺";
-            this.ScaleLabel.TextPosition = new System.Drawing.Point(2, 3);
             // 
-            // AltitudeLabel
+            // RetButton
             // 
-            resources.ApplyResources(this.AltitudeLabel, "AltitudeLabel");
-            this.AltitudeLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.AltitudeLabel.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.AltitudeLabel.ForeColor = System.Drawing.Color.Black;
-            this.AltitudeLabel.Name = "AltitudeLabel";
-            this.AltitudeLabel.Pattern = "^\\S*$";
-            this.AltitudeLabel.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
-            this.AltitudeLabel.RederWidth = 1;
-            this.AltitudeLabel.TextContent = "地面高程";
-            this.AltitudeLabel.TextPosition = new System.Drawing.Point(11, 4);
-            // 
-            // LatitudeLabel
-            // 
-            resources.ApplyResources(this.LatitudeLabel, "LatitudeLabel");
-            this.LatitudeLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.LatitudeLabel.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.LatitudeLabel.ForeColor = System.Drawing.Color.Black;
-            this.LatitudeLabel.Name = "LatitudeLabel";
-            this.LatitudeLabel.Pattern = "^\\S*$";
-            this.LatitudeLabel.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
-            this.LatitudeLabel.RederWidth = 1;
-            this.LatitudeLabel.TextContent = "纬度";
-            this.LatitudeLabel.TextPosition = new System.Drawing.Point(23, 5);
-            // 
-            // Longitude
-            // 
-            this.Longitude.AllowEdit = true;
-            resources.ApplyResources(this.Longitude, "Longitude");
-            this.Longitude.BackColor = System.Drawing.SystemColors.Control;
-            this.Longitude.BoardColor = System.Drawing.SystemColors.InactiveCaption;
-            this.Longitude.Name = "Longitude";
-            this.Longitude.Pattern = "^[+-]?\\d+[.]?\\d*$";
-            this.Longitude.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
-            this.Longitude.RederWidth = 2;
-            this.Longitude.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.Longitude.TextContent = "0";
-            this.Longitude.TextPosition = new System.Drawing.Point(3, 5);
-            // 
-            // LongitudeLabel
-            // 
-            resources.ApplyResources(this.LongitudeLabel, "LongitudeLabel");
-            this.LongitudeLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.LongitudeLabel.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.LongitudeLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.LongitudeLabel.Name = "LongitudeLabel";
-            this.LongitudeLabel.Pattern = "^\\S*$";
-            this.LongitudeLabel.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
-            this.LongitudeLabel.RederWidth = 1;
-            this.LongitudeLabel.TextContent = "经度";
-            this.LongitudeLabel.TextPosition = new System.Drawing.Point(23, 5);
-            // 
-            // Latitude
-            // 
-            this.Latitude.AllowEdit = true;
-            resources.ApplyResources(this.Latitude, "Latitude");
-            this.Latitude.BackColor = System.Drawing.SystemColors.Control;
-            this.Latitude.BoardColor = System.Drawing.SystemColors.InactiveCaption;
-            this.Latitude.Name = "Latitude";
-            this.Latitude.Pattern = "^[+-]?\\d+[.]?\\d*$";
-            this.Latitude.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
-            this.Latitude.RederWidth = 2;
-            this.Latitude.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.Latitude.TextContent = "0";
-            this.Latitude.TextPosition = new System.Drawing.Point(3, 5);
-            // 
-            // Altitude
-            // 
-            this.Altitude.AllowEdit = true;
-            resources.ApplyResources(this.Altitude, "Altitude");
-            this.Altitude.BackColor = System.Drawing.SystemColors.Control;
-            this.Altitude.BoardColor = System.Drawing.SystemColors.InactiveCaption;
-            this.Altitude.Name = "Altitude";
-            this.Altitude.Pattern = "^[+-]?\\d+[.]?\\d*$";
-            this.Altitude.RederStyle = VPS.Controls.BoardEditableLabel.Style.Inner;
-            this.Altitude.RederWidth = 2;
-            this.Altitude.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.Altitude.TextContent = "0";
-            this.Altitude.TextPosition = new System.Drawing.Point(3, 5);
-            // 
-            // TransparentLabel
-            // 
-            resources.ApplyResources(this.TransparentLabel, "TransparentLabel");
-            this.TransparentLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.TransparentLabel.BoardColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.TransparentLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.TransparentLabel.Name = "TransparentLabel";
-            this.TransparentLabel.Pattern = "^\\S*$";
-            this.TransparentLabel.RederStyle = VPS.Controls.BoardLabel.Style.Inner;
-            this.TransparentLabel.RederWidth = 1;
-            this.TransparentLabel.TextContent = "透明色";
-            this.TransparentLabel.TextPosition = new System.Drawing.Point(16, 4);
+            resources.ApplyResources(this.RetButton, "RetButton");
+            this.RetButton.BottomRederBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.RetButton.CancelText = "取消";
+            this.RetButton.DownButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.RetButton.GlowButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.RetButton.MouseButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.RetButton.Name = "RetButton";
+            this.RetButton.OKText = "确定";
+            this.RetButton.RederButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(255)))));
+            this.RetButton.TopRederBackColor = System.Drawing.Color.Transparent;
             // 
             // FilePath
             // 
-            this.FilePath.AllowEdit = true;
             resources.ApplyResources(this.FilePath, "FilePath");
+            this.FilePath.AllowEdit = true;
             this.FilePath.BoardColor = System.Drawing.Color.CornflowerBlue;
             this.FilePath.Name = "FilePath";
             this.FilePath.Pattern = "^\\S*$";
@@ -459,7 +459,7 @@ namespace VPS.Controls
         private BoardLabel boardLabel1;
         private BoardLabel boardLabel2;
         private CCWin.SkinControl.SkinGroupBox skinGroupBox1;
-        private CCWin.SkinControl.SkinCheckBox skinCheckBox1;
+        private CCWin.SkinControl.SkinCheckBox ImageTileBox;
         private CCWin.SkinControl.SkinGroupBox skinGroupBox2;
         private BoardLabel AltitudeLabel;
         private BoardLabel LatitudeLabel;

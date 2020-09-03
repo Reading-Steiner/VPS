@@ -96,6 +96,7 @@
     <Reference Include="CSkin">
       <HintPath>ExtLibs\CSkin\CSkin.dll</HintPath>
     </Reference>
+    <Reference Include="DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -461,6 +462,12 @@
     <Compile Include="Controls\LayerReader.Designer.cs">
       <DependentUpon>LayerReader.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LayerTile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\LayerTile.Designer.cs">
+      <DependentUpon>LayerTile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ReturnButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -791,6 +798,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LayerReader.zh-Hans.resx">
       <DependentUpon>LayerReader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerTile.resx">
+      <DependentUpon>LayerTile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ReturnButton.resx">
       <DependentUpon>ReturnButton.cs</DependentUpon>
@@ -1245,6 +1255,7 @@
     <Compile Include="Utilities\POI.cs" />
     <Compile Include="Utilities\ThemeManager.cs" />
     <Compile Include="Utilities\GStreamerUI.cs" />
+    <Compile Include="Utilities\Ui3dEffectForm.cs" />
     <Compile Include="Utilities\Update.cs" />
     <Compile Include="Utilities\Win32DeviceMgnt.cs" />
     <Compile Include="Utilities\AltitudeAngel\AASettings.cs">

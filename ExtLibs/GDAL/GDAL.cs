@@ -264,6 +264,372 @@ namespace GDAL
             return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
         }
 
+
+        public static Bitmap LoadTile(string file, int xOffset, int yOffset, int xSize = 400, int ySize = 400)
+        {
+            lock (locker)
+            {
+                using (var ds = OSGeo.GDAL.Gdal.Open(file, OSGeo.GDAL.Access.GA_ReadOnly))
+                {
+                    //var opt = OSGeo.GDAL.GDALBuildVRTOptions.;
+                    if (ds.RasterXSize <= xOffset ||
+                        ds.RasterYSize <= yOffset ||
+                        xOffset < 0 || yOffset < 0 || xSize <= 0 || ySize <= 0)
+                        return null;
+                    int rasterXSize = ds.RasterXSize >= xOffset + xSize ?
+                        xSize : ds.RasterXSize - xOffset;
+                    int rasterYSize = ds.RasterYSize >= yOffset + ySize ?
+                        ySize : ds.RasterYSize - yOffset;
+
+                    if (ds.RasterCount == 1)
+                    {
+                        Band band = ds.GetRasterBand(1);
+                        if (band == null)
+                            return null;
+
+                        ColorTable ct = band.GetRasterColorTable();
+
+                        PixelFormat format = PixelFormat.Format8bppIndexed;
+
+                        // Create a Bitmap to store the GDAL image in
+                        Bitmap bitmap = new Bitmap(rasterXSize, rasterYSize, format);
+
+                        // Obtaining the bitmap buffer
+                        BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, rasterXSize, rasterYSize),
+                            ImageLockMode.ReadWrite, format);
+                        try
+                        {
+                            if (ct != null)
+                            {
+                                int iCol = ct.GetCount();
+                                ColorPalette pal = bitmap.Palette;
+                                for (int i = 0; i < rasterYSize; i++)
+                                {
+                                    for (int j = 0; j < rasterXSize; j++)
+                                    {
+                                        ColorEntry ce = ct.GetColorEntry((yOffset + i) * ds.RasterXSize + xOffset + j);
+                                        pal.Entries[i] = Color.FromArgb(ce.c4, ce.c1, ce.c2, ce.c3);
+                                    }
+                                }
+
+                                bitmap.Palette = pal;
+                            }
+                            else
+                            {
+
+                            }
+
+                            //int stride = ds.RasterXSize;
+                            IntPtr buf = bitmapData.Scan0;
+
+                            band.ReadRaster(xOffset, yOffset, rasterXSize, rasterYSize, buf, rasterXSize, rasterYSize,
+                                DataType.GDT_Byte, 0, 0);
+
+                        }
+                        finally
+                        {
+                            bitmap.UnlockBits(bitmapData);
+                        }
+
+
+                        return bitmap;
+                    }
+
+                    {
+                        Bitmap bitmap = new Bitmap(rasterXSize, rasterYSize, PixelFormat.Format32bppArgb);
+
+                        for (int a = 1; a <= ds.RasterCount; a++)
+                        {
+                            // Get the GDAL Band objects from the Dataset
+                            Band band = ds.GetRasterBand(a);
+                            if (band == null)
+                                return null;
+
+                            var cint = band.GetColorInterpretation();
+
+
+                            // Obtaining the bitmap buffer
+                            BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, rasterXSize, rasterYSize),
+                                ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+                            try
+                            {
+
+                                //int stride = bitmapData.Stride;
+                                IntPtr buf = bitmapData.Scan0;
+                                var buffer = new byte[rasterXSize * rasterYSize];
+
+                                band.ReadRaster(xOffset, yOffset, rasterXSize, rasterYSize, buffer, rasterXSize, rasterYSize, 0, 0);
+
+                                int c = 0;
+                                if (cint == ColorInterp.GCI_AlphaBand)
+                                    foreach (var b in buffer)
+                                    {
+                                        Marshal.WriteByte(buf, 3 + c * 4, (byte)b);
+                                        c++;
+                                    }
+                                else if (cint == ColorInterp.GCI_RedBand)
+                                    foreach (var b in buffer)
+                                    {
+                                        Marshal.WriteByte(buf, 2 + c * 4, (byte)b);
+                                        c++;
+                                    }
+                                else if (cint == ColorInterp.GCI_GreenBand)
+                                    foreach (var b in buffer)
+                                    {
+                                        Marshal.WriteByte(buf, 1 + c * 4, (byte)b);
+                                        c++;
+                                    }
+                                else if (cint == ColorInterp.GCI_BlueBand)
+                                    foreach (var b in buffer)
+                                    {
+                                        Marshal.WriteByte(buf, 0 + c * 4, (byte)b);
+                                        c++;
+                                    }
+                                else
+                                {
+
+                                }
+                            }
+                            finally
+                            {
+                                bitmap.UnlockBits(bitmapData);
+                            }
+                        }
+
+                        //bitmap.Save("gdal.bmp", ImageFormat.Bmp);
+                        return bitmap;
+                    }
+                }
+            }
+        }
+
+        public static bool SaveTiffTile(string file, string saveFile, int xOffset, int yOffset, int xSize = 400, int ySize = 400)
+        {
+
+            lock (locker)
+            {
+                using (var ds = OSGeo.GDAL.Gdal.Open(file, OSGeo.GDAL.Access.GA_ReadOnly))
+                {
+                    //var opt = OSGeo.GDAL.GDALBuildVRTOptions.;
+                    if (ds.RasterXSize <= xOffset ||
+                        ds.RasterYSize <= yOffset ||
+                        xOffset < 0 || yOffset < 0 || xSize <= 0 || ySize <= 0)
+                        return false;
+                    int rasterXSize = ds.RasterXSize >= xOffset + xSize ?
+                        xSize : ds.RasterXSize - xOffset;
+                    int rasterYSize = ds.RasterYSize >= yOffset + ySize ?
+                        ySize : ds.RasterYSize - yOffset;
+
+                    string fomat = "GTiff";
+                    var driver = OSGeo.GDAL.Gdal.GetDriverByName(fomat);
+                    Dataset tiff = driver.Create(saveFile, rasterXSize, rasterYSize, ds.RasterCount, DataType.GDT_Byte, driver.GetMetadataDomainList());
+                    foreach (var domain in ds.GetMetadataDomainList())
+                    {
+                        tiff.SetMetadata(ds.GetMetadata(domain), domain);
+                    }
+
+                    tiff.SetProjection(ds.GetProjection());
+                    double[] adfGeoTransform = { 0, 0, 0, 0, 0, 0 };
+                    ds.GetGeoTransform(adfGeoTransform);
+                    double left = adfGeoTransform[0] + xOffset * adfGeoTransform[1] + yOffset * adfGeoTransform[2];
+                    double top = adfGeoTransform[3] + xOffset * adfGeoTransform[4] + yOffset * adfGeoTransform[5];
+                    adfGeoTransform[0] = left;
+                    adfGeoTransform[3] = top;
+                    tiff.SetGeoTransform(adfGeoTransform);
+
+                    if (ds.RasterCount == 1)
+                    {
+                        Band band = ds.GetRasterBand(1);
+                        Band tiffBand = tiff.GetRasterBand(1);
+                        if (band == null)
+                            return false;
+
+                        try
+                        {
+                            //int stride = ds.RasterXSize;
+                            var buffer = new byte[rasterXSize * rasterYSize];
+
+                            band.ReadRaster(xOffset, yOffset, rasterXSize, rasterYSize,
+                                buffer, rasterXSize, rasterYSize, 0, 0);
+                            tiffBand.WriteRaster(0, 0, rasterXSize, rasterYSize,
+                                buffer, rasterXSize, rasterYSize, 0, 0);
+
+                        }
+                        finally
+                        {
+                        }
+
+
+                        return true;
+                    }
+
+                    {
+                        Bitmap bitmap = new Bitmap(rasterXSize, rasterYSize, PixelFormat.Format32bppArgb);
+
+                        for (int a = 1; a <= ds.RasterCount; a++)
+                        {
+                            // Get the GDAL Band objects from the Dataset
+                            Band band = ds.GetRasterBand(a);
+                            Band tiffBand = tiff.GetRasterBand(a);
+                            if (band == null)
+                                return false;
+
+                            try
+                            {
+                                //int stride = bitmapData.Stride;
+                                var buffer = new byte[rasterXSize * rasterYSize];
+                                band.ReadRaster(xOffset, yOffset, rasterXSize, rasterYSize, buffer, rasterXSize, rasterYSize, 0, 0);
+                                tiffBand.WriteRaster(0, 0, rasterXSize, rasterYSize, buffer, rasterXSize, rasterYSize, 0, 0);
+                            }
+                            finally
+                            {
+                            }
+                        }
+                        
+                        //bitmap.Save("gdal.bmp", ImageFormat.Bmp);
+                        return true;
+                    }
+                }
+            }
+        }
+
+
+        public static Bitmap LoadTileImage(string file, int xOffset, int yOffset, int xSize = 400, int ySize = 400)
+        {
+            lock (locker)
+            {
+                using (var ds = OSGeo.GDAL.Gdal.Open(file, OSGeo.GDAL.Access.GA_ReadOnly))
+                {
+                    if (ds.RasterXSize <= xOffset ||
+                        ds.RasterYSize <= yOffset ||
+                        xOffset < 0 || yOffset < 0 || xSize <= 0 || ySize <= 0) 
+                        return null;
+                    int rasterXSize = ds.RasterXSize >= xOffset + xSize ?
+                        xSize : ds.RasterXSize - xOffset;
+                    int rasterYSize = ds.RasterYSize >= yOffset + ySize ?
+                        ySize : ds.RasterYSize - yOffset;
+
+                    if (ds.RasterCount == 1)
+                    {
+                        Band band = ds.GetRasterBand(1);
+                        if (band == null)
+                            return null;
+
+                        ColorTable ct = band.GetRasterColorTable();
+
+                        PixelFormat format = PixelFormat.Format8bppIndexed;
+
+                        // Create a Bitmap to store the GDAL image in
+                        Bitmap bitmap = new Bitmap(rasterXSize, rasterYSize, format);
+
+                        // Obtaining the bitmap buffer
+                        BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, rasterXSize, rasterYSize),
+                            ImageLockMode.ReadWrite, format);
+                        try
+                        {
+                            if (ct != null)
+                            {
+                                int iCol = ct.GetCount();
+                                ColorPalette pal = bitmap.Palette;
+                                for (int i = 0; i < rasterYSize; i++)
+                                {
+                                    for (int j = 0; j < rasterXSize; j++)
+                                    {
+                                        ColorEntry ce = ct.GetColorEntry((yOffset + i) * ds.RasterXSize + xOffset + j);
+                                        pal.Entries[i] = Color.FromArgb(ce.c4, ce.c1, ce.c2, ce.c3);
+                                    }
+                                }
+
+                                bitmap.Palette = pal;
+                            }
+                            else
+                            {
+
+                            }
+
+                            //int stride = ds.RasterXSize;
+                            IntPtr buf = bitmapData.Scan0;
+
+                            band.ReadRaster(xOffset, yOffset, rasterXSize, rasterYSize, buf, rasterXSize, rasterYSize,
+                                DataType.GDT_Byte, 0, 0);
+                        }
+                        finally
+                        {
+                            bitmap.UnlockBits(bitmapData);
+                        }
+
+
+                        return bitmap;
+                    }
+
+                    {
+                        Bitmap bitmap = new Bitmap(rasterXSize, rasterYSize, PixelFormat.Format32bppArgb);
+
+                        for (int a = 1; a <= ds.RasterCount; a++)
+                        {
+                            // Get the GDAL Band objects from the Dataset
+                            Band band = ds.GetRasterBand(a);
+                            if (band == null)
+                                return null;
+
+                            var cint = band.GetColorInterpretation();
+
+
+                            // Obtaining the bitmap buffer
+                            BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, rasterXSize, rasterYSize),
+                                ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+                            try
+                            {
+
+                                //int stride = bitmapData.Stride;
+                                IntPtr buf = bitmapData.Scan0;
+                                var buffer = new byte[rasterXSize * rasterYSize];
+
+                                band.ReadRaster(xOffset, yOffset, rasterXSize, rasterYSize, buffer, rasterXSize, rasterYSize, 0, 0);
+
+                                int c = 0;
+                                if (cint == ColorInterp.GCI_AlphaBand)
+                                    foreach (var b in buffer)
+                                    {
+                                        Marshal.WriteByte(buf, 3 + c * 4, (byte)b);
+                                        c++;
+                                    }
+                                else if (cint == ColorInterp.GCI_RedBand)
+                                    foreach (var b in buffer)
+                                    {
+                                        Marshal.WriteByte(buf, 2 + c * 4, (byte)b);
+                                        c++;
+                                    }
+                                else if (cint == ColorInterp.GCI_GreenBand)
+                                    foreach (var b in buffer)
+                                    {
+                                        Marshal.WriteByte(buf, 1 + c * 4, (byte)b);
+                                        c++;
+                                    }
+                                else if (cint == ColorInterp.GCI_BlueBand)
+                                    foreach (var b in buffer)
+                                    {
+                                        Marshal.WriteByte(buf, 0 + c * 4, (byte)b);
+                                        c++;
+                                    }
+                                else
+                                {
+
+                                }
+                            }
+                            finally
+                            {
+                                bitmap.UnlockBits(bitmapData);
+                            }
+                        }
+
+                        //bitmap.Save("gdal.bmp", ImageFormat.Bmp);
+                        return bitmap;
+                    }
+                }
+            }
+        }
+
         public static Bitmap LoadImage(string file, int xSize = 16384, int ySize = 16384)
         {
             lock (locker)
@@ -417,7 +783,7 @@ namespace GDAL
 
             dfGeoX = adfGeoTransform[0] + adfGeoTransform[1] * x + adfGeoTransform[2] * y;
             dfGeoY = adfGeoTransform[3] + adfGeoTransform[4] * x + adfGeoTransform[5] * y;
-
+            
             return new double[] { dfGeoX, dfGeoY };
         }
 

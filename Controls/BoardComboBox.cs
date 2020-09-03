@@ -32,6 +32,35 @@ namespace VPS.Controls
                 SelectedChange?.Invoke();
             }
         }
+
+        private delegate void SetTextContentCallback(string text);
+        public void SetTextContent(string value)
+        {
+            if (this.InvokeRequired)
+            {
+                SetTextContentCallback setText = new SetTextContentCallback(SetTextContent);
+                this.Invoke(setText, new object[] { value });
+            }
+            else
+            {
+                this.TextContent = value;
+            }
+        }
+
+        private delegate string GetTextContentCallback();
+        public string GetTextContent()
+        {
+            if (this.InvokeRequired)
+            {
+                GetTextContentCallback getText = new GetTextContentCallback(GetTextContent);
+                IAsyncResult iar = this.BeginInvoke(getText);
+                return (string)this.EndInvoke(iar);
+            }
+            else
+            {
+                return this.TextContent;
+            }
+        }
         [Category("设置"), Description("数据源")]
         public List<string> DataSource
         {

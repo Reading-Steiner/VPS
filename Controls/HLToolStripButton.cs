@@ -105,9 +105,11 @@ namespace VPS.Controls
             set
             {
                 this.Checked = value;
+
                 Invalidate();
             }
 
         }
+
     }
 }

@@ -44,7 +44,8 @@
             // 
             // EditBox
             // 
-            this.EditBox.Location = new System.Drawing.Point(37, 3);
+            this.EditBox.BackColor = System.Drawing.Color.White;
+            this.EditBox.Location = new System.Drawing.Point(40, 3);
             this.EditBox.Name = "EditBox";
             this.EditBox.Size = new System.Drawing.Size(65, 21);
             this.EditBox.TabIndex = 2;

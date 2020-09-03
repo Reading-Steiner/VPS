@@ -39,7 +39,6 @@
             this.OK.BaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(255)))));
             this.OK.BorderColor = System.Drawing.Color.Transparent;
             this.OK.ControlState = CCWin.SkinClass.ControlState.Normal;
-            this.OK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.OK.DownBack = null;
             this.OK.DownBaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(180)))));
             this.OK.ForeColorSuit = true;
@@ -63,7 +62,6 @@
             this.Cancel.BaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(255)))));
             this.Cancel.BorderColor = System.Drawing.Color.Transparent;
             this.Cancel.ControlState = CCWin.SkinClass.ControlState.Normal;
-            this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Cancel.DownBack = null;
             this.Cancel.DownBaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(180)))));
             this.Cancel.InnerBorderColor = System.Drawing.Color.Transparent;
@@ -76,7 +74,6 @@
             this.Cancel.RoundStyle = CCWin.SkinClass.RoundStyle.All;
             this.Cancel.Size = new System.Drawing.Size(68, 30);
             this.Cancel.TabIndex = 1;
-            this.Cancel.TabStop = false;
             this.Cancel.Text = "取消";
             this.Cancel.UseVisualStyleBackColor = true;
             // 

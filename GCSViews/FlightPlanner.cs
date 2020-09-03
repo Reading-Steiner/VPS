@@ -54,7 +54,7 @@ namespace VPS.GCSViews
         public FlightPlanner()
         {
             InitializeComponent();
-            System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
+            //System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
             Init();
         }
 

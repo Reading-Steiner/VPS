@@ -21,11 +21,28 @@ namespace VPS.Controls
             DrawBackground();
         }
 
+        private void DisplayText_MouseEnter(object sender, EventArgs e)
+        {
+            this.Capture = true;
+        }
+
+
         private void DrawBackground()
         {
             Bitmap background = new Bitmap(this.Width, this.Height, PixelFormat.Format32bppRgb);
             var g = Graphics.FromImage(background);
             g.Clear(this.BackColor);
+            {
+                StringFormat SF = new StringFormat
+                {
+                    Alignment = StringAlignment.Center,
+                    LineAlignment = StringAlignment.Center
+                };
+                Brush brush = new SolidBrush(this.ForeColor);
+                g.DrawString(TextContent, this.Font, brush,
+                    new RectangleF(_rederWidth, _rederWidth, this.Width - 2 * _rederWidth, this.Height - 2 * _rederWidth),
+                    SF);
+            }
             for (int i = 0; i < _rederWidth; i++)
             {
                 switch (_rederStyle)
@@ -98,28 +115,47 @@ namespace VPS.Controls
             }
         }
 
-        [Category("设置"), Description("文本位置")]
-        public Point TextPosition
-        {
-            get { return DisplayText.Location; }
-            set
-            {
-                DisplayText.Location = value;
-                this.DisplayText.Invalidate();
-            }
-        }
 
         [Category("设置"), Description("文本内容")]
         public string TextContent
         {
-            get { return DisplayText.Text; }
+            get { return this.Text; }
             set
             {
                 if (Regex.IsMatch(value, Pattern))
                 {
-                    DisplayText.Text = value;
-                    this.DisplayText.Invalidate();
+                    this.Text = value;
+                    DrawBackground();
                 }
+            }
+        }
+
+        private delegate void SetTextContentCallback(string text);
+        public void SetTextContent(string value)
+        {
+            if (this.InvokeRequired)
+            {
+                SetTextContentCallback setText = new SetTextContentCallback(SetTextContent);
+                this.Invoke(setText, new object[] { value });
+            }
+            else
+            {
+                this.TextContent = value;
+            }
+        }
+
+        private delegate string GetTextContentCallback();
+        public string GetTextContent()
+        {
+            if (this.InvokeRequired)
+            {
+                GetTextContentCallback getText = new GetTextContentCallback(GetTextContent);
+                IAsyncResult iar = this.BeginInvoke(getText);
+                return (string)this.EndInvoke(iar);
+            }
+            else
+            {
+                return this.TextContent;
             }
         }
 
@@ -128,8 +164,6 @@ namespace VPS.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            if (this.DisplayText.BackColor != Color.Transparent)
-                this.DisplayText.BackColor = Color.Transparent;
             var g = e.Graphics;
             g.DrawImage(_background, 0, 0);
             base.OnPaint(e);
