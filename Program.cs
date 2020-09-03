@@ -84,6 +84,11 @@ namespace VPS
             Start(args);
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static void VPSStart(string[] args)
+        {
+
+        }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void Start(string[] args)

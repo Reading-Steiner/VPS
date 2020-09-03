@@ -543,13 +543,6 @@ namespace VPS
             MenuHelp.Visible = DisplayConfiguration.displayHelp;
             VPS.Controls.BackstageView.BackstageView.Advanced = DisplayConfiguration.isAdvancedMode;
 
-            if (Settings.Instance.GetBoolean("menu_autohide") != DisplayConfiguration.autoHideMenuForce)
-            {
-                AutoHideMenu(DisplayConfiguration.autoHideMenuForce);
-                Settings.Instance["menu_autohide"] = DisplayConfiguration.autoHideMenuForce.ToString();
-            }
-
-            autoHideToolStripMenuItem.Visible = !DisplayConfiguration.autoHideMenuForce;
 
             //Flight data page
             if (MainV2.instance.FlightData != null)
@@ -3306,19 +3299,6 @@ namespace VPS
 
         protected override void OnLoad(EventArgs e)
         {
-            // check if its defined, and force to show it if not known about
-            if (Settings.Instance["menu_autohide"] == null)
-            {
-                Settings.Instance["menu_autohide"] = "false";
-            }
-
-            try
-            {
-                AutoHideMenu(Settings.Instance.GetBoolean("menu_autohide"));
-            }
-            catch
-            {
-            }
 
             MyView.AddScreen(new MainSwitcher.Screen("FlightData", FlightData, true));
             MyView.AddScreen(new MainSwitcher.Screen("FlightPlanner", FlightPlanner, true));
@@ -4426,52 +4406,6 @@ namespace VPS
             this.ResumeLayout();
         }
 
-        void menu_MouseEnter(object sender, EventArgs e)
-        {
-            this.SuspendLayout();
-            panel1.Location = new Point(0, 0);
-            panel1.Width = menu.Width;
-            panel1.BringToFront();
-            panel1.Visible = true;
-            this.ResumeLayout();
-        }
-
-        private void autoHideToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AutoHideMenu(autoHideToolStripMenuItem.Checked);
-
-            Settings.Instance["menu_autohide"] = autoHideToolStripMenuItem.Checked.ToString();
-        }
-
-        void AutoHideMenu(bool hide)
-        {
-            autoHideToolStripMenuItem.Checked = hide;
-
-            if (!hide)
-            {
-                this.SuspendLayout();
-                panel1.Dock = DockStyle.Top;
-                panel1.SendToBack();
-                panel1.Visible = true;
-                menu.Visible = false;
-                MainMenu.MouseLeave -= MainMenu_MouseLeave;
-                panel1.MouseLeave -= MainMenu_MouseLeave;
-                toolStripConnectionControl.MouseLeave -= MainMenu_MouseLeave;
-                this.ResumeLayout();
-            }
-            else
-            {
-                this.SuspendLayout();
-                panel1.Dock = DockStyle.None;
-                panel1.Visible = false;
-                MainMenu.MouseLeave += MainMenu_MouseLeave;
-                panel1.MouseLeave += MainMenu_MouseLeave;
-                toolStripConnectionControl.MouseLeave += MainMenu_MouseLeave;
-                menu.Visible = true;
-                menu.SendToBack();
-                this.ResumeLayout();
-            }
-        }
 
         private void MainV2_KeyDown(object sender, KeyEventArgs e)
         {
@@ -4688,28 +4622,7 @@ namespace VPS
             //MainMenu.BackgroundImage = MissionPlanner.Properties.Resources.bgdark;
         }
 
-        private void fullScreenToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // full screen
-            if (fullScreenToolStripMenuItem.Checked)
-            {
-                this.TopMost = true;
-                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-                this.WindowState = FormWindowState.Normal;
-                this.WindowState = FormWindowState.Maximized;
-            }
-            else
-            {
-                this.TopMost = false;
-                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-                this.WindowState = FormWindowState.Maximized;
-            }
-        }
 
-        private void readonlyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MainV2.comPort.ReadOnly = readonlyToolStripMenuItem.Checked;
-        }
 
         private void connectionOptionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
