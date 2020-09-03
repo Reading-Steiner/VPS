@@ -1661,37 +1661,7 @@
       <DependentUpon>MainV2.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainV2.ar.resx">
-      <DependentUpon>MainV2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainV2.az-Latn-AZ.resx">
-      <DependentUpon>MainV2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainV2.id-ID.resx">
-      <DependentUpon>MainV2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainV2.ja-JP.resx">
-      <DependentUpon>MainV2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainV2.ko-KR.resx">
-      <DependentUpon>MainV2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainV2.pt.resx">
-      <DependentUpon>MainV2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainV2.ru-KZ.resx">
-      <DependentUpon>MainV2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainV2.tr.resx">
-      <DependentUpon>MainV2.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainV2.zh-Hans.resx">
-      <DependentUpon>MainV2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainV2.zh-Hant.resx">
-      <DependentUpon>MainV2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainV2.zh-TW.resx">
       <DependentUpon>MainV2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MovingBase.resx">
@@ -2220,106 +2190,13 @@
     <EmbeddedResource Include="GCSViews\FlightData.ar.resx">
       <DependentUpon>FlightData.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightData.az-Latn-AZ.resx">
-      <DependentUpon>FlightData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightData.de-DE.resx">
-      <DependentUpon>FlightData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightData.es-ES.resx">
-      <DependentUpon>FlightData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightData.fr.resx">
-      <DependentUpon>FlightData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightData.id-ID.resx">
-      <DependentUpon>FlightData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightData.it-IT.resx">
-      <DependentUpon>FlightData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightData.ja-JP.resx">
-      <DependentUpon>FlightData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightData.ko-KR.resx">
-      <DependentUpon>FlightData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightData.pl.resx">
-      <DependentUpon>FlightData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightData.pt.resx">
-      <DependentUpon>FlightData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightData.ru-KZ.resx">
-      <DependentUpon>FlightData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightData.ru-RU.resx">
-      <DependentUpon>FlightData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightData.tr.resx">
-      <DependentUpon>FlightData.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GCSViews\FlightData.zh-Hans.resx">
-      <DependentUpon>FlightData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightData.zh-Hant.resx">
-      <DependentUpon>FlightData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightData.zh-TW.resx">
       <DependentUpon>FlightData.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GCSViews\FlightPlanner.resx">
       <DependentUpon>FlightPlanner.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.ar.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.az-Latn-AZ.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.de-DE.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.es-ES.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.fr.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.id-ID.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.it-IT.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.ja-JP.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.ko-KR.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.pl.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.pt.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.ru-KZ.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.ru-RU.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.tr.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GCSViews\FlightPlanner.zh-Hans.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.zh-Hant.resx">
-      <DependentUpon>FlightPlanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GCSViews\FlightPlanner.zh-TW.resx">
       <DependentUpon>FlightPlanner.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GCSViews\Help.resx">
