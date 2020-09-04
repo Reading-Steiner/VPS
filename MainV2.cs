@@ -4359,5 +4359,67 @@ namespace VPS
                 StyleManager.ColorTint = (Color)source.CommandParameter;
             }
         }
+
+        private void RibbonStateCommand_Executed(object sender, EventArgs e)
+        {
+            MinMenuBar.Expanded = RibbonStateCommand.Checked;
+            RibbonStateCommand.Checked = !RibbonStateCommand.Checked;
+        }
+
+
+        private delegate void SetMenuItemCheckedCallback(DevComponents.DotNetBar.ButtonItem stripButton, bool value);
+        private void SeMenuItemChecked(DevComponents.DotNetBar.ButtonItem stripButton, bool value)
+        {
+            if (stripButton.InvokeRequired)
+            {
+                SetMenuItemCheckedCallback callback = new SetMenuItemCheckedCallback(SeMenuItemChecked);
+                stripButton.Invoke(callback, new object[] { stripButton, value });
+            }
+            else
+            {
+                stripButton.Checked = value;
+            }
+        }
+
+        private delegate bool GetMenuItemCheckedCallback(DevComponents.DotNetBar.ButtonItem stripButton);
+        private bool GetMenuItemChecked(DevComponents.DotNetBar.ButtonItem stripButton)
+        {
+            if (stripButton.InvokeRequired)
+            {
+                GetMenuItemCheckedCallback callback = new GetMenuItemCheckedCallback(GetMenuItemChecked);
+                IAsyncResult iar = this.BeginInvoke(callback);
+                return (bool)this.EndInvoke(iar);
+            }
+            else
+            {
+                return stripButton.Checked;
+            }
+        }
+
+        private void OpenProjectButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SaveProjectButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LoadTiffButton_Click(object sender, EventArgs e)
+        {
+            LoadTiffLayer();
+        }
+
+        private void ZoomTiffButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TiffManagerButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

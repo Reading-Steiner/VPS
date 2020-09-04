@@ -48,11 +48,15 @@ namespace VPS
             this.MenuSimulation = new System.Windows.Forms.ToolStripButton();
             this.MenuHelp = new System.Windows.Forms.ToolStripButton();
             this.MenuArduPilot = new System.Windows.Forms.ToolStripButton();
-            this.MinMenu = new DevComponents.DotNetBar.RibbonControl();
+            this.MinMenuBar = new DevComponents.DotNetBar.RibbonControl();
             this.FileRibbonPanel = new DevComponents.DotNetBar.RibbonPanel();
+            this.ribbonBar1 = new DevComponents.DotNetBar.RibbonBar();
+            this.LoadTiffButton = new DevComponents.DotNetBar.ButtonItem();
+            this.ZoomTiffButton = new DevComponents.DotNetBar.ButtonItem();
+            this.TiffManagerButton = new DevComponents.DotNetBar.ButtonItem();
             this.ProjectRibbonBar = new DevComponents.DotNetBar.RibbonBar();
-            this.buttonItem1 = new DevComponents.DotNetBar.ButtonItem();
-            this.buttonItem2 = new DevComponents.DotNetBar.ButtonItem();
+            this.OpenProjectButton = new DevComponents.DotNetBar.ButtonItem();
+            this.SaveProjectButton = new DevComponents.DotNetBar.ButtonItem();
             this.FileRibbonTabItem = new DevComponents.DotNetBar.RibbonTabItem();
             this.buttonChangeStyle = new DevComponents.DotNetBar.ButtonItem();
             this.buttonStyleOffice2010Blue = new DevComponents.DotNetBar.ButtonItem();
@@ -84,7 +88,9 @@ namespace VPS
             this.MenuSaveWP = new VPS.Controls.HLToolStripButton();
             this.toolStripConnectionControl = new VPS.Controls.ToolStripConnectionControl();
             this.MenuWPGobalConfig = new VPS.Controls.HLToolStripButton();
-            this.MinMenu.SuspendLayout();
+            this.MenuSwitchButton = new DevComponents.DotNetBar.SwitchButtonItem();
+            this.RibbonStateCommand = new DevComponents.DotNetBar.Command(this.components);
+            this.MinMenuBar.SuspendLayout();
             this.FileRibbonPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -232,50 +238,52 @@ namespace VPS
             // 
             // 
             // 
-            this.MinMenu.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.MinMenu.CaptionVisible = true;
-            this.MinMenu.Controls.Add(this.FileRibbonPanel);
-            this.MinMenu.Dock = System.Windows.Forms.DockStyle.Top;
-            this.MinMenu.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.MinMenuBar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.MinMenuBar.CaptionVisible = true;
+            this.MinMenuBar.Controls.Add(this.FileRibbonPanel);
+            this.MinMenuBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.MinMenuBar.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.FileRibbonTabItem,
-            this.buttonChangeStyle});
-            this.MinMenu.KeyTipsFont = new System.Drawing.Font("Tahoma", 7F);
-            this.MinMenu.Location = new System.Drawing.Point(5, 1);
-            this.MinMenu.Name = "MinMenu";
-            this.MinMenu.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
-            this.MinMenu.QuickToolbarItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.buttonChangeStyle,
+            this.MenuSwitchButton});
+            this.MinMenuBar.KeyTipsFont = new System.Drawing.Font("Tahoma", 7F);
+            this.MinMenuBar.Location = new System.Drawing.Point(5, 1);
+            this.MinMenuBar.Name = "MinMenu";
+            this.MinMenuBar.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.MinMenuBar.QuickToolbarItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.StartButton,
             this.qatCustomizeItem});
-            this.MinMenu.Size = new System.Drawing.Size(1008, 170);
-            this.MinMenu.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.MinMenu.SystemText.MaximizeRibbonText = "&Maximize the Ribbon";
-            this.MinMenu.SystemText.MinimizeRibbonText = "Mi&nimize the Ribbon";
-            this.MinMenu.SystemText.QatAddItemText = "&Add to Quick Access Toolbar";
-            this.MinMenu.SystemText.QatCustomizeMenuLabel = "<b>Customize Quick Access Toolbar</b>";
-            this.MinMenu.SystemText.QatCustomizeText = "&Customize Quick Access Toolbar...";
-            this.MinMenu.SystemText.QatDialogAddButton = "&Add >>";
-            this.MinMenu.SystemText.QatDialogCancelButton = "Cancel";
-            this.MinMenu.SystemText.QatDialogCaption = "Customize Quick Access Toolbar";
-            this.MinMenu.SystemText.QatDialogCategoriesLabel = "&Choose commands from:";
-            this.MinMenu.SystemText.QatDialogOkButton = "OK";
-            this.MinMenu.SystemText.QatDialogPlacementCheckbox = "&Place Quick Access Toolbar below the Ribbon";
-            this.MinMenu.SystemText.QatDialogRemoveButton = "&Remove";
-            this.MinMenu.SystemText.QatPlaceAboveRibbonText = "&Place Quick Access Toolbar above the Ribbon";
-            this.MinMenu.SystemText.QatPlaceBelowRibbonText = "&Place Quick Access Toolbar below the Ribbon";
-            this.MinMenu.SystemText.QatRemoveItemText = "&Remove from Quick Access Toolbar";
-            this.MinMenu.TabGroupHeight = 14;
-            this.MinMenu.TabIndex = 0;
-            this.MinMenu.Text = "MinMenu";
+            this.MinMenuBar.Size = new System.Drawing.Size(992, 170);
+            this.MinMenuBar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.MinMenuBar.SystemText.MaximizeRibbonText = "显示功能区";
+            this.MinMenuBar.SystemText.MinimizeRibbonText = "隐藏功能区";
+            this.MinMenuBar.SystemText.QatAddItemText = "添加到工具栏";
+            this.MinMenuBar.SystemText.QatCustomizeMenuLabel = "<b>工具栏选项</b>";
+            this.MinMenuBar.SystemText.QatCustomizeText = "自定义工具栏...";
+            this.MinMenuBar.SystemText.QatDialogAddButton = "添加 >>";
+            this.MinMenuBar.SystemText.QatDialogCancelButton = "取消";
+            this.MinMenuBar.SystemText.QatDialogCaption = "自定义工具栏";
+            this.MinMenuBar.SystemText.QatDialogCategoriesLabel = "选择指令:";
+            this.MinMenuBar.SystemText.QatDialogOkButton = "确定";
+            this.MinMenuBar.SystemText.QatDialogPlacementCheckbox = "下移工具栏";
+            this.MinMenuBar.SystemText.QatDialogRemoveButton = "移除";
+            this.MinMenuBar.SystemText.QatPlaceAboveRibbonText = "上移工具栏";
+            this.MinMenuBar.SystemText.QatPlaceBelowRibbonText = "下移工具栏";
+            this.MinMenuBar.SystemText.QatRemoveItemText = "移除";
+            this.MinMenuBar.TabGroupHeight = 14;
+            this.MinMenuBar.TabIndex = 0;
+            this.MinMenuBar.Text = "MinMenu";
             // 
             // FileRibbonPanel
             // 
             this.FileRibbonPanel.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.FileRibbonPanel.Controls.Add(this.ribbonBar1);
             this.FileRibbonPanel.Controls.Add(this.ProjectRibbonBar);
             this.FileRibbonPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FileRibbonPanel.Location = new System.Drawing.Point(0, 56);
             this.FileRibbonPanel.Name = "FileRibbonPanel";
             this.FileRibbonPanel.Padding = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.FileRibbonPanel.Size = new System.Drawing.Size(1008, 111);
+            this.FileRibbonPanel.Size = new System.Drawing.Size(992, 111);
             // 
             // 
             // 
@@ -289,6 +297,59 @@ namespace VPS
             // 
             this.FileRibbonPanel.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.FileRibbonPanel.TabIndex = 1;
+            // 
+            // ribbonBar1
+            // 
+            this.ribbonBar1.AutoOverflowEnabled = true;
+            // 
+            // 
+            // 
+            this.ribbonBar1.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.ribbonBar1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.ribbonBar1.ContainerControlProcessDialogKey = true;
+            this.ribbonBar1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ribbonBar1.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.LoadTiffButton,
+            this.ZoomTiffButton,
+            this.TiffManagerButton});
+            this.ribbonBar1.Location = new System.Drawing.Point(132, 0);
+            this.ribbonBar1.Name = "ribbonBar1";
+            this.ribbonBar1.Size = new System.Drawing.Size(224, 108);
+            this.ribbonBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.ribbonBar1.TabIndex = 1;
+            this.ribbonBar1.Text = "工作区";
+            // 
+            // 
+            // 
+            this.ribbonBar1.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.ribbonBar1.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // LoadTiffButton
+            // 
+            this.LoadTiffButton.Name = "LoadTiffButton";
+            this.LoadTiffButton.SubItemsExpandWidth = 14;
+            this.LoadTiffButton.Text = "添加工作区";
+            this.LoadTiffButton.Click += new System.EventHandler(this.LoadTiffButton_Click);
+            // 
+            // ZoomTiffButton
+            // 
+            this.ZoomTiffButton.Name = "ZoomTiffButton";
+            this.ZoomTiffButton.SubItemsExpandWidth = 14;
+            this.ZoomTiffButton.Text = "定位工作区";
+            this.ZoomTiffButton.Click += new System.EventHandler(this.ZoomTiffButton_Click);
+            // 
+            // TiffManagerButton
+            // 
+            this.TiffManagerButton.Name = "TiffManagerButton";
+            this.TiffManagerButton.SubItemsExpandWidth = 14;
+            this.TiffManagerButton.Text = "管理工作区";
+            this.TiffManagerButton.Click += new System.EventHandler(this.TiffManagerButton_Click);
             // 
             // ProjectRibbonBar
             // 
@@ -304,14 +365,14 @@ namespace VPS
             this.ProjectRibbonBar.ContainerControlProcessDialogKey = true;
             this.ProjectRibbonBar.Dock = System.Windows.Forms.DockStyle.Left;
             this.ProjectRibbonBar.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.buttonItem1,
-            this.buttonItem2});
+            this.OpenProjectButton,
+            this.SaveProjectButton});
             this.ProjectRibbonBar.Location = new System.Drawing.Point(3, 0);
             this.ProjectRibbonBar.Name = "ProjectRibbonBar";
-            this.ProjectRibbonBar.Size = new System.Drawing.Size(184, 108);
+            this.ProjectRibbonBar.Size = new System.Drawing.Size(129, 108);
             this.ProjectRibbonBar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.ProjectRibbonBar.TabIndex = 0;
-            this.ProjectRibbonBar.Text = "Project";
+            this.ProjectRibbonBar.Text = "工程";
             // 
             // 
             // 
@@ -321,24 +382,26 @@ namespace VPS
             // 
             this.ProjectRibbonBar.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             // 
-            // buttonItem1
+            // OpenProjectButton
             // 
-            this.buttonItem1.Name = "buttonItem1";
-            this.buttonItem1.SubItemsExpandWidth = 14;
-            this.buttonItem1.Text = "buttonItem1";
+            this.OpenProjectButton.Name = "OpenProjectButton";
+            this.OpenProjectButton.SubItemsExpandWidth = 14;
+            this.OpenProjectButton.Text = "打开工程";
+            this.OpenProjectButton.Click += new System.EventHandler(this.OpenProjectButton_Click);
             // 
-            // buttonItem2
+            // SaveProjectButton
             // 
-            this.buttonItem2.Name = "buttonItem2";
-            this.buttonItem2.SubItemsExpandWidth = 14;
-            this.buttonItem2.Text = "buttonItem2";
+            this.SaveProjectButton.Name = "SaveProjectButton";
+            this.SaveProjectButton.SubItemsExpandWidth = 14;
+            this.SaveProjectButton.Text = "保存工程";
+            this.SaveProjectButton.Click += new System.EventHandler(this.SaveProjectButton_Click);
             // 
             // FileRibbonTabItem
             // 
             this.FileRibbonTabItem.Checked = true;
             this.FileRibbonTabItem.Name = "FileRibbonTabItem";
             this.FileRibbonTabItem.Panel = this.FileRibbonPanel;
-            this.FileRibbonTabItem.Text = "File";
+            this.FileRibbonTabItem.Text = "文件";
             // 
             // buttonChangeStyle
             // 
@@ -517,7 +580,7 @@ namespace VPS
             this.RibbonClientPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RibbonClientPanel.Location = new System.Drawing.Point(5, 171);
             this.RibbonClientPanel.Name = "RibbonClientPanel";
-            this.RibbonClientPanel.Size = new System.Drawing.Size(1008, 360);
+            this.RibbonClientPanel.Size = new System.Drawing.Size(992, 360);
             // 
             // 
             // 
@@ -707,17 +770,34 @@ namespace VPS
             this.MenuWPGobalConfig.TopTransparent = 8;
             this.MenuWPGobalConfig.Click += new System.EventHandler(this.WPGobalConfig_Click);
             // 
+            // MenuSwitchButton
+            // 
+            this.MenuSwitchButton.ButtonHeight = 20;
+            this.MenuSwitchButton.ButtonWidth = 62;
+            this.MenuSwitchButton.Command = this.RibbonStateCommand;
+            this.MenuSwitchButton.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far;
+            this.MenuSwitchButton.Margin.Bottom = 2;
+            this.MenuSwitchButton.Margin.Left = 4;
+            this.MenuSwitchButton.Name = "MenuSwitchButton";
+            this.MenuSwitchButton.OffText = "显示";
+            this.MenuSwitchButton.OnText = "隐藏";
+            this.MenuSwitchButton.Tooltip = "显示/隐藏功能区";
+            // 
+            // RibbonStateCommand
+            // 
+            this.RibbonStateCommand.Name = "RibbonStateCommand";
+            this.RibbonStateCommand.Executed += new System.EventHandler(this.RibbonStateCommand_Executed);
+            // 
             // MainV2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1018, 533);
+            this.ClientSize = new System.Drawing.Size(1002, 533);
             this.Controls.Add(this.RibbonClientPanel);
-            this.Controls.Add(this.MinMenu);
+            this.Controls.Add(this.MinMenuBar);
             this.EnableGlass = false;
             this.FlattenMDIBorder = false;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(960, 534);
@@ -726,8 +806,8 @@ namespace VPS
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainV2_KeyDown);
             this.Resize += new System.EventHandler(this.MainV2_Resize);
-            this.MinMenu.ResumeLayout(false);
-            this.MinMenu.PerformLayout();
+            this.MinMenuBar.ResumeLayout(false);
+            this.MinMenuBar.PerformLayout();
             this.FileRibbonPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -761,7 +841,7 @@ namespace VPS
         private Controls.ToolStripConnectionControl toolStripConnectionControl;
         public System.Windows.Forms.ToolStripButton MenuHelp;
         public System.Windows.Forms.ToolStripButton MenuArduPilot;
-        private DevComponents.DotNetBar.RibbonControl MinMenu;
+        private DevComponents.DotNetBar.RibbonControl MinMenuBar;
         private DevComponents.DotNetBar.RibbonPanel FileRibbonPanel;
         private DevComponents.DotNetBar.RibbonBar ProjectRibbonBar;
         private DevComponents.DotNetBar.RibbonTabItem FileRibbonTabItem;
@@ -775,8 +855,8 @@ namespace VPS
         private DevComponents.DotNetBar.ItemContainer StartBottomContainer;
         private DevComponents.DotNetBar.DockContainerItem dockContainerItem1;
         private DevComponents.DotNetBar.ItemContainer itemContainer2;
-        private DevComponents.DotNetBar.ButtonItem buttonItem1;
-        private DevComponents.DotNetBar.ButtonItem buttonItem2;
+        private DevComponents.DotNetBar.ButtonItem OpenProjectButton;
+        private DevComponents.DotNetBar.ButtonItem SaveProjectButton;
         private DevComponents.DotNetBar.Ribbon.RibbonClientPanel RibbonClientPanel;
         private DevComponents.DotNetBar.Command AppCommandTheme;
         private DevComponents.DotNetBar.ButtonItem buttonChangeStyle;
@@ -786,5 +866,11 @@ namespace VPS
         private DevComponents.DotNetBar.ButtonItem buttonStyleOffice2007Blue;
         private DevComponents.DotNetBar.ButtonItem buttonStyleOffice2007Black;
         private DevComponents.DotNetBar.ButtonItem buttonStyleOffice2007Silver;
+        private DevComponents.DotNetBar.RibbonBar ribbonBar1;
+        private DevComponents.DotNetBar.ButtonItem LoadTiffButton;
+        private DevComponents.DotNetBar.ButtonItem ZoomTiffButton;
+        private DevComponents.DotNetBar.ButtonItem TiffManagerButton;
+        private DevComponents.DotNetBar.SwitchButtonItem MenuSwitchButton;
+        private DevComponents.DotNetBar.Command RibbonStateCommand;
     }
 }
