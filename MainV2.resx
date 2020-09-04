@@ -386,67 +386,67 @@
   <data name="MenuConnect.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABGCAYAAAB8MJLDAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        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
-        YII=
+        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
+        QmCC
 </value>
   </data>
   <data name="MenuConnect.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
@@ -775,6 +775,45 @@
   <data name="FileRibbonTabItem.Text" xml:space="preserve">
     <value>File</value>
   </data>
+  <data name="buttonStyleOffice2010Blue.CommandParameter" xml:space="preserve">
+    <value>Office2010Blue</value>
+  </data>
+  <data name="buttonStyleOffice2010Blue.Text" xml:space="preserve">
+    <value>Office 2010 Blue</value>
+  </data>
+  <data name="buttonStyleOffice2010Silver.CommandParameter" xml:space="preserve">
+    <value>Office2010Silver</value>
+  </data>
+  <data name="buttonStyleOffice2010Silver.Text" xml:space="preserve">
+    <value>Office 2010 &lt;font color="Silver"&gt;&lt;b&gt;Silver&lt;/b&gt;&lt;/font&gt;</value>
+  </data>
+  <data name="buttonStyleOffice2010Black.CommandParameter" xml:space="preserve">
+    <value>Office2010Black</value>
+  </data>
+  <data name="buttonStyleOffice2010Black.Text" xml:space="preserve">
+    <value>Office 2010 Black</value>
+  </data>
+  <data name="buttonStyleOffice2007Blue.CommandParameter" xml:space="preserve">
+    <value>Office2007Blue</value>
+  </data>
+  <data name="buttonStyleOffice2007Blue.Text" xml:space="preserve">
+    <value>Office 2007 &lt;font color="Blue"&gt;&lt;b&gt;Blue&lt;/b&gt;&lt;/font&gt;</value>
+  </data>
+  <data name="buttonStyleOffice2007Black.CommandParameter" xml:space="preserve">
+    <value>Office2007Black</value>
+  </data>
+  <data name="buttonStyleOffice2007Black.Text" xml:space="preserve">
+    <value>Office 2007 &lt;font color="black"&gt;&lt;b&gt;Black&lt;/b&gt;&lt;/font&gt;</value>
+  </data>
+  <data name="buttonStyleOffice2007Silver.CommandParameter" xml:space="preserve">
+    <value>Office2007Silver</value>
+  </data>
+  <data name="buttonStyleOffice2007Silver.Text" xml:space="preserve">
+    <value>Office 2007 &lt;font color="Silver"&gt;&lt;b&gt;Silver&lt;/b&gt;&lt;/font&gt;</value>
+  </data>
+  <data name="buttonChangeStyle.Text" xml:space="preserve">
+    <value>Style</value>
+  </data>
   <data name="MinMenu.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
@@ -804,9 +843,6 @@
         19gcp+Vr8wDA8yEFz4fDxS4rihsYCEJ7mJavzU1/5TQ2vqUUhLaHOGtC/gatLmr0BdUBeQAAAABJRU5E
         rkJggg==
 </value>
-  </data>
-  <data name="RecentDocumentsLabel.Text" xml:space="preserve">
-    <value>Recent Documents</value>
   </data>
   <data name="StartButton.Text" xml:space="preserve">
     <value>&amp;File</value>
@@ -877,11 +913,41 @@
   <data name="&gt;&gt;MinMenu.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="RecentDocumentsLabel.Text" xml:space="preserve">
+    <value>Recent Documents</value>
+  </data>
   <metadata name="styleManager.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>16, 12</value>
   </metadata>
   <data name="dockContainerItem1.Text" xml:space="preserve">
     <value>dockContainerItem1</value>
+  </data>
+  <data name="RibbonClientPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="RibbonClientPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 170</value>
+  </data>
+  <data name="RibbonClientPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1034, 348</value>
+  </data>
+  <data name="RibbonClientPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="RibbonClientPanel.Text" xml:space="preserve">
+    <value>ClientPanel</value>
+  </data>
+  <data name="&gt;&gt;RibbonClientPanel.Name" xml:space="preserve">
+    <value>RibbonClientPanel</value>
+  </data>
+  <data name="&gt;&gt;RibbonClientPanel.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.Ribbon.RibbonClientPanel, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;RibbonClientPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;RibbonClientPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="MenuLoadLayer.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -2548,32 +2614,68 @@
   <data name="MenuWPGobalConfig.Text" xml:space="preserve">
     <value>Config</value>
   </data>
-  <data name="RibbonClientPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="buttonItem4.CommandParameter" xml:space="preserve">
+    <value>Office2010Blue</value>
   </data>
-  <data name="RibbonClientPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 170</value>
+  <data name="buttonItem4.Text" xml:space="preserve">
+    <value>Office 2010 Blue</value>
   </data>
-  <data name="RibbonClientPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1034, 348</value>
+  <data name="buttonItem5.CommandParameter" xml:space="preserve">
+    <value>Office2010Silver</value>
   </data>
-  <data name="RibbonClientPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="buttonItem5.Text" xml:space="preserve">
+    <value>Office 2010 &lt;font color="Silver"&gt;&lt;b&gt;Silver&lt;/b&gt;&lt;/font&gt;</value>
   </data>
-  <data name="RibbonClientPanel.Text" xml:space="preserve">
-    <value>ClientPanel</value>
+  <data name="buttonItem6.CommandParameter" xml:space="preserve">
+    <value>Office2010Black</value>
   </data>
-  <data name="&gt;&gt;RibbonClientPanel.Name" xml:space="preserve">
-    <value>RibbonClientPanel</value>
+  <data name="buttonItem6.Text" xml:space="preserve">
+    <value>Office 2010 Black</value>
   </data>
-  <data name="&gt;&gt;RibbonClientPanel.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.Ribbon.RibbonClientPanel, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  <data name="buttonStyleVS2010.CommandParameter" xml:space="preserve">
+    <value>VisualStudio2010Blue</value>
   </data>
-  <data name="&gt;&gt;RibbonClientPanel.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="buttonStyleVS2010.Text" xml:space="preserve">
+    <value>Visual Studio 2010</value>
   </data>
-  <data name="&gt;&gt;RibbonClientPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="buttonItem62.CommandParameter" xml:space="preserve">
+    <value>Windows7Blue</value>
+  </data>
+  <data name="buttonItem62.Text" xml:space="preserve">
+    <value>Windows 7</value>
+  </data>
+  <data name="buttonItem7.CommandParameter" xml:space="preserve">
+    <value>Office2007Blue</value>
+  </data>
+  <data name="buttonItem7.Text" xml:space="preserve">
+    <value>Office 2007 &lt;font color="Blue"&gt;&lt;b&gt;Blue&lt;/b&gt;&lt;/font&gt;</value>
+  </data>
+  <data name="buttonItem8.CommandParameter" xml:space="preserve">
+    <value>Office2007Black</value>
+  </data>
+  <data name="buttonItem8.Text" xml:space="preserve">
+    <value>Office 2007 &lt;font color="black"&gt;&lt;b&gt;Black&lt;/b&gt;&lt;/font&gt;</value>
+  </data>
+  <data name="buttonItem9.CommandParameter" xml:space="preserve">
+    <value>Office2007Silver</value>
+  </data>
+  <data name="buttonItem9.Text" xml:space="preserve">
+    <value>Office 2007 &lt;font color="Silver"&gt;&lt;b&gt;Silver&lt;/b&gt;&lt;/font&gt;</value>
+  </data>
+  <data name="buttonItem10.CommandParameter" xml:space="preserve">
+    <value>Office2007VistaGlass</value>
+  </data>
+  <data name="buttonItem10.Text" xml:space="preserve">
+    <value>Vista Glass</value>
+  </data>
+  <data name="colorPickerDropDown1.Text" xml:space="preserve">
+    <value>Custom scheme</value>
+  </data>
+  <data name="colorPickerDropDown1.Tooltip" xml:space="preserve">
+    <value>Custom color scheme is created based on currently selected color table. Try selecting Silver or Blue color table and then creating custom color scheme.</value>
+  </data>
+  <data name="buttonItem3.Text" xml:space="preserve">
+    <value>Style</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -4234,6 +4336,9 @@
         AAAAAAAAAAAAAAAAAAA=
 </value>
   </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
@@ -4403,67 +4508,175 @@
     <value>MenuLoadLayer</value>
   </data>
   <data name="&gt;&gt;MenuLoadLayer.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20632, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuZoomToLayer.Name" xml:space="preserve">
     <value>MenuZoomToLayer</value>
   </data>
   <data name="&gt;&gt;MenuZoomToLayer.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20632, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuLayerManager.Name" xml:space="preserve">
     <value>MenuLayerManager</value>
   </data>
   <data name="&gt;&gt;MenuLayerManager.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20632, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuDrawPolygon.Name" xml:space="preserve">
     <value>MenuDrawPolygon</value>
   </data>
   <data name="&gt;&gt;MenuDrawPolygon.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20632, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuClearPolygon.Name" xml:space="preserve">
     <value>MenuClearPolygon</value>
   </data>
   <data name="&gt;&gt;MenuClearPolygon.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20632, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuSurveyGrid.Name" xml:space="preserve">
     <value>MenuSurveyGrid</value>
   </data>
   <data name="&gt;&gt;MenuSurveyGrid.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20632, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuClearWP.Name" xml:space="preserve">
     <value>MenuClearWP</value>
   </data>
   <data name="&gt;&gt;MenuClearWP.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20632, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuReadWP.Name" xml:space="preserve">
     <value>MenuReadWP</value>
   </data>
   <data name="&gt;&gt;MenuReadWP.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20632, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuSaveWP.Name" xml:space="preserve">
     <value>MenuSaveWP</value>
   </data>
   <data name="&gt;&gt;MenuSaveWP.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20632, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;toolStripConnectionControl.Name" xml:space="preserve">
     <value>toolStripConnectionControl</value>
   </data>
   <data name="&gt;&gt;toolStripConnectionControl.Type" xml:space="preserve">
-    <value>VPS.Controls.ToolStripConnectionControl, VPS, Version=1.0.7552.20632, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.ToolStripConnectionControl, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MenuWPGobalConfig.Name" xml:space="preserve">
     <value>MenuWPGobalConfig</value>
   </data>
   <data name="&gt;&gt;MenuWPGobalConfig.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20632, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;buttonChangeStyle.Name" xml:space="preserve">
+    <value>buttonChangeStyle</value>
+  </data>
+  <data name="&gt;&gt;buttonChangeStyle.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonStyleOffice2010Blue.Name" xml:space="preserve">
+    <value>buttonStyleOffice2010Blue</value>
+  </data>
+  <data name="&gt;&gt;buttonStyleOffice2010Blue.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonStyleOffice2010Silver.Name" xml:space="preserve">
+    <value>buttonStyleOffice2010Silver</value>
+  </data>
+  <data name="&gt;&gt;buttonStyleOffice2010Silver.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonStyleOffice2010Black.Name" xml:space="preserve">
+    <value>buttonStyleOffice2010Black</value>
+  </data>
+  <data name="&gt;&gt;buttonStyleOffice2010Black.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonStyleOffice2007Blue.Name" xml:space="preserve">
+    <value>buttonStyleOffice2007Blue</value>
+  </data>
+  <data name="&gt;&gt;buttonStyleOffice2007Blue.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonStyleOffice2007Black.Name" xml:space="preserve">
+    <value>buttonStyleOffice2007Black</value>
+  </data>
+  <data name="&gt;&gt;buttonStyleOffice2007Black.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonStyleOffice2007Silver.Name" xml:space="preserve">
+    <value>buttonStyleOffice2007Silver</value>
+  </data>
+  <data name="&gt;&gt;buttonStyleOffice2007Silver.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonItem3.Name" xml:space="preserve">
+    <value>buttonItem3</value>
+  </data>
+  <data name="&gt;&gt;buttonItem3.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonItem4.Name" xml:space="preserve">
+    <value>buttonItem4</value>
+  </data>
+  <data name="&gt;&gt;buttonItem4.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonItem5.Name" xml:space="preserve">
+    <value>buttonItem5</value>
+  </data>
+  <data name="&gt;&gt;buttonItem5.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonItem6.Name" xml:space="preserve">
+    <value>buttonItem6</value>
+  </data>
+  <data name="&gt;&gt;buttonItem6.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonStyleVS2010.Name" xml:space="preserve">
+    <value>buttonStyleVS2010</value>
+  </data>
+  <data name="&gt;&gt;buttonStyleVS2010.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonItem62.Name" xml:space="preserve">
+    <value>buttonItem62</value>
+  </data>
+  <data name="&gt;&gt;buttonItem62.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonItem7.Name" xml:space="preserve">
+    <value>buttonItem7</value>
+  </data>
+  <data name="&gt;&gt;buttonItem7.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonItem8.Name" xml:space="preserve">
+    <value>buttonItem8</value>
+  </data>
+  <data name="&gt;&gt;buttonItem8.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonItem9.Name" xml:space="preserve">
+    <value>buttonItem9</value>
+  </data>
+  <data name="&gt;&gt;buttonItem9.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;buttonItem10.Name" xml:space="preserve">
+    <value>buttonItem10</value>
+  </data>
+  <data name="&gt;&gt;buttonItem10.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
+  </data>
+  <data name="&gt;&gt;colorPickerDropDown1.Name" xml:space="preserve">
+    <value>colorPickerDropDown1</value>
+  </data>
+  <data name="&gt;&gt;colorPickerDropDown1.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ColorPickerDropDown, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainV2</value>

@@ -37,6 +37,7 @@ using GMap.NET.CacheProviders;
 using System.Runtime.Remoting.Messaging;
 using static GDAL.GDAL;
 using System.Linq;
+using DevComponents.DotNetBar;
 
 namespace VPS
 {
@@ -260,7 +261,7 @@ namespace VPS
             //Flight data page
             if (MainV2.instance.FlightData != null)
             {
-                TabControl t = MainV2.instance.FlightData.tabControlactions;
+                var t = MainV2.instance.FlightData.tabControlactions;
                 if (DisplayConfiguration.displayQuickTab && !t.TabPages.Contains(FlightData.tabQuick))
                 {
                     t.TabPages.Add(FlightData.tabQuick);
@@ -4337,6 +4338,25 @@ namespace VPS
                         Comports.Add(mav);
                     });
                 }
+            }
+        }
+
+        private void AppCommandTheme_Executed(object sender, EventArgs e)
+        {
+            ICommandSource source = sender as ICommandSource;
+            if (source.CommandParameter is string)
+            {
+                eStyle style = (eStyle)Enum.Parse(typeof(eStyle), source.CommandParameter.ToString());
+                // Using StyleManager change the style and color tinting
+                StyleManager.ChangeStyle(style, System.Drawing.Color.Empty);
+                if (style == eStyle.Office2007Black || style == eStyle.Office2007Blue || style == eStyle.Office2007Silver || style == eStyle.Office2007VistaGlass)
+                    StartButton.BackstageTabEnabled = false;
+                else
+                    StartButton.BackstageTabEnabled = true;
+            }
+            else if (source.CommandParameter is Color)
+            {
+                StyleManager.ColorTint = (Color)source.CommandParameter;
             }
         }
     }

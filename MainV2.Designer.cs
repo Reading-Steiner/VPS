@@ -64,6 +64,8 @@ namespace VPS
             this.qatCustomizeItem = new DevComponents.DotNetBar.QatCustomizeItem();
             this.styleManager = new DevComponents.DotNetBar.StyleManager(this.components);
             this.dockContainerItem1 = new DevComponents.DotNetBar.DockContainerItem();
+            this.RibbonClientPanel = new DevComponents.DotNetBar.Ribbon.RibbonClientPanel();
+            this.AppCommandTheme = new DevComponents.DotNetBar.Command(this.components);
             this.MenuLoadLayer = new VPS.Controls.HLToolStripButton();
             this.MenuZoomToLayer = new VPS.Controls.HLToolStripButton();
             this.MenuLayerManager = new VPS.Controls.HLToolStripButton();
@@ -75,7 +77,13 @@ namespace VPS
             this.MenuSaveWP = new VPS.Controls.HLToolStripButton();
             this.toolStripConnectionControl = new VPS.Controls.ToolStripConnectionControl();
             this.MenuWPGobalConfig = new VPS.Controls.HLToolStripButton();
-            this.RibbonClientPanel = new DevComponents.DotNetBar.Ribbon.RibbonClientPanel();
+            this.buttonChangeStyle = new DevComponents.DotNetBar.ButtonItem();
+            this.buttonStyleOffice2010Blue = new DevComponents.DotNetBar.ButtonItem();
+            this.buttonStyleOffice2010Silver = new DevComponents.DotNetBar.ButtonItem();
+            this.buttonStyleOffice2010Black = new DevComponents.DotNetBar.ButtonItem();
+            this.buttonStyleOffice2007Blue = new DevComponents.DotNetBar.ButtonItem();
+            this.buttonStyleOffice2007Black = new DevComponents.DotNetBar.ButtonItem();
+            this.buttonStyleOffice2007Silver = new DevComponents.DotNetBar.ButtonItem();
             this.MinMenu.SuspendLayout();
             this.FileRibbonPanel.SuspendLayout();
             this.SuspendLayout();
@@ -190,7 +198,8 @@ namespace VPS
             this.MinMenu.Controls.Add(this.FileRibbonPanel);
             resources.ApplyResources(this.MinMenu, "MinMenu");
             this.MinMenu.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.FileRibbonTabItem});
+            this.FileRibbonTabItem,
+            this.buttonChangeStyle});
             this.MinMenu.KeyTipsFont = new System.Drawing.Font("Tahoma", 7F);
             this.MinMenu.Name = "MinMenu";
             this.MinMenu.QuickToolbarItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
@@ -382,6 +391,21 @@ namespace VPS
             this.dockContainerItem1.Name = "dockContainerItem1";
             resources.ApplyResources(this.dockContainerItem1, "dockContainerItem1");
             // 
+            // RibbonClientPanel
+            // 
+            this.RibbonClientPanel.CanvasColor = System.Drawing.SystemColors.Control;
+            this.RibbonClientPanel.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            resources.ApplyResources(this.RibbonClientPanel, "RibbonClientPanel");
+            this.RibbonClientPanel.Name = "RibbonClientPanel";
+            this.RibbonClientPanel.Style.Class = "RibbonClientPanel";
+            this.RibbonClientPanel.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.RibbonClientPanel.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // AppCommandTheme
+            // 
+            this.AppCommandTheme.Name = "AppCommandTheme";
+            this.AppCommandTheme.Executed += new System.EventHandler(this.AppCommandTheme_Executed);
+            // 
             // MenuLoadLayer
             // 
             resources.ApplyResources(this.MenuLoadLayer, "MenuLoadLayer");
@@ -531,25 +555,61 @@ namespace VPS
             this.MenuWPGobalConfig.TopTransparent = 8;
             this.MenuWPGobalConfig.Click += new System.EventHandler(this.WPGobalConfig_Click);
             // 
-            // RibbonClientPanel
+            // buttonChangeStyle
             // 
-            this.RibbonClientPanel.CanvasColor = System.Drawing.SystemColors.Control;
-            this.RibbonClientPanel.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            resources.ApplyResources(this.RibbonClientPanel, "RibbonClientPanel");
-            this.RibbonClientPanel.Name = "RibbonClientPanel";
+            this.buttonChangeStyle.AutoExpandOnClick = true;
+            this.buttonChangeStyle.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far;
+            this.buttonChangeStyle.Name = "buttonChangeStyle";
+            this.buttonChangeStyle.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.buttonStyleOffice2010Blue,
+            this.buttonStyleOffice2010Silver,
+            this.buttonStyleOffice2010Black,
+            this.buttonStyleOffice2007Blue,
+            this.buttonStyleOffice2007Black,
+            this.buttonStyleOffice2007Silver});
+            resources.ApplyResources(this.buttonChangeStyle, "buttonChangeStyle");
             // 
+            // buttonStyleOffice2010Blue
             // 
+            this.buttonStyleOffice2010Blue.Command = this.AppCommandTheme;
+            resources.ApplyResources(this.buttonStyleOffice2010Blue, "buttonStyleOffice2010Blue");
+            this.buttonStyleOffice2010Blue.Name = "buttonStyleOffice2010Blue";
+            this.buttonStyleOffice2010Blue.OptionGroup = "style";
             // 
-            this.RibbonClientPanel.Style.Class = "RibbonClientPanel";
-            this.RibbonClientPanel.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // buttonStyleOffice2010Silver
             // 
+            this.buttonStyleOffice2010Silver.Command = this.AppCommandTheme;
+            resources.ApplyResources(this.buttonStyleOffice2010Silver, "buttonStyleOffice2010Silver");
+            this.buttonStyleOffice2010Silver.Name = "buttonStyleOffice2010Silver";
+            this.buttonStyleOffice2010Silver.OptionGroup = "style";
             // 
+            // buttonStyleOffice2010Black
             // 
-            this.RibbonClientPanel.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.buttonStyleOffice2010Black.Command = this.AppCommandTheme;
+            resources.ApplyResources(this.buttonStyleOffice2010Black, "buttonStyleOffice2010Black");
+            this.buttonStyleOffice2010Black.Name = "buttonStyleOffice2010Black";
+            this.buttonStyleOffice2010Black.OptionGroup = "style";
             // 
+            // buttonStyleOffice2007Blue
             // 
+            this.buttonStyleOffice2007Blue.Command = this.AppCommandTheme;
+            resources.ApplyResources(this.buttonStyleOffice2007Blue, "buttonStyleOffice2007Blue");
+            this.buttonStyleOffice2007Blue.Name = "buttonStyleOffice2007Blue";
+            this.buttonStyleOffice2007Blue.OptionGroup = "style";
             // 
-            this.RibbonClientPanel.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // buttonStyleOffice2007Black
+            // 
+            this.buttonStyleOffice2007Black.Command = this.AppCommandTheme;
+            resources.ApplyResources(this.buttonStyleOffice2007Black, "buttonStyleOffice2007Black");
+            this.buttonStyleOffice2007Black.Name = "buttonStyleOffice2007Black";
+            this.buttonStyleOffice2007Black.OptionGroup = "style";
+            // 
+            // buttonStyleOffice2007Silver
+            // 
+            this.buttonStyleOffice2007Silver.Command = this.AppCommandTheme;
+            resources.ApplyResources(this.buttonStyleOffice2007Silver, "buttonStyleOffice2007Silver");
+            this.buttonStyleOffice2007Silver.Name = "buttonStyleOffice2007Silver";
+            this.buttonStyleOffice2007Silver.OptionGroup = "style";
             // 
             // MainV2
             // 
@@ -616,5 +676,13 @@ namespace VPS
         private DevComponents.DotNetBar.ButtonItem buttonItem1;
         private DevComponents.DotNetBar.ButtonItem buttonItem2;
         private DevComponents.DotNetBar.Ribbon.RibbonClientPanel RibbonClientPanel;
+        private DevComponents.DotNetBar.Command AppCommandTheme;
+        private DevComponents.DotNetBar.ButtonItem buttonChangeStyle;
+        private DevComponents.DotNetBar.ButtonItem buttonStyleOffice2010Blue;
+        private DevComponents.DotNetBar.ButtonItem buttonStyleOffice2010Silver;
+        private DevComponents.DotNetBar.ButtonItem buttonStyleOffice2010Black;
+        private DevComponents.DotNetBar.ButtonItem buttonStyleOffice2007Blue;
+        private DevComponents.DotNetBar.ButtonItem buttonStyleOffice2007Black;
+        private DevComponents.DotNetBar.ButtonItem buttonStyleOffice2007Silver;
     }
 }
