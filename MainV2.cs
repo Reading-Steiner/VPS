@@ -40,297 +40,10 @@ using System.Linq;
 
 namespace VPS
 {
-    public partial class MainV2 : Form
+    public partial class MainV2 : DevComponents.DotNetBar.Office2007Form
     {
         private static readonly ILog log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        public static menuicons displayicons;  //do not initialize to allow update of custom icons
-
-        public abstract class menuicons
-        {
-            public abstract Image fd { get; }
-            public abstract Image fp { get; }
-            public abstract Image initsetup { get; }
-            public abstract Image config_tuning { get; }
-            public abstract Image sim { get; }
-            public abstract Image terminal { get; }
-            public abstract Image help { get; }
-            public abstract Image donate { get; }
-            public abstract Image connect { get; }
-            public abstract Image disconnect { get; }
-            public abstract Image bg { get; }
-            public abstract Image wizard { get; }
-        }
-
-
-        public class burntkermitmenuicons : menuicons
-        {
-            public override Image fd
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "light_flightdata_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "light_flightdata_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.light_flightdata_icon;
-                }
-            }
-
-            public override Image fp
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "light_flightplan_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "light_flightplan_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.light_flightplan_icon;
-                }
-            }
-
-            public override Image initsetup
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "light_initialsetup_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "light_initialsetup_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.light_initialsetup_icon;
-                }
-            }
-
-            public override Image config_tuning
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "light_tuningconfig_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "light_tuningconfig_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.light_tuningconfig_icon;
-                }
-            }
-
-            public override Image sim
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "light_simulation_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "light_simulation_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.light_simulation_icon;
-                }
-            }
-
-            public override Image terminal
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "light_terminal_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "light_terminal_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.light_terminal_icon;
-                }
-            }
-
-            public override Image help
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "light_help_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "light_help_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.light_help_icon;
-                }
-            }
-
-            public override Image donate
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "light_donate_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "light_donate_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.donate;
-                }
-            }
-
-            public override Image connect
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "light_connect_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "light_connect_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.light_connect_icon;
-                }
-            }
-
-            public override Image disconnect
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "light_disconnect_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "light_disconnect_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.light_disconnect_icon;
-                }
-            }
-
-            public override Image bg
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "light_icon_background.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "light_icon_background.png");
-                    else
-                        return global::VPS.Properties.Resources.bgdark;
-                }
-            }
-            public override Image wizard
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "light_wizard_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "light_wizard_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.wizardicon;
-                }
-            }
-        }
-
-        public class highcontrastmenuicons : menuicons
-        {
-            public override Image fd
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "dark_flightdata_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "dark_flightdata_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.dark_flightdata_icon;
-                }
-            }
-
-            public override Image fp
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "dark_flightplan_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "dark_flightplan_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.dark_flightplan_icon;
-                }
-            }
-
-            public override Image initsetup
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "dark_initialsetup_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "dark_initialsetup_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.dark_initialsetup_icon;
-                }
-            }
-
-            public override Image config_tuning
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "dark_tuningconfig_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "dark_tuningconfig_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.dark_tuningconfig_icon;
-                }
-            }
-
-            public override Image sim
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "dark_simulation_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "dark_simulation_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.dark_simulation_icon;
-                }
-            }
-
-            public override Image terminal
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "dark_terminal_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "dark_terminal_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.dark_terminal_icon;
-                }
-            }
-
-            public override Image help
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "dark_help_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "dark_help_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.dark_help_icon;
-                }
-            }
-
-            public override Image donate
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "dark_donate_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "dark_donate_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.donate;
-                }
-            }
-
-            public override Image connect
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "dark_connect_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "dark_connect_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.dark_connect_icon;
-                }
-            }
-
-            public override Image disconnect
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "dark_disconnect_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "dark_disconnect_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.dark_disconnect_icon;
-                }
-            }
-
-            public override Image bg
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "dark_icon_background.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "dark_icon_background.png");
-                    else
-                        return null;
-                }
-            }
-            public override Image wizard
-            {
-                get
-                {
-                    if (File.Exists(Settings.GetRunningDirectory() + "dark_wizard_icon.png"))
-                        return Image.FromFile(Settings.GetRunningDirectory() + "dark_wizard_icon.png");
-                    else
-                        return global::VPS.Properties.Resources.wizardicon;
-                }
-            }
-        }
 
         Controls.MainSwitcher MyView;
 
@@ -419,7 +132,7 @@ namespace VPS
 
         public ConcurrentDictionary<string, adsb.PointLatLngAltHdg> adsbPlanes = new ConcurrentDictionary<string, adsb.PointLatLngAltHdg>();
 
-        string titlebar;
+        //string titlebar;
 
         /// <summary>
         /// Comport name
@@ -708,7 +421,7 @@ namespace VPS
 
             Utilities.ThemeManager.ApplyThemeTo(this);
 
-            MyView = new MainSwitcher(this);
+            MyView = new MainSwitcher(this.RibbonClientPanel);
 
             View = MyView;
 
@@ -795,11 +508,11 @@ namespace VPS
             {
                 changelanguage(CultureInfoEx.GetCultureInfo(Settings.Instance["language"]));
             }
-            if (splash != null)
-            {
-                this.Text = splash?.Text;
-                titlebar = splash?.Text;
-            }
+            //if (splash != null)
+            //{
+            //    this.Text = splash?.Text;
+            //    titlebar = splash?.Text;
+            //}
 
             if (!MONO) // windows only
             {
@@ -1159,39 +872,6 @@ namespace VPS
             }
         }
 
-        public void switchicons(menuicons icons)
-        {
-            //Check if we starting 
-            if (displayicons != null)
-            {
-                // dont update if no change
-                if (displayicons.GetType() == icons.GetType())
-                    return;
-            }
-
-            displayicons = icons;
-
-            MainMenu.BackColor = SystemColors.MenuBar;
-
-            MainMenu.BackgroundImage = displayicons.bg;
-
-            //MenuFlightPlannerClose.Image = displayicons.fd;
-            //MenuFlightPlannerOpen.Image = displayicons.fp;
-            MenuInitConfig.Image = displayicons.initsetup;
-            MenuSimulation.Image = displayicons.sim;
-            MenuConfigTune.Image = displayicons.config_tuning;
-            MenuConnect.Image = displayicons.connect;
-            MenuHelp.Image = displayicons.help;
-
-
-            MenuFlightPlannerOpen.ForeColor = ThemeManager.TextColor;
-            MenuFlightPlannerClose.ForeColor = ThemeManager.TextColor;
-            MenuInitConfig.ForeColor = ThemeManager.TextColor;
-            MenuSimulation.ForeColor = ThemeManager.TextColor;
-            MenuConfigTune.ForeColor = ThemeManager.TextColor;
-            MenuConnect.ForeColor = ThemeManager.TextColor;
-            MenuHelp.ForeColor = ThemeManager.TextColor;
-        }
 
         void adsb_UpdatePlanePosition(object sender, VPS.Utilities.adsb.PointLatLngAltHdg adsb)
         {
@@ -1353,30 +1033,14 @@ namespace VPS
         private delegate void SetCheckedCallback(HLToolStripButton stripButton, bool value);
         private void SetHLToolStripButtonChecked(HLToolStripButton stripButton, bool value)
         {
-            if (MainMenu.InvokeRequired)
-            {
-                SetCheckedCallback setCallback = new SetCheckedCallback(SetHLToolStripButtonChecked);
-                MainMenu.Invoke(setCallback, new object[] { stripButton, value });
-            }
-            else
-            {
-                stripButton.MyChecked = value;
-            }
+
+            stripButton.MyChecked = value;
         }
 
         private delegate bool GetCheckedCallback(HLToolStripButton stripButton);
         private bool GetHLToolStripButtonChecked(HLToolStripButton stripButton)
         {
-            if (MainMenu.InvokeRequired)
-            {
-                GetCheckedCallback setCallback = new GetCheckedCallback(GetHLToolStripButtonChecked);
-                IAsyncResult ia = MainMenu.BeginInvoke(setCallback);
-                return (bool)MainMenu.EndInvoke(ia);
-            }
-            else
-            {
-                return stripButton.MyChecked;
-            }
+            return stripButton.MyChecked;
         }
 
         private void SetLaodLayerState()
@@ -2047,7 +1711,7 @@ namespace VPS
                 // save the baudrate for this port
                 Settings.Instance[_connectionControl.CMB_serialport.Text + "_BAUD"] = _connectionControl.CMB_baudrate.Text;
 
-                this.Text = titlebar + " " + comPort.MAV.VersionString;
+                //this.Text = titlebar + " " + comPort.MAV.VersionString;
 
                 // refresh config window if needed
                 if (MyView.current != null)
@@ -2119,7 +1783,6 @@ namespace VPS
                 HUD.Custom.src = MainV2.comPort.MAV.cs;
 
                 // set connected icon
-                this.MenuConnect.Image = displayicons.disconnect;
             }
             catch (Exception ex)
             {
@@ -2718,7 +2381,6 @@ namespace VPS
                     {
                         this.BeginInvoke((MethodInvoker)delegate
                        {
-                           this.MenuConnect.Image = displayicons.disconnect;
                            this.MenuConnect.Image.Tag = "Disconnect";
                            this.MenuConnect.Text = Strings.DISCONNECTc;
                            _connectionControl.IsConnected(true);
@@ -2731,7 +2393,6 @@ namespace VPS
                     {
                         this.BeginInvoke((MethodInvoker)delegate
                        {
-                           this.MenuConnect.Image = displayicons.connect;
                            this.MenuConnect.Image.Tag = "Connect";
                            this.MenuConnect.Text = Strings.CONNECTc;
                            _connectionControl.IsConnected(false);
@@ -3097,13 +2758,6 @@ namespace VPS
                         }
                     }
 
-                    if (comPort.MAV.param.TotalReceived < comPort.MAV.param.TotalReported)
-                    {
-                        if (comPort.MAV.param.TotalReported > 0 && comPort.BaseStream.IsOpen)
-                            instance.status1.Percent =
-                                (comPort.MAV.param.TotalReceived / (double)comPort.MAV.param.TotalReported) * 100.0;
-                    }
-
                     // send a hb every seconds from gcs to ap
                     if (heatbeatSend.Second != DateTime.Now.Second)
                     {
@@ -3336,7 +2990,6 @@ namespace VPS
             {
                 this.PerformLayout();
                 FlightPlannerShow();
-                MainMenu_ItemClicked(this, new ToolStripItemClickedEventArgs(MenuFlightPlannerOpen));
             }
             else
             {
@@ -3344,7 +2997,6 @@ namespace VPS
                 log.Info("show FlightData");
                 FlightDataShow();
                 log.Info("show FlightData... Done");
-                MainMenu_ItemClicked(this, new ToolStripItemClickedEventArgs(MenuFlightPlannerClose));
             }
 
             // for long running tasks using own threads.
@@ -4394,17 +4046,6 @@ namespace VPS
             }
         }
 
-        private void MainMenu_MouseLeave(object sender, EventArgs e)
-        {
-            if (_connectionControl.PointToClient(Control.MousePosition).Y < MainMenu.Height)
-                return;
-
-            this.SuspendLayout();
-
-            panel1.Visible = false;
-
-            this.ResumeLayout();
-        }
 
 
         private void MainV2_KeyDown(object sender, KeyEventArgs e)
@@ -4599,27 +4240,6 @@ namespace VPS
             DBT_DEVNODES_CHANGED = 0x7,
             DBT_QUERYCHANGECONFIG = 0x17,
             DBT_USERDEFINED = 0xFFFF,
-        }
-
-        private void MainMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            foreach (ToolStripItem item in MainMenu.Items)
-            {
-                if (e.ClickedItem == item)
-                {
-                    item.BackColor = ThemeManager.ControlBGColor;
-                }
-                else
-                {
-                    try
-                    {
-                        item.BackColor = Color.Transparent;
-                        item.BackgroundImage = displayicons.bg; //.BackColor = Color.Black;
-                    } catch {}
-                }
-            }
-            //MainMenu.BackColor = Color.Black;
-            //MainMenu.BackgroundImage = MissionPlanner.Properties.Resources.bgdark;
         }
 
 

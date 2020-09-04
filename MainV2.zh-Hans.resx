@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="$this.Text" xml:space="preserve">
-    <value>远景多功能摄影测量仿真系统</value>
+    <value />
   </data>
   <data name="autoHideToolStripMenuItem.Text" xml:space="preserve">
     <value>自动隐藏</value>

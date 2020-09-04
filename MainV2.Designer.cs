@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 
 namespace VPS
 {
@@ -34,48 +33,52 @@ namespace VPS
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainV2));
-            this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.MenuFlightPlannerOpen = new System.Windows.Forms.ToolStripButton();
             this.MenuFlightPlannerClose = new System.Windows.Forms.ToolStripButton();
             this.Separator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuLoadLayer = new VPS.Controls.HLToolStripButton();
-            this.MenuZoomToLayer = new VPS.Controls.HLToolStripButton();
-            this.MenuLayerManager = new VPS.Controls.HLToolStripButton();
             this.Separator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuDrawPolygon = new VPS.Controls.HLToolStripButton();
-            this.MenuClearPolygon = new VPS.Controls.HLToolStripButton();
             this.Separator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuSurveyGrid = new VPS.Controls.HLToolStripButton();
-            this.MenuClearWP = new VPS.Controls.HLToolStripButton();
-            this.MenuReadWP = new VPS.Controls.HLToolStripButton();
-            this.MenuSaveWP = new VPS.Controls.HLToolStripButton();
             this.Separator4 = new System.Windows.Forms.ToolStripSeparator();
             this.Separator5 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuConnect = new System.Windows.Forms.ToolStripButton();
-            this.toolStripConnectionControl = new VPS.Controls.ToolStripConnectionControl();
-            this.MenuWPGobalConfig = new VPS.Controls.HLToolStripButton();
             this.MenuInitConfig = new System.Windows.Forms.ToolStripButton();
             this.MenuConfigTune = new System.Windows.Forms.ToolStripButton();
             this.MenuSimulation = new System.Windows.Forms.ToolStripButton();
             this.MenuHelp = new System.Windows.Forms.ToolStripButton();
             this.MenuArduPilot = new System.Windows.Forms.ToolStripButton();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.status1 = new VPS.Controls.Status();
-            this.MainMenu.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.MinMenu = new DevComponents.DotNetBar.RibbonControl();
+            this.FileRibbonPanel = new DevComponents.DotNetBar.RibbonPanel();
+            this.ProjectRibbonBar = new DevComponents.DotNetBar.RibbonBar();
+            this.buttonItem1 = new DevComponents.DotNetBar.ButtonItem();
+            this.buttonItem2 = new DevComponents.DotNetBar.ButtonItem();
+            this.FileRibbonTabItem = new DevComponents.DotNetBar.RibbonTabItem();
+            this.StartButton = new DevComponents.DotNetBar.Office2007StartButton();
+            this.StartContainer = new DevComponents.DotNetBar.ItemContainer();
+            this.itemContainer2 = new DevComponents.DotNetBar.ItemContainer();
+            this.StartItemContainer = new DevComponents.DotNetBar.ItemContainer();
+            this.StartFileContainer = new DevComponents.DotNetBar.GalleryContainer();
+            this.RecentDocumentsLabel = new DevComponents.DotNetBar.LabelItem();
+            this.StartBottomContainer = new DevComponents.DotNetBar.ItemContainer();
+            this.qatCustomizeItem = new DevComponents.DotNetBar.QatCustomizeItem();
+            this.styleManager = new DevComponents.DotNetBar.StyleManager(this.components);
+            this.dockContainerItem1 = new DevComponents.DotNetBar.DockContainerItem();
+            this.MenuLoadLayer = new VPS.Controls.HLToolStripButton();
+            this.MenuZoomToLayer = new VPS.Controls.HLToolStripButton();
+            this.MenuLayerManager = new VPS.Controls.HLToolStripButton();
+            this.MenuDrawPolygon = new VPS.Controls.HLToolStripButton();
+            this.MenuClearPolygon = new VPS.Controls.HLToolStripButton();
+            this.MenuSurveyGrid = new VPS.Controls.HLToolStripButton();
+            this.MenuClearWP = new VPS.Controls.HLToolStripButton();
+            this.MenuReadWP = new VPS.Controls.HLToolStripButton();
+            this.MenuSaveWP = new VPS.Controls.HLToolStripButton();
+            this.toolStripConnectionControl = new VPS.Controls.ToolStripConnectionControl();
+            this.MenuWPGobalConfig = new VPS.Controls.HLToolStripButton();
+            this.RibbonClientPanel = new DevComponents.DotNetBar.Ribbon.RibbonClientPanel();
+            this.MinMenu.SuspendLayout();
+            this.FileRibbonPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // MainMenu
-            // 
-            resources.ApplyResources(this.MainMenu, "MainMenu");
-            this.MainMenu.GripMargin = new System.Windows.Forms.Padding(0);
-            this.MainMenu.ImageScalingSize = new System.Drawing.Size(45, 39);
-            this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {});
-            this.MainMenu.Name = "MainMenu";
-            this.MainMenu.ShowItemToolTips = true;
-            this.MainMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.MainMenu_ItemClicked);
-            this.MainMenu.MouseLeave += new System.EventHandler(this.MainMenu_MouseLeave);
             // 
             // MenuFlightPlannerOpen
             // 
@@ -101,6 +104,283 @@ namespace VPS
             // 
             this.Separator1.Name = "Separator1";
             resources.ApplyResources(this.Separator1, "Separator1");
+            // 
+            // Separator2
+            // 
+            this.Separator2.Name = "Separator2";
+            resources.ApplyResources(this.Separator2, "Separator2");
+            // 
+            // Separator3
+            // 
+            this.Separator3.Name = "Separator3";
+            resources.ApplyResources(this.Separator3, "Separator3");
+            // 
+            // Separator4
+            // 
+            this.Separator4.Name = "Separator4";
+            resources.ApplyResources(this.Separator4, "Separator4");
+            // 
+            // Separator5
+            // 
+            this.Separator5.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.Separator5.Name = "Separator5";
+            resources.ApplyResources(this.Separator5, "Separator5");
+            // 
+            // MenuConnect
+            // 
+            this.MenuConnect.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            resources.ApplyResources(this.MenuConnect, "MenuConnect");
+            this.MenuConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MenuConnect.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuConnect.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuConnect.Name = "MenuConnect";
+            this.MenuConnect.Click += new System.EventHandler(this.MenuConnect_Click);
+            // 
+            // MenuInitConfig
+            // 
+            this.MenuInitConfig.ForeColor = System.Drawing.SystemColors.ControlLight;
+            resources.ApplyResources(this.MenuInitConfig, "MenuInitConfig");
+            this.MenuInitConfig.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuInitConfig.Name = "MenuInitConfig";
+            this.MenuInitConfig.Click += new System.EventHandler(this.MenuSetup_Click);
+            // 
+            // MenuConfigTune
+            // 
+            this.MenuConfigTune.ForeColor = System.Drawing.SystemColors.ControlLight;
+            resources.ApplyResources(this.MenuConfigTune, "MenuConfigTune");
+            this.MenuConfigTune.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuConfigTune.Name = "MenuConfigTune";
+            this.MenuConfigTune.Click += new System.EventHandler(this.MenuTuning_Click);
+            // 
+            // MenuSimulation
+            // 
+            this.MenuSimulation.ForeColor = System.Drawing.SystemColors.ControlLight;
+            resources.ApplyResources(this.MenuSimulation, "MenuSimulation");
+            this.MenuSimulation.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuSimulation.Name = "MenuSimulation";
+            this.MenuSimulation.Click += new System.EventHandler(this.MenuSimulation_Click);
+            // 
+            // MenuHelp
+            // 
+            this.MenuHelp.ForeColor = System.Drawing.SystemColors.ControlLight;
+            resources.ApplyResources(this.MenuHelp, "MenuHelp");
+            this.MenuHelp.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuHelp.Name = "MenuHelp";
+            this.MenuHelp.Click += new System.EventHandler(this.MenuHelp_Click);
+            // 
+            // MenuArduPilot
+            // 
+            this.MenuArduPilot.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            resources.ApplyResources(this.MenuArduPilot, "MenuArduPilot");
+            this.MenuArduPilot.BackColor = System.Drawing.Color.Transparent;
+            this.MenuArduPilot.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MenuArduPilot.ForeColor = System.Drawing.Color.White;
+            this.MenuArduPilot.Image = global::VPS.Properties.Resources._0d92fed790a3a70170e61a86db103f399a595c70;
+            this.MenuArduPilot.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuArduPilot.Name = "MenuArduPilot";
+            this.MenuArduPilot.Click += new System.EventHandler(this.MenuArduPilot_Click);
+            // 
+            // MinMenu
+            // 
+            // 
+            // 
+            // 
+            this.MinMenu.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.MinMenu.CaptionVisible = true;
+            this.MinMenu.Controls.Add(this.FileRibbonPanel);
+            resources.ApplyResources(this.MinMenu, "MinMenu");
+            this.MinMenu.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.FileRibbonTabItem});
+            this.MinMenu.KeyTipsFont = new System.Drawing.Font("Tahoma", 7F);
+            this.MinMenu.Name = "MinMenu";
+            this.MinMenu.QuickToolbarItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.StartButton,
+            this.qatCustomizeItem});
+            this.MinMenu.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.MinMenu.SystemText.MaximizeRibbonText = resources.GetString("MinMenu.SystemText.MaximizeRibbonText");
+            this.MinMenu.SystemText.MinimizeRibbonText = resources.GetString("MinMenu.SystemText.MinimizeRibbonText");
+            this.MinMenu.SystemText.QatAddItemText = resources.GetString("MinMenu.SystemText.QatAddItemText");
+            this.MinMenu.SystemText.QatCustomizeMenuLabel = resources.GetString("MinMenu.SystemText.QatCustomizeMenuLabel");
+            this.MinMenu.SystemText.QatCustomizeText = resources.GetString("MinMenu.SystemText.QatCustomizeText");
+            this.MinMenu.SystemText.QatDialogAddButton = resources.GetString("MinMenu.SystemText.QatDialogAddButton");
+            this.MinMenu.SystemText.QatDialogCancelButton = resources.GetString("MinMenu.SystemText.QatDialogCancelButton");
+            this.MinMenu.SystemText.QatDialogCaption = resources.GetString("MinMenu.SystemText.QatDialogCaption");
+            this.MinMenu.SystemText.QatDialogCategoriesLabel = resources.GetString("MinMenu.SystemText.QatDialogCategoriesLabel");
+            this.MinMenu.SystemText.QatDialogOkButton = resources.GetString("MinMenu.SystemText.QatDialogOkButton");
+            this.MinMenu.SystemText.QatDialogPlacementCheckbox = resources.GetString("MinMenu.SystemText.QatDialogPlacementCheckbox");
+            this.MinMenu.SystemText.QatDialogRemoveButton = resources.GetString("MinMenu.SystemText.QatDialogRemoveButton");
+            this.MinMenu.SystemText.QatPlaceAboveRibbonText = resources.GetString("MinMenu.SystemText.QatPlaceAboveRibbonText");
+            this.MinMenu.SystemText.QatPlaceBelowRibbonText = resources.GetString("MinMenu.SystemText.QatPlaceBelowRibbonText");
+            this.MinMenu.SystemText.QatRemoveItemText = resources.GetString("MinMenu.SystemText.QatRemoveItemText");
+            this.MinMenu.TabGroupHeight = 14;
+            // 
+            // FileRibbonPanel
+            // 
+            this.FileRibbonPanel.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.FileRibbonPanel.Controls.Add(this.ProjectRibbonBar);
+            resources.ApplyResources(this.FileRibbonPanel, "FileRibbonPanel");
+            this.FileRibbonPanel.Name = "FileRibbonPanel";
+            // 
+            // 
+            // 
+            this.FileRibbonPanel.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.FileRibbonPanel.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.FileRibbonPanel.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // ProjectRibbonBar
+            // 
+            this.ProjectRibbonBar.AutoOverflowEnabled = true;
+            // 
+            // 
+            // 
+            this.ProjectRibbonBar.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.ProjectRibbonBar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.ProjectRibbonBar.ContainerControlProcessDialogKey = true;
+            resources.ApplyResources(this.ProjectRibbonBar, "ProjectRibbonBar");
+            this.ProjectRibbonBar.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.buttonItem1,
+            this.buttonItem2});
+            this.ProjectRibbonBar.Name = "ProjectRibbonBar";
+            this.ProjectRibbonBar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            // 
+            // 
+            // 
+            this.ProjectRibbonBar.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.ProjectRibbonBar.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // buttonItem1
+            // 
+            this.buttonItem1.Name = "buttonItem1";
+            this.buttonItem1.SubItemsExpandWidth = 14;
+            resources.ApplyResources(this.buttonItem1, "buttonItem1");
+            // 
+            // buttonItem2
+            // 
+            this.buttonItem2.Name = "buttonItem2";
+            this.buttonItem2.SubItemsExpandWidth = 14;
+            resources.ApplyResources(this.buttonItem2, "buttonItem2");
+            // 
+            // FileRibbonTabItem
+            // 
+            this.FileRibbonTabItem.Checked = true;
+            this.FileRibbonTabItem.Name = "FileRibbonTabItem";
+            this.FileRibbonTabItem.Panel = this.FileRibbonPanel;
+            resources.ApplyResources(this.FileRibbonTabItem, "FileRibbonTabItem");
+            // 
+            // StartButton
+            // 
+            this.StartButton.AutoExpandOnClick = true;
+            this.StartButton.CanCustomize = false;
+            this.StartButton.HotTrackingStyle = DevComponents.DotNetBar.eHotTrackingStyle.Image;
+            this.StartButton.Image = ((System.Drawing.Image)(resources.GetObject("StartButton.Image")));
+            this.StartButton.ImagePaddingHorizontal = 2;
+            this.StartButton.ImagePaddingVertical = 2;
+            this.StartButton.Name = "StartButton";
+            this.StartButton.ShowSubItems = false;
+            this.StartButton.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.StartContainer});
+            resources.ApplyResources(this.StartButton, "StartButton");
+            // 
+            // StartContainer
+            // 
+            // 
+            // 
+            // 
+            this.StartContainer.BackgroundStyle.Class = "RibbonFileMenuContainer";
+            this.StartContainer.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.StartContainer.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical;
+            this.StartContainer.Name = "StartContainer";
+            this.StartContainer.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.itemContainer2,
+            this.StartBottomContainer});
+            // 
+            // itemContainer2
+            // 
+            // 
+            // 
+            // 
+            this.itemContainer2.BackgroundStyle.Class = "RibbonFileMenuTwoColumnContainer";
+            this.itemContainer2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.itemContainer2.ItemSpacing = 0;
+            this.itemContainer2.Name = "itemContainer2";
+            this.itemContainer2.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.StartItemContainer,
+            this.StartFileContainer});
+            // 
+            // StartItemContainer
+            // 
+            // 
+            // 
+            // 
+            this.StartItemContainer.BackgroundStyle.Class = "RibbonFileMenuColumnOneContainer";
+            this.StartItemContainer.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.StartItemContainer.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical;
+            this.StartItemContainer.MinimumSize = new System.Drawing.Size(120, 0);
+            this.StartItemContainer.Name = "StartItemContainer";
+            // 
+            // StartFileContainer
+            // 
+            // 
+            // 
+            // 
+            this.StartFileContainer.BackgroundStyle.Class = "RibbonFileMenuColumnTwoContainer";
+            this.StartFileContainer.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.StartFileContainer.EnableGalleryPopup = false;
+            this.StartFileContainer.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical;
+            this.StartFileContainer.MinimumSize = new System.Drawing.Size(180, 240);
+            this.StartFileContainer.MultiLine = false;
+            this.StartFileContainer.Name = "StartFileContainer";
+            this.StartFileContainer.PopupUsesStandardScrollbars = false;
+            this.StartFileContainer.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.RecentDocumentsLabel});
+            // 
+            // RecentDocumentsLabel
+            // 
+            this.RecentDocumentsLabel.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom;
+            this.RecentDocumentsLabel.BorderType = DevComponents.DotNetBar.eBorderType.Etched;
+            this.RecentDocumentsLabel.CanCustomize = false;
+            this.RecentDocumentsLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.RecentDocumentsLabel.Name = "RecentDocumentsLabel";
+            this.RecentDocumentsLabel.PaddingBottom = 2;
+            this.RecentDocumentsLabel.PaddingTop = 2;
+            this.RecentDocumentsLabel.Stretch = true;
+            resources.ApplyResources(this.RecentDocumentsLabel, "RecentDocumentsLabel");
+            // 
+            // StartBottomContainer
+            // 
+            // 
+            // 
+            // 
+            this.StartBottomContainer.BackgroundStyle.Class = "RibbonFileMenuBottomContainer";
+            this.StartBottomContainer.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.StartBottomContainer.HorizontalItemAlignment = DevComponents.DotNetBar.eHorizontalItemsAlignment.Right;
+            this.StartBottomContainer.Name = "StartBottomContainer";
+            // 
+            // qatCustomizeItem
+            // 
+            this.qatCustomizeItem.Name = "qatCustomizeItem";
+            // 
+            // styleManager
+            // 
+            this.styleManager.ManagerStyle = DevComponents.DotNetBar.eStyle.Office2007Black;
+            this.styleManager.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(163)))), ((int)(((byte)(26))))));
+            // 
+            // dockContainerItem1
+            // 
+            this.dockContainerItem1.Name = "dockContainerItem1";
+            resources.ApplyResources(this.dockContainerItem1, "dockContainerItem1");
             // 
             // MenuLoadLayer
             // 
@@ -144,11 +424,6 @@ namespace VPS
             this.MenuLayerManager.TopTransparent = 8;
             this.MenuLayerManager.Click += new System.EventHandler(this.MenuLayerManager_Click);
             // 
-            // Separator2
-            // 
-            this.Separator2.Name = "Separator2";
-            resources.ApplyResources(this.Separator2, "Separator2");
-            // 
             // MenuDrawPolygon
             // 
             resources.ApplyResources(this.MenuDrawPolygon, "MenuDrawPolygon");
@@ -176,11 +451,6 @@ namespace VPS
             this.MenuClearPolygon.Padding = new System.Windows.Forms.Padding(0, 0, 43, 38);
             this.MenuClearPolygon.TopTransparent = 8;
             this.MenuClearPolygon.Click += new System.EventHandler(this.MenuClearPolygon_Click);
-            // 
-            // Separator3
-            // 
-            this.Separator3.Name = "Separator3";
-            resources.ApplyResources(this.Separator3, "Separator3");
             // 
             // MenuSurveyGrid
             // 
@@ -238,27 +508,6 @@ namespace VPS
             this.MenuSaveWP.TopTransparent = 8;
             this.MenuSaveWP.Click += new System.EventHandler(this.MenuSaveWP_Click);
             // 
-            // Separator4
-            // 
-            this.Separator4.Name = "Separator4";
-            resources.ApplyResources(this.Separator4, "Separator4");
-            // 
-            // Separator5
-            // 
-            this.Separator5.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.Separator5.Name = "Separator5";
-            resources.ApplyResources(this.Separator5, "Separator5");
-            // 
-            // MenuConnect
-            // 
-            this.MenuConnect.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            resources.ApplyResources(this.MenuConnect, "MenuConnect");
-            this.MenuConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuConnect.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuConnect.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuConnect.Name = "MenuConnect";
-            this.MenuConnect.Click += new System.EventHandler(this.MenuConnect_Click);
-            // 
             // toolStripConnectionControl
             // 
             this.toolStripConnectionControl.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -268,7 +517,6 @@ namespace VPS
             this.toolStripConnectionControl.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripConnectionControl.Name = "toolStripConnectionControl";
             this.toolStripConnectionControl.Padding = new System.Windows.Forms.Padding(0, 0, 200, 38);
-            this.toolStripConnectionControl.MouseLeave += new System.EventHandler(this.MainMenu_MouseLeave);
             // 
             // MenuWPGobalConfig
             // 
@@ -283,78 +531,42 @@ namespace VPS
             this.MenuWPGobalConfig.TopTransparent = 8;
             this.MenuWPGobalConfig.Click += new System.EventHandler(this.WPGobalConfig_Click);
             // 
-            // MenuInitConfig
+            // RibbonClientPanel
             // 
-            this.MenuInitConfig.ForeColor = System.Drawing.SystemColors.ControlLight;
-            resources.ApplyResources(this.MenuInitConfig, "MenuInitConfig");
-            this.MenuInitConfig.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuInitConfig.Name = "MenuInitConfig";
-            this.MenuInitConfig.Click += new System.EventHandler(this.MenuSetup_Click);
+            this.RibbonClientPanel.CanvasColor = System.Drawing.SystemColors.Control;
+            this.RibbonClientPanel.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            resources.ApplyResources(this.RibbonClientPanel, "RibbonClientPanel");
+            this.RibbonClientPanel.Name = "RibbonClientPanel";
             // 
-            // MenuConfigTune
             // 
-            this.MenuConfigTune.ForeColor = System.Drawing.SystemColors.ControlLight;
-            resources.ApplyResources(this.MenuConfigTune, "MenuConfigTune");
-            this.MenuConfigTune.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuConfigTune.Name = "MenuConfigTune";
-            this.MenuConfigTune.Click += new System.EventHandler(this.MenuTuning_Click);
             // 
-            // MenuSimulation
+            this.RibbonClientPanel.Style.Class = "RibbonClientPanel";
+            this.RibbonClientPanel.Style.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             // 
-            this.MenuSimulation.ForeColor = System.Drawing.SystemColors.ControlLight;
-            resources.ApplyResources(this.MenuSimulation, "MenuSimulation");
-            this.MenuSimulation.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuSimulation.Name = "MenuSimulation";
-            this.MenuSimulation.Click += new System.EventHandler(this.MenuSimulation_Click);
             // 
-            // MenuHelp
             // 
-            this.MenuHelp.ForeColor = System.Drawing.SystemColors.ControlLight;
-            resources.ApplyResources(this.MenuHelp, "MenuHelp");
-            this.MenuHelp.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuHelp.Name = "MenuHelp";
-            this.MenuHelp.Click += new System.EventHandler(this.MenuHelp_Click);
+            this.RibbonClientPanel.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             // 
-            // MenuArduPilot
             // 
-            this.MenuArduPilot.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            resources.ApplyResources(this.MenuArduPilot, "MenuArduPilot");
-            this.MenuArduPilot.BackColor = System.Drawing.Color.Transparent;
-            this.MenuArduPilot.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuArduPilot.ForeColor = System.Drawing.Color.White;
-            this.MenuArduPilot.Image = global::VPS.Properties.Resources._0d92fed790a3a70170e61a86db103f399a595c70;
-            this.MenuArduPilot.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuArduPilot.Name = "MenuArduPilot";
-            this.MenuArduPilot.Click += new System.EventHandler(this.MenuArduPilot_Click);
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.status1);
-            this.panel1.Controls.Add(this.MainMenu);
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Name = "panel1";
-            this.panel1.MouseLeave += new System.EventHandler(this.MainMenu_MouseLeave);
-            // 
-            // status1
-            // 
-            resources.ApplyResources(this.status1, "status1");
-            this.status1.Name = "status1";
-            this.status1.Percent = 0D;
+            this.RibbonClientPanel.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             // 
             // MainV2
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel1);
+            this.ControlBox = false;
+            this.Controls.Add(this.RibbonClientPanel);
+            this.Controls.Add(this.MinMenu);
+            this.DoubleBuffered = true;
             this.KeyPreview = true;
-            this.MainMenuStrip = this.MainMenu;
             this.Name = "MainV2";
+            this.ShowIcon = false;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainV2_KeyDown);
             this.Resize += new System.EventHandler(this.MainV2_Resize);
-            this.MainMenu.ResumeLayout(false);
-            this.MainMenu.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.MinMenu.ResumeLayout(false);
+            this.MinMenu.PerformLayout();
+            this.FileRibbonPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -385,10 +597,24 @@ namespace VPS
         public System.Windows.Forms.ToolStripButton MenuConfigTune;
         public System.Windows.Forms.ToolStripButton MenuConnect;
         private Controls.ToolStripConnectionControl toolStripConnectionControl;
-        public System.Windows.Forms.Panel panel1;
-        public System.Windows.Forms.MenuStrip MainMenu;
         public System.Windows.Forms.ToolStripButton MenuHelp;
         public System.Windows.Forms.ToolStripButton MenuArduPilot;
-        public Controls.Status status1;
+        private DevComponents.DotNetBar.RibbonControl MinMenu;
+        private DevComponents.DotNetBar.RibbonPanel FileRibbonPanel;
+        private DevComponents.DotNetBar.RibbonBar ProjectRibbonBar;
+        private DevComponents.DotNetBar.RibbonTabItem FileRibbonTabItem;
+        private DevComponents.DotNetBar.Office2007StartButton StartButton;
+        private DevComponents.DotNetBar.ItemContainer StartContainer;
+        private DevComponents.DotNetBar.ItemContainer StartItemContainer;
+        private DevComponents.DotNetBar.QatCustomizeItem qatCustomizeItem;
+        private DevComponents.DotNetBar.StyleManager styleManager;
+        private DevComponents.DotNetBar.GalleryContainer StartFileContainer;
+        private DevComponents.DotNetBar.LabelItem RecentDocumentsLabel;
+        private DevComponents.DotNetBar.ItemContainer StartBottomContainer;
+        private DevComponents.DotNetBar.DockContainerItem dockContainerItem1;
+        private DevComponents.DotNetBar.ItemContainer itemContainer2;
+        private DevComponents.DotNetBar.ButtonItem buttonItem1;
+        private DevComponents.DotNetBar.ButtonItem buttonItem2;
+        private DevComponents.DotNetBar.Ribbon.RibbonClientPanel RibbonClientPanel;
     }
 }

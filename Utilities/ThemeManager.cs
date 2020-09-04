@@ -115,22 +115,6 @@ namespace VPS.Utilities
                 }
             }
 
-            if (MainV2.instance != null)
-            {
-                switch (iconSet)
-                {
-                    case IconSet.BurnKermitIconSet:
-                        MainV2.instance.switchicons(new MainV2.burntkermitmenuicons());
-                        break;
-                    case IconSet.HighContrastIconSet:
-                        MainV2.instance.switchicons(new MainV2.highcontrastmenuicons());
-                        break;
-                    default:                                                            
-                        MainV2.instance.switchicons(new MainV2.burntkermitmenuicons());     //Fall back to BurntKermit
-                        break;
-                }
-            }
-
             MainV2.TerminalTheming = terminalTheming;
             Settings.Instance["terminaltheming"] = terminalTheming.ToString();
             //HUD Color setting
