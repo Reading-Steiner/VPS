@@ -81,13 +81,14 @@ namespace VPS
         [STAThread]
         public static void Main(string[] args)
         {
-            Start(args);
+            TestVPS(args);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void VPSStart(string[] args)
+        public static void TestVPS(string[] args)
         {
-
+            Thread.CurrentThread.Name = "Base Thread";
+            Application.Run(new MainTestVPS());
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]

@@ -66,6 +66,8 @@ namespace VPS
             this.buttonStyleOffice2007Blue = new DevComponents.DotNetBar.ButtonItem();
             this.buttonStyleOffice2007Black = new DevComponents.DotNetBar.ButtonItem();
             this.buttonStyleOffice2007Silver = new DevComponents.DotNetBar.ButtonItem();
+            this.MenuSwitchButton = new DevComponents.DotNetBar.SwitchButtonItem();
+            this.RibbonStateCommand = new DevComponents.DotNetBar.Command(this.components);
             this.StartButton = new DevComponents.DotNetBar.Office2007StartButton();
             this.StartContainer = new DevComponents.DotNetBar.ItemContainer();
             this.itemContainer2 = new DevComponents.DotNetBar.ItemContainer();
@@ -88,8 +90,6 @@ namespace VPS
             this.MenuSaveWP = new VPS.Controls.HLToolStripButton();
             this.toolStripConnectionControl = new VPS.Controls.ToolStripConnectionControl();
             this.MenuWPGobalConfig = new VPS.Controls.HLToolStripButton();
-            this.MenuSwitchButton = new DevComponents.DotNetBar.SwitchButtonItem();
-            this.RibbonStateCommand = new DevComponents.DotNetBar.Command(this.components);
             this.MinMenuBar.SuspendLayout();
             this.FileRibbonPanel.SuspendLayout();
             this.SuspendLayout();
@@ -233,7 +233,7 @@ namespace VPS
             this.MenuArduPilot.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.MenuArduPilot.Click += new System.EventHandler(this.MenuArduPilot_Click);
             // 
-            // MinMenu
+            // MinMenuBar
             // 
             // 
             // 
@@ -248,12 +248,12 @@ namespace VPS
             this.MenuSwitchButton});
             this.MinMenuBar.KeyTipsFont = new System.Drawing.Font("Tahoma", 7F);
             this.MinMenuBar.Location = new System.Drawing.Point(5, 1);
-            this.MinMenuBar.Name = "MinMenu";
+            this.MinMenuBar.Name = "MinMenuBar";
             this.MinMenuBar.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
             this.MinMenuBar.QuickToolbarItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.StartButton,
             this.qatCustomizeItem});
-            this.MinMenuBar.Size = new System.Drawing.Size(992, 170);
+            this.MinMenuBar.Size = new System.Drawing.Size(976, 170);
             this.MinMenuBar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.MinMenuBar.SystemText.MaximizeRibbonText = "显示功能区";
             this.MinMenuBar.SystemText.MinimizeRibbonText = "隐藏功能区";
@@ -283,7 +283,7 @@ namespace VPS
             this.FileRibbonPanel.Location = new System.Drawing.Point(0, 56);
             this.FileRibbonPanel.Name = "FileRibbonPanel";
             this.FileRibbonPanel.Padding = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.FileRibbonPanel.Size = new System.Drawing.Size(992, 111);
+            this.FileRibbonPanel.Size = new System.Drawing.Size(976, 111);
             // 
             // 
             // 
@@ -470,6 +470,24 @@ namespace VPS
             this.buttonStyleOffice2007Silver.OptionGroup = "style";
             this.buttonStyleOffice2007Silver.Text = "Office 2007 <font color=\"Silver\"><b>Silver</b></font>";
             // 
+            // MenuSwitchButton
+            // 
+            this.MenuSwitchButton.ButtonHeight = 20;
+            this.MenuSwitchButton.ButtonWidth = 62;
+            this.MenuSwitchButton.Command = this.RibbonStateCommand;
+            this.MenuSwitchButton.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far;
+            this.MenuSwitchButton.Margin.Bottom = 2;
+            this.MenuSwitchButton.Margin.Left = 4;
+            this.MenuSwitchButton.Name = "MenuSwitchButton";
+            this.MenuSwitchButton.OffText = "显示";
+            this.MenuSwitchButton.OnText = "隐藏";
+            this.MenuSwitchButton.Tooltip = "显示/隐藏功能区";
+            // 
+            // RibbonStateCommand
+            // 
+            this.RibbonStateCommand.Name = "RibbonStateCommand";
+            this.RibbonStateCommand.Executed += new System.EventHandler(this.RibbonStateCommand_Executed);
+            // 
             // StartButton
             // 
             this.StartButton.AutoExpandOnClick = true;
@@ -580,7 +598,7 @@ namespace VPS
             this.RibbonClientPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RibbonClientPanel.Location = new System.Drawing.Point(5, 171);
             this.RibbonClientPanel.Name = "RibbonClientPanel";
-            this.RibbonClientPanel.Size = new System.Drawing.Size(992, 360);
+            this.RibbonClientPanel.Size = new System.Drawing.Size(976, 360);
             // 
             // 
             // 
@@ -770,29 +788,11 @@ namespace VPS
             this.MenuWPGobalConfig.TopTransparent = 8;
             this.MenuWPGobalConfig.Click += new System.EventHandler(this.WPGobalConfig_Click);
             // 
-            // MenuSwitchButton
-            // 
-            this.MenuSwitchButton.ButtonHeight = 20;
-            this.MenuSwitchButton.ButtonWidth = 62;
-            this.MenuSwitchButton.Command = this.RibbonStateCommand;
-            this.MenuSwitchButton.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far;
-            this.MenuSwitchButton.Margin.Bottom = 2;
-            this.MenuSwitchButton.Margin.Left = 4;
-            this.MenuSwitchButton.Name = "MenuSwitchButton";
-            this.MenuSwitchButton.OffText = "显示";
-            this.MenuSwitchButton.OnText = "隐藏";
-            this.MenuSwitchButton.Tooltip = "显示/隐藏功能区";
-            // 
-            // RibbonStateCommand
-            // 
-            this.RibbonStateCommand.Name = "RibbonStateCommand";
-            this.RibbonStateCommand.Executed += new System.EventHandler(this.RibbonStateCommand_Executed);
-            // 
             // MainV2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1002, 533);
+            this.ClientSize = new System.Drawing.Size(986, 533);
             this.Controls.Add(this.RibbonClientPanel);
             this.Controls.Add(this.MinMenuBar);
             this.EnableGlass = false;

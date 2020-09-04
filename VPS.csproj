@@ -651,6 +651,12 @@
     <Compile Include="temp.Designer.cs">
       <DependentUpon>temp.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainTestVPS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainTestVPS.Designer.cs">
+      <DependentUpon>MainTestVPS.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserPanel\UserPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -4359,6 +4365,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\fftui.resx">
       <DependentUpon>fftui.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainTestVPS.resx">
+      <DependentUpon>MainTestVPS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserPanel\UserPanel.resx">
       <DependentUpon>UserPanel.cs</DependentUpon>
