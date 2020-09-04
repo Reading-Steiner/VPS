@@ -4413,12 +4413,13 @@ namespace VPS
 
         private void ZoomTiffButton_Click(object sender, EventArgs e)
         {
-
+            GCSViews.FlightPlanner.instance.zoomToTiffLayer();
+            GCSViews.FlightData.instance.zoomToTiffLayer();
         }
 
         private void TiffManagerButton_Click(object sender, EventArgs e)
         {
-
+            GCSViews.FlightPlanner.instance.TiffLayerManager();
         }
 
     }
