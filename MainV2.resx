@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="MenuFlightPlannerOpen.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="MenuFlightPlannerOpen.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -227,12 +223,6 @@
         MC+g54ONJ0YcARzzbCyv7gj+KOoFTrTjUo+2fH/t5b7RJqN1uAnosv4PhbV3A5opyZQAAAAASUVORK5C
         YII=
 </value>
-  </data>
-  <data name="MenuFlightPlannerOpen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 34</value>
-  </data>
-  <data name="MenuFlightPlannerClose.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="MenuFlightPlannerClose.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -362,111 +352,71 @@
         rkJggg==
 </value>
   </data>
-  <data name="MenuFlightPlannerClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 38</value>
-  </data>
-  <data name="Separator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>6, 43</value>
-  </data>
-  <data name="Separator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>6, 43</value>
-  </data>
-  <data name="Separator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>6, 43</value>
-  </data>
-  <data name="Separator4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>6, 43</value>
-  </data>
-  <data name="Separator5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>6, 43</value>
-  </data>
-  <data name="MenuConnect.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="MenuConnect.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         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
-        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
-        QmCC
+        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
+        gg==
 </value>
-  </data>
-  <data name="MenuConnect.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="MenuConnect.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="MenuConnect.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 38</value>
-  </data>
-  <data name="MenuConnect.Text" xml:space="preserve">
-    <value>CONNECT</value>
-  </data>
-  <data name="MenuConnect.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="MenuConnect.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
   </data>
   <data name="MenuInitConfig.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -511,24 +461,6 @@
         a3hiNQzyxOrSBPSd6fZ8q2Z5s/6qRMuaNf8DQpTX5GXJc4QAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="MenuInitConfig.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="MenuInitConfig.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 47</value>
-  </data>
-  <data name="MenuInitConfig.Text" xml:space="preserve">
-    <value>SETUP</value>
-  </data>
-  <data name="MenuInitConfig.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <data name="MenuInitConfig.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="MenuInitConfig.ToolTipText" xml:space="preserve">
-    <value>Hardware Config</value>
-  </data>
   <data name="MenuConfigTune.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADQAAAAtCAYAAADhoUi4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -572,24 +504,6 @@
         AAAASUVORK5CYII=
 </value>
   </data>
-  <data name="MenuConfigTune.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="MenuConfigTune.Size" type="System.Drawing.Size, System.Drawing">
-    <value>51, 47</value>
-  </data>
-  <data name="MenuConfigTune.Text" xml:space="preserve">
-    <value>CONFIG</value>
-  </data>
-  <data name="MenuConfigTune.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <data name="MenuConfigTune.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="MenuConfigTune.ToolTipText" xml:space="preserve">
-    <value>Software Config</value>
-  </data>
   <data name="MenuSimulation.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAAAtCAYAAAAeA21aAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -627,24 +541,6 @@
         RK5CYII=
 </value>
   </data>
-  <data name="MenuSimulation.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="MenuSimulation.Size" type="System.Drawing.Size, System.Drawing">
-    <value>77, 47</value>
-  </data>
-  <data name="MenuSimulation.Text" xml:space="preserve">
-    <value>SIMULATION</value>
-  </data>
-  <data name="MenuSimulation.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <data name="MenuSimulation.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="MenuSimulation.ToolTipText" xml:space="preserve">
-    <value>Simulation</value>
-  </data>
   <data name="MenuHelp.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADYAAAAtCAYAAADlVJiFAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -676,150 +572,9 @@
         KZUAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="MenuHelp.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="MenuHelp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 47</value>
-  </data>
-  <data name="MenuHelp.Text" xml:space="preserve">
-    <value>HELP</value>
-  </data>
-  <data name="MenuHelp.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <data name="MenuHelp.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="MenuHelp.ToolTipText" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="MenuArduPilot.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="MenuArduPilot.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="MenuArduPilot.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="MenuArduPilot.Size" type="System.Drawing.Size, System.Drawing">
-    <value>255, 40</value>
-  </data>
-  <data name="MenuArduPilot.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>Overlay</value>
-  </data>
-  <data name="ProjectRibbonBar.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <data name="buttonItem1.Text" xml:space="preserve">
-    <value>buttonItem1</value>
-  </data>
-  <data name="buttonItem2.Text" xml:space="preserve">
-    <value>buttonItem2</value>
-  </data>
-  <data name="ProjectRibbonBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 0</value>
-  </data>
-  <data name="ProjectRibbonBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 108</value>
-  </data>
-  <data name="ProjectRibbonBar.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="ProjectRibbonBar.Text" xml:space="preserve">
-    <value>Project</value>
-  </data>
-  <data name="&gt;&gt;ProjectRibbonBar.Name" xml:space="preserve">
-    <value>ProjectRibbonBar</value>
-  </data>
-  <data name="&gt;&gt;ProjectRibbonBar.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.RibbonBar, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;ProjectRibbonBar.Parent" xml:space="preserve">
-    <value>FileRibbonPanel</value>
-  </data>
-  <data name="&gt;&gt;ProjectRibbonBar.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="FileRibbonPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="FileRibbonPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 56</value>
-  </data>
-  <data name="FileRibbonPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 0, 3, 3</value>
-  </data>
-  <data name="FileRibbonPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1034, 111</value>
-  </data>
-  <data name="FileRibbonPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;FileRibbonPanel.Name" xml:space="preserve">
-    <value>FileRibbonPanel</value>
-  </data>
-  <data name="&gt;&gt;FileRibbonPanel.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.RibbonPanel, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;FileRibbonPanel.Parent" xml:space="preserve">
-    <value>MinMenu</value>
-  </data>
-  <data name="&gt;&gt;FileRibbonPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="MinMenu.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="FileRibbonTabItem.Text" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="buttonStyleOffice2010Blue.CommandParameter" xml:space="preserve">
-    <value>Office2010Blue</value>
-  </data>
-  <data name="buttonStyleOffice2010Blue.Text" xml:space="preserve">
-    <value>Office 2010 Blue</value>
-  </data>
-  <data name="buttonStyleOffice2010Silver.CommandParameter" xml:space="preserve">
-    <value>Office2010Silver</value>
-  </data>
-  <data name="buttonStyleOffice2010Silver.Text" xml:space="preserve">
-    <value>Office 2010 &lt;font color="Silver"&gt;&lt;b&gt;Silver&lt;/b&gt;&lt;/font&gt;</value>
-  </data>
-  <data name="buttonStyleOffice2010Black.CommandParameter" xml:space="preserve">
-    <value>Office2010Black</value>
-  </data>
-  <data name="buttonStyleOffice2010Black.Text" xml:space="preserve">
-    <value>Office 2010 Black</value>
-  </data>
-  <data name="buttonStyleOffice2007Blue.CommandParameter" xml:space="preserve">
-    <value>Office2007Blue</value>
-  </data>
-  <data name="buttonStyleOffice2007Blue.Text" xml:space="preserve">
-    <value>Office 2007 &lt;font color="Blue"&gt;&lt;b&gt;Blue&lt;/b&gt;&lt;/font&gt;</value>
-  </data>
-  <data name="buttonStyleOffice2007Black.CommandParameter" xml:space="preserve">
-    <value>Office2007Black</value>
-  </data>
-  <data name="buttonStyleOffice2007Black.Text" xml:space="preserve">
-    <value>Office 2007 &lt;font color="black"&gt;&lt;b&gt;Black&lt;/b&gt;&lt;/font&gt;</value>
-  </data>
-  <data name="buttonStyleOffice2007Silver.CommandParameter" xml:space="preserve">
-    <value>Office2007Silver</value>
-  </data>
-  <data name="buttonStyleOffice2007Silver.Text" xml:space="preserve">
-    <value>Office 2007 &lt;font color="Silver"&gt;&lt;b&gt;Silver&lt;/b&gt;&lt;/font&gt;</value>
-  </data>
-  <data name="buttonChangeStyle.Text" xml:space="preserve">
-    <value>Style</value>
-  </data>
-  <data name="MinMenu.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="MinMenu.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 3</value>
-  </data>
+  <metadata name="AppCommandTheme.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="StartButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAANbY1E9YMgAAABl0RVh0U29m
@@ -844,114 +599,9 @@
         rkJggg==
 </value>
   </data>
-  <data name="StartButton.Text" xml:space="preserve">
-    <value>&amp;File</value>
-  </data>
-  <data name="MinMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1034, 170</value>
-  </data>
-  <data name="MinMenu.SystemText.MaximizeRibbonText" xml:space="preserve">
-    <value>&amp;Maximize the Ribbon</value>
-  </data>
-  <data name="MinMenu.SystemText.MinimizeRibbonText" xml:space="preserve">
-    <value>Mi&amp;nimize the Ribbon</value>
-  </data>
-  <data name="MinMenu.SystemText.QatAddItemText" xml:space="preserve">
-    <value>&amp;Add to Quick Access Toolbar</value>
-  </data>
-  <data name="MinMenu.SystemText.QatCustomizeMenuLabel" xml:space="preserve">
-    <value>&lt;b&gt;Customize Quick Access Toolbar&lt;/b&gt;</value>
-  </data>
-  <data name="MinMenu.SystemText.QatCustomizeText" xml:space="preserve">
-    <value>&amp;Customize Quick Access Toolbar...</value>
-  </data>
-  <data name="MinMenu.SystemText.QatDialogAddButton" xml:space="preserve">
-    <value>&amp;Add &gt;&gt;</value>
-  </data>
-  <data name="MinMenu.SystemText.QatDialogCancelButton" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="MinMenu.SystemText.QatDialogCaption" xml:space="preserve">
-    <value>Customize Quick Access Toolbar</value>
-  </data>
-  <data name="MinMenu.SystemText.QatDialogCategoriesLabel" xml:space="preserve">
-    <value>&amp;Choose commands from:</value>
-  </data>
-  <data name="MinMenu.SystemText.QatDialogOkButton" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="MinMenu.SystemText.QatDialogPlacementCheckbox" xml:space="preserve">
-    <value>&amp;Place Quick Access Toolbar below the Ribbon</value>
-  </data>
-  <data name="MinMenu.SystemText.QatDialogRemoveButton" xml:space="preserve">
-    <value>&amp;Remove</value>
-  </data>
-  <data name="MinMenu.SystemText.QatPlaceAboveRibbonText" xml:space="preserve">
-    <value>&amp;Place Quick Access Toolbar above the Ribbon</value>
-  </data>
-  <data name="MinMenu.SystemText.QatPlaceBelowRibbonText" xml:space="preserve">
-    <value>&amp;Place Quick Access Toolbar below the Ribbon</value>
-  </data>
-  <data name="MinMenu.SystemText.QatRemoveItemText" xml:space="preserve">
-    <value>&amp;Remove from Quick Access Toolbar</value>
-  </data>
-  <data name="MinMenu.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="MinMenu.Text" xml:space="preserve">
-    <value>MinMenu</value>
-  </data>
-  <data name="&gt;&gt;MinMenu.Name" xml:space="preserve">
-    <value>MinMenu</value>
-  </data>
-  <data name="&gt;&gt;MinMenu.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.RibbonControl, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;MinMenu.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;MinMenu.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="RecentDocumentsLabel.Text" xml:space="preserve">
-    <value>Recent Documents</value>
-  </data>
   <metadata name="styleManager.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>16, 12</value>
+    <value>195, 17</value>
   </metadata>
-  <data name="dockContainerItem1.Text" xml:space="preserve">
-    <value>dockContainerItem1</value>
-  </data>
-  <data name="RibbonClientPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="RibbonClientPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 170</value>
-  </data>
-  <data name="RibbonClientPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1034, 348</value>
-  </data>
-  <data name="RibbonClientPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="RibbonClientPanel.Text" xml:space="preserve">
-    <value>ClientPanel</value>
-  </data>
-  <data name="&gt;&gt;RibbonClientPanel.Name" xml:space="preserve">
-    <value>RibbonClientPanel</value>
-  </data>
-  <data name="&gt;&gt;RibbonClientPanel.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.Ribbon.RibbonClientPanel, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;RibbonClientPanel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;RibbonClientPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="MenuLoadLayer.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="MenuLoadLayer.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAAA0CAYAAAA62j4JAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH
@@ -1074,12 +724,6 @@
         PDIl5v3BmYA0+X8lCaknUnitoQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="MenuLoadLayer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 38</value>
-  </data>
-  <data name="MenuZoomToLayer.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="MenuZoomToLayer.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAAAzCAYAAAAn3w6xAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH
@@ -1185,12 +829,6 @@
         kCnOJwHpVtpZ9FO65am9QnAVv3pqN13dtGnuBVVrnVS5ZjuwLSRUGdt5XD4xtTJ3m722NHPejq1h/wWY
         /mlu/pco/QAAAABJRU5ErkJggg==
 </value>
-  </data>
-  <data name="MenuZoomToLayer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 38</value>
-  </data>
-  <data name="MenuLayerManager.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="MenuLayerManager.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1320,12 +958,6 @@
         LAztFwFnXQtLnvfWVa8ZX9XC/guzlrobmznQnwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="MenuLayerManager.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 38</value>
-  </data>
-  <data name="MenuDrawPolygon.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="MenuDrawPolygon.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAAA8CAYAAADWibxkAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH
@@ -1448,12 +1080,6 @@
         AElFTkSuQmCC
 </value>
   </data>
-  <data name="MenuDrawPolygon.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 38</value>
-  </data>
-  <data name="MenuClearPolygon.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="MenuClearPolygon.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADsAAABACAYAAACkwA+xAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH
@@ -1575,12 +1201,6 @@
         MdZqciJk4W4R81HePY6ExOTi/h8eBsx75+/NcCTyRj+vAq+h8Gj4xc6NQe1/tcYaivgB/5AAAAAASUVO
         RK5CYII=
 </value>
-  </data>
-  <data name="MenuClearPolygon.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 38</value>
-  </data>
-  <data name="MenuSurveyGrid.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="MenuSurveyGrid.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1717,15 +1337,6 @@
         1440BI1D5Wkceusv5OqFTnL5HfOsMrC3oODRGyrGISyfC0kzvQsjzMRYETjXlpsbTAOUQzEMjfcLuWek
         /wPmpL65wpCCeAAAAABJRU5ErkJggg==
 </value>
-  </data>
-  <data name="MenuSurveyGrid.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomLeft</value>
-  </data>
-  <data name="MenuSurveyGrid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 34</value>
-  </data>
-  <data name="MenuClearWP.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="MenuClearWP.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1919,15 +1530,6 @@
         qNzrLOj6AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="MenuClearWP.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomLeft</value>
-  </data>
-  <data name="MenuClearWP.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 38</value>
-  </data>
-  <data name="MenuReadWP.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="MenuReadWP.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAGsAAABACAYAAAAd1In5AAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH
@@ -2102,12 +1704,6 @@
         YYmk/wXxKIrHZc64egAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="MenuReadWP.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 38</value>
-  </data>
-  <data name="MenuSaveWP.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="MenuSaveWP.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAGsAAABACAYAAAAd1In5AAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH
@@ -2270,12 +1866,6 @@
         lgWuHF5ihVUW0EtDWH6zlV77ftVw1Dl83v8ATR7d5s3T2uwAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="MenuSaveWP.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 38</value>
-  </data>
-  <data name="toolStripConnectionControl.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="toolStripConnectionControl.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         /9j/4AAQSkZJRgABAQEASABIAAD/7gAOQWRvYmUAZAAAAAAB/+EF9kV4aWYAAE1NACoAAAAIAAwBAAAD
@@ -2432,9 +2022,6 @@
         5/Pru8JX9Kr/AEsVPH+Fj78Ot466Qk21K6w/jxEH/beC59+691zbTp9Hk/2Hm/x/p79/h6912rR3A0Ta
         /wDVSq2q/wCbCao1e9/4evdY3E39qT8niSGH6/8AnQefevXr3XL9z/m3a/8AzZ8P/FP+N+9Z695df//Z
 </value>
-  </data>
-  <data name="toolStripConnectionControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 38</value>
   </data>
   <data name="MenuWPGobalConfig.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2608,87 +2195,9 @@
         23uUZ5QD6m29yjPKAfU23uUZ5QD6m2k3BJRSLxH2bfxNGGro+0d23btzm48/qO6fRw8Hz3/D/9k=
 </value>
   </data>
-  <data name="MenuWPGobalConfig.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 43</value>
-  </data>
-  <data name="MenuWPGobalConfig.Text" xml:space="preserve">
-    <value>Config</value>
-  </data>
-  <data name="buttonItem4.CommandParameter" xml:space="preserve">
-    <value>Office2010Blue</value>
-  </data>
-  <data name="buttonItem4.Text" xml:space="preserve">
-    <value>Office 2010 Blue</value>
-  </data>
-  <data name="buttonItem5.CommandParameter" xml:space="preserve">
-    <value>Office2010Silver</value>
-  </data>
-  <data name="buttonItem5.Text" xml:space="preserve">
-    <value>Office 2010 &lt;font color="Silver"&gt;&lt;b&gt;Silver&lt;/b&gt;&lt;/font&gt;</value>
-  </data>
-  <data name="buttonItem6.CommandParameter" xml:space="preserve">
-    <value>Office2010Black</value>
-  </data>
-  <data name="buttonItem6.Text" xml:space="preserve">
-    <value>Office 2010 Black</value>
-  </data>
-  <data name="buttonStyleVS2010.CommandParameter" xml:space="preserve">
-    <value>VisualStudio2010Blue</value>
-  </data>
-  <data name="buttonStyleVS2010.Text" xml:space="preserve">
-    <value>Visual Studio 2010</value>
-  </data>
-  <data name="buttonItem62.CommandParameter" xml:space="preserve">
-    <value>Windows7Blue</value>
-  </data>
-  <data name="buttonItem62.Text" xml:space="preserve">
-    <value>Windows 7</value>
-  </data>
-  <data name="buttonItem7.CommandParameter" xml:space="preserve">
-    <value>Office2007Blue</value>
-  </data>
-  <data name="buttonItem7.Text" xml:space="preserve">
-    <value>Office 2007 &lt;font color="Blue"&gt;&lt;b&gt;Blue&lt;/b&gt;&lt;/font&gt;</value>
-  </data>
-  <data name="buttonItem8.CommandParameter" xml:space="preserve">
-    <value>Office2007Black</value>
-  </data>
-  <data name="buttonItem8.Text" xml:space="preserve">
-    <value>Office 2007 &lt;font color="black"&gt;&lt;b&gt;Black&lt;/b&gt;&lt;/font&gt;</value>
-  </data>
-  <data name="buttonItem9.CommandParameter" xml:space="preserve">
-    <value>Office2007Silver</value>
-  </data>
-  <data name="buttonItem9.Text" xml:space="preserve">
-    <value>Office 2007 &lt;font color="Silver"&gt;&lt;b&gt;Silver&lt;/b&gt;&lt;/font&gt;</value>
-  </data>
-  <data name="buttonItem10.CommandParameter" xml:space="preserve">
-    <value>Office2007VistaGlass</value>
-  </data>
-  <data name="buttonItem10.Text" xml:space="preserve">
-    <value>Vista Glass</value>
-  </data>
-  <data name="colorPickerDropDown1.Text" xml:space="preserve">
-    <value>Custom scheme</value>
-  </data>
-  <data name="colorPickerDropDown1.Tooltip" xml:space="preserve">
-    <value>Custom color scheme is created based on currently selected color table. Try selecting Silver or Blue color table and then creating custom color scheme.</value>
-  </data>
-  <data name="buttonItem3.Text" xml:space="preserve">
-    <value>Style</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>46</value>
   </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1034, 518</value>
-  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAQAICAAAAEAIACoEAAARgAAADAwAAABACAAqCUAAO4QAABAQAAAAQAgAChCAACWNgAAgIAAAAEA
@@ -4335,353 +3844,5 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAA=
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>960, 534</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
-  </data>
-  <data name="&gt;&gt;MenuFlightPlannerOpen.Name" xml:space="preserve">
-    <value>MenuFlightPlannerOpen</value>
-  </data>
-  <data name="&gt;&gt;MenuFlightPlannerOpen.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MenuFlightPlannerClose.Name" xml:space="preserve">
-    <value>MenuFlightPlannerClose</value>
-  </data>
-  <data name="&gt;&gt;MenuFlightPlannerClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Separator1.Name" xml:space="preserve">
-    <value>Separator1</value>
-  </data>
-  <data name="&gt;&gt;Separator1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Separator2.Name" xml:space="preserve">
-    <value>Separator2</value>
-  </data>
-  <data name="&gt;&gt;Separator2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Separator3.Name" xml:space="preserve">
-    <value>Separator3</value>
-  </data>
-  <data name="&gt;&gt;Separator3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Separator4.Name" xml:space="preserve">
-    <value>Separator4</value>
-  </data>
-  <data name="&gt;&gt;Separator4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Separator5.Name" xml:space="preserve">
-    <value>Separator5</value>
-  </data>
-  <data name="&gt;&gt;Separator5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MenuConnect.Name" xml:space="preserve">
-    <value>MenuConnect</value>
-  </data>
-  <data name="&gt;&gt;MenuConnect.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MenuInitConfig.Name" xml:space="preserve">
-    <value>MenuInitConfig</value>
-  </data>
-  <data name="&gt;&gt;MenuInitConfig.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MenuConfigTune.Name" xml:space="preserve">
-    <value>MenuConfigTune</value>
-  </data>
-  <data name="&gt;&gt;MenuConfigTune.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MenuSimulation.Name" xml:space="preserve">
-    <value>MenuSimulation</value>
-  </data>
-  <data name="&gt;&gt;MenuSimulation.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MenuHelp.Name" xml:space="preserve">
-    <value>MenuHelp</value>
-  </data>
-  <data name="&gt;&gt;MenuHelp.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MenuArduPilot.Name" xml:space="preserve">
-    <value>MenuArduPilot</value>
-  </data>
-  <data name="&gt;&gt;MenuArduPilot.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;buttonItem1.Name" xml:space="preserve">
-    <value>buttonItem1</value>
-  </data>
-  <data name="&gt;&gt;buttonItem1.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonItem2.Name" xml:space="preserve">
-    <value>buttonItem2</value>
-  </data>
-  <data name="&gt;&gt;buttonItem2.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;FileRibbonTabItem.Name" xml:space="preserve">
-    <value>FileRibbonTabItem</value>
-  </data>
-  <data name="&gt;&gt;FileRibbonTabItem.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.RibbonTabItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;StartButton.Name" xml:space="preserve">
-    <value>StartButton</value>
-  </data>
-  <data name="&gt;&gt;StartButton.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.Office2007StartButton, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;StartContainer.Name" xml:space="preserve">
-    <value>StartContainer</value>
-  </data>
-  <data name="&gt;&gt;StartContainer.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ItemContainer, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;itemContainer2.Name" xml:space="preserve">
-    <value>itemContainer2</value>
-  </data>
-  <data name="&gt;&gt;itemContainer2.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ItemContainer, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;StartItemContainer.Name" xml:space="preserve">
-    <value>StartItemContainer</value>
-  </data>
-  <data name="&gt;&gt;StartItemContainer.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ItemContainer, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;StartFileContainer.Name" xml:space="preserve">
-    <value>StartFileContainer</value>
-  </data>
-  <data name="&gt;&gt;StartFileContainer.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.GalleryContainer, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;RecentDocumentsLabel.Name" xml:space="preserve">
-    <value>RecentDocumentsLabel</value>
-  </data>
-  <data name="&gt;&gt;RecentDocumentsLabel.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.LabelItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;StartBottomContainer.Name" xml:space="preserve">
-    <value>StartBottomContainer</value>
-  </data>
-  <data name="&gt;&gt;StartBottomContainer.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ItemContainer, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;qatCustomizeItem.Name" xml:space="preserve">
-    <value>qatCustomizeItem</value>
-  </data>
-  <data name="&gt;&gt;qatCustomizeItem.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.QatCustomizeItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;styleManager.Name" xml:space="preserve">
-    <value>styleManager</value>
-  </data>
-  <data name="&gt;&gt;styleManager.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.StyleManager, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;dockContainerItem1.Name" xml:space="preserve">
-    <value>dockContainerItem1</value>
-  </data>
-  <data name="&gt;&gt;dockContainerItem1.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.DockContainerItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;MenuLoadLayer.Name" xml:space="preserve">
-    <value>MenuLoadLayer</value>
-  </data>
-  <data name="&gt;&gt;MenuLoadLayer.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;MenuZoomToLayer.Name" xml:space="preserve">
-    <value>MenuZoomToLayer</value>
-  </data>
-  <data name="&gt;&gt;MenuZoomToLayer.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;MenuLayerManager.Name" xml:space="preserve">
-    <value>MenuLayerManager</value>
-  </data>
-  <data name="&gt;&gt;MenuLayerManager.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;MenuDrawPolygon.Name" xml:space="preserve">
-    <value>MenuDrawPolygon</value>
-  </data>
-  <data name="&gt;&gt;MenuDrawPolygon.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;MenuClearPolygon.Name" xml:space="preserve">
-    <value>MenuClearPolygon</value>
-  </data>
-  <data name="&gt;&gt;MenuClearPolygon.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;MenuSurveyGrid.Name" xml:space="preserve">
-    <value>MenuSurveyGrid</value>
-  </data>
-  <data name="&gt;&gt;MenuSurveyGrid.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;MenuClearWP.Name" xml:space="preserve">
-    <value>MenuClearWP</value>
-  </data>
-  <data name="&gt;&gt;MenuClearWP.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;MenuReadWP.Name" xml:space="preserve">
-    <value>MenuReadWP</value>
-  </data>
-  <data name="&gt;&gt;MenuReadWP.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;MenuSaveWP.Name" xml:space="preserve">
-    <value>MenuSaveWP</value>
-  </data>
-  <data name="&gt;&gt;MenuSaveWP.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;toolStripConnectionControl.Name" xml:space="preserve">
-    <value>toolStripConnectionControl</value>
-  </data>
-  <data name="&gt;&gt;toolStripConnectionControl.Type" xml:space="preserve">
-    <value>VPS.Controls.ToolStripConnectionControl, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;MenuWPGobalConfig.Name" xml:space="preserve">
-    <value>MenuWPGobalConfig</value>
-  </data>
-  <data name="&gt;&gt;MenuWPGobalConfig.Type" xml:space="preserve">
-    <value>VPS.Controls.HLToolStripButton, VPS, Version=1.0.7552.20703, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;buttonChangeStyle.Name" xml:space="preserve">
-    <value>buttonChangeStyle</value>
-  </data>
-  <data name="&gt;&gt;buttonChangeStyle.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonStyleOffice2010Blue.Name" xml:space="preserve">
-    <value>buttonStyleOffice2010Blue</value>
-  </data>
-  <data name="&gt;&gt;buttonStyleOffice2010Blue.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonStyleOffice2010Silver.Name" xml:space="preserve">
-    <value>buttonStyleOffice2010Silver</value>
-  </data>
-  <data name="&gt;&gt;buttonStyleOffice2010Silver.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonStyleOffice2010Black.Name" xml:space="preserve">
-    <value>buttonStyleOffice2010Black</value>
-  </data>
-  <data name="&gt;&gt;buttonStyleOffice2010Black.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonStyleOffice2007Blue.Name" xml:space="preserve">
-    <value>buttonStyleOffice2007Blue</value>
-  </data>
-  <data name="&gt;&gt;buttonStyleOffice2007Blue.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonStyleOffice2007Black.Name" xml:space="preserve">
-    <value>buttonStyleOffice2007Black</value>
-  </data>
-  <data name="&gt;&gt;buttonStyleOffice2007Black.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonStyleOffice2007Silver.Name" xml:space="preserve">
-    <value>buttonStyleOffice2007Silver</value>
-  </data>
-  <data name="&gt;&gt;buttonStyleOffice2007Silver.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonItem3.Name" xml:space="preserve">
-    <value>buttonItem3</value>
-  </data>
-  <data name="&gt;&gt;buttonItem3.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonItem4.Name" xml:space="preserve">
-    <value>buttonItem4</value>
-  </data>
-  <data name="&gt;&gt;buttonItem4.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonItem5.Name" xml:space="preserve">
-    <value>buttonItem5</value>
-  </data>
-  <data name="&gt;&gt;buttonItem5.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonItem6.Name" xml:space="preserve">
-    <value>buttonItem6</value>
-  </data>
-  <data name="&gt;&gt;buttonItem6.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonStyleVS2010.Name" xml:space="preserve">
-    <value>buttonStyleVS2010</value>
-  </data>
-  <data name="&gt;&gt;buttonStyleVS2010.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonItem62.Name" xml:space="preserve">
-    <value>buttonItem62</value>
-  </data>
-  <data name="&gt;&gt;buttonItem62.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonItem7.Name" xml:space="preserve">
-    <value>buttonItem7</value>
-  </data>
-  <data name="&gt;&gt;buttonItem7.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonItem8.Name" xml:space="preserve">
-    <value>buttonItem8</value>
-  </data>
-  <data name="&gt;&gt;buttonItem8.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonItem9.Name" xml:space="preserve">
-    <value>buttonItem9</value>
-  </data>
-  <data name="&gt;&gt;buttonItem9.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;buttonItem10.Name" xml:space="preserve">
-    <value>buttonItem10</value>
-  </data>
-  <data name="&gt;&gt;buttonItem10.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;colorPickerDropDown1.Name" xml:space="preserve">
-    <value>colorPickerDropDown1</value>
-  </data>
-  <data name="&gt;&gt;colorPickerDropDown1.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.ColorPickerDropDown, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>MainV2</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>DevComponents.DotNetBar.Office2007Form, DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b</value>
   </data>
 </root>

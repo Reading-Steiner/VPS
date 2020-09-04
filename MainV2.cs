@@ -41,7 +41,7 @@ using DevComponents.DotNetBar;
 
 namespace VPS
 {
-    public partial class MainV2 : DevComponents.DotNetBar.Office2007Form
+    public partial class MainV2 : DevComponents.DotNetBar.Office2007RibbonForm
     {
         private static readonly ILog log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
