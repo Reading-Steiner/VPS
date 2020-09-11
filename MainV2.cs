@@ -41,7 +41,7 @@ using DevComponents.DotNetBar;
 
 namespace VPS
 {
-    public partial class MainV2 : DevComponents.DotNetBar.Office2007RibbonForm
+    public partial class MainV2 : Office2007RibbonForm
     {
         private static readonly ILog log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -787,7 +787,7 @@ namespace VPS
             if (layer != null)
             {
                 GMap.NET.Internals.LayerInfo layerInfo = (GMap.NET.Internals.LayerInfo)layer;
-                SetLayerOverlay(layerInfo.Layer, layerInfo.Lng, layerInfo.Lat, layerInfo.Alt, layerInfo.Scale, layerInfo.Transparent);
+                SetLayerOverlay(layerInfo.Layer, layerInfo.Lng, layerInfo.Lat, layerInfo.Alt, layerInfo.Transparent);
 
             }
             SaveConfig();
@@ -1025,6 +1025,9 @@ namespace VPS
             FlightPlanner.ToDrawPolygonHandle += ToDrawPolygonState;
             FlightPlanner.OutDrawPolygonHandle += OutDrawPolygonState;
 
+            FlightPlanner.ToDrawWPHandle += ToDrawWPState;
+            FlightPlanner.OutDrawWPHandle += OutDrawWPState;
+
             NoLoadLayerHandle += SetNoLaodLayerState;
             LoadLayerHandle += SetLaodLayerState;
 
@@ -1058,14 +1061,26 @@ namespace VPS
 
         private void ToDrawPolygonState()
         {
-            SetHLToolStripButtonChecked(this.MenuDrawPolygon, true);
+            //SetHLToolStripButtonChecked(this.MenuDrawPolygon, true);
             //this.MenuClearPolygon.Visible = true;
+            SetMenuItemChecked(this.DrawPolygonButton, true);
         }
 
         private void OutDrawPolygonState()
         {
-            SetHLToolStripButtonChecked(this.MenuDrawPolygon, false);
+            //SetHLToolStripButtonChecked(this.MenuDrawPolygon, false);
             //this.MenuClearPolygon.Visible = false;
+            SetMenuItemChecked(this.DrawPolygonButton, false);
+        }
+
+        private void ToDrawWPState()
+        {
+            SetMenuItemChecked(this.AddWPButton, true);
+        }
+
+        private void OutDrawWPState()
+        {
+            SetMenuItemChecked(this.AddWPButton, false);
         }
 
         private void SetFlightPlannerMenu()
@@ -1200,7 +1215,7 @@ namespace VPS
                         tile.Close();
                     }
                 }
-                AddLayerOverlay(reader.GetLayer(), reader.GetOrigin(), reader.GetScale(), reader.GetTransparentColor());
+                AddLayerOverlay(reader.GetLayer(), reader.GetOrigin(), reader.GetTransparentColor());
                 reader.Dispose();
                 reader.Close();
             }
@@ -1211,13 +1226,13 @@ namespace VPS
             }
         }
 
-        private bool AddLayerOverlay(string path, PointLatLngAlt origin, double scale, Color transparent)
+        public bool AddLayerOverlay(string path, PointLatLngAlt origin, Color transparent)
         {
-            MemoryLayerCache.AddLayerToMemoryCache(new GMap.NET.Internals.LayerInfo(path, origin.Lng, origin.Lat, origin.Alt, scale, transparent));
-            return SetLayerOverlay(path, origin.Lng, origin.Lat, origin.Alt, scale, transparent);
+            MemoryLayerCache.AddLayerToMemoryCache(new GMap.NET.Internals.LayerInfo(path, origin.Lng, origin.Lat, origin.Alt, transparent));
+            return SetLayerOverlay(path, origin.Lng, origin.Lat, origin.Alt, transparent);
         }
 
-        private bool SetLayerOverlay(string path, double lng, double lat, double alt, double scale, Color Transparent)
+        private bool SetLayerOverlay(string path, double lng, double lat, double alt, Color Transparent)
         {
             if (File.Exists(path))
             {
@@ -2987,18 +3002,8 @@ namespace VPS
                 log.Error(ex);
             }
 
-            if (Program.Logo != null && Program.name == "VVVVZ")
-            {
-                this.PerformLayout();
-                FlightPlannerShow();
-            }
-            else
-            {
-                this.PerformLayout();
-                log.Info("show FlightData");
-                FlightDataShow();
-                log.Info("show FlightData... Done");
-            }
+            this.PerformLayout();
+            FlightPlannerShow();
 
             // for long running tasks using own threads.
             // for short use threadpool
@@ -4348,15 +4353,18 @@ namespace VPS
             {
                 eStyle style = (eStyle)Enum.Parse(typeof(eStyle), source.CommandParameter.ToString());
                 // Using StyleManager change the style and color tinting
-                StyleManager.ChangeStyle(style, System.Drawing.Color.Empty);
-                if (style == eStyle.Office2007Black || style == eStyle.Office2007Blue || style == eStyle.Office2007Silver || style == eStyle.Office2007VistaGlass)
-                    StartButton.BackstageTabEnabled = false;
-                else
-                    StartButton.BackstageTabEnabled = true;
+                this.styleManager.ManagerStyle = style;
+                this.styleManager.ManagerColorTint = System.Drawing.Color.Empty;
+                //StyleManager.ChangeStyle(style, System.Drawing.Color.Empty);
+                //if (style == eStyle.Office2007Black || style == eStyle.Office2007Blue || style == eStyle.Office2007Silver || style == eStyle.Office2007VistaGlass)
+                //    StartButton.BackstageTabEnabled = false;
+                //else
+                //    StartButton.BackstageTabEnabled = true;
             }
             else if (source.CommandParameter is Color)
             {
-                StyleManager.ColorTint = (Color)source.CommandParameter;
+                //StyleManager.ColorTint = (Color)source.CommandParameter;
+                this.styleManager.ManagerColorTint = (Color)source.CommandParameter;
             }
         }
 
@@ -4368,11 +4376,11 @@ namespace VPS
 
 
         private delegate void SetMenuItemCheckedCallback(DevComponents.DotNetBar.ButtonItem stripButton, bool value);
-        private void SeMenuItemChecked(DevComponents.DotNetBar.ButtonItem stripButton, bool value)
+        private void SetMenuItemChecked(DevComponents.DotNetBar.ButtonItem stripButton, bool value)
         {
             if (stripButton.InvokeRequired)
             {
-                SetMenuItemCheckedCallback callback = new SetMenuItemCheckedCallback(SeMenuItemChecked);
+                SetMenuItemCheckedCallback callback = new SetMenuItemCheckedCallback(SetMenuItemChecked);
                 stripButton.Invoke(callback, new object[] { stripButton, value });
             }
             else
@@ -4396,9 +4404,9 @@ namespace VPS
             }
         }
 
-        private void OpenProjectButton_Click(object sender, EventArgs e)
-        {
 
+        private void LoadProjectButton_Click(object sender, EventArgs e)
+        {
         }
 
         private void SaveProjectButton_Click(object sender, EventArgs e)
@@ -4408,13 +4416,13 @@ namespace VPS
 
         private void LoadTiffButton_Click(object sender, EventArgs e)
         {
-            LoadTiffLayer();
+
         }
 
         private void ZoomTiffButton_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.zoomToTiffLayer();
-            GCSViews.FlightData.instance.zoomToTiffLayer();
+            //GCSViews.FlightData.instance.zoomToTiffLayer();
         }
 
         private void TiffManagerButton_Click(object sender, EventArgs e)
@@ -4422,5 +4430,95 @@ namespace VPS
             GCSViews.FlightPlanner.instance.TiffLayerManager();
         }
 
+        private void DrawPolygonButton_Click(object sender, EventArgs e)
+        {
+            if (!DrawPolygonButton.Checked)
+                GCSViews.FlightPlanner.instance.AddPolygon();
+            else
+                GCSViews.FlightPlanner.instance.NoAddPolygon();
+        }
+
+        private void ClearPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.ClearPloygon();
+        }
+
+        private void AddWPButton_Click(object sender, EventArgs e)
+        {
+            if (!AddWPButton.Checked)
+                GCSViews.FlightPlanner.instance.AddWP();
+            else
+                GCSViews.FlightPlanner.instance.NoAddWP();
+        }
+
+        private void ClearWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.ClearMission();
+        }
+
+        private void AutoWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.surveyGrid();
+        }
+
+        private void DeleteSelectedPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.DeleteCurrentPolygon();
+        }
+
+        private void DeleteSelectedWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.DeleteCurrentWP();
+        }
+
+        private void SaveWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.SaveWPFile();
+        }
+
+        private void LoadWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.LoadWPFile();
+        }
+
+        private void FirstPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.polygonMarkersGroupFirst();
+        }
+
+        private void NextPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.polygonMarkersGroupNext();
+        }
+
+        private void PrevPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.polygonMarkersGroupPrev();
+        }
+
+        private void CancelPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.polygonMarkersGroupClear();
+        }
+
+        private void FirstWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.wpMarkersGroupFirst();
+        }
+
+        private void NextWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.wpMarkersGroupNext();
+        }
+
+        private void PrevWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.wpMarkersGroupPrev();
+        }
+
+        private void CancelWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.wpMarkersGroupClear();
+        }
     }
 }

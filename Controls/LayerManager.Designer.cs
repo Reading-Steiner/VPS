@@ -106,7 +106,6 @@ namespace VPS.Controls
                 item.SubItems.Add(layerInfo.GetValueOrDefault().Lng.ToString());
                 item.SubItems.Add(layerInfo.GetValueOrDefault().Lat.ToString());
                 item.SubItems.Add(layerInfo.GetValueOrDefault().Alt.ToString());
-                item.SubItems.Add(layerInfo.GetValueOrDefault().ScaleFormat);
                 if (layerInfo.GetValueOrDefault().Equals(MemoryLayerCache.GetSelectedLayerFromMemoryCache().GetValueOrDefault()))
                     this.SelectedGroup.Items.Add(item);
                 else

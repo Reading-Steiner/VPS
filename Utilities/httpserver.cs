@@ -1248,7 +1248,7 @@ namespace VPS.Utilities
 
         void refreshmap()
         {
-            Action m = delegate () { GCSViews.FlightData.mymap.Refresh(); };
+            Action m = delegate () { GCSViews.FlightData.mymap.RefreshInThread(); };
             MainV2.instance.Invoke(m);
         }
 

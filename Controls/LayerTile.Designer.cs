@@ -573,7 +573,7 @@
             this.TileFunc.PageHover = ((System.Drawing.Image)(resources.GetObject("TileFunc.PageHover")));
             this.TileFunc.PageImagePosition = CCWin.SkinControl.SkinTabControl.ePageImagePosition.Left;
             this.TileFunc.PageNorml = null;
-            this.TileFunc.SelectedIndex = 0;
+            this.TileFunc.SelectedIndex = 1;
             this.TileFunc.Size = new System.Drawing.Size(555, 178);
             this.TileFunc.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TileFunc.TabIndex = 229;
@@ -1633,9 +1633,9 @@
             this.BorderColor = System.Drawing.Color.Navy;
             this.CaptionBackColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.ClientSize = new System.Drawing.Size(625, 494);
-            this.Controls.Add(this.DisplayPanel);
             this.Controls.Add(this.InfoPanel);
             this.Controls.Add(this.RetButton);
+            this.Controls.Add(this.DisplayPanel);
             this.InnerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.MaximizeBox = false;
             this.MinimizeBox = false;

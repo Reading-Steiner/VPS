@@ -630,15 +630,29 @@ namespace GMap.NET.WindowsForms
          }
          finally
          {
-            Refresh();
+                RefreshInThread();
          }
       }
+
+        private delegate void RefreshInThreadHandle();
+        public void RefreshInThread()
+        {
+            if (this.InvokeRequired)
+            {
+                RefreshInThreadHandle refresh = new RefreshInThreadHandle(RefreshInThread);
+                this.Invoke(refresh);
+            }
+            else
+            {
+                Refresh();
+            }
+        }
 
       /// <summary>
       /// render map in GDI+
       /// </summary>
       /// <param name="g"></param>
-      void DrawMap(IGraphics g)
+        void DrawMap(IGraphics g)
       {
          if(Core.updatingBounds || MapProvider == EmptyProvider.Instance || MapProvider == null)
          {

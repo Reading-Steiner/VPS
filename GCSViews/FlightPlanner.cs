@@ -107,9 +107,11 @@ namespace VPS.GCSViews
         private List<List<Locationwp>> history = new List<List<Locationwp>>();
         private bool isMouseClickOffMenu;
         private bool isMouseDown;
-        private bool isMouseDraging;
-        private bool isMouseDraggable;
-        private bool isMouseDroppable;
+        private bool isMarkerDraging;
+        private bool isMarkerAddable;
+        private bool isMarkerDroppable;
+        private bool isWndDroppable;
+        private bool isMarkerPickable;
         public GMapOverlay kmlpolygonsoverlay;
 
         /// <summary>
@@ -291,19 +293,43 @@ namespace VPS.GCSViews
         }
 
         public delegate void delegateHandler();
-        private bool polygongridmode;
+        private bool addPolygonMode;
+        private bool addWPMode;
+
+        private static object polygonLock = new object();
         public delegateHandler ToDrawPolygonHandle;
         public delegateHandler OutDrawPolygonHandle;
         public bool IsDrawPolygongridMode
         {
-            get { return polygongridmode; }
+            get { return addPolygonMode; }
             set
             {
-                polygongridmode = value;
-                if (polygongridmode)
-                    ToDrawPolygonHandle();
-                else
-                    OutDrawPolygonHandle();
+                lock (polygonLock)
+                {
+                    addPolygonMode = value;
+                    if (addPolygonMode)
+                        ToDrawPolygonHandle?.Invoke();
+                    else
+                        OutDrawPolygonHandle?.Invoke();
+                }
+            }
+        }
+
+        private static object wpLock = new object();
+        public delegateHandler ToDrawWPHandle;
+        public delegateHandler OutDrawWPHandle;
+        public bool IsDrawWPMode
+        {
+            get { return addWPMode; }
+            set
+            {
+                lock (wpLock) {
+                    addWPMode = value;
+                    if (addWPMode)
+                        ToDrawWPHandle?.Invoke();
+                    else
+                        OutDrawWPHandle?.Invoke();
+                }
             }
         }
 
@@ -328,6 +354,18 @@ namespace VPS.GCSViews
         {
             this.polyicon.IsSelected = false;
             this.addPolygonPointToolStripMenuItem.Checked = false;
+        }
+
+        private void SetDrawWPState()
+        {
+            //this.polyicon.IsSelected = true;
+            this.drawWPToolStripMenuItem.Checked = true;
+        }
+
+        private void SetNoDrawWPState()
+        {
+            //this.polyicon.IsSelected = false;
+            this.drawWPToolStripMenuItem.Checked = false;
         }
 
 
@@ -410,6 +448,18 @@ namespace VPS.GCSViews
             if (keyData == (Keys.Delete))
             {
                 DeleteMarkerToolStripMenuItem_Click(null, null);
+                return true;
+            }
+
+            if (keyData == (Keys.Control|Keys.Delete))
+            {
+                DeleteCurrentWP();
+                return true;
+            }
+
+            if (keyData == (Keys.Alt|Keys.Delete))
+            {
+                DeleteCurrentPolygon();
                 return true;
             }
 
@@ -732,6 +782,54 @@ namespace VPS.GCSViews
             return selectedrow;
         }
 
+        private void OnMidLine_Click()
+        {
+            int pnt2 = 0;
+            var midline = CurrentMidLine.Tag as midline;
+            // var pnt1 = int.Parse(midline.now.Tag);
+
+            if (IsDrawPolygongridMode && midline.now != null)
+            {
+                //点击到多边形中线
+                var idx = drawnpolygon.Points.IndexOf(midline.now);
+                drawnpolygon.Points.Insert(idx + 1,
+                    new PointLatLng(CurrentMidLine.Position.Lat, CurrentMidLine.Position.Lng));
+
+                redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
+            }
+            else
+            {
+                if (int.TryParse(midline.next.Tag, out pnt2))
+                {
+                    //点击到航点中线
+                    if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue ==
+                        MAVLink.MAV_MISSION_TYPE.FENCE)
+                    {
+                        var prevtype = Commands.Rows[(int)Math.Max(pnt2 - 2, 0)].Cells[Command.Index].Value.ToString();
+                        // match type of prev row
+                        InsertCommand(pnt2 - 1, (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD), prevtype),
+                            0, 0, 0, 0,
+                            CurrentMidLine.Position.Lng,
+                            CurrentMidLine.Position.Lat, 0);
+
+                        ReCalcFence(pnt2 - 1, true, false);
+                    }
+                    else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue ==
+                             MAVLink.MAV_MISSION_TYPE.MISSION)
+                    {
+
+                        InsertCommand(pnt2 - 1, MAVLink.MAV_CMD.WAYPOINT, 0, 0, 0, 0,
+                            CurrentMidLine.Position.Lng,
+                            CurrentMidLine.Position.Lat, float.Parse(TXT_DefaultAlt.Text));
+                    }
+                }
+            }
+
+            CurrentMidLine = null;
+            writeKML();
+            return;
+        }
+
         /// <summary>
         /// Used to create a new WP
         /// </summary>
@@ -740,45 +838,48 @@ namespace VPS.GCSViews
         /// <param name="alt"></param>
         public void AddWPToMap(double lat, double lng, int alt)
         {
-            if (polygongridmode)
+            if (IsDrawPolygongridMode)
             {
-                AddPolygonPointToolStripMenuItem_Click(null, null);
+                AddPolygonPoint(lng, lat);
                 return;
             }
+            else if (IsDrawWPMode)
+            {
 
-            if (sethome)
-            {
-                sethome = false;
-                CallMeDrag("H", lat, lng, alt);
-                return;
-            }
-            // creating a WP
+                if (sethome)
+                {
+                    sethome = false;
+                    CallMeDrag("H", lat, lng, alt);
+                    return;
+                }
+                //creating a WP
 
-            selectedrow = Commands.Rows.Add();
+               selectedrow = Commands.Rows.Add();
 
-            if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.RALLY)
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.RALLY_POINT.ToString();
-                ChangeColumnHeader(MAVLink.MAV_CMD.RALLY_POINT.ToString());
-            }
-            else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString();
-                Commands.Rows[selectedrow].Cells[Param1.Index].Value = 5;
-                ChangeColumnHeader(MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString());
-            }
-            else if (splinemode)
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString();
-                ChangeColumnHeader(MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString());
-            }
-            else
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.WAYPOINT.ToString();
-                ChangeColumnHeader(MAVLink.MAV_CMD.WAYPOINT.ToString());
-            }
+                if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.RALLY)
+                {
+                    Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.RALLY_POINT.ToString();
+                    ChangeColumnHeader(MAVLink.MAV_CMD.RALLY_POINT.ToString());
+                }
+                else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
+                {
+                    Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString();
+                    Commands.Rows[selectedrow].Cells[Param1.Index].Value = 5;
+                    ChangeColumnHeader(MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString());
+                }
+                else if (splinemode)
+                {
+                    Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString();
+                    ChangeColumnHeader(MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString());
+                }
+                else
+                {
+                    Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.WAYPOINT.ToString();
+                    ChangeColumnHeader(MAVLink.MAV_CMD.WAYPOINT.ToString());
+                }
 
-            setfromMap(lat, lng, alt);
+                setfromMap(lat, lng, alt);
+            }
         }
 
         /// <summary>
@@ -1003,7 +1104,7 @@ namespace VPS.GCSViews
 
         public void GeoFencedownloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            polygongridmode = false;
+            addPolygonMode = false;
             int count = 1;
 
             if ((MainV2.comPort.MAV.cs.capabilities & (uint)MAVLink.MAV_PROTOCOL_CAPABILITY.MISSION_FENCE) > 0)
@@ -1671,7 +1772,7 @@ namespace VPS.GCSViews
                         fenceoverlay.overlay.ForceUpdate();
                     }
 
-                    MainMap.Refresh();
+                    MainMap.RefreshInThread();
                 }
 
                 if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
@@ -1855,7 +1956,19 @@ namespace VPS.GCSViews
 
         public void AddPolygon()
         {
-            AddPolygonPointToolStripMenuItem_Click(this, null);
+            IsDrawPolygongridMode = true;
+            IsDrawWPMode = false;
+        }
+
+        public void AddWP()
+        {
+            IsDrawWPMode = true;
+            IsDrawPolygongridMode = false;
+        }
+
+        public void NoAddWP()
+        {
+            IsDrawWPMode = false;
         }
 
         public void AddPolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1863,9 +1976,14 @@ namespace VPS.GCSViews
             if (!IsDrawPolygongridMode)
             {
                 IsDrawPolygongridMode = true;
+                IsDrawWPMode = false;
                 return;
             }
+            AddPolygonPoint(MouseDownStart.Lng, MouseDownStart.Lat);
+        }
 
+        public void AddPolygonPoint(double lat,double lng)
+        {
             List<PointLatLng> polygonPoints = new List<PointLatLng>();
             if (drawnpolygonsoverlay.Polygons.Count == 0)
             {
@@ -1886,6 +2004,19 @@ namespace VPS.GCSViews
 
             MainMap.Invalidate();
         }
+
+        private void AddWPToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!IsDrawPolygongridMode)
+            {
+                IsDrawPolygongridMode = true;
+                IsDrawWPMode = false;
+                return;
+            }
+            int.TryParse(TXT_DefaultAlt.Text, out int alt);
+            AddWPToMap(MouseDownStart.Lng, MouseDownStart.Lat, alt);
+        }
+
 
         public void LoadWPFile()
         {
@@ -2241,7 +2372,7 @@ namespace VPS.GCSViews
 
         public void ClearPolygonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            polygongridmode = false;
+            //polygongridmode = false;
             if (drawnpolygon == null)
                 return;
             drawnpolygon.Points.Clear();
@@ -3281,6 +3412,51 @@ namespace VPS.GCSViews
             writeKML();
         }
 
+        public void DeleteCurrentWP()
+        {
+            if (wpMarkersGroup.Count > 0)
+            {
+                for (int a = Commands.Rows.Count; a > 0; a--)
+                {
+                    try
+                    {
+                        if (wpMarkersGroup.Contains(a)) Commands.Rows.RemoveAt(a - 1); // home is 0
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        CustomMessageBox.Show("error selecting wp, please try again.");
+                    }
+                }
+                wpMarkersGroupClear();
+            }
+        }
+
+        public void DeleteCurrentPolygon()
+        {
+            if (polygonMarkersGroup.Count > 0)
+            {
+                for (int a = drawnpolygon.LocalPoints.Count; a > 0; a--)
+                {
+                    try
+                    {
+                        if (polygonMarkersGroup.Contains(a))
+                        {
+                            drawnpolygon.Points.RemoveAt(a - 1);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        CustomMessageBox.Show("error selecting polygon, please try again.");
+                    }
+                }
+                polygonMarkersGroupClear();
+            }
+            if (currentMarker != null)
+                CurentRectMarker = null;
+        }
+
         public void DeleteMarkerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (CurentRectMarker != null)
@@ -3771,7 +3947,7 @@ namespace VPS.GCSViews
 
         public void GeoFenceuploadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            polygongridmode = false;
+            addPolygonMode = false;
             //FENCE_ENABLE ON COPTER
             //FENCE_ACTION ON PLANE
             if (!MainV2.comPort.MAV.param.ContainsKey("FENCE_ENABLE") && !MainV2.comPort.MAV.param.ContainsKey("FENCE_ACTION"))
@@ -7617,7 +7793,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
         }
 
-        private void wpMarkersGroupAddAll()
+        public void wpMarkersGroupAddAll()
         {
             foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
             {
@@ -7636,7 +7812,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             writeKML();
         }
 
-        private void polygonMarkersGroupAddAll()
+        public void polygonMarkersGroupAddAll()
         {
             foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
             {
@@ -7655,7 +7831,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
         }
 
-        private void wpMarkersGroupClear()
+        public void wpMarkersGroupClear()
         {
             if (wpMarkersGroup.Count > 0)
             {
@@ -7664,7 +7840,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
-        private void polygonMarkersGroupClear()
+        public void polygonMarkersGroupClear()
         {
             if (polygonMarkersGroup.Count > 0)
             {
@@ -7673,7 +7849,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
-        private void wpMarkersGroupFirst()
+        public void wpMarkersGroupFirst()
         {
             foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
             {
@@ -7694,8 +7870,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
-
-        private void polygonMarkersGroupFirst()
+        public void polygonMarkersGroupFirst()
         {
             foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
             {
@@ -7716,7 +7891,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
-        private void wpMarkersGroupNext()
+        public void wpMarkersGroupNext()
         {
             if (wpMarkersGroup.Count > 0)
             {
@@ -7750,7 +7925,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
-        private void wpMarkersGroupPrev()
+        public void wpMarkersGroupPrev()
         {
             if (wpMarkersGroup.Count > 0)
             {
@@ -7784,8 +7959,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
-
-        private void polygonMarkersGroupNext()
+        public void polygonMarkersGroupNext()
         {
             if (polygonMarkersGroup.Count > 0)
             {
@@ -7819,7 +7993,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
-        private void polygonMarkersGroupPrev()
+        public void polygonMarkersGroupPrev()
         {
             if (polygonMarkersGroup.Count > 0)
             {
@@ -7964,7 +8138,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
-
         private void wpMarkersGroupMoveUp()
         {
             if (wpMarkersGroup.Count > 0)
@@ -8090,7 +8263,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             if (e.Button == MouseButtons.Middle && Control.ModifierKeys != Keys.Alt && Control.ModifierKeys != Keys.Control)
             {
                 isMouseDown = true;
-                isMouseDroppable = true;
+                isWndDroppable = true;
                 return;
             }
 
@@ -8098,17 +8271,25 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             {
                 // group move
                 isMouseDown = true;
+                isMarkerPickable = true;
                 return;
             }
 
             if (e.Button == MouseButtons.Left && Control.ModifierKeys != Keys.Alt && Control.ModifierKeys != Keys.Control)
             {
                 isMouseDown = true;
-                isMouseDraggable = true;
-
+                
                 if (currentMarker.IsVisible)
                 {
                     currentMarker.Position = MainMap.FromLocalToLatLng(e.X, e.Y);
+                }
+                if (!IsDrawPolygongridMode && !IsDrawWPMode && CurentRectMarker == null)
+                {
+                    isWndDroppable = true;
+                }else
+                {
+                    isMarkerAddable = true;
+                    isMarkerDroppable = true;
                 }
                 return;
             }
@@ -8139,9 +8320,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             currentMarker.Position = mousePoint;
 
             //可拖动状态下鼠标按下
-            if (isMouseDraggable && e.Button == MouseButtons.Left)
+            if (isMarkerDroppable)
             {
-                isMouseDraging = true;
+                isMarkerDraging = true;
 
                 if (CurentRectMarker != null) // left click pan
                 {
@@ -8190,7 +8371,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         log.Error(ex);
                     }
 
-
                     //随鼠标位置更新当前标记
                     if (CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
                     {
@@ -8216,17 +8396,20 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                             CurentRectMarker.InnerMarker.Position = mousePoint;
                         }
                     }
-                }
-                else if (CurrentPOIMarker != null)
+                }else
                 {
-                    CurrentPOIMarker.Position = mousePoint;
+
                 }
-                else if (CurrentGMapMarker != null)
-                {
-                    CurrentGMapMarker.Position = mousePoint;
-                }
+                //else if (CurrentPOIMarker != null)
+                //{
+                //    CurrentPOIMarker.Position = mousePoint;
+                //}
+                //else if (CurrentGMapMarker != null)
+                //{
+                //    CurrentGMapMarker.Position = mousePoint;
+                //}
             }
-            else if (isMouseDroppable && e.Button == MouseButtons.Middle)
+            else if (isWndDroppable)
             {
                 double latdif = MouseDownStart.Lat - mousePoint.Lat;
                 double lngdif = MouseDownStart.Lng - mousePoint.Lng;
@@ -8245,8 +8428,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     log.Error(ex);
                 }
             }
-            else if (e.Button == MouseButtons.Left &&
-                (Control.ModifierKeys == Keys.Control || Control.ModifierKeys == Keys.Alt))
+            else if (isMarkerPickable)
             {
                 // draw selection box
                 double latdif = MouseDownStart.Lat - mousePoint.Lat;
@@ -8339,10 +8521,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     return;
                 }
 
-                if (e.Button == MouseButtons.Middle)
-                {
-                    return;
-                }
+
                 else if (e.Button == MouseButtons.None)
                 {
                     return;
@@ -8351,9 +8530,13 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 MouseDownEnd = MainMap.FromLocalToLatLng(e.X, e.Y);
                 MouseDownEndPoint = new GPoint(e.X, e.Y);
 
-                if (isMouseDown && e.Button == MouseButtons.Left) // mouse down on some other object and dragged to here.
+                if (isMouseDown) // mouse down on some other object and dragged to here.
                 {
-                    if (Control.ModifierKeys == Keys.Control)
+                    if (isWndDroppable)
+                    {
+                        return;
+                    }
+                    else if (isMarkerPickable && Control.ModifierKeys == Keys.Control)
                     {
                         // group select wps
                         GMapPolygon poly = new GMapPolygon(new List<PointLatLng>(), "temp");
@@ -8383,7 +8566,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                         return;
                     }
-                    else if (Control.ModifierKeys == Keys.Alt)
+                    else if (isMarkerPickable && Control.ModifierKeys == Keys.Alt)
                     {
                         // group select wps
                         GMapPolygon poly = new GMapPolygon(new List<PointLatLng>(), "temp");
@@ -8413,53 +8596,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                         return;
                     }
-                    else if (CurrentMidLine is GMapMarkerPlus)
-                    {
-                        int pnt2 = 0;
-                        var midline = CurrentMidLine.Tag as midline;
-                        // var pnt1 = int.Parse(midline.now.Tag);
-
-                        if (IsDrawPolygongridMode && midline.now != null)
-                        {
-                            //点击到多边形中线
-                            var idx = drawnpolygon.Points.IndexOf(midline.now);
-                            drawnpolygon.Points.Insert(idx + 1,
-                                new PointLatLng(CurrentMidLine.Position.Lat, CurrentMidLine.Position.Lng));
-
-                            redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
-                        }
-                        else
-                        {
-                            if (int.TryParse(midline.next.Tag, out pnt2))
-                            {
-                                //点击到航点中线
-                                if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue ==
-                                    MAVLink.MAV_MISSION_TYPE.FENCE)
-                                {
-                                    var prevtype = Commands.Rows[(int)Math.Max(pnt2 - 2, 0)].Cells[Command.Index].Value.ToString();
-                                    // match type of prev row
-                                    InsertCommand(pnt2 - 1, (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD), prevtype),
-                                        0, 0, 0, 0,
-                                        CurrentMidLine.Position.Lng,
-                                        CurrentMidLine.Position.Lat, 0);
-
-                                    ReCalcFence(pnt2 - 1, true, false);
-                                }
-                                else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue ==
-                                         MAVLink.MAV_MISSION_TYPE.MISSION)
-                                {
-
-                                    InsertCommand(pnt2 - 1, MAVLink.MAV_CMD.WAYPOINT, 0, 0, 0, 0,
-                                        CurrentMidLine.Position.Lng,
-                                        CurrentMidLine.Position.Lat, float.Parse(TXT_DefaultAlt.Text));
-                                }
-                            }
-                        }
-
-                        CurrentMidLine = null;
-                        writeKML();
-                        return;
-                    }
 
                     if (wpMarkersGroup.Count > 0 || polygonMarkersGroup.Count > 0)
                     {
@@ -8476,24 +8612,13 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         return;
                     }
                     // drag finished, update poi db
-                    if (CurrentPOIMarker != null)
-                    {
-                        POI.POIMove(CurrentPOIMarker);
-                        CurrentPOIMarker = null;
-                    }
+                    //if (CurrentPOIMarker != null)
+                    //{
+                    //    POI.POIMove(CurrentPOIMarker);
+                    //    CurrentPOIMarker = null;
+                    //}
 
-                    if (!isMouseDraging)
-                    {
-                        if (CurentRectMarker != null)
-                        {
-                            // cant add WP in existing rect
-                        }
-                        else
-                        {
-                            AddWPToMap(currentMarker.Position.Lat, currentMarker.Position.Lng, 0);
-                        }
-                    }
-                    else
+                    if (isMarkerDraging)
                     {
                         if (CurentRectMarker != null && CurentRectMarker.InnerMarker != null)
                         {
@@ -8520,6 +8645,21 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                             CurentRectMarker = null;
                         }
                     }
+                    if (isMarkerAddable)
+                    {
+                        if (CurentRectMarker != null)
+                        {
+                            // cant add WP in existing rect
+                            return;
+                        }
+                        if (CurrentMidLine is GMapMarkerPlus)
+                        {
+                            OnMidLine_Click();
+                            return;
+                        }
+                        AddWPToMap(currentMarker.Position.Lat, currentMarker.Position.Lng, 0);
+
+                    }
 
                 }
             }
@@ -8527,9 +8667,11 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             {
                 MainMap.SelectedArea = RectLatLng.Empty;
                 isMouseDown = false;
-                isMouseDroppable = false;
-                isMouseDraggable = false;
-                isMouseDraging = false;
+                isMarkerAddable = false;
+                isWndDroppable = false;
+                isMarkerDroppable = false;
+                isMarkerPickable = false;
+                isMarkerDraging = false;
                 CurentRectMarker = null;
             }
         }
@@ -8716,37 +8858,40 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     // home.. etc
                     return;
                 }
-
-                if (Control.ModifierKeys == Keys.Control)
-                {
-                    try
-                    {
-                        wpMarkersGroupAdd(item);
-
-                        log.Info("add marker to group");
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                    }
-                }
-                else if (Control.ModifierKeys == Keys.Alt)
-                {
-                    try
-                    {
-                        polygonMarkersGroupAdd(item);
-
-                        log.Info("add marker to group");
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                    }
-                }
                 if (int.TryParse(item.Tag.ToString(), out int answer))
                 {
                     Commands.CurrentCell = Commands[0, answer - 1];
                 }
+                if (isMarkerPickable)
+                {
+                    if (Control.ModifierKeys == Keys.Control)
+                    {
+                        try
+                        {
+                            wpMarkersGroupAdd(item);
+
+                            log.Info("add marker to group");
+                        }
+                        catch (Exception ex)
+                        {
+                            log.Error(ex);
+                        }
+                    }
+                    else if (Control.ModifierKeys == Keys.Alt)
+                    {
+                        try
+                        {
+                            polygonMarkersGroupAdd(item);
+
+                            log.Info("add marker to group");
+                        }
+                        catch (Exception ex)
+                        {
+                            log.Error(ex);
+                        }
+                    }
+                }
+
             }
             catch (Exception ex)
             {
@@ -9100,6 +9245,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
             MainMap.SetZoomToFitRect(MainV2.instance.diisplayRect);
         }
+
 
     }
 }

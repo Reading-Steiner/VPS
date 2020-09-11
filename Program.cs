@@ -81,7 +81,7 @@ namespace VPS
         [STAThread]
         public static void Main(string[] args)
         {
-            TestVPS(args);
+            Start(args);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]

@@ -91,6 +91,16 @@
             }
         }
 
+        public LayerInfo(string path, double lng, double lat, double alt, System.Drawing.Color transparent)
+        {
+            this.path = path;
+            this.originLng = lng;
+            this.originLat = lat;
+            this.originAlt = alt;
+            this.scale = 1;
+            this.transparent = transparent;
+        }
+
         public LayerInfo(string path, double lng, double lat, double alt, double scale, System.Drawing.Color transparent)
         {
             this.path = path;

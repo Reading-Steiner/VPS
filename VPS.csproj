@@ -441,6 +441,12 @@
     <Compile Include="Controls\GradualButton.Designer.cs">
       <DependentUpon>GradualButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Grid\GridConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Grid\GridConfig.Designer.cs">
+      <DependentUpon>GridConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\HLToolStripButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -467,6 +473,18 @@
     </Compile>
     <Compile Include="Controls\LayerTile.Designer.cs">
       <DependentUpon>LayerTile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Layer\LayerManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Layer\LayerManager.Designer.cs">
+      <DependentUpon>LayerManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Layer\LayerReader.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Layer\LayerReader.Designer.cs">
+      <DependentUpon>LayerReader.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ReturnButton.cs">
       <SubType>UserControl</SubType>
@@ -790,6 +808,9 @@
     <EmbeddedResource Include="Controls\GobalWPConfig.resx">
       <DependentUpon>GobalWPConfig.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Grid\GridConfig.resx">
+      <DependentUpon>GridConfig.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\LayerManager.resx">
       <DependentUpon>LayerManager.cs</DependentUpon>
     </EmbeddedResource>
@@ -807,6 +828,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LayerTile.resx">
       <DependentUpon>LayerTile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Layer\LayerReader.resx">
+      <DependentUpon>LayerReader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ReturnButton.resx">
       <DependentUpon>ReturnButton.cs</DependentUpon>
