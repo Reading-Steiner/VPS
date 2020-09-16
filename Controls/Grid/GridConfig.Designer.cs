@@ -29,29 +29,29 @@
         private void InitializeComponent()
         {
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.panelEx9 = new DevComponents.DotNetBar.PanelEx();
+            this.Accept = new DevComponents.DotNetBar.ButtonX();
             this.AdvanceAirLineBox = new DevComponents.DotNetBar.PanelEx();
-            this.panelEx8 = new DevComponents.DotNetBar.PanelEx();
+            this.CorridorInfoBox = new DevComponents.DotNetBar.PanelEx();
             this.labelX18 = new DevComponents.DotNetBar.LabelX();
-            this.integerInput15 = new DevComponents.Editors.IntegerInput();
-            this.integerInput14 = new DevComponents.Editors.IntegerInput();
-            this.integerInput13 = new DevComponents.Editors.IntegerInput();
-            this.integerInput12 = new DevComponents.Editors.IntegerInput();
-            this.integerInput11 = new DevComponents.Editors.IntegerInput();
-            this.checkBoxX5 = new DevComponents.DotNetBar.Controls.CheckBoxX();
-            this.checkBoxX4 = new DevComponents.DotNetBar.Controls.CheckBoxX();
-            this.checkBoxX3 = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.num_corridorwidth = new DevComponents.Editors.IntegerInput();
+            this.NUM_Lane_Dist = new DevComponents.Editors.IntegerInput();
+            this.NUM_leadin = new DevComponents.Editors.IntegerInput();
+            this.NUM_overshoot2 = new DevComponents.Editors.IntegerInput();
+            this.NUM_overshoot = new DevComponents.Editors.IntegerInput();
+            this.chk_spiral = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.chk_Corridor = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.chk_crossgrid = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.labelX16 = new DevComponents.DotNetBar.LabelX();
             this.labelX15 = new DevComponents.DotNetBar.LabelX();
             this.labelX13 = new DevComponents.DotNetBar.LabelX();
             this.labelX12 = new DevComponents.DotNetBar.LabelX();
             this.AirLineBox = new DevComponents.DotNetBar.PanelEx();
-            this.doubleInput5 = new DevComponents.Editors.DoubleInput();
-            this.doubleInput3 = new DevComponents.Editors.DoubleInput();
-            this.integerInput8 = new DevComponents.Editors.IntegerInput();
-            this.integerInput7 = new DevComponents.Editors.IntegerInput();
-            this.doubleInput2 = new DevComponents.Editors.DoubleInput();
-            this.labelX17 = new DevComponents.DotNetBar.LabelX();
-            this.checkBoxX2 = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.num_sidelap = new DevComponents.Editors.DoubleInput();
+            this.num_overlap = new DevComponents.Editors.DoubleInput();
+            this.NUM_spacing = new DevComponents.Editors.DoubleInput();
+            this.NUM_Distance = new DevComponents.Editors.DoubleInput();
+            this.ShowAdvanceOptions = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.labelX10 = new DevComponents.DotNetBar.LabelX();
             this.labelX9 = new DevComponents.DotNetBar.LabelX();
             this.labelX8 = new DevComponents.DotNetBar.LabelX();
@@ -60,15 +60,23 @@
             this.skinLine3 = new CCWin.SkinControl.SkinLine();
             this.label2 = new System.Windows.Forms.Label();
             this.FlightBox = new DevComponents.DotNetBar.PanelEx();
-            this.integerInput10 = new DevComponents.Editors.IntegerInput();
-            this.integerInput9 = new DevComponents.Editors.IntegerInput();
+            this.NUM_angle = new DevComponents.Editors.IntegerInput();
+            this.labelX17 = new DevComponents.DotNetBar.LabelX();
+            this.CMB_startfrom = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.labelX14 = new DevComponents.DotNetBar.LabelX();
+            this.lbl_gndelev = new DevComponents.Editors.IntegerInput();
+            this.NUM_altitude = new DevComponents.Editors.IntegerInput();
             this.labelX11 = new DevComponents.DotNetBar.LabelX();
             this.labelX6 = new DevComponents.DotNetBar.LabelX();
             this.panelEx14 = new DevComponents.DotNetBar.PanelEx();
             this.skinLine2 = new CCWin.SkinControl.SkinLine();
             this.label14 = new System.Windows.Forms.Label();
             this.panelEx4 = new DevComponents.DotNetBar.PanelEx();
-            this.doubleInput4 = new DevComponents.Editors.DoubleInput();
+            this.TXT_fovH = new DevComponents.Editors.DoubleInput();
+            this.labelX20 = new DevComponents.DotNetBar.LabelX();
+            this.TXT_fovV = new DevComponents.Editors.DoubleInput();
+            this.labelX19 = new DevComponents.DotNetBar.LabelX();
+            this.TXT_cmpixel = new DevComponents.Editors.DoubleInput();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.panelEx5 = new DevComponents.DotNetBar.PanelEx();
             this.skinLine1 = new CCWin.SkinControl.SkinLine();
@@ -78,58 +86,64 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.integerInput3 = new DevComponents.Editors.IntegerInput();
-            this.integerInput4 = new DevComponents.Editors.IntegerInput();
-            this.integerInput2 = new DevComponents.Editors.IntegerInput();
-            this.integerInput1 = new DevComponents.Editors.IntegerInput();
+            this.TXT_sensheight = new DevComponents.Editors.DoubleInput();
+            this.TXT_senswidth = new DevComponents.Editors.DoubleInput();
+            this.TXT_imgheight = new DevComponents.Editors.IntegerInput();
+            this.TXT_imgwidth = new DevComponents.Editors.IntegerInput();
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.CameraInfo = new DevComponents.DotNetBar.PanelEx();
+            this.CHK_camdirection = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.ShowCameraInfo = new DevComponents.DotNetBar.Controls.CheckBoxX();
-            this.comboBoxEx2 = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.CMB_camera = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX3 = new DevComponents.DotNetBar.LabelX();
-            this.doubleInput1 = new DevComponents.Editors.DoubleInput();
+            this.NUM_focallength = new DevComponents.Editors.DoubleInput();
             this.panelEx6 = new DevComponents.DotNetBar.PanelEx();
             this.skinLine7 = new CCWin.SkinControl.SkinLine();
             this.label6 = new System.Windows.Forms.Label();
             this.panelEx1.SuspendLayout();
+            this.panelEx9.SuspendLayout();
             this.AdvanceAirLineBox.SuspendLayout();
-            this.panelEx8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput13)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput11)).BeginInit();
+            this.CorridorInfoBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.num_corridorwidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_Lane_Dist)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_leadin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_overshoot2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_overshoot)).BeginInit();
             this.AirLineBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.doubleInput5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.doubleInput3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.doubleInput2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_sidelap)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_overlap)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_spacing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_Distance)).BeginInit();
             this.panelEx7.SuspendLayout();
             this.FlightBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_angle)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbl_gndelev)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_altitude)).BeginInit();
             this.panelEx14.SuspendLayout();
             this.panelEx4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.doubleInput4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_fovH)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_fovV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_cmpixel)).BeginInit();
             this.panelEx5.SuspendLayout();
             this.CameraDetailBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_sensheight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_senswidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_imgheight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_imgwidth)).BeginInit();
             this.CameraInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.doubleInput1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_focallength)).BeginInit();
             this.panelEx6.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelEx1
             // 
             this.panelEx1.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
+            this.panelEx1.AutoSize = true;
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx1.Controls.Add(this.panelEx9);
             this.panelEx1.Controls.Add(this.AdvanceAirLineBox);
             this.panelEx1.Controls.Add(this.AirLineBox);
             this.panelEx1.Controls.Add(this.panelEx7);
@@ -143,7 +157,7 @@
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx1.Location = new System.Drawing.Point(0, 0);
             this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(310, 550);
+            this.panelEx1.Size = new System.Drawing.Size(310, 671);
             this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelEx1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -151,26 +165,58 @@
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 0;
             // 
+            // panelEx9
+            // 
+            this.panelEx9.AutoSize = true;
+            this.panelEx9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelEx9.CanvasColor = System.Drawing.SystemColors.Control;
+            this.panelEx9.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx9.Controls.Add(this.Accept);
+            this.panelEx9.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEx9.Location = new System.Drawing.Point(0, 639);
+            this.panelEx9.Name = "panelEx9";
+            this.panelEx9.Size = new System.Drawing.Size(310, 32);
+            this.panelEx9.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelEx9.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
+            this.panelEx9.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.panelEx9.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
+            this.panelEx9.Style.GradientAngle = 90;
+            this.panelEx9.TabIndex = 46;
+            // 
+            // Accept
+            // 
+            this.Accept.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.Accept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Accept.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.Accept.Enabled = false;
+            this.Accept.Location = new System.Drawing.Point(205, 6);
+            this.Accept.Name = "Accept";
+            this.Accept.Size = new System.Drawing.Size(75, 23);
+            this.Accept.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.Accept.TabIndex = 16;
+            this.Accept.Text = "确定";
+            this.Accept.Click += new System.EventHandler(this.Accept_Click);
+            // 
             // AdvanceAirLineBox
             // 
             this.AdvanceAirLineBox.AutoSize = true;
             this.AdvanceAirLineBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.AdvanceAirLineBox.CanvasColor = System.Drawing.SystemColors.Control;
             this.AdvanceAirLineBox.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.AdvanceAirLineBox.Controls.Add(this.panelEx8);
-            this.AdvanceAirLineBox.Controls.Add(this.integerInput14);
-            this.AdvanceAirLineBox.Controls.Add(this.integerInput13);
-            this.AdvanceAirLineBox.Controls.Add(this.integerInput12);
-            this.AdvanceAirLineBox.Controls.Add(this.integerInput11);
-            this.AdvanceAirLineBox.Controls.Add(this.checkBoxX5);
-            this.AdvanceAirLineBox.Controls.Add(this.checkBoxX4);
-            this.AdvanceAirLineBox.Controls.Add(this.checkBoxX3);
+            this.AdvanceAirLineBox.Controls.Add(this.CorridorInfoBox);
+            this.AdvanceAirLineBox.Controls.Add(this.NUM_Lane_Dist);
+            this.AdvanceAirLineBox.Controls.Add(this.NUM_leadin);
+            this.AdvanceAirLineBox.Controls.Add(this.NUM_overshoot2);
+            this.AdvanceAirLineBox.Controls.Add(this.NUM_overshoot);
+            this.AdvanceAirLineBox.Controls.Add(this.chk_spiral);
+            this.AdvanceAirLineBox.Controls.Add(this.chk_Corridor);
+            this.AdvanceAirLineBox.Controls.Add(this.chk_crossgrid);
             this.AdvanceAirLineBox.Controls.Add(this.labelX16);
             this.AdvanceAirLineBox.Controls.Add(this.labelX15);
             this.AdvanceAirLineBox.Controls.Add(this.labelX13);
             this.AdvanceAirLineBox.Controls.Add(this.labelX12);
             this.AdvanceAirLineBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.AdvanceAirLineBox.Location = new System.Drawing.Point(0, 365);
+            this.AdvanceAirLineBox.Location = new System.Drawing.Point(0, 471);
             this.AdvanceAirLineBox.Name = "AdvanceAirLineBox";
             this.AdvanceAirLineBox.Size = new System.Drawing.Size(310, 168);
             this.AdvanceAirLineBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -179,24 +225,26 @@
             this.AdvanceAirLineBox.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.AdvanceAirLineBox.Style.GradientAngle = 90;
             this.AdvanceAirLineBox.TabIndex = 43;
+            this.AdvanceAirLineBox.Visible = false;
             // 
-            // panelEx8
+            // CorridorInfoBox
             // 
-            this.panelEx8.AutoSize = true;
-            this.panelEx8.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panelEx8.CanvasColor = System.Drawing.SystemColors.Control;
-            this.panelEx8.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.panelEx8.Controls.Add(this.labelX18);
-            this.panelEx8.Controls.Add(this.integerInput15);
-            this.panelEx8.Location = new System.Drawing.Point(159, 113);
-            this.panelEx8.Name = "panelEx8";
-            this.panelEx8.Size = new System.Drawing.Size(134, 26);
-            this.panelEx8.Style.Alignment = System.Drawing.StringAlignment.Center;
-            this.panelEx8.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
-            this.panelEx8.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
-            this.panelEx8.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
-            this.panelEx8.Style.GradientAngle = 90;
-            this.panelEx8.TabIndex = 61;
+            this.CorridorInfoBox.AutoSize = true;
+            this.CorridorInfoBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.CorridorInfoBox.CanvasColor = System.Drawing.SystemColors.Control;
+            this.CorridorInfoBox.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.CorridorInfoBox.Controls.Add(this.labelX18);
+            this.CorridorInfoBox.Controls.Add(this.num_corridorwidth);
+            this.CorridorInfoBox.Location = new System.Drawing.Point(159, 113);
+            this.CorridorInfoBox.Name = "CorridorInfoBox";
+            this.CorridorInfoBox.Size = new System.Drawing.Size(143, 26);
+            this.CorridorInfoBox.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.CorridorInfoBox.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
+            this.CorridorInfoBox.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.CorridorInfoBox.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
+            this.CorridorInfoBox.Style.GradientAngle = 90;
+            this.CorridorInfoBox.TabIndex = 61;
+            this.CorridorInfoBox.Visible = false;
             // 
             // labelX18
             // 
@@ -210,117 +258,127 @@
             this.labelX18.TabIndex = 55;
             this.labelX18.Text = "廊道宽度";
             // 
-            // integerInput15
+            // num_corridorwidth
+            // 
+            this.num_corridorwidth.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.num_corridorwidth.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.num_corridorwidth.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.num_corridorwidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.num_corridorwidth.Location = new System.Drawing.Point(76, 2);
+            this.num_corridorwidth.Name = "num_corridorwidth";
+            this.num_corridorwidth.ShowUpDown = true;
+            this.num_corridorwidth.Size = new System.Drawing.Size(64, 21);
+            this.num_corridorwidth.TabIndex = 60;
+            this.num_corridorwidth.ValueChanged += new System.EventHandler(this.num_corridorwidth_ValueChanged);
+            // 
+            // NUM_Lane_Dist
+            // 
+            this.NUM_Lane_Dist.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.NUM_Lane_Dist.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_Lane_Dist.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_Lane_Dist.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_Lane_Dist.Location = new System.Drawing.Point(235, 5);
+            this.NUM_Lane_Dist.Name = "NUM_Lane_Dist";
+            this.NUM_Lane_Dist.ShowUpDown = true;
+            this.NUM_Lane_Dist.Size = new System.Drawing.Size(64, 21);
+            this.NUM_Lane_Dist.TabIndex = 59;
+            this.NUM_Lane_Dist.ValueChanged += new System.EventHandler(this.NUM_Lane_Dist_ValueChanged);
+            // 
+            // NUM_leadin
+            // 
+            this.NUM_leadin.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.NUM_leadin.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_leadin.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_leadin.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_leadin.Location = new System.Drawing.Point(87, 57);
+            this.NUM_leadin.Name = "NUM_leadin";
+            this.NUM_leadin.ShowUpDown = true;
+            this.NUM_leadin.Size = new System.Drawing.Size(64, 21);
+            this.NUM_leadin.TabIndex = 58;
+            this.NUM_leadin.ValueChanged += new System.EventHandler(this.NUM_leadin_ValueChanged);
+            // 
+            // NUM_overshoot2
+            // 
+            this.NUM_overshoot2.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.NUM_overshoot2.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_overshoot2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_overshoot2.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_overshoot2.Location = new System.Drawing.Point(87, 31);
+            this.NUM_overshoot2.Name = "NUM_overshoot2";
+            this.NUM_overshoot2.ShowUpDown = true;
+            this.NUM_overshoot2.Size = new System.Drawing.Size(64, 21);
+            this.NUM_overshoot2.TabIndex = 57;
+            this.NUM_overshoot2.ValueChanged += new System.EventHandler(this.NUM_overshoot2_ValueChanged);
+            // 
+            // NUM_overshoot
+            // 
+            this.NUM_overshoot.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.NUM_overshoot.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_overshoot.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_overshoot.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_overshoot.Location = new System.Drawing.Point(87, 5);
+            this.NUM_overshoot.Name = "NUM_overshoot";
+            this.NUM_overshoot.ShowUpDown = true;
+            this.NUM_overshoot.Size = new System.Drawing.Size(64, 21);
+            this.NUM_overshoot.TabIndex = 56;
+            this.NUM_overshoot.ValueChanged += new System.EventHandler(this.NUM_overshoot_ValueChanged);
+            // 
+            // chk_spiral
             // 
             // 
             // 
             // 
-            this.integerInput15.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.integerInput15.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.integerInput15.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.integerInput15.Location = new System.Drawing.Point(76, 2);
-            this.integerInput15.Name = "integerInput15";
-            this.integerInput15.ShowUpDown = true;
-            this.integerInput15.Size = new System.Drawing.Size(55, 21);
-            this.integerInput15.TabIndex = 60;
+            this.chk_spiral.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.chk_spiral.Location = new System.Drawing.Point(35, 142);
+            this.chk_spiral.Name = "chk_spiral";
+            this.chk_spiral.Size = new System.Drawing.Size(83, 23);
+            this.chk_spiral.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.chk_spiral.TabIndex = 54;
+            this.chk_spiral.Text = "螺旋航线";
+            this.chk_spiral.CheckedChanged += new System.EventHandler(this.chk_spiral_CheckedChanged);
             // 
-            // integerInput14
-            // 
-            // 
-            // 
-            // 
-            this.integerInput14.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.integerInput14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.integerInput14.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.integerInput14.Location = new System.Drawing.Point(235, 5);
-            this.integerInput14.Name = "integerInput14";
-            this.integerInput14.ShowUpDown = true;
-            this.integerInput14.Size = new System.Drawing.Size(55, 21);
-            this.integerInput14.TabIndex = 59;
-            // 
-            // integerInput13
+            // chk_Corridor
             // 
             // 
             // 
             // 
-            this.integerInput13.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.integerInput13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.integerInput13.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.integerInput13.Location = new System.Drawing.Point(87, 57);
-            this.integerInput13.Name = "integerInput13";
-            this.integerInput13.ShowUpDown = true;
-            this.integerInput13.Size = new System.Drawing.Size(55, 21);
-            this.integerInput13.TabIndex = 58;
+            this.chk_Corridor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.chk_Corridor.Location = new System.Drawing.Point(35, 113);
+            this.chk_Corridor.Name = "chk_Corridor";
+            this.chk_Corridor.Size = new System.Drawing.Size(83, 23);
+            this.chk_Corridor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.chk_Corridor.TabIndex = 53;
+            this.chk_Corridor.Text = "廊道航线";
+            this.chk_Corridor.CheckedChanged += new System.EventHandler(this.chk_Corridor_CheckedChanged);
             // 
-            // integerInput12
-            // 
-            // 
-            // 
-            // 
-            this.integerInput12.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.integerInput12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.integerInput12.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.integerInput12.Location = new System.Drawing.Point(87, 31);
-            this.integerInput12.Name = "integerInput12";
-            this.integerInput12.ShowUpDown = true;
-            this.integerInput12.Size = new System.Drawing.Size(55, 21);
-            this.integerInput12.TabIndex = 57;
-            // 
-            // integerInput11
+            // chk_crossgrid
             // 
             // 
             // 
             // 
-            this.integerInput11.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.integerInput11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.integerInput11.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.integerInput11.Location = new System.Drawing.Point(87, 5);
-            this.integerInput11.Name = "integerInput11";
-            this.integerInput11.ShowUpDown = true;
-            this.integerInput11.Size = new System.Drawing.Size(55, 21);
-            this.integerInput11.TabIndex = 56;
-            // 
-            // checkBoxX5
-            // 
-            // 
-            // 
-            // 
-            this.checkBoxX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.checkBoxX5.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
-            this.checkBoxX5.Location = new System.Drawing.Point(35, 142);
-            this.checkBoxX5.Name = "checkBoxX5";
-            this.checkBoxX5.Size = new System.Drawing.Size(83, 23);
-            this.checkBoxX5.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.checkBoxX5.TabIndex = 54;
-            this.checkBoxX5.Text = "螺旋航线";
-            // 
-            // checkBoxX4
-            // 
-            // 
-            // 
-            // 
-            this.checkBoxX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.checkBoxX4.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
-            this.checkBoxX4.Location = new System.Drawing.Point(35, 113);
-            this.checkBoxX4.Name = "checkBoxX4";
-            this.checkBoxX4.Size = new System.Drawing.Size(83, 23);
-            this.checkBoxX4.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.checkBoxX4.TabIndex = 53;
-            this.checkBoxX4.Text = "廊道航线";
-            // 
-            // checkBoxX3
-            // 
-            // 
-            // 
-            // 
-            this.checkBoxX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.checkBoxX3.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
-            this.checkBoxX3.Location = new System.Drawing.Point(35, 84);
-            this.checkBoxX3.Name = "checkBoxX3";
-            this.checkBoxX3.Size = new System.Drawing.Size(83, 23);
-            this.checkBoxX3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.checkBoxX3.TabIndex = 52;
-            this.checkBoxX3.Text = "栅格航线";
+            this.chk_crossgrid.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.chk_crossgrid.Location = new System.Drawing.Point(35, 84);
+            this.chk_crossgrid.Name = "chk_crossgrid";
+            this.chk_crossgrid.Size = new System.Drawing.Size(83, 23);
+            this.chk_crossgrid.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.chk_crossgrid.TabIndex = 52;
+            this.chk_crossgrid.Text = "栅格航线";
+            this.chk_crossgrid.CheckedChanged += new System.EventHandler(this.chk_crossgrid_CheckedChanged);
             // 
             // labelX16
             // 
@@ -376,19 +434,17 @@
             this.AirLineBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.AirLineBox.CanvasColor = System.Drawing.SystemColors.Control;
             this.AirLineBox.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.AirLineBox.Controls.Add(this.doubleInput5);
-            this.AirLineBox.Controls.Add(this.doubleInput3);
-            this.AirLineBox.Controls.Add(this.integerInput8);
-            this.AirLineBox.Controls.Add(this.integerInput7);
-            this.AirLineBox.Controls.Add(this.doubleInput2);
-            this.AirLineBox.Controls.Add(this.labelX17);
-            this.AirLineBox.Controls.Add(this.checkBoxX2);
+            this.AirLineBox.Controls.Add(this.num_sidelap);
+            this.AirLineBox.Controls.Add(this.num_overlap);
+            this.AirLineBox.Controls.Add(this.NUM_spacing);
+            this.AirLineBox.Controls.Add(this.NUM_Distance);
+            this.AirLineBox.Controls.Add(this.ShowAdvanceOptions);
             this.AirLineBox.Controls.Add(this.labelX10);
             this.AirLineBox.Controls.Add(this.labelX9);
             this.AirLineBox.Controls.Add(this.labelX8);
             this.AirLineBox.Controls.Add(this.labelX7);
             this.AirLineBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.AirLineBox.Location = new System.Drawing.Point(0, 286);
+            this.AirLineBox.Location = new System.Drawing.Point(0, 392);
             this.AirLineBox.Name = "AirLineBox";
             this.AirLineBox.Size = new System.Drawing.Size(310, 79);
             this.AirLineBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -398,103 +454,93 @@
             this.AirLineBox.Style.GradientAngle = 90;
             this.AirLineBox.TabIndex = 42;
             // 
-            // doubleInput5
+            // num_sidelap
+            // 
+            this.num_sidelap.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.num_sidelap.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.num_sidelap.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.num_sidelap.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.num_sidelap.DisplayFormat = "0.00";
+            this.num_sidelap.Increment = 0.01D;
+            this.num_sidelap.Location = new System.Drawing.Point(87, 55);
+            this.num_sidelap.MaxValue = 100D;
+            this.num_sidelap.MinValue = 0D;
+            this.num_sidelap.Name = "num_sidelap";
+            this.num_sidelap.ShowUpDown = true;
+            this.num_sidelap.Size = new System.Drawing.Size(64, 21);
+            this.num_sidelap.TabIndex = 57;
+            this.num_sidelap.ValueChanged += new System.EventHandler(this.num_sidelap_ValueChanged);
+            // 
+            // num_overlap
+            // 
+            this.num_overlap.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.num_overlap.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.num_overlap.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.num_overlap.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.num_overlap.DisplayFormat = "0.00";
+            this.num_overlap.Increment = 0.01D;
+            this.num_overlap.Location = new System.Drawing.Point(87, 29);
+            this.num_overlap.MaxValue = 100D;
+            this.num_overlap.MinValue = 0D;
+            this.num_overlap.Name = "num_overlap";
+            this.num_overlap.ShowUpDown = true;
+            this.num_overlap.Size = new System.Drawing.Size(64, 21);
+            this.num_overlap.TabIndex = 56;
+            this.num_overlap.ValueChanged += new System.EventHandler(this.num_overlap_ValueChanged);
+            // 
+            // NUM_spacing
+            // 
+            this.NUM_spacing.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.NUM_spacing.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_spacing.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_spacing.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_spacing.Increment = 0.01D;
+            this.NUM_spacing.Location = new System.Drawing.Point(235, 2);
+            this.NUM_spacing.Name = "NUM_spacing";
+            this.NUM_spacing.ShowUpDown = true;
+            this.NUM_spacing.Size = new System.Drawing.Size(64, 21);
+            this.NUM_spacing.TabIndex = 54;
+            this.NUM_spacing.ValueChanged += new System.EventHandler(this.NUM_spacing_ValueChanged);
+            // 
+            // NUM_Distance
+            // 
+            this.NUM_Distance.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.NUM_Distance.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_Distance.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_Distance.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_Distance.Increment = 0.01D;
+            this.NUM_Distance.Location = new System.Drawing.Point(87, 2);
+            this.NUM_Distance.Name = "NUM_Distance";
+            this.NUM_Distance.ShowUpDown = true;
+            this.NUM_Distance.Size = new System.Drawing.Size(64, 21);
+            this.NUM_Distance.TabIndex = 51;
+            this.NUM_Distance.ValueChanged += new System.EventHandler(this.NUM_Distance_ValueChanged);
+            // 
+            // ShowAdvanceOptions
             // 
             // 
             // 
             // 
-            this.doubleInput5.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.doubleInput5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.doubleInput5.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.doubleInput5.Increment = 0.01D;
-            this.doubleInput5.Location = new System.Drawing.Point(87, 55);
-            this.doubleInput5.Name = "doubleInput5";
-            this.doubleInput5.ShowUpDown = true;
-            this.doubleInput5.Size = new System.Drawing.Size(55, 21);
-            this.doubleInput5.TabIndex = 57;
-            // 
-            // doubleInput3
-            // 
-            // 
-            // 
-            // 
-            this.doubleInput3.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.doubleInput3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.doubleInput3.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.doubleInput3.Increment = 0.01D;
-            this.doubleInput3.Location = new System.Drawing.Point(87, 29);
-            this.doubleInput3.Name = "doubleInput3";
-            this.doubleInput3.ShowUpDown = true;
-            this.doubleInput3.Size = new System.Drawing.Size(55, 21);
-            this.doubleInput3.TabIndex = 56;
-            // 
-            // integerInput8
-            // 
-            // 
-            // 
-            // 
-            this.integerInput8.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.integerInput8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.integerInput8.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.integerInput8.Location = new System.Drawing.Point(235, 29);
-            this.integerInput8.Name = "integerInput8";
-            this.integerInput8.ShowUpDown = true;
-            this.integerInput8.Size = new System.Drawing.Size(55, 21);
-            this.integerInput8.TabIndex = 55;
-            // 
-            // integerInput7
-            // 
-            // 
-            // 
-            // 
-            this.integerInput7.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.integerInput7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.integerInput7.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.integerInput7.Location = new System.Drawing.Point(235, 2);
-            this.integerInput7.Name = "integerInput7";
-            this.integerInput7.ShowUpDown = true;
-            this.integerInput7.Size = new System.Drawing.Size(55, 21);
-            this.integerInput7.TabIndex = 54;
-            // 
-            // doubleInput2
-            // 
-            // 
-            // 
-            // 
-            this.doubleInput2.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.doubleInput2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.doubleInput2.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.doubleInput2.Increment = 0.01D;
-            this.doubleInput2.Location = new System.Drawing.Point(87, 2);
-            this.doubleInput2.Name = "doubleInput2";
-            this.doubleInput2.ShowUpDown = true;
-            this.doubleInput2.Size = new System.Drawing.Size(55, 21);
-            this.doubleInput2.TabIndex = 51;
-            // 
-            // labelX17
-            // 
-            // 
-            // 
-            // 
-            this.labelX17.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX17.Location = new System.Drawing.Point(164, 30);
-            this.labelX17.Name = "labelX17";
-            this.labelX17.Size = new System.Drawing.Size(54, 20);
-            this.labelX17.TabIndex = 46;
-            this.labelX17.Text = "航飞角度";
-            // 
-            // checkBoxX2
-            // 
-            // 
-            // 
-            // 
-            this.checkBoxX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.checkBoxX2.Location = new System.Drawing.Point(207, 50);
-            this.checkBoxX2.Name = "checkBoxX2";
-            this.checkBoxX2.Size = new System.Drawing.Size(73, 23);
-            this.checkBoxX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.checkBoxX2.TabIndex = 50;
-            this.checkBoxX2.Text = "高级选项";
+            this.ShowAdvanceOptions.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.ShowAdvanceOptions.Location = new System.Drawing.Point(226, 50);
+            this.ShowAdvanceOptions.Name = "ShowAdvanceOptions";
+            this.ShowAdvanceOptions.Size = new System.Drawing.Size(73, 23);
+            this.ShowAdvanceOptions.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.ShowAdvanceOptions.TabIndex = 50;
+            this.ShowAdvanceOptions.Text = "高级选项";
+            this.ShowAdvanceOptions.CheckedChanged += new System.EventHandler(this.ShowAdvanceOptions_CheckedChanged);
             // 
             // labelX10
             // 
@@ -553,7 +599,7 @@
             this.panelEx7.Controls.Add(this.skinLine3);
             this.panelEx7.Controls.Add(this.label2);
             this.panelEx7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx7.Location = new System.Drawing.Point(0, 265);
+            this.panelEx7.Location = new System.Drawing.Point(0, 371);
             this.panelEx7.Name = "panelEx7";
             this.panelEx7.Size = new System.Drawing.Size(310, 21);
             this.panelEx7.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -593,14 +639,18 @@
             this.FlightBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.FlightBox.CanvasColor = System.Drawing.SystemColors.Control;
             this.FlightBox.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.FlightBox.Controls.Add(this.integerInput10);
-            this.FlightBox.Controls.Add(this.integerInput9);
+            this.FlightBox.Controls.Add(this.NUM_angle);
+            this.FlightBox.Controls.Add(this.labelX17);
+            this.FlightBox.Controls.Add(this.CMB_startfrom);
+            this.FlightBox.Controls.Add(this.labelX14);
+            this.FlightBox.Controls.Add(this.lbl_gndelev);
+            this.FlightBox.Controls.Add(this.NUM_altitude);
             this.FlightBox.Controls.Add(this.labelX11);
             this.FlightBox.Controls.Add(this.labelX6);
             this.FlightBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.FlightBox.Location = new System.Drawing.Point(0, 236);
+            this.FlightBox.Location = new System.Drawing.Point(0, 289);
             this.FlightBox.Name = "FlightBox";
-            this.FlightBox.Size = new System.Drawing.Size(310, 29);
+            this.FlightBox.Size = new System.Drawing.Size(310, 82);
             this.FlightBox.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.FlightBox.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.FlightBox.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -608,32 +658,93 @@
             this.FlightBox.Style.GradientAngle = 90;
             this.FlightBox.TabIndex = 41;
             // 
-            // integerInput10
+            // NUM_angle
+            // 
+            this.NUM_angle.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.NUM_angle.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_angle.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_angle.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_angle.Location = new System.Drawing.Point(87, 31);
+            this.NUM_angle.MaxValue = 360;
+            this.NUM_angle.MinValue = 0;
+            this.NUM_angle.Name = "NUM_angle";
+            this.NUM_angle.ShowUpDown = true;
+            this.NUM_angle.Size = new System.Drawing.Size(64, 21);
+            this.NUM_angle.TabIndex = 57;
+            this.NUM_angle.ValueChanged += new System.EventHandler(this.NUM_angle_ValueChanged);
+            // 
+            // labelX17
             // 
             // 
             // 
             // 
-            this.integerInput10.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.integerInput10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.integerInput10.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.integerInput10.Location = new System.Drawing.Point(235, 3);
-            this.integerInput10.Name = "integerInput10";
-            this.integerInput10.Size = new System.Drawing.Size(55, 21);
-            this.integerInput10.TabIndex = 47;
+            this.labelX17.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX17.Location = new System.Drawing.Point(16, 31);
+            this.labelX17.Name = "labelX17";
+            this.labelX17.Size = new System.Drawing.Size(54, 20);
+            this.labelX17.TabIndex = 56;
+            this.labelX17.Text = "航飞角度";
             // 
-            // integerInput9
+            // CMB_startfrom
+            // 
+            this.CMB_startfrom.DisplayMember = "Text";
+            this.CMB_startfrom.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.CMB_startfrom.FormattingEnabled = true;
+            this.CMB_startfrom.ItemHeight = 15;
+            this.CMB_startfrom.Location = new System.Drawing.Point(87, 58);
+            this.CMB_startfrom.MaxDropDownItems = 10;
+            this.CMB_startfrom.MaxLength = 1000;
+            this.CMB_startfrom.Name = "CMB_startfrom";
+            this.CMB_startfrom.Size = new System.Drawing.Size(101, 21);
+            this.CMB_startfrom.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.CMB_startfrom.TabIndex = 48;
+            this.CMB_startfrom.SelectedIndexChanged += new System.EventHandler(this.CMB_startfrom_SelectedIndexChanged);
+            // 
+            // labelX14
             // 
             // 
             // 
             // 
-            this.integerInput9.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.integerInput9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.integerInput9.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.integerInput9.Location = new System.Drawing.Point(87, 4);
-            this.integerInput9.Name = "integerInput9";
-            this.integerInput9.ShowUpDown = true;
-            this.integerInput9.Size = new System.Drawing.Size(55, 21);
-            this.integerInput9.TabIndex = 46;
+            this.labelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX14.Location = new System.Drawing.Point(16, 61);
+            this.labelX14.Name = "labelX14";
+            this.labelX14.Size = new System.Drawing.Size(54, 18);
+            this.labelX14.TabIndex = 49;
+            this.labelX14.Text = "起始位置";
+            // 
+            // lbl_gndelev
+            // 
+            this.lbl_gndelev.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.lbl_gndelev.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.lbl_gndelev.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.lbl_gndelev.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.lbl_gndelev.Location = new System.Drawing.Point(235, 3);
+            this.lbl_gndelev.Name = "lbl_gndelev";
+            this.lbl_gndelev.Size = new System.Drawing.Size(64, 21);
+            this.lbl_gndelev.TabIndex = 47;
+            this.lbl_gndelev.ValueChanged += new System.EventHandler(this.lbl_gndelev_ValueChanged);
+            // 
+            // NUM_altitude
+            // 
+            this.NUM_altitude.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.NUM_altitude.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_altitude.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_altitude.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_altitude.Location = new System.Drawing.Point(87, 4);
+            this.NUM_altitude.Name = "NUM_altitude";
+            this.NUM_altitude.ShowUpDown = true;
+            this.NUM_altitude.Size = new System.Drawing.Size(64, 21);
+            this.NUM_altitude.TabIndex = 46;
+            this.NUM_altitude.ValueChanged += new System.EventHandler(this.NUM_altitude_ValueChanged);
             // 
             // labelX11
             // 
@@ -668,7 +779,7 @@
             this.panelEx14.Controls.Add(this.skinLine2);
             this.panelEx14.Controls.Add(this.label14);
             this.panelEx14.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx14.Location = new System.Drawing.Point(0, 215);
+            this.panelEx14.Location = new System.Drawing.Point(0, 268);
             this.panelEx14.Name = "panelEx14";
             this.panelEx14.Size = new System.Drawing.Size(310, 21);
             this.panelEx14.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -708,12 +819,16 @@
             this.panelEx4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panelEx4.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.panelEx4.Controls.Add(this.doubleInput4);
+            this.panelEx4.Controls.Add(this.TXT_fovH);
+            this.panelEx4.Controls.Add(this.labelX20);
+            this.panelEx4.Controls.Add(this.TXT_fovV);
+            this.panelEx4.Controls.Add(this.labelX19);
+            this.panelEx4.Controls.Add(this.TXT_cmpixel);
             this.panelEx4.Controls.Add(this.labelX2);
             this.panelEx4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx4.Location = new System.Drawing.Point(0, 188);
+            this.panelEx4.Location = new System.Drawing.Point(0, 187);
             this.panelEx4.Name = "panelEx4";
-            this.panelEx4.Size = new System.Drawing.Size(310, 27);
+            this.panelEx4.Size = new System.Drawing.Size(310, 81);
             this.panelEx4.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx4.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelEx4.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -721,20 +836,74 @@
             this.panelEx4.Style.GradientAngle = 90;
             this.panelEx4.TabIndex = 38;
             // 
-            // doubleInput4
+            // TXT_fovH
             // 
             // 
             // 
             // 
-            this.doubleInput4.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.doubleInput4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.doubleInput4.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.doubleInput4.Increment = 0.01D;
-            this.doubleInput4.Location = new System.Drawing.Point(114, 3);
-            this.doubleInput4.Name = "doubleInput4";
-            this.doubleInput4.ShowUpDown = true;
-            this.doubleInput4.Size = new System.Drawing.Size(64, 21);
-            this.doubleInput4.TabIndex = 55;
+            this.TXT_fovH.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TXT_fovH.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TXT_fovH.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TXT_fovH.Increment = 0D;
+            this.TXT_fovH.IsInputReadOnly = true;
+            this.TXT_fovH.Location = new System.Drawing.Point(114, 30);
+            this.TXT_fovH.Name = "TXT_fovH";
+            this.TXT_fovH.Size = new System.Drawing.Size(64, 21);
+            this.TXT_fovH.TabIndex = 59;
+            // 
+            // labelX20
+            // 
+            // 
+            // 
+            // 
+            this.labelX20.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX20.Location = new System.Drawing.Point(15, 31);
+            this.labelX20.Name = "labelX20";
+            this.labelX20.Size = new System.Drawing.Size(82, 20);
+            this.labelX20.TabIndex = 58;
+            this.labelX20.Text = "水平视野";
+            // 
+            // TXT_fovV
+            // 
+            // 
+            // 
+            // 
+            this.TXT_fovV.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TXT_fovV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TXT_fovV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TXT_fovV.Increment = 0D;
+            this.TXT_fovV.IsInputReadOnly = true;
+            this.TXT_fovV.Location = new System.Drawing.Point(114, 57);
+            this.TXT_fovV.Name = "TXT_fovV";
+            this.TXT_fovV.Size = new System.Drawing.Size(64, 21);
+            this.TXT_fovV.TabIndex = 57;
+            // 
+            // labelX19
+            // 
+            // 
+            // 
+            // 
+            this.labelX19.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX19.Location = new System.Drawing.Point(15, 58);
+            this.labelX19.Name = "labelX19";
+            this.labelX19.Size = new System.Drawing.Size(82, 20);
+            this.labelX19.TabIndex = 56;
+            this.labelX19.Text = "垂直视野";
+            // 
+            // TXT_cmpixel
+            // 
+            // 
+            // 
+            // 
+            this.TXT_cmpixel.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TXT_cmpixel.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TXT_cmpixel.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TXT_cmpixel.Increment = 0D;
+            this.TXT_cmpixel.IsInputReadOnly = true;
+            this.TXT_cmpixel.Location = new System.Drawing.Point(114, 3);
+            this.TXT_cmpixel.Name = "TXT_cmpixel";
+            this.TXT_cmpixel.Size = new System.Drawing.Size(64, 21);
+            this.TXT_cmpixel.TabIndex = 55;
             // 
             // labelX2
             // 
@@ -757,7 +926,7 @@
             this.panelEx5.Controls.Add(this.skinLine1);
             this.panelEx5.Controls.Add(this.label1);
             this.panelEx5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx5.Location = new System.Drawing.Point(0, 167);
+            this.panelEx5.Location = new System.Drawing.Point(0, 166);
             this.panelEx5.Name = "panelEx5";
             this.panelEx5.Size = new System.Drawing.Size(310, 21);
             this.panelEx5.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -789,7 +958,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 26;
-            this.label1.Text = "摄影设置";
+            this.label1.Text = "摄影参数";
             // 
             // CameraDetailBox
             // 
@@ -801,14 +970,14 @@
             this.CameraDetailBox.Controls.Add(this.label8);
             this.CameraDetailBox.Controls.Add(this.label7);
             this.CameraDetailBox.Controls.Add(this.label5);
-            this.CameraDetailBox.Controls.Add(this.integerInput3);
-            this.CameraDetailBox.Controls.Add(this.integerInput4);
-            this.CameraDetailBox.Controls.Add(this.integerInput2);
-            this.CameraDetailBox.Controls.Add(this.integerInput1);
+            this.CameraDetailBox.Controls.Add(this.TXT_sensheight);
+            this.CameraDetailBox.Controls.Add(this.TXT_senswidth);
+            this.CameraDetailBox.Controls.Add(this.TXT_imgheight);
+            this.CameraDetailBox.Controls.Add(this.TXT_imgwidth);
             this.CameraDetailBox.Controls.Add(this.labelX5);
             this.CameraDetailBox.Controls.Add(this.labelX4);
             this.CameraDetailBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.CameraDetailBox.Location = new System.Drawing.Point(0, 78);
+            this.CameraDetailBox.Location = new System.Drawing.Point(0, 77);
             this.CameraDetailBox.Name = "CameraDetailBox";
             this.CameraDetailBox.Size = new System.Drawing.Size(310, 89);
             this.CameraDetailBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -826,7 +995,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(17, 12);
             this.label9.TabIndex = 48;
-            this.label9.Text = "宽";
+            this.label9.Text = "高";
             // 
             // label8
             // 
@@ -835,7 +1004,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(17, 12);
             this.label8.TabIndex = 47;
-            this.label8.Text = "长";
+            this.label8.Text = "宽";
             // 
             // label7
             // 
@@ -844,7 +1013,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(17, 12);
             this.label7.TabIndex = 46;
-            this.label7.Text = "长";
+            this.label7.Text = "宽";
             // 
             // label5
             // 
@@ -853,63 +1022,69 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(17, 12);
             this.label5.TabIndex = 45;
-            this.label5.Text = "宽";
+            this.label5.Text = "高";
             // 
-            // integerInput3
+            // TXT_sensheight
             // 
-            // 
-            // 
-            // 
-            this.integerInput3.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.integerInput3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.integerInput3.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.integerInput3.Increment = 0;
-            this.integerInput3.Location = new System.Drawing.Point(175, 65);
-            this.integerInput3.Name = "integerInput3";
-            this.integerInput3.Size = new System.Drawing.Size(65, 21);
-            this.integerInput3.TabIndex = 44;
-            // 
-            // integerInput4
+            this.TXT_sensheight.AllowEmptyState = false;
             // 
             // 
             // 
+            this.TXT_sensheight.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TXT_sensheight.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TXT_sensheight.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TXT_sensheight.Increment = 0D;
+            this.TXT_sensheight.IsInputReadOnly = true;
+            this.TXT_sensheight.Location = new System.Drawing.Point(175, 65);
+            this.TXT_sensheight.Name = "TXT_sensheight";
+            this.TXT_sensheight.Size = new System.Drawing.Size(65, 21);
+            this.TXT_sensheight.TabIndex = 44;
             // 
-            this.integerInput4.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.integerInput4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.integerInput4.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.integerInput4.Increment = 0;
-            this.integerInput4.Location = new System.Drawing.Point(67, 65);
-            this.integerInput4.Name = "integerInput4";
-            this.integerInput4.Size = new System.Drawing.Size(65, 21);
-            this.integerInput4.TabIndex = 43;
+            // TXT_senswidth
             // 
-            // integerInput2
-            // 
-            // 
-            // 
-            // 
-            this.integerInput2.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.integerInput2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.integerInput2.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.integerInput2.Increment = 0;
-            this.integerInput2.Location = new System.Drawing.Point(175, 21);
-            this.integerInput2.Name = "integerInput2";
-            this.integerInput2.Size = new System.Drawing.Size(65, 21);
-            this.integerInput2.TabIndex = 42;
-            // 
-            // integerInput1
+            this.TXT_senswidth.AllowEmptyState = false;
             // 
             // 
             // 
+            this.TXT_senswidth.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TXT_senswidth.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TXT_senswidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TXT_senswidth.Increment = 0D;
+            this.TXT_senswidth.IsInputReadOnly = true;
+            this.TXT_senswidth.Location = new System.Drawing.Point(67, 65);
+            this.TXT_senswidth.Name = "TXT_senswidth";
+            this.TXT_senswidth.Size = new System.Drawing.Size(65, 21);
+            this.TXT_senswidth.TabIndex = 43;
             // 
-            this.integerInput1.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.integerInput1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.integerInput1.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.integerInput1.Increment = 0;
-            this.integerInput1.Location = new System.Drawing.Point(67, 21);
-            this.integerInput1.Name = "integerInput1";
-            this.integerInput1.Size = new System.Drawing.Size(65, 21);
-            this.integerInput1.TabIndex = 41;
+            // TXT_imgheight
+            // 
+            this.TXT_imgheight.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.TXT_imgheight.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TXT_imgheight.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TXT_imgheight.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TXT_imgheight.Increment = 0;
+            this.TXT_imgheight.Location = new System.Drawing.Point(175, 21);
+            this.TXT_imgheight.Name = "TXT_imgheight";
+            this.TXT_imgheight.Size = new System.Drawing.Size(65, 21);
+            this.TXT_imgheight.TabIndex = 42;
+            // 
+            // TXT_imgwidth
+            // 
+            this.TXT_imgwidth.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.TXT_imgwidth.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TXT_imgwidth.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TXT_imgwidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TXT_imgwidth.Increment = 0;
+            this.TXT_imgwidth.Location = new System.Drawing.Point(67, 21);
+            this.TXT_imgwidth.Name = "TXT_imgwidth";
+            this.TXT_imgwidth.Size = new System.Drawing.Size(65, 21);
+            this.TXT_imgwidth.TabIndex = 41;
             // 
             // labelX5
             // 
@@ -941,15 +1116,16 @@
             this.CameraInfo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CameraInfo.CanvasColor = System.Drawing.SystemColors.Control;
             this.CameraInfo.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.CameraInfo.Controls.Add(this.CHK_camdirection);
             this.CameraInfo.Controls.Add(this.ShowCameraInfo);
-            this.CameraInfo.Controls.Add(this.comboBoxEx2);
+            this.CameraInfo.Controls.Add(this.CMB_camera);
             this.CameraInfo.Controls.Add(this.labelX1);
             this.CameraInfo.Controls.Add(this.labelX3);
-            this.CameraInfo.Controls.Add(this.doubleInput1);
+            this.CameraInfo.Controls.Add(this.NUM_focallength);
             this.CameraInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.CameraInfo.Location = new System.Drawing.Point(0, 21);
             this.CameraInfo.Name = "CameraInfo";
-            this.CameraInfo.Size = new System.Drawing.Size(310, 57);
+            this.CameraInfo.Size = new System.Drawing.Size(310, 56);
             this.CameraInfo.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.CameraInfo.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.CameraInfo.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -957,13 +1133,26 @@
             this.CameraInfo.Style.GradientAngle = 90;
             this.CameraInfo.TabIndex = 34;
             // 
+            // CHK_camdirection
+            // 
+            // 
+            // 
+            // 
+            this.CHK_camdirection.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.CHK_camdirection.Location = new System.Drawing.Point(207, 3);
+            this.CHK_camdirection.Name = "CHK_camdirection";
+            this.CHK_camdirection.Size = new System.Drawing.Size(51, 23);
+            this.CHK_camdirection.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.CHK_camdirection.TabIndex = 39;
+            this.CHK_camdirection.Text = "横放";
+            // 
             // ShowCameraInfo
             // 
             // 
             // 
             // 
             this.ShowCameraInfo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ShowCameraInfo.Location = new System.Drawing.Point(207, 31);
+            this.ShowCameraInfo.Location = new System.Drawing.Point(207, 30);
             this.ShowCameraInfo.Name = "ShowCameraInfo";
             this.ShowCameraInfo.Size = new System.Drawing.Size(100, 23);
             this.ShowCameraInfo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -971,19 +1160,20 @@
             this.ShowCameraInfo.Text = "显示详细信息";
             this.ShowCameraInfo.CheckedChanged += new System.EventHandler(this.ShowCameraInfo_CheckedChanged);
             // 
-            // comboBoxEx2
+            // CMB_camera
             // 
-            this.comboBoxEx2.DisplayMember = "Text";
-            this.comboBoxEx2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.comboBoxEx2.FormattingEnabled = true;
-            this.comboBoxEx2.ItemHeight = 15;
-            this.comboBoxEx2.Location = new System.Drawing.Point(67, 3);
-            this.comboBoxEx2.MaxDropDownItems = 10;
-            this.comboBoxEx2.MaxLength = 1000;
-            this.comboBoxEx2.Name = "comboBoxEx2";
-            this.comboBoxEx2.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxEx2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.comboBoxEx2.TabIndex = 1;
+            this.CMB_camera.DisplayMember = "Text";
+            this.CMB_camera.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.CMB_camera.FormattingEnabled = true;
+            this.CMB_camera.ItemHeight = 15;
+            this.CMB_camera.Location = new System.Drawing.Point(67, 3);
+            this.CMB_camera.MaxDropDownItems = 10;
+            this.CMB_camera.MaxLength = 1000;
+            this.CMB_camera.Name = "CMB_camera";
+            this.CMB_camera.Size = new System.Drawing.Size(121, 21);
+            this.CMB_camera.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.CMB_camera.TabIndex = 1;
+            this.CMB_camera.SelectedIndexChanged += new System.EventHandler(this.CMB_camera_SelectedIndexChanged);
             // 
             // labelX1
             // 
@@ -1009,20 +1199,22 @@
             this.labelX3.TabIndex = 38;
             this.labelX3.Text = "焦距";
             // 
-            // doubleInput1
+            // NUM_focallength
+            // 
+            this.NUM_focallength.AllowEmptyState = false;
             // 
             // 
             // 
-            // 
-            this.doubleInput1.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.doubleInput1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.doubleInput1.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.doubleInput1.Increment = 0.01D;
-            this.doubleInput1.Location = new System.Drawing.Point(67, 30);
-            this.doubleInput1.Name = "doubleInput1";
-            this.doubleInput1.ShowUpDown = true;
-            this.doubleInput1.Size = new System.Drawing.Size(80, 21);
-            this.doubleInput1.TabIndex = 38;
+            this.NUM_focallength.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_focallength.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_focallength.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_focallength.Increment = 0.01D;
+            this.NUM_focallength.Location = new System.Drawing.Point(67, 30);
+            this.NUM_focallength.Name = "NUM_focallength";
+            this.NUM_focallength.ShowUpDown = true;
+            this.NUM_focallength.Size = new System.Drawing.Size(80, 21);
+            this.NUM_focallength.TabIndex = 38;
+            this.NUM_focallength.ValueChanged += new System.EventHandler(this.NUM_focallength_ValueChanged);
             // 
             // panelEx6
             // 
@@ -1071,54 +1263,60 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.Controls.Add(this.panelEx1);
             this.Name = "GridConfig";
-            this.Size = new System.Drawing.Size(310, 550);
+            this.Size = new System.Drawing.Size(310, 671);
+            this.Load += new System.EventHandler(this.GridConfig_Load);
             this.panelEx1.ResumeLayout(false);
             this.panelEx1.PerformLayout();
+            this.panelEx9.ResumeLayout(false);
             this.AdvanceAirLineBox.ResumeLayout(false);
             this.AdvanceAirLineBox.PerformLayout();
-            this.panelEx8.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput13)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput11)).EndInit();
+            this.CorridorInfoBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.num_corridorwidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_Lane_Dist)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_leadin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_overshoot2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_overshoot)).EndInit();
             this.AirLineBox.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.doubleInput5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.doubleInput3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.doubleInput2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_sidelap)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_overlap)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_spacing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_Distance)).EndInit();
             this.panelEx7.ResumeLayout(false);
             this.panelEx7.PerformLayout();
             this.FlightBox.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_angle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbl_gndelev)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_altitude)).EndInit();
             this.panelEx14.ResumeLayout(false);
             this.panelEx14.PerformLayout();
             this.panelEx4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.doubleInput4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_fovH)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_fovV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_cmpixel)).EndInit();
             this.panelEx5.ResumeLayout(false);
             this.panelEx5.PerformLayout();
             this.CameraDetailBox.ResumeLayout(false);
             this.CameraDetailBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.integerInput1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_sensheight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_senswidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_imgheight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_imgwidth)).EndInit();
             this.CameraInfo.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.doubleInput1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_focallength)).EndInit();
             this.panelEx6.ResumeLayout(false);
             this.panelEx6.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private DevComponents.DotNetBar.PanelEx panelEx1;
-        private DevComponents.DotNetBar.Controls.ComboBoxEx comboBoxEx2;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx CMB_camera;
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.PanelEx panelEx6;
         private CCWin.SkinControl.SkinLine skinLine7;
@@ -1126,14 +1324,14 @@
         private DevComponents.DotNetBar.PanelEx CameraDetailBox;
         private DevComponents.DotNetBar.PanelEx CameraInfo;
         private DevComponents.DotNetBar.LabelX labelX3;
-        private DevComponents.Editors.DoubleInput doubleInput1;
+        private DevComponents.Editors.DoubleInput NUM_focallength;
         private DevComponents.DotNetBar.LabelX labelX5;
         private DevComponents.DotNetBar.LabelX labelX4;
-        private DevComponents.Editors.IntegerInput integerInput1;
+        private DevComponents.Editors.IntegerInput TXT_imgwidth;
         private DevComponents.DotNetBar.PanelEx panelEx4;
-        private DevComponents.Editors.IntegerInput integerInput3;
-        private DevComponents.Editors.IntegerInput integerInput4;
-        private DevComponents.Editors.IntegerInput integerInput2;
+        private DevComponents.Editors.DoubleInput TXT_sensheight;
+        private DevComponents.Editors.DoubleInput TXT_senswidth;
+        private DevComponents.Editors.IntegerInput TXT_imgheight;
         private DevComponents.DotNetBar.Controls.CheckBoxX ShowCameraInfo;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
@@ -1161,26 +1359,35 @@
         private DevComponents.DotNetBar.LabelX labelX13;
         private DevComponents.DotNetBar.LabelX labelX12;
         private DevComponents.DotNetBar.LabelX labelX15;
-        private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX2;
+        private DevComponents.DotNetBar.Controls.CheckBoxX ShowAdvanceOptions;
         private DevComponents.DotNetBar.LabelX labelX16;
-        private DevComponents.DotNetBar.LabelX labelX17;
-        private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX3;
-        private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX5;
-        private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX4;
+        private DevComponents.DotNetBar.Controls.CheckBoxX chk_crossgrid;
+        private DevComponents.DotNetBar.Controls.CheckBoxX chk_spiral;
+        private DevComponents.DotNetBar.Controls.CheckBoxX chk_Corridor;
         private DevComponents.DotNetBar.LabelX labelX18;
-        private DevComponents.Editors.DoubleInput doubleInput2;
-        private DevComponents.Editors.IntegerInput integerInput15;
-        private DevComponents.Editors.IntegerInput integerInput14;
-        private DevComponents.Editors.IntegerInput integerInput13;
-        private DevComponents.Editors.IntegerInput integerInput12;
-        private DevComponents.Editors.IntegerInput integerInput11;
-        private DevComponents.Editors.IntegerInput integerInput8;
-        private DevComponents.Editors.IntegerInput integerInput7;
-        private DevComponents.Editors.IntegerInput integerInput10;
-        private DevComponents.Editors.IntegerInput integerInput9;
-        private DevComponents.Editors.DoubleInput doubleInput4;
-        private DevComponents.DotNetBar.PanelEx panelEx8;
-        private DevComponents.Editors.DoubleInput doubleInput5;
-        private DevComponents.Editors.DoubleInput doubleInput3;
+        private DevComponents.Editors.DoubleInput NUM_Distance;
+        private DevComponents.Editors.IntegerInput num_corridorwidth;
+        private DevComponents.Editors.IntegerInput NUM_Lane_Dist;
+        private DevComponents.Editors.IntegerInput NUM_leadin;
+        private DevComponents.Editors.IntegerInput NUM_overshoot2;
+        private DevComponents.Editors.IntegerInput NUM_overshoot;
+        private DevComponents.Editors.DoubleInput NUM_spacing;
+        private DevComponents.Editors.IntegerInput lbl_gndelev;
+        private DevComponents.Editors.IntegerInput NUM_altitude;
+        private DevComponents.Editors.DoubleInput TXT_cmpixel;
+        private DevComponents.DotNetBar.PanelEx CorridorInfoBox;
+        private DevComponents.Editors.DoubleInput num_sidelap;
+        private DevComponents.Editors.DoubleInput num_overlap;
+        private DevComponents.DotNetBar.Controls.CheckBoxX CHK_camdirection;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx CMB_startfrom;
+        private DevComponents.DotNetBar.LabelX labelX14;
+        private DevComponents.DotNetBar.PanelEx panelEx9;
+        private DevComponents.DotNetBar.ButtonX Accept;
+        private DevComponents.Editors.IntegerInput NUM_angle;
+        private DevComponents.DotNetBar.LabelX labelX17;
+        private DevComponents.Editors.DoubleInput TXT_fovH;
+        private DevComponents.DotNetBar.LabelX labelX20;
+        private DevComponents.Editors.DoubleInput TXT_fovV;
+        private DevComponents.DotNetBar.LabelX labelX19;
     }
 }

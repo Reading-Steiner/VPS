@@ -4395,7 +4395,7 @@ namespace VPS
             if (stripButton.InvokeRequired)
             {
                 GetMenuItemCheckedCallback callback = new GetMenuItemCheckedCallback(GetMenuItemChecked);
-                IAsyncResult iar = this.BeginInvoke(callback);
+                IAsyncResult iar = this.BeginInvoke(callback, new object[] { stripButton });
                 return (bool)this.EndInvoke(iar);
             }
             else
@@ -4416,7 +4416,24 @@ namespace VPS
 
         private void LoadTiffButton_Click(object sender, EventArgs e)
         {
-
+            if (!LoadTiffButton.Checked)
+            {
+                LoadTiffButton.Checked = true;
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
+                LayerReaderDockContainerItem.Visible = true;
+                LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
+                this.LeftBar.ResumeLayout(false);
+            }
+            else
+            {
+                LoadTiffButton.Checked = false;
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
+                LayerReaderDockContainerItem.Visible = false;
+                //LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
+                this.LeftBar.ResumeLayout(false);
+            }
         }
 
         private void ZoomTiffButton_Click(object sender, EventArgs e)
@@ -4458,7 +4475,72 @@ namespace VPS
 
         private void AutoWPButton_Click(object sender, EventArgs e)
         {
-            GCSViews.FlightPlanner.instance.surveyGrid();
+            if (!AutoWPButton.Checked)
+            {
+                AutoWPButton.Checked = true;
+                //GCSViews.FlightPlanner.instance.surveyGrid();
+                GridConfig.WPListChangeHandle -= WPListChange;
+                GridConfig.WPListChangeHandle += WPListChange;
+                GCSViews.FlightPlanner.instance.PolygonListChange -= PolygonListChange;
+                GCSViews.FlightPlanner.instance.PolygonListChange += PolygonListChange;
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
+                AutoGridDockContainerItem.Visible = true;
+                LeftBar.SelectedDockContainerItem = AutoGridDockContainerItem;
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
+                this.LeftBar.ResumeLayout(false);
+
+                PolygonListChange();
+            }
+            else
+            {
+                AutoWPButton.Checked = false;
+                GridConfig.WPListChangeHandle -= WPListChange;
+                GCSViews.FlightPlanner.instance.PolygonListChange -= PolygonListChange;
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
+                GridConfig.SaveSetting();
+                AutoGridDockContainerItem.Visible = false;
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
+                this.LeftBar.ResumeLayout(false);
+            }
+        }
+
+        private void PolygonListChange()
+        {
+            List<PointLatLngAlt> polygonList = new List<PointLatLngAlt>();
+            foreach (var mark in GCSViews.FlightPlanner.instance.drawnpolygon.Points)
+            {
+                polygonList.Add(mark);
+            }
+            GridConfig.SetPolygonList(polygonList);
+        }
+
+        public delegate void WPListChangeInThread();
+        private void WPListChange()
+        {
+            if (this.InvokeRequired) {
+                WPListChangeInThread thread = new WPListChangeInThread(WPListChange);
+                this.Invoke(thread);
+            }
+            else
+            {
+                List<PointLatLngAlt> wpList = VPS.Controls.Grid.GridConfig.instance.GetWPList();
+                //GCSViews.FlightPlanner.instance.ClearMission();
+                int counter = 0;
+                int have = GCSViews.FlightPlanner.instance.Commands.Rows.Count;
+                foreach (var wp in wpList)
+                {
+                    if (counter < have)
+                        GCSViews.FlightPlanner.instance.SetWPPoint(wp.Lat, wp.Lng, (int)wp.Alt, counter);
+                    else
+                        GCSViews.FlightPlanner.instance.AddWPPoint(wp.Lat, wp.Lng, (int)wp.Alt);
+                    counter++;
+                }
+                while (counter < have)
+                {
+                    GCSViews.FlightPlanner.instance.DeleteWPPoint(counter);
+                    have--;
+                }
+            }
         }
 
         private void DeleteSelectedPolygonButton_Click(object sender, EventArgs e)

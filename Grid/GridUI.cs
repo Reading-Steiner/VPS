@@ -170,8 +170,8 @@ namespace VPS.Grid
             {
                 name = CMB_camera.Text,
                 focallen = Convert.ToSingle(NUM_focallength.Value),
-                imageheight = Convert.ToSingle(TXT_imgheight.Text),
-                imagewidth = Convert.ToSingle(TXT_imgwidth.Text),
+                imageheight = Convert.ToInt32(TXT_imgheight.Text),
+                imagewidth = Convert.ToInt32(TXT_imgwidth.Text),
                 sensorheight = Convert.ToSingle(TXT_sensheight.Text),
                 sensorwidth = Convert.ToSingle(TXT_senswidth.Text)
             };
@@ -585,10 +585,10 @@ namespace VPS.Grid
                                                         camera.name = xmlreader.ReadString();
                                                         break;
                                                     case "imgw":
-                                                        camera.imagewidth = float.Parse(xmlreader.ReadString(), new System.Globalization.CultureInfo("en-US"));
+                                                        camera.imagewidth = int.Parse(xmlreader.ReadString(), new System.Globalization.CultureInfo("en-US"));
                                                         break;
                                                     case "imgh":
-                                                        camera.imageheight = float.Parse(xmlreader.ReadString(), new System.Globalization.CultureInfo("en-US"));
+                                                        camera.imageheight = int.Parse(xmlreader.ReadString(), new System.Globalization.CultureInfo("en-US"));
                                                         break;
                                                     case "senw":
                                                         camera.sensorwidth = float.Parse(xmlreader.ReadString(), new System.Globalization.CultureInfo("en-US"));
@@ -1622,8 +1622,8 @@ namespace VPS.Grid
             {
                 camera.name = CMB_camera.Text;
                 camera.focallen = (float)NUM_focallength.Value;
-                camera.imageheight = float.Parse(TXT_imgheight.Text);
-                camera.imagewidth = float.Parse(TXT_imgwidth.Text);
+                camera.imageheight = int.Parse(TXT_imgheight.Text);
+                camera.imagewidth = int.Parse(TXT_imgwidth.Text);
                 camera.sensorheight = float.Parse(TXT_sensheight.Text);
                 camera.sensorwidth = float.Parse(TXT_senswidth.Text);
             }
@@ -1949,6 +1949,5 @@ namespace VPS.Grid
             // doCalc
             domainUpDown1_ValueChanged(sender, e);
         }
-
     }
 }

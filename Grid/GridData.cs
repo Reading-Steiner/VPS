@@ -3,6 +3,66 @@ using System.Collections.Generic;
 
 namespace VPS.Grid
 {
+    public struct NewGridData
+    {
+        public List<PointLatLngAlt> poly;
+        //simple
+        public string camera;
+        public int alt;
+        public int angle;
+        public bool camdir;
+        //public decimal speed;
+        //public bool usespeed;
+        //public bool autotakeoff;
+        //public bool autotakeoff_RTL;
+
+        //public decimal splitmission;
+
+        //public bool internals;
+        //public bool footprints;
+        public bool advanced;
+
+        //options
+        public double dist;
+        public int overshoot1;
+        public int overshoot2;
+        public int leadin;
+        public string startfrom;
+        public double overlap;
+        public double sidelap;
+        public double spacing;
+        public bool crossgrid;
+        public bool spiral;
+        public bool corridor;
+        public int corriidorwidth;
+        // Copter Settings
+        //public decimal copter_delay;
+        //public bool copter_headinghold_chk;
+        //public decimal copter_headinghold;
+        //public bool copter_spline;
+        // plane settings
+        //public bool alternateLanes;
+        public int minlaneseparation;
+
+        // camera config
+        public bool trigdist;
+        public bool digicam;
+        public bool repeatservo;
+
+        public bool breaktrigdist;
+
+        //public decimal repeatservo_no;
+        //public decimal repeatservo_pwm;
+        //public decimal repeatservo_cycle;
+
+        // do set servo
+        //public decimal setservo_no;
+        //public decimal setservo_low;
+        //public decimal setservo_high;
+
+
+    }
+
     public struct GridData
     {
         public List<PointLatLngAlt> poly;

@@ -199,7 +199,11 @@ namespace VPS.Controls.Layer
 
         private void LoadImage()
         {
-            string openPath = OpenFilePath.Text;
+            string openPath = "";
+            if (ImageSave.Checked)
+                openPath = GetSaveFilePath();
+            else
+                openPath = OpenFilePath.Text;
             if (UsingTransparent.Checked)
             {
                 MainV2.instance.AddLayerOverlay(openPath, PointLeftTop, ColorPickerButton.SelectedColor);

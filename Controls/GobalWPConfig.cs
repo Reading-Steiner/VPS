@@ -24,8 +24,8 @@ namespace VPS.Controls
                 {
                     name = CMB_camera.GetTextContent(),
                     focallen = Convert.ToSingle(CameraFocus.GetTextContent()),
-                    imageheight = Convert.ToSingle(ImageHeight.GetTextContent()),
-                    imagewidth = Convert.ToSingle(ImageWidth.GetTextContent()),
+                    imageheight = Convert.ToInt32(ImageHeight.GetTextContent()),
+                    imagewidth = Convert.ToInt32(ImageWidth.GetTextContent()),
                     sensorheight = Convert.ToSingle(CameraSensorHeight.GetTextContent()),
                     sensorwidth = Convert.ToSingle(CameraSensorWidth.GetTextContent())
                 };
@@ -359,10 +359,10 @@ namespace VPS.Controls
                                                         camera.name = xmlreader.ReadString();
                                                         break;
                                                     case "imgw":
-                                                        camera.imagewidth = float.Parse(xmlreader.ReadString(), new System.Globalization.CultureInfo("en-US"));
+                                                        camera.imagewidth = int.Parse(xmlreader.ReadString(), new System.Globalization.CultureInfo("en-US"));
                                                         break;
                                                     case "imgh":
-                                                        camera.imageheight = float.Parse(xmlreader.ReadString(), new System.Globalization.CultureInfo("en-US"));
+                                                        camera.imageheight = int.Parse(xmlreader.ReadString(), new System.Globalization.CultureInfo("en-US"));
                                                         break;
                                                     case "senw":
                                                         camera.sensorwidth = float.Parse(xmlreader.ReadString(), new System.Globalization.CultureInfo("en-US"));
