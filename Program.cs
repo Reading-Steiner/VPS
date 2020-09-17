@@ -95,15 +95,15 @@ namespace VPS
         public static void Start(string[] args)
         {
             Program.args = args;
-            Console.WriteLine(
-                "If your error is about Microsoft.DirectX.DirectInput, please install the latest directx redist from here http://www.microsoft.com/en-us/download/details.aspx?id=35 \n\n");
-            Console.WriteLine("Debug under mono    MONO_LOG_LEVEL=debug mono VPS.exe");
-            Console.WriteLine("To fix any filename case issues under mono use    export MONO_IOMAP=drive:case");
-
 
             var t = Type.GetType("Mono.Runtime");
             MONO = (t != null);
 
+            if (!MONO) // windows only
+            {
+                int win = NativeMethods.FindWindow("ConsoleWindowClass", null);
+                NativeMethods.ShowWindow(win, NativeMethods.SW_HIDE); // hide window
+            }
             Directory.SetCurrentDirectory(Settings.GetRunningDirectory());
 
             var listener = new TextWriterTraceListener(Settings.GetDataDirectory() + Path.DirectorySeparatorChar + "trace.log",

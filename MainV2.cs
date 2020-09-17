@@ -365,7 +365,7 @@ namespace VPS
 
         public MainV2()
         {
-            log.Info("Mainv2 ctor");
+
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
@@ -517,9 +517,6 @@ namespace VPS
 
             if (!MONO) // windows only
             {
-                    int win = NativeMethods.FindWindow("ConsoleWindowClass", null);
-                    NativeMethods.ShowWindow(win, NativeMethods.SW_HIDE); // hide window
-
                 // prevent system from sleeping while mp open
                 var previousExecutionState =
                     NativeMethods.SetThreadExecutionState(NativeMethods.ES_CONTINUOUS | NativeMethods.ES_SYSTEM_REQUIRED);
