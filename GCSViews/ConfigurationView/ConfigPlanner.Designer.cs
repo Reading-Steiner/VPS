@@ -611,7 +611,7 @@
             this.CHK_showairports.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CHK_showairports.Name = "CHK_showairports";
             this.CHK_showairports.UseVisualStyleBackColor = true;
-            this.CHK_showairports.CheckedChanged += new System.EventHandler(this.CHK_showairports_CheckedChanged);
+            //this.CHK_showairports.CheckedChanged += new System.EventHandler(this.CHK_showairports_CheckedChanged);
             // 
             // chk_ADSB
             // 

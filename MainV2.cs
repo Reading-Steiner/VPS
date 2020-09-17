@@ -66,7 +66,7 @@ namespace VPS
         }
 
 
-        public static bool ShowAirports { get; set; }
+        //public static bool ShowAirports { get; set; }
         public static bool ShowTFR { get; set; }
 
         private Utilities.adsb _adsb;
@@ -378,7 +378,7 @@ namespace VPS
             // force language to be loaded
             L10N.GetConfigLang();
 
-            ShowAirports = true;
+            //ShowAirports = true;
 
             // setup adsb
             Utilities.adsb.UpdatePlanePosition += adsb_UpdatePlanePosition;
@@ -517,14 +517,8 @@ namespace VPS
 
             if (!MONO) // windows only
             {
-                if (Settings.Instance["showconsole"] != null && Settings.Instance["showconsole"].ToString() == "True")
-                {
-                }
-                else
-                {
                     int win = NativeMethods.FindWindow("ConsoleWindowClass", null);
                     NativeMethods.ShowWindow(win, NativeMethods.SW_HIDE); // hide window
-                }
 
                 // prevent system from sleeping while mp open
                 var previousExecutionState =
@@ -533,10 +527,10 @@ namespace VPS
 
             ChangeUnits();
 
-            if (Settings.Instance["showairports"] != null)
-            {
-                MainV2.ShowAirports = bool.Parse(Settings.Instance["showairports"]);
-            }
+            //if (Settings.Instance["showairports"] != null)
+            //{
+            //    MainV2.ShowAirports = bool.Parse(Settings.Instance["showairports"]);
+            //}
 
             // set default
             ShowTFR = true;

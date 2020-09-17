@@ -841,8 +841,8 @@ namespace VPS.GCSViews.ConfigurationView
 
         private void CHK_showairports_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.Instance["showairports"] = CHK_showairports.Checked.ToString();
-            MainV2.ShowAirports = CHK_showairports.Checked;
+            //Settings.Instance["showairports"] = CHK_showairports.Checked.ToString();
+            //MainV2.ShowAirports = CHK_showairports.Checked;
         }
 
         private void chk_ADSB_CheckedChanged(object sender, EventArgs e)

@@ -3219,27 +3219,27 @@ namespace VPS.GCSViews
                             fenceoverlay.overlay.ForceUpdate();
 
                             // optional on Flight data
-                            if (MainV2.ShowAirports)
-                            {
-                                // airports
-                                foreach (var item in Airports.getAirports(MainMap.Position).ToArray())
-                                {
-                                    try
-                                    {
-                                        rallypointoverlay.Markers.Add(new GMapMarkerAirport(item)
-                                        {
-                                            ToolTipText = item.Tag,
-                                            ToolTipMode = MarkerTooltipMode.OnMouseOver
-                                        });
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        log.Error(e);
-                                    }
-                                }
-                            }
+                            //if (MainV2.ShowAirports)
+                            //{
+                            //    // airports
+                            //    foreach (var item in Airports.getAirports(MainMap.Position).ToArray())
+                            //    {
+                            //        try
+                            //        {
+                            //            rallypointoverlay.Markers.Add(new GMapMarkerAirport(item)
+                            //            {
+                            //                ToolTipText = item.Tag,
+                            //                ToolTipMode = MarkerTooltipMode.OnMouseOver
+                            //            });
+                            //        }
+                            //        catch (Exception e)
+                            //        {
+                            //            log.Error(e);
+                            //        }
+                            //    }
+                            //}
 
-                            waypoints = DateTime.Now;
+                waypoints = DateTime.Now;
                         }
 
                         updateClearRoutesMarkers();

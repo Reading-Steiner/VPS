@@ -61,7 +61,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panelEx3 = new DevComponents.DotNetBar.PanelEx();
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
-            this.checkBoxX2 = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.SettingDefaultMap = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.TransparentBox = new DevComponents.DotNetBar.PanelEx();
             this.TransparentDisplay = new DevComponents.DotNetBar.ColorPickers.ColorCombControl();
             this.ColorPickerButton = new DevComponents.DotNetBar.ColorPickerButton();
@@ -496,7 +496,7 @@
             this.panelEx1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.panelEx1.Controls.Add(this.checkBoxX2);
+            this.panelEx1.Controls.Add(this.SettingDefaultMap);
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEx1.Location = new System.Drawing.Point(0, 77);
             this.panelEx1.Name = "panelEx1";
@@ -508,21 +508,21 @@
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 34;
             // 
-            // checkBoxX2
+            // SettingDefaultMap
             // 
             // 
             // 
             // 
-            this.checkBoxX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.checkBoxX2.Checked = true;
-            this.checkBoxX2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxX2.CheckValue = "Y";
-            this.checkBoxX2.Location = new System.Drawing.Point(39, 4);
-            this.checkBoxX2.Name = "checkBoxX2";
-            this.checkBoxX2.Size = new System.Drawing.Size(113, 18);
-            this.checkBoxX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.checkBoxX2.TabIndex = 30;
-            this.checkBoxX2.Text = "设为默认地图";
+            this.SettingDefaultMap.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.SettingDefaultMap.Checked = true;
+            this.SettingDefaultMap.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.SettingDefaultMap.CheckValue = "Y";
+            this.SettingDefaultMap.Location = new System.Drawing.Point(39, 4);
+            this.SettingDefaultMap.Name = "SettingDefaultMap";
+            this.SettingDefaultMap.Size = new System.Drawing.Size(113, 18);
+            this.SettingDefaultMap.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.SettingDefaultMap.TabIndex = 30;
+            this.SettingDefaultMap.Text = "设为默认地图";
             // 
             // TransparentBox
             // 
@@ -929,9 +929,9 @@
             this.OpenFile.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.OpenFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.OpenFile.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.OpenFile.Location = new System.Drawing.Point(244, 21);
+            this.OpenFile.Location = new System.Drawing.Point(242, 21);
             this.OpenFile.Name = "OpenFile";
-            this.OpenFile.Size = new System.Drawing.Size(52, 23);
+            this.OpenFile.Size = new System.Drawing.Size(54, 23);
             this.OpenFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.OpenFile.TabIndex = 17;
             this.OpenFile.Text = "打开";
@@ -950,7 +950,7 @@
             this.OpenFilePath.ForeColor = System.Drawing.SystemColors.ControlText;
             this.OpenFilePath.Location = new System.Drawing.Point(12, 22);
             this.OpenFilePath.Name = "OpenFilePath";
-            this.OpenFilePath.Size = new System.Drawing.Size(232, 21);
+            this.OpenFilePath.Size = new System.Drawing.Size(230, 21);
             this.OpenFilePath.TabIndex = 16;
             this.OpenFilePath.TextChanged += new System.EventHandler(this.OpenFilePath_TextChanged);
             // 
@@ -1153,7 +1153,7 @@
         private System.Windows.Forms.Label label6;
         private DevComponents.DotNetBar.ButtonX Accept;
         private DevComponents.DotNetBar.PanelEx panelEx1;
-        private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX2;
+        private DevComponents.DotNetBar.Controls.CheckBoxX SettingDefaultMap;
         private DevComponents.DotNetBar.ButtonX buttonX1;
         private DevComponents.DotNetBar.PanelEx panelEx9;
     }

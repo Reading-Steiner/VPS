@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using DevComponents.DotNetBar;
 using System.Text.RegularExpressions;
 using System.IO;
+using VPS.Utilities;
 
 namespace VPS.Controls.Layer
 {
@@ -211,6 +212,10 @@ namespace VPS.Controls.Layer
             else
             {
                 MainV2.instance.AddLayerOverlay(openPath, PointLeftTop, Color.Transparent);
+            }
+            if (SettingDefaultMap.Checked)
+            {
+                Settings.Instance["defaultLayer"] = openPath;
             }
         }
 

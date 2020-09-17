@@ -78,7 +78,7 @@ namespace VPS.GCSViews
         internal string wpfilename;
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private static Propagation prop;
-        public static GMapOverlay airportsoverlay;
+        //public static GMapOverlay airportsoverlay;
         public static GMapOverlay objectsoverlay;
         public static GMapOverlay poioverlay = new GMapOverlay("POI");
         public static GMapOverlay polygonsoverlay;
@@ -292,8 +292,8 @@ namespace VPS.GCSViews
             polygonsoverlay = new GMapOverlay("polygons");
             MainMap.Overlays.Add(polygonsoverlay);
 
-            airportsoverlay = new GMapOverlay("airports");
-            MainMap.Overlays.Add(airportsoverlay);
+            //airportsoverlay = new GMapOverlay("airports");
+            //MainMap.Overlays.Add(airportsoverlay);
 
             objectsoverlay = new GMapOverlay("objects");
             MainMap.Overlays.Add(objectsoverlay);
@@ -8869,17 +8869,17 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
             // always show on planner view
             //if (MainV2.ShowAirports)
-            {
-                airportsoverlay.Clear();
-                foreach (var item in Airports.getAirports(MainMap.Position))
-                {
-                    airportsoverlay.Markers.Add(new GMapMarkerAirport(item)
-                    {
-                        ToolTipText = item.Tag,
-                        ToolTipMode = MarkerTooltipMode.OnMouseOver
-                    });
-                }
-            }
+            //{
+            //    airportsoverlay.Clear();
+            //    foreach (var item in Airports.getAirports(MainMap.Position))
+            //    {
+            //        airportsoverlay.Markers.Add(new GMapMarkerAirport(item)
+            //        {
+            //            ToolTipText = item.Tag,
+            //            ToolTipMode = MarkerTooltipMode.OnMouseOver
+            //        });
+            //    }
+            //}
         }
 
         private void MainMap_OnMapTypeChanged(GMapProvider type)
