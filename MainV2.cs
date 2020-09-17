@@ -509,6 +509,14 @@ namespace VPS
             {
                 changelanguage(CultureInfoEx.GetCultureInfo(Settings.Instance["language"]));
             }
+
+            if (Settings.Instance["formStyle"] != null)
+            {
+                eStyle style = (eStyle)Enum.Parse(typeof(eStyle), Settings.Instance["formstyle"]);
+                // Using StyleManager change the style and color tinting
+                this.styleManager.ManagerStyle = style;
+                this.styleManager.ManagerColorTint = System.Drawing.Color.Empty;
+            }
             //if (splash != null)
             //{
             //    this.Text = splash?.Text;
@@ -4107,6 +4115,7 @@ namespace VPS
             if (source.CommandParameter is string)
             {
                 eStyle style = (eStyle)Enum.Parse(typeof(eStyle), source.CommandParameter.ToString());
+                Settings.Instance["formStyle"] = source.CommandParameter.ToString();
                 // Using StyleManager change the style and color tinting
                 this.styleManager.ManagerStyle = style;
                 this.styleManager.ManagerColorTint = System.Drawing.Color.Empty;
