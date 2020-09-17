@@ -35,9 +35,9 @@ namespace VPS.GeoRef
 
             VPS.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
 
-            myGMAP1.MapProvider = MainV2.instance.FlightData.MainMap.MapProvider;
-            myGMAP1.MinZoom = MainV2.instance.FlightData.MainMap.MinZoom;
-            myGMAP1.MaxZoom = MainV2.instance.FlightData.MainMap.MaxZoom;
+            myGMAP1.MapProvider = MainV2.instance.FlightPlanner.MainMap.MapProvider;
+            myGMAP1.MinZoom = MainV2.instance.FlightPlanner.MainMap.MinZoom;
+            myGMAP1.MaxZoom = MainV2.instance.FlightPlanner.MainMap.MaxZoom;
 
             GMapOverlay overlay = new GMapOverlay();
             myGMAP1.Overlays.Add(overlay);

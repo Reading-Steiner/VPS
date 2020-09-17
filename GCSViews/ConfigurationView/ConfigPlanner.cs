@@ -682,10 +682,10 @@ namespace VPS.GCSViews.ConfigurationView
 
         private void CHK_maprotation_CheckedChanged(object sender, EventArgs e)
         {
-            if (startup)
-                return;
-            Settings.Instance["CHK_maprotation"] = CHK_maprotation.Checked.ToString();
-            FlightData.instance.MainMap.Bearing = 0;
+            //if (startup)
+            //    return;
+            //Settings.Instance["CHK_maprotation"] = CHK_maprotation.Checked.ToString();
+            //FlightData.instance.MainMap.Bearing = 0;
         }
 
         private static void SetCheckboxFromConfig(string configKey, CheckBox chk)

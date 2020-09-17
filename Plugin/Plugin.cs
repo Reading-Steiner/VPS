@@ -127,7 +127,7 @@ namespace VPS.Plugin
         /// </summary>
         public ContextMenuStrip FDMenuMap
         {
-            get { return MainV2.instance.FlightData.contextMenuStripMap; }
+            get { return GCSViews.FlightData.instance.contextMenuStripMap; }
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace VPS.Plugin
         /// </summary>
         public PointLatLng FDMenuMapPosition
         {
-            get { return MainV2.instance.FlightData.MouseDownStart; }
+            get { return GCSViews.FlightData.instance.MouseDownStart; }
         }
 
         public GMapProvider FDMapType
@@ -148,7 +148,7 @@ namespace VPS.Plugin
         /// </summary>
         public ContextMenuStrip FDMenuHud
         {
-            get { return MainV2.instance.FlightData.contextMenuStripHud; }
+            get { return GCSViews.FlightData.instance.contextMenuStripHud; }
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace VPS.Plugin
         /// </summary>
         public GMapControl FDGMapControl
         {
-            get { return MainV2.instance.FlightData.MainMap; }
+            get { return GCSViews.FlightData.DefaultMap; }
         }
 
         /// <summary>

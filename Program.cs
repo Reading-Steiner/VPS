@@ -42,22 +42,22 @@ namespace VPS
         /// <summary>
         /// MissionPlanner text image
         /// </summary>
-        public static Image Logo = null;
+        //public static Image Logo = null;
         /// <summary>
         /// Ardupilot logo
         /// </summary>
-        public static Image Logo2 = null;
+        //public static Image Logo2 = null;
         /// <summary>
         /// icon
         /// </summary>
-        public static Image IconFile = null;
+        //public static Image IconFile = null;
 
         public static Splash Splash;
 
         internal static Thread Thread;
 
         public static string[] args = new string[] { };
-        public static Bitmap SplashBG = null;
+        //public static Bitmap SplashBG = null;
 
         public static string[] names = new string[] { "VVVVZ" };
         public static bool MONO = false;
@@ -104,6 +104,28 @@ namespace VPS
                 int win = NativeMethods.FindWindow("ConsoleWindowClass", null);
                 NativeMethods.ShowWindow(win, NativeMethods.SW_HIDE); // hide window
             }
+
+            Thread = Thread.CurrentThread;
+
+            Splash = new VPS.Splash();
+
+            //if (IconFile != null)
+            //    Splash.Icon = Icon.FromHandle(((Bitmap)IconFile).GetHicon());
+
+            name = "Visiontek Photogrammetry Simulation System";
+
+            string strVersion = File.Exists("version.txt") ? 
+                File.ReadAllText("version.txt") : 
+                System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+            Splash.Text = name + " V" + Application.ProductVersion;
+            Splash.pictureBox1.Visible = false;
+            Splash.Show();
+
+            if (Debugger.IsAttached)
+                Splash.TopMost = false;
+
+            Splash.setDisplayLog("正在初始化配置...");
             Directory.SetCurrentDirectory(Settings.GetRunningDirectory());
 
             var listener = new TextWriterTraceListener(Settings.GetDataDirectory() + Path.DirectorySeparatorChar + "trace.log",
@@ -112,13 +134,11 @@ namespace VPS
             if (args.Any(a=>a.Contains("trace")))
                 Trace.Listeners.Add(listener);
 
-            Thread = Thread.CurrentThread;
-
-            System.Windows.Forms.Application.EnableVisualStyles();
             XmlConfigurator.Configure(LogManager.GetRepository(Assembly.GetCallingAssembly()));
-            log.Info("******************* Logging Configured *******************");
 
             ServicePointManager.DefaultConnectionLimit = 10;
+
+            System.Windows.Forms.Application.EnableVisualStyles();
 
             System.Windows.Forms.Application.ThreadException += Application_ThreadException;
 
@@ -134,41 +154,41 @@ namespace VPS
             //    return;
             //}
 
-            name = "Visiontek Photogrammetry Simulation System";
 
-            try
-            {
-                if (File.Exists(Settings.GetRunningDirectory() + "logo.txt"))
-                    name = File.ReadAllLines(Settings.GetRunningDirectory() + "logo.txt",
-                        Encoding.UTF8)[0];
-            }
-            catch
-            {
-            }
+            //try
+            //{
+            //    if (File.Exists(Settings.GetRunningDirectory() + "logo.txt"))
+            //        name = File.ReadAllLines(Settings.GetRunningDirectory() + "logo.txt",
+            //            Encoding.UTF8)[0];
+            //}
+            //catch
+            //{
+            //}
 
-            if (File.Exists(Settings.GetRunningDirectory() + "logo.png"))
-                Logo = new Bitmap(Settings.GetRunningDirectory() + "logo.png");
+            //if (File.Exists(Settings.GetRunningDirectory() + "logo.png"))
+            //    Logo = new Bitmap(Settings.GetRunningDirectory() + "logo.png");
 
-            if (File.Exists(Settings.GetRunningDirectory() + "logo2.png"))
-                Logo2 = new Bitmap(Settings.GetRunningDirectory() + "logo2.png");
+            //if (File.Exists(Settings.GetRunningDirectory() + "logo2.png"))
+            //    Logo2 = new Bitmap(Settings.GetRunningDirectory() + "logo2.png");
 
-            if (File.Exists(Settings.GetRunningDirectory() + "icon.png"))
-            {
-                // 128*128
-                IconFile = new Bitmap(Settings.GetRunningDirectory() + "icon.png");
-            }
-            else
-            {
-                IconFile = VPS.Properties.Resources.mpdesktop.ToBitmap();
-            }
+            //if (File.Exists(Settings.GetRunningDirectory() + "icon.png"))
+            //{
+            //    // 128*128
+            //    IconFile = new Bitmap(Settings.GetRunningDirectory() + "icon.png");
+            //}
+            //else
+            //{
+            //    IconFile = VPS.Properties.Resources.mpdesktop.ToBitmap();
+            //}
 
-            if (File.Exists(Settings.GetRunningDirectory() + "splashbg.png")) // 600*375
-                SplashBG = new Bitmap(Settings.GetRunningDirectory() + "splashbg.png");
+            //if (File.Exists(Settings.GetRunningDirectory() + "splashbg.png")) // 600*375
+            //    SplashBG = new Bitmap(Settings.GetRunningDirectory() + "splashbg.png");
 
+            Splash.setDisplayLog("加载图形库...");
             try
             {
                 var file = NativeLibrary.GetLibraryPathname("libSkiaSharp");
-                log.Info(file);
+                //log.Info(file);
                 IntPtr ptr;
                 if(MONO)
                     ptr = NativeLibrary.dlopen(file+".so", NativeLibrary.RTLD_NOW);
@@ -185,24 +205,7 @@ namespace VPS
                 log.Error(ex);
             }
 
-            Splash = new VPS.Splash();
-            if (SplashBG != null)
-            {
-                Splash.BackgroundImage = SplashBG;
-                Splash.pictureBox1.Visible = false;
-            }
 
-            if (IconFile != null)
-                Splash.Icon = Icon.FromHandle(((Bitmap)IconFile).GetHicon());
-
-            string strVersion = File.Exists("version.txt")
-                ? File.ReadAllText("version.txt")
-                : System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Splash.Text = name + " V" + Application.ProductVersion;
-            Splash.Show();
-
-            if (Debugger.IsAttached)
-                Splash.TopMost = false;
 
             Application.DoEvents();
             Application.DoEvents();
@@ -214,10 +217,10 @@ namespace VPS
                 };
 
             // setup theme provider
-            MsgBox.CustomMessageBox.ApplyTheme += VPS.Utilities.ThemeManager.ApplyThemeTo;
-            Controls.MainSwitcher.ApplyTheme += VPS.Utilities.ThemeManager.ApplyThemeTo;
-            VPS.Controls.InputBox.ApplyTheme += VPS.Utilities.ThemeManager.ApplyThemeTo;
-            Controls.BackstageView.BackstageViewPage.ApplyTheme += VPS.Utilities.ThemeManager.ApplyThemeTo;
+            //MsgBox.CustomMessageBox.ApplyTheme += VPS.Utilities.ThemeManager.ApplyThemeTo;
+            //Controls.MainSwitcher.ApplyTheme += VPS.Utilities.ThemeManager.ApplyThemeTo;
+            //VPS.Controls.InputBox.ApplyTheme += VPS.Utilities.ThemeManager.ApplyThemeTo;
+            //Controls.BackstageView.BackstageViewPage.ApplyTheme += VPS.Utilities.ThemeManager.ApplyThemeTo;
 
             Controls.MainSwitcher.Tracking += VPS.Utilities.Tracking.AddPage;
             Controls.BackstageView.BackstageView.Tracking += VPS.Utilities.Tracking.AddPage;
@@ -225,11 +228,12 @@ namespace VPS
             // setup settings provider
             VPS.Comms.CommsBase.Settings += CommsBase_Settings;
             VPS.Comms.CommsBase.InputBoxShow += CommsBaseOnInputBoxShow;
-            VPS.Comms.CommsBase.ApplyTheme += VPS.Utilities.ThemeManager.ApplyThemeTo;
+            //VPS.Comms.CommsBase.ApplyTheme += VPS.Utilities.ThemeManager.ApplyThemeTo;
             VPS.Comms.SerialPort.GetDeviceName += SerialPort_GetDeviceName;
 
             VPS.Utilities.Extensions.MessageLoop = new Action(() => Application.DoEvents());
 
+            Splash.setDisplayLog("加载地图资源...");
             // set the cache provider to my custom version
             GMap.NET.GMaps.Instance.PrimaryCache = new Maps.MyImageCache();
             // add my custom map providers
@@ -241,15 +245,15 @@ namespace VPS
             GMap.NET.MapProviders.GMapProviders.List.Add(Maps.MapBox.Instance);
             GMap.NET.MapProviders.GMapProviders.List.Add(Maps.MapboxNoFly.Instance);
             GMap.NET.MapProviders.GMapProviders.List.Add(Maps.MapboxUser.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Lake.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1974.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1979.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1984.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1988.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Relief.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Slopezone.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Sea.Instance);
+            //GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan.Instance);
+            //GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Lake.Instance);
+            //GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1974.Instance);
+            //GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1979.Instance);
+            //GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1984.Instance);
+            //GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1988.Instance);
+            //GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Relief.Instance);
+            //GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Slopezone.Instance);
+            //GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Sea.Instance);
 
             GoogleMapProvider.APIKey = "AIzaSyA5nFp39fEHruCezXnG3r8rGyZtuAkmCug";
             if (Settings.Instance["GoogleApiKey"] != null) GoogleMapProvider.APIKey = Settings.Instance["GoogleApiKey"];
@@ -278,6 +282,7 @@ namespace VPS
             WebRequest.DefaultWebProxy = WebRequest.GetSystemWebProxy();
             WebRequest.DefaultWebProxy.Credentials = CredentialCache.DefaultNetworkCredentials;
 
+            Splash.setDisplayLog("验证网络配置...");
             if (name == "VVVVZ")
             {
                 // set pw
@@ -289,13 +294,14 @@ namespace VPS
                 System.Configuration.ConfigurationManager.AppSettings["UpdateLocationVersion"] = "";
             }
 
+            Splash.setDisplayLog("清理缓存文件...");
             CleanupFiles();
 
-            log.InfoFormat("64bit os {0}, 64bit process {1}, OS Arch {2}", System.Environment.Is64BitOperatingSystem,
-                System.Environment.Is64BitProcess, RuntimeInformation.OSArchitecture);
+            //log.InfoFormat("64bit os {0}, 64bit process {1}, OS Arch {2}", System.Environment.Is64BitOperatingSystem,
+            //    System.Environment.Is64BitProcess, RuntimeInformation.OSArchitecture);
 
-            log.InfoFormat("Runtime Version {0}",
-                System.Reflection.Assembly.GetExecutingAssembly().ImageRuntimeVersion);
+            //log.InfoFormat("Runtime Version {0}",
+            //    System.Reflection.Assembly.GetExecutingAssembly().ImageRuntimeVersion);
 
             try
             {
@@ -305,6 +311,7 @@ namespace VPS
             {
             }
 
+            Splash.setDisplayLog("验证运行库...");
             Type type = Type.GetType("Mono.Runtime");
             if (type != null)
             {
@@ -328,6 +335,7 @@ namespace VPS
 
             try
             {
+                Splash.setDisplayLog("加载主界面...");
                 Thread.CurrentThread.Name = "Base Thread";
                 Application.Run(new MainV2());
             }
@@ -340,21 +348,21 @@ namespace VPS
                 Console.ReadLine();
             }
 
-            try
-            {
-                // kill sim background process if its still running
-                GCSViews.SITL.simulator.ForEach(a =>
-                {
-                    try
-                    {
-                        a.Kill();
-                    }
-                    catch { }
-                });
-            }
-            catch
-            {
-            }
+            //try
+            //{
+            //    // kill sim background process if its still running
+            //    GCSViews.SITL.simulator.ForEach(a =>
+            //    {
+            //        try
+            //        {
+            //            a.Kill();
+            //        }
+            //        catch { }
+            //    });
+            //}
+            //catch
+            //{
+            //}
         }
 
         private static string SerialPort_GetDeviceName(string port)
