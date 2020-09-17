@@ -237,7 +237,7 @@ namespace VPS
         public GCSViews.FlightData FlightData;
         MemoryLayerCache layerCache;
         public GCSViews.FlightPlanner FlightPlanner;
-        GCSViews.SITL Simulation;
+        //GCSViews.SITL Simulation;
 
         private Form connectionStatsForm;
         private ConnectionStats _connectionStats;
@@ -560,14 +560,14 @@ namespace VPS
                 log.Info("Create FP");
                 FlightPlanner = new GCSViews.FlightPlanner();
                 //Configuration = new GCSViews.ConfigurationView.Setup();
-                log.Info("Create SIM");
-                Simulation = new GCSViews.SITL();
+                //log.Info("Create SIM");
+                //Simulation = new GCSViews.SITL();
                 //Firmware = new GCSViews.Firmware();
                 //Terminal = new GCSViews.Terminal();
 
                 FlightData.Width = MyView.Width;
                 FlightPlanner.Width = MyView.Width;
-                Simulation.Width = MyView.Width;
+                //Simulation.Width = MyView.Width;
             }
             catch (ArgumentException e)
             {
@@ -2112,14 +2112,14 @@ namespace VPS
             catch
             {
             }
-            log.Info("closing sim");
-            try
-            {
-                Simulation.Dispose();
-            }
-            catch
-            {
-            }
+            //log.Info("closing sim");
+            //try
+            //{
+            //    Simulation.Dispose();
+            //}
+            //catch
+            //{
+            //}
 
             try
             {
@@ -2968,7 +2968,7 @@ namespace VPS
             MyView.AddScreen(new MainSwitcher.Screen("FlightPlanner", FlightPlanner, true));
             MyView.AddScreen(new MainSwitcher.Screen("HWConfig", typeof(GCSViews.InitialSetup), false));
             MyView.AddScreen(new MainSwitcher.Screen("SWConfig", typeof(GCSViews.SoftwareConfig), false));
-            MyView.AddScreen(new MainSwitcher.Screen("Simulation", Simulation, true));
+            //MyView.AddScreen(new MainSwitcher.Screen("Simulation", Simulation, true));
             MyView.AddScreen(new MainSwitcher.Screen("Help", typeof(GCSViews.Help), false));
 
             // hide simulation under mono
@@ -3910,7 +3910,7 @@ namespace VPS
                 Settings.Instance["language"] = ci.Name;
                 //System.Threading.Thread.CurrentThread.CurrentCulture = ci;
 
-                HashSet<Control> views = new HashSet<Control> { this, FlightData, FlightPlanner, Simulation };
+                HashSet<Control> views = new HashSet<Control> { this, FlightData, FlightPlanner/*, Simulation*/ };
 
                 foreach (Control view in MyView.Controls)
                     views.Add(view);
