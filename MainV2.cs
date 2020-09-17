@@ -1009,9 +1009,6 @@ namespace VPS
         }
         private void SetInitHandler()
         {
-            GCSViews.FlightData.instance.OpenFlightPlannerHandler += SetFlightPlannerMenu;
-            GCSViews.FlightData.instance.CloseFlightPlannerHandler += SetFlightDataMenu;
-
             OutDrawPolygonState();
             FlightPlanner.ToDrawPolygonHandle += ToDrawPolygonState;
             FlightPlanner.OutDrawPolygonHandle += OutDrawPolygonState;
@@ -1022,13 +1019,11 @@ namespace VPS
             NoLoadLayerHandle += SetNoLaodLayerState;
             LoadLayerHandle += SetLaodLayerState;
 
-            SetFlightDataMenu();
         }
 
         private delegate void SetCheckedCallback(HLToolStripButton stripButton, bool value);
         private void SetHLToolStripButtonChecked(HLToolStripButton stripButton, bool value)
         {
-
             stripButton.MyChecked = value;
         }
 
@@ -1040,27 +1035,23 @@ namespace VPS
 
         private void SetLaodLayerState()
         {
-            SetHLToolStripButtonChecked(this.MenuLoadLayer, true);
-            this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible;
+            this.ZoomTiffButton.Enabled = true;
+            this.ZoomToButton.Enabled = true;
         }
 
         private void SetNoLaodLayerState()
         {
-            SetHLToolStripButtonChecked(this.MenuLoadLayer, false);
-            this.MenuZoomToLayer.Visible = false;
+            this.ZoomTiffButton.Enabled = false;
+            this.ZoomToButton.Enabled = false;
         }
 
         private void ToDrawPolygonState()
         {
-            //SetHLToolStripButtonChecked(this.MenuDrawPolygon, true);
-            //this.MenuClearPolygon.Visible = true;
             SetMenuItemChecked(this.DrawPolygonButton, true);
         }
 
         private void OutDrawPolygonState()
         {
-            //SetHLToolStripButtonChecked(this.MenuDrawPolygon, false);
-            //this.MenuClearPolygon.Visible = false;
             SetMenuItemChecked(this.DrawPolygonButton, false);
         }
 
@@ -1074,59 +1065,7 @@ namespace VPS
             SetMenuItemChecked(this.AddWPButton, false);
         }
 
-        private void SetFlightPlannerMenu()
-        {
-            this.MenuFlightPlannerOpen.Visible = false;
-            this.MenuFlightPlannerClose.Visible = true;
-            this.Separator1.Visible = true;
 
-            this.MenuLoadLayer.Visible = true;
-            this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible && this.MenuLoadLayer.Checked;
-            this.MenuLayerManager.Visible = true;
-            this.Separator2.Visible = true;
-
-            this.MenuDrawPolygon.Visible = true;
-            this.MenuClearPolygon.Visible = true;
-            this.Separator3.Visible = true;
-
-            this.MenuSurveyGrid.Visible = true;
-            this.MenuClearWP.Visible = true;
-            this.MenuReadWP.Visible = true;
-            this.MenuSaveWP.Visible = true;
-            this.Separator4.Visible = true;
-            this.Separator5.Visible = true;
-        }
-
-        private void SetFlightDataMenu()
-        {
-            this.MenuFlightPlannerOpen.Visible = true;
-            this.MenuFlightPlannerClose.Visible = false;
-            this.Separator1.Visible = true;
-
-            this.MenuLoadLayer.Visible = true;
-            this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible && this.MenuLoadLayer.Checked;
-            this.MenuLayerManager.Visible = true;
-            this.Separator2.Visible = true;
-
-            this.MenuDrawPolygon.Visible = false;
-            this.MenuClearPolygon.Visible = false;
-            this.Separator3.Visible = false;
-
-            this.MenuSurveyGrid.Visible = false;
-            this.MenuClearWP.Visible = false;
-            this.MenuReadWP.Visible = false;
-            this.MenuSaveWP.Visible = false;
-            this.Separator4.Visible = false;
-            this.Separator5.Visible = true;
-        }
-
-        private void MenuFlightPlannerOpen_Click(object sender, EventArgs e)
-        {
-            if (MyView.current != MyView.screens.Single(s => s.Name == "FlightData"))
-                FlightDataShow();
-            if (this.MenuFlightPlannerOpen.Visible)
-                GCSViews.FlightData.instance.OpenFlightPlanner();
-        }
 
         private void FlightPlannerShow()
         {
@@ -1134,34 +1073,13 @@ namespace VPS
             MyView.ShowScreen("FlightPlanner");
         }
 
-        private void MenuFlightPlannerClose_Click(object sender, EventArgs e)
-        {
-            //MyView.ShowScreen("FlightData");
-            if (MyView.current != MyView.screens.Single(s => s.Name == "FlightData"))
-                FlightDataShow();
-            if (MenuFlightPlannerClose.Visible)
-                GCSViews.FlightData.instance.CloseFlightPlanner();
-        }
 
         private void FlightDataShow()
         {
             MyView.ShowScreen("FlightData");
         }
 
-        private void WPGobalConfig_Click(object sender, EventArgs e)
-        {
-            if (MenuWPGobalConfig.Visible)
-            {
-                GobalWPConfig dlg = new GobalWPConfig();
-                dlg.ShowDialog();
-            }
-        }
 
-        private void MenuLoadLayer_Click(object sender, EventArgs e)
-        {
-            if (MenuLoadLayer.Visible)
-                LoadTiffLayer();
-        }
 
         private void MenuZoomToLayer_Click(object sender, EventArgs e)
         {
@@ -1169,13 +1087,6 @@ namespace VPS
             GCSViews.FlightData.instance.zoomToTiffLayer();
         }
 
-        private void MenuLayerManager_Click(object sender, EventArgs e)
-        {
-            SetHLToolStripButtonChecked(this.MenuLayerManager, true);
-            if (MenuLayerManager.Visible)
-                GCSViews.FlightPlanner.instance.TiffLayerManager();
-            SetHLToolStripButtonChecked(this.MenuLayerManager, false);
-        }
 
         #region 图层信息
         public GMap.NET.RectLatLng diisplayRect = new GMap.NET.RectLatLng();
@@ -1272,53 +1183,6 @@ namespace VPS
         {
             GCSViews.FlightData.instance.ShowLayerOverlay(geoBitmap);
             GCSViews.FlightPlanner.instance.ShowLayerOverlay(geoBitmap);
-        }
-
-        private void MenuDrawPolygon_Click(object sender, EventArgs e)
-        {
-            if (MenuDrawPolygon.Visible)
-            {
-                if (!GetHLToolStripButtonChecked(this.MenuDrawPolygon))
-                    GCSViews.FlightPlanner.instance.AddPolygon();
-                else
-                    GCSViews.FlightPlanner.instance.NoAddPolygon();
-            }
-        }
-
-        private void MenuClearPolygon_Click(object sender, EventArgs e)
-        {
-            if (MenuClearPolygon.Visible)
-                GCSViews.FlightPlanner.instance.ClearPloygon();
-        }
-
-        private void MenuSurveyGrid_Click(object sender, EventArgs e)
-        {
-            SetHLToolStripButtonChecked(this.MenuSurveyGrid, true);
-            if (MenuSurveyGrid.Visible)
-                GCSViews.FlightPlanner.instance.surveyGrid();
-            SetHLToolStripButtonChecked(this.MenuSurveyGrid, false);
-        }
-
-        private void MenuClearWP_Click(object sender, EventArgs e)
-        {
-            if (MenuClearWP.Visible)
-                GCSViews.FlightPlanner.instance.ClearMission();
-        }
-
-        private void MenuReadWP_Click(object sender, EventArgs e)
-        {
-            SetHLToolStripButtonChecked(this.MenuReadWP, true);
-            if (MenuReadWP.Visible)
-                GCSViews.FlightPlanner.instance.LoadWPFile();
-            SetHLToolStripButtonChecked(this.MenuReadWP, false);
-        }
-
-        private void MenuSaveWP_Click(object sender, EventArgs e)
-        {
-            SetHLToolStripButtonChecked(this.MenuSaveWP, true);
-            if (MenuSaveWP.Visible)
-                GCSViews.FlightPlanner.instance.SaveWPFile();
-            SetHLToolStripButtonChecked(this.MenuSaveWP, false);
         }
         #endregion
 

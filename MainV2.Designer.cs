@@ -35,13 +35,6 @@ namespace VPS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainV2));
-            this.MenuFlightPlannerOpen = new System.Windows.Forms.ToolStripButton();
-            this.MenuFlightPlannerClose = new System.Windows.Forms.ToolStripButton();
-            this.Separator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.Separator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.Separator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.Separator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.Separator5 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuConnect = new System.Windows.Forms.ToolStripButton();
             this.MenuInitConfig = new System.Windows.Forms.ToolStripButton();
             this.MenuConfigTune = new System.Windows.Forms.ToolStripButton();
@@ -130,17 +123,7 @@ namespace VPS
             this.microChartItem2 = new DevComponents.DotNetBar.MicroChartItem();
             this.LayerReader = new VPS.Controls.Layer.LayerReader();
             this.GridConfig = new VPS.Controls.Grid.GridConfig();
-            this.MenuLoadLayer = new VPS.Controls.HLToolStripButton();
-            this.MenuZoomToLayer = new VPS.Controls.HLToolStripButton();
-            this.MenuLayerManager = new VPS.Controls.HLToolStripButton();
-            this.MenuDrawPolygon = new VPS.Controls.HLToolStripButton();
-            this.MenuClearPolygon = new VPS.Controls.HLToolStripButton();
-            this.MenuSurveyGrid = new VPS.Controls.HLToolStripButton();
-            this.MenuClearWP = new VPS.Controls.HLToolStripButton();
-            this.MenuReadWP = new VPS.Controls.HLToolStripButton();
-            this.MenuSaveWP = new VPS.Controls.HLToolStripButton();
             this.toolStripConnectionControl = new VPS.Controls.ToolStripConnectionControl();
-            this.MenuWPGobalConfig = new VPS.Controls.HLToolStripButton();
             this.MinMenuBar.SuspendLayout();
             this.FuncRibbonPanel.SuspendLayout();
             this.FileRibbonPanel.SuspendLayout();
@@ -150,56 +133,6 @@ namespace VPS
             this.AutoGridParamPanel.SuspendLayout();
             this.LayerReaderPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // MenuFlightPlannerOpen
-            // 
-            this.MenuFlightPlannerOpen.AutoSize = false;
-            this.MenuFlightPlannerOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuFlightPlannerOpen.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuFlightPlannerOpen.Image = ((System.Drawing.Image)(resources.GetObject("MenuFlightPlannerOpen.Image")));
-            this.MenuFlightPlannerOpen.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuFlightPlannerOpen.Name = "MenuFlightPlannerOpen";
-            this.MenuFlightPlannerOpen.Padding = new System.Windows.Forms.Padding(0, 0, 43, 38);
-            this.MenuFlightPlannerOpen.Size = new System.Drawing.Size(40, 34);
-            this.MenuFlightPlannerOpen.Click += new System.EventHandler(this.MenuFlightPlannerOpen_Click);
-            // 
-            // MenuFlightPlannerClose
-            // 
-            this.MenuFlightPlannerClose.AutoSize = false;
-            this.MenuFlightPlannerClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuFlightPlannerClose.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuFlightPlannerClose.Image = ((System.Drawing.Image)(resources.GetObject("MenuFlightPlannerClose.Image")));
-            this.MenuFlightPlannerClose.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuFlightPlannerClose.Name = "MenuFlightPlannerClose";
-            this.MenuFlightPlannerClose.Padding = new System.Windows.Forms.Padding(0, 0, 43, 38);
-            this.MenuFlightPlannerClose.Size = new System.Drawing.Size(43, 38);
-            this.MenuFlightPlannerClose.Click += new System.EventHandler(this.MenuFlightPlannerClose_Click);
-            // 
-            // Separator1
-            // 
-            this.Separator1.Name = "Separator1";
-            this.Separator1.Size = new System.Drawing.Size(6, 43);
-            // 
-            // Separator2
-            // 
-            this.Separator2.Name = "Separator2";
-            this.Separator2.Size = new System.Drawing.Size(6, 43);
-            // 
-            // Separator3
-            // 
-            this.Separator3.Name = "Separator3";
-            this.Separator3.Size = new System.Drawing.Size(6, 43);
-            // 
-            // Separator4
-            // 
-            this.Separator4.Name = "Separator4";
-            this.Separator4.Size = new System.Drawing.Size(6, 43);
-            // 
-            // Separator5
-            // 
-            this.Separator5.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.Separator5.Name = "Separator5";
-            this.Separator5.Size = new System.Drawing.Size(6, 43);
             // 
             // MenuConnect
             // 
@@ -1278,152 +1211,6 @@ namespace VPS
             this.GridConfig.Size = new System.Drawing.Size(309, 582);
             this.GridConfig.TabIndex = 0;
             // 
-            // MenuLoadLayer
-            // 
-            this.MenuLoadLayer.AutoSize = false;
-            this.MenuLoadLayer.BottomTransparent = 5;
-            this.MenuLoadLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuLoadLayer.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuLoadLayer.HightLightBackgroundColor = System.Drawing.Color.Lime;
-            this.MenuLoadLayer.Image = ((System.Drawing.Image)(resources.GetObject("MenuLoadLayer.Image")));
-            this.MenuLoadLayer.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuLoadLayer.MyChecked = false;
-            this.MenuLoadLayer.Name = "MenuLoadLayer";
-            this.MenuLoadLayer.Padding = new System.Windows.Forms.Padding(0, 0, 43, 38);
-            this.MenuLoadLayer.Size = new System.Drawing.Size(43, 38);
-            this.MenuLoadLayer.TopTransparent = 8;
-            this.MenuLoadLayer.Click += new System.EventHandler(this.MenuLoadLayer_Click);
-            // 
-            // MenuZoomToLayer
-            // 
-            this.MenuZoomToLayer.AutoSize = false;
-            this.MenuZoomToLayer.BottomTransparent = 5;
-            this.MenuZoomToLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuZoomToLayer.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuZoomToLayer.HightLightBackgroundColor = System.Drawing.Color.Lime;
-            this.MenuZoomToLayer.Image = ((System.Drawing.Image)(resources.GetObject("MenuZoomToLayer.Image")));
-            this.MenuZoomToLayer.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuZoomToLayer.MyChecked = false;
-            this.MenuZoomToLayer.Name = "MenuZoomToLayer";
-            this.MenuZoomToLayer.Padding = new System.Windows.Forms.Padding(0, 0, 43, 38);
-            this.MenuZoomToLayer.Size = new System.Drawing.Size(43, 38);
-            this.MenuZoomToLayer.TopTransparent = 8;
-            this.MenuZoomToLayer.Click += new System.EventHandler(this.MenuZoomToLayer_Click);
-            // 
-            // MenuLayerManager
-            // 
-            this.MenuLayerManager.AutoSize = false;
-            this.MenuLayerManager.BottomTransparent = 5;
-            this.MenuLayerManager.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuLayerManager.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuLayerManager.HightLightBackgroundColor = System.Drawing.Color.Lime;
-            this.MenuLayerManager.Image = ((System.Drawing.Image)(resources.GetObject("MenuLayerManager.Image")));
-            this.MenuLayerManager.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuLayerManager.MyChecked = false;
-            this.MenuLayerManager.Name = "MenuLayerManager";
-            this.MenuLayerManager.Padding = new System.Windows.Forms.Padding(0, 0, 43, 38);
-            this.MenuLayerManager.Size = new System.Drawing.Size(43, 38);
-            this.MenuLayerManager.TopTransparent = 8;
-            this.MenuLayerManager.Click += new System.EventHandler(this.MenuLayerManager_Click);
-            // 
-            // MenuDrawPolygon
-            // 
-            this.MenuDrawPolygon.AutoSize = false;
-            this.MenuDrawPolygon.BottomTransparent = 5;
-            this.MenuDrawPolygon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuDrawPolygon.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuDrawPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.MenuDrawPolygon.Image = ((System.Drawing.Image)(resources.GetObject("MenuDrawPolygon.Image")));
-            this.MenuDrawPolygon.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuDrawPolygon.MyChecked = false;
-            this.MenuDrawPolygon.Name = "MenuDrawPolygon";
-            this.MenuDrawPolygon.Padding = new System.Windows.Forms.Padding(0, 0, 43, 38);
-            this.MenuDrawPolygon.Size = new System.Drawing.Size(43, 38);
-            this.MenuDrawPolygon.TopTransparent = 8;
-            this.MenuDrawPolygon.Click += new System.EventHandler(this.MenuDrawPolygon_Click);
-            // 
-            // MenuClearPolygon
-            // 
-            this.MenuClearPolygon.AutoSize = false;
-            this.MenuClearPolygon.BottomTransparent = 5;
-            this.MenuClearPolygon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuClearPolygon.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuClearPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.MenuClearPolygon.Image = ((System.Drawing.Image)(resources.GetObject("MenuClearPolygon.Image")));
-            this.MenuClearPolygon.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuClearPolygon.MyChecked = false;
-            this.MenuClearPolygon.Name = "MenuClearPolygon";
-            this.MenuClearPolygon.Padding = new System.Windows.Forms.Padding(0, 0, 43, 38);
-            this.MenuClearPolygon.Size = new System.Drawing.Size(40, 38);
-            this.MenuClearPolygon.TopTransparent = 8;
-            this.MenuClearPolygon.Click += new System.EventHandler(this.MenuClearPolygon_Click);
-            // 
-            // MenuSurveyGrid
-            // 
-            this.MenuSurveyGrid.AutoSize = false;
-            this.MenuSurveyGrid.BottomTransparent = 5;
-            this.MenuSurveyGrid.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuSurveyGrid.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuSurveyGrid.HightLightBackgroundColor = System.Drawing.Color.Aqua;
-            this.MenuSurveyGrid.Image = ((System.Drawing.Image)(resources.GetObject("MenuSurveyGrid.Image")));
-            this.MenuSurveyGrid.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.MenuSurveyGrid.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuSurveyGrid.MyChecked = false;
-            this.MenuSurveyGrid.Name = "MenuSurveyGrid";
-            this.MenuSurveyGrid.Padding = new System.Windows.Forms.Padding(0, 0, 43, 38);
-            this.MenuSurveyGrid.Size = new System.Drawing.Size(42, 34);
-            this.MenuSurveyGrid.TopTransparent = 8;
-            this.MenuSurveyGrid.Click += new System.EventHandler(this.MenuSurveyGrid_Click);
-            // 
-            // MenuClearWP
-            // 
-            this.MenuClearWP.AutoSize = false;
-            this.MenuClearWP.BottomTransparent = 5;
-            this.MenuClearWP.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuClearWP.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuClearWP.HightLightBackgroundColor = System.Drawing.Color.Aqua;
-            this.MenuClearWP.Image = ((System.Drawing.Image)(resources.GetObject("MenuClearWP.Image")));
-            this.MenuClearWP.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.MenuClearWP.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuClearWP.MyChecked = false;
-            this.MenuClearWP.Name = "MenuClearWP";
-            this.MenuClearWP.Padding = new System.Windows.Forms.Padding(0, 0, 43, 38);
-            this.MenuClearWP.Size = new System.Drawing.Size(49, 38);
-            this.MenuClearWP.TopTransparent = 8;
-            this.MenuClearWP.Click += new System.EventHandler(this.MenuClearWP_Click);
-            // 
-            // MenuReadWP
-            // 
-            this.MenuReadWP.AutoSize = false;
-            this.MenuReadWP.BottomTransparent = 5;
-            this.MenuReadWP.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuReadWP.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuReadWP.HightLightBackgroundColor = System.Drawing.Color.Aqua;
-            this.MenuReadWP.Image = ((System.Drawing.Image)(resources.GetObject("MenuReadWP.Image")));
-            this.MenuReadWP.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuReadWP.MyChecked = false;
-            this.MenuReadWP.Name = "MenuReadWP";
-            this.MenuReadWP.Padding = new System.Windows.Forms.Padding(0, 0, 43, 38);
-            this.MenuReadWP.Size = new System.Drawing.Size(49, 38);
-            this.MenuReadWP.TopTransparent = 8;
-            this.MenuReadWP.Click += new System.EventHandler(this.MenuReadWP_Click);
-            // 
-            // MenuSaveWP
-            // 
-            this.MenuSaveWP.AutoSize = false;
-            this.MenuSaveWP.BottomTransparent = 5;
-            this.MenuSaveWP.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuSaveWP.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuSaveWP.HightLightBackgroundColor = System.Drawing.Color.Aqua;
-            this.MenuSaveWP.Image = ((System.Drawing.Image)(resources.GetObject("MenuSaveWP.Image")));
-            this.MenuSaveWP.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuSaveWP.MyChecked = false;
-            this.MenuSaveWP.Name = "MenuSaveWP";
-            this.MenuSaveWP.Padding = new System.Windows.Forms.Padding(0, 0, 43, 38);
-            this.MenuSaveWP.Size = new System.Drawing.Size(49, 38);
-            this.MenuSaveWP.TopTransparent = 8;
-            this.MenuSaveWP.Click += new System.EventHandler(this.MenuSaveWP_Click);
-            // 
             // toolStripConnectionControl
             // 
             this.toolStripConnectionControl.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -1435,21 +1222,6 @@ namespace VPS
             this.toolStripConnectionControl.Name = "toolStripConnectionControl";
             this.toolStripConnectionControl.Padding = new System.Windows.Forms.Padding(0, 0, 200, 38);
             this.toolStripConnectionControl.Size = new System.Drawing.Size(200, 38);
-            // 
-            // MenuWPGobalConfig
-            // 
-            this.MenuWPGobalConfig.BottomTransparent = 4;
-            this.MenuWPGobalConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuWPGobalConfig.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuWPGobalConfig.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.MenuWPGobalConfig.Image = ((System.Drawing.Image)(resources.GetObject("MenuWPGobalConfig.Image")));
-            this.MenuWPGobalConfig.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuWPGobalConfig.MyChecked = false;
-            this.MenuWPGobalConfig.Name = "MenuWPGobalConfig";
-            this.MenuWPGobalConfig.Size = new System.Drawing.Size(49, 43);
-            this.MenuWPGobalConfig.Text = "Config";
-            this.MenuWPGobalConfig.TopTransparent = 8;
-            this.MenuWPGobalConfig.Click += new System.EventHandler(this.WPGobalConfig_Click);
             // 
             // MainV2
             // 
@@ -1493,25 +1265,6 @@ namespace VPS
         }
 
         #endregion
-
-        public System.Windows.Forms.ToolStripSeparator Separator1;
-        public System.Windows.Forms.ToolStripSeparator Separator2;
-        public System.Windows.Forms.ToolStripSeparator Separator3;
-        public System.Windows.Forms.ToolStripSeparator Separator4;
-        public System.Windows.Forms.ToolStripSeparator Separator5;
-        public System.Windows.Forms.ToolStripButton MenuFlightPlannerOpen;
-        public System.Windows.Forms.ToolStripButton MenuFlightPlannerClose;
-
-        public Controls.HLToolStripButton MenuWPGobalConfig;
-        public Controls.HLToolStripButton MenuLoadLayer;
-        public Controls.HLToolStripButton MenuZoomToLayer;
-        public Controls.HLToolStripButton MenuLayerManager;
-        public Controls.HLToolStripButton MenuDrawPolygon;
-        public Controls.HLToolStripButton MenuClearPolygon;
-        public Controls.HLToolStripButton MenuSurveyGrid;
-        public Controls.HLToolStripButton MenuClearWP;
-        public Controls.HLToolStripButton MenuReadWP;
-        public Controls.HLToolStripButton MenuSaveWP;
 
         public System.Windows.Forms.ToolStripButton MenuInitConfig;
         public System.Windows.Forms.ToolStripButton MenuSimulation;
