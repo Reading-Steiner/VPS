@@ -39,25 +39,13 @@ namespace VPS
             get { return Application.ExecutablePath.Contains("WindowsApps"); }
         }
 
-        /// <summary>
-        /// MissionPlanner text image
-        /// </summary>
-        public static Image Logo = null;
-        /// <summary>
-        /// Ardupilot logo
-        /// </summary>
-        public static Image Logo2 = null;
-        /// <summary>
-        /// icon
-        /// </summary>
-        public static Image IconFile = null;
+
 
         public static Splash Splash;
 
         internal static Thread Thread;
 
         public static string[] args = new string[] { };
-        public static Bitmap SplashBG = null;
 
         public static string[] names = new string[] { "VVVVZ" };
         public static bool MONO = false;
@@ -104,6 +92,21 @@ namespace VPS
                 int win = NativeMethods.FindWindow("ConsoleWindowClass", null);
                 NativeMethods.ShowWindow(win, NativeMethods.SW_HIDE); // hide window
             }
+
+            name = "Visiontek Photogrammetry Simulation System";
+
+            Splash = new VPS.Splash();
+
+            string strVersion = File.Exists("version.txt")
+                ? File.ReadAllText("version.txt")
+                : System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            Splash.Text = name + " V" + Application.ProductVersion;
+            Splash.Show();
+
+            if (Debugger.IsAttached)
+                Splash.TopMost = false;
+
+            Splash.SetDisplayInfo("初始化配置文件信息");
             Directory.SetCurrentDirectory(Settings.GetRunningDirectory());
 
             var listener = new TextWriterTraceListener(Settings.GetDataDirectory() + Path.DirectorySeparatorChar + "trace.log",
@@ -116,7 +119,6 @@ namespace VPS
 
             System.Windows.Forms.Application.EnableVisualStyles();
             XmlConfigurator.Configure(LogManager.GetRepository(Assembly.GetCallingAssembly()));
-            log.Info("******************* Logging Configured *******************");
 
             ServicePointManager.DefaultConnectionLimit = 10;
 
@@ -134,7 +136,7 @@ namespace VPS
             //    return;
             //}
 
-            name = "Visiontek Photogrammetry Simulation System";
+            
 
             try
             {
@@ -146,25 +148,8 @@ namespace VPS
             {
             }
 
-            if (File.Exists(Settings.GetRunningDirectory() + "logo.png"))
-                Logo = new Bitmap(Settings.GetRunningDirectory() + "logo.png");
 
-            if (File.Exists(Settings.GetRunningDirectory() + "logo2.png"))
-                Logo2 = new Bitmap(Settings.GetRunningDirectory() + "logo2.png");
-
-            if (File.Exists(Settings.GetRunningDirectory() + "icon.png"))
-            {
-                // 128*128
-                IconFile = new Bitmap(Settings.GetRunningDirectory() + "icon.png");
-            }
-            else
-            {
-                IconFile = VPS.Properties.Resources.mpdesktop.ToBitmap();
-            }
-
-            if (File.Exists(Settings.GetRunningDirectory() + "splashbg.png")) // 600*375
-                SplashBG = new Bitmap(Settings.GetRunningDirectory() + "splashbg.png");
-
+            Splash.SetDisplayInfo("初始化图形库");
             try
             {
                 var file = NativeLibrary.GetLibraryPathname("libSkiaSharp");
@@ -184,25 +169,6 @@ namespace VPS
             {
                 log.Error(ex);
             }
-
-            Splash = new VPS.Splash();
-            if (SplashBG != null)
-            {
-                Splash.BackgroundImage = SplashBG;
-                Splash.pictureBox1.Visible = false;
-            }
-
-            if (IconFile != null)
-                Splash.Icon = Icon.FromHandle(((Bitmap)IconFile).GetHicon());
-
-            string strVersion = File.Exists("version.txt")
-                ? File.ReadAllText("version.txt")
-                : System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Splash.Text = name + " V" + Application.ProductVersion;
-            Splash.Show();
-
-            if (Debugger.IsAttached)
-                Splash.TopMost = false;
 
             Application.DoEvents();
             Application.DoEvents();
@@ -230,6 +196,7 @@ namespace VPS
 
             VPS.Utilities.Extensions.MessageLoop = new Action(() => Application.DoEvents());
 
+            Splash.SetDisplayInfo("初始化地图图源");
             // set the cache provider to my custom version
             GMap.NET.GMaps.Instance.PrimaryCache = new Maps.MyImageCache();
             // add my custom map providers
@@ -289,6 +256,7 @@ namespace VPS
                 System.Configuration.ConfigurationManager.AppSettings["UpdateLocationVersion"] = "";
             }
 
+            Splash.SetDisplayInfo("清理缓存");
             CleanupFiles();
 
             log.InfoFormat("64bit os {0}, 64bit process {1}, OS Arch {2}", System.Environment.Is64BitOperatingSystem,
@@ -304,7 +272,7 @@ namespace VPS
             catch
             {
             }
-
+            Splash.SetDisplayInfo("验证版本信息");
             Type type = Type.GetType("Mono.Runtime");
             if (type != null)
             {
@@ -326,6 +294,7 @@ namespace VPS
                 }
             }
 
+            Splash.SetDisplayInfo("加载主界面");
             try
             {
                 Thread.CurrentThread.Name = "Base Thread";

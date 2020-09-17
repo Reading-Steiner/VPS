@@ -754,16 +754,10 @@ namespace VPS
                 }
             }
 
-            if (Program.IconFile != null)
-            {
-                this.Icon = Icon.FromHandle(((Bitmap)Program.IconFile).GetHicon());
-            }
-
             MenuArduPilot.Image = new Bitmap(Properties.Resources._0d92fed790a3a70170e61a86db103f399a595c70, (int)(200), 31);
             MenuArduPilot.Width = MenuArduPilot.Image.Width;
 
-            if (Program.Logo2 != null)
-                MenuArduPilot.Image = Program.Logo2;
+
 
             Application.DoEvents();
 

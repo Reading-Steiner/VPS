@@ -2,22 +2,25 @@
 
 namespace VPS
 {
-    public partial class Splash : Form
+    public partial class Splash : DevComponents.DotNetBar.Office2007Form
     {
         public Splash()
         {
             InitializeComponent();
-
-            string strVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-
-            TXT_version.Text = "Version: " + Application.ProductVersion; // +" Build " + strVersion;
-
-            if (Program.Logo != null)
-            {
-                pictureBox1.BackgroundImage = VPS.Properties.Resources.bgdark;
-                pictureBox1.Image = Program.Logo;
-                pictureBox1.Visible = true;
-            }
         }
+
+
+        private delegate void SetTextInThreadHander(string text);
+        public void SetDisplayInfo(string text)
+        {
+            if (this.InvokeRequired)
+            {
+                SetTextInThreadHander hander = new SetTextInThreadHander(SetDisplayInfo);
+                this.Invoke(hander, new object[] { text });
+            }
+            else
+                this.DisplayBoxLog.Text = text;
+        }
+
     }
 }
