@@ -104,16 +104,9 @@ namespace VPS.Controls.Layer
                 if (System.IO.File.Exists(openFile.FileName))
                 {
                     this.OpenFilePath.Text = openFile.FileName;
-                    try
+                    using (var ds = OSGeo.GDAL.Gdal.Open(openFile.FileName, OSGeo.GDAL.Access.GA_ReadOnly))
                     {
-                        using (var ds = OSGeo.GDAL.Gdal.Open(openFile.FileName, OSGeo.GDAL.Access.GA_ReadOnly))
-                        {
-                            this.Projection.Text = ds.GetProjectionRef();
-                        }
-                    }
-                    catch(Exception ex)
-                    {
-                        string msg = ex.Message;
+                        this.Projection.Text = ds.GetProjectionRef();
                     }
                     var info = GDAL.GDAL.LoadImageInfo(openFile.FileName);
                     {

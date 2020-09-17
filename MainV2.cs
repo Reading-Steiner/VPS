@@ -234,7 +234,7 @@ namespace VPS
         /// declared here if i want a "single" instance of the form
         /// ie configuration gets reloaded on every click
         /// </summary>
-        //public GCSViews.FlightData FlightData;
+        public GCSViews.FlightData FlightData;
         MemoryLayerCache layerCache;
         public GCSViews.FlightPlanner FlightPlanner;
         //GCSViews.SITL Simulation;
@@ -259,101 +259,101 @@ namespace VPS
 
 
             //Flight data page
-            //if (MainV2.instance.FlightData != null)
-            //{
-            //    var t = MainV2.instance.FlightData.tabControlactions;
-            //    if (DisplayConfiguration.displayQuickTab && !t.TabPages.Contains(FlightData.tabQuick))
-            //    {
-            //        t.TabPages.Add(FlightData.tabQuick);
-            //    }
-            //    else if (!DisplayConfiguration.displayQuickTab && t.TabPages.Contains(FlightData.tabQuick))
-            //    {
-            //        t.TabPages.Remove(FlightData.tabQuick);
-            //    }
-            //    if (DisplayConfiguration.displayPreFlightTab && !t.TabPages.Contains(FlightData.tabPagePreFlight))
-            //    {
-            //        t.TabPages.Add(FlightData.tabPagePreFlight);
-            //    }
-            //    else if (!DisplayConfiguration.displayPreFlightTab && t.TabPages.Contains(FlightData.tabPagePreFlight))
-            //    {
-            //        t.TabPages.Remove(FlightData.tabPagePreFlight);
-            //    }
-            //    if (DisplayConfiguration.displayAdvActionsTab && !t.TabPages.Contains(FlightData.tabActions))
-            //    {
-            //        t.TabPages.Add(FlightData.tabActions);
-            //    }
-            //    else if (!DisplayConfiguration.displayAdvActionsTab && t.TabPages.Contains(FlightData.tabActions))
-            //    {
-            //        t.TabPages.Remove(FlightData.tabActions);
-            //    }
-            //    if (DisplayConfiguration.displaySimpleActionsTab && !t.TabPages.Contains(FlightData.tabActionsSimple))
-            //    {
-            //        t.TabPages.Add(FlightData.tabActionsSimple);
-            //    }
-            //    else if (!DisplayConfiguration.displaySimpleActionsTab && t.TabPages.Contains(FlightData.tabActionsSimple))
-            //    {
-            //        t.TabPages.Remove(FlightData.tabActionsSimple);
-            //    }
-            //    if (DisplayConfiguration.displayGaugesTab && !t.TabPages.Contains(FlightData.tabGauges))
-            //    {
-            //        t.TabPages.Add(FlightData.tabGauges);
-            //    }
-            //    else if (!DisplayConfiguration.displayGaugesTab && t.TabPages.Contains(FlightData.tabGauges))
-            //    {
-            //        t.TabPages.Remove(FlightData.tabGauges);
-            //    }
-            //    if (DisplayConfiguration.displayStatusTab && !t.TabPages.Contains(FlightData.tabStatus))
-            //    {
-            //        t.TabPages.Add(FlightData.tabStatus);
-            //    }
-            //    else if (!DisplayConfiguration.displayStatusTab && t.TabPages.Contains(FlightData.tabStatus))
-            //    {
-            //        t.TabPages.Remove(FlightData.tabStatus);
-            //    }
-            //    if (DisplayConfiguration.displayServoTab && !t.TabPages.Contains(FlightData.tabServo))
-            //    {
-            //        t.TabPages.Add(FlightData.tabServo);
-            //    }
-            //    else if (!DisplayConfiguration.displayServoTab && t.TabPages.Contains(FlightData.tabServo))
-            //    {
-            //        t.TabPages.Remove(FlightData.tabServo);
-            //    }
-            //    if (DisplayConfiguration.displayScriptsTab && !t.TabPages.Contains(FlightData.tabScripts))
-            //    {
-            //        t.TabPages.Add(FlightData.tabScripts);
-            //    }
-            //    else if (!DisplayConfiguration.displayScriptsTab && t.TabPages.Contains(FlightData.tabScripts))
-            //    {
-            //        t.TabPages.Remove(FlightData.tabScripts);
-            //    }
-            //    if (DisplayConfiguration.displayTelemetryTab && !t.TabPages.Contains(FlightData.tabTLogs))
-            //    {
-            //        t.TabPages.Add(FlightData.tabTLogs);
-            //    }
-            //    else if (!DisplayConfiguration.displayTelemetryTab && t.TabPages.Contains(FlightData.tabTLogs))
-            //    {
-            //        t.TabPages.Remove(FlightData.tabTLogs);
-            //    }
-            //    if (DisplayConfiguration.displayDataflashTab && !t.TabPages.Contains(FlightData.tablogbrowse))
-            //    {
-            //        t.TabPages.Add(FlightData.tablogbrowse);
-            //    }
-            //    else if (!DisplayConfiguration.displayDataflashTab && t.TabPages.Contains(FlightData.tablogbrowse))
-            //    {
-            //        t.TabPages.Remove(FlightData.tablogbrowse);
-            //    }
-            //    if (DisplayConfiguration.displayMessagesTab && !t.TabPages.Contains(FlightData.tabPagemessages))
-            //    {
-            //        t.TabPages.Add(FlightData.tabPagemessages);
-            //    }
-            //    else if (!DisplayConfiguration.displayMessagesTab && t.TabPages.Contains(FlightData.tabPagemessages))
-            //    {
-            //        t.TabPages.Remove(FlightData.tabPagemessages);
-            //    }
-            //    t.SelectedIndex = 0;
+            if (MainV2.instance.FlightData != null)
+            {
+                var t = MainV2.instance.FlightData.tabControlactions;
+                if (DisplayConfiguration.displayQuickTab && !t.TabPages.Contains(FlightData.tabQuick))
+                {
+                    t.TabPages.Add(FlightData.tabQuick);
+                }
+                else if (!DisplayConfiguration.displayQuickTab && t.TabPages.Contains(FlightData.tabQuick))
+                {
+                    t.TabPages.Remove(FlightData.tabQuick);
+                }
+                if (DisplayConfiguration.displayPreFlightTab && !t.TabPages.Contains(FlightData.tabPagePreFlight))
+                {
+                    t.TabPages.Add(FlightData.tabPagePreFlight);
+                }
+                else if (!DisplayConfiguration.displayPreFlightTab && t.TabPages.Contains(FlightData.tabPagePreFlight))
+                {
+                    t.TabPages.Remove(FlightData.tabPagePreFlight);
+                }
+                if (DisplayConfiguration.displayAdvActionsTab && !t.TabPages.Contains(FlightData.tabActions))
+                {
+                    t.TabPages.Add(FlightData.tabActions);
+                }
+                else if (!DisplayConfiguration.displayAdvActionsTab && t.TabPages.Contains(FlightData.tabActions))
+                {
+                    t.TabPages.Remove(FlightData.tabActions);
+                }
+                if (DisplayConfiguration.displaySimpleActionsTab && !t.TabPages.Contains(FlightData.tabActionsSimple))
+                {
+                    t.TabPages.Add(FlightData.tabActionsSimple);
+                }
+                else if (!DisplayConfiguration.displaySimpleActionsTab && t.TabPages.Contains(FlightData.tabActionsSimple))
+                {
+                    t.TabPages.Remove(FlightData.tabActionsSimple);
+                }
+                if (DisplayConfiguration.displayGaugesTab && !t.TabPages.Contains(FlightData.tabGauges))
+                {
+                    t.TabPages.Add(FlightData.tabGauges);
+                }
+                else if (!DisplayConfiguration.displayGaugesTab && t.TabPages.Contains(FlightData.tabGauges))
+                {
+                    t.TabPages.Remove(FlightData.tabGauges);
+                }
+                if (DisplayConfiguration.displayStatusTab && !t.TabPages.Contains(FlightData.tabStatus))
+                {
+                    t.TabPages.Add(FlightData.tabStatus);
+                }
+                else if (!DisplayConfiguration.displayStatusTab && t.TabPages.Contains(FlightData.tabStatus))
+                {
+                    t.TabPages.Remove(FlightData.tabStatus);
+                }
+                if (DisplayConfiguration.displayServoTab && !t.TabPages.Contains(FlightData.tabServo))
+                {
+                    t.TabPages.Add(FlightData.tabServo);
+                }
+                else if (!DisplayConfiguration.displayServoTab && t.TabPages.Contains(FlightData.tabServo))
+                {
+                    t.TabPages.Remove(FlightData.tabServo);
+                }
+                if (DisplayConfiguration.displayScriptsTab && !t.TabPages.Contains(FlightData.tabScripts))
+                {
+                    t.TabPages.Add(FlightData.tabScripts);
+                }
+                else if (!DisplayConfiguration.displayScriptsTab && t.TabPages.Contains(FlightData.tabScripts))
+                {
+                    t.TabPages.Remove(FlightData.tabScripts);
+                }
+                if (DisplayConfiguration.displayTelemetryTab && !t.TabPages.Contains(FlightData.tabTLogs))
+                {
+                    t.TabPages.Add(FlightData.tabTLogs);
+                }
+                else if (!DisplayConfiguration.displayTelemetryTab && t.TabPages.Contains(FlightData.tabTLogs))
+                {
+                    t.TabPages.Remove(FlightData.tabTLogs);
+                }
+                if (DisplayConfiguration.displayDataflashTab && !t.TabPages.Contains(FlightData.tablogbrowse))
+                {
+                    t.TabPages.Add(FlightData.tablogbrowse);
+                }
+                else if (!DisplayConfiguration.displayDataflashTab && t.TabPages.Contains(FlightData.tablogbrowse))
+                {
+                    t.TabPages.Remove(FlightData.tablogbrowse);
+                }
+                if (DisplayConfiguration.displayMessagesTab && !t.TabPages.Contains(FlightData.tabPagemessages))
+                {
+                    t.TabPages.Add(FlightData.tabPagemessages);
+                }
+                else if (!DisplayConfiguration.displayMessagesTab && t.TabPages.Contains(FlightData.tabPagemessages))
+                {
+                    t.TabPages.Remove(FlightData.tabPagemessages);
+                }
+                t.SelectedIndex = 0;
 
-            //    MainV2.instance.FlightData.loadTabControlActions();
-            //}
+                MainV2.instance.FlightData.loadTabControlActions();
+            }
 
             if (MainV2.instance.FlightPlanner != null)
             {
@@ -365,6 +365,8 @@ namespace VPS
 
         public MainV2()
         {
+
+
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
             // create one here - but override on load
@@ -380,7 +382,9 @@ namespace VPS
 
             // setup adsb
             Utilities.adsb.UpdatePlanePosition += adsb_UpdatePlanePosition;
+
             MAVLinkInterface.UpdateADSBPlanePosition += adsb_UpdatePlanePosition;
+
             MAVLinkInterface.UpdateADSBCollision += (sender, tuple) =>
             {
                 lock (adsblock)
@@ -405,18 +409,18 @@ namespace VPS
             InitializeComponent();
 
             //Init Theme table and load BurntKermit as a default
-            //ThemeManager.thmColor = new ThemeColorTable(); //Init colortable
-            //ThemeManager.thmColor.InitColors();     //This fills up the table with BurntKermit defaults. 
-            //ThemeManager.thmColor.SetTheme();              //Set the colors, this need to handle the case when not all colors are defined in the theme file
+            ThemeManager.thmColor = new ThemeColorTable(); //Init colortable
+            ThemeManager.thmColor.InitColors();     //This fills up the table with BurntKermit defaults. 
+            ThemeManager.thmColor.SetTheme();              //Set the colors, this need to handle the case when not all colors are defined in the theme file
 
  
 
-            //if (Settings.Instance["theme"] == null) Settings.Instance["theme"] = "HighContrast.mpsystheme";
-            //if (Settings.Instance["theme"] == "BurntKermit.mpsystheme") Settings.Instance["theme"] = "HighContrast.mpsystheme";
+            if (Settings.Instance["theme"] == null) Settings.Instance["theme"] = "HighContrast.mpsystheme";
+            if (Settings.Instance["theme"] == "BurntKermit.mpsystheme") Settings.Instance["theme"] = "HighContrast.mpsystheme";
 
-            //ThemeManager.LoadTheme(Settings.Instance["theme"]);
+            ThemeManager.LoadTheme(Settings.Instance["theme"]);
 
-            //Utilities.ThemeManager.ApplyThemeTo(this);
+            Utilities.ThemeManager.ApplyThemeTo(this);
 
             MyView = new MainSwitcher(this.RibbonClientPanel);
 
@@ -440,8 +444,8 @@ namespace VPS
                                  "srtm";
 
             var t = Type.GetType("Mono.Runtime");
-
             MONO = (t != null);
+
             try
             {
                 speechEngine = new Speech();
@@ -505,16 +509,11 @@ namespace VPS
             {
                 changelanguage(CultureInfoEx.GetCultureInfo(Settings.Instance["language"]));
             }
-
-            if (Settings.Instance["formstyle"] != null)
-            {
-                eStyle style = (eStyle)Enum.Parse(typeof(eStyle), Settings.Instance["formstyle"]);
-                // Using StyleManager change the style and color tinting
-                this.styleManager.ManagerStyle = style;
-                this.styleManager.ManagerColorTint = System.Drawing.Color.Empty;
-            }
-
-
+            //if (splash != null)
+            //{
+            //    this.Text = splash?.Text;
+            //    titlebar = splash?.Text;
+            //}
 
             if (!MONO) // windows only
             {
@@ -553,8 +552,8 @@ namespace VPS
 
             try
             {
-                //log.Info("Create FD");
-                //FlightData = new GCSViews.FlightData();
+                log.Info("Create FD");
+                FlightData = new GCSViews.FlightData();
                 log.Info("Create FP");
                 FlightPlanner = new GCSViews.FlightPlanner();
                 //Configuration = new GCSViews.ConfigurationView.Setup();
@@ -563,8 +562,8 @@ namespace VPS
                 //Firmware = new GCSViews.Firmware();
                 //Terminal = new GCSViews.Terminal();
 
-                //FlightData.Width = MyView.Width;
-                //FlightPlanner.Width = MyView.Width;
+                FlightData.Width = MyView.Width;
+                FlightPlanner.Width = MyView.Width;
                 //Simulation.Width = MyView.Width;
             }
             catch (ArgumentException e)
@@ -617,11 +616,11 @@ namespace VPS
             LayoutChanged += updateLayout;
             LayoutChanged(null, EventArgs.Empty);
 
-            //if (Settings.Instance["CHK_GDIPlus"] != null)
-            //    GCSViews.FlightData.myhud.opengl = !bool.Parse(Settings.Instance["CHK_GDIPlus"].ToString());
+            if (Settings.Instance["CHK_GDIPlus"] != null)
+                GCSViews.FlightData.myhud.opengl = !bool.Parse(Settings.Instance["CHK_GDIPlus"].ToString());
 
-            //if (Settings.Instance["CHK_hudshow"] != null)
-            //    GCSViews.FlightData.myhud.hudon = bool.Parse(Settings.Instance["CHK_hudshow"].ToString());
+            if (Settings.Instance["CHK_hudshow"] != null)
+                GCSViews.FlightData.myhud.hudon = bool.Parse(Settings.Instance["CHK_hudshow"].ToString());
 
             try
             {
@@ -755,16 +754,16 @@ namespace VPS
                 }
             }
 
-            //if (Program.IconFile != null)
-            //{
-            //    this.Icon = Icon.FromHandle(((Bitmap)Program.IconFile).GetHicon());
-            //}
+            if (Program.IconFile != null)
+            {
+                this.Icon = Icon.FromHandle(((Bitmap)Program.IconFile).GetHicon());
+            }
 
             MenuArduPilot.Image = new Bitmap(Properties.Resources._0d92fed790a3a70170e61a86db103f399a595c70, (int)(200), 31);
             MenuArduPilot.Width = MenuArduPilot.Image.Width;
 
-            //if (Program.Logo2 != null)
-            //    MenuArduPilot.Image = Program.Logo2;
+            if (Program.Logo2 != null)
+                MenuArduPilot.Image = Program.Logo2;
 
             Application.DoEvents();
 
@@ -773,8 +772,15 @@ namespace VPS
             MainV2.comPort.MavChanged += comPort_MavChanged;
 
             // save config to test we have write access
-            
+            SetInitHandler();
             layerCache = new MemoryLayerCache();
+            var layer = MemoryLayerCache.GetSelectedLayerFromMemoryCache();
+            if (layer != null)
+            {
+                GMap.NET.Internals.LayerInfo layerInfo = (GMap.NET.Internals.LayerInfo)layer;
+                SetLayerOverlay(layerInfo.Layer, layerInfo.Lng, layerInfo.Lat, layerInfo.Alt, layerInfo.Transparent);
+
+            }
             SaveConfig();
         }
 
@@ -808,23 +814,23 @@ namespace VPS
                 this.BeginInvoke((MethodInvoker)delegate
                {
                    //enable the payload control page if a mavlink gimbal is detected
-                   //if (instance.FlightData != null)
-                   //{
-                   //    instance.FlightData.updatePayloadTabVisible();
-                   //}
+                   if (instance.FlightData != null)
+                   {
+                       instance.FlightData.updatePayloadTabVisible();
+                   }
 
-                   //instance.MyView.Reload();
+                   instance.MyView.Reload();
                });
             }
             else
             {
                 //enable the payload control page if a mavlink gimbal is detected
-                //if (instance.FlightData != null)
-                //{
-                //    instance.FlightData.updatePayloadTabVisible();
-                //}
+                if (instance.FlightData != null)
+                {
+                    instance.FlightData.updatePayloadTabVisible();
+                }
 
-                //instance.MyView.Reload();
+                instance.MyView.Reload();
             }
         }
 #if !NETSTANDARD2_0
@@ -980,8 +986,9 @@ namespace VPS
             _connectionControl.CMB_serialport.Items.Add("WS");
         }
 
+        #region new
 
-        private bool isLoadLayer = false;
+        private bool isLoadLayer;
         public delegate void delegateHandler();
         public delegateHandler LoadLayerHandle;
         public delegateHandler NoLoadLayerHandle;
@@ -1002,7 +1009,9 @@ namespace VPS
         }
         private void SetInitHandler()
         {
-            MyView.ShowScreen("FlightPlanner"); 
+            GCSViews.FlightData.instance.OpenFlightPlannerHandler += SetFlightPlannerMenu;
+            GCSViews.FlightData.instance.CloseFlightPlannerHandler += SetFlightDataMenu;
+
             OutDrawPolygonState();
             FlightPlanner.ToDrawPolygonHandle += ToDrawPolygonState;
             FlightPlanner.OutDrawPolygonHandle += OutDrawPolygonState;
@@ -1012,18 +1021,33 @@ namespace VPS
 
             NoLoadLayerHandle += SetNoLaodLayerState;
             LoadLayerHandle += SetLaodLayerState;
+
+            SetFlightDataMenu();
+        }
+
+        private delegate void SetCheckedCallback(HLToolStripButton stripButton, bool value);
+        private void SetHLToolStripButtonChecked(HLToolStripButton stripButton, bool value)
+        {
+
+            stripButton.MyChecked = value;
+        }
+
+        private delegate bool GetCheckedCallback(HLToolStripButton stripButton);
+        private bool GetHLToolStripButtonChecked(HLToolStripButton stripButton)
+        {
+            return stripButton.MyChecked;
         }
 
         private void SetLaodLayerState()
         {
-            this.ZoomToButton.Enabled = true;
-            this.ZoomTiffButton.Enabled = true;
+            SetHLToolStripButtonChecked(this.MenuLoadLayer, true);
+            this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible;
         }
 
         private void SetNoLaodLayerState()
         {
-            this.ZoomToButton.Enabled = false;
-            this.ZoomTiffButton.Enabled = false;
+            SetHLToolStripButtonChecked(this.MenuLoadLayer, false);
+            this.MenuZoomToLayer.Visible = false;
         }
 
         private void ToDrawPolygonState()
@@ -1050,6 +1074,108 @@ namespace VPS
             SetMenuItemChecked(this.AddWPButton, false);
         }
 
+        private void SetFlightPlannerMenu()
+        {
+            this.MenuFlightPlannerOpen.Visible = false;
+            this.MenuFlightPlannerClose.Visible = true;
+            this.Separator1.Visible = true;
+
+            this.MenuLoadLayer.Visible = true;
+            this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible && this.MenuLoadLayer.Checked;
+            this.MenuLayerManager.Visible = true;
+            this.Separator2.Visible = true;
+
+            this.MenuDrawPolygon.Visible = true;
+            this.MenuClearPolygon.Visible = true;
+            this.Separator3.Visible = true;
+
+            this.MenuSurveyGrid.Visible = true;
+            this.MenuClearWP.Visible = true;
+            this.MenuReadWP.Visible = true;
+            this.MenuSaveWP.Visible = true;
+            this.Separator4.Visible = true;
+            this.Separator5.Visible = true;
+        }
+
+        private void SetFlightDataMenu()
+        {
+            this.MenuFlightPlannerOpen.Visible = true;
+            this.MenuFlightPlannerClose.Visible = false;
+            this.Separator1.Visible = true;
+
+            this.MenuLoadLayer.Visible = true;
+            this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible && this.MenuLoadLayer.Checked;
+            this.MenuLayerManager.Visible = true;
+            this.Separator2.Visible = true;
+
+            this.MenuDrawPolygon.Visible = false;
+            this.MenuClearPolygon.Visible = false;
+            this.Separator3.Visible = false;
+
+            this.MenuSurveyGrid.Visible = false;
+            this.MenuClearWP.Visible = false;
+            this.MenuReadWP.Visible = false;
+            this.MenuSaveWP.Visible = false;
+            this.Separator4.Visible = false;
+            this.Separator5.Visible = true;
+        }
+
+        private void MenuFlightPlannerOpen_Click(object sender, EventArgs e)
+        {
+            if (MyView.current != MyView.screens.Single(s => s.Name == "FlightData"))
+                FlightDataShow();
+            if (this.MenuFlightPlannerOpen.Visible)
+                GCSViews.FlightData.instance.OpenFlightPlanner();
+        }
+
+        private void FlightPlannerShow()
+        {
+            //MyView.ShowScreen("FlightPlanner");
+            MyView.ShowScreen("FlightPlanner");
+        }
+
+        private void MenuFlightPlannerClose_Click(object sender, EventArgs e)
+        {
+            //MyView.ShowScreen("FlightData");
+            if (MyView.current != MyView.screens.Single(s => s.Name == "FlightData"))
+                FlightDataShow();
+            if (MenuFlightPlannerClose.Visible)
+                GCSViews.FlightData.instance.CloseFlightPlanner();
+        }
+
+        private void FlightDataShow()
+        {
+            MyView.ShowScreen("FlightData");
+        }
+
+        private void WPGobalConfig_Click(object sender, EventArgs e)
+        {
+            if (MenuWPGobalConfig.Visible)
+            {
+                GobalWPConfig dlg = new GobalWPConfig();
+                dlg.ShowDialog();
+            }
+        }
+
+        private void MenuLoadLayer_Click(object sender, EventArgs e)
+        {
+            if (MenuLoadLayer.Visible)
+                LoadTiffLayer();
+        }
+
+        private void MenuZoomToLayer_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.zoomToTiffLayer();
+            GCSViews.FlightData.instance.zoomToTiffLayer();
+        }
+
+        private void MenuLayerManager_Click(object sender, EventArgs e)
+        {
+            SetHLToolStripButtonChecked(this.MenuLayerManager, true);
+            if (MenuLayerManager.Visible)
+                GCSViews.FlightPlanner.instance.TiffLayerManager();
+            SetHLToolStripButtonChecked(this.MenuLayerManager, false);
+        }
 
         #region 图层信息
         public GMap.NET.RectLatLng diisplayRect = new GMap.NET.RectLatLng();
@@ -1059,46 +1185,49 @@ namespace VPS
 
         public void LoadTiffLayer()
         {
-            LoadTiffButton_Click(this, null);
-        }
-
-        public bool LoadDefaultLayer()
-        {
-            if (Settings.Instance["defaultLayer"] != null)
+            LayerReader reader = new LayerReader();
+            DialogResult readerResult = reader.ShowDialog();
+            if (readerResult == DialogResult.OK)
             {
-                var layer = MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultLayer"]);
-                if(layer != null)
+                if (reader.GetApplyTile())
                 {
-                    IsLoadLayer = false;
-                    return SetLayerOverlay(layer.GetValueOrDefault());
-                }
-                else
-                {
-                    IsLoadLayer = false;
-                    FlightPlanner.ClearLayerOverlay();
-                }
-            }
-            else
-            {
-                IsLoadLayer = false;
-                FlightPlanner.ClearLayerOverlay();
-            }
-            return false;
+                    LayerTile tile = new LayerTile(reader.GetLayer());
+                    tile.SetDesktopBounds(reader.Left, reader.Top, reader.Width, reader.Height);
+                    DialogResult tileResult = tile.ShowDialog(this);
+                    if(tileResult == DialogResult.OK)
+                    {
 
+                        tile.Dispose();
+                        tile.Close();
+                    }
+                    else if (readerResult == DialogResult.Cancel)
+                    {
+                        tile.Dispose();
+                        tile.Close();
+                    }
+                }
+                AddLayerOverlay(reader.GetLayer(), reader.GetOrigin(), reader.GetTransparentColor());
+                reader.Dispose();
+                reader.Close();
+            }
+            else if (readerResult == DialogResult.Cancel)
+            {
+                reader.Dispose();
+                reader.Close();
+            }
         }
 
         public bool AddLayerOverlay(string path, PointLatLngAlt origin, Color transparent)
         {
-            var layerInfo = new GMap.NET.Internals.LayerInfo(path, origin.Lng, origin.Lat, origin.Alt, transparent);
-            MemoryLayerCache.AddLayerToMemoryCache(layerInfo);
-            return SetLayerOverlay(layerInfo);
+            MemoryLayerCache.AddLayerToMemoryCache(new GMap.NET.Internals.LayerInfo(path, origin.Lng, origin.Lat, origin.Alt, transparent));
+            return SetLayerOverlay(path, origin.Lng, origin.Lat, origin.Alt, transparent);
         }
 
-        private bool SetLayerOverlay(GMap.NET.Internals.LayerInfo layerInfo)
+        private bool SetLayerOverlay(string path, double lng, double lat, double alt, Color Transparent)
         {
-            if (File.Exists(layerInfo.Layer))
+            if (File.Exists(path))
             {
-                var bitmap = GDAL.GDAL.LoadImageInfo(layerInfo.Layer);
+                var bitmap = GDAL.GDAL.LoadImageInfo(path);
                 if (bitmap != null && !bitmap.Rect.IsEmpty)
                 {
                     Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (_bitmap, _transparent) =>
@@ -1108,11 +1237,11 @@ namespace VPS
                         _bitmap.smallBitmap.MakeTransparent(_transparent);
                         return _bitmap;
                     };
-                    IAsyncResult iar = GetGeoBitmap.BeginInvoke(bitmap, layerInfo.Transparent, CallbackWhenDone, this);
+                    IAsyncResult iar = GetGeoBitmap.BeginInvoke(bitmap, Transparent, CallbackWhenDone, this);
 
                     this.diisplayRect = bitmap.Rect;
-                    this.defaultOrigin = new PointLatLngAlt(layerInfo.Lat, layerInfo.Lng, layerInfo.Alt);
-                    ZoomTiffButton_Click(this, null);
+                    this.defaultOrigin = new PointLatLngAlt(lat, lng, alt);
+                    MenuZoomToLayer_Click(this, null);
                     return true;
                 }
                 else
@@ -1141,8 +1270,120 @@ namespace VPS
 
         private void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
         {
-            //GCSViews.FlightData.instance.ShowLayerOverlay(geoBitmap);
+            GCSViews.FlightData.instance.ShowLayerOverlay(geoBitmap);
             GCSViews.FlightPlanner.instance.ShowLayerOverlay(geoBitmap);
+        }
+
+        private void MenuDrawPolygon_Click(object sender, EventArgs e)
+        {
+            if (MenuDrawPolygon.Visible)
+            {
+                if (!GetHLToolStripButtonChecked(this.MenuDrawPolygon))
+                    GCSViews.FlightPlanner.instance.AddPolygon();
+                else
+                    GCSViews.FlightPlanner.instance.NoAddPolygon();
+            }
+        }
+
+        private void MenuClearPolygon_Click(object sender, EventArgs e)
+        {
+            if (MenuClearPolygon.Visible)
+                GCSViews.FlightPlanner.instance.ClearPloygon();
+        }
+
+        private void MenuSurveyGrid_Click(object sender, EventArgs e)
+        {
+            SetHLToolStripButtonChecked(this.MenuSurveyGrid, true);
+            if (MenuSurveyGrid.Visible)
+                GCSViews.FlightPlanner.instance.surveyGrid();
+            SetHLToolStripButtonChecked(this.MenuSurveyGrid, false);
+        }
+
+        private void MenuClearWP_Click(object sender, EventArgs e)
+        {
+            if (MenuClearWP.Visible)
+                GCSViews.FlightPlanner.instance.ClearMission();
+        }
+
+        private void MenuReadWP_Click(object sender, EventArgs e)
+        {
+            SetHLToolStripButtonChecked(this.MenuReadWP, true);
+            if (MenuReadWP.Visible)
+                GCSViews.FlightPlanner.instance.LoadWPFile();
+            SetHLToolStripButtonChecked(this.MenuReadWP, false);
+        }
+
+        private void MenuSaveWP_Click(object sender, EventArgs e)
+        {
+            SetHLToolStripButtonChecked(this.MenuSaveWP, true);
+            if (MenuSaveWP.Visible)
+                GCSViews.FlightPlanner.instance.SaveWPFile();
+            SetHLToolStripButtonChecked(this.MenuSaveWP, false);
+        }
+        #endregion
+
+        public void MenuSetup_Click(object sender, EventArgs e)
+        {
+            if (Settings.Instance.GetBoolean("password_protect") == false)
+            {
+                MyView.ShowScreen("HWConfig");
+            }
+            else
+            {
+                var pw = "";
+                if (InputBox.Show("Enter Password", "Please enter your password", ref pw, true) ==
+    System.Windows.Forms.DialogResult.OK)
+                {
+                    bool ans = Password.ValidatePassword(pw);
+
+                    if (ans == false)
+                    {
+                        CustomMessageBox.Show("Bad Password", "Bad Password");
+                    }
+                }
+
+                if (Password.VerifyPassword(pw))
+                {
+                    MyView.ShowScreen("HWConfig");
+                }
+            }
+        }
+
+        private void MenuSimulation_Click(object sender, EventArgs e)
+        {
+            MyView.ShowScreen("Simulation");
+        }
+
+        private void MenuTuning_Click(object sender, EventArgs e)
+        {
+            if (Settings.Instance.GetBoolean("password_protect") == false)
+            {
+                MyView.ShowScreen("SWConfig");
+            }
+            else
+            {
+                var pw = "";
+                if (InputBox.Show("Enter Password", "Please enter your password", ref pw, true) ==
+    System.Windows.Forms.DialogResult.OK)
+                {
+                    bool ans = Password.ValidatePassword(pw);
+
+                    if (ans == false)
+                    {
+                        CustomMessageBox.Show("Bad Password", "Bad Password");
+                    }
+                }
+
+                if (Password.VerifyPassword(pw))
+                {
+                    MyView.ShowScreen("SWConfig");
+                }
+            }
+        }
+
+        private void MenuTerminal_Click(object sender, EventArgs e)
+        {
+            MyView.ShowScreen("Terminal");
         }
 
         public void doDisconnect(MAVLinkInterface comPort)
@@ -1175,13 +1416,13 @@ namespace VPS
             }
 
             // refresh config window if needed
-            //if (MyView.current != null)
-            //{
-            //    if (MyView.current.Name == "HWConfig")
-            //        MyView.ShowScreen("HWConfig");
-            //    if (MyView.current.Name == "SWConfig")
-            //        MyView.ShowScreen("SWConfig");
-            //}
+            if (MyView.current != null)
+            {
+                if (MyView.current.Name == "HWConfig")
+                    MyView.ShowScreen("HWConfig");
+                if (MyView.current.Name == "SWConfig")
+                    MyView.ShowScreen("SWConfig");
+            }
 
             try
             {
@@ -1472,7 +1713,7 @@ namespace VPS
                     }
                 }
 
-                //FlightData.CheckBatteryShow();
+                FlightData.CheckBatteryShow();
 
                 // save the baudrate for this port
                 Settings.Instance[_connectionControl.CMB_serialport.Text + "_BAUD"] = _connectionControl.CMB_baudrate.Text;
@@ -1480,23 +1721,23 @@ namespace VPS
                 //this.Text = titlebar + " " + comPort.MAV.VersionString;
 
                 // refresh config window if needed
-                //if (MyView.current != null)
-                //{
-                //    if (MyView.current.Name == "HWConfig")
-                //        MyView.ShowScreen("HWConfig");
-                //    if (MyView.current.Name == "SWConfig")
-                //        MyView.ShowScreen("SWConfig");
-                //}
+                if (MyView.current != null)
+                {
+                    if (MyView.current.Name == "HWConfig")
+                        MyView.ShowScreen("HWConfig");
+                    if (MyView.current.Name == "SWConfig")
+                        MyView.ShowScreen("SWConfig");
+                }
 
                 // load wps on connect option.
                 if (Settings.Instance.GetBoolean("loadwpsonconnect") == true)
                 {
                     // only do it if we are connected.
-                    //if (comPort.BaseStream.IsOpen)
-                    //{
-                    //    FlightPlannerShow();
-                    //    FlightPlanner.BUT_read_Click(null, null);
-                    //}
+                    if (comPort.BaseStream.IsOpen)
+                    {
+                        FlightPlannerShow();
+                        FlightPlanner.BUT_read_Click(null, null);
+                    }
                 }
 
                 // get any rallypoints
@@ -1855,7 +2096,7 @@ namespace VPS
             log.Info("closing fd");
             try
             {
-                //FlightData.Dispose();
+                FlightData.Dispose();
             }
             catch
             {
@@ -2448,7 +2689,7 @@ namespace VPS
                             linkqualitytime = DateTime.Now;
 
                             // force redraw if there are no other packets are being read
-                            //GCSViews.FlightData.myhud.Invalidate();
+                            GCSViews.FlightData.myhud.Invalidate();
                         }
                     }
 
@@ -2615,16 +2856,16 @@ namespace VPS
                                     if (port == MainV2.comPort)
                                     {
                                         // refresh config window if needed
-                                        //if (MyView.current != null)
-                                        //{
-                                        //    this.BeginInvoke((MethodInvoker)delegate ()
-                                        //   {
-                                        //       if (MyView.current.Name == "HWConfig")
-                                        //           MyView.ShowScreen("HWConfig");
-                                        //       if (MyView.current.Name == "SWConfig")
-                                        //           MyView.ShowScreen("SWConfig");
-                                        //   });
-                                        //}
+                                        if (MyView.current != null)
+                                        {
+                                            this.BeginInvoke((MethodInvoker)delegate ()
+                                           {
+                                               if (MyView.current.Name == "HWConfig")
+                                                   MyView.ShowScreen("HWConfig");
+                                               if (MyView.current.Name == "SWConfig")
+                                                   MyView.ShowScreen("SWConfig");
+                                           });
+                                        }
                                     }
                                 }
                             }
@@ -2720,21 +2961,18 @@ namespace VPS
         protected override void OnLoad(EventArgs e)
         {
 
-            //MyView.AddScreen(new MainSwitcher.Screen("FlightData", FlightData, true));
+            MyView.AddScreen(new MainSwitcher.Screen("FlightData", FlightData, true));
             MyView.AddScreen(new MainSwitcher.Screen("FlightPlanner", FlightPlanner, true));
-            //MyView.AddScreen(new MainSwitcher.Screen("HWConfig", typeof(GCSViews.InitialSetup), false));
-            //MyView.AddScreen(new MainSwitcher.Screen("SWConfig", typeof(GCSViews.SoftwareConfig), false));
+            MyView.AddScreen(new MainSwitcher.Screen("HWConfig", typeof(GCSViews.InitialSetup), false));
+            MyView.AddScreen(new MainSwitcher.Screen("SWConfig", typeof(GCSViews.SoftwareConfig), false));
             //MyView.AddScreen(new MainSwitcher.Screen("Simulation", Simulation, true));
-            //MyView.AddScreen(new MainSwitcher.Screen("Help", typeof(GCSViews.Help), false));
-            SetInitHandler();
+            MyView.AddScreen(new MainSwitcher.Screen("Help", typeof(GCSViews.Help), false));
 
-            if (!LoadDefaultLayer())
-                Settings.Instance["defaultLayer"] = null;
             // hide simulation under mono
-            //if (Program.MONO)
-            //{
-            //    MenuSimulation.Visible = false;
-            //}
+            if (Program.MONO)
+            {
+                MenuSimulation.Visible = false;
+            }
 
             try
             {
@@ -2756,7 +2994,7 @@ namespace VPS
             }
 
             this.PerformLayout();
-            //FlightPlannerShow();
+            FlightPlannerShow();
 
             // for long running tasks using own threads.
             // for short use threadpool
@@ -2933,55 +3171,55 @@ namespace VPS
             {
                 if (image == null)
                 {
-                    //GCSViews.FlightData.myhud.bgimage = null;
+                    GCSViews.FlightData.myhud.bgimage = null;
                     return;
                 }
 
                 if (!(image is Drawing::System.Drawing.Bitmap bmp))
                     return;
-                //var old = GCSViews.FlightData.myhud.bgimage;
-                //GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
-                //    PixelFormat.Format32bppPArgb,
-                //    bmp.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888)
-                //    .Scan0);
-                //if (old != null)
-                //    old.Dispose();
+                var old = GCSViews.FlightData.myhud.bgimage;
+                GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
+                    PixelFormat.Format32bppPArgb,
+                    bmp.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888)
+                    .Scan0);
+                if (old != null)
+                    old.Dispose();
             };
 
             vlcrender.onNewImage += (sender, image) =>
             {
                 if (image == null)
                 {
-                    //GCSViews.FlightData.myhud.bgimage = null;
+                    GCSViews.FlightData.myhud.bgimage = null;
                     return;
                 }
                 if (!(image is Drawing::System.Drawing.Bitmap bmp))
                     return;
-                //var old = GCSViews.FlightData.myhud.bgimage;
-                //GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width,
-                //                                               image.Height,
-                //                                               4 * image.Width,
-                //                                               PixelFormat.Format32bppPArgb,
-                //                                               bmp.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888).Scan0);
-                //if (old != null)
-                //    old.Dispose();
+                var old = GCSViews.FlightData.myhud.bgimage;
+                GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width,
+                                                               image.Height,
+                                                               4 * image.Width,
+                                                               PixelFormat.Format32bppPArgb,
+                                                               bmp.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888).Scan0);
+                if (old != null)
+                    old.Dispose();
             };
 
             CaptureMJPEG.onNewImage += (sender, image) =>
             {
                 if (image == null)
                 {
-                    //    GCSViews.FlightData.myhud.bgimage = null;
+                    GCSViews.FlightData.myhud.bgimage = null;
                     return;
                 }
                 if (!(image is Drawing::System.Drawing.Bitmap bmp))
                     return;
-                //var old = GCSViews.FlightData.myhud.bgimage;
-                //GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
-                //                                               PixelFormat.Format32bppPArgb,
-                //                                               bmp.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888).Scan0);
-                //if (old != null)
-                //    old.Dispose();
+                var old = GCSViews.FlightData.myhud.bgimage;
+                GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
+                                                               PixelFormat.Format32bppPArgb,
+                                                               bmp.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888).Scan0);
+                if (old != null)
+                    old.Dispose();
             };
 
             try
@@ -3088,8 +3326,8 @@ namespace VPS
 
                 if (cmds.ContainsKey("file") && File.Exists(cmds["file"]) && cmds["file"].ToLower().EndsWith(".tlog"))
                 {
-                    //FlightData.LoadLogFile(Program.args[0]);
-                    //FlightData.BUT_playlog_Click(null, null);
+                    FlightData.LoadLogFile(Program.args[0]);
+                    FlightData.BUT_playlog_Click(null, null);
                 }
                 else if (cmds.ContainsKey("file") && File.Exists(cmds["file"]) &&
                          (cmds["file"].ToLower().EndsWith(".log") || cmds["file"].ToLower().EndsWith(".bin")))
@@ -3106,16 +3344,16 @@ namespace VPS
                     // invoke for after onload finished
                     this.BeginInvoke((Action)delegate ()
                    {
-                       //try
-                       //{
-                       //    FlightData.selectedscript = cmds["script"];
+                       try
+                       {
+                           FlightData.selectedscript = cmds["script"];
 
-                       //    FlightData.BUT_run_script_Click(null, null);
-                       //}
-                       //catch (Exception ex)
-                       //{
-                       //    CustomMessageBox.Show("Start script failed: " + ex.ToString(), Strings.ERROR);
-                       //}
+                           FlightData.BUT_run_script_Click(null, null);
+                       }
+                       catch (Exception ex)
+                       {
+                           CustomMessageBox.Show("Start script failed: " + ex.ToString(), Strings.ERROR);
+                       }
                    });
                 }
 
@@ -3465,7 +3703,7 @@ namespace VPS
 
         private void MenuHelp_Click(object sender, EventArgs e)
         {
-            //MyView.ShowScreen("Help");
+            MyView.ShowScreen("Help");
         }
 
 
@@ -3486,54 +3724,64 @@ namespace VPS
 
             if (keyData == Keys.F1)
             {
-                LoadProjectButton_Click(this, null);
+                MenuFlightPlannerOpen_Click(this, null);
                 return true;
             }
             if (keyData == Keys.F2)
             {
-                SaveProjectButton_Click(this, null);
+                MenuFlightPlannerClose_Click(this, null);
                 return true;
             }
 
             if (keyData == Keys.F5)
             {
-                LoadTiffButton_Click(this, null);
-                LoadTiffButton_Click(this, null);
+                MenuLoadLayer_Click(this, null);
                 return true;
             }
             if (keyData == Keys.F6)
             {
-                TiffManagerButton_Click(this, null);
+                MenuLayerManager_Click(this, null);
                 return true;
             }
+            //if (keyData == Keys.F4)
+            //{
+            //    MenuTuning_Click(null, null);
+            //    return true;
+            //}
 
+            //if (keyData == Keys.F5)
+            //{
+            //    comPort.getParamList();
+            //    MyView.ShowScreen(MyView.current.Name);
+            //    return true;
+            //}
             if (keyData == (Keys.Menu | Keys.Control | Keys.Alt) || keyData == (Keys.ControlKey | Keys.Control | Keys.Alt))
             {
-                DrawPolygonButton_Click(this, null);
+                MenuDrawPolygon_Click(this, null);
                 return true;
             }
 
             if (keyData == (Keys.Control | Keys.Delete))
             {
-                ClearWPButton_Click(this, null);
+                MenuClearWP_Click(this, null);
                 return true;
             }
 
             if (keyData == (Keys.Alt | Keys.Delete))
             {
-                ClearPolygonButton_Click(this, null);
+                MenuClearPolygon_Click(this, null);
                 return true;
             }
 
             if (keyData == (Keys.Control | Keys.T))
             {
-                ZoomTiffButton_Click(this, null);
+                MenuZoomToLayer_Click(this, null);
                 return true;
             }
 
             if (keyData == (Keys.Control | Keys.G))
             {
-                AutoWPButton_Click(this, null);
+                MenuSurveyGrid_Click(this, null);
                 return true;
             }
 
@@ -3542,16 +3790,100 @@ namespace VPS
             // open wp file
             if (keyData == (Keys.Control | Keys.O))
             {
-                SaveWPButton_Click(this, null);
+                MenuSaveWP_Click(this, null);
                 return true;
             }
 
             // save wp file
             if (keyData == (Keys.Control | Keys.S))
             {
-                LoadWPButton_Click(this, null);
+                MenuReadWP_Click(this, null);
                 return true;
             }
+
+            //if (keyData == (Keys.Control | Keys.F)) // temp
+            //{
+            //    Form frm = new temp();
+            //    ThemeManager.ApplyThemeTo(frm);
+            //    frm.Show();
+            //    return true;
+            //}
+            /*if (keyData == (Keys.Control | Keys.S)) // screenshot
+            {
+                ScreenShot();
+                return true;
+            }*/
+            //if (keyData == (Keys.Control | Keys.P))
+            //{
+            //    new PluginUI().Show();
+            //    return true;
+            //}
+
+            //if (keyData == (Keys.Control | Keys.G)) // nmea out
+            //{
+            //    Form frm = new SerialOutputNMEA();
+            //    ThemeManager.ApplyThemeTo(frm);
+            //    frm.Show();
+            //    return true;
+            //}
+            //if (keyData == (Keys.Control | Keys.X))
+            //{
+            //    new GMAPCache().ShowUserControl();
+            //    return true;
+            //}
+            //if (keyData == (Keys.Control | Keys.L)) // limits
+            //{
+            //    new DigitalSkyUI().ShowUserControl();
+
+            //    return true;
+            //}
+            //if (keyData == (Keys.Control | Keys.W)) // test ac config
+            //{
+            //    new PropagationSettings().Show();
+
+            //    return true;
+            //}
+            //if (keyData == (Keys.Control | Keys.Z))
+            //{
+            //    //ScanHW.Scan(comPort);
+            //    new Camera().test(MainV2.comPort);
+            //    return true;
+            //}
+            //if (keyData == (Keys.Control | Keys.T)) // for override connect
+            //{
+            //    try
+            //    {
+            //        MainV2.comPort.Open(false);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        CustomMessageBox.Show(ex.ToString());
+            //    }
+            //    return true;
+            //}
+            //if (keyData == (Keys.Control | Keys.Y)) // for ryan beall and ollyw42
+            //{
+            //    // write
+            //    try
+            //    {
+            //        MainV2.comPort.doCommand((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, MAVLink.MAV_CMD.PREFLIGHT_STORAGE, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+            //    }
+            //    catch
+            //    {
+            //        CustomMessageBox.Show("Invalid command");
+            //        return true;
+            //    }
+            //    //read
+            //    ///////MainV2.comPort.doCommand(MAVLink09.MAV_CMD.PREFLIGHT_STORAGE, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+            //    CustomMessageBox.Show("Done MAV_ACTION_STORAGE_WRITE");
+            //    return true;
+            //}
+            //if (keyData == (Keys.Control | Keys.J))
+            //{
+            //    new DevopsUI().ShowUserControl();
+
+            //    return true;
+            //}
 
             if (ProcessCmdKeyCallback != null)
             {
@@ -3575,7 +3907,7 @@ namespace VPS
                 Settings.Instance["language"] = ci.Name;
                 //System.Threading.Thread.CurrentThread.CurrentCulture = ci;
 
-                HashSet<Control> views = new HashSet<Control> { this/*, FlightData*/, FlightPlanner/*, Simulation*/ };
+                HashSet<Control> views = new HashSet<Control> { this, FlightData, FlightPlanner/*, Simulation*/ };
 
                 foreach (Control view in MyView.Controls)
                     views.Add(view);
@@ -4010,12 +4342,10 @@ namespace VPS
             ICommandSource source = sender as ICommandSource;
             if (source.CommandParameter is string)
             {
-                Settings.Instance["formstyle"] = source.CommandParameter.ToString();
                 eStyle style = (eStyle)Enum.Parse(typeof(eStyle), source.CommandParameter.ToString());
                 // Using StyleManager change the style and color tinting
                 this.styleManager.ManagerStyle = style;
                 this.styleManager.ManagerColorTint = System.Drawing.Color.Empty;
-                
                 //StyleManager.ChangeStyle(style, System.Drawing.Color.Empty);
                 //if (style == eStyle.Office2007Black || style == eStyle.Office2007Blue || style == eStyle.Office2007Silver || style == eStyle.Office2007VistaGlass)
                 //    StartButton.BackstageTabEnabled = false;

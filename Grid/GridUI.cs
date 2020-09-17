@@ -77,7 +77,7 @@ namespace VPS.Grid
 
             tiffoverlay = new GMapOverlay("layerpolygons");
             map.Overlays.Add(tiffoverlay);
-            var layer = GMap.NET.CacheProviders.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultLayer"]);
+            var layer = GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache();
             if (layer != null)
             {
                 var layerInfo = (GMap.NET.Internals.LayerInfo)layer;

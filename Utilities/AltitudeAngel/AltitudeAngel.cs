@@ -13,7 +13,7 @@ namespace VPS.Utilities.AltitudeAngel
         {
             AltitudeAngelPlugin.Configure();
             ServiceLocator.Register<IMissionPlanner>(l => new MissionPlannerAdaptor(
-                new MapAdapter(FlightData.DefaultMap),
+                new MapAdapter(FlightData.instance.MainMap),
                 new MapAdapter(FlightPlanner.instance.MainMap),
                 () => FlightPlanner.instance.GetFlightPlanLocations()));
             ServiceLocator.Register<IMissionPlannerState>(l => new MissionPlannerStateAdapter(

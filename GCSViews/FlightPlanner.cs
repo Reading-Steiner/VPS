@@ -422,8 +422,6 @@ namespace VPS.GCSViews
             }
         }
 
-
-
         private void SetInitState()
         {
             SetNoDrawPolygonState();
@@ -2175,8 +2173,15 @@ namespace VPS.GCSViews
 
         private void LoadWPFile_Click(object sender, EventArgs e)
         {
-            loadwaypoints();
-            writeKML();
+            if (GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache() != null)
+            {
+                loadwaypoints();
+                writeKML();
+            }
+            else
+            {
+                CustomMessageBox.Show("请完善沙盘坐标系信息", Strings.ERROR);
+            }
         }
 
         public void SaveWPFile()
@@ -2186,8 +2191,15 @@ namespace VPS.GCSViews
 
         private void SaveWPFile_Click(object sender, EventArgs e)
         {
-            savewaypoints();
-            writeKML();
+            if (GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache() != null)
+            {
+                savewaypoints();
+                writeKML();
+            }
+            else
+            {
+                CustomMessageBox.Show("请完善沙盘坐标系信息", Strings.ERROR);
+            }
         }
 
         public void areaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2650,7 +2662,7 @@ namespace VPS.GCSViews
                 }
 
                 MainMap.MapProvider = (GMapProvider)comboBoxMapType.SelectedItem;
-                FlightData.DefaultMap.MapProvider = (GMapProvider)comboBoxMapType.SelectedItem;
+                FlightData.mymap.MapProvider = (GMapProvider)comboBoxMapType.SelectedItem;
                 Settings.Instance["MapType"] = comboBoxMapType.Text;
             }
             catch (Exception ex)
@@ -6356,7 +6368,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 w.WriteEndElement();//styleUrl
                 w.WriteStartElement("ExtendedData", "www.dji.com");
 
-                var layerInfo = GMap.NET.CacheProviders.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultLayer"]);
+                var layerInfo = GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache();
                 if (layerInfo != null)
                 {
                     w.WriteStartElement("local");
@@ -6761,7 +6773,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         /// </summary>
         private void CovertToWorkCoordinate(PointLatLngAlt WGS84Point, out PointLatLngAlt WorkPoint)
         {
-            var layer = GMap.NET.CacheProviders.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultLayer"]);
+            var layer = GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache();
             if (layer == null)
             {
             }
@@ -6812,7 +6824,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
         private void CovertFromWorkCoordinate(PointLatLngAlt WorkCoordPoint, out PointLatLngAlt WGS84CorrdPoint)
         {
-            var layer = GMap.NET.CacheProviders.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultLayer"]);
+            var layer = GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache();
             if (layer == null)
             {
             }
@@ -9285,11 +9297,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             FlightPlanner.instance.zoomToTiffLayer();
         }
 
-        public void ClearLayerOverlay()
-        {
-            layerPolygonsOverlay.Polygons.Clear();
-        }
-
         public void zoomToTiffLayer()
         {
             zoomToTiffToolStripMenuItem_Click(this, null);
@@ -9299,7 +9306,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         {
             //double Lat = (rect.Left + rect.Right) / 2;
             //double Lng = (rect.Top + rect.Bottom) / 2;
-            var layerInfo = GMap.NET.CacheProviders.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultLayer"]);
+            var layerInfo = GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache();
             if (layerInfo == null)
                 return;
 

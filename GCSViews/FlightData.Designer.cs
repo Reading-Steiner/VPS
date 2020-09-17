@@ -2493,7 +2493,6 @@
         private Controls.MyLabel label1;
         private System.Windows.Forms.CheckBox CHK_autopan;
         public Controls.myGMAP MainMap;
-        public static Controls.myGMAP DefaultMap = new VPS.Controls.myGMAP();
         private ZedGraph.ZedGraphControl zg1;
         public System.Windows.Forms.TabControl tabControlactions;
         public System.Windows.Forms.TabPage tabGauges;

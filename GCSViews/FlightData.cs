@@ -5163,7 +5163,7 @@ namespace VPS.GCSViews
         {
             //double Lat = (rect.Left + rect.Right) / 2;
             //double Lng = (rect.Top + rect.Bottom) / 2;
-            var layerInfo = GMap.NET.CacheProviders.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultLayer"]);
+            var layerInfo = GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache();
             if (layerInfo == null)
                 return;
 

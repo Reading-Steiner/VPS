@@ -9,6 +9,7 @@
     public class MemoryLayerCache
     {
         static readonly LayerInfoCache layerInfoInMemory = new LayerInfoCache();
+        static string selectedLayer;
 
         static MemoryLayerCache()
         {
@@ -88,6 +89,19 @@
             }
         }
 
+        static public LayerInfo? GetSelectedLayerFromMemoryCache()
+        {
+            try
+            {
+                if (layerInfoInMemory.Count <= 0)
+                    return null;
+                return GetLayerFromMemoryCache(selectedLayer);
+            }
+            finally
+            {
+            }
+        }
+
         static public bool AddLayerToMemoryCache(LayerInfo data)
         {
 
@@ -98,15 +112,18 @@
                     return false;
                 if (!layerInfoInMemory.ContainsKey(key))
                 {
-                    layerInfoInMemory.Add(key, data);
+                    if (layerInfoInMemory.Add(key, data))
+                        selectedLayer = key;
                 }
                 else if (!data.Equals(GetLayerFromMemoryCache(key).GetValueOrDefault()))
                 {
-                    layerInfoInMemory.Modify(key, data);
+                    if (layerInfoInMemory.Modify(key, data))
+                        selectedLayer = key;
                 }
                 else
                 {
-                    layerInfoInMemory.MoveToLast(key);
+                    if (layerInfoInMemory.MoveToLast(key))
+                        selectedLayer = key;
                 }
             }
             finally
@@ -136,7 +153,7 @@
             xmlDoc.Load(".\\plugins\\GMap.NET.CacheProviders.MemoryLayerCache.xml");
             try
             {
-                layerInfoInMemory.FromXML(xmlDoc, out string selectedLayer);
+                layerInfoInMemory.FromXML(xmlDoc, out selectedLayer);
             }
             finally
             {
