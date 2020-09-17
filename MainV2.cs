@@ -409,18 +409,18 @@ namespace VPS
             InitializeComponent();
 
             //Init Theme table and load BurntKermit as a default
-            ThemeManager.thmColor = new ThemeColorTable(); //Init colortable
-            ThemeManager.thmColor.InitColors();     //This fills up the table with BurntKermit defaults. 
-            ThemeManager.thmColor.SetTheme();              //Set the colors, this need to handle the case when not all colors are defined in the theme file
+            //ThemeManager.thmColor = new ThemeColorTable(); //Init colortable
+            //ThemeManager.thmColor.InitColors();     //This fills up the table with BurntKermit defaults. 
+            //ThemeManager.thmColor.SetTheme();              //Set the colors, this need to handle the case when not all colors are defined in the theme file
 
  
 
-            if (Settings.Instance["theme"] == null) Settings.Instance["theme"] = "HighContrast.mpsystheme";
-            if (Settings.Instance["theme"] == "BurntKermit.mpsystheme") Settings.Instance["theme"] = "HighContrast.mpsystheme";
+            //if (Settings.Instance["theme"] == null) Settings.Instance["theme"] = "HighContrast.mpsystheme";
+            //if (Settings.Instance["theme"] == "BurntKermit.mpsystheme") Settings.Instance["theme"] = "HighContrast.mpsystheme";
 
-            ThemeManager.LoadTheme(Settings.Instance["theme"]);
+            //ThemeManager.LoadTheme(Settings.Instance["theme"]);
 
-            Utilities.ThemeManager.ApplyThemeTo(this);
+            //Utilities.ThemeManager.ApplyThemeTo(this);
 
             MyView = new MainSwitcher(this.RibbonClientPanel);
 
