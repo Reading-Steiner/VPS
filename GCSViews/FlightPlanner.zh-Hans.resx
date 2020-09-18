@@ -445,7 +445,7 @@
     <value>123, 22</value>
   </data>
   <data name="tiffReadToolStripMenuItem.Text" xml:space="preserve">
-    <value>添加本地地图</value>
+    <value>添加工作区</value>
   </data>
   <data name="loadAndAppendToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>150, 22</value>
@@ -472,6 +472,9 @@
     <value>136, 22</value>
   </data>
   <data name="tiffManagerToolStripTiffMenuItem.Text" xml:space="preserve">
-    <value>图层管理器</value>
+    <value>管理工作区</value>
+  </data>
+  <data name="tiffReadToolStripTiffMenuItem.Text" xml:space="preserve">
+    <value>添加工作区</value>
   </data>
 </root>

@@ -1116,6 +1116,11 @@ namespace VPS
             LoadTiffButton_Click(this, null);
         }
 
+        public void ManagerTiffLayer()
+        {
+            TiffManagerButton_Click(this, null);
+        }
+
         public bool LoadDefaultLayer()
         {
             var layerInfo = MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
@@ -4210,7 +4215,7 @@ namespace VPS
 
         private void TiffManagerButton_Click(object sender, EventArgs e)
         {
-            GCSViews.FlightPlanner.instance.TiffLayerManager();
+            
         }
 
         private void DrawPolygonButton_Click(object sender, EventArgs e)

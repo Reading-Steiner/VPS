@@ -4478,16 +4478,10 @@ namespace VPS.GCSViews
             MainV2.instance.LoadTiffLayer();
         }
 
-        public void TiffLayerManager()
-        {
-            TiffManagerToolStripMenuItem_Click(null, null);
-        }
+
         private void TiffManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LayerManager layerManager = new LayerManager();
-            layerManager.ShowDialog();
-            layerManager.Dispose();
-            layerManager.Close();
+            MainV2.instance.ManagerTiffLayer();
         }
 
         public void kMLOverlayToolStripMenuItem_Click(object sender, EventArgs e)
