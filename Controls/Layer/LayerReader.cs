@@ -106,14 +106,6 @@ namespace VPS.Controls.Layer
                     this.OpenFilePath.Text = openFile.FileName;
                     try
                     {
-                        using (var ds = OSGeo.GDAL.Gdal.Open(openFile.FileName, OSGeo.GDAL.Access.GA_ReadOnly))
-                        {
-                            this.Projection.Text = ds.GetProjectionRef();
-                        }
-                    }
-                    catch (Exception ex) { }
-                    try
-                    {
                         var info = GDAL.GDAL.LoadImageInfo(openFile.FileName);
                         {
                             this.BoundLeftText.Text = info.Rect.Left.ToString("0.000000");
@@ -123,6 +115,14 @@ namespace VPS.Controls.Layer
                             RasterXSize = info.RasterXSize;
                             RasterYSize = info.RasterYSize;
                             PointLeftTop = info.Rect.LocationTopLeft;
+                        }
+                    }
+                    catch (Exception ex) { }
+                    try
+                    {
+                        using (var ds = OSGeo.GDAL.Gdal.Open(openFile.FileName, OSGeo.GDAL.Access.GA_ReadOnly))
+                        {
+                            this.Projection.Text = ds.GetProjectionRef();
                         }
                     }
                     catch (Exception ex) { }
