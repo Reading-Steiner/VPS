@@ -413,7 +413,7 @@ namespace VPS
             //ThemeManager.thmColor.InitColors();     //This fills up the table with BurntKermit defaults. 
             //ThemeManager.thmColor.SetTheme();              //Set the colors, this need to handle the case when not all colors are defined in the theme file
 
- 
+
 
             //if (Settings.Instance["theme"] == null) Settings.Instance["theme"] = "HighContrast.mpsystheme";
             //if (Settings.Instance["theme"] == "BurntKermit.mpsystheme") Settings.Instance["theme"] = "HighContrast.mpsystheme";
@@ -510,12 +510,16 @@ namespace VPS
                 changelanguage(CultureInfoEx.GetCultureInfo(Settings.Instance["language"]));
             }
 
-            if (Settings.Instance["formStyle"] != null)
+            if (!string.IsNullOrEmpty(Settings.Instance["formStyle"]))
             {
-                eStyle style = (eStyle)Enum.Parse(typeof(eStyle), Settings.Instance["formstyle"]);
+                eStyle style = (eStyle)Enum.Parse(typeof(eStyle), Settings.Instance["formStyle"]);
                 // Using StyleManager change the style and color tinting
                 this.styleManager.ManagerStyle = style;
                 this.styleManager.ManagerColorTint = System.Drawing.Color.Empty;
+            }
+            else if (!Settings.Instance.ContainsKey("fromStyle"))
+            {
+                Settings.Instance.AppendList("formStyle", "");
             }
             //if (splash != null)
             //{
@@ -776,13 +780,24 @@ namespace VPS
             // save config to test we have write access
             SetInitHandler();
             layerCache = new MemoryLayerCache();
-            var layer = MemoryLayerCache.GetSelectedLayerFromMemoryCache();
+            var layer = MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
             if (layer != null)
             {
                 GMap.NET.Internals.LayerInfo layerInfo = (GMap.NET.Internals.LayerInfo)layer;
-                SetLayerOverlay(layerInfo.Layer, layerInfo.Lng, layerInfo.Lat, layerInfo.Alt, layerInfo.Transparent);
+                SetLayerOverlay(layerInfo);
 
             }
+            if (!Settings.Instance.ContainsKey("defaultTiffLayer"))
+            {
+                Settings.Instance.AppendList("defaultTiffLayer", "");
+            }
+            else if (string.IsNullOrEmpty(Settings.Instance["defaultTiffLayer"]))
+            {
+                Settings.Instance["defaultTiffLayer"] = "";
+            }
+
+            
+
             SaveConfig();
         }
 
@@ -1098,49 +1113,32 @@ namespace VPS
 
         public void LoadTiffLayer()
         {
-            LayerReader reader = new LayerReader();
-            DialogResult readerResult = reader.ShowDialog();
-            if (readerResult == DialogResult.OK)
-            {
-                if (reader.GetApplyTile())
-                {
-                    LayerTile tile = new LayerTile(reader.GetLayer());
-                    tile.SetDesktopBounds(reader.Left, reader.Top, reader.Width, reader.Height);
-                    DialogResult tileResult = tile.ShowDialog(this);
-                    if(tileResult == DialogResult.OK)
-                    {
+            LoadTiffButton_Click(this, null);
+        }
 
-                        tile.Dispose();
-                        tile.Close();
-                    }
-                    else if (readerResult == DialogResult.Cancel)
-                    {
-                        tile.Dispose();
-                        tile.Close();
-                    }
-                }
-                AddLayerOverlay(reader.GetLayer(), reader.GetOrigin(), reader.GetTransparentColor());
-                reader.Dispose();
-                reader.Close();
-            }
-            else if (readerResult == DialogResult.Cancel)
+        public bool LoadDefaultLayer()
+        {
+            var layerInfo = MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
+            if (layerInfo != null)
             {
-                reader.Dispose();
-                reader.Close();
+                return SetLayerOverlay(layerInfo.GetValueOrDefault());
             }
+            else
+                return false;
         }
 
         public bool AddLayerOverlay(string path, PointLatLngAlt origin, Color transparent)
         {
-            MemoryLayerCache.AddLayerToMemoryCache(new GMap.NET.Internals.LayerInfo(path, origin.Lng, origin.Lat, origin.Alt, transparent));
-            return SetLayerOverlay(path, origin.Lng, origin.Lat, origin.Alt, transparent);
+            var layerInfo = new GMap.NET.Internals.LayerInfo(path, origin.Lng, origin.Lat, origin.Alt, transparent);
+            MemoryLayerCache.AddLayerToMemoryCache(layerInfo);
+            return SetLayerOverlay(layerInfo);
         }
 
-        private bool SetLayerOverlay(string path, double lng, double lat, double alt, Color Transparent)
+        private bool SetLayerOverlay(GMap.NET.Internals.LayerInfo layerInfo)
         {
-            if (File.Exists(path))
+            if (File.Exists(layerInfo.Layer))
             {
-                var bitmap = GDAL.GDAL.LoadImageInfo(path);
+                var bitmap = GDAL.GDAL.LoadImageInfo(layerInfo.Layer);
                 if (bitmap != null && !bitmap.Rect.IsEmpty)
                 {
                     Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (_bitmap, _transparent) =>
@@ -1150,10 +1148,10 @@ namespace VPS
                         _bitmap.smallBitmap.MakeTransparent(_transparent);
                         return _bitmap;
                     };
-                    IAsyncResult iar = GetGeoBitmap.BeginInvoke(bitmap, Transparent, CallbackWhenDone, this);
+                    IAsyncResult iar = GetGeoBitmap.BeginInvoke(bitmap, layerInfo.Transparent, CallbackWhenDone, this);
 
                     this.diisplayRect = bitmap.Rect;
-                    this.defaultOrigin = new PointLatLngAlt(lat, lng, alt);
+                    this.defaultOrigin = new PointLatLngAlt(layerInfo.Lat, layerInfo.Lng, layerInfo.Alt);
                     MenuZoomToLayer_Click(this, null);
                     return true;
                 }
@@ -2834,6 +2832,10 @@ namespace VPS
             //MyView.AddScreen(new MainSwitcher.Screen("Simulation", Simulation, true));
             MyView.AddScreen(new MainSwitcher.Screen("Help", typeof(GCSViews.Help), false));
 
+            //if (!LoadDefaultLayer())
+            //{
+            //    Settings.Instance["defaultTiffLayer"] = "";
+            //}
             // hide simulation under mono
             if (Program.MONO)
             {

@@ -104,20 +104,28 @@ namespace VPS.Controls.Layer
                 if (System.IO.File.Exists(openFile.FileName))
                 {
                     this.OpenFilePath.Text = openFile.FileName;
-                    using (var ds = OSGeo.GDAL.Gdal.Open(openFile.FileName, OSGeo.GDAL.Access.GA_ReadOnly))
+                    try
                     {
-                        this.Projection.Text = ds.GetProjectionRef();
+                        using (var ds = OSGeo.GDAL.Gdal.Open(openFile.FileName, OSGeo.GDAL.Access.GA_ReadOnly))
+                        {
+                            this.Projection.Text = ds.GetProjectionRef();
+                        }
                     }
-                    var info = GDAL.GDAL.LoadImageInfo(openFile.FileName);
+                    catch (Exception ex) { }
+                    try
                     {
-                        this.BoundLeftText.Text = info.Rect.Left.ToString("0.000000");
-                        this.BoundRightText.Text = info.Rect.Right.ToString("0.000000");
-                        this.BoundTopText.Text = info.Rect.Top.ToString("0.000000");
-                        this.BoundBottomText.Text = info.Rect.Bottom.ToString("0.000000");
-                        RasterXSize = info.RasterXSize;
-                        RasterYSize = info.RasterYSize;
-                        PointLeftTop = info.Rect.LocationTopLeft;
+                        var info = GDAL.GDAL.LoadImageInfo(openFile.FileName);
+                        {
+                            this.BoundLeftText.Text = info.Rect.Left.ToString("0.000000");
+                            this.BoundRightText.Text = info.Rect.Right.ToString("0.000000");
+                            this.BoundTopText.Text = info.Rect.Top.ToString("0.000000");
+                            this.BoundBottomText.Text = info.Rect.Bottom.ToString("0.000000");
+                            RasterXSize = info.RasterXSize;
+                            RasterYSize = info.RasterYSize;
+                            PointLeftTop = info.Rect.LocationTopLeft;
+                        }
                     }
+                    catch (Exception ex) { }
                     FileInfo fileInfo = new FileInfo(openFile.FileName);
                     {
                         FileName = fileInfo.Name;
@@ -215,7 +223,7 @@ namespace VPS.Controls.Layer
             }
             if (SettingDefaultMap.Checked)
             {
-                Settings.Instance["defaultLayer"] = openPath;
+                Settings.Instance["defaultTiffLayer"] = openPath;
             }
         }
 

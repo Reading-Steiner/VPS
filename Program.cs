@@ -303,10 +303,6 @@ namespace VPS
             catch (Exception ex)
             {
                 log.Fatal("Fatal app exception", ex);
-                Console.WriteLine(ex.ToString());
-
-                Console.WriteLine("\nPress any key to exit!");
-                Console.ReadLine();
             }
 
             try

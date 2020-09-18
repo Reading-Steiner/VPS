@@ -106,7 +106,7 @@ namespace VPS.Controls
                 item.SubItems.Add(layerInfo.GetValueOrDefault().Lng.ToString());
                 item.SubItems.Add(layerInfo.GetValueOrDefault().Lat.ToString());
                 item.SubItems.Add(layerInfo.GetValueOrDefault().Alt.ToString());
-                if (layerInfo.GetValueOrDefault().Equals(MemoryLayerCache.GetSelectedLayerFromMemoryCache().GetValueOrDefault()))
+                if (layerInfo.GetValueOrDefault().Layer == Utilities.Settings.Instance["defaultTiffLayer"])
                     this.SelectedGroup.Items.Add(item);
                 else
                     this.NormalGroup.Items.Add(item);

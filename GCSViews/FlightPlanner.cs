@@ -2173,7 +2173,7 @@ namespace VPS.GCSViews
 
         private void LoadWPFile_Click(object sender, EventArgs e)
         {
-            if (GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache() != null)
+            if (GMap.NET.CacheProviders.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]) != null)
             {
                 loadwaypoints();
                 writeKML();
@@ -2191,7 +2191,7 @@ namespace VPS.GCSViews
 
         private void SaveWPFile_Click(object sender, EventArgs e)
         {
-            if (GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache() != null)
+            if (GMap.NET.CacheProviders.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]) != null)
             {
                 savewaypoints();
                 writeKML();
@@ -6368,7 +6368,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 w.WriteEndElement();//styleUrl
                 w.WriteStartElement("ExtendedData", "www.dji.com");
 
-                var layerInfo = GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache();
+                var layerInfo = GMap.NET.CacheProviders.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
                 if (layerInfo != null)
                 {
                     w.WriteStartElement("local");
@@ -6773,7 +6773,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         /// </summary>
         private void CovertToWorkCoordinate(PointLatLngAlt WGS84Point, out PointLatLngAlt WorkPoint)
         {
-            var layer = GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache();
+            var layer = GMap.NET.CacheProviders.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
             if (layer == null)
             {
             }
@@ -6824,7 +6824,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
         private void CovertFromWorkCoordinate(PointLatLngAlt WorkCoordPoint, out PointLatLngAlt WGS84CorrdPoint)
         {
-            var layer = GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache();
+            var layer = GMap.NET.CacheProviders.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
             if (layer == null)
             {
             }
@@ -9306,7 +9306,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         {
             //double Lat = (rect.Left + rect.Right) / 2;
             //double Lng = (rect.Top + rect.Bottom) / 2;
-            var layerInfo = GMap.NET.CacheProviders.MemoryLayerCache.GetSelectedLayerFromMemoryCache();
+            var layerInfo = GMap.NET.CacheProviders.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
             if (layerInfo == null)
                 return;
 

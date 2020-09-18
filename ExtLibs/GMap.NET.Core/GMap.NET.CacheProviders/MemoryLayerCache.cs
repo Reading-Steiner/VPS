@@ -9,7 +9,6 @@
     public class MemoryLayerCache
     {
         static readonly LayerInfoCache layerInfoInMemory = new LayerInfoCache();
-        static string selectedLayer;
 
         static MemoryLayerCache()
         {
@@ -63,6 +62,8 @@
         {
             try
             {
+                if (string.IsNullOrEmpty(key) || !layerInfoInMemory.ContainsKey(key))
+                    return null;
                 LayerInfo ret;
                 if (layerInfoInMemory.TryGetValue(key, out ret))
                 {
@@ -89,18 +90,6 @@
             }
         }
 
-        static public LayerInfo? GetSelectedLayerFromMemoryCache()
-        {
-            try
-            {
-                if (layerInfoInMemory.Count <= 0)
-                    return null;
-                return GetLayerFromMemoryCache(selectedLayer);
-            }
-            finally
-            {
-            }
-        }
 
         static public bool AddLayerToMemoryCache(LayerInfo data)
         {
@@ -112,18 +101,15 @@
                     return false;
                 if (!layerInfoInMemory.ContainsKey(key))
                 {
-                    if (layerInfoInMemory.Add(key, data))
-                        selectedLayer = key;
+                    layerInfoInMemory.Add(key, data);
                 }
                 else if (!data.Equals(GetLayerFromMemoryCache(key).GetValueOrDefault()))
                 {
-                    if (layerInfoInMemory.Modify(key, data))
-                        selectedLayer = key;
+                    layerInfoInMemory.Modify(key, data);
                 }
                 else
                 {
-                    if (layerInfoInMemory.MoveToLast(key))
-                        selectedLayer = key;
+                    layerInfoInMemory.MoveToLast(key);
                 }
             }
             finally
@@ -153,7 +139,7 @@
             xmlDoc.Load(".\\plugins\\GMap.NET.CacheProviders.MemoryLayerCache.xml");
             try
             {
-                layerInfoInMemory.FromXML(xmlDoc, out selectedLayer);
+                layerInfoInMemory.FromXML(xmlDoc, out string selectedLayer);
             }
             finally
             {
