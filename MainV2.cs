@@ -780,12 +780,16 @@ namespace VPS
             // save config to test we have write access
             SetInitHandler();
             layerCache = new MemoryLayerCache();
-            var layer = MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
-            if (layer != null)
-            {
-                GMap.NET.Internals.LayerInfo layerInfo = (GMap.NET.Internals.LayerInfo)layer;
-                SetLayerOverlay(layerInfo);
+            //var layer = MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
+            //if (layer != null)
+            //{
+            //    GMap.NET.Internals.LayerInfo layerInfo = (GMap.NET.Internals.LayerInfo)layer;
+            //    AddLayerOverlay(layerInfo);
 
+            //}
+            if (!LoadDefaultLayer())
+            {
+                Settings.Instance["defaultTiffLayer"] = "";
             }
             if (!Settings.Instance.ContainsKey("defaultTiffLayer"))
             {
@@ -1006,6 +1010,7 @@ namespace VPS
         #region new
 
         private bool isLoadLayer;
+        private string isLoadingLayerName = "";
         public delegate void delegateHandler();
         public delegateHandler LoadLayerHandle;
         public delegateHandler NoLoadLayerHandle;
@@ -1106,9 +1111,12 @@ namespace VPS
 
 
         #region 图层信息
-        public GMap.NET.RectLatLng diisplayRect = new GMap.NET.RectLatLng();
+        public string currentLayerPath;
+        public GMap.NET.RectLatLng displayRect = new GMap.NET.RectLatLng();
         public PointLatLngAlt defaultOrigin = new PointLatLngAlt();
-        public GeoBitmap CurrentLayer;
+        public PointLatLngAlt defaultHome = new PointLatLngAlt();
+        public GeoBitmap currentLayer;
+        public GMap.NET.Internals.LayerInfo selectedLayer;
         #endregion
 
         public void LoadTiffLayer()
@@ -1126,10 +1134,11 @@ namespace VPS
             var layerInfo = MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
             if (layerInfo != null)
             {
-                return SetLayerOverlay(layerInfo.GetValueOrDefault());
+                return AddLayerOverlay(layerInfo.GetValueOrDefault());
             }
-            else
+            else {
                 return false;
+            }
         }
 
         public bool AddLayerOverlay(string path, PointLatLngAlt origin, Color transparent)
@@ -1139,6 +1148,12 @@ namespace VPS
             return SetLayerOverlay(layerInfo);
         }
 
+        public bool AddLayerOverlay(GMap.NET.Internals.LayerInfo info)
+        {
+            MemoryLayerCache.AddLayerToMemoryCache(info);
+            return SetLayerOverlay(info);
+        }
+
         private bool SetLayerOverlay(GMap.NET.Internals.LayerInfo layerInfo)
         {
             if (File.Exists(layerInfo.Layer))
@@ -1146,6 +1161,7 @@ namespace VPS
                 var bitmap = GDAL.GDAL.LoadImageInfo(layerInfo.Layer);
                 if (bitmap != null && !bitmap.Rect.IsEmpty)
                 {
+                    
                     Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (_bitmap, _transparent) =>
                     {
                         _bitmap.Bitmap.MakeTransparent(_transparent);
@@ -1153,10 +1169,14 @@ namespace VPS
                         _bitmap.smallBitmap.MakeTransparent(_transparent);
                         return _bitmap;
                     };
+                    isLoadingLayerName = bitmap.File;
                     IAsyncResult iar = GetGeoBitmap.BeginInvoke(bitmap, layerInfo.Transparent, CallbackWhenDone, this);
 
-                    this.diisplayRect = bitmap.Rect;
+                    this.currentLayerPath = layerInfo.Layer;
+                    this.displayRect = bitmap.Rect;
                     this.defaultOrigin = new PointLatLngAlt(layerInfo.Lat, layerInfo.Lng, layerInfo.Alt);
+                    this.defaultHome = new PointLatLngAlt(layerInfo.Lat, layerInfo.Lng, layerInfo.Alt);
+                    this.selectedLayer = layerInfo;
                     MenuZoomToLayer_Click(this, null);
                     return true;
                 }
@@ -1178,16 +1198,26 @@ namespace VPS
             var geoBitmap = geoFunc.EndInvoke(iar);
             if (geoBitmap.Bitmap != null)
             {
-                IsLoadLayer = true;
-                CurrentLayer = geoBitmap;
-                ShowLayerOverlay(geoBitmap);
+                if (geoBitmap.File == isLoadingLayerName)
+                {
+                    IsLoadLayer = true;
+                    currentLayer = geoBitmap;
+                    ShowLayerOverlay(geoBitmap);
+                }
             }
         }
 
         private void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
         {
+
             GCSViews.FlightData.instance.ShowLayerOverlay(geoBitmap);
             GCSViews.FlightPlanner.instance.ShowLayerOverlay(geoBitmap);
+
+        }
+
+        private void SetHome(PointLatLngAlt position)
+        {
+            GCSViews.FlightPlanner.instance.setHomeHere(position);
         }
         #endregion
 
@@ -2837,10 +2867,6 @@ namespace VPS
             //MyView.AddScreen(new MainSwitcher.Screen("Simulation", Simulation, true));
             MyView.AddScreen(new MainSwitcher.Screen("Help", typeof(GCSViews.Help), false));
 
-            //if (!LoadDefaultLayer())
-            //{
-            //    Settings.Instance["defaultTiffLayer"] = "";
-            //}
             // hide simulation under mono
             if (Program.MONO)
             {
@@ -4178,11 +4204,80 @@ namespace VPS
 
         private void LoadProjectButton_Click(object sender, EventArgs e)
         {
+            System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(GCSViews.ProjectData));
+
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "项目工程(*.vps)|*.vps";
+                ofd.ShowDialog();
+
+                if (File.Exists(ofd.FileName))
+                {
+                    using (StreamReader sr = new StreamReader(ofd.FileName))
+                    {
+                        var data = (GCSViews.ProjectData)reader.Deserialize(sr);
+                        loadProjectData(data);
+                    }
+                }
+            }
         }
 
         private void SaveProjectButton_Click(object sender, EventArgs e)
         {
+            System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(GCSViews.ProjectData));
 
+            var data = saveProjectData();
+
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "项目工程(*.vps)|*.vps";
+                var result = sfd.ShowDialog();
+
+                if (sfd.FileName != "" && result == DialogResult.OK)
+                {
+                    using (StreamWriter sw = new StreamWriter(sfd.FileName))
+                    {
+                        writer.Serialize(sw, data);
+                    }
+                }
+            }
+        }
+
+        private void loadProjectData(GCSViews.ProjectData data)
+        {
+            SetPolygonList(data.poly);
+            SetWPList(data.wp);
+            currentLayerPath = data.layer;
+            defaultOrigin = data.layerPosition;
+            displayRect = data.layerRect;
+            GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(displayRect);
+            defaultHome = data.homePosition;
+            SetHome(defaultHome);
+            AddLayerOverlay(selectedLayer);
+            if (LoadTiffButton.Checked != data.isLayerReaderOpen)
+                LoadTiffButton_Click(this, null);
+            if (TiffManagerButton.Checked != data.isLayerManagerOpen)
+                TiffManagerButton_Click(this, null);
+            if (AutoWPButton.Checked != data.isGridConfigOpen)
+                AutoWPButton_Click(this, null);
+        }
+
+        private GCSViews.ProjectData saveProjectData()
+        {
+            var data = new GCSViews.ProjectData();
+            GetPolygonList(out data.poly);
+            GetWPList(out data.wp);
+            data.layer = currentLayerPath;
+            data.layerPosition = defaultOrigin;
+            data.layerRect = displayRect;
+            data.homePosition = defaultHome;
+            data.layerInfo = selectedLayer;
+            data.isLayerReaderOpen = LoadTiffButton.Checked;
+            data.isLayerManagerOpen = TiffManagerButton.Checked;
+            data.isGridConfigOpen = AutoWPButton.Checked;
+
+
+            return data;
         }
 
         private void LoadTiffButton_Click(object sender, EventArgs e)
@@ -4285,6 +4380,23 @@ namespace VPS
             GridConfig.SetPolygonList(polygonList);
         }
 
+        private void SetPolygonList(List<PointLatLngAlt> polygonList)
+        {
+            foreach (var mark in polygonList)
+            {
+                GCSViews.FlightPlanner.instance.AddPolygonPoint(mark.Lat, mark.Lng);
+            }
+        }
+
+        private void GetPolygonList(out List<PointLatLngAlt> polygonList)
+        {
+            polygonList = new List<PointLatLngAlt>();
+            foreach (var mark in GCSViews.FlightPlanner.instance.drawnpolygon.Points)
+            {
+                polygonList.Add(mark);
+            }
+        }
+
         public delegate void WPListChangeInThread();
         private void WPListChange()
         {
@@ -4294,23 +4406,40 @@ namespace VPS
             }
             else
             {
-                List<PointLatLngAlt> wpList = VPS.Controls.Grid.GridConfig.instance.GetWPList();
+                SetWPList(VPS.Controls.Grid.GridConfig.instance.GetWPList());
                 //GCSViews.FlightPlanner.instance.ClearMission();
-                int counter = 0;
-                int have = GCSViews.FlightPlanner.instance.Commands.Rows.Count;
-                foreach (var wp in wpList)
-                {
-                    if (counter < have)
-                        GCSViews.FlightPlanner.instance.SetWPPoint(wp.Lat, wp.Lng, (int)wp.Alt, counter);
-                    else
-                        GCSViews.FlightPlanner.instance.AddWPPoint(wp.Lat, wp.Lng, (int)wp.Alt);
-                    counter++;
-                }
-                while (counter < have)
-                {
-                    GCSViews.FlightPlanner.instance.DeleteWPPoint(counter);
-                    have--;
-                }
+            }
+        }
+
+        private void SetWPList(List<PointLatLngAlt> wpList)
+        {
+            int counter = 0;
+            int have = GCSViews.FlightPlanner.instance.Commands.Rows.Count;
+            foreach (var wp in wpList)
+            {
+                if (counter < have)
+                    GCSViews.FlightPlanner.instance.SetWPPoint(wp.Lat, wp.Lng, (int)wp.Alt, counter);
+                else
+                    GCSViews.FlightPlanner.instance.AddWPPoint(wp.Lat, wp.Lng, (int)wp.Alt);
+                counter++;
+            }
+            while (counter < have)
+            {
+                GCSViews.FlightPlanner.instance.DeleteWPPoint(counter);
+                have--;
+            }
+        }
+
+
+        private void GetWPList(out List<PointLatLngAlt> wpList)
+        {
+            wpList = new List<PointLatLngAlt>();
+            int count = GCSViews.FlightPlanner.instance.Commands.Rows.Count;
+            for (int i = 0; i < count; i++)
+            {
+                GCSViews.FlightPlanner.instance.GetWPPoint(i, out PointLatLngAlt wp);
+
+                wpList.Add(wp);
             }
         }
 

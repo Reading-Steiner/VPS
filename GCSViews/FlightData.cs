@@ -5167,11 +5167,11 @@ namespace VPS.GCSViews
             if (layerInfo == null)
                 return;
 
-            double lng = MainV2.instance.defaultOrigin.Lng;
-            double lat = MainV2.instance.defaultOrigin.Lat;
-            double alt = MainV2.instance.defaultOrigin.Alt;
+            double lng = MainV2.instance.defaultHome.Lng;
+            double lat = MainV2.instance.defaultHome.Lat;
+            double alt = MainV2.instance.defaultHome.Alt;
 
-            MainMap.SetZoomToFitRect(MainV2.instance.diisplayRect);
+            MainMap.SetZoomToFitRect(MainV2.instance.displayRect);
         }
     }
 }

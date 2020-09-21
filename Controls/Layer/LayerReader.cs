@@ -117,7 +117,9 @@ namespace VPS.Controls.Layer
                             PointLeftTop = info.Rect.LocationTopLeft;
                         }
                     }
-                    catch (Exception ex) { }
+                    catch (Exception ex) {
+
+                    }
                     try
                     {
                         using (var ds = OSGeo.GDAL.Gdal.Open(openFile.FileName, OSGeo.GDAL.Access.GA_ReadOnly))
@@ -125,7 +127,9 @@ namespace VPS.Controls.Layer
                             this.Projection.Text = ds.GetProjectionRef();
                         }
                     }
-                    catch (Exception ex) { }
+                    catch (Exception ex) {
+                        this.Projection.Text = ex.Message;
+                    }
                     FileInfo fileInfo = new FileInfo(openFile.FileName);
                     {
                         FileName = fileInfo.Name;
@@ -210,7 +214,8 @@ namespace VPS.Controls.Layer
         {
             string openPath = "";
             if (ImageSave.Checked)
-                openPath = GetSaveFilePath();
+                //openPath = GetSaveFilePath();
+                openPath = OpenFilePath.Text;
             else
                 openPath = OpenFilePath.Text;
             if (UsingTransparent.Checked)
@@ -258,22 +263,32 @@ namespace VPS.Controls.Layer
                     else
                     {
                         string savePath = "";
-                        if (this.SaveFilePath.Text.EndsWith("\\"))
-                            savePath = this.SaveFilePath.Text;
+                        string saveFile = "";
+                        if (this.SaveFilePath.Text.EndsWith(".tif"))
+                        {
+                            savePath = this.SaveFilePath.Text.Substring(0, this.SaveFilePath.Text.LastIndexOf('\\') + 1);
+                            saveFile = this.SaveFilePath.Text;
+                        }
                         else
-                            savePath = this.SaveFilePath.Text + "\\";
-                        if (Directory.Exists(this.SaveFilePath.Text))
-                            return savePath + FileName;
+                        {
+                            if (this.SaveFilePath.Text.EndsWith("\\"))
+                                savePath = this.SaveFilePath.Text;
+                            else
+                                savePath = this.SaveFilePath.Text + "\\";
+                            saveFile = savePath + FileName;
+                        }
+                        if (Directory.Exists(savePath))
+                            return saveFile;
                         else
                         {
                             try
                             {
                                 Directory.CreateDirectory(savePath);
-                                return savePath + FileName;
+                                return saveFile;
                             }
                             catch
                             {
-                                return "";
+                                return ".\\" + saveFile;
                             }
                         }
                     }

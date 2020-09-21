@@ -616,6 +616,7 @@
     <Compile Include="GCSViews\ConfigurationView\DeviceInfo.cs" />
     <Compile Include="GCSViews\ConfigurationView\UAVCANModel.cs" />
     <Compile Include="GCSViews\ConfigurationView\uitype.cs" />
+    <Compile Include="GCSViews\ProjectData.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Grid\GridUI.cs">
       <SubType>Form</SubType>

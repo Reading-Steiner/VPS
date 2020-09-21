@@ -408,6 +408,7 @@ namespace GDAL
 
             lock (locker)
             {
+                //Gdal.AllRegister();
                 using (var ds = OSGeo.GDAL.Gdal.Open(file, OSGeo.GDAL.Access.GA_ReadOnly))
                 {
                     //var opt = OSGeo.GDAL.GDALBuildVRTOptions.;
@@ -420,8 +421,9 @@ namespace GDAL
                     int rasterYSize = ds.RasterYSize >= yOffset + ySize ?
                         ySize : ds.RasterYSize - yOffset;
 
-                    string fomat = "GTiff";
-                    var driver = OSGeo.GDAL.Gdal.GetDriverByName(fomat);
+                    string GType = "GTiff";
+
+                    var driver = OSGeo.GDAL.Gdal.GetDriverByName(GType);
                     Dataset tiff = driver.Create(saveFile, rasterXSize, rasterYSize, ds.RasterCount, DataType.GDT_Byte, driver.GetMetadataDomainList());
                     foreach (var domain in ds.GetMetadataDomainList())
                     {
@@ -436,7 +438,6 @@ namespace GDAL
                     adfGeoTransform[0] = left;
                     adfGeoTransform[3] = top;
                     tiff.SetGeoTransform(adfGeoTransform);
-
                     if (ds.RasterCount == 1)
                     {
                         Band band = ds.GetRasterBand(1);

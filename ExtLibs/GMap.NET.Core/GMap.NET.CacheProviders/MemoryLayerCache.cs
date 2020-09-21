@@ -62,6 +62,26 @@
         {
             try
             {
+                string hash = GetHashCode(key);
+                if (string.IsNullOrEmpty(key) || !layerInfoInMemory.ContainsKey(hash))
+                    return null;
+                LayerInfo ret;
+                if (layerInfoInMemory.TryGetValue(hash, out ret))
+                {
+                    return ret;
+                }
+            }
+            catch
+            {
+
+            }
+            return null;
+        }
+
+        static private LayerInfo? GetLayerFromMemoryCacheWithHashCode(string key)
+        {
+            try
+            {
                 if (string.IsNullOrEmpty(key) || !layerInfoInMemory.ContainsKey(key))
                     return null;
                 LayerInfo ret;
@@ -103,7 +123,7 @@
                 {
                     layerInfoInMemory.Add(key, data);
                 }
-                else if (!data.Equals(GetLayerFromMemoryCache(key).GetValueOrDefault()))
+                else if (!data.Equals(GetLayerFromMemoryCacheWithHashCode(key).GetValueOrDefault()))
                 {
                     layerInfoInMemory.Modify(key, data);
                 }
@@ -131,6 +151,17 @@
             }
         }
 
+        internal static string GetHashCode(string data)
+        {
+            if (data != null || data != "")
+            {
+                return (data.GetHashCode().ToString());
+            }
+            else
+            {
+                return "";
+            }
+        }
         internal static void ReadLayerInfoConfig()
         {
             if (!System.IO.File.Exists(".\\plugins\\GMap.NET.CacheProviders.MemoryLayerCache.xml"))

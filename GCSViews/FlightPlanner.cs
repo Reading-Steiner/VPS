@@ -1406,7 +1406,7 @@ namespace VPS.GCSViews
         {
             if (selectedrow > Commands.RowCount)
             {
-                CustomMessageBox.Show("Invalid coord, How did you do this?");
+                CustomMessageBox.Show("无效操作");
                 return;
             }
 
@@ -1424,7 +1424,7 @@ namespace VPS.GCSViews
             }
             catch (Exception ex)
             {
-                CustomMessageBox.Show("A invalid entry has been detected\n" + ex.Message, Strings.ERROR);
+                CustomMessageBox.Show("检测到无效条目\n" + ex.Message, Strings.ERROR);
             }
 
             // remove more than 40 revisions
@@ -1481,23 +1481,23 @@ namespace VPS.GCSViews
 
                     if (pass == false)
                     {
-                        CustomMessageBox.Show("You must have a home altitude");
+                        CustomMessageBox.Show("Home点信息必须包含高度");
                         string homealt = "100";
-                        if (DialogResult.Cancel == InputBox.Show("Home Alt", "Home Altitude", ref homealt))
+                        if (DialogResult.Cancel == InputBox.Show("Home高度信息", "Home高度", ref homealt))
                             return;
                         TXT_homealt.Text = homealt;
                     }
                     int results1;
                     if (!int.TryParse(TXT_DefaultAlt.Text, out results1))
                     {
-                        CustomMessageBox.Show("Your default alt is not valid");
+                        CustomMessageBox.Show("默认高度无效");
                         return;
                     }
 
                     if (results1 == 0)
                     {
                         string defalt = "100";
-                        if (DialogResult.Cancel == InputBox.Show("Default Alt", "Default Altitude", ref defalt))
+                        if (DialogResult.Cancel == InputBox.Show("默认高度", "默认高度", ref defalt))
                             return;
                         TXT_DefaultAlt.Text = defalt;
                     }
@@ -2069,7 +2069,7 @@ namespace VPS.GCSViews
                 drawnpolygon.Points[0] == drawnpolygon.Points[drawnpolygon.Points.Count - 1])
                 drawnpolygon.Points.RemoveAt(drawnpolygon.Points.Count - 1); // unmake a full loop
 
-            drawnpolygon.Points.Add(new PointLatLng(MouseDownStart.Lat, MouseDownStart.Lng));
+            drawnpolygon.Points.Add(new PointLatLng(lat, lng));
             PolygonListChange?.Invoke();
             redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
             MainMap.Invalidate();
@@ -2104,6 +2104,16 @@ namespace VPS.GCSViews
             setfromMap(lat, lng, alt);
         }
 
+
+        public void GetWPPoint(int index,out PointLatLngAlt wp)
+        {
+
+            double lat = double.Parse(Commands.Rows[index].Cells[Lat.Index].Value.ToString());
+            double lng = double.Parse(Commands.Rows[index].Cells[Lon.Index].Value.ToString());
+            double alt = double.Parse(Commands.Rows[index].Cells[Alt.Index].Value.ToString());
+            //string tag = (string)Commands.Rows[index].Cells[TagData.Index].Value;
+            wp = new PointLatLngAlt(lat, lng, alt);
+        }
 
         public void DeleteWPPoint(int index)
         {
@@ -4799,17 +4809,62 @@ namespace VPS.GCSViews
                             a++;
                         }
                     }
-
+                    
                     MainMap.Invalidate();
+                    ZoomToCenterWP();
                 }
             }
+        }
+
+        public void ZoomToCenterWP()
+        {
+            RectLatLng ret = new RectLatLng();
+
+            double left = double.MaxValue;
+            double top = double.MinValue;
+            double right = double.MinValue;
+            double bottom = double.MaxValue;
+
+            for(int i =0; i < Commands.Rows.Count; i++)
+            {
+                GetWPPoint(i, out PointLatLngAlt wp);
+                if (wp.Lng < left)
+                {
+                    left = wp.Lng;
+                }
+
+                // top
+                if (wp.Lat > top)
+                {
+                    top = wp.Lat;
+                }
+
+                // right
+                if (wp.Lng > right)
+                {
+                    right = wp.Lng;
+                }
+
+                // bottom
+                if (wp.Lat < bottom)
+                {
+                    bottom = wp.Lat;
+                }
+            }
+            if (left != double.MaxValue && right != double.MinValue && top != double.MinValue && bottom != double.MaxValue)
+            {
+                ret = RectLatLng.FromLTRB(left, top, right, bottom);
+                MainMap.SetZoomToFitRect(ret);
+            }
+            else
+                return;
         }
 
         public void LoadKMLFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog fd = new OpenFileDialog())
             {
-                fd.Filter = "Google Earth KML |*.kml;*.kmz";
+                fd.Filter = "Google Earth KML(*kml;*.kmz) |*.kml;*.kmz";
                 DialogResult result = fd.ShowDialog();
                 string file = fd.FileName;
                 if (file != "")
@@ -4854,6 +4909,7 @@ namespace VPS.GCSViews
 
                         parser.ElementAdded += processKMLMission;
                         parser.ParseString(kml, false);
+                        ZoomToCenterWP();
                     }
                     catch (Exception ex)
                     {
@@ -5057,13 +5113,14 @@ namespace VPS.GCSViews
         {
             using (OpenFileDialog fd = new OpenFileDialog())
             {
-                fd.Filter = "Shape file|*.shp";
+                fd.Filter = "Shape file(*.shp)|*.shp";
                 DialogResult result = fd.ShowDialog();
                 string file = fd.FileName;
 
                 try
                 {
                     LoadSHPFile(file);
+                    ZoomToCenterWP();
                 }
                 catch
                 {
@@ -5636,7 +5693,8 @@ namespace VPS.GCSViews
                     {
                         if (cellhome.Value.ToString() != TXT_homelat.Text && cellhome.Value.ToString() != "0")
                         {
-                            var dr = CustomMessageBox.Show("Reset Home to loaded coords", "Reset Home Coords",
+                            //DevComponents.DotNetBar.MessageBoxEx.Show(this, "变更Home位置", "重设Home位置", MessageBoxButtons.YesNo);
+                            var dr = CustomMessageBox.Show("变更Home位置", "重设Home位置",
                                 MessageBoxButtons.YesNo);
 
                             if (dr == (int)DialogResult.Yes)
@@ -5967,7 +6025,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         {
             using (OpenFileDialog fd = new OpenFileDialog())
             {
-                fd.Filter = "WP KML|*.kml;|WP File|*.waypoints;*.txt";
+                fd.Filter = "WP KML(*.kml)|*.kml;|WP File(*.waypoints)|*.waypoints;*.txt";
                 if (Directory.Exists(Settings.Instance["WPFileDirectory"] ?? ""))
                     fd.InitialDirectory = Settings.Instance["WPFileDirectory"];
                 DialogResult result = fd.ShowDialog();
@@ -7231,6 +7289,15 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             TXT_homelng.Text = MouseDownStart.Lng.ToString();
         }
 
+        public void setHomeHere(PointLatLngAlt position)
+        {
+            TXT_homealt.Text = position.Alt.ToString();
+            TXT_homelat.Text = position.Lat.ToString();
+            TXT_homelng.Text = position.Lng.ToString();
+        }
+
+
+
         public void setRallyPointToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string altstring = TXT_DefaultAlt.Text;
@@ -7780,12 +7847,13 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 if (L10N.ConfigLang.IsChildOf(CultureInfo.GetCultureInfo("zh-Hans")))
                 {
                     CustomMessageBox.Show(
-                        "亲爱的中国用户，为保证地图使用正常，已为您将默认地图自动切换到具有中国特色的【谷歌中国卫星地图】！\r\n与默认【谷歌卫星地图】的区别：使用.cn服务器，加入火星坐标修正\r\n如果您所在的地区仍然无法使用，天书同时推荐必应或高德地图，其它地图由于没有加入坐标修正功能，为确保飞行安全，请谨慎选择",
+                        "亲爱的中国用户，为保证地图使用正常，已为您将默认地图自动切换到具有中国特色的【谷歌中国卫星地图】！\r\n与默认【谷歌卫星地图】的区别：使用.cn服务器，加入火星坐标修正\r\n",
                         "默认地图已被切换");
 
+                    mapType = "谷歌中国卫星地图";
                     try
                     {
-                        var index = GMapProviders.List.FindIndex(x => (x.Name == "谷歌中国卫星地图"));
+                        var index = GMapProviders.List.FindIndex(x => (x.Name == mapType));
 
                         if (index != -1) comboBoxMapType.SelectedIndex = index;
                     }
@@ -9304,17 +9372,15 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             if (layerInfo == null)
                 return;
 
-            double lng = MainV2.instance.defaultOrigin.Lng;
-            double lat = MainV2.instance.defaultOrigin.Lat;
-            double alt = MainV2.instance.defaultOrigin.Alt;
+            double lng = MainV2.instance.defaultHome.Lng;
+            double lat = MainV2.instance.defaultHome.Lat;
+            double alt = MainV2.instance.defaultHome.Alt;
 
             TXT_homealt.Text = alt.ToString();
             TXT_homelat.Text = lat.ToString();
             TXT_homelng.Text = lng.ToString();
 
-            MainMap.SetZoomToFitRect(MainV2.instance.diisplayRect);
+            MainMap.SetZoomToFitRect(MainV2.instance.displayRect);
         }
-
-
     }
 }

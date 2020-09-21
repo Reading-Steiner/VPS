@@ -11,15 +11,6 @@ namespace VPS.Grid
         public int alt;
         public int angle;
         public bool camdir;
-        //public decimal speed;
-        //public bool usespeed;
-        //public bool autotakeoff;
-        //public bool autotakeoff_RTL;
-
-        //public decimal splitmission;
-
-        //public bool internals;
-        //public bool footprints;
         public bool advanced;
 
         //options
@@ -36,12 +27,6 @@ namespace VPS.Grid
         public bool corridor;
         public int corriidorwidth;
         // Copter Settings
-        //public decimal copter_delay;
-        //public bool copter_headinghold_chk;
-        //public decimal copter_headinghold;
-        //public bool copter_spline;
-        // plane settings
-        //public bool alternateLanes;
         public int minlaneseparation;
 
         // camera config
@@ -50,15 +35,6 @@ namespace VPS.Grid
         public bool repeatservo;
 
         public bool breaktrigdist;
-
-        //public decimal repeatservo_no;
-        //public decimal repeatservo_pwm;
-        //public decimal repeatservo_cycle;
-
-        // do set servo
-        //public decimal setservo_no;
-        //public decimal setservo_low;
-        //public decimal setservo_high;
 
 
     }

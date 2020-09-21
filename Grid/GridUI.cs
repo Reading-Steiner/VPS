@@ -81,7 +81,7 @@ namespace VPS.Grid
             if (layer != null)
             {
                 var layerInfo = (GMap.NET.Internals.LayerInfo)layer;
-                SetLayerOverlay(MainV2.instance.CurrentLayer, layerInfo.Lng, layerInfo.Lat);
+                SetLayerOverlay(MainV2.instance.currentLayer, layerInfo.Lng, layerInfo.Lat);
             }
             kmlpolygonsoverlay = new GMapOverlay("kmlpolygons");
             map.Overlays.Add(kmlpolygonsoverlay);
