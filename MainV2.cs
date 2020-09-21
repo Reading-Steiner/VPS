@@ -4372,11 +4372,7 @@ namespace VPS
 
         private void PolygonListChange()
         {
-            List<PointLatLngAlt> polygonList = new List<PointLatLngAlt>();
-            foreach (var mark in GCSViews.FlightPlanner.instance.drawnpolygon.Points)
-            {
-                polygonList.Add(mark);
-            }
+            GetPolygonList(out List<PointLatLngAlt> polygonList);
             GridConfig.SetPolygonList(polygonList);
         }
 

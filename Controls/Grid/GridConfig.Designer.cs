@@ -1145,6 +1145,7 @@
             this.CHK_camdirection.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.CHK_camdirection.TabIndex = 39;
             this.CHK_camdirection.Text = "横放";
+            this.CHK_camdirection.CheckedChanged += new System.EventHandler(this.CHK_camdirection_CheckedChanged);
             // 
             // ShowCameraInfo
             // 

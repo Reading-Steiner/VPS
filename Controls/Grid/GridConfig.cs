@@ -734,5 +734,10 @@ namespace VPS.Controls.Grid
         {
             domainUpDown1_ValueChanged(sender, e);
         }
+
+        private void CHK_camdirection_CheckedChanged(object sender, EventArgs e)
+        {
+            domainUpDown2_ValueChanged(sender, e);
+        }
     }
 }
