@@ -381,6 +381,8 @@ namespace VPS.GCSViews
         }
 
         public delegate void delegateHandler();
+        public delegate void delegateIntChangeHandler(int data);
+        public delegateIntChangeHandler historyChange;
         private bool addPolygonMode;
         private bool addWPMode;
 
@@ -512,7 +514,7 @@ namespace VPS.GCSViews
             }
             catch
             {
-                CustomMessageBox.Show("Please fix your default alt value");
+                DevComponents.DotNetBar.MessageBoxEx.Show("请修正默认Alt");
                 TXT_DefaultAlt.Text = (50 * CurrentState.multiplieralt).ToString("0");
             }
         }
@@ -523,18 +525,26 @@ namespace VPS.GCSViews
             timer1.Stop();
         }
 
+        public void Undo()
+        {
+            if (history.Count > 0)
+            {
+                int no = history.Count - 1;
+                var pop = history[no];
+                history.RemoveAt(no);
+                WPtoScreen(pop);
+                historyChange?.Invoke(history.Count);
+            }
+        }
+
+        
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             // undo
             if (keyData == (Keys.Control | Keys.Z))
             {
-                if (history.Count > 0)
-                {
-                    int no = history.Count - 1;
-                    var pop = history[no];
-                    history.RemoveAt(no);
-                    WPtoScreen(pop);
-                }
+                Undo();
                 return true;
             }
 
@@ -966,8 +976,8 @@ namespace VPS.GCSViews
                 else
                 {
                     if (
-                        CustomMessageBox.Show("This will clear your existing points, Continue?", "Confirm",
-                            MessageBoxButtons.OKCancel) != (int)DialogResult.OK)
+                        DevComponents.DotNetBar.MessageBoxEx.Show("该操作将清理你现有的航点, 继续?", "确定"
+                            ,MessageBoxButtons.OKCancel) != DialogResult.OK)
                     {
                         return;
                     }
@@ -999,8 +1009,8 @@ namespace VPS.GCSViews
         {
             if ((altmode)CMB_altmode.SelectedValue == altmode.Absolute)
             {
-                if ((int)DialogResult.No ==
-                    CustomMessageBox.Show("Absolute Alt is selected are you sure?", "Alt Mode", MessageBoxButtons.YesNo))
+                if (DialogResult.No ==
+                    DevComponents.DotNetBar.MessageBoxEx.Show("确定使用绝对高度?", "高度模式",MessageBoxButtons.YesNo))
                 {
                     CMB_altmode.SelectedValue = (int)altmode.Relative;
                 }
@@ -1018,7 +1028,7 @@ namespace VPS.GCSViews
             }
             catch
             {
-                CustomMessageBox.Show("Your home location is invalid", Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show("Home位置无效", Strings.ERROR);
                 return;
             }
 
@@ -1032,7 +1042,7 @@ namespace VPS.GCSViews
                     {
                         if (!double.TryParse(Commands[b, a].Value.ToString(), out answer))
                         {
-                            CustomMessageBox.Show("There are errors in your mission");
+                            DevComponents.DotNetBar.MessageBoxEx.Show("航线计划错误");
                             return;
                         }
                     }
@@ -1053,8 +1063,8 @@ namespace VPS.GCSViews
                             cmd != (ushort)MAVLink.MAV_CMD.LAND &&
                             cmd != (ushort)MAVLink.MAV_CMD.RETURN_TO_LAUNCH)
                         {
-                            CustomMessageBox.Show("Low alt on WP#" + (a + 1) +
-                                                  "\nPlease reduce the alt warning, or increase the altitude");
+                            DevComponents.DotNetBar.MessageBoxEx.Show("WP#" + (a + 1) + "高度过低" +
+                                                  "\n请降低高度警告线, 或增加航点高度");
                             return;
                         }
                     }
@@ -1180,7 +1190,7 @@ namespace VPS.GCSViews
             {
                 if (!MainV2.comPort.BaseStream.IsOpen)
                 {
-                    CustomMessageBox.Show(Strings.PleaseConnect);
+                    DevComponents.DotNetBar.MessageBoxEx.Show(Strings.PleaseConnect);
                     return;
                 }
                 try
@@ -1189,20 +1199,20 @@ namespace VPS.GCSViews
                 }
                 catch
                 {
-                    CustomMessageBox.Show("Failed to get fence point", Strings.ERROR);
+                    DevComponents.DotNetBar.MessageBoxEx.Show("获取栅栏点失败", Strings.ERROR);
                 }
                 return;
             }
 
             if (MainV2.comPort.MAV.param["FENCE_ACTION"] == null || MainV2.comPort.MAV.param["FENCE_TOTAL"] == null)
             {
-                CustomMessageBox.Show("Not Supported");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Not Supported");
                 return;
             }
 
             if (int.Parse(MainV2.comPort.MAV.param["FENCE_TOTAL"].ToString()) <= 1)
             {
-                CustomMessageBox.Show("Nothing to download");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Fence points - Nothing to download");
                 return;
             }
 
@@ -1220,7 +1230,7 @@ namespace VPS.GCSViews
                 }
                 catch
                 {
-                    CustomMessageBox.Show("Failed to get fence point", Strings.ERROR);
+                    DevComponents.DotNetBar.MessageBoxEx.Show("获取栅栏点失败", Strings.ERROR);
                     return;
                 }
             }
@@ -1264,7 +1274,7 @@ namespace VPS.GCSViews
             {
                 if (!MainV2.comPort.BaseStream.IsOpen)
                 {
-                    CustomMessageBox.Show(Strings.PleaseConnect);
+                    DevComponents.DotNetBar.MessageBoxEx.Show(Strings.PleaseConnect);
                     return;
                 }
                 mav_mission.download(MainV2.comPort, MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid, MAVLink.MAV_MISSION_TYPE.RALLY).AwaitSync();
@@ -1273,13 +1283,13 @@ namespace VPS.GCSViews
 
             if (MainV2.comPort.MAV.param["RALLY_TOTAL"] == null)
             {
-                CustomMessageBox.Show("Not Supported");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Not Supported");
                 return;
             }
 
             if (int.Parse(MainV2.comPort.MAV.param["RALLY_TOTAL"].ToString()) < 1)
             {
-                CustomMessageBox.Show("Rally points - Nothing to download");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Rally points - Nothing to download");
                 return;
             }
 
@@ -1302,7 +1312,7 @@ namespace VPS.GCSViews
                 }
                 catch
                 {
-                    CustomMessageBox.Show("Failed to get rally point", Strings.ERROR);
+                    DevComponents.DotNetBar.MessageBoxEx.Show("获取集结点失败", Strings.ERROR);
                     return;
                 }
             }
@@ -1406,7 +1416,7 @@ namespace VPS.GCSViews
         {
             if (selectedrow > Commands.RowCount)
             {
-                CustomMessageBox.Show("无效操作");
+                DevComponents.DotNetBar.MessageBoxEx.Show("无效操作");
                 return;
             }
 
@@ -1420,11 +1430,12 @@ namespace VPS.GCSViews
                     currentlist.RemoveAt(selectedrow);
                     // add history
                     history.Add(currentlist);
+                    historyChange?.Invoke(history.Count);
                 }
             }
             catch (Exception ex)
             {
-                CustomMessageBox.Show("检测到无效条目\n" + ex.Message, Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show("检测到无效条目\n" + ex.Message, Strings.ERROR);
             }
 
             // remove more than 40 revisions
@@ -1481,7 +1492,7 @@ namespace VPS.GCSViews
 
                     if (pass == false)
                     {
-                        CustomMessageBox.Show("Home点信息必须包含高度");
+                        DevComponents.DotNetBar.MessageBoxEx.Show("Home点信息必须包含高度");
                         string homealt = "100";
                         if (DialogResult.Cancel == InputBox.Show("Home高度信息", "Home高度", ref homealt))
                             return;
@@ -1490,7 +1501,7 @@ namespace VPS.GCSViews
                     int results1;
                     if (!int.TryParse(TXT_DefaultAlt.Text, out results1))
                     {
-                        CustomMessageBox.Show("默认高度无效");
+                        DevComponents.DotNetBar.MessageBoxEx.Show("默认高度无效");
                         return;
                     }
 
@@ -1548,7 +1559,7 @@ namespace VPS.GCSViews
                 }
                 else
                 {
-                    CustomMessageBox.Show("Invalid Home or wp Alt");
+                    DevComponents.DotNetBar.MessageBoxEx.Show("高度无效");
                     cell.Style.BackColor = Color.Red;
                 }
             }
@@ -1711,7 +1722,7 @@ namespace VPS.GCSViews
                 }
                 catch (Exception ex)
                 {
-                    CustomMessageBox.Show(Strings.Invalid_home_location, Strings.ERROR);
+                    DevComponents.DotNetBar.MessageBoxEx.Show(Strings.Invalid_home_location, Strings.ERROR);
                     log.Error(ex);
                 }
             }
@@ -1749,19 +1760,15 @@ namespace VPS.GCSViews
                                     }
                                 }
                             }
-#pragma warning disable CS0168 // 声明了变量“ex”，但从未使用过
                             catch (Exception ex)
-#pragma warning restore CS0168 // 声明了变量“ex”，但从未使用过
                             {
 
                             }
                         }
                     }
-#pragma warning disable CS0168 // 声明了变量“ex”，但从未使用过
                     catch (FormatException ex)
-#pragma warning restore CS0168 // 声明了变量“ex”，但从未使用过
                     {
-                        CustomMessageBox.Show(Strings.InvalidNumberEntered + "\n" + "WP Radius or Loiter Radius",
+                        DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidNumberEntered + "\n" + "WP Radius or Loiter Radius",
                             Strings.ERROR);
                     }
 
@@ -1854,11 +1861,9 @@ namespace VPS.GCSViews
                         overlay.CreateOverlay(PointLatLngAlt.Zero,
                             commandlist, 0, 0);
                     }
-#pragma warning disable CS0168 // 声明了变量“ex”，但从未使用过
                     catch (FormatException ex)
-#pragma warning restore CS0168 // 声明了变量“ex”，但从未使用过
                     {
-                        CustomMessageBox.Show(Strings.InvalidNumberEntered, Strings.ERROR);
+                        DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidNumberEntered, Strings.ERROR);
                     }
 
                     MainMap.HoldInvalidation = true;
@@ -1913,11 +1918,9 @@ namespace VPS.GCSViews
                         overlay.CreateOverlay(PointLatLngAlt.Zero,
                             commandlist, 0, 0);
                     }
-#pragma warning disable CS0168 // 声明了变量“ex”，但从未使用过
                     catch (FormatException ex)
-#pragma warning restore CS0168 // 声明了变量“ex”，但从未使用过
                     {
-                        CustomMessageBox.Show(Strings.InvalidNumberEntered, Strings.ERROR);
+                        DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidNumberEntered, Strings.ERROR);
                     }
 
                     MainMap.HoldInvalidation = true;
@@ -1937,7 +1940,7 @@ namespace VPS.GCSViews
             }
             catch (FormatException ex)
             {
-                CustomMessageBox.Show(Strings.InvalidNumberEntered + "\n" + ex.Message, Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidNumberEntered + "\n" + ex.Message, Strings.ERROR);
             }
         }
 
@@ -2190,7 +2193,7 @@ namespace VPS.GCSViews
             }
             else
             {
-                CustomMessageBox.Show("请完善沙盘坐标系信息", Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show("请完善沙盘坐标系信息", Strings.ERROR);
             }
         }
 
@@ -2208,7 +2211,7 @@ namespace VPS.GCSViews
             }
             else
             {
-                CustomMessageBox.Show("请完善沙盘坐标系信息", Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show("请完善沙盘坐标系信息", Strings.ERROR);
             }
         }
 
@@ -2222,7 +2225,7 @@ namespace VPS.GCSViews
 
             double areasqf = aream2 * 10.7639;
 
-            CustomMessageBox.Show(
+            DevComponents.DotNetBar.MessageBoxEx.Show(
                 "Area: " + aream2.ToString("0") + " m2\n\t" + areaa.ToString("0.00") + " Acre\n\t" +
                 areaha.ToString("0.00") + " Hectare\n\t" + areasqf.ToString("0") + " sqf", "Area");
         }
@@ -2337,8 +2340,8 @@ namespace VPS.GCSViews
         {
             if ((altmode)CMB_altmode.SelectedValue == altmode.Absolute)
             {
-                if ((int)DialogResult.No ==
-                    CustomMessageBox.Show("Absolute Alt is selected are you sure?", "Alt Mode", MessageBoxButtons.YesNo))
+                if (DialogResult.No ==
+                    DevComponents.DotNetBar.MessageBoxEx.Show("确定使用绝对高度?", "高度模式", MessageBoxButtons.YesNo))
                 {
                     CMB_altmode.SelectedValue = (int)altmode.Relative;
                 }
@@ -2346,7 +2349,7 @@ namespace VPS.GCSViews
 
             if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue != MAVLink.MAV_MISSION_TYPE.MISSION)
             {
-                CustomMessageBox.Show("Only available for missions");
+                DevComponents.DotNetBar.MessageBoxEx.Show("仅适用于Mission");
                 return;
             }
 
@@ -2361,7 +2364,7 @@ namespace VPS.GCSViews
             }
             catch
             {
-                CustomMessageBox.Show("Your home location is invalid", Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show("Home位置无效", Strings.ERROR);
                 return;
             }
 
@@ -2375,7 +2378,7 @@ namespace VPS.GCSViews
                     {
                         if (!double.TryParse(Commands[b, a].Value.ToString(), out answer))
                         {
-                            CustomMessageBox.Show("There are errors in your mission");
+                            DevComponents.DotNetBar.MessageBoxEx.Show("航线计划有错误");
                             return;
                         }
                     }
@@ -2396,8 +2399,8 @@ namespace VPS.GCSViews
                             cmd != (ushort)MAVLink.MAV_CMD.LAND &&
                             cmd != (ushort)MAVLink.MAV_CMD.RETURN_TO_LAUNCH)
                         {
-                            CustomMessageBox.Show("Low alt on WP#" + (a + 1) +
-                                                  "\nPlease reduce the alt warning, or increase the altitude");
+                            DevComponents.DotNetBar.MessageBoxEx.Show("WP#" + (a + 1) + "高度过低" +
+                                                  "\n请降低高度警告线，或增加航点高度");
                             return;
                         }
                     }
@@ -2431,7 +2434,7 @@ namespace VPS.GCSViews
 
             if (polygon.Count == 0)
             {
-                CustomMessageBox.Show("Please define a polygon!");
+                DevComponents.DotNetBar.MessageBoxEx.Show("请划定区域!");
                 return 0;
             }
 
@@ -2486,7 +2489,7 @@ namespace VPS.GCSViews
             }
             catch (Exception ex)
             {
-                CustomMessageBox.Show(ex.ToString());
+                DevComponents.DotNetBar.MessageBoxEx.Show(ex.ToString());
             }
         }
 
@@ -2565,7 +2568,7 @@ namespace VPS.GCSViews
             }
             catch
             {
-                CustomMessageBox.Show("Failed to set FENCE_ENABLE");
+                DevComponents.DotNetBar.MessageBoxEx.Show("设置 FENCE_ENABLE 失败");
                 return;
             }
 
@@ -2575,7 +2578,7 @@ namespace VPS.GCSViews
             }
             catch
             {
-                CustomMessageBox.Show("Failed to set FENCE_ACTION");
+                DevComponents.DotNetBar.MessageBoxEx.Show("设置 FENCE_ACTION 失败");
                 return;
             }
 
@@ -2585,7 +2588,7 @@ namespace VPS.GCSViews
             }
             catch
             {
-                CustomMessageBox.Show("Failed to set FENCE_TOTAL");
+                CustomMessageBox.Show("设置 FENCE_TOTAL 失败");
                 return;
             }
 
@@ -2633,7 +2636,7 @@ namespace VPS.GCSViews
                 BUT_Add.Visible = false;
                 processToScreen(MainV2.comPort.MAV.fencepoints.Select(a => (Locationwp)a.Value).ToList());
 
-                Common.MessageShowAgain("FlightPlan Fence", "Please use the Polygon drawing tool to draw " +
+                DevComponents.DotNetBar.MessageBoxEx.Show("FlightPlan Fence", "Please use the Polygon drawing tool to draw " +
                                                             "Inclusion and Exclusion areas (round circle to the left)," +
                                                             " once drawn use the same icon to convert it to a inclusion " +
                                                             "or exclusion fence");
@@ -2666,7 +2669,7 @@ namespace VPS.GCSViews
                     }
                     else
                     {
-                        CustomMessageBox.Show(Strings.InvalidField, Strings.ERROR);
+                        DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidField, Strings.ERROR);
                         return;
                     }
                 }
@@ -2678,7 +2681,7 @@ namespace VPS.GCSViews
             catch (Exception ex)
             {
                 log.Error(ex);
-                CustomMessageBox.Show("Map change failed. try zooming out first.");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Map change failed. try zooming out first.");
             }
         }
 
@@ -2719,7 +2722,7 @@ namespace VPS.GCSViews
             }
             catch (Exception)
             {
-                CustomMessageBox.Show("Row error");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Row error");
             }
         }
 
@@ -2751,7 +2754,7 @@ namespace VPS.GCSViews
                 catch (Exception ex)
                 {
                     log.Error(ex);
-                    CustomMessageBox.Show("Invalid Lat/Long, please fix", Strings.ERROR);
+                    DevComponents.DotNetBar.MessageBoxEx.Show("无效的经度/纬度, 请修复", Strings.ERROR);
                 }
             }
 
@@ -2764,7 +2767,7 @@ namespace VPS.GCSViews
             }
             catch (FormatException)
             {
-                CustomMessageBox.Show(Strings.InvalidNumberEntered, Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidNumberEntered, Strings.ERROR);
             }
         }
 
@@ -2833,7 +2836,7 @@ namespace VPS.GCSViews
             }
             catch (Exception ex)
             {
-                CustomMessageBox.Show(ex.ToString());
+                DevComponents.DotNetBar.MessageBoxEx.Show(ex.ToString());
             }
         }
 
@@ -3042,7 +3045,7 @@ namespace VPS.GCSViews
                 startmeasure = MouseDownStart;
                 polygonsoverlay.Markers.Add(new GMarkerGoogle(MouseDownStart, GMarkerGoogleType.red));
                 MainMap.Invalidate();
-                Common.MessageShowAgain("Measure Dist",
+                DevComponents.DotNetBar.MessageBoxEx.Show("Measure Dist",
                     "You can now pan/zoom around.\nClick this option again to get the distance.");
             }
             else
@@ -3060,7 +3063,7 @@ namespace VPS.GCSViews
 
                 polygonsoverlay.Markers.Add(new GMarkerGoogle(MouseDownStart, GMarkerGoogleType.red));
                 MainMap.Invalidate();
-                CustomMessageBox.Show("Distance: " +
+                DevComponents.DotNetBar.MessageBoxEx.Show("Distance: " +
                                       FormatDistance(MainMap.MapProvider.Projection.GetDistance(startmeasure, MouseDownStart), true) +
                                       " AZ: " +
                                       (MainMap.MapProvider.Projection.GetBearing(startmeasure, MouseDownStart)
@@ -3320,23 +3323,23 @@ namespace VPS.GCSViews
             int altstep = 5;
             if (!int.TryParse(RadiusIn, out Radius))
             {
-                CustomMessageBox.Show("Bad Radius");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Bad Radius");
                 return;
             }
 
             if (!int.TryParse(minaltin, out minalt))
             {
-                CustomMessageBox.Show("Bad min alt");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Bad min alt");
                 return;
             }
             if (!int.TryParse(maxaltin, out maxalt))
             {
-                CustomMessageBox.Show("Bad maxalt");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Bad maxalt");
                 return;
             }
             if (!int.TryParse(altstepin, out altstep))
             {
-                CustomMessageBox.Show("Bad alt step");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Bad alt step");
                 return;
             }
 
@@ -3413,7 +3416,7 @@ namespace VPS.GCSViews
 
             if (!int.TryParse(RadiusIn, out Radius))
             {
-                CustomMessageBox.Show("Bad Radius");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Bad Radius");
                 return;
             }
 
@@ -3421,19 +3424,19 @@ namespace VPS.GCSViews
 
             if (!int.TryParse(Pointsin, out Points))
             {
-                CustomMessageBox.Show("Bad Point value");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Bad Point value");
                 return;
             }
 
             if (!int.TryParse(Directionin, out Direction))
             {
-                CustomMessageBox.Show("Bad Direction value");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Bad Direction value");
                 return;
             }
 
             if (!int.TryParse(startanglein, out startangle))
             {
-                CustomMessageBox.Show("Bad start angle value");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Bad start angle value");
                 return;
             }
 
@@ -3584,7 +3587,7 @@ namespace VPS.GCSViews
                     catch (Exception ex)
                     {
                         log.Error(ex);
-                        CustomMessageBox.Show("error selecting wp, please try again.");
+                        DevComponents.DotNetBar.MessageBoxEx.Show("error selecting wp, please try again.");
                     }
                 }
                 wpMarkersGroupClear();
@@ -3607,7 +3610,7 @@ namespace VPS.GCSViews
                     catch (Exception ex)
                     {
                         log.Error(ex);
-                        CustomMessageBox.Show("error selecting polygon, please try again.");
+                        DevComponents.DotNetBar.MessageBoxEx.Show("error selecting polygon, please try again.");
                     }
                 }
                 polygonMarkersGroupClear();
@@ -3633,7 +3636,7 @@ namespace VPS.GCSViews
                     catch (Exception ex)
                     {
                         log.Error(ex);
-                        CustomMessageBox.Show("error selecting wp, please try again.");
+                        DevComponents.DotNetBar.MessageBoxEx.Show("error selecting wp, please try again.");
                     }
                 }
                 else if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", ""), out no))
@@ -3670,7 +3673,7 @@ namespace VPS.GCSViews
                     catch (Exception ex)
                     {
                         log.Error(ex);
-                        CustomMessageBox.Show("error selecting wp, please try again.");
+                        DevComponents.DotNetBar.MessageBoxEx.Show("error selecting wp, please try again.");
                     }
                 }
                 wpMarkersGroupClear();
@@ -3689,7 +3692,7 @@ namespace VPS.GCSViews
                     catch (Exception ex)
                     {
                         log.Error(ex);
-                        CustomMessageBox.Show("error selecting polygon, please try again.");
+                        DevComponents.DotNetBar.MessageBoxEx.Show("error selecting polygon, please try again.");
                     }
                 }
                 polygonMarkersGroupClear();
@@ -3831,7 +3834,7 @@ namespace VPS.GCSViews
             int maxzoom = 20;
             if (!int.TryParse(maxzoomstring, out maxzoom))
             {
-                CustomMessageBox.Show(Strings.InvalidNumberEntered, Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidNumberEntered, Strings.ERROR);
                 return;
             }
 
@@ -4099,7 +4102,7 @@ namespace VPS.GCSViews
                     }
                     catch (Exception ex)
                     {
-                        CustomMessageBox.Show(Strings.ERROR + "\n" + ex, Strings.ERROR);
+                        DevComponents.DotNetBar.MessageBoxEx.Show(Strings.ERROR + "\n" + ex, Strings.ERROR);
                     }
                 }
             }
@@ -4112,25 +4115,25 @@ namespace VPS.GCSViews
             //FENCE_ACTION ON PLANE
             if (!MainV2.comPort.MAV.param.ContainsKey("FENCE_ENABLE") && !MainV2.comPort.MAV.param.ContainsKey("FENCE_ACTION"))
             {
-                CustomMessageBox.Show("Not Supported");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Not Supported");
                 return;
             }
 
             if (drawnpolygon == null)
             {
-                CustomMessageBox.Show("No polygon to upload");
+                DevComponents.DotNetBar.MessageBoxEx.Show("No polygon to upload");
                 return;
             }
 
             if (geofenceoverlay.Markers.Count == 0)
             {
-                CustomMessageBox.Show("No return location set");
+                DevComponents.DotNetBar.MessageBoxEx.Show("No return location set");
                 return;
             }
 
             if (drawnpolygon.Points.Count == 0)
             {
-                CustomMessageBox.Show("No polygon drawn");
+                DevComponents.DotNetBar.MessageBoxEx.Show("No polygon drawn");
                 return;
             }
 
@@ -4142,7 +4145,7 @@ namespace VPS.GCSViews
             if (
                 !pnpoly(plll.ToArray(), geofenceoverlay.Markers[0].Position.Lat, geofenceoverlay.Markers[0].Position.Lng))
             {
-                CustomMessageBox.Show("Your return location is outside the polygon");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Your return location is outside the polygon");
                 return;
             }
 
@@ -4160,7 +4163,7 @@ namespace VPS.GCSViews
 
                 if (!int.TryParse(minalts, out minalt))
                 {
-                    CustomMessageBox.Show("Bad Min Alt");
+                    DevComponents.DotNetBar.MessageBoxEx.Show("Bad Min Alt");
                     return;
                 }
             }
@@ -4176,7 +4179,7 @@ namespace VPS.GCSViews
 
                 if (!int.TryParse(maxalts, out maxalt))
                 {
-                    CustomMessageBox.Show("Bad Max Alt");
+                    DevComponents.DotNetBar.MessageBoxEx.Show("Bad Max Alt");
                     return;
                 }
             }
@@ -4191,7 +4194,7 @@ namespace VPS.GCSViews
             catch (Exception ex)
             {
                 log.Error(ex);
-                CustomMessageBox.Show("Failed to set min/max fence alt");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Failed to set min/max fence alt");
                 return;
             }
 
@@ -4203,7 +4206,7 @@ namespace VPS.GCSViews
             }
             catch
             {
-                CustomMessageBox.Show("Failed to set FENCE_ACTION");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Failed to set FENCE_ACTION");
                 return;
             }
 
@@ -4217,7 +4220,7 @@ namespace VPS.GCSViews
             }
             catch
             {
-                CustomMessageBox.Show("Failed to set FENCE_TOTAL");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Failed to set FENCE_TOTAL");
                 return;
             }
 
@@ -4243,7 +4246,7 @@ namespace VPS.GCSViews
                 }
                 catch
                 {
-                    CustomMessageBox.Show("Failed to restore FENCE_ACTION");
+                    DevComponents.DotNetBar.MessageBoxEx.Show("Failed to restore FENCE_ACTION");
                     return;
                 }
 
@@ -4282,7 +4285,7 @@ namespace VPS.GCSViews
             }
             catch (Exception ex)
             {
-                CustomMessageBox.Show("Failed to send new fence points " + ex, Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show("Failed to send new fence points " + ex, Strings.ERROR);
             }
         }
 
@@ -4400,7 +4403,7 @@ namespace VPS.GCSViews
                 }
                 catch
                 {
-                    CustomMessageBox.Show(Strings.InvalidNumberEntered, Strings.ERROR);
+                    DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidNumberEntered, Strings.ERROR);
                     return;
                 }
 
@@ -4412,7 +4415,7 @@ namespace VPS.GCSViews
                 }
                 catch
                 {
-                    CustomMessageBox.Show("SPLINE_WAYPOINT command not supported.");
+                    DevComponents.DotNetBar.MessageBoxEx.Show("SPLINE_WAYPOINT command not supported.");
                     Commands.Rows.RemoveAt(selectedrow);
                     return;
                 }
@@ -4434,7 +4437,7 @@ namespace VPS.GCSViews
                 }
                 catch
                 {
-                    CustomMessageBox.Show("Invalid insert position", Strings.ERROR);
+                    DevComponents.DotNetBar.MessageBoxEx.Show("Invalid insert position", Strings.ERROR);
                     return;
                 }
 
@@ -4603,8 +4606,8 @@ namespace VPS.GCSViews
                             parser.ElementAdded += parser_ElementAdded;
                             parser.ParseString(kml, false);
 
-                            if ((int)DialogResult.Yes ==
-                                CustomMessageBox.Show(Strings.Do_you_want_to_load_this_into_the_flight_data_screen, Strings.Load_data,
+                            if (DialogResult.Yes ==
+                                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.Do_you_want_to_load_this_into_the_flight_data_screen, Strings.Load_data,
                                     MessageBoxButtons.YesNo))
                             {
                                 foreach (var temp in kmlpolygonsoverlay.Polygons)
@@ -4618,15 +4621,15 @@ namespace VPS.GCSViews
                             }
 
                             if (
-                                CustomMessageBox.Show(Strings.Zoom_To, Strings.Zoom_to_the_center_or_the_loaded_file, MessageBoxButtons.YesNo) ==
-                                (int)DialogResult.Yes)
+                                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.Zoom_To, Strings.Zoom_to_the_center_or_the_loaded_file, MessageBoxButtons.YesNo) ==
+                                DialogResult.Yes)
                             {
                                 MainMap.SetZoomToFitRect(GetBoundingLayer(kmlpolygonsoverlay));
                             }
                         }
                         catch (Exception ex)
                         {
-                            CustomMessageBox.Show(Strings.Bad_KML_File + ex);
+                            DevComponents.DotNetBar.MessageBoxEx.Show(Strings.Bad_KML_File + ex);
                         }
                     }
                 }
@@ -4647,7 +4650,7 @@ namespace VPS.GCSViews
             }
             else
             {
-                CustomMessageBox.Show(
+                DevComponents.DotNetBar.MessageBoxEx.Show(
                     "如果你在现场，连接你的APM并等待GPS锁定。然后单击“Home Location”链接将Home设置为您的位置");
             }
         }
@@ -4675,7 +4678,7 @@ namespace VPS.GCSViews
             }
             catch
             {
-                CustomMessageBox.Show("打开 url http://127.0.0.1:56781/network.kml 失败");
+                DevComponents.DotNetBar.MessageBoxEx.Show("打开 url http://127.0.0.1:56781/network.kml 失败");
             }
         }
 
@@ -4913,7 +4916,7 @@ namespace VPS.GCSViews
                     }
                     catch (Exception ex)
                     {
-                        CustomMessageBox.Show(Strings.Bad_KML_File + ex);
+                        DevComponents.DotNetBar.MessageBoxEx.Show(Strings.Bad_KML_File + ex);
                     }
                 }
             }
@@ -5124,7 +5127,7 @@ namespace VPS.GCSViews
                 }
                 catch
                 {
-                    CustomMessageBox.Show("文件打开时出错", Strings.ERROR);
+                    DevComponents.DotNetBar.MessageBoxEx.Show("文件打开时出错", Strings.ERROR);
                     return;
                 }
             }
@@ -5311,7 +5314,7 @@ namespace VPS.GCSViews
             }
             catch
             {
-                CustomMessageBox.Show(Strings.InvalidNumberEntered, Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidNumberEntered, Strings.ERROR);
                 return;
             }
 
@@ -5409,9 +5412,9 @@ namespace VPS.GCSViews
             RectLatLng area = MainMap.SelectedArea;
             if (area.IsEmpty)
             {
-                var res = CustomMessageBox.Show("No ripp area defined, ripp displayed on screen?", "Rip",
+                var res = DevComponents.DotNetBar.MessageBoxEx.Show("No ripp area defined, ripp displayed on screen?", "Rip",
                     MessageBoxButtons.YesNo);
-                if (res == (int)DialogResult.Yes)
+                if (res == DialogResult.Yes)
                 {
                     area = MainMap.ViewArea;
                 }
@@ -5426,7 +5429,7 @@ namespace VPS.GCSViews
                 int maxzoom = 20;
                 if (!int.TryParse(maxzoomstring, out maxzoom))
                 {
-                    CustomMessageBox.Show(Strings.InvalidNumberEntered, Strings.ERROR);
+                    DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidNumberEntered, Strings.ERROR);
                     return;
                 }
 
@@ -5450,7 +5453,7 @@ namespace VPS.GCSViews
             }
             else
             {
-                CustomMessageBox.Show("按住 ALT 选择区域", "GMap.NET", MessageBoxButtons.OK,
+                DevComponents.DotNetBar.MessageBoxEx.Show("按住 ALT 选择区域", "GMap.NET", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
             }
         }
@@ -5694,18 +5697,18 @@ namespace VPS.GCSViews
                         if (cellhome.Value.ToString() != TXT_homelat.Text && cellhome.Value.ToString() != "0")
                         {
                             //DevComponents.DotNetBar.MessageBoxEx.Show(this, "变更Home位置", "重设Home位置", MessageBoxButtons.YesNo);
-                            var dr = CustomMessageBox.Show("变更Home位置", "重设Home位置",
-                                MessageBoxButtons.YesNo);
+                            //var dr = CustomMessageBox.Show("变更Home位置", "重设Home位置",
+                            //    MessageBoxButtons.YesNo);
 
-                            if (dr == (int)DialogResult.Yes)
-                            {
+                            //if (dr == (int)DialogResult.Yes)
+                            //{
                                 TXT_homelat.Text = (double.Parse(cellhome.Value.ToString())).ToString();
                                 cellhome = Commands.Rows[0].Cells[Lon.Index] as DataGridViewTextBoxCell;
                                 TXT_homelng.Text = (double.Parse(cellhome.Value.ToString())).ToString();
                                 cellhome = Commands.Rows[0].Cells[Alt.Index] as DataGridViewTextBoxCell;
                                 TXT_homealt.Text =
                                     (double.Parse(cellhome.Value.ToString()) * CurrentState.multiplieralt).ToString();
-                            }
+                            //}
                         }
                     }
                 }
@@ -5738,7 +5741,7 @@ namespace VPS.GCSViews
 
             if (!File.Exists(file))
             {
-                CustomMessageBox.Show("Missing mavcmd.xml file");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Missing mavcmd.xml file");
                 return cmd;
             }
 
@@ -5889,7 +5892,7 @@ namespace VPS.GCSViews
                     }
                     catch
                     {
-                        CustomMessageBox.Show("Failed to write fence file");
+                        DevComponents.DotNetBar.MessageBoxEx.Show("Failed to write fence file");
                     }
                 }
             }
@@ -5911,7 +5914,7 @@ namespace VPS.GCSViews
                 }
                 catch
                 {
-                    CustomMessageBox.Show("Failed to save rally point", Strings.ERROR);
+                    DevComponents.DotNetBar.MessageBoxEx.Show("Failed to save rally point", Strings.ERROR);
                     return;
                 }
             }
@@ -5921,7 +5924,7 @@ namespace VPS.GCSViews
         {
             if (geofenceoverlay.Markers.Count == 0)
             {
-                CustomMessageBox.Show("Please set a return location");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Please set a return location");
                 return;
             }
 
@@ -5967,7 +5970,7 @@ namespace VPS.GCSViews
                     }
                     catch
                     {
-                        CustomMessageBox.Show("Failed to write fence file");
+                        DevComponents.DotNetBar.MessageBoxEx.Show("Failed to write fence file");
                     }
                 }
             }
@@ -5977,7 +5980,7 @@ namespace VPS.GCSViews
         {
             if (rallypointoverlay.Markers.Count == 0)
             {
-                CustomMessageBox.Show("Please set some rally points");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Please set some rally points");
                 return;
             }
             /*
@@ -6011,7 +6014,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     }
                     catch
                     {
-                        CustomMessageBox.Show("Failed to write rally file");
+                        DevComponents.DotNetBar.MessageBoxEx.Show("Failed to write rally file");
                     }
                 }
             }
@@ -6042,7 +6045,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         }
                         catch
                         {
-                            CustomMessageBox.Show("Error opening File", Strings.ERROR);
+                            DevComponents.DotNetBar.MessageBoxEx.Show("Error opening File", Strings.ERROR);
                             return;
                         }
                     }
@@ -6054,7 +6057,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         }
                         catch
                         {
-                            CustomMessageBox.Show("Error opening File", Strings.ERROR);
+                            DevComponents.DotNetBar.MessageBoxEx.Show("Error opening File", Strings.ERROR);
                             return;
                         }
                     }
@@ -6266,7 +6269,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
             catch (Exception ex)
             {
-                CustomMessageBox.Show("Can't open file! " + ex);
+                DevComponents.DotNetBar.MessageBoxEx.Show("Can't open file! " + ex);
             }
         }
 
@@ -6309,7 +6312,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
             catch (Exception ex)
             {
-                CustomMessageBox.Show("Can't open file! " + ex);
+                DevComponents.DotNetBar.MessageBoxEx.Show("Can't open file! " + ex);
             }
         }
 
@@ -6739,7 +6742,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
             catch (Exception)
             {
-                CustomMessageBox.Show(Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.ERROR);
             }
 
         }
@@ -6816,7 +6819,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
             catch (Exception)
             {
-                CustomMessageBox.Show(Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.ERROR);
             }
         }
 
@@ -7323,7 +7326,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
             else
             {
-                CustomMessageBox.Show(Strings.InvalidAlt, Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidAlt, Strings.ERROR);
             }
 
             IsMouseClickOffMenu = false;
@@ -7343,7 +7346,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         {
             if (!cmdParamNames.ContainsKey("DO_SET_ROI"))
             {
-                CustomMessageBox.Show(Strings.ErrorFeatureNotEnabled, Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.ErrorFeatureNotEnabled, Strings.ERROR);
                 return;
             }
 
@@ -7517,7 +7520,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 }
                 catch (ArgumentException ex)
                 {
-                    CustomMessageBox.Show("Bad input options, please try again\n" + ex.ToString(), Strings.ERROR);
+                    DevComponents.DotNetBar.MessageBoxEx.Show("Bad input options, please try again\n" + ex.ToString(), Strings.ERROR);
                 }
 
                 quickadd = false;
@@ -7644,7 +7647,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         public void TXT_homelat_Enter(object sender, EventArgs e)
         {
             if (!sethome)
-                CustomMessageBox.Show("点击地图设置 Home ");
+                DevComponents.DotNetBar.MessageBoxEx.Show("点击地图设置 Home ");
             sethome = true;
 
         }
@@ -7846,7 +7849,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             {
                 if (L10N.ConfigLang.IsChildOf(CultureInfo.GetCultureInfo("zh-Hans")))
                 {
-                    CustomMessageBox.Show(
+                    DevComponents.DotNetBar.MessageBoxEx.Show(
                         "亲爱的中国用户，为保证地图使用正常，已为您将默认地图自动切换到具有中国特色的【谷歌中国卫星地图】！\r\n与默认【谷歌卫星地图】的区别：使用.cn服务器，加入火星坐标修正\r\n",
                         "默认地图已被切换");
 
@@ -9175,7 +9178,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
             catch (Exception e)
             {
-                CustomMessageBox.Show("Failed to make WMS Server request: " + e.Message);
+                DevComponents.DotNetBar.MessageBoxEx.Show("Failed to make WMS Server request: " + e.Message);
                 return null;
             }
         }
@@ -9195,7 +9198,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             bool bPngCapable = false;
             XmlNodeList getMapElements = xCapabilitesResponse.SelectNodes("//GetMap", nsmgr);
             if (getMapElements.Count != 1)
-                CustomMessageBox.Show("Invalid WMS Server response: Invalid number of GetMap elements.");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Invalid WMS Server response: Invalid number of GetMap elements.");
             else
             {
                 XmlNode getMapNode = getMapElements.Item(0);
@@ -9213,7 +9216,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
             if (!bPngCapable)
             {
-                CustomMessageBox.Show("Invalid WMS Server response: Server unable to return PNG images.");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Invalid WMS Server response: Server unable to return PNG images.");
                 return;
             }
 
@@ -9233,7 +9236,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
             if (!bEpsgCapable)
             {
-                CustomMessageBox.Show(
+                DevComponents.DotNetBar.MessageBoxEx.Show(
                     "Invalid WMS Server response: Server unable to return EPSG:4326 / WGS84 compatible images.");
                 return;
             }
@@ -9311,7 +9314,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 GeoCoderStatusCode status = MainMap.SetPositionByKeywords(place);
                 if (status != GeoCoderStatusCode.G_GEO_SUCCESS)
                 {
-                    CustomMessageBox.Show("Google Maps Geocoder can't find: '" + place + "', reason: " + status,
+                    DevComponents.DotNetBar.MessageBoxEx.Show("Google Maps Geocoder can't find: '" + place + "', reason: " + status,
                         "GMap.NET", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
                 else
@@ -9325,7 +9328,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         {
             if (MainV2.comPort.MAV.cs.Location.Lat == 0 && MainV2.comPort.MAV.cs.Location.Lng == 0)
             {
-                CustomMessageBox.Show(Strings.Invalid_Location, Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.Invalid_Location, Strings.ERROR);
                 return;
             }
 

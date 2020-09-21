@@ -576,6 +576,8 @@ namespace VPS
 
                 FlightData.Width = MyView.Width;
                 FlightPlanner.Width = MyView.Width;
+
+                FlightPlanner.historyChange += this.historyChange;
                 //Simulation.Width = MyView.Width;
             }
             catch (ArgumentException e)
@@ -584,7 +586,7 @@ namespace VPS
                 //System.ArgumentException: Font 'Arial' does not support style 'Regular'.
 
                 log.Fatal(e);
-                CustomMessageBox.Show(e.ToString() +
+                DevComponents.DotNetBar.MessageBoxEx.Show(e.ToString() +
                                       "\n\n Font Issues? Please install this http://www.microsoft.com/en-us/download/details.aspx?id=16083");
                 //splash.Close();
                 //this.Close();
@@ -593,7 +595,7 @@ namespace VPS
             catch (Exception e)
             {
                 log.Fatal(e);
-                CustomMessageBox.Show("A Major error has occured : " + e.ToString());
+                DevComponents.DotNetBar.MessageBoxEx.Show("A Major error has occured : " + e.ToString());
                 Application.Exit();
             }
 
@@ -730,7 +732,7 @@ namespace VPS
 
             if (CurrentState.rateattitudebackup == 0) // initilised to 10, configured above from save
             {
-                CustomMessageBox.Show(
+                DevComponents.DotNetBar.MessageBoxEx.Show(
                     "NOTE: your attitude rate is 0, the hud will not work\nChange in Configuration > Planner > Telemetry Rates");
             }
 
@@ -762,7 +764,7 @@ namespace VPS
 
                 if (Framework < 4.0)
                 {
-                    CustomMessageBox.Show("This program requires .NET Framework 4.0. You currently have " + Framework);
+                    DevComponents.DotNetBar.MessageBoxEx.Show("This program requires .NET Framework 4.0. You currently have " + Framework);
                 }
             }
 
@@ -1237,7 +1239,7 @@ namespace VPS
 
                     if (ans == false)
                     {
-                        CustomMessageBox.Show("Bad Password", "Bad Password");
+                        DevComponents.DotNetBar.MessageBoxEx.Show("Bad Password", "Bad Password");
                     }
                 }
 
@@ -1269,7 +1271,7 @@ namespace VPS
 
                     if (ans == false)
                     {
-                        CustomMessageBox.Show("Bad Password", "Bad Password");
+                        DevComponents.DotNetBar.MessageBoxEx.Show("Bad Password", "Bad Password");
                     }
                 }
 
@@ -1390,7 +1392,7 @@ namespace VPS
                         Console.WriteLine("wait for port " + CommsSerialScan.foundport + " or " + CommsSerialScan.run);
                         if (DateTime.Now > deadline)
                         {
-                            CustomMessageBox.Show(Strings.Timeout);
+                            DevComponents.DotNetBar.MessageBoxEx.Show(Strings.Timeout);
                             _connectionControl.IsConnected(false);
                             return;
                         }
@@ -1486,7 +1488,7 @@ namespace VPS
                 catch (Exception exp2)
                 {
                     log.Error(exp2);
-                    CustomMessageBox.Show(Strings.Failclog);
+                    DevComponents.DotNetBar.MessageBoxEx.Show(Strings.Failclog);
                 } // soft fail
 
                 // reset connect time - for timeout functions
@@ -1666,7 +1668,7 @@ namespace VPS
                         if (comPort.MAV.param.ContainsKey("RALLY_LIMIT_KM") &&
                             (maxdist / 1000.0) > (float)comPort.MAV.param["RALLY_LIMIT_KM"])
                         {
-                            CustomMessageBox.Show(Strings.Warningrallypointdistance + " " +
+                            DevComponents.DotNetBar.MessageBoxEx.Show(Strings.Warningrallypointdistance + " " +
                                                   (maxdist / 1000.0).ToString("0.00") + " > " +
                                                   (float)comPort.MAV.param["RALLY_LIMIT_KM"]);
                         }
@@ -1703,7 +1705,7 @@ namespace VPS
                 {
                     log.Warn(ex2);
                 }
-                CustomMessageBox.Show("Can not establish a connection\n\n" + ex.Message);
+                DevComponents.DotNetBar.MessageBoxEx.Show("Can not establish a connection\n\n" + ex.Message);
                 return;
             }
         }
@@ -1722,8 +1724,8 @@ namespace VPS
             // sanity check
             if (comPort.BaseStream.IsOpen && comPort.MAV.cs.groundspeed > 4)
             {
-                if ((int)DialogResult.No ==
-                    CustomMessageBox.Show(Strings.Stillmoving, Strings.Disconnect, MessageBoxButtons.YesNo))
+                if (DialogResult.No ==
+                    DevComponents.DotNetBar.MessageBoxEx.Show(Strings.Stillmoving, Strings.Disconnect, MessageBoxButtons.YesNo))
                 {
                     return;
                 }
@@ -1741,7 +1743,7 @@ namespace VPS
             }
             catch (Exception ex)
             {
-                CustomMessageBox.Show(Strings.ErrorClosingLogFile + ex.Message, Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.ErrorClosingLogFile + ex.Message, Strings.ERROR);
             }
 
             comPort.logfile = null;
@@ -2093,7 +2095,7 @@ namespace VPS
             }
             catch (Exception ex)
             {
-                CustomMessageBox.Show(ex.ToString());
+                DevComponents.DotNetBar.MessageBoxEx.Show(ex.ToString());
             }
         }
 
@@ -2644,7 +2646,7 @@ namespace VPS
                                         (Action)
                                             delegate
                                             {
-                                                CustomMessageBox.Show("Failed to update home location (" +
+                                                DevComponents.DotNetBar.MessageBoxEx.Show("Failed to update home location (" +
                                                                       MainV2.comPort.MAV.sysid + ")");
                                             });
                                 }
@@ -2914,7 +2916,7 @@ namespace VPS
             catch (Exception ex)
             {
                 log.Error("Error starting TCP listener thread: ", ex);
-                CustomMessageBox.Show(ex.ToString());
+                DevComponents.DotNetBar.MessageBoxEx.Show(ex.ToString());
             }
 
             log.Info("start joystick");
@@ -2999,10 +3001,10 @@ namespace VPS
 
                     if (!File.Exists(GStreamer.gstlaunch))
                     {
-                        if (CustomMessageBox.Show(
+                        if (DevComponents.DotNetBar.MessageBoxEx.Show(
                                 "A video stream has been detected, but gstreamer has not been configured/installed.\nDo you want to install/config it now?",
                                 "GStreamer", System.Windows.Forms.MessageBoxButtons.YesNo) ==
-                            (int)System.Windows.Forms.DialogResult.Yes)
+                            System.Windows.Forms.DialogResult.Yes)
                         {
                             {
                                 ProgressReporterDialogue prd = new ProgressReporterDialogue();
@@ -3251,7 +3253,7 @@ namespace VPS
                        }
                        catch (Exception ex)
                        {
-                           CustomMessageBox.Show("Start script failed: " + ex.ToString(), Strings.ERROR);
+                           DevComponents.DotNetBar.MessageBoxEx.Show("Start script failed: " + ex.ToString(), Strings.ERROR);
                        }
                    });
                 }
@@ -3284,7 +3286,7 @@ namespace VPS
                     }
                     else
                     {
-                        CustomMessageBox.Show("Failed to start joystick");
+                        DevComponents.DotNetBar.MessageBoxEx.Show("Failed to start joystick");
                     }
                 }
 
@@ -3308,7 +3310,7 @@ namespace VPS
                             }
                             catch (Exception ex)
                             {
-                                this.BeginInvokeIfRequired(() => { CustomMessageBox.Show(ex.ToString()); });
+                                this.BeginInvokeIfRequired(() => { DevComponents.DotNetBar.MessageBoxEx.Show(ex.ToString()); });
                             }
                         });
                     }
@@ -3324,7 +3326,7 @@ namespace VPS
                     }
                     catch (Exception ex)
                     {
-                        CustomMessageBox.Show(ex.ToString());
+                        DevComponents.DotNetBar.MessageBoxEx.Show(ex.ToString());
                     }
                 }
 
@@ -3334,10 +3336,10 @@ namespace VPS
 
                     if (!File.Exists(GStreamer.gstlaunch))
                     {
-                        if (CustomMessageBox.Show(
+                        if (DevComponents.DotNetBar.MessageBoxEx.Show(
                                 "A video stream has been detected, but gstreamer has not been configured/installed.\nDo you want to install/config it now?",
                                 "GStreamer", System.Windows.Forms.MessageBoxButtons.YesNo) ==
-                            (int)System.Windows.Forms.DialogResult.Yes)
+                            System.Windows.Forms.DialogResult.Yes)
                         {
                             GStreamerUI.DownloadGStreamer();
                         }
@@ -3823,7 +3825,7 @@ namespace VPS
         {
             if (!int.TryParse(_connectionControl.CMB_baudrate.Text, out comPortBaud))
             {
-                CustomMessageBox.Show(Strings.InvalidBaudRate, Strings.ERROR);
+                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidBaudRate, Strings.ERROR);
                 return;
             }
             var sb = new StringBuilder();
@@ -3866,7 +3868,7 @@ namespace VPS
             }
             catch
             {
-                CustomMessageBox.Show("Link open failed. check your default webpage association");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Link open failed. check your default webpage association");
             }
         }
 
@@ -4059,7 +4061,7 @@ namespace VPS
             }
             catch
             {
-                CustomMessageBox.Show("Failed to open url https://ardupilot.org");
+                DevComponents.DotNetBar.MessageBoxEx.Show("Failed to open url https://ardupilot.org");
             }
         }
 
@@ -4497,6 +4499,19 @@ namespace VPS
         private void CancelWPButton_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.wpMarkersGroupClear();
+        }
+
+        private void UndoButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.Undo();
+        }
+
+        private void historyChange(int Count)
+        {
+            if (Count > 0)
+                this.UndoButton.Enabled = true;
+            else
+                this.UndoButton.Enabled = false;
         }
     }
 }

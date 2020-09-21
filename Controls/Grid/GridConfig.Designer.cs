@@ -30,6 +30,7 @@
         {
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
             this.panelEx9 = new DevComponents.DotNetBar.PanelEx();
+            this.Default = new DevComponents.DotNetBar.ButtonX();
             this.Accept = new DevComponents.DotNetBar.ButtonX();
             this.AdvanceAirLineBox = new DevComponents.DotNetBar.PanelEx();
             this.CorridorInfoBox = new DevComponents.DotNetBar.PanelEx();
@@ -171,6 +172,7 @@
             this.panelEx9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panelEx9.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx9.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx9.Controls.Add(this.Default);
             this.panelEx9.Controls.Add(this.Accept);
             this.panelEx9.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEx9.Location = new System.Drawing.Point(0, 639);
@@ -183,18 +185,30 @@
             this.panelEx9.Style.GradientAngle = 90;
             this.panelEx9.TabIndex = 46;
             // 
+            // Default
+            // 
+            this.Default.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.Default.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Default.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.Default.Location = new System.Drawing.Point(129, 6);
+            this.Default.Name = "Default";
+            this.Default.Size = new System.Drawing.Size(75, 23);
+            this.Default.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.Default.TabIndex = 17;
+            this.Default.Text = "默认";
+            this.Default.Click += new System.EventHandler(this.Default_Click);
+            // 
             // Accept
             // 
             this.Accept.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.Accept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Accept.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Accept.Enabled = false;
-            this.Accept.Location = new System.Drawing.Point(205, 6);
+            this.Accept.Location = new System.Drawing.Point(224, 6);
             this.Accept.Name = "Accept";
             this.Accept.Size = new System.Drawing.Size(75, 23);
             this.Accept.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.Accept.TabIndex = 16;
-            this.Accept.Text = "确定";
+            this.Accept.Text = "保存";
             this.Accept.Click += new System.EventHandler(this.Accept_Click);
             // 
             // AdvanceAirLineBox
@@ -1390,5 +1404,6 @@
         private DevComponents.DotNetBar.LabelX labelX20;
         private DevComponents.Editors.DoubleInput TXT_fovV;
         private DevComponents.DotNetBar.LabelX labelX19;
+        private DevComponents.DotNetBar.ButtonX Default;
     }
 }

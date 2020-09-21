@@ -688,8 +688,15 @@ namespace VPS.Controls.Grid
 
         private void Accept_Click(object sender, EventArgs e)
         {
-            domainUpDown2_ValueChanged(sender, e);
             savesettings();
+        }
+
+        private void Default_Click(object sender, EventArgs e)
+        {
+            loading = true;
+            loadsettings();
+            loading = false;
+            domainUpDown2_ValueChanged(sender, e);
         }
 
         private void chk_crossgrid_CheckedChanged(object sender, EventArgs e)
