@@ -220,6 +220,7 @@ namespace VPS.Controls.Grid
             CMB_camera.Text = griddata.camera;
             NUM_altitude.Value = griddata.alt;
             NUM_angle.Value = griddata.angle;
+            LockAngle.Checked = griddata.lockangle;
             CHK_camdirection.Checked = griddata.camdir;
 
 
@@ -252,6 +253,7 @@ namespace VPS.Controls.Grid
             griddata.camera = CMB_camera.Text;
             griddata.alt = NUM_altitude.Value;
             griddata.angle = NUM_angle.Value;
+            griddata.lockangle = LockAngle.Checked;
             griddata.camdir = CHK_camdirection.Checked;
 
             griddata.advanced = ShowAdvanceOptions.Checked;
@@ -393,7 +395,7 @@ namespace VPS.Controls.Grid
             double altitude = (int)ReadControlMainThread(instance.NUM_altitude);
             double distance = (double)ReadControlMainThread(instance.NUM_Distance);
             double spacing = (double)ReadControlMainThread(instance.NUM_spacing);
-            double angle = (int)ReadControlMainThread(instance.NUM_angle);
+            double angle = (double)ReadControlMainThread(instance.NUM_angle);
             double overshoot = (int)ReadControlMainThread(instance.NUM_overshoot);
             double overshoot2 = (int)ReadControlMainThread(instance.NUM_overshoot2);
             string startfrom = (string)ReadControlMainThread(instance.CMB_startfrom);
@@ -570,6 +572,11 @@ namespace VPS.Controls.Grid
                     NUM_Distance.Value = (double)((1 - (sidelap / 100.0f)) * viewheight);
                 }
 
+            if (!isLockAngle)
+            {
+                NUM_angle.Value = getAngleOfLongestSide(list);
+            }
+
         }
 
         public static GridConfig instance = null;
@@ -586,8 +593,22 @@ namespace VPS.Controls.Grid
             CMB_startfrom.SelectedIndex = 0;
 
             editable = true;
+
+            DevComponents.DotNetBar.SuperTooltipInfo defaultAngleInfo = new DevComponents.DotNetBar.SuperTooltipInfo(
+                "默认飞行角度",
+                "",
+                "    依照当前飞行区域的最长边直线方向，设置飞行计划的飞行角度。",
+                null, null, DevComponents.DotNetBar.eTooltipColor.Orange,
+                true, false, new Size(200, 70));
+
+            DefaultAngleToolTips.SetSuperTooltip(DefaultAngle, defaultAngleInfo);
             // set and angle that is good
             //NUM_angle.Value = (int)((getAngleOfLongestSide(list) + 360) % 360);
+        }
+
+        ~GridConfig()
+        {
+            savesettings();
         }
 
 
@@ -745,6 +766,52 @@ namespace VPS.Controls.Grid
         private void CHK_camdirection_CheckedChanged(object sender, EventArgs e)
         {
             domainUpDown2_ValueChanged(sender, e);
+        }
+
+        private void defaultAngle_Click(object sender, EventArgs e)
+        {
+            if (!isLockAngle)
+            {
+                this.NUM_angle.Value = getAngleOfLongestSide(list);
+                domainUpDown2_ValueChanged(sender, e);
+            }
+        }
+
+        private double getAngleOfLongestSide(List<PointLatLngAlt> list)
+        {
+            if (list.Count == 0)
+                return 0;
+            double angle = 0;
+            double maxdist = 0;
+            PointLatLngAlt last = list[list.Count - 1];
+            foreach (var item in list)
+            {
+                if (item.GetDistance(last) > maxdist)
+                {
+                    angle = item.GetBearing(last);
+                    maxdist = item.GetDistance(last);
+                }
+                last = item;
+            }
+
+            return (angle % 360 + 360) % 360;
+        }
+
+        bool isLockAngle;
+        private void LockAngle_CheckedChanged(object sender, EventArgs e)
+        {
+            isLockAngle = LockAngle.Checked;
+            if (!isLockAngle)
+            {
+                domainUpDown2_ValueChanged(sender, e);
+                NUM_angle.Enabled = true;
+                DefaultAngle.Enabled = true;
+            }
+            else
+            {
+                NUM_angle.Enabled = false;
+                DefaultAngle.Enabled = false;
+            }
         }
     }
 }

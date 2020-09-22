@@ -9,7 +9,8 @@ namespace VPS.Grid
         //simple
         public string camera;
         public int alt;
-        public int angle;
+        public double angle;
+        public bool lockangle;
         public bool camdir;
         public bool advanced;
 

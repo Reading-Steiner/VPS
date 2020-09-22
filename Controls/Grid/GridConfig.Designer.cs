@@ -61,7 +61,9 @@
             this.skinLine3 = new CCWin.SkinControl.SkinLine();
             this.label2 = new System.Windows.Forms.Label();
             this.FlightBox = new DevComponents.DotNetBar.PanelEx();
-            this.NUM_angle = new DevComponents.Editors.IntegerInput();
+            this.LockAngle = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.DefaultAngle = new DevComponents.DotNetBar.ButtonX();
+            this.NUM_angle = new DevComponents.Editors.DoubleInput();
             this.labelX17 = new DevComponents.DotNetBar.LabelX();
             this.CMB_startfrom = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.labelX14 = new DevComponents.DotNetBar.LabelX();
@@ -103,6 +105,7 @@
             this.panelEx6 = new DevComponents.DotNetBar.PanelEx();
             this.skinLine7 = new CCWin.SkinControl.SkinLine();
             this.label6 = new System.Windows.Forms.Label();
+            this.DefaultAngleToolTips = new DevComponents.DotNetBar.SuperTooltip();
             this.panelEx1.SuspendLayout();
             this.panelEx9.SuspendLayout();
             this.AdvanceAirLineBox.SuspendLayout();
@@ -158,7 +161,7 @@
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx1.Location = new System.Drawing.Point(0, 0);
             this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(310, 671);
+            this.panelEx1.Size = new System.Drawing.Size(310, 696);
             this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelEx1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -175,7 +178,7 @@
             this.panelEx9.Controls.Add(this.Default);
             this.panelEx9.Controls.Add(this.Accept);
             this.panelEx9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx9.Location = new System.Drawing.Point(0, 639);
+            this.panelEx9.Location = new System.Drawing.Point(0, 664);
             this.panelEx9.Name = "panelEx9";
             this.panelEx9.Size = new System.Drawing.Size(310, 32);
             this.panelEx9.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -230,7 +233,7 @@
             this.AdvanceAirLineBox.Controls.Add(this.labelX13);
             this.AdvanceAirLineBox.Controls.Add(this.labelX12);
             this.AdvanceAirLineBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.AdvanceAirLineBox.Location = new System.Drawing.Point(0, 471);
+            this.AdvanceAirLineBox.Location = new System.Drawing.Point(0, 496);
             this.AdvanceAirLineBox.Name = "AdvanceAirLineBox";
             this.AdvanceAirLineBox.Size = new System.Drawing.Size(310, 168);
             this.AdvanceAirLineBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -458,7 +461,7 @@
             this.AirLineBox.Controls.Add(this.labelX8);
             this.AirLineBox.Controls.Add(this.labelX7);
             this.AirLineBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.AirLineBox.Location = new System.Drawing.Point(0, 392);
+            this.AirLineBox.Location = new System.Drawing.Point(0, 417);
             this.AirLineBox.Name = "AirLineBox";
             this.AirLineBox.Size = new System.Drawing.Size(310, 79);
             this.AirLineBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -613,7 +616,7 @@
             this.panelEx7.Controls.Add(this.skinLine3);
             this.panelEx7.Controls.Add(this.label2);
             this.panelEx7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx7.Location = new System.Drawing.Point(0, 371);
+            this.panelEx7.Location = new System.Drawing.Point(0, 396);
             this.panelEx7.Name = "panelEx7";
             this.panelEx7.Size = new System.Drawing.Size(310, 21);
             this.panelEx7.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -653,6 +656,8 @@
             this.FlightBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.FlightBox.CanvasColor = System.Drawing.SystemColors.Control;
             this.FlightBox.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.FlightBox.Controls.Add(this.LockAngle);
+            this.FlightBox.Controls.Add(this.DefaultAngle);
             this.FlightBox.Controls.Add(this.NUM_angle);
             this.FlightBox.Controls.Add(this.labelX17);
             this.FlightBox.Controls.Add(this.CMB_startfrom);
@@ -664,13 +669,39 @@
             this.FlightBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.FlightBox.Location = new System.Drawing.Point(0, 289);
             this.FlightBox.Name = "FlightBox";
-            this.FlightBox.Size = new System.Drawing.Size(310, 82);
+            this.FlightBox.Size = new System.Drawing.Size(310, 107);
             this.FlightBox.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.FlightBox.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.FlightBox.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.FlightBox.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.FlightBox.Style.GradientAngle = 90;
             this.FlightBox.TabIndex = 41;
+            // 
+            // LockAngle
+            // 
+            // 
+            // 
+            // 
+            this.LockAngle.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.LockAngle.Location = new System.Drawing.Point(35, 57);
+            this.LockAngle.Name = "LockAngle";
+            this.LockAngle.Size = new System.Drawing.Size(100, 23);
+            this.LockAngle.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.LockAngle.TabIndex = 59;
+            this.LockAngle.Text = "航向锁定";
+            this.LockAngle.CheckedChanged += new System.EventHandler(this.LockAngle_CheckedChanged);
+            // 
+            // DefaultAngle
+            // 
+            this.DefaultAngle.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.DefaultAngle.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.DefaultAngle.Location = new System.Drawing.Point(164, 31);
+            this.DefaultAngle.Name = "DefaultAngle";
+            this.DefaultAngle.Size = new System.Drawing.Size(43, 20);
+            this.DefaultAngle.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.DefaultAngle.TabIndex = 58;
+            this.DefaultAngle.Text = "默认";
+            this.DefaultAngle.Click += new System.EventHandler(this.defaultAngle_Click);
             // 
             // NUM_angle
             // 
@@ -681,9 +712,11 @@
             this.NUM_angle.BackgroundStyle.Class = "DateTimeInputBackground";
             this.NUM_angle.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.NUM_angle.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_angle.DisplayFormat = "F1";
+            this.NUM_angle.Increment = 0.1D;
             this.NUM_angle.Location = new System.Drawing.Point(87, 31);
-            this.NUM_angle.MaxValue = 360;
-            this.NUM_angle.MinValue = 0;
+            this.NUM_angle.MaxValue = 360D;
+            this.NUM_angle.MinValue = 0D;
             this.NUM_angle.Name = "NUM_angle";
             this.NUM_angle.ShowUpDown = true;
             this.NUM_angle.Size = new System.Drawing.Size(64, 21);
@@ -708,7 +741,7 @@
             this.CMB_startfrom.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.CMB_startfrom.FormattingEnabled = true;
             this.CMB_startfrom.ItemHeight = 15;
-            this.CMB_startfrom.Location = new System.Drawing.Point(87, 58);
+            this.CMB_startfrom.Location = new System.Drawing.Point(85, 83);
             this.CMB_startfrom.MaxDropDownItems = 10;
             this.CMB_startfrom.MaxLength = 1000;
             this.CMB_startfrom.Name = "CMB_startfrom";
@@ -723,7 +756,7 @@
             // 
             // 
             this.labelX14.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX14.Location = new System.Drawing.Point(16, 61);
+            this.labelX14.Location = new System.Drawing.Point(14, 86);
             this.labelX14.Name = "labelX14";
             this.labelX14.Size = new System.Drawing.Size(54, 18);
             this.labelX14.TabIndex = 49;
@@ -1281,7 +1314,7 @@
             this.AutoSize = true;
             this.Controls.Add(this.panelEx1);
             this.Name = "GridConfig";
-            this.Size = new System.Drawing.Size(310, 671);
+            this.Size = new System.Drawing.Size(310, 696);
             this.Load += new System.EventHandler(this.GridConfig_Load);
             this.panelEx1.ResumeLayout(false);
             this.panelEx1.PerformLayout();
@@ -1398,12 +1431,15 @@
         private DevComponents.DotNetBar.LabelX labelX14;
         private DevComponents.DotNetBar.PanelEx panelEx9;
         private DevComponents.DotNetBar.ButtonX Accept;
-        private DevComponents.Editors.IntegerInput NUM_angle;
+        private DevComponents.Editors.DoubleInput NUM_angle;
         private DevComponents.DotNetBar.LabelX labelX17;
         private DevComponents.Editors.DoubleInput TXT_fovH;
         private DevComponents.DotNetBar.LabelX labelX20;
         private DevComponents.Editors.DoubleInput TXT_fovV;
         private DevComponents.DotNetBar.LabelX labelX19;
         private DevComponents.DotNetBar.ButtonX Default;
+        private DevComponents.DotNetBar.ButtonX DefaultAngle;
+        private DevComponents.DotNetBar.Controls.CheckBoxX LockAngle;
+        private DevComponents.DotNetBar.SuperTooltip DefaultAngleToolTips;
     }
 }
