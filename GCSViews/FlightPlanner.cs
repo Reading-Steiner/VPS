@@ -943,7 +943,7 @@ namespace VPS.GCSViews
         {
             if (IsDrawPolygongridMode)
             {
-                AddPolygonPoint(lng, lat);
+                AddPolygonPoint(lat, lng);
                 return;
             }
             else if (IsDrawWPMode)
@@ -2051,7 +2051,7 @@ namespace VPS.GCSViews
                 IsDrawWPMode = false;
                 return;
             }
-            AddPolygonPoint(MouseDownStart.Lng, MouseDownStart.Lat);
+            AddPolygonPoint(MouseDownStart.Lat, MouseDownStart.Lng);
         }
         
 

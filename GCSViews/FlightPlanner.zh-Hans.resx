@@ -291,6 +291,10 @@
   <data name="panelWaypoints.Text" xml:space="preserve">
     <value>航点</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="panelWaypoints.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="chk_grid.Text" xml:space="preserve">
     <value>网格</value>
   </data>
@@ -378,35 +382,53 @@
   <data name="polygonToolStripMenuItem.Text" xml:space="preserve">
     <value>划定区域</value>
   </data>
+  <data name="drawWPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
+  </data>
   <data name="drawWPToolStripMenuItem.Text" xml:space="preserve">
     <value>设置航点</value>
+  </data>
+  <data name="surveyGridToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
   </data>
   <data name="surveyGridToolStripMenuItem.Text" xml:space="preserve">
     <value>自动航点</value>
   </data>
+  <data name="clearMissionToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
+  </data>
   <data name="clearMissionToolStripMenuItem.Text" xml:space="preserve">
     <value>清除任务</value>
+  </data>
+  <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 6</value>
+  </data>
+  <data name="saveWPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
   </data>
   <data name="saveWPToolStripMenuItem.Text" xml:space="preserve">
     <value>保存航点</value>
   </data>
   <data name="loadWPFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>153, 22</value>
   </data>
   <data name="loadWPFileToolStripMenuItem.Text" xml:space="preserve">
     <value>加载航点文件</value>
   </data>
   <data name="loadKMLFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>153, 22</value>
   </data>
   <data name="loadKMLFileToolStripMenuItem.Text" xml:space="preserve">
     <value>加载 kml 文件</value>
   </data>
   <data name="loadSHPFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>153, 22</value>
   </data>
   <data name="loadSHPFileToolStripMenuItem.Text" xml:space="preserve">
     <value>加载 shp 文件</value>
+  </data>
+  <data name="loadWPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
   </data>
   <data name="loadWPToolStripMenuItem.Text" xml:space="preserve">
     <value>加载航点</value>
