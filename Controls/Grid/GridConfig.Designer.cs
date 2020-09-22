@@ -105,7 +105,7 @@
             this.panelEx6 = new DevComponents.DotNetBar.PanelEx();
             this.skinLine7 = new CCWin.SkinControl.SkinLine();
             this.label6 = new System.Windows.Forms.Label();
-            this.DefaultAngleToolTips = new DevComponents.DotNetBar.SuperTooltip();
+            this.defaultAngleTooltip = new DevComponents.DotNetBar.SuperTooltip();
             this.panelEx1.SuspendLayout();
             this.panelEx9.SuspendLayout();
             this.AdvanceAirLineBox.SuspendLayout();
@@ -699,6 +699,7 @@
             this.DefaultAngle.Name = "DefaultAngle";
             this.DefaultAngle.Size = new System.Drawing.Size(43, 20);
             this.DefaultAngle.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.defaultAngleTooltip.SetSuperTooltip(this.DefaultAngle, new DevComponents.DotNetBar.SuperTooltipInfo("默认航飞角度", "", "使用当前航飞区域的长边直线方向，作为飞行计划的默认航飞角度。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003, true, false, new System.Drawing.Size(150, 80)));
             this.DefaultAngle.TabIndex = 58;
             this.DefaultAngle.Text = "默认";
             this.DefaultAngle.Click += new System.EventHandler(this.defaultAngle_Click);
@@ -1440,6 +1441,6 @@
         private DevComponents.DotNetBar.ButtonX Default;
         private DevComponents.DotNetBar.ButtonX DefaultAngle;
         private DevComponents.DotNetBar.Controls.CheckBoxX LockAngle;
-        private DevComponents.DotNetBar.SuperTooltip DefaultAngleToolTips;
+        private DevComponents.DotNetBar.SuperTooltip defaultAngleTooltip;
     }
 }

@@ -594,14 +594,7 @@ namespace VPS.Controls.Grid
 
             editable = true;
 
-            DevComponents.DotNetBar.SuperTooltipInfo defaultAngleInfo = new DevComponents.DotNetBar.SuperTooltipInfo(
-                "默认飞行角度",
-                "",
-                "    依照当前飞行区域的最长边直线方向，设置飞行计划的飞行角度。",
-                null, null, DevComponents.DotNetBar.eTooltipColor.Orange,
-                true, false, new Size(200, 70));
-
-            DefaultAngleToolTips.SetSuperTooltip(DefaultAngle, defaultAngleInfo);
+            defaultAngleTooltip.SetSuperTooltip(DefaultAngle, defaultAngleTooltip.DefaultTooltipSettings);
             // set and angle that is good
             //NUM_angle.Value = (int)((getAngleOfLongestSide(list) + 360) % 360);
         }

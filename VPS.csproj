@@ -96,7 +96,9 @@
     <Reference Include="CSkin">
       <HintPath>ExtLibs\CSkin\CSkin.dll</HintPath>
     </Reference>
+    <Reference Include="DevComponents.DotNetBar.SuperGrid, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL" />
     <Reference Include="DevComponents.DotNetBar2, Version=10.5.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL" />
+    <Reference Include="DevComponents.Instrumentation, Version=10.5.0.3, Culture=neutral, PublicKeyToken=bc4a9d761ea44ef0" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -395,6 +397,12 @@
     </Compile>
     <Compile Include="Controls\BoardLabel.Designer.cs">
       <DependentUpon>BoardLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Commands.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Commands.Designer.cs">
+      <DependentUpon>Commands.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ConnectionOptions.cs">
       <SubType>Form</SubType>
@@ -793,6 +801,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ComboDataList.resx">
       <DependentUpon>ComboDataList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Commands.resx">
+      <DependentUpon>Commands.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlSensorsStatus.resx">
       <DependentUpon>ControlSensorsStatus.cs</DependentUpon>

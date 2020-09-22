@@ -560,7 +560,7 @@ namespace VPS.GCSViews
                 return true;
             }
 
-            if (keyData == (Keys.Alt|Keys.Delete))
+            if (keyData == (Keys.Alt | Keys.Delete))
             {
                 DeleteCurrentPolygon();
                 return true;

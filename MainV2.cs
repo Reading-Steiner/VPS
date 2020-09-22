@@ -3639,33 +3639,40 @@ namespace VPS
                 LoadTiffButton_Click(this, null);
                 return true;
             }
+
             if (keyData == Keys.F6)
+            {
+                ZoomTiffButton_Click(this, null);
+                return true;
+            }
+
+            if (keyData == Keys.F7)
             {
                 TiffManagerButton_Click(this, null);
                 return true;
             }
 
-            if (keyData == (Keys.Menu | Keys.Control | Keys.Alt) || keyData == (Keys.ControlKey | Keys.Control | Keys.Alt))
+            if (keyData == (Keys.Alt | Keys.E))
             {
                 DrawPolygonButton_Click(this, null);
                 return true;
             }
 
-            if (keyData == (Keys.Control | Keys.Delete))
+            if (keyData == (Keys.Control | Keys.E))
+            {
+                AddWPButton_Click(this, null);
+                return true;
+            }
+
+            if (keyData == (Keys.Control | Keys.D))
             {
                 ClearWPButton_Click(this, null);
                 return true;
             }
 
-            if (keyData == (Keys.Alt | Keys.Delete))
+            if (keyData == (Keys.Alt | Keys.D))
             {
                 ClearPolygonButton_Click(this, null);
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.T))
-            {
-                ZoomTiffButton_Click(this, null);
                 return true;
             }
 
@@ -3675,17 +3682,15 @@ namespace VPS
                 return true;
             }
 
-
-
             // open wp file
-            if (keyData == (Keys.Control | Keys.O))
+            if (keyData == (Keys.Control | Keys.S))
             {
                 SaveWPButton_Click(this, null);
                 return true;
             }
 
             // save wp file
-            if (keyData == (Keys.Control | Keys.S))
+            if (keyData == (Keys.Control | Keys.O))
             {
                 LoadWPButton_Click(this, null);
                 return true;
@@ -4499,6 +4504,16 @@ namespace VPS
         private void CancelWPButton_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.wpMarkersGroupClear();
+        }
+
+        private void AllPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.polygonMarkersGroupAddAll();
+        }
+
+        private void AllWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.wpMarkersGroupAddAll();
         }
 
         private void UndoButton_Click(object sender, EventArgs e)
