@@ -42,8 +42,6 @@
             this.textBoxItem6 = new DevComponents.DotNetBar.TextBoxItem();
             this.labelItem6 = new DevComponents.DotNetBar.LabelItem();
             this.panelEx2 = new DevComponents.DotNetBar.PanelEx();
-            this.panelEx9 = new DevComponents.DotNetBar.PanelEx();
-            this.Accept = new DevComponents.DotNetBar.ButtonX();
             this.panelEx5 = new DevComponents.DotNetBar.PanelEx();
             this.SaveFileBox = new DevComponents.DotNetBar.PanelEx();
             this.DefaultSavePath = new DevComponents.DotNetBar.ButtonX();
@@ -51,6 +49,11 @@
             this.SaveFile = new DevComponents.DotNetBar.ButtonX();
             this.SaveFilePath = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.TileNameBox = new DevComponents.DotNetBar.PanelEx();
+            this.labelX5 = new DevComponents.DotNetBar.LabelX();
+            this.labelX2 = new DevComponents.DotNetBar.LabelX();
+            this.textBoxX2 = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.labelX1 = new DevComponents.DotNetBar.LabelX();
+            this.textBoxX1 = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.labelX7 = new DevComponents.DotNetBar.LabelX();
             this.TileName = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.panelEx10 = new DevComponents.DotNetBar.PanelEx();
@@ -60,13 +63,15 @@
             this.skinLine1 = new CCWin.SkinControl.SkinLine();
             this.label3 = new System.Windows.Forms.Label();
             this.panelEx3 = new DevComponents.DotNetBar.PanelEx();
+            this.PreviewBox = new DevComponents.DotNetBar.PanelEx();
+            this.DisplayImagePanel = new System.Windows.Forms.PictureBox();
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.Preview = new DevComponents.DotNetBar.ButtonX();
             this.SettingDefaultMap = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.TransparentBox = new DevComponents.DotNetBar.PanelEx();
             this.TransparentDisplay = new DevComponents.DotNetBar.ColorPickers.ColorCombControl();
             this.ColorPickerButton = new DevComponents.DotNetBar.ColorPickerButton();
             this.panelEx7 = new DevComponents.DotNetBar.PanelEx();
-            this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.UsingTransparent = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.panelEx12 = new DevComponents.DotNetBar.PanelEx();
             this.skinLine3 = new CCWin.SkinControl.SkinLine();
@@ -96,14 +101,17 @@
             this.panelEx6 = new DevComponents.DotNetBar.PanelEx();
             this.skinLine7 = new CCWin.SkinControl.SkinLine();
             this.label6 = new System.Windows.Forms.Label();
+            this.panelEx9 = new DevComponents.DotNetBar.PanelEx();
+            this.Accept = new DevComponents.DotNetBar.ButtonX();
             this.panelEx2.SuspendLayout();
-            this.panelEx9.SuspendLayout();
             this.panelEx5.SuspendLayout();
             this.SaveFileBox.SuspendLayout();
             this.TileNameBox.SuspendLayout();
             this.panelEx10.SuspendLayout();
             this.panelEx11.SuspendLayout();
             this.panelEx3.SuspendLayout();
+            this.PreviewBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DisplayImagePanel)).BeginInit();
             this.panelEx1.SuspendLayout();
             this.TransparentBox.SuspendLayout();
             this.panelEx7.SuspendLayout();
@@ -116,6 +124,7 @@
             this.FileReaderBox.SuspendLayout();
             this.panelEx15.SuspendLayout();
             this.panelEx6.SuspendLayout();
+            this.panelEx9.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxItem1
@@ -193,45 +202,13 @@
             this.panelEx2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx2.Location = new System.Drawing.Point(0, 0);
             this.panelEx2.Name = "panelEx2";
-            this.panelEx2.Size = new System.Drawing.Size(310, 549);
+            this.panelEx2.Size = new System.Drawing.Size(310, 973);
             this.panelEx2.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx2.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelEx2.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.panelEx2.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.panelEx2.Style.GradientAngle = 90;
             this.panelEx2.TabIndex = 7;
-            // 
-            // panelEx9
-            // 
-            this.panelEx9.AutoSize = true;
-            this.panelEx9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panelEx9.CanvasColor = System.Drawing.SystemColors.Control;
-            this.panelEx9.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.panelEx9.Controls.Add(this.Accept);
-            this.panelEx9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx9.Location = new System.Drawing.Point(0, 517);
-            this.panelEx9.Name = "panelEx9";
-            this.panelEx9.Size = new System.Drawing.Size(310, 32);
-            this.panelEx9.Style.Alignment = System.Drawing.StringAlignment.Center;
-            this.panelEx9.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
-            this.panelEx9.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
-            this.panelEx9.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
-            this.panelEx9.Style.GradientAngle = 90;
-            this.panelEx9.TabIndex = 34;
-            // 
-            // Accept
-            // 
-            this.Accept.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.Accept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Accept.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Accept.Enabled = false;
-            this.Accept.Location = new System.Drawing.Point(205, 6);
-            this.Accept.Name = "Accept";
-            this.Accept.Size = new System.Drawing.Size(75, 23);
-            this.Accept.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.Accept.TabIndex = 16;
-            this.Accept.Text = "确定";
-            this.Accept.Click += new System.EventHandler(this.Accept_Click);
             // 
             // panelEx5
             // 
@@ -244,9 +221,9 @@
             this.panelEx5.Controls.Add(this.panelEx10);
             this.panelEx5.Controls.Add(this.panelEx11);
             this.panelEx5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx5.Location = new System.Drawing.Point(0, 367);
+            this.panelEx5.Location = new System.Drawing.Point(0, 746);
             this.panelEx5.Name = "panelEx5";
-            this.panelEx5.Size = new System.Drawing.Size(310, 150);
+            this.panelEx5.Size = new System.Drawing.Size(310, 195);
             this.panelEx5.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx5.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx5.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
@@ -265,7 +242,7 @@
             this.SaveFileBox.Controls.Add(this.SaveFile);
             this.SaveFileBox.Controls.Add(this.SaveFilePath);
             this.SaveFileBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.SaveFileBox.Location = new System.Drawing.Point(0, 75);
+            this.SaveFileBox.Location = new System.Drawing.Point(0, 120);
             this.SaveFileBox.Name = "SaveFileBox";
             this.SaveFileBox.Size = new System.Drawing.Size(310, 75);
             this.SaveFileBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -279,7 +256,6 @@
             // DefaultSavePath
             // 
             this.DefaultSavePath.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.DefaultSavePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.DefaultSavePath.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.DefaultSavePath.Location = new System.Drawing.Point(154, 49);
             this.DefaultSavePath.Name = "DefaultSavePath";
@@ -304,7 +280,6 @@
             // SaveFile
             // 
             this.SaveFile.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.SaveFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.SaveFile.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.SaveFile.Location = new System.Drawing.Point(228, 49);
             this.SaveFile.Name = "SaveFile";
@@ -316,8 +291,6 @@
             // 
             // SaveFilePath
             // 
-            this.SaveFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.SaveFilePath.BackColor = System.Drawing.Color.White;
             // 
             // 
@@ -336,12 +309,17 @@
             this.TileNameBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.TileNameBox.CanvasColor = System.Drawing.SystemColors.Control;
             this.TileNameBox.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.TileNameBox.Controls.Add(this.labelX5);
+            this.TileNameBox.Controls.Add(this.labelX2);
+            this.TileNameBox.Controls.Add(this.textBoxX2);
+            this.TileNameBox.Controls.Add(this.labelX1);
+            this.TileNameBox.Controls.Add(this.textBoxX1);
             this.TileNameBox.Controls.Add(this.labelX7);
             this.TileNameBox.Controls.Add(this.TileName);
             this.TileNameBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.TileNameBox.Location = new System.Drawing.Point(0, 48);
             this.TileNameBox.Name = "TileNameBox";
-            this.TileNameBox.Size = new System.Drawing.Size(310, 27);
+            this.TileNameBox.Size = new System.Drawing.Size(310, 72);
             this.TileNameBox.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.TileNameBox.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.TileNameBox.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -349,6 +327,70 @@
             this.TileNameBox.Style.GradientAngle = 90;
             this.TileNameBox.TabIndex = 34;
             this.TileNameBox.Visible = false;
+            // 
+            // labelX5
+            // 
+            // 
+            // 
+            // 
+            this.labelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX5.Location = new System.Drawing.Point(168, 30);
+            this.labelX5.Name = "labelX5";
+            this.labelX5.Size = new System.Drawing.Size(23, 18);
+            this.labelX5.TabIndex = 23;
+            this.labelX5.Text = "高";
+            // 
+            // labelX2
+            // 
+            // 
+            // 
+            // 
+            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX2.Location = new System.Drawing.Point(89, 30);
+            this.labelX2.Name = "labelX2";
+            this.labelX2.Size = new System.Drawing.Size(17, 18);
+            this.labelX2.TabIndex = 22;
+            this.labelX2.Text = "宽";
+            // 
+            // textBoxX2
+            // 
+            this.textBoxX2.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.textBoxX2.Border.Class = "TextBoxBorder";
+            this.textBoxX2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.textBoxX2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.textBoxX2.Location = new System.Drawing.Point(150, 48);
+            this.textBoxX2.Name = "textBoxX2";
+            this.textBoxX2.Size = new System.Drawing.Size(49, 21);
+            this.textBoxX2.TabIndex = 21;
+            // 
+            // labelX1
+            // 
+            // 
+            // 
+            // 
+            this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX1.Location = new System.Drawing.Point(12, 42);
+            this.labelX1.Name = "labelX1";
+            this.labelX1.Size = new System.Drawing.Size(60, 18);
+            this.labelX1.TabIndex = 20;
+            this.labelX1.Text = "切片大小";
+            // 
+            // textBoxX1
+            // 
+            this.textBoxX1.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.textBoxX1.Border.Class = "TextBoxBorder";
+            this.textBoxX1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.textBoxX1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.textBoxX1.Location = new System.Drawing.Point(73, 48);
+            this.textBoxX1.Name = "textBoxX1";
+            this.textBoxX1.Size = new System.Drawing.Size(49, 21);
+            this.textBoxX1.TabIndex = 19;
             // 
             // labelX7
             // 
@@ -364,8 +406,6 @@
             // 
             // TileName
             // 
-            this.TileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.TileName.BackColor = System.Drawing.Color.White;
             // 
             // 
@@ -475,14 +515,15 @@
             this.panelEx3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panelEx3.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx3.Controls.Add(this.PreviewBox);
             this.panelEx3.Controls.Add(this.panelEx1);
             this.panelEx3.Controls.Add(this.TransparentBox);
             this.panelEx3.Controls.Add(this.panelEx7);
             this.panelEx3.Controls.Add(this.panelEx12);
             this.panelEx3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx3.Location = new System.Drawing.Point(0, 265);
+            this.panelEx3.Location = new System.Drawing.Point(0, 338);
             this.panelEx3.Name = "panelEx3";
-            this.panelEx3.Size = new System.Drawing.Size(310, 102);
+            this.panelEx3.Size = new System.Drawing.Size(310, 408);
             this.panelEx3.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx3.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx3.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
@@ -490,12 +531,41 @@
             this.panelEx3.Style.GradientAngle = 90;
             this.panelEx3.TabIndex = 31;
             // 
+            // PreviewBox
+            // 
+            this.PreviewBox.AutoSize = true;
+            this.PreviewBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.PreviewBox.CanvasColor = System.Drawing.SystemColors.Control;
+            this.PreviewBox.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.PreviewBox.Controls.Add(this.DisplayImagePanel);
+            this.PreviewBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PreviewBox.Location = new System.Drawing.Point(0, 102);
+            this.PreviewBox.Name = "PreviewBox";
+            this.PreviewBox.Size = new System.Drawing.Size(310, 306);
+            this.PreviewBox.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.PreviewBox.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
+            this.PreviewBox.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.PreviewBox.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
+            this.PreviewBox.Style.GradientAngle = 90;
+            this.PreviewBox.TabIndex = 35;
+            this.PreviewBox.Visible = false;
+            // 
+            // DisplayImagePanel
+            // 
+            this.DisplayImagePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.DisplayImagePanel.Location = new System.Drawing.Point(5, 3);
+            this.DisplayImagePanel.Name = "DisplayImagePanel";
+            this.DisplayImagePanel.Size = new System.Drawing.Size(300, 300);
+            this.DisplayImagePanel.TabIndex = 2;
+            this.DisplayImagePanel.TabStop = false;
+            // 
             // panelEx1
             // 
             this.panelEx1.AutoSize = true;
             this.panelEx1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx1.Controls.Add(this.Preview);
             this.panelEx1.Controls.Add(this.SettingDefaultMap);
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEx1.Location = new System.Drawing.Point(0, 77);
@@ -507,6 +577,19 @@
             this.panelEx1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 34;
+            // 
+            // Preview
+            // 
+            this.Preview.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.Preview.ColorTable = DevComponents.DotNetBar.eButtonColor.Blue;
+            this.Preview.Location = new System.Drawing.Point(239, 5);
+            this.Preview.Name = "Preview";
+            this.Preview.Size = new System.Drawing.Size(60, 17);
+            this.Preview.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.Preview.TabIndex = 31;
+            this.Preview.Text = "&预&览&>&>";
+            this.Preview.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.Preview.Click += new System.EventHandler(this.Preview_Click);
             // 
             // SettingDefaultMap
             // 
@@ -523,6 +606,7 @@
             this.SettingDefaultMap.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.SettingDefaultMap.TabIndex = 30;
             this.SettingDefaultMap.Text = "设为默认地图";
+            this.SettingDefaultMap.CheckedChanged += new System.EventHandler(this.SettingDefaultMap_CheckedChanged);
             // 
             // TransparentBox
             // 
@@ -574,7 +658,6 @@
             this.panelEx7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panelEx7.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx7.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.panelEx7.Controls.Add(this.buttonX1);
             this.panelEx7.Controls.Add(this.UsingTransparent);
             this.panelEx7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEx7.Location = new System.Drawing.Point(0, 22);
@@ -586,19 +669,6 @@
             this.panelEx7.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.panelEx7.Style.GradientAngle = 90;
             this.panelEx7.TabIndex = 33;
-            // 
-            // buttonX1
-            // 
-            this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.buttonX1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.Blue;
-            this.buttonX1.Location = new System.Drawing.Point(236, 5);
-            this.buttonX1.Name = "buttonX1";
-            this.buttonX1.Size = new System.Drawing.Size(60, 17);
-            this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.buttonX1.TabIndex = 31;
-            this.buttonX1.Text = "&预&览&>&>";
-            this.buttonX1.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             // 
             // UsingTransparent
             // 
@@ -653,9 +723,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 4);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 12);
+            this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 26;
-            this.label1.Text = "&预&览";
+            this.label1.Text = "显示设置";
             // 
             // panelEx4
             // 
@@ -667,9 +737,9 @@
             this.panelEx4.Controls.Add(this.panelEx13);
             this.panelEx4.Controls.Add(this.panelEx14);
             this.panelEx4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx4.Location = new System.Drawing.Point(0, 93);
+            this.panelEx4.Location = new System.Drawing.Point(0, 99);
             this.panelEx4.Name = "panelEx4";
-            this.panelEx4.Size = new System.Drawing.Size(310, 172);
+            this.panelEx4.Size = new System.Drawing.Size(310, 239);
             this.panelEx4.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx4.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx4.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
@@ -689,7 +759,7 @@
             this.BoundBox.Controls.Add(this.BoundBottomText);
             this.BoundBox.Controls.Add(this.BoundRightText);
             this.BoundBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.BoundBox.Location = new System.Drawing.Point(0, 92);
+            this.BoundBox.Location = new System.Drawing.Point(0, 159);
             this.BoundBox.Name = "BoundBox";
             this.BoundBox.Size = new System.Drawing.Size(310, 80);
             this.BoundBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -780,7 +850,7 @@
             this.panelEx13.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEx13.Location = new System.Drawing.Point(0, 21);
             this.panelEx13.Name = "panelEx13";
-            this.panelEx13.Size = new System.Drawing.Size(310, 71);
+            this.panelEx13.Size = new System.Drawing.Size(310, 138);
             this.panelEx13.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx13.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelEx13.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -805,16 +875,14 @@
             // 
             // Projection
             // 
-            this.Projection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
             this.Projection.BackgroundStyle.Class = "RichTextBoxBorder";
             this.Projection.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.Projection.Location = new System.Drawing.Point(12, 24);
+            this.Projection.Location = new System.Drawing.Point(12, 28);
             this.Projection.Name = "Projection";
-            this.Projection.Size = new System.Drawing.Size(284, 44);
+            this.Projection.Size = new System.Drawing.Size(287, 107);
             this.Projection.TabIndex = 25;
             // 
             // labelX3
@@ -884,7 +952,7 @@
             this.panelEx8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEx8.Location = new System.Drawing.Point(0, 0);
             this.panelEx8.Name = "panelEx8";
-            this.panelEx8.Size = new System.Drawing.Size(310, 93);
+            this.panelEx8.Size = new System.Drawing.Size(310, 99);
             this.panelEx8.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx8.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx8.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
@@ -904,7 +972,7 @@
             this.FileReaderBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.FileReaderBox.Location = new System.Drawing.Point(0, 46);
             this.FileReaderBox.Name = "FileReaderBox";
-            this.FileReaderBox.Size = new System.Drawing.Size(310, 47);
+            this.FileReaderBox.Size = new System.Drawing.Size(310, 53);
             this.FileReaderBox.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.FileReaderBox.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.FileReaderBox.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -927,9 +995,8 @@
             // OpenFile
             // 
             this.OpenFile.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.OpenFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.OpenFile.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.OpenFile.Location = new System.Drawing.Point(242, 21);
+            this.OpenFile.Location = new System.Drawing.Point(243, 27);
             this.OpenFile.Name = "OpenFile";
             this.OpenFile.Size = new System.Drawing.Size(54, 23);
             this.OpenFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -939,8 +1006,6 @@
             // 
             // OpenFilePath
             // 
-            this.OpenFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.OpenFilePath.BackColor = System.Drawing.Color.White;
             // 
             // 
@@ -948,9 +1013,9 @@
             this.OpenFilePath.Border.Class = "TextBoxBorder";
             this.OpenFilePath.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.OpenFilePath.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.OpenFilePath.Location = new System.Drawing.Point(12, 22);
+            this.OpenFilePath.Location = new System.Drawing.Point(12, 28);
             this.OpenFilePath.Name = "OpenFilePath";
-            this.OpenFilePath.Size = new System.Drawing.Size(230, 21);
+            this.OpenFilePath.Size = new System.Drawing.Size(225, 21);
             this.OpenFilePath.TabIndex = 16;
             this.OpenFilePath.TextChanged += new System.EventHandler(this.OpenFilePath_TextChanged);
             // 
@@ -1046,16 +1111,45 @@
             this.label6.TabIndex = 26;
             this.label6.Text = "文件设置";
             // 
+            // panelEx9
+            // 
+            this.panelEx9.AutoSize = true;
+            this.panelEx9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelEx9.CanvasColor = System.Drawing.SystemColors.Control;
+            this.panelEx9.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx9.Controls.Add(this.Accept);
+            this.panelEx9.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEx9.Location = new System.Drawing.Point(0, 941);
+            this.panelEx9.Name = "panelEx9";
+            this.panelEx9.Size = new System.Drawing.Size(310, 32);
+            this.panelEx9.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelEx9.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
+            this.panelEx9.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.panelEx9.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
+            this.panelEx9.Style.GradientAngle = 90;
+            this.panelEx9.TabIndex = 35;
+            // 
+            // Accept
+            // 
+            this.Accept.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.Accept.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.Accept.Enabled = false;
+            this.Accept.Location = new System.Drawing.Point(205, 6);
+            this.Accept.Name = "Accept";
+            this.Accept.Size = new System.Drawing.Size(75, 23);
+            this.Accept.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.Accept.TabIndex = 16;
+            this.Accept.Text = "确定";
+            // 
             // LayerReader
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
             this.Controls.Add(this.panelEx2);
             this.Name = "LayerReader";
-            this.Size = new System.Drawing.Size(310, 549);
+            this.Size = new System.Drawing.Size(310, 973);
             this.panelEx2.ResumeLayout(false);
             this.panelEx2.PerformLayout();
-            this.panelEx9.ResumeLayout(false);
             this.panelEx5.ResumeLayout(false);
             this.panelEx5.PerformLayout();
             this.SaveFileBox.ResumeLayout(false);
@@ -1065,6 +1159,8 @@
             this.panelEx11.PerformLayout();
             this.panelEx3.ResumeLayout(false);
             this.panelEx3.PerformLayout();
+            this.PreviewBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DisplayImagePanel)).EndInit();
             this.panelEx1.ResumeLayout(false);
             this.TransparentBox.ResumeLayout(false);
             this.panelEx7.ResumeLayout(false);
@@ -1083,6 +1179,7 @@
             this.panelEx15.PerformLayout();
             this.panelEx6.ResumeLayout(false);
             this.panelEx6.PerformLayout();
+            this.panelEx9.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1151,10 +1248,17 @@
         private DevComponents.DotNetBar.PanelEx panelEx6;
         private CCWin.SkinControl.SkinLine skinLine7;
         private System.Windows.Forms.Label label6;
-        private DevComponents.DotNetBar.ButtonX Accept;
         private DevComponents.DotNetBar.PanelEx panelEx1;
         private DevComponents.DotNetBar.Controls.CheckBoxX SettingDefaultMap;
-        private DevComponents.DotNetBar.ButtonX buttonX1;
+        private DevComponents.DotNetBar.ButtonX Preview;
+        private DevComponents.DotNetBar.PanelEx PreviewBox;
+        private System.Windows.Forms.PictureBox DisplayImagePanel;
+        private DevComponents.DotNetBar.LabelX labelX5;
+        private DevComponents.DotNetBar.LabelX labelX2;
+        private DevComponents.DotNetBar.Controls.TextBoxX textBoxX2;
+        private DevComponents.DotNetBar.LabelX labelX1;
+        private DevComponents.DotNetBar.Controls.TextBoxX textBoxX1;
         private DevComponents.DotNetBar.PanelEx panelEx9;
+        private DevComponents.DotNetBar.ButtonX Accept;
     }
 }

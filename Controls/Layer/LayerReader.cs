@@ -139,6 +139,8 @@ namespace VPS.Controls.Layer
 
                     }
                     DefaultSavePath_Click(null, null);
+                    bitmap = null;
+                    ShowGeoBitmapHandle?.Invoke();
                 }
             }
         }
@@ -335,6 +337,76 @@ namespace VPS.Controls.Layer
         private void ColorPickerButton_SelectedColorChanged(object sender, EventArgs e)
         {
             TransparentDisplay.BackColor = this.ColorPickerButton.SelectedColor;
+            ShowGeoBitmapHandle?.Invoke();
+        }
+
+        private void SettingDefaultMap_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private delegate void delegateHandle();
+        private delegateHandle ShowGeoBitmapHandle;
+
+        Bitmap bitmap = null;
+        private void ShowGeoBitmap()
+        {
+            if(bitmap == null)
+            {
+                bitmap = CreateBitMap();
+                if (bitmap == null)
+                {
+                    PreviewBox.Visible = false;
+                    return;
+                }
+            }
+            PreviewBox.Visible = true;
+            Image img = Image.FromHbitmap(bitmap.GetHbitmap());
+            DisplayImagePanel.BackgroundImage = img;
+
+        }
+
+        Bitmap CreateBitMap()
+        {
+            if (!File.Exists(OpenFilePath.Text))
+                return null;
+            try
+            {
+                var info = GDAL.GDAL.LoadImageInfo(OpenFilePath.Text);
+                if (UsingTransparent.Checked)
+                    info.smallBitmap.MakeTransparent(ColorPickerButton.SelectedColor);
+                else
+                    info.smallBitmap.MakeTransparent();
+                return info.smallBitmap;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        bool isShowPreview = false;
+        bool IsShowPreview
+        {
+            get { return isShowPreview; }
+            set
+            {
+                isShowPreview = value;
+                if (isShowPreview)
+                {
+                    ShowGeoBitmapHandle -= ShowGeoBitmap;
+                    ShowGeoBitmapHandle += ShowGeoBitmap;
+                    ShowGeoBitmapHandle?.Invoke();
+                }
+                else
+                {
+                    ShowGeoBitmapHandle -= ShowGeoBitmap;
+                    PreviewBox.Visible = false;
+                }
+            }
+        }
+        private void Preview_Click(object sender, EventArgs e)
+        {
+            IsShowPreview = !IsShowPreview;
         }
     }
 }
