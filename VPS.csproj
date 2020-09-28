@@ -401,10 +401,10 @@
     <Compile Include="Controls\BoardLabel.Designer.cs">
       <DependentUpon>BoardLabel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Commands.cs">
+    <Compile Include="Controls\Command\Commands.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Commands.Designer.cs">
+    <Compile Include="Controls\Command\Commands.Designer.cs">
       <DependentUpon>Commands.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ConnectionOptions.cs">
@@ -805,7 +805,7 @@
     <EmbeddedResource Include="Controls\ComboDataList.resx">
       <DependentUpon>ComboDataList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Commands.resx">
+    <EmbeddedResource Include="Controls\Command\Commands.resx">
       <DependentUpon>Commands.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlSensorsStatus.resx">

@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace VPS.Controls
+namespace VPS.Controls.Command
 {
-    public partial class Commands : UserControl
+    public partial class CommandsPanel : UserControl
     {
-        public Commands()
+        public CommandsPanel()
         {
             InitializeComponent();
         }
