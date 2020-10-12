@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CommandsPanel));
             this.MainPanel = new DevComponents.DotNetBar.PanelEx();
             this.AutoWarnAlt = new DevComponents.DotNetBar.Controls.CheckBoxX();
@@ -126,6 +128,9 @@
             // 
             // 
             this.AutoWarnAlt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.AutoWarnAlt.Checked = true;
+            this.AutoWarnAlt.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AutoWarnAlt.CheckValue = "Y";
             this.AutoWarnAlt.Location = new System.Drawing.Point(21, 188);
             this.AutoWarnAlt.Name = "AutoWarnAlt";
             this.AutoWarnAlt.Size = new System.Drawing.Size(113, 18);
@@ -149,6 +154,7 @@
             // 
             // BaseAlt
             // 
+            this.BaseAlt.AllowEmptyState = false;
             // 
             // 
             // 
@@ -166,6 +172,7 @@
             // 
             // HomeLng
             // 
+            this.HomeLng.AllowEmptyState = false;
             this.HomeLng.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
@@ -173,8 +180,11 @@
             this.HomeLng.BackgroundStyle.Class = "DateTimeInputBackground";
             this.HomeLng.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.HomeLng.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.HomeLng.DisplayFormat = "0.######";
             this.HomeLng.Increment = 1D;
             this.HomeLng.Location = new System.Drawing.Point(1201, 217);
+            this.HomeLng.MaxValue = 400D;
+            this.HomeLng.MinValue = -400D;
             this.HomeLng.Name = "HomeLng";
             this.HomeLng.ShowUpDown = true;
             this.HomeLng.Size = new System.Drawing.Size(80, 21);
@@ -183,6 +193,7 @@
             // 
             // HomeAlt
             // 
+            this.HomeAlt.AllowEmptyState = false;
             this.HomeAlt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
@@ -190,8 +201,11 @@
             this.HomeAlt.BackgroundStyle.Class = "DateTimeInputBackground";
             this.HomeAlt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.HomeAlt.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.HomeAlt.DisplayFormat = "0.######";
             this.HomeAlt.Increment = 1D;
             this.HomeAlt.Location = new System.Drawing.Point(1201, 244);
+            this.HomeAlt.MaxValue = 100000000D;
+            this.HomeAlt.MinValue = -100000000D;
             this.HomeAlt.Name = "HomeAlt";
             this.HomeAlt.ShowUpDown = true;
             this.HomeAlt.Size = new System.Drawing.Size(80, 21);
@@ -200,6 +214,7 @@
             // 
             // HomeLat
             // 
+            this.HomeLat.AllowEmptyState = false;
             this.HomeLat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
@@ -207,8 +222,11 @@
             this.HomeLat.BackgroundStyle.Class = "DateTimeInputBackground";
             this.HomeLat.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.HomeLat.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.HomeLat.DisplayFormat = "0.######";
             this.HomeLat.Increment = 1D;
             this.HomeLat.Location = new System.Drawing.Point(1201, 190);
+            this.HomeLat.MaxValue = 200D;
+            this.HomeLat.MinValue = -200D;
             this.HomeLat.Name = "HomeLat";
             this.HomeLat.ShowUpDown = true;
             this.HomeLat.Size = new System.Drawing.Size(80, 21);
@@ -301,6 +319,7 @@
             // 
             // WpRad
             // 
+            this.WpRad.AllowEmptyState = false;
             this.WpRad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
@@ -315,6 +334,7 @@
             this.WpRad.ShowUpDown = true;
             this.WpRad.Size = new System.Drawing.Size(80, 21);
             this.WpRad.TabIndex = 8;
+            this.WpRad.Value = 20;
             this.WpRad.ValueChanged += new System.EventHandler(this.WpRad_ValueChanged);
             // 
             // labelX4
@@ -346,6 +366,7 @@
             // 
             // WarnAlt
             // 
+            this.WarnAlt.AllowEmptyState = false;
             // 
             // 
             // 
@@ -363,6 +384,7 @@
             // 
             // DefaultAlt
             // 
+            this.DefaultAlt.AllowEmptyState = false;
             // 
             // 
             // 
@@ -376,6 +398,7 @@
             this.DefaultAlt.ShowUpDown = true;
             this.DefaultAlt.Size = new System.Drawing.Size(80, 21);
             this.DefaultAlt.TabIndex = 4;
+            this.DefaultAlt.Value = 200;
             this.DefaultAlt.ValueChanged += new System.EventHandler(this.DefaultAlt_ValueChanged);
             // 
             // labelX2
@@ -427,6 +450,14 @@
             this.CommandDataList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.CommandDataList.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CommandDataList.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedVertical;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.CommandDataList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.CommandDataList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CommandDataList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Command,
@@ -447,19 +478,28 @@
             this.Down,
             this.Delete,
             this.Frame});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.CommandDataList.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.CommandDataList.DefaultCellStyle = dataGridViewCellStyle3;
             this.CommandDataList.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.CommandDataList.EnableHeadersVisualStyles = false;
             this.CommandDataList.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.CommandDataList.HighlightSelectedColumnHeaders = false;
             this.CommandDataList.Location = new System.Drawing.Point(156, 3);
             this.CommandDataList.Name = "CommandDataList";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.CommandDataList.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.CommandDataList.RowTemplate.Height = 23;
             this.CommandDataList.Size = new System.Drawing.Size(985, 272);
             this.CommandDataList.TabIndex = 0;

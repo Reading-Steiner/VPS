@@ -21,6 +21,7 @@ namespace VPS.Controls.Command
             StartEdit();
             InitializeComponent();
             InitAltFrame();
+            InitCoordSystem();
 
             instance = this;
             EndEdit();
@@ -28,18 +29,20 @@ namespace VPS.Controls.Command
 
         private void InitAltFrame()
         {
-            AltFrame.Items.Add(AltFrames.Relative);
-            AltFrame.Items.Add(AltFrames.Absolute);
-            AltFrame.Items.Add(AltFrames.Terrain);
-            AltFrame.SelectedIndex = 0;
+            AltFrame.DisplayMember = "Value";
+            AltFrame.ValueMember = "Key";
+            AltFrame.DataSource = Utilities.EnumTranslator.EnumToList<AltFrames>();
+
+            AltFrame.SelectedItem = AltFrames.Relative;
         }
 
         private void InitCoordSystem()
         {
-            CoordSystem.Items.Add(CoordSystems.WGS84);
-            CoordSystem.Items.Add(CoordSystems.UTM);
-            CoordSystem.Items.Add(CoordSystems.MGRS);
-            CoordSystem.SelectedIndex = 0;
+            CoordSystem.DisplayMember = "Value";
+            CoordSystem.ValueMember = "Key";
+            CoordSystem.DataSource = Utilities.EnumTranslator.EnumToList<CoordSystems>();
+
+            CoordSystem.SelectedItem = CoordSystems.WGS84;
         }
 
         private bool isEdit = false;
