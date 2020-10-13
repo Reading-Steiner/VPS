@@ -14,7 +14,7 @@ namespace VPS.Controls.Command
 {
     public partial class CommandsPanel : UserControl
     {
-        public CommandsPanel instance = null;
+        public static CommandsPanel instance = null;
 
         public CommandsPanel()
         {
@@ -22,7 +22,7 @@ namespace VPS.Controls.Command
             InitializeComponent();
             InitAltFrame();
             InitCoordSystem();
-
+            InitParam();
             instance = this;
             EndEdit();
         }
@@ -44,6 +44,77 @@ namespace VPS.Controls.Command
 
             CoordSystem.SelectedItem = CoordSystems.WGS84;
         }
+
+        private void InitParam()
+        {
+            if (Utilities.Settings.Instance.ContainsKey("Commands_WpRad") && Utilities.Settings.Instance["Commands_WpRad"] != null)
+            {
+                if (int.TryParse(Utilities.Settings.Instance["Commands_WpRad"], out int wpRad))
+                    WpRad.Value = wpRad;
+            }
+            if (Utilities.Settings.Instance.ContainsKey("Commands_DefaultAlt") && Utilities.Settings.Instance["Commands_DefaultAlt"] != null)
+            {
+                if (int.TryParse(Utilities.Settings.Instance["Commands_DefaultAlt"], out int defaultAlt))
+                    DefaultAlt.Value = defaultAlt;
+            }
+            if (Utilities.Settings.Instance.ContainsKey("Commands_WarnAlt") && Utilities.Settings.Instance["Commands_WarnAlt"] != null)
+            {
+                if (int.TryParse(Utilities.Settings.Instance["Commands_WarnAlt"], out int warnAlt))
+                    WarnAlt.Value = warnAlt;
+            }
+            if (Utilities.Settings.Instance.ContainsKey("Commands_BaseAlt") && Utilities.Settings.Instance["Commands_BaseAlt"] != null)
+            {
+                if (int.TryParse(Utilities.Settings.Instance["Commands_BaseAlt"], out int baseAlt))
+                    BaseAlt.Value = baseAlt;
+            }
+            if (Utilities.Settings.Instance.ContainsKey("Commands_IsAutoWarn") && Utilities.Settings.Instance["Commands_IsAutoWarn"] != null)
+            {
+                if (bool.TryParse(Utilities.Settings.Instance["Commands_IsAutoWarn"], out bool isAutoWarn))
+                    AutoWarnAlt.Checked = isAutoWarn;
+            }
+            if (Utilities.Settings.Instance.ContainsKey("Commands_AltFrame") && Utilities.Settings.Instance["Commands_AltFrame"] != null)
+            {
+                AltFrame.Text = Utilities.Settings.Instance["Commands_AltFrame"];
+            }
+            if (Utilities.Settings.Instance.ContainsKey("Commands_CoordSystem") && Utilities.Settings.Instance["Commands_CoordSystem"] != null)
+            {
+                CoordSystem.Text = Utilities.Settings.Instance["Commands_CoordSystem"];
+            }
+            if (Utilities.Settings.Instance.ContainsKey("Main_HomeLat") && Utilities.Settings.Instance["Main_HomeLat"] != null)
+            {
+                if (double.TryParse(Utilities.Settings.Instance["Main_HomeLat"], out double lat))
+                    HomeLat.Value = lat;
+            }
+            if (Utilities.Settings.Instance.ContainsKey("Main_HomeLng") && Utilities.Settings.Instance["Main_HomeLng"] != null)
+            {
+                if (double.TryParse(Utilities.Settings.Instance["Main_HomeLng"], out double lng))
+                    HomeLng.Value = lng;
+            }
+            if (Utilities.Settings.Instance.ContainsKey("Main_HomeAlt") && Utilities.Settings.Instance["Main_HomeAlt"] != null)
+            {
+                if (double.TryParse(Utilities.Settings.Instance["Main_HomeAlt"], out double alt))
+                    HomeAlt.Value = alt;
+            }
+        }
+
+        void SaveParam()
+        {
+            Utilities.Settings.Instance["Commands_WpRad"] = WpRad.Value.ToString();
+            Utilities.Settings.Instance["Commands_DefaultAlt"] = DefaultAlt.Value.ToString();
+            Utilities.Settings.Instance["Commands_WarnAlt"] = WarnAlt.Value.ToString();
+            Utilities.Settings.Instance["Commands_BaseAlt"] = BaseAlt.Value.ToString();
+            Utilities.Settings.Instance["Commands_IsAutoWarn"] = AutoWarnAlt.Checked.ToString();
+            Utilities.Settings.Instance["Commands_AltFrame"] = AltFrame.Text;
+            Utilities.Settings.Instance["Commands_CoordSystem"] = CoordSystem.Text;
+
+        }
+
+
+        private void CommandsPanel_Leave(object sender, EventArgs e)
+        {
+            SaveParam();
+        }
+
 
         private bool isEdit = false;
         private void StartEdit()
@@ -121,7 +192,7 @@ namespace VPS.Controls.Command
             WarnAltChange?.Invoke(warnAlt);
         }
 
-        private bool isAutoWarn = false;
+        private bool isAutoWarn = true;
         private void AutoWarnAlt_CheckedChanged(object sender, EventArgs e)
         {
             isAutoWarn = AutoWarnAlt.Checked;
@@ -203,7 +274,7 @@ namespace VPS.Controls.Command
             WPRadChange?.Invoke(wpRad);
         }
 
-        private Utilities.PointLatLngAlt homePosition;
+        private Utilities.PointLatLngAlt homePosition = new Utilities.PointLatLngAlt();
         public DataChangeHandle HomeChange;
         private void HomeLat_ValueChanged(object sender, EventArgs e)
         {
@@ -263,7 +334,7 @@ namespace VPS.Controls.Command
             CommandDataList[Command.Index, index].Value = wp.Tag;
             switch (wp.Tag)
             {
-                case "WayPoint":
+                case "WAYPOINT":
                     {
                         CommandDataList[Lat.Index, index].Value = wp.Lat;
                         CommandDataList[Lon.Index, index].Value = wp.Lng;
@@ -393,7 +464,8 @@ namespace VPS.Controls.Command
             }
         }
 
-        public DataChangeHandle WPListChange;
+        public delegate void WPListChangeHandle(List<Utilities.PointLatLngAlt> wpList);
+        public WPListChangeHandle WPListChange;
 
         private List<Utilities.PointLatLngAlt> GetWPList()
         {

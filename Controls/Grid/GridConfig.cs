@@ -276,7 +276,7 @@ namespace VPS.Controls.Grid
 
             return griddata;
         }
-        public delegate void ListChangedEventArgs();
+        public delegate void ListChangedEventArgs(List<PointLatLngAlt> wpList);
         public ListChangedEventArgs WPListChangeHandle;
         List<PointLatLngAlt> list = new List<PointLatLngAlt>();
         List<PointLatLngAlt> grid = new List<PointLatLngAlt>();
@@ -434,7 +434,7 @@ namespace VPS.Controls.Grid
             if (wp.Count == 0)
             {
                 instance.grid.Clear();
-                instance.WPListChangeHandle?.Invoke();
+                instance.WPListChangeHandle?.Invoke(instance.grid);
                 return;
             }
 
@@ -454,7 +454,7 @@ namespace VPS.Controls.Grid
             if (wp.Count == 0)
             {
                 instance.grid.Clear();
-                instance.WPListChangeHandle?.Invoke();
+                instance.WPListChangeHandle?.Invoke(instance.grid);
                 return;
             }
 
@@ -481,7 +481,7 @@ namespace VPS.Controls.Grid
 
 
             }
-            instance.WPListChangeHandle?.Invoke();
+            instance.WPListChangeHandle?.Invoke(instance.grid);
         }
 
         private delegate object ReadControlInMainThreadHandle(Control control);

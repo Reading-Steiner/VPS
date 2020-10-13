@@ -75,6 +75,7 @@ namespace VPS.GCSViews
 
         static public Object thisLock = new Object();
         public bool quickadd;
+        public bool isSendChange = false;
         internal string wpfilename;
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private static Propagation prop;
@@ -924,12 +925,16 @@ namespace VPS.GCSViews
                         InsertCommand(pnt2 - 1, MAVLink.MAV_CMD.WAYPOINT, 0, 0, 0, 0,
                             CurrentMidLine.Position.Lng,
                             CurrentMidLine.Position.Lat, float.Parse(TXT_DefaultAlt.Text));
+
                     }
                 }
             }
 
             CurrentMidLine = null;
+
+            isSendChange = true;
             writeKML();
+            isSendChange = false;
             return;
         }
 
@@ -958,6 +963,10 @@ namespace VPS.GCSViews
                 //creating a WP
 
                 AddWPPoint(lat, lng, alt);
+
+                isSendChange = true;
+                writeKML();
+                isSendChange = false;
             }
         }
 
@@ -1108,10 +1117,7 @@ namespace VPS.GCSViews
             if (pointno == "H")
             {
                 // auto update home alt
-                TXT_homealt.Text = (srtm.getAltitude(lat, lng).alt * CurrentState.multiplieralt).ToString();
-
-                TXT_homelat.Text = lat.ToString();
-                TXT_homelng.Text = lng.ToString();
+                ChangeHome(new PointLatLngAlt(lat, lng, srtm.getAltitude(lat, lng).alt * CurrentState.multiplieralt));
                 return;
             }
 
@@ -1496,7 +1502,19 @@ namespace VPS.GCSViews
                         string homealt = "100";
                         if (DialogResult.Cancel == InputBox.Show("Home高度信息", "Home高度", ref homealt))
                             return;
-                        TXT_homealt.Text = homealt;
+                        if(double.TryParse(homealt, out double homeAlt)){
+                            ChangeHome(new PointLatLngAlt(
+                                double.Parse(TXT_homelat.Text), 
+                                double.Parse(TXT_homelng.Text), 
+                                homeAlt));
+                        }
+                        else
+                        {
+                            ChangeHome(new PointLatLngAlt(
+                                double.Parse(TXT_homelat.Text),
+                                double.Parse(TXT_homelng.Text),
+                                double.Parse(TXT_DefaultAlt.Text)));
+                        }
                     }
                     int results1;
                     if (!int.TryParse(TXT_DefaultAlt.Text, out results1))
@@ -1942,6 +1960,11 @@ namespace VPS.GCSViews
             {
                 DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidNumberEntered + "\n" + ex.Message, Strings.ERROR);
             }
+            finally
+            {
+                if (isSendChange)
+                    WPListChange?.Invoke(GetWPList());
+            }
         }
 
         internal IList<Locationwp> GetFlightPlanLocations()
@@ -1949,16 +1972,6 @@ namespace VPS.GCSViews
             return GetCommandList().AsReadOnly();
         }
 
-        private void AddDigicamControlPhoto()
-        {
-            selectedrow = Commands.Rows.Add();
-
-            Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.DO_DIGICAM_CONTROL.ToString();
-
-            ChangeColumnHeader(MAVLink.MAV_CMD.DO_DIGICAM_CONTROL.ToString());
-
-            writeKML();
-        }
 
         private void addpolygonmarker(string tag, double lng, double lat, int alt, Color? color, GMapOverlay overlay)
         {
@@ -2116,6 +2129,8 @@ namespace VPS.GCSViews
             double alt = double.Parse(Commands.Rows[index].Cells[Alt.Index].Value.ToString());
             //string tag = (string)Commands.Rows[index].Cells[TagData.Index].Value;
             wp = new PointLatLngAlt(lat, lng, alt);
+            wp.Tag = Commands.Rows[index].Cells[Command.Index].Value.ToString();
+            wp.Tag2 = Commands.Rows[index].Cells[Frame.Index].Value.ToString();
         }
 
         public void DeleteWPPoint(int index)
@@ -2135,6 +2150,7 @@ namespace VPS.GCSViews
             Commands.Rows.RemoveAt(index);
 
             quickadd = false;
+            
             writeKML();
         }
         public void SetWPPoint(double lat, double lng, int alt, int index)
@@ -2164,8 +2180,11 @@ namespace VPS.GCSViews
             }
 
             setfromMap(lat, lng, alt);
+
         }
 
+        public delegate void WPListChangeHandle(List<PointLatLngAlt> wpList);
+        public WPListChangeHandle WPListChange;
         private void AddWPToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!IsDrawPolygongridMode)
@@ -2175,6 +2194,7 @@ namespace VPS.GCSViews
                 return;
             }
             int.TryParse(TXT_DefaultAlt.Text, out int alt);
+
             AddWPPoint(MouseDownStart.Lng, MouseDownStart.Lat, alt);
         }
 
@@ -2523,7 +2543,10 @@ namespace VPS.GCSViews
 
             selectedrow = 0;
             quickadd = false;
+
+            isSendChange = true;
             writeKML();
+            isSendChange = false;
         }
 
         public void ClearPloygon()
@@ -2540,7 +2563,7 @@ namespace VPS.GCSViews
             drawnpolygonsoverlay.Markers.Clear();
             MainMap.Invalidate();
 
-            writeKML();
+            redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
         }
 
         public void clearRallyPointsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3287,199 +3310,6 @@ namespace VPS.GCSViews
             }
         }
 
-        public void createCircleSurveyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Utilities.CircleSurveyMission.createGrid(MouseDownEnd);
-        }
-
-        public void createSplineCircleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string RadiusIn = "50";
-            if (DialogResult.Cancel == InputBox.Show("Radius", "Radius", ref RadiusIn))
-                return;
-
-            string minaltin = "5";
-            if (DialogResult.Cancel == InputBox.Show("min alt", "Min Alt", ref minaltin))
-                return;
-
-            string maxaltin = "20";
-            if (DialogResult.Cancel == InputBox.Show("max alt", "Max Alt", ref maxaltin))
-                return;
-
-            string altstepin = "5";
-            if (DialogResult.Cancel == InputBox.Show("alt step", "alt step", ref altstepin))
-                return;
-
-
-            string startanglein = "0";
-            if (DialogResult.Cancel == InputBox.Show("angle", "Angle of first point (whole degrees)", ref startanglein))
-                return;
-
-            int Points = 4;
-            int Radius = 0;
-            int startangle = 0;
-            int minalt = 5;
-            int maxalt = 20;
-            int altstep = 5;
-            if (!int.TryParse(RadiusIn, out Radius))
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Bad Radius");
-                return;
-            }
-
-            if (!int.TryParse(minaltin, out minalt))
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Bad min alt");
-                return;
-            }
-            if (!int.TryParse(maxaltin, out maxalt))
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Bad maxalt");
-                return;
-            }
-            if (!int.TryParse(altstepin, out altstep))
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Bad alt step");
-                return;
-            }
-
-            double a = startangle;
-            double step = 360.0f / Points;
-
-            quickadd = true;
-
-            AddCommand(MAVLink.MAV_CMD.DO_SET_ROI, 0, 0, 0, 0, MouseDownStart.Lng, MouseDownStart.Lat, 0);
-
-            bool startup = true;
-
-            for (int stepalt = minalt; stepalt <= maxalt;)
-            {
-                for (a = 0; a <= (startangle + 360) && a >= 0; a += step)
-                {
-                    selectedrow = Commands.Rows.Add();
-
-                    Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString();
-
-                    ChangeColumnHeader(MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString());
-
-                    float d = Radius;
-                    float R = 6371000;
-
-                    var lat2 = Math.Asin(Math.Sin(MouseDownEnd.Lat * MathHelper.deg2rad) * Math.Cos(d / R) +
-                                         Math.Cos(MouseDownEnd.Lat * MathHelper.deg2rad) * Math.Sin(d / R) * Math.Cos(a * MathHelper.deg2rad));
-                    var lon2 = MouseDownEnd.Lng * MathHelper.deg2rad +
-                               Math.Atan2(Math.Sin(a * MathHelper.deg2rad) * Math.Sin(d / R) * Math.Cos(MouseDownEnd.Lat * MathHelper.deg2rad),
-                                   Math.Cos(d / R) - Math.Sin(MouseDownEnd.Lat * MathHelper.deg2rad) * Math.Sin(lat2));
-
-                    PointLatLng pll = new PointLatLng(lat2 * MathHelper.rad2deg, lon2 * MathHelper.rad2deg);
-
-                    setfromMap(pll.Lat, pll.Lng, stepalt);
-
-                    if (!startup)
-                        stepalt += altstep / Points;
-                }
-
-                // reset back to the start
-                if (startup)
-                    stepalt = minalt;
-
-                // we have finsihed the first run
-                startup = false;
-            }
-
-            quickadd = false;
-            writeKML();
-        }
-
-        public void createWpCircleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string RadiusIn = "50";
-            if (DialogResult.Cancel == InputBox.Show("Radius", "Radius", ref RadiusIn))
-                return;
-
-            string Pointsin = "20";
-            if (DialogResult.Cancel == InputBox.Show("Points", "Number of points to generate Circle", ref Pointsin))
-                return;
-
-            string Directionin = "1";
-            if (DialogResult.Cancel == InputBox.Show("Points", "Direction of circle (-1 or 1)", ref Directionin))
-                return;
-
-            string startanglein = "0";
-            if (DialogResult.Cancel == InputBox.Show("angle", "Angle of first point (whole degrees)", ref startanglein))
-                return;
-
-            int Points = 0;
-            int Radius = 0;
-            int Direction = 1;
-            int startangle = 0;
-
-            if (!int.TryParse(RadiusIn, out Radius))
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Bad Radius");
-                return;
-            }
-
-            Radius = (int)(Radius / CurrentState.multiplierdist);
-
-            if (!int.TryParse(Pointsin, out Points))
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Bad Point value");
-                return;
-            }
-
-            if (!int.TryParse(Directionin, out Direction))
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Bad Direction value");
-                return;
-            }
-
-            if (!int.TryParse(startanglein, out startangle))
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Bad start angle value");
-                return;
-            }
-
-            double a = startangle;
-            double step = 360.0f / Points;
-            if (Direction == -1)
-            {
-                a += 360;
-                step *= -1;
-            }
-
-            quickadd = true;
-
-            for (; a <= (startangle + 360) && a >= 0; a += step)
-            {
-                selectedrow = Commands.Rows.Add();
-
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.WAYPOINT.ToString();
-
-                ChangeColumnHeader(MAVLink.MAV_CMD.WAYPOINT.ToString());
-
-                float d = Radius;
-                float R = 6371000;
-
-                var lat2 = Math.Asin(Math.Sin(MouseDownEnd.Lat * MathHelper.deg2rad) * Math.Cos(d / R) +
-                                     Math.Cos(MouseDownEnd.Lat * MathHelper.deg2rad) * Math.Sin(d / R) * Math.Cos(a * MathHelper.deg2rad));
-                var lon2 = MouseDownEnd.Lng * MathHelper.deg2rad +
-                           Math.Atan2(Math.Sin(a * MathHelper.deg2rad) * Math.Sin(d / R) * Math.Cos(MouseDownEnd.Lat * MathHelper.deg2rad),
-                               Math.Cos(d / R) - Math.Sin(MouseDownEnd.Lat * MathHelper.deg2rad) * Math.Sin(lat2));
-
-                PointLatLng pll = new PointLatLng(lat2 * MathHelper.rad2deg, lon2 * MathHelper.rad2deg);
-
-                setfromMap(pll.Lat, pll.Lng, (int)float.Parse(TXT_DefaultAlt.Text));
-            }
-
-            quickadd = false;
-            writeKML();
-        }
-
-        public void currentPositionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AddWPToMap(MainV2.comPort.MAV.cs.lat, MainV2.comPort.MAV.cs.lng, (int)MainV2.comPort.MAV.cs.alt);
-        }
 
         private Locationwp DataViewtoLocationwp(int a)
         {
@@ -3543,7 +3373,7 @@ namespace VPS.GCSViews
             }
             if (currentMarker != null)
                 CurentRectMarker = null;
-            writeKML();
+            redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
         }
 
         public void DeleteWPToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3552,26 +3382,16 @@ namespace VPS.GCSViews
             {
                 if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString(), out int no))
                 {
-                    try
-                    {
-                        if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue ==
-                            MAVLink.MAV_MISSION_TYPE.FENCE)
-                            ReCalcFence(no - 1, false, true);
-
-                        Commands.Rows.RemoveAt(no - 1); // home is 0
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                        //CustomMessageBox.Show("error selecting wp, please try again.");
-                    }
+                    DeleteWPPoint(no);
                 }
             }
 
             if (currentMarker != null)
                 CurentRectMarker = null;
 
+            isSendChange = true;
             writeKML();
+            isSendChange = false;
         }
 
         public void DeleteCurrentWP()
@@ -3702,7 +3522,9 @@ namespace VPS.GCSViews
             if (currentMarker != null)
                 CurentRectMarker = null;
 
+            isSendChange = true;
             writeKML();
+            isSendChange = false;
         }
 
         private void Dxf_newLine(dxf sender, netDxf.Entities.Line line)
@@ -3767,61 +3589,6 @@ namespace VPS.GCSViews
             kmlpolygonsoverlay.Routes.Add(route);
         }
 
-        public void elevationGraphToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            writeKML();
-            double homealt = MainV2.comPort.MAV.cs.HomeAlt;
-            Form temp = new ElevationProfile(pointlist, homealt, (altmode)Enum.Parse(typeof(altmode), CMB_altmode.Text));
-            ThemeManager.ApplyThemeTo(temp);
-            temp.ShowDialog();
-        }
-
-        public void enterUTMCoordToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string easting = "578994";
-            string northing = "6126244";
-
-            if (InputBox.Show("Zone", "输入 Zone. (eg 50S, 11N)", ref zone) != DialogResult.OK)
-                return;
-            if (InputBox.Show("Easting", "Easting", ref easting) != DialogResult.OK)
-                return;
-            if (InputBox.Show("Northing", "Northing", ref northing) != DialogResult.OK)
-                return;
-
-            string newzone = zone.ToLower().Replace('s', ' ');
-            newzone = newzone.ToLower().Replace('n', ' ');
-
-            int zoneint = int.Parse(newzone);
-
-            UTM utm = new UTM(zoneint, double.Parse(easting), double.Parse(northing),
-                zone.ToLower().Contains("N") ? Geocentric.Hemisphere.North : Geocentric.Hemisphere.South);
-
-            PointLatLngAlt ans = ((Geographic)utm);
-
-            selectedrow = Commands.Rows.Add();
-
-            ChangeColumnHeader(MAVLink.MAV_CMD.WAYPOINT.ToString());
-
-            setfromMap(ans.Lat, ans.Lng, (int)ans.Alt);
-        }
-
-        public void FenceExclusionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            int count = 0;
-            drawnpolygon.Points.ForEach(a => AddCommand(MAVLink.MAV_CMD.FENCE_POLYGON_VERTEX_EXCLUSION,
-                drawnpolygon.Points.Count, 0, 0, 0, a.Lng, a.Lat, count++));
-
-            ClearPolygonToolStripMenuItem_Click(null, null);
-        }
-
-        public void FenceInclusionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            int count = 0;
-            drawnpolygon.Points.ForEach(a => AddCommand(MAVLink.MAV_CMD.FENCE_POLYGON_VERTEX_INCLUSION,
-                drawnpolygon.Points.Count, 0, 0, 0, a.Lng, a.Lat, count++));
-
-            ClearPolygonToolStripMenuItem_Click(null, null);
-        }
 
         private void FetchPath()
         {
@@ -4449,42 +4216,6 @@ namespace VPS.GCSViews
             }
         }
 
-        public void jumpstartToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string repeat = "5";
-            if (DialogResult.Cancel == InputBox.Show("Jump repeat", "Number of times to Repeat", ref repeat))
-                return;
-
-            selectedrow = Commands.Rows.Add();
-
-            Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.DO_JUMP.ToString();
-
-            Commands.Rows[selectedrow].Cells[Param1.Index].Value = 1;
-
-            Commands.Rows[selectedrow].Cells[Param2.Index].Value = repeat;
-
-            writeKML();
-        }
-
-        public void jumpwPToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string wp = "1";
-            if (DialogResult.Cancel == InputBox.Show("WP No", "Jump to WP no?", ref wp))
-                return;
-            string repeat = "5";
-            if (DialogResult.Cancel == InputBox.Show("Jump repeat", "Number of times to Repeat", ref repeat))
-                return;
-
-            selectedrow = Commands.Rows.Add();
-
-            Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.DO_JUMP.ToString();
-
-            Commands.Rows[selectedrow].Cells[Param1.Index].Value = wp;
-
-            Commands.Rows[selectedrow].Cells[Param2.Index].Value = repeat;
-
-            writeKML();
-        }
 
         private void TiffOverlayToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -4640,10 +4371,11 @@ namespace VPS.GCSViews
         {
             if (MainV2.comPort.MAV.cs.lat != 0)
             {
-                TXT_homealt.Text = (MainV2.comPort.MAV.cs.altasl).ToString("0");
-                TXT_homelat.Text = MainV2.comPort.MAV.cs.lat.ToString();
-                TXT_homelng.Text = MainV2.comPort.MAV.cs.lng.ToString();
-
+                ChangeHome(new PointLatLngAlt(
+                                MainV2.comPort.MAV.cs.lat,
+                                MainV2.comPort.MAV.cs.lng,
+                                MainV2.comPort.MAV.cs.altasl
+                                ));
                 writeKML();
 
                 zoomToHomeToolStripMenuItem_Click(null, null);
@@ -4653,21 +4385,6 @@ namespace VPS.GCSViews
                 DevComponents.DotNetBar.MessageBoxEx.Show(
                     "如果你在现场，连接你的APM并等待GPS锁定。然后单击“Home Location”链接将Home设置为您的位置");
             }
-        }
-
-        public void landToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            selectedrow = Commands.Rows.Add();
-
-            Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.LAND.ToString();
-
-            //Commands.Rows[selectedrow].Cells[Param1.Index].Value = time;
-
-            ChangeColumnHeader(MAVLink.MAV_CMD.LAND.ToString());
-
-            setfromMap(MouseDownEnd.Lat, MouseDownEnd.Lng, 1);
-
-            writeKML();
         }
 
         public void lnk_kml_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -5106,7 +4823,9 @@ namespace VPS.GCSViews
 
                 quickadd = false;
 
+                isSendChange = true;
                 writeKML();
+                isSendChange = false;
 
                 MainMap.ZoomAndCenterMarkers("WPOverlay");
             }
@@ -5139,56 +4858,8 @@ namespace VPS.GCSViews
             //BUT_loadwpfile_Click(null, null);
         }
 
-        public void loitercirclesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string turns = "3";
-            if (DialogResult.Cancel == InputBox.Show("Loiter Turns", "Loiter Turns", ref turns))
-                return;
 
-            selectedrow = Commands.Rows.Add();
 
-            Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.LOITER_TURNS.ToString();
-
-            Commands.Rows[selectedrow].Cells[Param1.Index].Value = turns;
-
-            ChangeColumnHeader(MAVLink.MAV_CMD.LOITER_TURNS.ToString());
-
-            setfromMap(MouseDownEnd.Lat, MouseDownEnd.Lng, (int)float.Parse(TXT_DefaultAlt.Text));
-
-            writeKML();
-        }
-
-        public void loiterForeverToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            selectedrow = Commands.Rows.Add();
-
-            Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.LOITER_UNLIM.ToString();
-
-            ChangeColumnHeader(MAVLink.MAV_CMD.LOITER_UNLIM.ToString());
-
-            setfromMap(MouseDownEnd.Lat, MouseDownEnd.Lng, (int)float.Parse(TXT_DefaultAlt.Text));
-
-            writeKML();
-        }
-
-        public void loitertimeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string time = "5";
-            if (DialogResult.Cancel == InputBox.Show("Loiter Time", "Loiter Time", ref time))
-                return;
-
-            selectedrow = Commands.Rows.Add();
-
-            Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.LOITER_TIME.ToString();
-
-            Commands.Rows[selectedrow].Cells[Param1.Index].Value = time;
-
-            ChangeColumnHeader(MAVLink.MAV_CMD.LOITER_TIME.ToString());
-
-            setfromMap(MouseDownEnd.Lat, MouseDownEnd.Lng, (int)float.Parse(TXT_DefaultAlt.Text));
-
-            writeKML();
-        }
 
         public void MainMap_Paint(object sender, PaintEventArgs e)
         {
@@ -5702,12 +5373,11 @@ namespace VPS.GCSViews
 
                             //if (dr == (int)DialogResult.Yes)
                             //{
-                                TXT_homelat.Text = (double.Parse(cellhome.Value.ToString())).ToString();
-                                cellhome = Commands.Rows[0].Cells[Lon.Index] as DataGridViewTextBoxCell;
-                                TXT_homelng.Text = (double.Parse(cellhome.Value.ToString())).ToString();
-                                cellhome = Commands.Rows[0].Cells[Alt.Index] as DataGridViewTextBoxCell;
-                                TXT_homealt.Text =
-                                    (double.Parse(cellhome.Value.ToString()) * CurrentState.multiplieralt).ToString();
+                            ChangeHome(new PointLatLngAlt(
+                                double.Parse(Commands.Rows[0].Cells[Lat.Index].Value.ToString()),
+                                double.Parse(Commands.Rows[0].Cells[Lon.Index].Value.ToString()),
+                                double.Parse(Commands.Rows[0].Cells[Alt.Index].Value.ToString()) * CurrentState.multiplieralt
+                                ));
                             //}
                         }
                     }
@@ -5804,51 +5474,6 @@ namespace VPS.GCSViews
             return cmd;
         }
 
-        public void reverseWPsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DataGridViewRowCollection rows = Commands.Rows;
-            //Commands.Rows.Clear();
-
-            int count = rows.Count;
-
-            quickadd = true;
-
-            for (int a = count; a > 0; a--)
-            {
-                DataGridViewRow row = Commands.Rows[a - 1];
-                Commands.Rows.Remove(row);
-                Commands.Rows.Add(row);
-            }
-
-            quickadd = false;
-
-            writeKML();
-        }
-
-        public void rotateMapToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string heading = "0";
-            if (DialogResult.Cancel == InputBox.Show("Rotate map to heading", "Enter new UP heading", ref heading))
-                return;
-            float ans = 0;
-            if (float.TryParse(heading, out ans))
-            {
-                MainMap.Bearing = ans;
-            }
-        }
-
-        public void rTLToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            selectedrow = Commands.Rows.Add();
-
-            Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.RETURN_TO_LAUNCH.ToString();
-
-            //Commands.Rows[selectedrow].Cells[Param1.Index].Value = time;
-
-            ChangeColumnHeader(MAVLink.MAV_CMD.RETURN_TO_LAUNCH.ToString());
-
-            writeKML();
-        }
 
         private void SaveFile_Click(object sender, EventArgs e)
         {
@@ -6078,8 +5703,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                             processToScreen(cmds);
 
+                            isSendChange = true;
                             writeKML();
-
+                            isSendChange = false;
                             MainMap.ZoomAndCenterMarkers("WPOverlay");
                         }
                         else
@@ -6240,7 +5866,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                                     }
                                 }
                                 processToScreen(cmds, false);
+                                isSendChange = true;
                                 writeKML();
+                                isSendChange = false;
                             }
                         }
                     }
@@ -6263,8 +5891,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                 processToScreen(cmds, append);
 
+                isSendChange = true;
                 writeKML();
-
+                isSendChange = false;
                 MainMap.ZoomAndCenterMarkers("WPOverlay");
             }
             catch (Exception ex)
@@ -6306,7 +5935,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 }
                 processToScreen(cmds, append);
 
+                isSendChange = true;
                 writeKML();
+                isSendChange = false;
 
                 MainMap.ZoomAndCenterMarkers("WPOverlay");
             }
@@ -7285,12 +6916,16 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
-        public void setHomeHereToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ChangeHome(PointLatLngAlt position)
         {
-            TXT_homealt.Text = (srtm.getAltitude(MouseDownStart.Lat, MouseDownStart.Lng).alt * CurrentState.multiplieralt).ToString("0");
-            TXT_homelat.Text = MouseDownStart.Lat.ToString();
-            TXT_homelng.Text = MouseDownStart.Lng.ToString();
+            TXT_homealt.Text = position.Alt.ToString();
+            TXT_homelat.Text = position.Lat.ToString();
+            TXT_homelng.Text = position.Lng.ToString();
+            HomeChange?.Invoke(position);
         }
+
+        public delegate void HomeChangeHandle(PointLatLngAlt position);
+        public HomeChangeHandle HomeChange;
 
         public void setHomeHere(PointLatLngAlt position)
         {
@@ -7340,27 +6975,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             { ToolTipMode = MarkerTooltipMode.OnMouseOver, ToolTipText = "GeoFence Return" });
 
             MainMap.Invalidate();
-        }
-
-        public void setROIToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!cmdParamNames.ContainsKey("DO_SET_ROI"))
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.ErrorFeatureNotEnabled, Strings.ERROR);
-                return;
-            }
-
-            selectedrow = Commands.Rows.Add();
-
-            Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.DO_SET_ROI.ToString();
-
-            //Commands.Rows[selectedrow].Cells[Param1.Index].Value = time;
-
-            ChangeColumnHeader(MAVLink.MAV_CMD.DO_SET_ROI.ToString());
-
-            setfromMap(MouseDownEnd.Lat, MouseDownEnd.Lng, (int)float.Parse(TXT_DefaultAlt.Text));
-
-            writeKML();
         }
 
         private void setWPParams()
@@ -7483,49 +7097,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             ChangeColumnHeader(MAVLink.MAV_CMD.TAKEOFF.ToString());
 
             writeKML();
-        }
-
-        public void textToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string text = "";
-            InputBox.Show("Enter String", "Enter String (requires 1CamBam_Stick_3 font)", ref text);
-            string size = "5";
-            InputBox.Show("Enter size", "Enter size", ref size);
-
-            using (Font font = new System.Drawing.Font("1CamBam_Stick_3", float.Parse(size) * 1.35f, FontStyle.Regular))
-            using (GraphicsPath gp = new GraphicsPath())
-            using (StringFormat sf = new StringFormat())
-            {
-                sf.Alignment = StringAlignment.Near;
-                sf.LineAlignment = StringAlignment.Near;
-                gp.AddString(text, font.FontFamily, (int)font.Style, font.Size, new PointF(0, 0), sf);
-
-                utmpos basepos = new utmpos(MouseDownStart);
-
-                try
-                {
-
-                    foreach (var pathPoint in gp.PathPoints)
-                    {
-                        utmpos newpos = new utmpos(basepos);
-
-                        newpos.x += pathPoint.X;
-                        newpos.y += -pathPoint.Y;
-
-                        var newlla = newpos.ToLLA();
-                        quickadd = true;
-                        AddWPToMap(newlla.Lat, newlla.Lng, int.Parse(TXT_DefaultAlt.Text));
-
-                    }
-                }
-                catch (ArgumentException ex)
-                {
-                    DevComponents.DotNetBar.MessageBoxEx.Show("Bad input options, please try again\n" + ex.ToString(), Strings.ERROR);
-                }
-
-                quickadd = false;
-                writeKML();
-            }
         }
 
         /// <summary>
@@ -7785,22 +7356,18 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             // set home location
             if (MainV2.comPort.MAV.cs.HomeLocation.Lat != 0 && MainV2.comPort.MAV.cs.HomeLocation.Lng != 0)
             {
-                TXT_homelat.Text = MainV2.comPort.MAV.cs.HomeLocation.Lat.ToString();
-
-                TXT_homelng.Text = MainV2.comPort.MAV.cs.HomeLocation.Lng.ToString();
-
-                TXT_homealt.Text = MainV2.comPort.MAV.cs.HomeLocation.Alt.ToString();
-
+                ChangeHome(new PointLatLngAlt(
+                                MainV2.comPort.MAV.cs.HomeLocation.Lat,
+                                MainV2.comPort.MAV.cs.HomeLocation.Lng,
+                                MainV2.comPort.MAV.cs.HomeLocation.Alt));
                 writeKML();
             }
             else if (MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat != 0 && MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng != 0)
             {
-                TXT_homelat.Text = MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat.ToString();
-
-                TXT_homelng.Text = MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng.ToString();
-
-                TXT_homealt.Text = MainV2.comPort.MAV.cs.PlannedHomeLocation.Alt.ToString();
-
+                ChangeHome(new PointLatLngAlt(
+                                MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat,
+                                MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng,
+                                MainV2.comPort.MAV.cs.PlannedHomeLocation.Alt));
                 writeKML();
             }
         }
@@ -8334,7 +7901,11 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         log.Error(ex);
                     }
                 }
+
+                isSendChange = true;
                 writeKML();
+                isSendChange = false;
+
             }
         }
 
@@ -9379,11 +8950,108 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             double lat = MainV2.instance.defaultHome.Lat;
             double alt = MainV2.instance.defaultHome.Alt;
 
-            TXT_homealt.Text = alt.ToString();
-            TXT_homelat.Text = lat.ToString();
-            TXT_homelng.Text = lng.ToString();
+            ChangeHome(new PointLatLngAlt(lat, lng, alt));
 
             MainMap.SetZoomToFitRect(MainV2.instance.displayRect);
+        }
+
+        public void SetWPList(List<PointLatLngAlt> wpList)
+        {
+            int counter = 0;
+            int have = Commands.Rows.Count;
+            foreach (var wp in wpList)
+            {
+                if (counter < have)
+                    SetWPPoint(wp.Lat, wp.Lng, (int)wp.Alt, counter);
+                else
+                    AddWPPoint(wp.Lat, wp.Lng, (int)wp.Alt);
+                counter++;
+            }
+            while (counter < have)
+            {
+                DeleteWPPoint(counter);
+                have--;
+            }
+
+            isSendChange = true;
+            writeKML();
+            isSendChange = false;
+        }
+
+
+        public List<PointLatLngAlt> GetWPList()
+        {
+            List<PointLatLngAlt> wpList = new List<PointLatLngAlt>();
+            int count = Commands.Rows.Count;
+            for (int i = 0; i < count; i++)
+            {
+                GetWPPoint(i, out PointLatLngAlt wp);
+
+                wpList.Add(wp);
+            }
+            return wpList;
+        }
+
+        public void SetCoordSystem(string coord)
+        {
+            switch (coord.ToString())
+            {
+                case "WGS84":
+                    coords1.System = Coords.CoordsSystems.GEO.ToString();
+                    break;
+                case "UTM":
+                    coords1.System = Coords.CoordsSystems.UTM.ToString();
+                    break;
+                case "MGRS":
+                    coords1.System = Coords.CoordsSystems.MGRS.ToString();
+                    break;
+                default:
+                    coords1.System = Coords.CoordsSystems.GEO.ToString();
+                    break;
+            }
+        }
+
+        public void SetAltFrame(string frame)
+        {
+            switch (frame.ToString())
+            {
+                case "Relative":
+                    CMB_altmode.SelectedText = GCSViews.FlightPlanner.altmode.Relative.ToString();
+                    break;
+                case "Absolute":
+                    CMB_altmode.SelectedText = GCSViews.FlightPlanner.altmode.Absolute.ToString();
+                    break;
+                case "Terrain":
+                    CMB_altmode.SelectedText = GCSViews.FlightPlanner.altmode.Terrain.ToString();
+                    break;
+                default:
+                    CMB_altmode.SelectedText = GCSViews.FlightPlanner.altmode.Relative.ToString();
+                    break;
+            }
+        }
+
+        public void SetBaseAlt(object baseAlt)
+        {
+        }
+
+        public void SetDefaultAlt(int defaultAlt)
+        {
+            TXT_DefaultAlt.Text = defaultAlt.ToString();
+        }
+
+        public void SetWarnAlt(int warnAlt)
+        {
+            TXT_altwarn.Text = warnAlt.ToString();
+        }
+
+        public void SetWPRad(int wpRad)
+        {
+            TXT_WPRad.Text = wpRad.ToString();
+        }
+
+        public void SetHomePosition(PointLatLngAlt home)
+        {
+            setHomeHere(home);
         }
     }
 }

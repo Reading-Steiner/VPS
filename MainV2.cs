@@ -1034,6 +1034,17 @@ namespace VPS
         private void SetInitHandler()
         {
             OutDrawPolygonState();
+
+            VPS.Controls.Command.CommandsPanel.instance.WPListChange += WPListChange;
+            VPS.Controls.Command.CommandsPanel.instance.CoordSystemChange += CoordSystemChange;
+            VPS.Controls.Command.CommandsPanel.instance.WPRadChange += WPRadChange;
+            VPS.Controls.Command.CommandsPanel.instance.AltFrameChange += AltFrameChange;
+            VPS.Controls.Command.CommandsPanel.instance.BaseAltChange += BaseAltChange;
+            VPS.Controls.Command.CommandsPanel.instance.WarnAltChange += WarnAltChange;
+            VPS.Controls.Command.CommandsPanel.instance.HomeChange += HomeChange;
+            GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.Command.CommandsPanel.instance.SetHome;
+            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.SetWPList;
+
             FlightPlanner.ToDrawPolygonHandle += ToDrawPolygonState;
             FlightPlanner.OutDrawPolygonHandle += OutDrawPolygonState;
 
@@ -1108,7 +1119,7 @@ namespace VPS
         private void MenuZoomToLayer_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.zoomToTiffLayer();
-            GCSViews.FlightData.instance.zoomToTiffLayer();
+            //GCSViews.FlightData.instance.zoomToTiffLayer();
         }
 
 
@@ -1215,11 +1226,6 @@ namespace VPS
             GCSViews.FlightData.instance.ShowLayerOverlay(geoBitmap);
             GCSViews.FlightPlanner.instance.ShowLayerOverlay(geoBitmap);
 
-        }
-
-        private void SetHome(PointLatLngAlt position)
-        {
-            GCSViews.FlightPlanner.instance.setHomeHere(position);
         }
         #endregion
 
@@ -4273,7 +4279,7 @@ namespace VPS
         {
             var data = new GCSViews.ProjectData();
             GetPolygonList(out data.poly);
-            GetWPList(out data.wp);
+            data.wp = GCSViews.FlightPlanner.instance.GetWPList();
             data.layer = currentLayerPath;
             data.layerPosition = defaultOrigin;
             data.layerRect = displayRect;
@@ -4400,51 +4406,123 @@ namespace VPS
             }
         }
 
-        public delegate void WPListChangeInThread();
-        private void WPListChange()
+        public delegate void WPListChangeInThread(List<PointLatLngAlt> wpList);
+        private void WPListChange(List<PointLatLngAlt> wpList)
         {
             if (this.InvokeRequired) {
                 WPListChangeInThread thread = new WPListChangeInThread(WPListChange);
-                this.Invoke(thread);
+                this.Invoke(thread,new object[] { wpList });
             }
             else
             {
-                SetWPList(VPS.Controls.Grid.GridConfig.instance.GetWPList());
-                //GCSViews.FlightPlanner.instance.ClearMission();
+                GCSViews.FlightPlanner.instance.SetWPList(wpList);
+            }
+        }
+
+        public delegate void DataChangeInThread(object data);
+        private void WPRadChange(object wpRad)
+        {
+            if (this.InvokeRequired)
+            {
+                DataChangeInThread thread = new DataChangeInThread(WPRadChange);
+                this.Invoke(thread, new object[] { wpRad });
+            }
+            else
+            {
+                GCSViews.FlightPlanner.instance.SetWPRad((int)wpRad);
+            }
+        }
+
+        private void BaseAltChange(object baseAlt)
+        {
+            if (this.InvokeRequired)
+            {
+                DataChangeInThread thread = new DataChangeInThread(BaseAltChange);
+                this.Invoke(thread, new object[] { baseAlt });
+            }
+            else
+            {
+                GCSViews.FlightPlanner.instance.SetBaseAlt((int)baseAlt);
+            }
+        }
+
+        private void DefaultAltChange(object defaultAlt)
+        {
+            if (this.InvokeRequired)
+            {
+                DataChangeInThread thread = new DataChangeInThread(DefaultAltChange);
+                this.Invoke(thread, new object[] { defaultAlt });
+            }
+            else
+            {
+                GCSViews.FlightPlanner.instance.SetDefaultAlt((int)defaultAlt);
+            }
+        }
+
+        private void WarnAltChange(object warnAlt)
+        {
+            if (this.InvokeRequired)
+            {
+                DataChangeInThread thread = new DataChangeInThread(WarnAltChange);
+                this.Invoke(thread, new object[] { warnAlt });
+            }
+            else
+            {
+                GCSViews.FlightPlanner.instance.SetWarnAlt((int)warnAlt);
+            }
+        }
+
+        private void HomeChange(object home)
+        {
+            if (this.InvokeRequired)
+            {
+                DataChangeInThread thread = new DataChangeInThread(HomeChange);
+                this.Invoke(thread, new object[] { home });
+            }
+            else
+            {
+                GCSViews.FlightPlanner.instance.setHomeHere((PointLatLngAlt)home);
+            }
+        }
+
+        private void CoordSystemChange(object coord)
+        {
+            if (this.InvokeRequired)
+            {
+                DataChangeInThread thread = new DataChangeInThread(CoordSystemChange);
+                this.Invoke(thread, new object[] { coord });
+            }
+            else
+            {
+                GCSViews.FlightPlanner.instance.SetCoordSystem(coord.ToString());
+            }
+        }
+
+        private void AltFrameChange(object altFrame)
+        {
+            if (this.InvokeRequired)
+            {
+                DataChangeInThread thread = new DataChangeInThread(AltFrameChange);
+                this.Invoke(thread, new object[] { altFrame });
+            }
+            else
+            {
+                GCSViews.FlightPlanner.instance.SetAltFrame(altFrame.ToString());
             }
         }
 
         private void SetWPList(List<PointLatLngAlt> wpList)
         {
-            int counter = 0;
-            int have = GCSViews.FlightPlanner.instance.Commands.Rows.Count;
-            foreach (var wp in wpList)
-            {
-                if (counter < have)
-                    GCSViews.FlightPlanner.instance.SetWPPoint(wp.Lat, wp.Lng, (int)wp.Alt, counter);
-                else
-                    GCSViews.FlightPlanner.instance.AddWPPoint(wp.Lat, wp.Lng, (int)wp.Alt);
-                counter++;
-            }
-            while (counter < have)
-            {
-                GCSViews.FlightPlanner.instance.DeleteWPPoint(counter);
-                have--;
-            }
+            GCSViews.FlightPlanner.instance.SetWPList(wpList);
+            VPS.Controls.Command.CommandsPanel.instance.SetWPList(wpList);
         }
 
-
-        private void GetWPList(out List<PointLatLngAlt> wpList)
+        private void SetHome(PointLatLngAlt position)
         {
-            wpList = new List<PointLatLngAlt>();
-            int count = GCSViews.FlightPlanner.instance.Commands.Rows.Count;
-            for (int i = 0; i < count; i++)
-            {
-                GCSViews.FlightPlanner.instance.GetWPPoint(i, out PointLatLngAlt wp);
-
-                wpList.Add(wp);
-            }
+            GCSViews.FlightPlanner.instance.setHomeHere(position);
+            VPS.Controls.Command.CommandsPanel.instance.SetHome(position);
         }
+
 
         private void DeleteSelectedPolygonButton_Click(object sender, EventArgs e)
         {

@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CommandsPanel));
             this.MainPanel = new DevComponents.DotNetBar.PanelEx();
             this.AutoWarnAlt = new DevComponents.DotNetBar.Controls.CheckBoxX();
@@ -182,11 +182,11 @@
             this.HomeLng.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.HomeLng.DisplayFormat = "0.######";
             this.HomeLng.Increment = 1D;
+            this.HomeLng.IsInputReadOnly = true;
             this.HomeLng.Location = new System.Drawing.Point(1201, 217);
             this.HomeLng.MaxValue = 400D;
             this.HomeLng.MinValue = -400D;
             this.HomeLng.Name = "HomeLng";
-            this.HomeLng.ShowUpDown = true;
             this.HomeLng.Size = new System.Drawing.Size(80, 21);
             this.HomeLng.TabIndex = 21;
             this.HomeLng.ValueChanged += new System.EventHandler(this.HomeLng_ValueChanged);
@@ -203,11 +203,11 @@
             this.HomeAlt.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.HomeAlt.DisplayFormat = "0.######";
             this.HomeAlt.Increment = 1D;
+            this.HomeAlt.IsInputReadOnly = true;
             this.HomeAlt.Location = new System.Drawing.Point(1201, 244);
             this.HomeAlt.MaxValue = 100000000D;
             this.HomeAlt.MinValue = -100000000D;
             this.HomeAlt.Name = "HomeAlt";
-            this.HomeAlt.ShowUpDown = true;
             this.HomeAlt.Size = new System.Drawing.Size(80, 21);
             this.HomeAlt.TabIndex = 20;
             this.HomeAlt.ValueChanged += new System.EventHandler(this.HomeAlt_ValueChanged);
@@ -224,11 +224,11 @@
             this.HomeLat.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.HomeLat.DisplayFormat = "0.######";
             this.HomeLat.Increment = 1D;
+            this.HomeLat.IsInputReadOnly = true;
             this.HomeLat.Location = new System.Drawing.Point(1201, 190);
             this.HomeLat.MaxValue = 200D;
             this.HomeLat.MinValue = -200D;
             this.HomeLat.Name = "HomeLat";
-            this.HomeLat.ShowUpDown = true;
             this.HomeLat.Size = new System.Drawing.Size(80, 21);
             this.HomeLat.TabIndex = 19;
             this.HomeLat.ValueChanged += new System.EventHandler(this.HomeLat_ValueChanged);
@@ -450,14 +450,14 @@
             this.CommandDataList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.CommandDataList.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CommandDataList.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedVertical;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.CommandDataList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.CommandDataList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.CommandDataList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CommandDataList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Command,
@@ -478,28 +478,28 @@
             this.Down,
             this.Delete,
             this.Frame});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.CommandDataList.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.CommandDataList.DefaultCellStyle = dataGridViewCellStyle11;
             this.CommandDataList.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.CommandDataList.EnableHeadersVisualStyles = false;
             this.CommandDataList.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.CommandDataList.HighlightSelectedColumnHeaders = false;
             this.CommandDataList.Location = new System.Drawing.Point(156, 3);
             this.CommandDataList.Name = "CommandDataList";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.CommandDataList.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.CommandDataList.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.CommandDataList.RowTemplate.Height = 23;
             this.CommandDataList.Size = new System.Drawing.Size(985, 272);
             this.CommandDataList.TabIndex = 0;
@@ -516,6 +516,8 @@
             this.Command.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.Command.IntegralHeight = false;
             this.Command.ItemHeight = 16;
+            this.Command.Items.AddRange(new object[] {
+            "WayPoint"});
             this.Command.Name = "Command";
             this.Command.ReadOnly = true;
             this.Command.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -789,6 +791,7 @@
             this.Controls.Add(this.MainPanel);
             this.Name = "CommandsPanel";
             this.Size = new System.Drawing.Size(1301, 278);
+            this.Leave += new System.EventHandler(this.CommandsPanel_Leave);
             this.MainPanel.ResumeLayout(false);
             this.MainPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BaseAlt)).EndInit();
