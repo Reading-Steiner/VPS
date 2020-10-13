@@ -401,9 +401,9 @@ namespace VPS.Controls.Command
                 if (terrain > maxAlt)
                     maxAlt = terrain;
             }
-            BaseAlt.Value = (int)(totalAlt / wpList.Count);
+            BaseAlt.Value = (int)(totalAlt / Math.Max(1, wpList.Count));
             if (isAutoWarn)
-                WarnAlt.Value = (int)(maxAlt - baseAlt + 1);
+                WarnAlt.Value = (int)(maxAlt - baseAlt);
         }
 
         private void SetAltitude(List<Utilities.PointLatLngAlt> wpList)
