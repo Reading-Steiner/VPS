@@ -7916,12 +7916,11 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         {
             try
             {
-                if (IsMouseClickOffMenu)
-                    return;
-
                 //记录鼠标开始位置
                 MouseDownStart = MainMap.FromLocalToLatLng(e.X, e.Y);
                 MouseDownStartPoint = new GPoint(e.X, e.Y);
+                if (IsMouseClickOffMenu)
+                    return;
 
                 if (e.Button == MouseButtons.Middle && Control.ModifierKeys != Keys.Alt && Control.ModifierKeys != Keys.Control)
                 {
