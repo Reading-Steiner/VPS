@@ -295,15 +295,15 @@ namespace VPS
             }
 
             Splash.SetDisplayInfo("加载主界面");
-            try
-            {
+            //try
+            //{
                 Thread.CurrentThread.Name = "Base Thread";
                 Application.Run(new MainV2());
-            }
-            catch (Exception ex)
-            {
-                log.Fatal("Fatal app exception", ex);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    log.Fatal("Fatal app exception", ex);
+            //}
 
             try
             {

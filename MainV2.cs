@@ -1045,6 +1045,10 @@ namespace VPS
             GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.Command.CommandsPanel.instance.SetHome;
             GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.SetWPList;
 
+            GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.MainInfo.MainInfo.instance.SetHomePosition;
+            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.MainInfo.MainInfo.instance.SetWPList;
+            GCSViews.FlightPlanner.instance.CurrentChange += VPS.Controls.MainInfo.MainInfo.instance.SetCurrentPosition;
+
             FlightPlanner.ToDrawPolygonHandle += ToDrawPolygonState;
             FlightPlanner.OutDrawPolygonHandle += OutDrawPolygonState;
 

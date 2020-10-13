@@ -1609,6 +1609,8 @@ namespace VPS.GCSViews
             mouseposdisplay.Lng = lng;
             mouseposdisplay.Alt = alt;
 
+            CurrentChange?.Invoke(mouseposdisplay);
+
             coords1.Lat = mouseposdisplay.Lat;
             coords1.Lng = mouseposdisplay.Lng;
             var altdata = srtm.getAltitude(mouseposdisplay.Lat, mouseposdisplay.Lng, MainMap.Zoom);
@@ -6925,9 +6927,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             HomeChange?.Invoke(position);
         }
 
-        public delegate void HomeChangeHandle(PointLatLngAlt position);
-        public HomeChangeHandle HomeChange;
-
+        public delegate void PositionChangeHandle(PointLatLngAlt position);
+        public PositionChangeHandle HomeChange;
+        public PositionChangeHandle CurrentChange;
         public void setHomeHere(PointLatLngAlt position)
         {
             TXT_homealt.Text = position.Alt.ToString();
