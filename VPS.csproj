@@ -497,6 +497,12 @@
     <Compile Include="Controls\Layer\LayerReader.Designer.cs">
       <DependentUpon>LayerReader.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MainInfo\MainInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MainInfo\MainInfo.Designer.cs">
+      <DependentUpon>MainInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ReturnButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -846,6 +852,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Layer\LayerReader.resx">
       <DependentUpon>LayerReader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MainInfo\MainInfo.resx">
+      <DependentUpon>MainInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ReturnButton.resx">
       <DependentUpon>ReturnButton.cs</DependentUpon>
