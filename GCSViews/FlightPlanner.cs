@@ -2130,7 +2130,8 @@ namespace VPS.GCSViews
             //string tag = (string)Commands.Rows[index].Cells[TagData.Index].Value;
             wp = new PointLatLngAlt(lat, lng, alt);
             wp.Tag = Commands.Rows[index].Cells[Command.Index].Value.ToString();
-            wp.Tag2 = Commands.Rows[index].Cells[Frame.Index].Value.ToString();
+            
+            wp.Tag2 = ((altmode)Commands.Rows[index].Cells[Frame.Index].Value).ToString();
         }
 
         public void DeleteWPPoint(int index)

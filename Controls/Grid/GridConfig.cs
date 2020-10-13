@@ -292,7 +292,13 @@ namespace VPS.Controls.Grid
 
         public List<PointLatLngAlt> GetWPList()
         {
-            return grid;
+            List<PointLatLngAlt> wpList = grid;
+            for(int i = 0;i< wpList.Count; i++)
+            {
+                wpList[i].Tag = "WAYPOINT";
+                wpList[i].Tag2 = "Relative";
+            }
+            return wpList;
         }
 
 
@@ -434,7 +440,7 @@ namespace VPS.Controls.Grid
             if (wp.Count == 0)
             {
                 instance.grid.Clear();
-                instance.WPListChangeHandle?.Invoke(instance.grid);
+                instance.WPListChangeHandle?.Invoke(instance.GetWPList());
                 return;
             }
 
@@ -454,7 +460,7 @@ namespace VPS.Controls.Grid
             if (wp.Count == 0)
             {
                 instance.grid.Clear();
-                instance.WPListChangeHandle?.Invoke(instance.grid);
+                instance.WPListChangeHandle?.Invoke(instance.GetWPList());
                 return;
             }
 
@@ -463,6 +469,7 @@ namespace VPS.Controls.Grid
             int a = 0;
 
             instance.grid.Clear();
+            PointLatLngAlt last = null;
             foreach (var item in wp)
             {
                 if (item.Tag == "M")
@@ -474,14 +481,23 @@ namespace VPS.Controls.Grid
                 {
                     if (item.Tag != "SM" && item.Tag != "ME")
                         strips++;
+                    if (last != null)
+                    {
+                        if (last.Lat == item.Lat && last.Lng == item.Lng && last.Alt == item.Alt)
+                        {
+                            last = item;
+                            continue;
+                        }
 
+                    }
                     instance.grid.Add(item);
+                    last = item;
                     a++;
                 }
 
 
             }
-            instance.WPListChangeHandle?.Invoke(instance.grid);
+            instance.WPListChangeHandle?.Invoke(instance.GetWPList());
         }
 
         private delegate object ReadControlInMainThreadHandle(Control control);
