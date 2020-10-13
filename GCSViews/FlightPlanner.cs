@@ -2198,7 +2198,7 @@ namespace VPS.GCSViews
             }
             int.TryParse(TXT_DefaultAlt.Text, out int alt);
 
-            AddWPPoint(MouseDownStart.Lng, MouseDownStart.Lat, alt);
+            AddWPPoint(MouseDownStart.Lat, MouseDownStart.Lng, alt);
         }
 
 
