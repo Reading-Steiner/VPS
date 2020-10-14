@@ -457,10 +457,10 @@ namespace VPS.Controls.Command
                 double distance = wpList[index].GetDistance(wpList[index - 1]);
                 double grad = height / distance;
 
-                CommandDataList[Grad.Index, 0].Value = (grad * 100);
-                CommandDataList[Angle.Index, 0].Value = ((180.0 / Math.PI) * Math.Atan(grad));
-                CommandDataList[Dist.Index, 0].Value = (Math.Sqrt(Math.Pow(distance, 2) + Math.Pow(height, 2)) * CurrentState.multiplierdist);
-                CommandDataList[AZ.Index, 0].Value = ((wpList[index].GetBearing(wpList[index - 1]) + 180) % 360);
+                CommandDataList[Grad.Index, index].Value = (grad * 100);
+                CommandDataList[Angle.Index, index].Value = ((180.0 / Math.PI) * Math.Atan(grad));
+                CommandDataList[Dist.Index, index].Value = (Math.Sqrt(Math.Pow(distance, 2) + Math.Pow(height, 2)) * CurrentState.multiplierdist);
+                CommandDataList[AZ.Index, index].Value = ((wpList[index].GetBearing(wpList[index - 1]) + 180) % 360);
             }
         }
 
