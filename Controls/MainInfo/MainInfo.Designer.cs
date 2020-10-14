@@ -49,6 +49,15 @@
             this.labelX12 = new DevComponents.DotNetBar.LabelX();
             this.panelEx2 = new DevComponents.DotNetBar.PanelEx();
             this.label1 = new System.Windows.Forms.Label();
+            this.panelEx5 = new DevComponents.DotNetBar.PanelEx();
+            this.labelX19 = new DevComponents.DotNetBar.LabelX();
+            this.WPTotalDist = new DevComponents.DotNetBar.LabelX();
+            this.labelX7 = new DevComponents.DotNetBar.LabelX();
+            this.WPBaseAlt = new DevComponents.DotNetBar.LabelX();
+            this.labelX6 = new DevComponents.DotNetBar.LabelX();
+            this.WPGndeLev = new DevComponents.DotNetBar.LabelX();
+            this.panelEx4 = new DevComponents.DotNetBar.PanelEx();
+            this.label2 = new System.Windows.Forms.Label();
             this.BoundBox = new DevComponents.DotNetBar.PanelEx();
             this.HomeAlt = new DevComponents.DotNetBar.LabelX();
             this.HomeLat = new DevComponents.DotNetBar.LabelX();
@@ -58,11 +67,35 @@
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.panelEx6 = new DevComponents.DotNetBar.PanelEx();
             this.label6 = new System.Windows.Forms.Label();
+            this.panelEx7 = new DevComponents.DotNetBar.PanelEx();
+            this.label3 = new System.Windows.Forms.Label();
+            this.panelEx8 = new DevComponents.DotNetBar.PanelEx();
+            this.LowSidelap = new DevComponents.DotNetBar.LabelX();
+            this.HeightSidelap = new DevComponents.DotNetBar.LabelX();
+            this.labelX22 = new DevComponents.DotNetBar.LabelX();
+            this.labelX23 = new DevComponents.DotNetBar.LabelX();
+            this.labelX24 = new DevComponents.DotNetBar.LabelX();
+            this.LowOverlap = new DevComponents.DotNetBar.LabelX();
+            this.labelX26 = new DevComponents.DotNetBar.LabelX();
+            this.HeightOverlap = new DevComponents.DotNetBar.LabelX();
+            this.Sidelap = new DevComponents.Editors.DoubleInput();
+            this.Overlap = new DevComponents.Editors.DoubleInput();
+            this.labelX28 = new DevComponents.DotNetBar.LabelX();
+            this.labelX29 = new DevComponents.DotNetBar.LabelX();
+            this.Relative = new DevComponents.Editors.IntegerInput();
+            this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.panelEx1.SuspendLayout();
             this.panelEx3.SuspendLayout();
             this.panelEx2.SuspendLayout();
+            this.panelEx5.SuspendLayout();
+            this.panelEx4.SuspendLayout();
             this.BoundBox.SuspendLayout();
             this.panelEx6.SuspendLayout();
+            this.panelEx7.SuspendLayout();
+            this.panelEx8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Sidelap)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Overlap)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Relative)).BeginInit();
             this.SuspendLayout();
             // 
             // panelEx1
@@ -70,14 +103,18 @@
             this.panelEx1.AutoSize = true;
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx1.Controls.Add(this.panelEx8);
+            this.panelEx1.Controls.Add(this.panelEx7);
             this.panelEx1.Controls.Add(this.panelEx3);
             this.panelEx1.Controls.Add(this.panelEx2);
+            this.panelEx1.Controls.Add(this.panelEx5);
+            this.panelEx1.Controls.Add(this.panelEx4);
             this.panelEx1.Controls.Add(this.BoundBox);
             this.panelEx1.Controls.Add(this.panelEx6);
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx1.Location = new System.Drawing.Point(0, 0);
             this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(310, 500);
+            this.panelEx1.Size = new System.Drawing.Size(310, 542);
             this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelEx1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -109,7 +146,7 @@
             this.panelEx3.Controls.Add(this.labelX11);
             this.panelEx3.Controls.Add(this.labelX12);
             this.panelEx3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx3.Location = new System.Drawing.Point(0, 119);
+            this.panelEx3.Location = new System.Drawing.Point(0, 217);
             this.panelEx3.Name = "panelEx3";
             this.panelEx3.Size = new System.Drawing.Size(310, 147);
             this.panelEx3.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -319,7 +356,7 @@
             // 
             // 
             this.labelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX10.Location = new System.Drawing.Point(43, 5);
+            this.labelX10.Location = new System.Drawing.Point(40, 5);
             this.labelX10.Name = "labelX10";
             this.labelX10.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.labelX10.Size = new System.Drawing.Size(31, 18);
@@ -333,7 +370,7 @@
             // 
             // 
             this.labelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX11.Location = new System.Drawing.Point(43, 29);
+            this.labelX11.Location = new System.Drawing.Point(40, 29);
             this.labelX11.Name = "labelX11";
             this.labelX11.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.labelX11.Size = new System.Drawing.Size(31, 18);
@@ -362,7 +399,7 @@
             this.panelEx2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelEx2.Controls.Add(this.label1);
             this.panelEx2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx2.Location = new System.Drawing.Point(0, 97);
+            this.panelEx2.Location = new System.Drawing.Point(0, 195);
             this.panelEx2.MinimumSize = new System.Drawing.Size(200, 22);
             this.panelEx2.Name = "panelEx2";
             this.panelEx2.Size = new System.Drawing.Size(310, 22);
@@ -393,6 +430,150 @@
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 26;
             this.label1.Text = "当前位置";
+            // 
+            // panelEx5
+            // 
+            this.panelEx5.AutoSize = true;
+            this.panelEx5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelEx5.CanvasColor = System.Drawing.SystemColors.Control;
+            this.panelEx5.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx5.Controls.Add(this.labelX19);
+            this.panelEx5.Controls.Add(this.WPTotalDist);
+            this.panelEx5.Controls.Add(this.labelX7);
+            this.panelEx5.Controls.Add(this.WPBaseAlt);
+            this.panelEx5.Controls.Add(this.labelX6);
+            this.panelEx5.Controls.Add(this.WPGndeLev);
+            this.panelEx5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEx5.Location = new System.Drawing.Point(0, 119);
+            this.panelEx5.Name = "panelEx5";
+            this.panelEx5.Size = new System.Drawing.Size(310, 76);
+            this.panelEx5.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelEx5.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
+            this.panelEx5.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.panelEx5.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
+            this.panelEx5.Style.GradientAngle = 90;
+            this.panelEx5.TabIndex = 38;
+            // 
+            // labelX19
+            // 
+            this.labelX19.AutoSize = true;
+            // 
+            // 
+            // 
+            this.labelX19.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX19.Location = new System.Drawing.Point(28, 31);
+            this.labelX19.Name = "labelX19";
+            this.labelX19.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.labelX19.Size = new System.Drawing.Size(56, 18);
+            this.labelX19.TabIndex = 32;
+            this.labelX19.Text = "地面高程";
+            // 
+            // WPTotalDist
+            // 
+            this.WPTotalDist.AutoSize = true;
+            // 
+            // 
+            // 
+            this.WPTotalDist.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.WPTotalDist.Location = new System.Drawing.Point(110, 56);
+            this.WPTotalDist.Name = "WPTotalDist";
+            this.WPTotalDist.Size = new System.Drawing.Size(13, 16);
+            this.WPTotalDist.TabIndex = 31;
+            this.WPTotalDist.Text = "0";
+            // 
+            // labelX7
+            // 
+            this.labelX7.AutoSize = true;
+            // 
+            // 
+            // 
+            this.labelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX7.Location = new System.Drawing.Point(28, 55);
+            this.labelX7.Name = "labelX7";
+            this.labelX7.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.labelX7.Size = new System.Drawing.Size(56, 18);
+            this.labelX7.TabIndex = 30;
+            this.labelX7.Text = "飞行距离";
+            // 
+            // WPBaseAlt
+            // 
+            this.WPBaseAlt.AutoSize = true;
+            // 
+            // 
+            // 
+            this.WPBaseAlt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.WPBaseAlt.Location = new System.Drawing.Point(110, 8);
+            this.WPBaseAlt.Name = "WPBaseAlt";
+            this.WPBaseAlt.Size = new System.Drawing.Size(13, 16);
+            this.WPBaseAlt.TabIndex = 29;
+            this.WPBaseAlt.Text = "0";
+            // 
+            // labelX6
+            // 
+            this.labelX6.AutoSize = true;
+            // 
+            // 
+            // 
+            this.labelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX6.Location = new System.Drawing.Point(28, 7);
+            this.labelX6.Name = "labelX6";
+            this.labelX6.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.labelX6.Size = new System.Drawing.Size(56, 18);
+            this.labelX6.TabIndex = 28;
+            this.labelX6.Text = "航摄基准";
+            // 
+            // WPGndeLev
+            // 
+            this.WPGndeLev.AutoSize = true;
+            // 
+            // 
+            // 
+            this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.WPGndeLev.Location = new System.Drawing.Point(110, 32);
+            this.WPGndeLev.Name = "WPGndeLev";
+            this.WPGndeLev.Size = new System.Drawing.Size(13, 16);
+            this.WPGndeLev.TabIndex = 27;
+            this.WPGndeLev.Text = "0";
+            // 
+            // panelEx4
+            // 
+            this.panelEx4.AutoSize = true;
+            this.panelEx4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelEx4.CanvasColor = System.Drawing.SystemColors.Control;
+            this.panelEx4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx4.Controls.Add(this.label2);
+            this.panelEx4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEx4.Location = new System.Drawing.Point(0, 97);
+            this.panelEx4.MinimumSize = new System.Drawing.Size(200, 22);
+            this.panelEx4.Name = "panelEx4";
+            this.panelEx4.Size = new System.Drawing.Size(310, 22);
+            this.panelEx4.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelEx4.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
+            this.panelEx4.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2;
+            this.panelEx4.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.panelEx4.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.panelEx4.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
+            this.panelEx4.Style.GradientAngle = 90;
+            this.panelEx4.StyleMouseDown.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelEx4.StyleMouseDown.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemPressedBackground;
+            this.panelEx4.StyleMouseDown.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemPressedBackground2;
+            this.panelEx4.StyleMouseDown.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemPressedBorder;
+            this.panelEx4.StyleMouseDown.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemPressedText;
+            this.panelEx4.StyleMouseOver.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelEx4.StyleMouseOver.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemHotBackground;
+            this.panelEx4.StyleMouseOver.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemHotBackground2;
+            this.panelEx4.StyleMouseOver.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemHotBorder;
+            this.panelEx4.StyleMouseOver.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemHotText;
+            this.panelEx4.TabIndex = 37;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(5, 4);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.TabIndex = 26;
+            this.label2.Text = "航线";
             // 
             // BoundBox
             // 
@@ -463,7 +644,7 @@
             // 
             // 
             this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX3.Location = new System.Drawing.Point(43, 6);
+            this.labelX3.Location = new System.Drawing.Point(40, 6);
             this.labelX3.Name = "labelX3";
             this.labelX3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.labelX3.Size = new System.Drawing.Size(31, 18);
@@ -477,7 +658,7 @@
             // 
             // 
             this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX2.Location = new System.Drawing.Point(43, 30);
+            this.labelX2.Location = new System.Drawing.Point(40, 30);
             this.labelX2.Name = "labelX2";
             this.labelX2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.labelX2.Size = new System.Drawing.Size(31, 18);
@@ -538,23 +719,307 @@
             this.label6.TabIndex = 26;
             this.label6.Text = "初始位置";
             // 
+            // panelEx7
+            // 
+            this.panelEx7.AutoSize = true;
+            this.panelEx7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelEx7.CanvasColor = System.Drawing.SystemColors.Control;
+            this.panelEx7.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx7.Controls.Add(this.label3);
+            this.panelEx7.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEx7.Location = new System.Drawing.Point(0, 364);
+            this.panelEx7.MinimumSize = new System.Drawing.Size(200, 22);
+            this.panelEx7.Name = "panelEx7";
+            this.panelEx7.Size = new System.Drawing.Size(310, 22);
+            this.panelEx7.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelEx7.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
+            this.panelEx7.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2;
+            this.panelEx7.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.panelEx7.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.panelEx7.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
+            this.panelEx7.Style.GradientAngle = 90;
+            this.panelEx7.StyleMouseDown.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelEx7.StyleMouseDown.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemPressedBackground;
+            this.panelEx7.StyleMouseDown.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemPressedBackground2;
+            this.panelEx7.StyleMouseDown.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemPressedBorder;
+            this.panelEx7.StyleMouseDown.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemPressedText;
+            this.panelEx7.StyleMouseOver.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelEx7.StyleMouseOver.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemHotBackground;
+            this.panelEx7.StyleMouseOver.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemHotBackground2;
+            this.panelEx7.StyleMouseOver.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemHotBorder;
+            this.panelEx7.StyleMouseOver.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemHotText;
+            this.panelEx7.TabIndex = 39;
+            this.panelEx7.Visible = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(5, 4);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 12);
+            this.label3.TabIndex = 26;
+            this.label3.Text = "重叠度检测";
+            // 
+            // panelEx8
+            // 
+            this.panelEx8.AutoSize = true;
+            this.panelEx8.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelEx8.CanvasColor = System.Drawing.SystemColors.Control;
+            this.panelEx8.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx8.Controls.Add(this.Relative);
+            this.panelEx8.Controls.Add(this.labelX4);
+            this.panelEx8.Controls.Add(this.Sidelap);
+            this.panelEx8.Controls.Add(this.Overlap);
+            this.panelEx8.Controls.Add(this.labelX28);
+            this.panelEx8.Controls.Add(this.labelX29);
+            this.panelEx8.Controls.Add(this.LowSidelap);
+            this.panelEx8.Controls.Add(this.HeightSidelap);
+            this.panelEx8.Controls.Add(this.labelX22);
+            this.panelEx8.Controls.Add(this.labelX23);
+            this.panelEx8.Controls.Add(this.labelX24);
+            this.panelEx8.Controls.Add(this.LowOverlap);
+            this.panelEx8.Controls.Add(this.labelX26);
+            this.panelEx8.Controls.Add(this.HeightOverlap);
+            this.panelEx8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEx8.Location = new System.Drawing.Point(0, 386);
+            this.panelEx8.Name = "panelEx8";
+            this.panelEx8.Size = new System.Drawing.Size(310, 156);
+            this.panelEx8.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelEx8.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
+            this.panelEx8.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.panelEx8.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
+            this.panelEx8.Style.GradientAngle = 90;
+            this.panelEx8.TabIndex = 40;
+            this.panelEx8.Visible = false;
+            // 
+            // LowSidelap
+            // 
+            // 
+            // 
+            // 
+            this.LowSidelap.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.LowSidelap.Location = new System.Drawing.Point(213, 136);
+            this.LowSidelap.Name = "LowSidelap";
+            this.LowSidelap.Size = new System.Drawing.Size(70, 16);
+            this.LowSidelap.TabIndex = 40;
+            this.LowSidelap.Text = "0";
+            this.LowSidelap.TextAlignment = System.Drawing.StringAlignment.Center;
+            // 
+            // HeightSidelap
+            // 
+            // 
+            // 
+            // 
+            this.HeightSidelap.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.HeightSidelap.Location = new System.Drawing.Point(212, 112);
+            this.HeightSidelap.Name = "HeightSidelap";
+            this.HeightSidelap.Size = new System.Drawing.Size(70, 16);
+            this.HeightSidelap.TabIndex = 39;
+            this.HeightSidelap.Text = "0";
+            this.HeightSidelap.TextAlignment = System.Drawing.StringAlignment.Center;
+            // 
+            // labelX22
+            // 
+            this.labelX22.AutoSize = true;
+            // 
+            // 
+            // 
+            this.labelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX22.Location = new System.Drawing.Point(213, 87);
+            this.labelX22.Name = "labelX22";
+            this.labelX22.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.labelX22.Size = new System.Drawing.Size(68, 18);
+            this.labelX22.TabIndex = 38;
+            this.labelX22.Text = "旁向重叠度";
+            // 
+            // labelX23
+            // 
+            this.labelX23.AutoSize = true;
+            // 
+            // 
+            // 
+            this.labelX23.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX23.Location = new System.Drawing.Point(104, 87);
+            this.labelX23.Name = "labelX23";
+            this.labelX23.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.labelX23.Size = new System.Drawing.Size(68, 18);
+            this.labelX23.TabIndex = 37;
+            this.labelX23.Text = "航向重叠度";
+            // 
+            // labelX24
+            // 
+            this.labelX24.AutoSize = true;
+            // 
+            // 
+            // 
+            this.labelX24.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX24.Location = new System.Drawing.Point(24, 135);
+            this.labelX24.Name = "labelX24";
+            this.labelX24.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.labelX24.Size = new System.Drawing.Size(56, 18);
+            this.labelX24.TabIndex = 36;
+            this.labelX24.Text = "地面低点";
+            // 
+            // LowOverlap
+            // 
+            // 
+            // 
+            // 
+            this.LowOverlap.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.LowOverlap.Location = new System.Drawing.Point(106, 136);
+            this.LowOverlap.Name = "LowOverlap";
+            this.LowOverlap.Size = new System.Drawing.Size(70, 16);
+            this.LowOverlap.TabIndex = 35;
+            this.LowOverlap.Text = "0";
+            this.LowOverlap.TextAlignment = System.Drawing.StringAlignment.Center;
+            // 
+            // labelX26
+            // 
+            this.labelX26.AutoSize = true;
+            // 
+            // 
+            // 
+            this.labelX26.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX26.Location = new System.Drawing.Point(24, 111);
+            this.labelX26.Name = "labelX26";
+            this.labelX26.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.labelX26.Size = new System.Drawing.Size(56, 18);
+            this.labelX26.TabIndex = 34;
+            this.labelX26.Text = "地面高点";
+            // 
+            // HeightOverlap
+            // 
+            // 
+            // 
+            // 
+            this.HeightOverlap.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.HeightOverlap.Location = new System.Drawing.Point(106, 112);
+            this.HeightOverlap.Name = "HeightOverlap";
+            this.HeightOverlap.Size = new System.Drawing.Size(70, 16);
+            this.HeightOverlap.TabIndex = 33;
+            this.HeightOverlap.Text = "0";
+            this.HeightOverlap.TextAlignment = System.Drawing.StringAlignment.Center;
+            // 
+            // Sidelap
+            // 
+            this.Sidelap.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.Sidelap.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.Sidelap.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.Sidelap.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.Sidelap.DisplayFormat = "0.00";
+            this.Sidelap.Increment = 0.01D;
+            this.Sidelap.Location = new System.Drawing.Point(104, 33);
+            this.Sidelap.MaxValue = 100D;
+            this.Sidelap.MinValue = 0D;
+            this.Sidelap.Name = "Sidelap";
+            this.Sidelap.ShowUpDown = true;
+            this.Sidelap.Size = new System.Drawing.Size(64, 21);
+            this.Sidelap.TabIndex = 61;
+            this.Sidelap.ValueChanged += new System.EventHandler(this.Sidelap_ValueChanged);
+            // 
+            // Overlap
+            // 
+            this.Overlap.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.Overlap.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.Overlap.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.Overlap.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.Overlap.DisplayFormat = "0.00";
+            this.Overlap.Increment = 0.01D;
+            this.Overlap.Location = new System.Drawing.Point(104, 6);
+            this.Overlap.MaxValue = 100D;
+            this.Overlap.MinValue = 0D;
+            this.Overlap.Name = "Overlap";
+            this.Overlap.ShowUpDown = true;
+            this.Overlap.Size = new System.Drawing.Size(64, 21);
+            this.Overlap.TabIndex = 60;
+            this.Overlap.ValueChanged += new System.EventHandler(this.Overlap_ValueChanged);
+            // 
+            // labelX28
+            // 
+            // 
+            // 
+            // 
+            this.labelX28.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX28.Location = new System.Drawing.Point(23, 34);
+            this.labelX28.Name = "labelX28";
+            this.labelX28.Size = new System.Drawing.Size(67, 20);
+            this.labelX28.TabIndex = 59;
+            this.labelX28.Text = "旁向重叠度";
+            // 
+            // labelX29
+            // 
+            // 
+            // 
+            // 
+            this.labelX29.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX29.Location = new System.Drawing.Point(23, 7);
+            this.labelX29.Name = "labelX29";
+            this.labelX29.Size = new System.Drawing.Size(66, 20);
+            this.labelX29.TabIndex = 58;
+            this.labelX29.Text = "航向重叠度";
+            // 
+            // Relative
+            // 
+            this.Relative.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.Relative.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.Relative.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.Relative.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.Relative.Location = new System.Drawing.Point(104, 60);
+            this.Relative.Name = "Relative";
+            this.Relative.ShowUpDown = true;
+            this.Relative.Size = new System.Drawing.Size(64, 21);
+            this.Relative.TabIndex = 63;
+            this.Relative.ValueChanged += new System.EventHandler(this.Relative_ValueChanged);
+            // 
+            // labelX4
+            // 
+            // 
+            // 
+            // 
+            this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX4.Location = new System.Drawing.Point(27, 60);
+            this.labelX4.Name = "labelX4";
+            this.labelX4.Size = new System.Drawing.Size(54, 20);
+            this.labelX4.TabIndex = 62;
+            this.labelX4.Text = "相对航高";
+            // 
             // MainInfo
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
             this.Controls.Add(this.panelEx1);
             this.Name = "MainInfo";
-            this.Size = new System.Drawing.Size(310, 500);
+            this.Size = new System.Drawing.Size(310, 542);
             this.panelEx1.ResumeLayout(false);
             this.panelEx1.PerformLayout();
             this.panelEx3.ResumeLayout(false);
             this.panelEx3.PerformLayout();
             this.panelEx2.ResumeLayout(false);
             this.panelEx2.PerformLayout();
+            this.panelEx5.ResumeLayout(false);
+            this.panelEx5.PerformLayout();
+            this.panelEx4.ResumeLayout(false);
+            this.panelEx4.PerformLayout();
             this.BoundBox.ResumeLayout(false);
             this.BoundBox.PerformLayout();
             this.panelEx6.ResumeLayout(false);
             this.panelEx6.PerformLayout();
+            this.panelEx7.ResumeLayout(false);
+            this.panelEx7.PerformLayout();
+            this.panelEx8.ResumeLayout(false);
+            this.panelEx8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Sidelap)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Overlap)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Relative)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -592,5 +1057,31 @@
         private DevComponents.DotNetBar.LabelX HomeAlt;
         private DevComponents.DotNetBar.LabelX HomeLat;
         private DevComponents.DotNetBar.LabelX HomeLng;
+        private DevComponents.DotNetBar.PanelEx panelEx5;
+        private DevComponents.DotNetBar.LabelX WPGndeLev;
+        private DevComponents.DotNetBar.PanelEx panelEx4;
+        private System.Windows.Forms.Label label2;
+        private DevComponents.DotNetBar.LabelX WPBaseAlt;
+        private DevComponents.DotNetBar.LabelX labelX6;
+        private DevComponents.DotNetBar.LabelX labelX19;
+        private DevComponents.DotNetBar.LabelX WPTotalDist;
+        private DevComponents.DotNetBar.LabelX labelX7;
+        private DevComponents.DotNetBar.PanelEx panelEx8;
+        private DevComponents.DotNetBar.LabelX LowSidelap;
+        private DevComponents.DotNetBar.LabelX HeightSidelap;
+        private DevComponents.DotNetBar.LabelX labelX22;
+        private DevComponents.DotNetBar.LabelX labelX23;
+        private DevComponents.DotNetBar.LabelX labelX24;
+        private DevComponents.DotNetBar.LabelX LowOverlap;
+        private DevComponents.DotNetBar.LabelX labelX26;
+        private DevComponents.DotNetBar.LabelX HeightOverlap;
+        private DevComponents.DotNetBar.PanelEx panelEx7;
+        private System.Windows.Forms.Label label3;
+        private DevComponents.Editors.DoubleInput Sidelap;
+        private DevComponents.Editors.DoubleInput Overlap;
+        private DevComponents.DotNetBar.LabelX labelX28;
+        private DevComponents.DotNetBar.LabelX labelX29;
+        private DevComponents.Editors.IntegerInput Relative;
+        private DevComponents.DotNetBar.LabelX labelX4;
     }
 }
