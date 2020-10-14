@@ -2190,10 +2190,10 @@ namespace VPS.GCSViews
         public WPListChangeHandle WPListChange;
         private void AddWPToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!IsDrawPolygongridMode)
+            if (!IsDrawWPMode)
             {
-                IsDrawPolygongridMode = true;
-                IsDrawWPMode = false;
+                IsDrawPolygongridMode = false;
+                IsDrawWPMode = true;
                 return;
             }
             int.TryParse(TXT_DefaultAlt.Text, out int alt);
