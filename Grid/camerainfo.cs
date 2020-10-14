@@ -18,6 +18,13 @@ namespace VPS.Grid
 
         static Dictionary<string, camerainfo> camerainfos = new Dictionary<string, camerainfo>();
         static List<string> cameras = new List<string>();
+        static public void SaveCameras()
+        {
+            if (cameras.Count >= 0)
+            {
+                xmlcamera(true, Settings.GetUserDataDirectory() + "cameras.xml");
+            }
+        }
         static public List<string> GetCameras()
         {
             if (cameras.Count <= 0)
@@ -39,6 +46,17 @@ namespace VPS.Grid
                 return camerainfos[camera];
             else
                 return new camerainfo();
+        }
+
+        static public void AddCamera(camerainfo info)
+        {
+            if (!cameras.Contains(info.name))
+            {
+                cameras.Add(info.name);
+            }
+            camerainfos[info.name] = info;
+
+            SaveCameras();
         }
         static private void xmlcamera(bool write, string filename)
         {

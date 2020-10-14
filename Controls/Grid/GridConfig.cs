@@ -699,6 +699,12 @@ namespace VPS.Controls.Grid
             domainUpDown1_ValueChanged(sender, e);
         }
 
+        private void CMB_camera_SelectedValueChanged(object sender, EventArgs e)
+        {
+            GetCameraInfo = camerainfo.GetCameraInfos(CMB_camera.Text);
+            domainUpDown1_ValueChanged(sender, e);
+        }
+
         private void NUM_focallength_ValueChanged(object sender, EventArgs e)
         {
             domainUpDown1_ValueChanged(sender, e);
@@ -822,5 +828,26 @@ namespace VPS.Controls.Grid
                 DefaultAngle.Enabled = false;
             }
         }
+
+        private void AddCamera_Click(object sender, EventArgs e)
+        {
+            using (CustomCamera dlg = new CustomCamera())
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    var info = dlg.GetCamerainfo();
+                    camerainfo.AddCamera(info);
+
+
+                    if (!CMB_camera.Items.Contains(info.name))
+                        CMB_camera.Items.Add(info.name);
+                    CMB_camera.SelectedIndex = CMB_camera.Items.IndexOf(info.name);
+                }
+                
+            }
+            
+        }
+
+
     }
 }

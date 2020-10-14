@@ -93,6 +93,7 @@
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.CameraInfo = new DevComponents.DotNetBar.PanelEx();
+            this.AddCamera = new DevComponents.DotNetBar.ButtonX();
             this.CHK_camdirection = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.ShowCameraInfo = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.CMB_camera = new DevComponents.DotNetBar.Controls.ComboBoxEx();
@@ -157,7 +158,7 @@
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx1.Location = new System.Drawing.Point(0, 0);
             this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(310, 700);
+            this.panelEx1.Size = new System.Drawing.Size(310, 727);
             this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelEx1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -174,7 +175,7 @@
             this.panelEx9.Controls.Add(this.Default);
             this.panelEx9.Controls.Add(this.Accept);
             this.panelEx9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx9.Location = new System.Drawing.Point(0, 668);
+            this.panelEx9.Location = new System.Drawing.Point(0, 695);
             this.panelEx9.Name = "panelEx9";
             this.panelEx9.Size = new System.Drawing.Size(310, 32);
             this.panelEx9.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -229,7 +230,7 @@
             this.AdvanceAirLineBox.Controls.Add(this.labelX13);
             this.AdvanceAirLineBox.Controls.Add(this.labelX12);
             this.AdvanceAirLineBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.AdvanceAirLineBox.Location = new System.Drawing.Point(0, 500);
+            this.AdvanceAirLineBox.Location = new System.Drawing.Point(0, 527);
             this.AdvanceAirLineBox.Name = "AdvanceAirLineBox";
             this.AdvanceAirLineBox.Size = new System.Drawing.Size(310, 168);
             this.AdvanceAirLineBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -457,7 +458,7 @@
             this.AirLineBox.Controls.Add(this.labelX8);
             this.AirLineBox.Controls.Add(this.labelX7);
             this.AirLineBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.AirLineBox.Location = new System.Drawing.Point(0, 421);
+            this.AirLineBox.Location = new System.Drawing.Point(0, 448);
             this.AirLineBox.Name = "AirLineBox";
             this.AirLineBox.Size = new System.Drawing.Size(310, 79);
             this.AirLineBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -611,7 +612,7 @@
             this.panelEx7.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelEx7.Controls.Add(this.label2);
             this.panelEx7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx7.Location = new System.Drawing.Point(0, 399);
+            this.panelEx7.Location = new System.Drawing.Point(0, 426);
             this.panelEx7.MinimumSize = new System.Drawing.Size(200, 22);
             this.panelEx7.Name = "panelEx7";
             this.panelEx7.Size = new System.Drawing.Size(310, 22);
@@ -660,7 +661,7 @@
             this.FlightBox.Controls.Add(this.labelX11);
             this.FlightBox.Controls.Add(this.labelX6);
             this.FlightBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.FlightBox.Location = new System.Drawing.Point(0, 292);
+            this.FlightBox.Location = new System.Drawing.Point(0, 319);
             this.FlightBox.Name = "FlightBox";
             this.FlightBox.Size = new System.Drawing.Size(310, 107);
             this.FlightBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -819,7 +820,7 @@
             this.panelEx14.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelEx14.Controls.Add(this.label14);
             this.panelEx14.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx14.Location = new System.Drawing.Point(0, 270);
+            this.panelEx14.Location = new System.Drawing.Point(0, 297);
             this.panelEx14.MinimumSize = new System.Drawing.Size(200, 22);
             this.panelEx14.Name = "panelEx14";
             this.panelEx14.Size = new System.Drawing.Size(310, 22);
@@ -864,7 +865,7 @@
             this.panelEx4.Controls.Add(this.TXT_cmpixel);
             this.panelEx4.Controls.Add(this.labelX2);
             this.panelEx4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx4.Location = new System.Drawing.Point(0, 189);
+            this.panelEx4.Location = new System.Drawing.Point(0, 216);
             this.panelEx4.Name = "panelEx4";
             this.panelEx4.Size = new System.Drawing.Size(310, 81);
             this.panelEx4.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -963,7 +964,7 @@
             this.panelEx5.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelEx5.Controls.Add(this.label1);
             this.panelEx5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx5.Location = new System.Drawing.Point(0, 167);
+            this.panelEx5.Location = new System.Drawing.Point(0, 194);
             this.panelEx5.MinimumSize = new System.Drawing.Size(200, 22);
             this.panelEx5.Name = "panelEx5";
             this.panelEx5.Size = new System.Drawing.Size(310, 22);
@@ -1012,7 +1013,7 @@
             this.CameraDetailBox.Controls.Add(this.labelX5);
             this.CameraDetailBox.Controls.Add(this.labelX4);
             this.CameraDetailBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.CameraDetailBox.Location = new System.Drawing.Point(0, 78);
+            this.CameraDetailBox.Location = new System.Drawing.Point(0, 105);
             this.CameraDetailBox.Name = "CameraDetailBox";
             this.CameraDetailBox.Size = new System.Drawing.Size(310, 89);
             this.CameraDetailBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -1151,6 +1152,7 @@
             this.CameraInfo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CameraInfo.CanvasColor = System.Drawing.SystemColors.Control;
             this.CameraInfo.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.CameraInfo.Controls.Add(this.AddCamera);
             this.CameraInfo.Controls.Add(this.CHK_camdirection);
             this.CameraInfo.Controls.Add(this.ShowCameraInfo);
             this.CameraInfo.Controls.Add(this.CMB_camera);
@@ -1160,7 +1162,7 @@
             this.CameraInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.CameraInfo.Location = new System.Drawing.Point(0, 22);
             this.CameraInfo.Name = "CameraInfo";
-            this.CameraInfo.Size = new System.Drawing.Size(310, 56);
+            this.CameraInfo.Size = new System.Drawing.Size(310, 83);
             this.CameraInfo.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.CameraInfo.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.CameraInfo.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -1168,13 +1170,25 @@
             this.CameraInfo.Style.GradientAngle = 90;
             this.CameraInfo.TabIndex = 34;
             // 
+            // AddCamera
+            // 
+            this.AddCamera.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.AddCamera.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.AddCamera.Location = new System.Drawing.Point(207, 18);
+            this.AddCamera.Name = "AddCamera";
+            this.AddCamera.Size = new System.Drawing.Size(58, 23);
+            this.AddCamera.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.AddCamera.TabIndex = 40;
+            this.AddCamera.Text = "添加";
+            this.AddCamera.Click += new System.EventHandler(this.AddCamera_Click);
+            // 
             // CHK_camdirection
             // 
             // 
             // 
             // 
             this.CHK_camdirection.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.CHK_camdirection.Location = new System.Drawing.Point(207, 3);
+            this.CHK_camdirection.Location = new System.Drawing.Point(137, 57);
             this.CHK_camdirection.Name = "CHK_camdirection";
             this.CHK_camdirection.Size = new System.Drawing.Size(51, 23);
             this.CHK_camdirection.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -1188,7 +1202,7 @@
             // 
             // 
             this.ShowCameraInfo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ShowCameraInfo.Location = new System.Drawing.Point(207, 30);
+            this.ShowCameraInfo.Location = new System.Drawing.Point(207, 57);
             this.ShowCameraInfo.Name = "ShowCameraInfo";
             this.ShowCameraInfo.Size = new System.Drawing.Size(100, 23);
             this.ShowCameraInfo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -1210,6 +1224,7 @@
             this.CMB_camera.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.CMB_camera.TabIndex = 1;
             this.CMB_camera.SelectedIndexChanged += new System.EventHandler(this.CMB_camera_SelectedIndexChanged);
+            this.CMB_camera.SelectedValueChanged += new System.EventHandler(this.CMB_camera_SelectedValueChanged);
             // 
             // labelX1
             // 
@@ -1299,7 +1314,7 @@
             this.AutoSize = true;
             this.Controls.Add(this.panelEx1);
             this.Name = "GridConfig";
-            this.Size = new System.Drawing.Size(310, 700);
+            this.Size = new System.Drawing.Size(310, 727);
             this.Load += new System.EventHandler(this.GridConfig_Load);
             this.panelEx1.ResumeLayout(false);
             this.panelEx1.PerformLayout();
@@ -1422,5 +1437,6 @@
         private DevComponents.DotNetBar.ButtonX DefaultAngle;
         private DevComponents.DotNetBar.Controls.CheckBoxX LockAngle;
         private DevComponents.DotNetBar.SuperTooltip defaultAngleTooltip;
+        private DevComponents.DotNetBar.ButtonX AddCamera;
     }
 }

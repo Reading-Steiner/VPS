@@ -452,6 +452,12 @@
     <Compile Include="Controls\GradualButton.Designer.cs">
       <DependentUpon>GradualButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Grid\CustomCamera.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Grid\CustomCamera.Designer.cs">
+      <DependentUpon>CustomCamera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Grid\GridConfig.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -828,6 +834,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\GobalWPConfig.resx">
       <DependentUpon>GobalWPConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Grid\CustomCamera.resx">
+      <DependentUpon>CustomCamera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Grid\GridConfig.resx">
       <DependentUpon>GridConfig.cs</DependentUpon>
