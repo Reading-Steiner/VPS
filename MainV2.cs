@@ -4356,6 +4356,11 @@ namespace VPS
             GCSViews.FlightPlanner.instance.ClearMission();
         }
 
+        public void AutoWP()
+        {
+            AutoWPButton_Click(null, null);
+        }
+
         private void AutoWPButton_Click(object sender, EventArgs e)
         {
             if (!AutoWPButton.Checked)
