@@ -4,11 +4,12 @@
     using GMap.NET.Internals;
     using System;
     using System.Xml;
-
+    using System.Collections.Generic;
 
     public class MemoryLayerCache
     {
         static readonly LayerInfoCache layerInfoInMemory = new LayerInfoCache();
+        static readonly List<string> layerInfoKey = new List<string>();
 
         static MemoryLayerCache()
         {
@@ -58,12 +59,12 @@
             }
         }
 
-        static public LayerInfo? GetLayerFromMemoryCache(string key)
+        static public LayerInfo? GetLayerFromMemoryCache(string layer)
         {
             try
             {
-                string hash = GetHashCode(key);
-                if (string.IsNullOrEmpty(key) || !layerInfoInMemory.ContainsKey(hash))
+                string hash = GetHashCode(layer);
+                if (string.IsNullOrEmpty(layer) || !layerInfoInMemory.ContainsKey(hash))
                     return null;
                 LayerInfo ret;
                 if (layerInfoInMemory.TryGetValue(hash, out ret))
@@ -162,6 +163,7 @@
                 return "";
             }
         }
+
         internal static void ReadLayerInfoConfig()
         {
             if (!System.IO.File.Exists(".\\plugins\\GMap.NET.CacheProviders.MemoryLayerCache.xml"))

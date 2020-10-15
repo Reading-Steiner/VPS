@@ -15,6 +15,27 @@ namespace VPS.Controls.Layer
         public LayerManager()
         {
             InitializeComponent();
+
+        }
+
+        public List<GMap.NET.Internals.LayerInfo> GetDataSource()
+        {
+            List<GMap.NET.Internals.LayerInfo> dataSource = new List<GMap.NET.Internals.LayerInfo>();
+            for (int index = 0; index < GMap.NET.CacheProviders.MemoryLayerCache.Count; index++)
+            {
+                var info = GMap.NET.CacheProviders.MemoryLayerCache.GetLayerFromMemoryCache(index);
+                if (info != null) 
+                {
+                    dataSource.Add(info.GetValueOrDefault());
+                }
+            }
+            return dataSource;
+        }
+
+        public void BindingDataSource()
+        {
+            LayerDataList.PrimaryGrid.DataSource = GetDataSource();
+            LayerDataList.PrimaryGrid.DataMember = null;
         }
     }
 }

@@ -859,6 +859,9 @@
     <EmbeddedResource Include="Controls\LayerTile.resx">
       <DependentUpon>LayerTile.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Layer\LayerManager.resx">
+      <DependentUpon>LayerManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Layer\LayerReader.resx">
       <DependentUpon>LayerReader.cs</DependentUpon>
     </EmbeddedResource>

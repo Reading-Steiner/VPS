@@ -111,7 +111,7 @@
             this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainPanel.Location = new System.Drawing.Point(0, 0);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(1301, 278);
+            this.MainPanel.Size = new System.Drawing.Size(1300, 278);
             this.MainPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.MainPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.MainPanel.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -183,7 +183,7 @@
             this.HomeLng.DisplayFormat = "0.######";
             this.HomeLng.Increment = 1D;
             this.HomeLng.IsInputReadOnly = true;
-            this.HomeLng.Location = new System.Drawing.Point(1201, 217);
+            this.HomeLng.Location = new System.Drawing.Point(1200, 217);
             this.HomeLng.MaxValue = 400D;
             this.HomeLng.MinValue = -400D;
             this.HomeLng.Name = "HomeLng";
@@ -204,7 +204,7 @@
             this.HomeAlt.DisplayFormat = "0.######";
             this.HomeAlt.Increment = 1D;
             this.HomeAlt.IsInputReadOnly = true;
-            this.HomeAlt.Location = new System.Drawing.Point(1201, 244);
+            this.HomeAlt.Location = new System.Drawing.Point(1200, 244);
             this.HomeAlt.MaxValue = 100000000D;
             this.HomeAlt.MinValue = -100000000D;
             this.HomeAlt.Name = "HomeAlt";
@@ -225,7 +225,7 @@
             this.HomeLat.DisplayFormat = "0.######";
             this.HomeLat.Increment = 1D;
             this.HomeLat.IsInputReadOnly = true;
-            this.HomeLat.Location = new System.Drawing.Point(1201, 190);
+            this.HomeLat.Location = new System.Drawing.Point(1200, 190);
             this.HomeLat.MaxValue = 200D;
             this.HomeLat.MinValue = -200D;
             this.HomeLat.Name = "HomeLat";
@@ -240,7 +240,7 @@
             this.CoordSystem.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.CoordSystem.FormattingEnabled = true;
             this.CoordSystem.ItemHeight = 15;
-            this.CoordSystem.Location = new System.Drawing.Point(1165, 37);
+            this.CoordSystem.Location = new System.Drawing.Point(1164, 37);
             this.CoordSystem.Name = "CoordSystem";
             this.CoordSystem.Size = new System.Drawing.Size(114, 21);
             this.CoordSystem.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -255,7 +255,7 @@
             // 
             // 
             this.labelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX9.Location = new System.Drawing.Point(1165, 17);
+            this.labelX9.Location = new System.Drawing.Point(1164, 17);
             this.labelX9.Name = "labelX9";
             this.labelX9.Size = new System.Drawing.Size(56, 18);
             this.labelX9.TabIndex = 17;
@@ -269,7 +269,7 @@
             // 
             // 
             this.labelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX8.Location = new System.Drawing.Point(1165, 247);
+            this.labelX8.Location = new System.Drawing.Point(1164, 247);
             this.labelX8.Name = "labelX8";
             this.labelX8.Size = new System.Drawing.Size(31, 18);
             this.labelX8.TabIndex = 15;
@@ -283,7 +283,7 @@
             // 
             // 
             this.labelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX7.Location = new System.Drawing.Point(1165, 219);
+            this.labelX7.Location = new System.Drawing.Point(1164, 219);
             this.labelX7.Name = "labelX7";
             this.labelX7.Size = new System.Drawing.Size(31, 18);
             this.labelX7.TabIndex = 14;
@@ -297,7 +297,7 @@
             // 
             // 
             this.labelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX6.Location = new System.Drawing.Point(1165, 193);
+            this.labelX6.Location = new System.Drawing.Point(1164, 193);
             this.labelX6.Name = "labelX6";
             this.labelX6.Size = new System.Drawing.Size(31, 18);
             this.labelX6.TabIndex = 13;
@@ -311,7 +311,7 @@
             // 
             // 
             this.labelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX5.Location = new System.Drawing.Point(1165, 166);
+            this.labelX5.Location = new System.Drawing.Point(1164, 166);
             this.labelX5.Name = "labelX5";
             this.labelX5.Size = new System.Drawing.Size(56, 18);
             this.labelX5.TabIndex = 9;
@@ -327,7 +327,7 @@
             this.WpRad.BackgroundStyle.Class = "DateTimeInputBackground";
             this.WpRad.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.WpRad.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.WpRad.Location = new System.Drawing.Point(1165, 113);
+            this.WpRad.Location = new System.Drawing.Point(1164, 113);
             this.WpRad.MaxValue = 1000;
             this.WpRad.MinValue = 0;
             this.WpRad.Name = "WpRad";
@@ -345,7 +345,7 @@
             // 
             // 
             this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX4.Location = new System.Drawing.Point(1165, 93);
+            this.labelX4.Location = new System.Drawing.Point(1164, 93);
             this.labelX4.Name = "labelX4";
             this.labelX4.Size = new System.Drawing.Size(56, 18);
             this.labelX4.TabIndex = 7;
@@ -501,7 +501,7 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.CommandDataList.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.CommandDataList.RowTemplate.Height = 23;
-            this.CommandDataList.Size = new System.Drawing.Size(985, 272);
+            this.CommandDataList.Size = new System.Drawing.Size(984, 272);
             this.CommandDataList.TabIndex = 0;
             this.CommandDataList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CommandDataList_CellContentClick);
             // 
@@ -790,7 +790,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.MainPanel);
             this.Name = "CommandsPanel";
-            this.Size = new System.Drawing.Size(1301, 278);
+            this.Size = new System.Drawing.Size(1300, 278);
             this.Leave += new System.EventHandler(this.CommandsPanel_Leave);
             this.MainPanel.ResumeLayout(false);
             this.MainPanel.PerformLayout();
