@@ -533,7 +533,7 @@ namespace VPS.GCSViews
                 int no = history.Count - 1;
                 var pop = history[no];
                 history.RemoveAt(no);
-                WPtoScreen(pop);
+                WPtoScreen(pop, false);
                 historyChange?.Invoke(history.Count);
             }
         }
@@ -999,7 +999,7 @@ namespace VPS.GCSViews
                 Text = "Receiving WP's"
             };
 
-            frmProgressReporter.DoWork += getWPs;
+            //frmProgressReporter.DoWork += getWPs;
             frmProgressReporter.UpdateProgressAndStatus(-1, "Receiving WP's");
 
             ThemeManager.ApplyThemeTo(frmProgressReporter);
@@ -1681,7 +1681,7 @@ namespace VPS.GCSViews
             quickadd = false;
         }
 
-        public void WPtoScreen(List<Locationwp> cmds)
+        public void WPtoScreen(List<Locationwp> cmds, bool home = true, bool append = false)
         {
             try
             {
@@ -1690,7 +1690,7 @@ namespace VPS.GCSViews
                     try
                     {
                         log.Info("Process " + cmds.Count);
-                        processToScreen(cmds);
+                        processToScreen(cmds, home, append);
                     }
                     catch (Exception exx)
                     {
@@ -2637,44 +2637,6 @@ namespace VPS.GCSViews
             }
         }
 
-        public void Cmb_missiontype_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // switch the mavcmd list and init
-            Activate();
-
-            var wp = MainMap.Overlays.Where(a => a.Id == "WPOverlay");
-            var fence = MainMap.Overlays.Where(a => a.Id == "fence");
-            var rally = MainMap.Overlays.Where(a => a.Id == "rally");
-
-            if (wp.Count() > 0) MainMap.Overlays.Remove(wp.First());
-            if (fence.Count() > 0) MainMap.Overlays.Remove(fence.First());
-            if (rally.Count() > 0) MainMap.Overlays.Remove(rally.First());
-
-            // update the displayed items
-            if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.RALLY)
-            {
-                BUT_Add.Visible = false;
-                processToScreen(MainV2.comPort.MAV.rallypoints.Select(a => (Locationwp)a.Value).ToList());
-
-            }
-            else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
-            {
-                BUT_Add.Visible = false;
-                processToScreen(MainV2.comPort.MAV.fencepoints.Select(a => (Locationwp)a.Value).ToList());
-
-                DevComponents.DotNetBar.MessageBoxEx.Show("FlightPlan Fence", "Please use the Polygon drawing tool to draw " +
-                                                            "Inclusion and Exclusion areas (round circle to the left)," +
-                                                            " once drawn use the same icon to convert it to a inclusion " +
-                                                            "or exclusion fence");
-            }
-            else
-            {
-                BUT_Add.Visible = true;
-                processToScreen(MainV2.comPort.MAV.wps.Select(a => (Locationwp)a.Value).ToList());
-            }
-
-            writeKML();
-        }
 
         private void comboBoxMapType_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -4137,30 +4099,30 @@ namespace VPS.GCSViews
             return new RectLatLng(maxy, minx, Math.Abs(maxx - minx), Math.Abs(miny - maxy));
         }
 
-        private void getWPs(IProgressReporterDialogue sender)
-        {
-            var type = (MAVLink.MAV_MISSION_TYPE)Invoke((Func<MAVLink.MAV_MISSION_TYPE>)delegate
-            {
-                return (MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue;
-            });
+        //private void getWPs(IProgressReporterDialogue sender)
+        //{
+        //    var type = (MAVLink.MAV_MISSION_TYPE)Invoke((Func<MAVLink.MAV_MISSION_TYPE>)delegate
+        //    {
+        //        return (MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue;
+        //    });
 
-            List<Locationwp> cmds = Task.Run(async () => await mav_mission.download(MainV2.comPort, MainV2.comPort.MAV.sysid,
-                MainV2.comPort.MAV.compid,
-                type,
-                (percent, status) =>
-                {
-                    if (sender.doWorkArgs.CancelRequested)
-                    {
-                        sender.doWorkArgs.CancelAcknowledged = true;
-                        sender.doWorkArgs.ErrorMessage = "User Canceled";
-                        throw new Exception("User Canceled");
-                    }
+        //    List<Locationwp> cmds = Task.Run(async () => await mav_mission.download(MainV2.comPort, MainV2.comPort.MAV.sysid,
+        //        MainV2.comPort.MAV.compid,
+        //        type,
+        //        (percent, status) =>
+        //        {
+        //            if (sender.doWorkArgs.CancelRequested)
+        //            {
+        //                sender.doWorkArgs.CancelAcknowledged = true;
+        //                sender.doWorkArgs.ErrorMessage = "User Canceled";
+        //                throw new Exception("User Canceled");
+        //            }
 
-                    sender.UpdateProgressAndStatus(percent, status);
-                }).ConfigureAwait(false)).Result;
+        //            sender.UpdateProgressAndStatus(percent, status);
+        //        }).ConfigureAwait(false)).Result;
 
-            WPtoScreen(cmds);
-        }
+        //    WPtoScreen(cmds);
+        //}
 
         public void insertSplineWPToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -5259,7 +5221,7 @@ namespace VPS.GCSViews
         /// <summary>
         /// Processes a loaded EEPROM to the map and datagrid
         /// </summary>
-        private void processToScreen(List<Locationwp> cmds, bool append = false)
+        private void processToScreen(List<Locationwp> cmds, bool home, bool append)
         {
             quickadd = true;
 
@@ -5360,41 +5322,43 @@ namespace VPS.GCSViews
                 return (MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue;
             });
 
-            if (!append && type == MAVLink.MAV_MISSION_TYPE.MISSION)
+            if (!append && type == MAVLink.MAV_MISSION_TYPE.MISSION && Commands.RowCount > 0)
             {
-                try
+                if (home)
                 {
-                    DataGridViewTextBoxCell cellhome;
-                    cellhome = Commands.Rows[0].Cells[Lat.Index] as DataGridViewTextBoxCell;
-                    if (cellhome.Value != null)
+                    try
                     {
-                        if (cellhome.Value.ToString() != TXT_homelat.Text && cellhome.Value.ToString() != "0")
+                        DataGridViewTextBoxCell cellhome;
+                        cellhome = Commands.Rows[0].Cells[Lat.Index] as DataGridViewTextBoxCell;
+                        if (cellhome.Value != null)
                         {
-                            //DevComponents.DotNetBar.MessageBoxEx.Show(this, "变更Home位置", "重设Home位置", MessageBoxButtons.YesNo);
-                            //var dr = CustomMessageBox.Show("变更Home位置", "重设Home位置",
-                            //    MessageBoxButtons.YesNo);
+                            if (cellhome.Value.ToString() != TXT_homelat.Text && cellhome.Value.ToString() != "0")
+                            {
+                                //DevComponents.DotNetBar.MessageBoxEx.Show(this, "变更Home位置", "重设Home位置", MessageBoxButtons.YesNo);
+                                //var dr = CustomMessageBox.Show("变更Home位置", "重设Home位置",
+                                //    MessageBoxButtons.YesNo);
 
-                            //if (dr == (int)DialogResult.Yes)
-                            //{
-                            ChangeHome(new PointLatLngAlt(
-                                double.Parse(Commands.Rows[0].Cells[Lat.Index].Value.ToString()),
-                                double.Parse(Commands.Rows[0].Cells[Lon.Index].Value.ToString()),
-                                double.Parse(Commands.Rows[0].Cells[Alt.Index].Value.ToString()) * CurrentState.multiplieralt
-                                ));
-                            //}
+                                //if (dr == (int)DialogResult.Yes)
+                                //{
+                                ChangeHome(new PointLatLngAlt(
+                                    double.Parse(Commands.Rows[0].Cells[Lat.Index].Value.ToString()),
+                                    double.Parse(Commands.Rows[0].Cells[Lon.Index].Value.ToString()),
+                                    double.Parse(Commands.Rows[0].Cells[Alt.Index].Value.ToString()) * CurrentState.multiplieralt
+                                    ));
+                                //}
+                            }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex.ToString());
-                } // if there is no valid home
+                    catch (Exception ex)
+                    {
+                        log.Error(ex.ToString());
+                    } // if there is no valid home
 
-                if (Commands.RowCount > 0)
-                {
+
                     log.Info("remove home from list");
                     Commands.Rows.Remove(Commands.Rows[0]); // remove home row
                 }
+
             }
 
             quickadd = false;
@@ -5681,7 +5645,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     {
                         try
                         {
-                            loadWaypointsKML(file);
+                            loadWaypointsKML(file, false);
                         }
                         catch
                         {
@@ -5704,7 +5668,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                             var cmds = MissionFile.ConvertToLocationwps(format);
 
-                            processToScreen(cmds);
+                            WPtoScreen(cmds);
 
                             isSendChange = true;
                             writeKML();
@@ -5726,7 +5690,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
-        private void loadWaypointsKML(string file)
+        private void loadWaypointsKML(string file, bool append)
         {
             // Create the file and writer.
             if (!System.IO.File.Exists(file))
@@ -5868,7 +5832,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                                         cmds.Add(temp);
                                     }
                                 }
-                                processToScreen(cmds, false);
+                                WPtoScreen(cmds, true, append);
                                 isSendChange = true;
                                 writeKML();
                                 isSendChange = false;
@@ -5892,7 +5856,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             {
                 var cmds = WaypointFile.ReadWaypointFile(file);
 
-                processToScreen(cmds, append);
+                WPtoScreen(cmds, true, append);
 
                 isSendChange = true;
                 writeKML();
@@ -5936,7 +5900,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     cmds.RemoveAt(i);
                     cmds.Insert(i, temp);
                 }
-                processToScreen(cmds, append);
+                WPtoScreen(cmds, true, append);
 
                 isSendChange = true;
                 writeKML();

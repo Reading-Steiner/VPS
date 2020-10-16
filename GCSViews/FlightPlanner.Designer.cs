@@ -685,7 +685,6 @@ namespace VPS.GCSViews
             resources.GetString("cmb_missiontype.Items2")});
             this.cmb_missiontype.Name = "cmb_missiontype";
             this.toolTip1.SetToolTip(this.cmb_missiontype, resources.GetString("cmb_missiontype.ToolTip"));
-            this.cmb_missiontype.SelectedIndexChanged += new System.EventHandler(this.Cmb_missiontype_SelectedIndexChanged);
             // 
             // MainMap
             // 
