@@ -131,9 +131,10 @@
             this.AutoWarnAlt.Checked = true;
             this.AutoWarnAlt.CheckState = System.Windows.Forms.CheckState.Checked;
             this.AutoWarnAlt.CheckValue = "Y";
+            this.AutoWarnAlt.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AutoWarnAlt.Location = new System.Drawing.Point(21, 188);
             this.AutoWarnAlt.Name = "AutoWarnAlt";
-            this.AutoWarnAlt.Size = new System.Drawing.Size(113, 18);
+            this.AutoWarnAlt.Size = new System.Drawing.Size(128, 20);
             this.AutoWarnAlt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.AutoWarnAlt.TabIndex = 24;
             this.AutoWarnAlt.Text = "自动生成警告线";
@@ -146,9 +147,10 @@
             // 
             // 
             this.labelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX10.Location = new System.Drawing.Point(21, 220);
+            this.labelX10.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelX10.Location = new System.Drawing.Point(21, 219);
             this.labelX10.Name = "labelX10";
-            this.labelX10.Size = new System.Drawing.Size(56, 18);
+            this.labelX10.Size = new System.Drawing.Size(65, 20);
             this.labelX10.TabIndex = 23;
             this.labelX10.Text = "航飞基准";
             // 
@@ -183,7 +185,7 @@
             this.HomeLng.DisplayFormat = "0.######";
             this.HomeLng.Increment = 1D;
             this.HomeLng.IsInputReadOnly = true;
-            this.HomeLng.Location = new System.Drawing.Point(1200, 217);
+            this.HomeLng.Location = new System.Drawing.Point(1200, 216);
             this.HomeLng.MaxValue = 400D;
             this.HomeLng.MinValue = -400D;
             this.HomeLng.Name = "HomeLng";
@@ -225,7 +227,7 @@
             this.HomeLat.DisplayFormat = "0.######";
             this.HomeLat.Increment = 1D;
             this.HomeLat.IsInputReadOnly = true;
-            this.HomeLat.Location = new System.Drawing.Point(1200, 190);
+            this.HomeLat.Location = new System.Drawing.Point(1200, 188);
             this.HomeLat.MaxValue = 200D;
             this.HomeLat.MinValue = -200D;
             this.HomeLat.Name = "HomeLat";
@@ -255,9 +257,10 @@
             // 
             // 
             this.labelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX9.Location = new System.Drawing.Point(1164, 17);
+            this.labelX9.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelX9.Location = new System.Drawing.Point(1164, 15);
             this.labelX9.Name = "labelX9";
-            this.labelX9.Size = new System.Drawing.Size(56, 18);
+            this.labelX9.Size = new System.Drawing.Size(65, 20);
             this.labelX9.TabIndex = 17;
             this.labelX9.Text = "坐标系统";
             // 
@@ -269,9 +272,10 @@
             // 
             // 
             this.labelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX8.Location = new System.Drawing.Point(1164, 247);
+            this.labelX8.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelX8.Location = new System.Drawing.Point(1159, 247);
             this.labelX8.Name = "labelX8";
-            this.labelX8.Size = new System.Drawing.Size(31, 18);
+            this.labelX8.Size = new System.Drawing.Size(36, 20);
             this.labelX8.TabIndex = 15;
             this.labelX8.Text = "高度";
             // 
@@ -283,9 +287,10 @@
             // 
             // 
             this.labelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX7.Location = new System.Drawing.Point(1164, 219);
+            this.labelX7.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelX7.Location = new System.Drawing.Point(1159, 218);
             this.labelX7.Name = "labelX7";
-            this.labelX7.Size = new System.Drawing.Size(31, 18);
+            this.labelX7.Size = new System.Drawing.Size(36, 20);
             this.labelX7.TabIndex = 14;
             this.labelX7.Text = "经度";
             // 
@@ -297,9 +302,10 @@
             // 
             // 
             this.labelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX6.Location = new System.Drawing.Point(1164, 193);
+            this.labelX6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelX6.Location = new System.Drawing.Point(1159, 191);
             this.labelX6.Name = "labelX6";
-            this.labelX6.Size = new System.Drawing.Size(31, 18);
+            this.labelX6.Size = new System.Drawing.Size(36, 20);
             this.labelX6.TabIndex = 13;
             this.labelX6.Text = "纬度";
             // 
@@ -311,9 +317,10 @@
             // 
             // 
             this.labelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX5.Location = new System.Drawing.Point(1164, 166);
+            this.labelX5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelX5.Location = new System.Drawing.Point(1164, 164);
             this.labelX5.Name = "labelX5";
-            this.labelX5.Size = new System.Drawing.Size(56, 18);
+            this.labelX5.Size = new System.Drawing.Size(65, 20);
             this.labelX5.TabIndex = 9;
             this.labelX5.Text = "初始位置";
             // 
@@ -327,7 +334,7 @@
             this.WpRad.BackgroundStyle.Class = "DateTimeInputBackground";
             this.WpRad.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.WpRad.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.WpRad.Location = new System.Drawing.Point(1164, 113);
+            this.WpRad.Location = new System.Drawing.Point(1164, 103);
             this.WpRad.MaxValue = 1000;
             this.WpRad.MinValue = 0;
             this.WpRad.Name = "WpRad";
@@ -345,9 +352,10 @@
             // 
             // 
             this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX4.Location = new System.Drawing.Point(1164, 93);
+            this.labelX4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelX4.Location = new System.Drawing.Point(1164, 81);
             this.labelX4.Name = "labelX4";
-            this.labelX4.Size = new System.Drawing.Size(56, 18);
+            this.labelX4.Size = new System.Drawing.Size(65, 20);
             this.labelX4.TabIndex = 7;
             this.labelX4.Text = "航点半径";
             // 
@@ -358,9 +366,10 @@
             // 
             // 
             this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX3.Location = new System.Drawing.Point(21, 144);
+            this.labelX3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelX3.Location = new System.Drawing.Point(21, 140);
             this.labelX3.Name = "labelX3";
-            this.labelX3.Size = new System.Drawing.Size(56, 18);
+            this.labelX3.Size = new System.Drawing.Size(65, 20);
             this.labelX3.TabIndex = 6;
             this.labelX3.Text = "高度警告";
             // 
@@ -391,7 +400,7 @@
             this.DefaultAlt.BackgroundStyle.Class = "DateTimeInputBackground";
             this.DefaultAlt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.DefaultAlt.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.DefaultAlt.Location = new System.Drawing.Point(21, 113);
+            this.DefaultAlt.Location = new System.Drawing.Point(21, 103);
             this.DefaultAlt.MaxValue = 10000000;
             this.DefaultAlt.MinValue = -10000000;
             this.DefaultAlt.Name = "DefaultAlt";
@@ -408,9 +417,10 @@
             // 
             // 
             this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX2.Location = new System.Drawing.Point(21, 93);
+            this.labelX2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelX2.Location = new System.Drawing.Point(21, 81);
             this.labelX2.Name = "labelX2";
-            this.labelX2.Size = new System.Drawing.Size(56, 18);
+            this.labelX2.Size = new System.Drawing.Size(65, 20);
             this.labelX2.TabIndex = 3;
             this.labelX2.Text = "默认高度";
             // 
@@ -421,9 +431,10 @@
             // 
             // 
             this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX1.Location = new System.Drawing.Point(21, 17);
+            this.labelX1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelX1.Location = new System.Drawing.Point(21, 15);
             this.labelX1.Name = "labelX1";
-            this.labelX1.Size = new System.Drawing.Size(56, 18);
+            this.labelX1.Size = new System.Drawing.Size(65, 20);
             this.labelX1.TabIndex = 2;
             this.labelX1.Text = "高度框架";
             // 
@@ -450,9 +461,9 @@
             this.CommandDataList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.CommandDataList.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.CommandDataList.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedVertical;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;

@@ -348,6 +348,8 @@ namespace VPS
             // 
             // LoadTiffButton
             // 
+            this.LoadTiffButton.Image = ((System.Drawing.Image)(resources.GetObject("LoadTiffButton.Image")));
+            this.LoadTiffButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.LoadTiffButton.Name = "LoadTiffButton";
             this.LoadTiffButton.SubItemsExpandWidth = 14;
             this.SuperTooltip.SetSuperTooltip(this.LoadTiffButton, new DevComponents.DotNetBar.SuperTooltipInfo("加载工作区", "F5", "加载一幅Tiff栅格影像，做为项目的工作区。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
@@ -357,6 +359,8 @@ namespace VPS
             // ZoomTiffButton
             // 
             this.ZoomTiffButton.Enabled = false;
+            this.ZoomTiffButton.Image = ((System.Drawing.Image)(resources.GetObject("ZoomTiffButton.Image")));
+            this.ZoomTiffButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.ZoomTiffButton.Name = "ZoomTiffButton";
             this.ZoomTiffButton.SubItemsExpandWidth = 14;
             this.SuperTooltip.SetSuperTooltip(this.ZoomTiffButton, new DevComponents.DotNetBar.SuperTooltipInfo("定位工作区", "F6", "移动地图到达工作区所在位置。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
@@ -365,6 +369,8 @@ namespace VPS
             // 
             // TiffManagerButton
             // 
+            this.TiffManagerButton.Image = ((System.Drawing.Image)(resources.GetObject("TiffManagerButton.Image")));
+            this.TiffManagerButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.TiffManagerButton.Name = "TiffManagerButton";
             this.TiffManagerButton.SubItemsExpandWidth = 14;
             this.SuperTooltip.SetSuperTooltip(this.TiffManagerButton, new DevComponents.DotNetBar.SuperTooltipInfo("管理工作区", "F7", "管理历史工作区。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
@@ -404,6 +410,8 @@ namespace VPS
             // 
             // OpenProjectButton
             // 
+            this.OpenProjectButton.Image = ((System.Drawing.Image)(resources.GetObject("OpenProjectButton.Image")));
+            this.OpenProjectButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.OpenProjectButton.Name = "OpenProjectButton";
             this.OpenProjectButton.SubItemsExpandWidth = 14;
             this.SuperTooltip.SetSuperTooltip(this.OpenProjectButton, new DevComponents.DotNetBar.SuperTooltipInfo("打开工程", "F1", "打开飞行计划的项目工程文件。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
@@ -412,6 +420,8 @@ namespace VPS
             // 
             // SaveProjectButton
             // 
+            this.SaveProjectButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveProjectButton.Image")));
+            this.SaveProjectButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.SaveProjectButton.Name = "SaveProjectButton";
             this.SaveProjectButton.SubItemsExpandWidth = 14;
             this.SuperTooltip.SetSuperTooltip(this.SaveProjectButton, new DevComponents.DotNetBar.SuperTooltipInfo("保存工程", "F2", "将当前工作进度保存为项目工程文件。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
@@ -789,6 +799,7 @@ namespace VPS
             // 
             // ClearPolygonButton
             // 
+            this.ClearPolygonButton.Image = ((System.Drawing.Image)(resources.GetObject("ClearPolygonButton.Image")));
             this.ClearPolygonButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.ClearPolygonButton.Name = "ClearPolygonButton";
             this.ClearPolygonButton.SubItemsExpandWidth = 14;
@@ -1102,9 +1113,9 @@ namespace VPS
             this.BottomBar.CanMove = false;
             this.BottomBar.CanUndock = false;
             this.BottomBar.CloseSingleTab = true;
-            this.BottomBar.Controls.Add(this.LayerManagerPanel);
             this.BottomBar.Controls.Add(this.CommandsPanel);
             this.BottomBar.Controls.Add(this.panelDockContainer1);
+            this.BottomBar.Controls.Add(this.LayerManagerPanel);
             this.BottomBar.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.BottomBar.GrabHandleStyle = DevComponents.DotNetBar.eGrabHandleStyle.Caption;
             this.BottomBar.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
@@ -1114,13 +1125,13 @@ namespace VPS
             this.BottomBar.LayoutType = DevComponents.DotNetBar.eLayoutType.DockContainer;
             this.BottomBar.Location = new System.Drawing.Point(0, 3);
             this.BottomBar.Name = "BottomBar";
-            this.BottomBar.SelectedDockTab = 1;
+            this.BottomBar.SelectedDockTab = 0;
             this.BottomBar.Size = new System.Drawing.Size(1085, 323);
             this.BottomBar.Stretch = true;
             this.BottomBar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.BottomBar.TabIndex = 0;
             this.BottomBar.TabStop = false;
-            this.BottomBar.Text = "图层管理器";
+            this.BottomBar.Text = "航点";
             // 
             // LayerManagerPanel
             // 

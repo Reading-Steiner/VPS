@@ -198,7 +198,7 @@
             this.panelEx2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx2.Location = new System.Drawing.Point(0, 0);
             this.panelEx2.Name = "panelEx2";
-            this.panelEx2.Size = new System.Drawing.Size(310, 974);
+            this.panelEx2.Size = new System.Drawing.Size(310, 976);
             this.panelEx2.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx2.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelEx2.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -214,7 +214,7 @@
             this.panelEx9.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelEx9.Controls.Add(this.Accept);
             this.panelEx9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx9.Location = new System.Drawing.Point(0, 942);
+            this.panelEx9.Location = new System.Drawing.Point(0, 944);
             this.panelEx9.Name = "panelEx9";
             this.panelEx9.Size = new System.Drawing.Size(310, 32);
             this.panelEx9.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -247,7 +247,7 @@
             this.panelEx5.Controls.Add(this.panelEx10);
             this.panelEx5.Controls.Add(this.panelEx11);
             this.panelEx5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx5.Location = new System.Drawing.Point(0, 747);
+            this.panelEx5.Location = new System.Drawing.Point(0, 749);
             this.panelEx5.Name = "panelEx5";
             this.panelEx5.Size = new System.Drawing.Size(310, 195);
             this.panelEx5.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -526,9 +526,10 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.Location = new System.Drawing.Point(6, 4);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.Size = new System.Drawing.Size(63, 14);
             this.label3.TabIndex = 24;
             this.label3.Text = "存储设置";
             // 
@@ -544,7 +545,7 @@
             this.panelEx3.Controls.Add(this.panelEx7);
             this.panelEx3.Controls.Add(this.panelEx12);
             this.panelEx3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx3.Location = new System.Drawing.Point(0, 339);
+            this.panelEx3.Location = new System.Drawing.Point(0, 341);
             this.panelEx3.Name = "panelEx3";
             this.panelEx3.Size = new System.Drawing.Size(310, 408);
             this.panelEx3.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -741,9 +742,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(6, 4);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.Size = new System.Drawing.Size(63, 14);
             this.label1.TabIndex = 26;
             this.label1.Text = "显示设置";
             // 
@@ -757,7 +759,7 @@
             this.panelEx4.Controls.Add(this.panelEx13);
             this.panelEx4.Controls.Add(this.panelEx14);
             this.panelEx4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx4.Location = new System.Drawing.Point(0, 99);
+            this.panelEx4.Location = new System.Drawing.Point(0, 101);
             this.panelEx4.Name = "panelEx4";
             this.panelEx4.Size = new System.Drawing.Size(310, 240);
             this.panelEx4.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -951,9 +953,10 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.Location = new System.Drawing.Point(5, 3);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.Size = new System.Drawing.Size(63, 14);
             this.label2.TabIndex = 25;
             this.label2.Text = "影像信息";
             // 
@@ -969,7 +972,7 @@
             this.panelEx8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEx8.Location = new System.Drawing.Point(0, 0);
             this.panelEx8.Name = "panelEx8";
-            this.panelEx8.Size = new System.Drawing.Size(310, 99);
+            this.panelEx8.Size = new System.Drawing.Size(310, 101);
             this.panelEx8.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx8.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx8.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
@@ -987,7 +990,7 @@
             this.FileReaderBox.Controls.Add(this.OpenFile);
             this.FileReaderBox.Controls.Add(this.OpenFilePath);
             this.FileReaderBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.FileReaderBox.Location = new System.Drawing.Point(0, 46);
+            this.FileReaderBox.Location = new System.Drawing.Point(0, 48);
             this.FileReaderBox.Name = "FileReaderBox";
             this.FileReaderBox.Size = new System.Drawing.Size(310, 53);
             this.FileReaderBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -1047,7 +1050,7 @@
             this.panelEx15.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEx15.Location = new System.Drawing.Point(0, 22);
             this.panelEx15.Name = "panelEx15";
-            this.panelEx15.Size = new System.Drawing.Size(310, 24);
+            this.panelEx15.Size = new System.Drawing.Size(310, 26);
             this.panelEx15.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx15.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelEx15.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -1080,7 +1083,7 @@
             this.FromFile.CheckValue = "Y";
             this.FromFile.Location = new System.Drawing.Point(100, 3);
             this.FromFile.Name = "FromFile";
-            this.FromFile.Size = new System.Drawing.Size(51, 18);
+            this.FromFile.Size = new System.Drawing.Size(56, 20);
             this.FromFile.TabIndex = 17;
             this.FromFile.Text = "文件";
             this.FromFile.CheckedChanged += new System.EventHandler(this.FromFile_CheckedChanged);
@@ -1119,9 +1122,10 @@
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label6.Location = new System.Drawing.Point(5, 4);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 12);
+            this.label6.Size = new System.Drawing.Size(63, 14);
             this.label6.TabIndex = 26;
             this.label6.Text = "文件设置";
             // 
@@ -1131,7 +1135,7 @@
             this.AutoSize = true;
             this.Controls.Add(this.panelEx2);
             this.Name = "LayerReader";
-            this.Size = new System.Drawing.Size(310, 974);
+            this.Size = new System.Drawing.Size(310, 976);
             this.panelEx2.ResumeLayout(false);
             this.panelEx2.PerformLayout();
             this.panelEx9.ResumeLayout(false);
