@@ -1114,12 +1114,12 @@ namespace VPS
             netDxf.DxfDocument dxf = new netDxf.DxfDocument();
 
             Polyline polyline = new Polyline(vertexes, true);
-            polyline.Layer = new Layer("polyline");
+            polyline.Layer = new netDxf.Tables.Layer("polyline");
             polyline.Layer.Color.Index = 24;
             dxf.AddEntity(polyline);
 
             var pnt = new Point(new netDxf.Vector3(-(float)x[0], -(float)x[1], -(float)x[2]));
-            pnt.Layer = new Layer("new offset");
+            pnt.Layer = new netDxf.Tables.Layer("new offset");
             pnt.Layer.Color.Index = 21;
             dxf.AddEntity(pnt);
 

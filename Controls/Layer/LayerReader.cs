@@ -222,11 +222,15 @@ namespace VPS.Controls.Layer
                 openPath = OpenFilePath.Text;
             if (UsingTransparent.Checked)
             {
-                MainV2.instance.AddLayerOverlay(openPath, PointLeftTop, ColorPickerButton.SelectedColor);
+                VPS.Layer.LayerInfo layerInfo = 
+                    new VPS.Layer.LayerInfo(openPath, PointLeftTop, ColorPickerButton.SelectedColor);
+                MainV2.instance.AddLayerOverlay(layerInfo);
             }
             else
             {
-                MainV2.instance.AddLayerOverlay(openPath, PointLeftTop, Color.Transparent);
+                VPS.Layer.LayerInfo layerInfo =
+                    new VPS.Layer.LayerInfo(openPath, PointLeftTop, Color.Transparent);
+                MainV2.instance.AddLayerOverlay(layerInfo);
             }
             if (SettingDefaultMap.Checked)
             {

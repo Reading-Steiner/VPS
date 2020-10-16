@@ -96,16 +96,16 @@ namespace VPS.Controls
             this.SelectedGroup = this.LayerInfoList.Groups[0];
             this.NormalGroup = this.LayerInfoList.Groups[1];
             
-            for (int i =0; i < MemoryLayerCache.Count; i++)
+            for (int i =0; i < VPS.Layer.MemoryLayerCache.Count; i++)
             {
                 System.Windows.Forms.ListViewItem item = new System.Windows.Forms.ListViewItem();
-                var layerInfo = MemoryLayerCache.GetLayerFromMemoryCache(i);
+                var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(i);
                 if (layerInfo == null)
                     continue;
                 item.Text = layerInfo.GetValueOrDefault().Layer;
-                item.SubItems.Add(layerInfo.GetValueOrDefault().Lng.ToString());
-                item.SubItems.Add(layerInfo.GetValueOrDefault().Lat.ToString());
-                item.SubItems.Add(layerInfo.GetValueOrDefault().Alt.ToString());
+                item.SubItems.Add(layerInfo.GetValueOrDefault().Origin.Lng.ToString());
+                item.SubItems.Add(layerInfo.GetValueOrDefault().Origin.Lat.ToString());
+                item.SubItems.Add(layerInfo.GetValueOrDefault().Origin.Alt.ToString());
                 if (layerInfo.GetValueOrDefault().Layer == Utilities.Settings.Instance["defaultTiffLayer"])
                     this.SelectedGroup.Items.Add(item);
                 else

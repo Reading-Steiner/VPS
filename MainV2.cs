@@ -235,7 +235,7 @@ namespace VPS
         /// ie configuration gets reloaded on every click
         /// </summary>
         public GCSViews.FlightData FlightData;
-        MemoryLayerCache layerCache;
+        VPS.Layer.MemoryLayerCache layerCache;
         public GCSViews.FlightPlanner FlightPlanner;
         //GCSViews.SITL Simulation;
 
@@ -781,7 +781,7 @@ namespace VPS
 
             // save config to test we have write access
             SetInitHandler();
-            layerCache = new MemoryLayerCache();
+            layerCache = new VPS.Layer.MemoryLayerCache();
             //var layer = MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
             //if (layer != null)
             //{
@@ -1133,7 +1133,7 @@ namespace VPS
         public PointLatLngAlt defaultOrigin = new PointLatLngAlt();
         public PointLatLngAlt defaultHome = new PointLatLngAlt();
         public GeoBitmap currentLayer;
-        public GMap.NET.Internals.LayerInfo selectedLayer;
+        public VPS.Layer.LayerInfo selectedLayer;
         #endregion
 
         public void LoadTiffLayer()
@@ -1148,7 +1148,7 @@ namespace VPS
 
         public bool LoadDefaultLayer()
         {
-            var layerInfo = MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
+            var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
             if (layerInfo != null)
             {
                 return AddLayerOverlay(layerInfo.GetValueOrDefault());
@@ -1160,18 +1160,18 @@ namespace VPS
 
         public bool AddLayerOverlay(string path, PointLatLngAlt origin, Color transparent)
         {
-            var layerInfo = new GMap.NET.Internals.LayerInfo(path, origin.Lng, origin.Lat, origin.Alt, transparent);
-            MemoryLayerCache.AddLayerToMemoryCache(layerInfo);
+            var layerInfo = new VPS.Layer.LayerInfo(path, origin, transparent);
+            VPS.Layer.MemoryLayerCache.AddLayerToMemoryCache(layerInfo);
             return SetLayerOverlay(layerInfo);
         }
 
-        public bool AddLayerOverlay(GMap.NET.Internals.LayerInfo info)
+        public bool AddLayerOverlay(VPS.Layer.LayerInfo info)
         {
-            MemoryLayerCache.AddLayerToMemoryCache(info);
+            VPS.Layer.MemoryLayerCache.AddLayerToMemoryCache(info);
             return SetLayerOverlay(info);
         }
 
-        private bool SetLayerOverlay(GMap.NET.Internals.LayerInfo layerInfo)
+        private bool SetLayerOverlay(VPS.Layer.LayerInfo layerInfo)
         {
             if (File.Exists(layerInfo.Layer))
             {
@@ -1191,8 +1191,8 @@ namespace VPS
 
                     this.currentLayerPath = layerInfo.Layer;
                     this.displayRect = bitmap.Rect;
-                    this.defaultOrigin = new PointLatLngAlt(layerInfo.Lat, layerInfo.Lng, layerInfo.Alt);
-                    this.defaultHome = new PointLatLngAlt(layerInfo.Lat, layerInfo.Lng, layerInfo.Alt);
+                    this.defaultOrigin = layerInfo.Origin;
+                    this.defaultHome = layerInfo.Origin;
                     this.selectedLayer = layerInfo;
                     MenuZoomToLayer_Click(this, null);
                     return true;
@@ -4327,7 +4327,24 @@ namespace VPS
 
         private void TiffManagerButton_Click(object sender, EventArgs e)
         {
-            
+            if (!TiffManagerButton.Checked)
+            {
+                TiffManagerButton.Checked = true;
+                ((System.ComponentModel.ISupportInitialize)(this.BottomBar)).BeginInit();
+                LayerManagerDockContainerItem.Visible = true;
+                BottomBar.SelectedDockContainerItem = LayerManagerDockContainerItem;
+                ((System.ComponentModel.ISupportInitialize)(this.BottomBar)).EndInit();
+                this.BottomBar.ResumeLayout(false);
+            }
+            else
+            {
+                TiffManagerButton.Checked = false;
+                ((System.ComponentModel.ISupportInitialize)(this.BottomBar)).BeginInit();
+                LayerManagerDockContainerItem.Visible = false;
+                //LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;
+                ((System.ComponentModel.ISupportInitialize)(this.BottomBar)).EndInit();
+                this.BottomBar.ResumeLayout(false);
+            }
         }
 
         private void DrawPolygonButton_Click(object sender, EventArgs e)

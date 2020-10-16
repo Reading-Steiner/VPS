@@ -1,4 +1,4 @@
-﻿namespace GMap.NET.CacheProviders
+﻿namespace VPS.Layer
 {
     using System.Diagnostics;
     using GMap.NET.Internals;
@@ -148,7 +148,7 @@
             else
             {
 
-                return (data.Lng + data.Lat + data.Alt).GetHashCode().ToString();
+                return (data.Origin).GetHashCode().ToString();
             }
         }
 

@@ -1,4 +1,4 @@
-﻿namespace GMap.NET.Internals
+﻿namespace VPS.Layer
 {
     using System.IO;
     using System;
@@ -8,53 +8,42 @@
 
     public struct LayerInfo
     {
-        private string path;
-        private readonly Color transparent;
+        private enum LayerTypes
+        {
+            file
+        }
+        private LayerTypes layerType;
+        public string LayerType {
+            get
+            {
+                return layerType.ToString() ;
+            }
+        }
         private double originLng;
         private double originLat;
         private double originAlt;
+        private string frameOfAlt;
+        public Utilities.PointLatLngAlt Origin
+        {
+            get
+            {
+                var origin = new Utilities.PointLatLngAlt(originLat, originLng, originAlt);
+                origin.Tag2 = frameOfAlt;
+                return origin;
+            }
+            set
+            {
+                originLng = value.Lng;
+                originLat = value.Lat;
+                originAlt = value.Alt;
+                if (value.Tag2 == "Relative" || value.Tag2 == "Absolute" || value.Tag2 == "Terrain")
+                    frameOfAlt = value.Tag2;
+                else
+                    frameOfAlt = "Relative";
+            }
+        }
+
         private double scale;
-
-
-        public double Lng
-        {
-            get
-            {
-                return originLng;
-            }
-            set
-            {
-                originLng = value;
-
-            }
-        }
-
-        public double Lat
-        {
-            get
-            {
-                return originLat;
-            }
-            set
-            {
-                originLat = value;
-
-            }
-        }
-
-        public double Alt
-        {
-            get
-            {
-                return originAlt;
-            }
-            set
-            {
-                originAlt = value;
-
-            }
-        }
-
         public double Scale
         {
             get
@@ -75,6 +64,7 @@
             }
         }
 
+        private string path;
         public string Layer
         {
             get
@@ -83,6 +73,7 @@
             }
         }
 
+        private readonly Color transparent;
         public Color Transparent
         {
             get
@@ -91,30 +82,49 @@
             }
         }
 
-        public LayerInfo(string path, double lng, double lat, double alt, System.Drawing.Color transparent)
+        public LayerInfo(string path, Utilities.PointLatLngAlt origin, System.Drawing.Color transparent)
         {
+            this.originLat = 0.0;
+            this.originLng = 0.0;
+            this.originAlt = 0.0;
+            this.frameOfAlt = "Relative";
             this.path = path;
-            this.originLng = lng;
-            this.originLat = lat;
-            this.originAlt = alt;
             this.scale = 1;
             this.transparent = transparent;
+            this.layerType = LayerTypes.file;
+            this.Origin = origin;
+
         }
 
-        public LayerInfo(string path, double lng, double lat, double alt, double scale, System.Drawing.Color transparent)
+        public LayerInfo(string path, Utilities.PointLatLngAlt origin, double scale, System.Drawing.Color transparent)
         {
+            this.originLat = 0.0;
+            this.originLng = 0.0;
+            this.originAlt = 0.0;
+            this.frameOfAlt = "Relative";
             this.path = path;
-            this.originLng = lng;
-            this.originLat = lat;
-            this.originAlt = alt;
             this.scale = scale;
             this.transparent = transparent;
+            this.layerType = LayerTypes.file;
+            this.Origin = origin;
         }
 
+        public override int GetHashCode()
+        {
+            if (Layer != null || Layer != "")
+            {
+                return (Layer.GetHashCode());
+            }
+            else
+            {
+
+                return (Origin).GetHashCode();
+            }
+        }
 
         public override string ToString()
         {
-            return Layer + " with origin (" + Lng + "," + Lat + "), scale (" + ScaleFormat + ")";
+            return Layer + " with origin (" + originLng + "," + originLat + "," + originAlt +"), scale (" + ScaleFormat + ")";
         }
 
         public bool Equals(LayerInfo obj)
@@ -135,21 +145,29 @@
             XmlElement keyIndex = xmlDoc.CreateElement("key");
             keyIndex.InnerText = key;
 
+            XmlElement type = xmlDoc.CreateElement("layerType");
+            type.InnerText = this.layerType.ToString();
+            keyIndex.AppendChild(type);
+
             XmlElement path = xmlDoc.CreateElement("path");
             path.InnerText = this.Layer;
             keyIndex.AppendChild(path);
 
             XmlElement originX = xmlDoc.CreateElement("originLng");
-            originX.InnerText = this.Lng.ToString();
+            originX.InnerText = this.originLng.ToString();
             keyIndex.AppendChild(originX);
 
             XmlElement originY = xmlDoc.CreateElement("originLat");
-            originY.InnerText = this.Lat.ToString();
+            originY.InnerText = this.originLat.ToString();
             keyIndex.AppendChild(originY);
 
             XmlElement originZ = xmlDoc.CreateElement("originAlt");
-            originZ.InnerText = this.Alt.ToString();
+            originZ.InnerText = this.originAlt.ToString();
             keyIndex.AppendChild(originZ);
+
+            XmlElement frame = xmlDoc.CreateElement("frameOfAlt");
+            frame.InnerText = this.frameOfAlt;
+            keyIndex.AppendChild(frame);
 
             XmlElement Scale = xmlDoc.CreateElement("scale");
             Scale.InnerText = this.Scale.ToString();
@@ -181,25 +199,37 @@
         {
             if (LayerInfoKeys.Name == "key")
             {
+                LayerTypes layerType = LayerTypes.file;
                 string path = "";
-                double? originLng = null, originLat = null, originAlt = null;
+                Utilities.PointLatLngAlt origin = new Utilities.PointLatLngAlt();
                 double? scale = null;
-                Color transparent;
+                Color transparent = Color.Transparent;
                 foreach (XmlNode Info in LayerInfoKeys.ChildNodes)
                 {
                     switch (Info.Name)
                     {
+                        case "layerType":
+                            switch (Info.InnerText)
+                            {
+                                case "file":
+                                    layerType = LayerTypes.file;
+                                    break;
+                            }
+                            break;
                         case "path":
                             path = Info.InnerText;
                             break;
                         case "originLng":
-                            originLng = System.Convert.ToDouble(Info.InnerText);
+                            origin.Lng = System.Convert.ToDouble(Info.InnerText);
                             break;
                         case "originLat":
-                            originLat = System.Convert.ToDouble(Info.InnerText);
+                            origin.Lat = System.Convert.ToDouble(Info.InnerText);
                             break;
                         case "originAlt":
-                            originAlt = System.Convert.ToDouble(Info.InnerText);
+                            origin.Alt = System.Convert.ToDouble(Info.InnerText);
+                            break;
+                        case "frameOfAlt":
+                            origin.Tag2 = Info.InnerText;
                             break;
                         case "scale":
                             scale = System.Convert.ToDouble(Info.InnerText);
@@ -233,15 +263,21 @@
                 }
                 if (path == null)
                     return null;
-                if (originLng == null || originLat == null || originAlt == null || scale == null)
-                    return null;
-                return new LayerInfo(
-                    path,
-                    originLng.GetValueOrDefault(),
-                    originLat.GetValueOrDefault(),
-                    originAlt.GetValueOrDefault(),
-                    scale.GetValueOrDefault(),
-                    transparent);
+                switch (layerType)
+                {
+                    case LayerTypes.file:
+                        return new LayerInfo(
+                            path,
+                            origin,
+                            scale.GetValueOrDefault(),
+                            transparent);
+                    default:
+                        return new LayerInfo(
+                            path,
+                            origin,
+                            scale.GetValueOrDefault(),
+                            transparent);
+                }
             }
             else
                 return null;

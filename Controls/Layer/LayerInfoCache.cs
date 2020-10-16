@@ -1,5 +1,5 @@
 ﻿
-namespace GMap.NET.Internals
+namespace VPS.Layer
 {
     using System.Collections.Generic;
     using System.IO;

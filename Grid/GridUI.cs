@@ -77,11 +77,11 @@ namespace VPS.Grid
 
             tiffoverlay = new GMapOverlay("layerpolygons");
             map.Overlays.Add(tiffoverlay);
-            var layer = GMap.NET.CacheProviders.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
+            var layer = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
             if (layer != null)
             {
-                var layerInfo = (GMap.NET.Internals.LayerInfo)layer;
-                SetLayerOverlay(MainV2.instance.currentLayer, layerInfo.Lng, layerInfo.Lat);
+                var layerInfo = (VPS.Layer.LayerInfo)layer;
+                SetLayerOverlay(MainV2.instance.currentLayer, layerInfo.Origin.Lng, layerInfo.Origin.Lat);
             }
             kmlpolygonsoverlay = new GMapOverlay("kmlpolygons");
             map.Overlays.Add(kmlpolygonsoverlay);

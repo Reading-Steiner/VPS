@@ -15,15 +15,15 @@ namespace VPS.Controls.Layer
         public LayerManager()
         {
             InitializeComponent();
-
+            BindingDataSource();
         }
 
-        public List<GMap.NET.Internals.LayerInfo> GetDataSource()
+        public List<VPS.Layer.LayerInfo> GetDataSource()
         {
-            List<GMap.NET.Internals.LayerInfo> dataSource = new List<GMap.NET.Internals.LayerInfo>();
-            for (int index = 0; index < GMap.NET.CacheProviders.MemoryLayerCache.Count; index++)
+            List<VPS.Layer.LayerInfo> dataSource = new List<VPS.Layer.LayerInfo>();
+            for (int index = 0; index < VPS.Layer.MemoryLayerCache.Count; index++)
             {
-                var info = GMap.NET.CacheProviders.MemoryLayerCache.GetLayerFromMemoryCache(index);
+                var info = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(index);
                 if (info != null) 
                 {
                     dataSource.Add(info.GetValueOrDefault());
@@ -32,10 +32,110 @@ namespace VPS.Controls.Layer
             return dataSource;
         }
 
+        public DataTable GetMainTable()
+        {
+            DataTable table = new DataTable("LayerTitle");
+
+            DataColumn col = new DataColumn();
+            col.ColumnName = "Key";
+            col.DataType = Type.GetType("System.String");
+            table.Columns.Add(col);
+
+            col = new DataColumn();
+            col.ColumnName = "数据位置";
+            col.DataType = Type.GetType("System.String");
+            table.Columns.Add(col);
+
+            col = new DataColumn();
+            col.ColumnName = "数据源类型";
+            col.DataType = Type.GetType("System.String");
+            table.Columns.Add(col);
+            return table;
+        }
+
+        public DataTable GetFileTable()
+        {
+            DataTable table = new DataTable("FileLayerTitle");
+
+            DataColumn col = new DataColumn();
+            col.ColumnName = "Key";
+            col.DataType = Type.GetType("System.String");
+            table.Columns.Add(col);
+
+
+            col = new DataColumn();
+            col.ColumnName = "图层原点";
+            col.DataType = new Utilities.PointLatLngAlt().GetType();
+            table.Columns.Add(col);
+
+            col = new DataColumn();
+            col.ColumnName = "高度框架";
+            col.DataType = Type.GetType("System.String");
+            table.Columns.Add(col);
+
+            col = new DataColumn();
+            col.ColumnName = "图层比例尺";
+            col.DataType = Type.GetType("System.String");
+            table.Columns.Add(col);
+
+            col = new DataColumn();
+            col.ColumnName = "图层透明色";
+            col.DataType = new Color().GetType();
+            table.Columns.Add(col);
+
+
+            return table;
+        }
+
         public void BindingDataSource()
         {
-            LayerDataList.PrimaryGrid.DataSource = GetDataSource();
-            LayerDataList.PrimaryGrid.DataMember = null;
+            DataSet set = new DataSet("LayerManager");
+
+            var table = GetMainTable();
+            var fileTable = GetFileTable();
+
+            set.Tables.Add(table);
+            set.Tables.Add(fileTable);
+            table.BeginLoadData();
+
+            // Add 50 rows to fiddle with
+            var emp = GetDataSource();
+            for (int i = 0; i < emp.Count; i++)
+            {
+                DataRow row = table.NewRow();
+
+                row[0] = emp[i].GetHashCode();
+                row[1] = emp[i].Layer;
+                row[2] = emp[i].LayerType;
+
+                table.Rows.Add(row);
+
+                row.AcceptChanges();
+
+                switch (emp[i].LayerType)
+                {
+                    case "file":
+                        fileTable.BeginLoadData();
+                        DataRow fileRow = fileTable.NewRow();
+                        fileRow[0] = emp[i].GetHashCode();
+                        fileRow[1] = emp[i].Origin;
+                        fileRow[2] = emp[i].Origin.Tag2;
+                        fileRow[3] = emp[i].ScaleFormat;
+                        fileRow[4] = emp[i].Transparent;
+
+                        fileTable.Rows.Add(fileRow);
+
+                        fileRow.AcceptChanges();
+                        fileTable.EndLoadData();
+                        break;
+                }
+            }
+            table.EndLoadData();
+
+            set.Relations.Add("1", set.Tables["LayerTitle"].Columns["Key"],
+                                           set.Tables["FileLayerTitle"].Columns["Key"], false);
+            LayerDataList.PrimaryGrid.DataSource = set;
+
         }
     }
 }
