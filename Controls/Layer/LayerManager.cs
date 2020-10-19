@@ -64,6 +64,11 @@ namespace VPS.Controls.Layer
             col.ColumnName = "删除";
             col.DataType = Type.GetType("System.String");
             table.Columns.Add(col);
+
+            col = new DataColumn();
+            col.ColumnName = "默认";
+            col.DataType = Type.GetType("System.String");
+            table.Columns.Add(col);
             return table;
         }
 
@@ -124,9 +129,16 @@ namespace VPS.Controls.Layer
 
                 row[0] = emp[i].GetHashCode();
                 row[1] = emp[i].Layer;
-                
+                if (emp[i].Layer == Utilities.Settings.Instance["defaultTiffLayer"])
+                {
+                    row[4] = "True";
+                }
+                else
+                {
+                    row[4] = "false";
+                }
 
-                
+
 
                 switch (emp[i].LayerType)
                 {
@@ -148,6 +160,7 @@ namespace VPS.Controls.Layer
                 }
 
                 row[3] = "";
+                
 
 
                 table.Rows.Add(row);
@@ -183,6 +196,7 @@ namespace VPS.Controls.Layer
         {
             panel.FrozenColumnCount = 1;
             panel.ColumnHeader.RowHeight = 30;
+            panel.MinRowHeight = 25;
 
             panel.ColumnAutoSizeMode = ColumnAutoSizeMode.None;
             panel.Columns[0].MinimumWidth = 80;
@@ -196,6 +210,11 @@ namespace VPS.Controls.Layer
             panel.Columns[3].EditorParams = new object[] { ImageList.Images["Delete.png"] };
             panel.Columns[3].MinimumWidth = 25;
             panel.Columns[3].Width = 25;
+
+            panel.Columns[4].EditorType = typeof(ImageCheckBox);
+            panel.Columns[4].EditorParams = new object[] { ImageList.Images["Default.png"] };
+            panel.Columns[4].MinimumWidth = 25;
+            panel.Columns[4].Width = 25;
             //panel.Columns[3].EditControl.EditorCellBitmap = ImageList.Images["Delete.png"];
 
         }
@@ -289,5 +308,16 @@ namespace VPS.Controls.Layer
             Image = image;
         }
 
+    }
+
+    internal class ImageCheckBox : GridCheckBoxXEditControl
+    {
+        #region Private variables
+        #endregion
+
+        public ImageCheckBox(Image image)
+        {
+            this.CheckBoxImageChecked = image;
+        }
     }
 }

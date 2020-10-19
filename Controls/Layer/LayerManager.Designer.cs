@@ -71,6 +71,7 @@
             this.ImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList.ImageStream")));
             this.ImageList.TransparentColor = System.Drawing.Color.Transparent;
             this.ImageList.Images.SetKeyName(0, "Delete.png");
+            this.ImageList.Images.SetKeyName(1, "Default.png");
             // 
             // LayerManager
             // 
