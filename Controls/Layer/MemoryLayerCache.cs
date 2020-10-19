@@ -190,12 +190,14 @@
 
         internal static void ReadLayerInfoConfig()
         {
-            if (!System.IO.File.Exists(".\\plugins\\GMap.NET.CacheProviders.MemoryLayerCache.xml"))
+            string file = VPS.Utilities.Settings.GetUserDataDirectory() + 
+                "plugins\\GMap.NET.CacheProviders.MemoryLayerCache.xml";
+            if (!System.IO.File.Exists(file))
                 return;
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load(".\\plugins\\GMap.NET.CacheProviders.MemoryLayerCache.xml");
+                xmlDoc.Load(file);
                 layerInfoInMemory.FromXML(xmlDoc, out string selectedLayer);
                 LayerInfosChange?.Invoke();
             }
@@ -217,7 +219,14 @@
             xmlDoc.AppendChild(layerInfoInMemory.GetXML(xmlDoc));
 
             //需要保存修改的值
-            xmlDoc.Save(".\\plugins\\GMap.NET.CacheProviders.MemoryLayerCache.xml");
+            string path = VPS.Utilities.Settings.GetUserDataDirectory() + "plugins\\";
+            if (!System.IO.Directory.Exists(path))
+
+            {
+                System.IO.Directory.CreateDirectory(path);//不存在就创建目录
+
+            }
+            xmlDoc.Save(path + "GMap.NET.CacheProviders.MemoryLayerCache.xml");
             xmlDoc = null;
         }
     }
