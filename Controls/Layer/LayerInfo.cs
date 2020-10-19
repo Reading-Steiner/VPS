@@ -109,16 +109,16 @@
             this.Origin = origin;
         }
 
-        public override int GetHashCode()
+        public new string GetHashCode()
         {
             if (Layer != null || Layer != "")
             {
-                return (Layer.GetHashCode());
+                return ((uint)Layer.GetHashCode()).ToString("X");
             }
             else
             {
 
-                return (Origin).GetHashCode();
+                return ((uint)(Origin).GetHashCode()).ToString("X");
             }
         }
 

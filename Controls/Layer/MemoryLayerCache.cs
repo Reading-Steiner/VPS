@@ -167,12 +167,12 @@
         {
             if (data.Layer != null || data.Layer != "")
             {
-                return (data.Layer.GetHashCode().ToString());
+                return ((uint)data.Layer.GetHashCode()).ToString("X");
             }
             else
             {
 
-                return (data.Origin).GetHashCode().ToString();
+                return ((uint)(data.Origin).GetHashCode()).ToString("X");
             }
         }
 
@@ -180,7 +180,7 @@
         {
             if (data != null || data != "")
             {
-                return (data.GetHashCode().ToString());
+                return ((uint)data.GetHashCode()).ToString("X");
             }
             else
             {
