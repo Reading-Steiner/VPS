@@ -229,7 +229,7 @@ namespace VPS.Controls.Layer
             else
             {
                 VPS.Layer.LayerInfo layerInfo =
-                    new VPS.Layer.LayerInfo(openPath, PointLeftTop, Color.Transparent);
+                    new VPS.Layer.LayerInfo(openPath, PointLeftTop, Color.FromArgb(0, 255, 255, 255));
                 MainV2.instance.AddLayerOverlay(layerInfo);
             }
             if (SettingDefaultMap.Checked)

@@ -21,16 +21,25 @@ namespace VPS.Controls.MainInfo
 
         public static MainInfo instance = null;
 
+        private delegate void SetPositionInThread(Utilities.PointLatLngAlt position);
         private Utilities.PointLatLngAlt home = null;
         public void SetHomePosition(Utilities.PointLatLngAlt position)
         {
-            home = position;
+            if (this.InvokeRequired)
+            {
+                SetPositionInThread inThread = new SetPositionInThread(SetHomePosition);
+                this.Invoke(inThread, new object[] { position });
+            }
+            else
+            {
+                home = position;
 
-            HomeLat.Text = home.Lat.ToString("0.######");
-            HomeLng.Text = home.Lng.ToString("0.######");
-            HomeAlt.Text = home.Alt.ToString("0.######");
+                HomeLat.Text = home.Lat.ToString("0.######");
+                HomeLng.Text = home.Lng.ToString("0.######");
+                HomeAlt.Text = home.Alt.ToString("0.######");
 
-            DoCalc();
+                DoCalc();
+            }
         }
 
         private List<Utilities.PointLatLngAlt> grid = new List<Utilities.PointLatLngAlt>();
@@ -71,14 +80,22 @@ namespace VPS.Controls.MainInfo
         private Utilities.PointLatLngAlt current = null;
         public void SetCurrentPosition(Utilities.PointLatLngAlt position)
         {
-            current = position;
-            current.Alt = (Utilities.srtm.getAltitude(current.Lat, current.Lng).alt * CurrentState.multiplieralt);
+            if (this.InvokeRequired)
+            {
+                SetPositionInThread inThread = new SetPositionInThread(SetCurrentPosition);
+                this.Invoke(inThread, new object[] { position });
+            }
+            else
+            {
+                current = position;
+                current.Alt = (Utilities.srtm.getAltitude(current.Lat, current.Lng).alt * CurrentState.multiplieralt);
 
-            CurrentLat.Text = current.Lat.ToString("0.######");
-            CurrentLng.Text = current.Lng.ToString("0.######");
-            CurrentAlt.Text = (Utilities.srtm.getAltitude(current.Lat, current.Lng).alt * CurrentState.multiplieralt).ToString("0.##");
+                CurrentLat.Text = current.Lat.ToString("0.######");
+                CurrentLng.Text = current.Lng.ToString("0.######");
+                CurrentAlt.Text = (Utilities.srtm.getAltitude(current.Lat, current.Lng).alt * CurrentState.multiplieralt).ToString("0.##");
 
-            DoCalc();
+                DoCalc();
+            }
         }
 
 
@@ -136,6 +153,13 @@ namespace VPS.Controls.MainInfo
                     HomeGrad.Text = (grad).ToString("0.## %");
                     HomeDist.Text = (distance * CurrentState.multiplierdist).ToString("0.## m");
                     HomeAZ.Text = ((current.GetBearing(home) + 180) % 360).ToString("0.##");
+
+                }
+                else
+                {
+                    HomeGrad.Text = "0";
+                    HomeDist.Text = "0";
+                    HomeAZ.Text = "0";
                 }
 
                 if (grid != null && grid.Count > 0)
@@ -147,6 +171,12 @@ namespace VPS.Controls.MainInfo
                     LastGrad.Text = (grad).ToString("0.## %");
                     LastDist.Text = (distance * CurrentState.multiplierdist).ToString("0.## m");
                     LastAZ.Text = ((current.GetBearing(grid[grid.Count - 1]) + 180) % 360).ToString("0.##");
+                }
+                else
+                {
+                    LastGrad.Text = "0";
+                    LastDist.Text = "0";
+                    LastAZ.Text = "0";
                 }
             }
         }

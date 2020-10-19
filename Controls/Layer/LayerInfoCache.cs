@@ -24,12 +24,23 @@ namespace VPS.Layer
             }
         }
 
-        public LayerInfo this[int index]
+        public int TotalCount
+        {
+            get
+            {
+                return Queue.Count;
+            }
+        }
+
+        public LayerInfo this[int index, bool vaild = false]
         {
             get
             {
                 LayerInfo layerInfo;
-                base.TryGetValue(Queue[index + vaildIndex], out layerInfo);
+                if (vaild)
+                    base.TryGetValue(Queue[index], out layerInfo);
+                else
+                    base.TryGetValue(Queue[index + vaildIndex], out layerInfo);
                 return layerInfo;
             }
         }
@@ -74,24 +85,11 @@ namespace VPS.Layer
 
         }
 
-        public bool MoveToLast(string key)
-        {
-            if (Queue.Contains(key))
-            {
-                if (Queue.IndexOf(key) >= vaildIndex)
-                {
-                    Queue.Remove(key);
-                    Queue.Add(key);
-                    return true;
-                }
-            }
-            return false;
-        }
-
 
         // do not allow directly removal of elements
-        private new void Remove(string key)
+        public new void Remove(string key)
         {
+            Queue.Remove(key);
             base.Remove(key);
         }
 

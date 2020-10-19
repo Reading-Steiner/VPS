@@ -214,7 +214,7 @@
             this.panelEx9.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelEx9.Controls.Add(this.Accept);
             this.panelEx9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx9.Location = new System.Drawing.Point(0, 944);
+            this.panelEx9.Location = new System.Drawing.Point(0, 942);
             this.panelEx9.Name = "panelEx9";
             this.panelEx9.Size = new System.Drawing.Size(310, 32);
             this.panelEx9.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -235,6 +235,7 @@
             this.Accept.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.Accept.TabIndex = 16;
             this.Accept.Text = "确定";
+            this.Accept.Click += new System.EventHandler(this.Accept_Click);
             // 
             // panelEx5
             // 
@@ -247,7 +248,7 @@
             this.panelEx5.Controls.Add(this.panelEx10);
             this.panelEx5.Controls.Add(this.panelEx11);
             this.panelEx5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx5.Location = new System.Drawing.Point(0, 749);
+            this.panelEx5.Location = new System.Drawing.Point(0, 747);
             this.panelEx5.Name = "panelEx5";
             this.panelEx5.Size = new System.Drawing.Size(310, 195);
             this.panelEx5.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -545,7 +546,7 @@
             this.panelEx3.Controls.Add(this.panelEx7);
             this.panelEx3.Controls.Add(this.panelEx12);
             this.panelEx3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx3.Location = new System.Drawing.Point(0, 341);
+            this.panelEx3.Location = new System.Drawing.Point(0, 339);
             this.panelEx3.Name = "panelEx3";
             this.panelEx3.Size = new System.Drawing.Size(310, 408);
             this.panelEx3.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -759,7 +760,7 @@
             this.panelEx4.Controls.Add(this.panelEx13);
             this.panelEx4.Controls.Add(this.panelEx14);
             this.panelEx4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx4.Location = new System.Drawing.Point(0, 101);
+            this.panelEx4.Location = new System.Drawing.Point(0, 99);
             this.panelEx4.Name = "panelEx4";
             this.panelEx4.Size = new System.Drawing.Size(310, 240);
             this.panelEx4.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -972,7 +973,7 @@
             this.panelEx8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEx8.Location = new System.Drawing.Point(0, 0);
             this.panelEx8.Name = "panelEx8";
-            this.panelEx8.Size = new System.Drawing.Size(310, 101);
+            this.panelEx8.Size = new System.Drawing.Size(310, 99);
             this.panelEx8.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx8.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx8.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
@@ -990,7 +991,7 @@
             this.FileReaderBox.Controls.Add(this.OpenFile);
             this.FileReaderBox.Controls.Add(this.OpenFilePath);
             this.FileReaderBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.FileReaderBox.Location = new System.Drawing.Point(0, 48);
+            this.FileReaderBox.Location = new System.Drawing.Point(0, 46);
             this.FileReaderBox.Name = "FileReaderBox";
             this.FileReaderBox.Size = new System.Drawing.Size(310, 53);
             this.FileReaderBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -1050,7 +1051,7 @@
             this.panelEx15.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEx15.Location = new System.Drawing.Point(0, 22);
             this.panelEx15.Name = "panelEx15";
-            this.panelEx15.Size = new System.Drawing.Size(310, 26);
+            this.panelEx15.Size = new System.Drawing.Size(310, 24);
             this.panelEx15.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx15.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelEx15.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -1083,7 +1084,7 @@
             this.FromFile.CheckValue = "Y";
             this.FromFile.Location = new System.Drawing.Point(100, 3);
             this.FromFile.Name = "FromFile";
-            this.FromFile.Size = new System.Drawing.Size(56, 20);
+            this.FromFile.Size = new System.Drawing.Size(51, 18);
             this.FromFile.TabIndex = 17;
             this.FromFile.Text = "文件";
             this.FromFile.CheckedChanged += new System.EventHandler(this.FromFile_CheckedChanged);

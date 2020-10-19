@@ -131,8 +131,6 @@
         {
             if (obj.path != path)
                 return false;
-            if (obj.scale != scale)
-                return false;
             if (obj.originLng != originLng || obj.originLat != originLat)
                 return false;
 

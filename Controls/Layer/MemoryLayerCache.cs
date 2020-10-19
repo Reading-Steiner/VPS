@@ -31,6 +31,7 @@
             try
             {
                 layerInfoInMemory.Clear();
+                LayerInfosChange?.Invoke();
             }
             finally
             {
@@ -42,6 +43,14 @@
             get
             {
                 return layerInfoInMemory.Count;
+            }
+        }
+
+        static public int TotalCount
+        {
+            get
+            {
+                return layerInfoInMemory.TotalCount;
             }
         }
 
@@ -98,13 +107,13 @@
             return null;
         }
 
-        static public LayerInfo? GetLayerFromMemoryCache(int index)
+        static public LayerInfo? GetLayerFromMemoryCache(int index,bool vaild = false)
         {
             try
             {
                 if (index >= layerInfoInMemory.Count || index < 0)
                     return null;
-                return layerInfoInMemory[index];
+                return layerInfoInMemory[index, vaild];
             }
             finally
             {
@@ -123,21 +132,36 @@
                 if (!layerInfoInMemory.ContainsKey(key))
                 {
                     layerInfoInMemory.Add(key, data);
-                }
-                else if (!data.Equals(GetLayerFromMemoryCacheWithHashCode(key).GetValueOrDefault()))
-                {
-                    layerInfoInMemory.Modify(key, data);
+                    LayerInfosChange?.Invoke();
                 }
                 else
                 {
-                    layerInfoInMemory.MoveToLast(key);
+                    layerInfoInMemory.Modify(key, data);
+                    LayerInfosChange?.Invoke();
                 }
             }
-            finally
-            {
-            }
+            catch { }
+            finally{ }
             return true;
         }
+
+        static public bool DeleteLayerInMenoryCacheWithHashCode(string key)
+        {
+            if (key == null)
+                return false;
+            if (layerInfoInMemory.ContainsKey(key))
+            {
+                layerInfoInMemory.Remove(key);
+                LayerInfosChange?.Invoke();
+
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public delegate void LayerInfosChangeHandle();
+        static public LayerInfosChangeHandle LayerInfosChange;
 
         internal static string GetHashCode(LayerInfo data)
         {
@@ -168,11 +192,15 @@
         {
             if (!System.IO.File.Exists(".\\plugins\\GMap.NET.CacheProviders.MemoryLayerCache.xml"))
                 return;
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(".\\plugins\\GMap.NET.CacheProviders.MemoryLayerCache.xml");
             try
             {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(".\\plugins\\GMap.NET.CacheProviders.MemoryLayerCache.xml");
                 layerInfoInMemory.FromXML(xmlDoc, out string selectedLayer);
+                LayerInfosChange?.Invoke();
+            }
+            catch(Exception ex)
+            {
             }
             finally
             {

@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LayerManager));
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
             this.LayerDataList = new DevComponents.DotNetBar.SuperGrid.SuperGridControl();
+            this.ImageList = new System.Windows.Forms.ImageList(this.components);
             this.panelEx1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,8 +61,16 @@
             this.LayerDataList.FilterExprColors.SysFunction = System.Drawing.Color.DarkRed;
             this.LayerDataList.Location = new System.Drawing.Point(3, 3);
             this.LayerDataList.Name = "LayerDataList";
-            this.LayerDataList.Size = new System.Drawing.Size(1169, 272);
+            this.LayerDataList.Size = new System.Drawing.Size(1001, 272);
             this.LayerDataList.TabIndex = 0;
+            this.LayerDataList.CellClick += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridCellClickEventArgs>(this.LayerDataList_CellClick);
+            this.LayerDataList.DataBindingComplete += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridDataBindingCompleteEventArgs>(this.LayerDataList_DataBindingComplete);
+            // 
+            // ImageList
+            // 
+            this.ImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList.ImageStream")));
+            this.ImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.ImageList.Images.SetKeyName(0, "Delete.png");
             // 
             // LayerManager
             // 
@@ -77,5 +88,6 @@
 
         private DevComponents.DotNetBar.PanelEx panelEx1;
         private DevComponents.DotNetBar.SuperGrid.SuperGridControl LayerDataList;
+        private System.Windows.Forms.ImageList ImageList;
     }
 }
