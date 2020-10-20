@@ -177,8 +177,8 @@ namespace VPS.Controls.Layer
 
             string savePath = GetSaveFilePath();
 
-            int tileXSize = 400;
-            int tileYSize = 400;
+            int tileXSize = TileXSize.Value;
+            int tileYSize = TileYSize.Value;
             int tileXCount = (int)(RasterXSize / tileXSize);
             int tileYCount = (int)(RasterYSize / tileYSize);
 
@@ -197,8 +197,7 @@ namespace VPS.Controls.Layer
 
         private void LoadTile()
         {
-            string openPath = OpenFilePath.Text;
-            
+            LoadImage();
         }
 
         private void SaveAndLoadImage()
@@ -206,9 +205,18 @@ namespace VPS.Controls.Layer
             string openPath = OpenFilePath.Text;
 
             string savePath = GetSaveFilePath();
-            GDAL.GDAL.SaveTiffTile(openPath, savePath, 0, 0, (int)RasterXSize, (int)RasterYSize);
-
-            LoadImage();
+            try
+            {
+                GDAL.GDAL.SaveTiffTile(openPath, savePath, 0, 0, (int)RasterXSize, (int)RasterYSize);
+            }
+            catch
+            {
+                
+            }
+            finally
+            {
+                LoadImage();
+            }
         }
         
 
@@ -217,7 +225,7 @@ namespace VPS.Controls.Layer
             string openPath = "";
             if (ImageSave.Checked)
                 //openPath = GetSaveFilePath();
-                openPath = OpenFilePath.Text;
+                openPath = SaveFilePath.Text;
             else
                 openPath = OpenFilePath.Text;
             if (UsingTransparent.Checked)

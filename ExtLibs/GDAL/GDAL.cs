@@ -421,16 +421,15 @@ namespace GDAL
                     int rasterYSize = ds.RasterYSize >= yOffset + ySize ?
                         ySize : ds.RasterYSize - yOffset;
 
-                    string GType = "GTiff";
-
-                    var driver = OSGeo.GDAL.Gdal.GetDriverByName(GType);
-                    Dataset tiff = driver.Create(saveFile, rasterXSize, rasterYSize, ds.RasterCount, DataType.GDT_Byte, driver.GetMetadataDomainList());
+                    var driver = OSGeo.GDAL.Gdal.GetDriverByName("GTiff");
+                    Dataset tiff = driver.Create(saveFile, rasterXSize, rasterYSize, ds.RasterCount, DataType.GDT_Byte, null);
                     foreach (var domain in ds.GetMetadataDomainList())
                     {
                         tiff.SetMetadata(ds.GetMetadata(domain), domain);
                     }
 
                     tiff.SetProjection(ds.GetProjection());
+
                     double[] adfGeoTransform = { 0, 0, 0, 0, 0, 0 };
                     ds.GetGeoTransform(adfGeoTransform);
                     double left = adfGeoTransform[0] + xOffset * adfGeoTransform[1] + yOffset * adfGeoTransform[2];
@@ -438,6 +437,7 @@ namespace GDAL
                     adfGeoTransform[0] = left;
                     adfGeoTransform[3] = top;
                     tiff.SetGeoTransform(adfGeoTransform);
+
                     if (ds.RasterCount == 1)
                     {
                         Band band = ds.GetRasterBand(1);
@@ -455,11 +455,12 @@ namespace GDAL
                             tiffBand.WriteRaster(0, 0, rasterXSize, rasterYSize,
                                 buffer, rasterXSize, rasterYSize, 0, 0);
 
+                            tiffBand.FlushCache();
                         }
                         finally
                         {
+                            tiff.FlushCache();
                         }
-
 
                         return true;
                     }
@@ -481,9 +482,11 @@ namespace GDAL
                                 var buffer = new byte[rasterXSize * rasterYSize];
                                 band.ReadRaster(xOffset, yOffset, rasterXSize, rasterYSize, buffer, rasterXSize, rasterYSize, 0, 0);
                                 tiffBand.WriteRaster(0, 0, rasterXSize, rasterYSize, buffer, rasterXSize, rasterYSize, 0, 0);
+                                tiffBand.FlushCache();
                             }
                             finally
                             {
+                                tiff.FlushCache();
                             }
                         }
                         

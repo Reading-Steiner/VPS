@@ -1154,6 +1154,7 @@ namespace VPS.Controls
         {
             MsgDisplayBox.Lines[MsgDisplayBox.Lines.Length] = msg;
         }
+
     }
 
     struct BitmapDisplay

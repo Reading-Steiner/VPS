@@ -117,6 +117,7 @@ namespace VPS.Controls.Layer
             return table;
         }
 
+        const string LayerLayerHandle = "LayerLayer";
         public DataTable GetLayerTable()
         {
             DataTable table = new DataTable(FileLayerHandle);

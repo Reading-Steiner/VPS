@@ -52,10 +52,7 @@
             this.SaveFilePath = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.TileNameBox = new DevComponents.DotNetBar.PanelEx();
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
-            this.labelX2 = new DevComponents.DotNetBar.LabelX();
-            this.textBoxX2 = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
-            this.textBoxX1 = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.labelX7 = new DevComponents.DotNetBar.LabelX();
             this.TileName = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.panelEx10 = new DevComponents.DotNetBar.PanelEx();
@@ -99,6 +96,8 @@
             this.FromFile = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.panelEx6 = new DevComponents.DotNetBar.PanelEx();
             this.label6 = new System.Windows.Forms.Label();
+            this.TileXSize = new DevComponents.Editors.IntegerInput();
+            this.TileYSize = new DevComponents.Editors.IntegerInput();
             this.panelEx2.SuspendLayout();
             this.panelEx9.SuspendLayout();
             this.panelEx5.SuspendLayout();
@@ -121,6 +120,8 @@
             this.FileReaderBox.SuspendLayout();
             this.panelEx15.SuspendLayout();
             this.panelEx6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TileXSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TileYSize)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxItem1
@@ -198,7 +199,7 @@
             this.panelEx2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx2.Location = new System.Drawing.Point(0, 0);
             this.panelEx2.Name = "panelEx2";
-            this.panelEx2.Size = new System.Drawing.Size(310, 976);
+            this.panelEx2.Size = new System.Drawing.Size(310, 1010);
             this.panelEx2.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx2.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelEx2.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -214,9 +215,9 @@
             this.panelEx9.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelEx9.Controls.Add(this.Accept);
             this.panelEx9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx9.Location = new System.Drawing.Point(0, 942);
+            this.panelEx9.Location = new System.Drawing.Point(0, 930);
             this.panelEx9.Name = "panelEx9";
-            this.panelEx9.Size = new System.Drawing.Size(310, 32);
+            this.panelEx9.Size = new System.Drawing.Size(310, 80);
             this.panelEx9.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx9.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelEx9.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -229,7 +230,7 @@
             this.Accept.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.Accept.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.Accept.Enabled = false;
-            this.Accept.Location = new System.Drawing.Point(205, 6);
+            this.Accept.Location = new System.Drawing.Point(205, 54);
             this.Accept.Name = "Accept";
             this.Accept.Size = new System.Drawing.Size(75, 23);
             this.Accept.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -250,7 +251,7 @@
             this.panelEx5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEx5.Location = new System.Drawing.Point(0, 747);
             this.panelEx5.Name = "panelEx5";
-            this.panelEx5.Size = new System.Drawing.Size(310, 195);
+            this.panelEx5.Size = new System.Drawing.Size(310, 183);
             this.panelEx5.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx5.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx5.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
@@ -269,7 +270,7 @@
             this.SaveFileBox.Controls.Add(this.SaveFile);
             this.SaveFileBox.Controls.Add(this.SaveFilePath);
             this.SaveFileBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.SaveFileBox.Location = new System.Drawing.Point(0, 120);
+            this.SaveFileBox.Location = new System.Drawing.Point(0, 108);
             this.SaveFileBox.Name = "SaveFileBox";
             this.SaveFileBox.Size = new System.Drawing.Size(310, 75);
             this.SaveFileBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -336,17 +337,16 @@
             this.TileNameBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.TileNameBox.CanvasColor = System.Drawing.SystemColors.Control;
             this.TileNameBox.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.TileNameBox.Controls.Add(this.TileYSize);
+            this.TileNameBox.Controls.Add(this.TileXSize);
             this.TileNameBox.Controls.Add(this.labelX5);
-            this.TileNameBox.Controls.Add(this.labelX2);
-            this.TileNameBox.Controls.Add(this.textBoxX2);
             this.TileNameBox.Controls.Add(this.labelX1);
-            this.TileNameBox.Controls.Add(this.textBoxX1);
             this.TileNameBox.Controls.Add(this.labelX7);
             this.TileNameBox.Controls.Add(this.TileName);
             this.TileNameBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.TileNameBox.Location = new System.Drawing.Point(0, 48);
             this.TileNameBox.Name = "TileNameBox";
-            this.TileNameBox.Size = new System.Drawing.Size(310, 72);
+            this.TileNameBox.Size = new System.Drawing.Size(310, 60);
             this.TileNameBox.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.TileNameBox.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.TileNameBox.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -357,41 +357,16 @@
             // 
             // labelX5
             // 
+            this.labelX5.AutoSize = true;
             // 
             // 
             // 
             this.labelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX5.Location = new System.Drawing.Point(168, 30);
+            this.labelX5.Location = new System.Drawing.Point(170, 40);
             this.labelX5.Name = "labelX5";
-            this.labelX5.Size = new System.Drawing.Size(23, 18);
+            this.labelX5.Size = new System.Drawing.Size(19, 16);
             this.labelX5.TabIndex = 23;
-            this.labelX5.Text = "高";
-            // 
-            // labelX2
-            // 
-            // 
-            // 
-            // 
-            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX2.Location = new System.Drawing.Point(89, 30);
-            this.labelX2.Name = "labelX2";
-            this.labelX2.Size = new System.Drawing.Size(17, 18);
-            this.labelX2.TabIndex = 22;
-            this.labelX2.Text = "宽";
-            // 
-            // textBoxX2
-            // 
-            this.textBoxX2.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.textBoxX2.Border.Class = "TextBoxBorder";
-            this.textBoxX2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.textBoxX2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.textBoxX2.Location = new System.Drawing.Point(150, 48);
-            this.textBoxX2.Name = "textBoxX2";
-            this.textBoxX2.Size = new System.Drawing.Size(49, 21);
-            this.textBoxX2.TabIndex = 21;
+            this.labelX5.Text = "×";
             // 
             // labelX1
             // 
@@ -399,25 +374,11 @@
             // 
             // 
             this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX1.Location = new System.Drawing.Point(12, 42);
+            this.labelX1.Location = new System.Drawing.Point(12, 39);
             this.labelX1.Name = "labelX1";
             this.labelX1.Size = new System.Drawing.Size(60, 18);
             this.labelX1.TabIndex = 20;
             this.labelX1.Text = "切片大小";
-            // 
-            // textBoxX1
-            // 
-            this.textBoxX1.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.textBoxX1.Border.Class = "TextBoxBorder";
-            this.textBoxX1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.textBoxX1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.textBoxX1.Location = new System.Drawing.Point(73, 48);
-            this.textBoxX1.Name = "textBoxX1";
-            this.textBoxX1.Size = new System.Drawing.Size(49, 21);
-            this.textBoxX1.TabIndex = 19;
             // 
             // labelX7
             // 
@@ -444,6 +405,7 @@
             this.TileName.Name = "TileName";
             this.TileName.Size = new System.Drawing.Size(224, 21);
             this.TileName.TabIndex = 16;
+            this.TileName.Text = "{x}_{y}";
             // 
             // panelEx10
             // 
@@ -470,7 +432,6 @@
             // 
             // 
             this.ImageTile.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ImageTile.Enabled = false;
             this.ImageTile.Location = new System.Drawing.Point(39, 4);
             this.ImageTile.Name = "ImageTile";
             this.ImageTile.Size = new System.Drawing.Size(76, 18);
@@ -1130,13 +1091,51 @@
             this.label6.TabIndex = 26;
             this.label6.Text = "文件设置";
             // 
+            // TileXSize
+            // 
+            this.TileXSize.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.TileXSize.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TileXSize.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TileXSize.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TileXSize.Increment = 10;
+            this.TileXSize.Location = new System.Drawing.Point(72, 36);
+            this.TileXSize.MaxValue = 100000000;
+            this.TileXSize.MinValue = 10;
+            this.TileXSize.Name = "TileXSize";
+            this.TileXSize.ShowUpDown = true;
+            this.TileXSize.Size = new System.Drawing.Size(80, 21);
+            this.TileXSize.TabIndex = 24;
+            this.TileXSize.Value = 400;
+            // 
+            // TileYSize
+            // 
+            this.TileYSize.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.TileYSize.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TileYSize.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TileYSize.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TileYSize.Increment = 10;
+            this.TileYSize.Location = new System.Drawing.Point(205, 36);
+            this.TileYSize.MaxValue = 100000000;
+            this.TileYSize.MinValue = 10;
+            this.TileYSize.Name = "TileYSize";
+            this.TileYSize.ShowUpDown = true;
+            this.TileYSize.Size = new System.Drawing.Size(80, 21);
+            this.TileYSize.TabIndex = 25;
+            this.TileYSize.Value = 400;
+            // 
             // LayerReader
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
             this.Controls.Add(this.panelEx2);
             this.Name = "LayerReader";
-            this.Size = new System.Drawing.Size(310, 976);
+            this.Size = new System.Drawing.Size(310, 1010);
             this.panelEx2.ResumeLayout(false);
             this.panelEx2.PerformLayout();
             this.panelEx9.ResumeLayout(false);
@@ -1144,6 +1143,7 @@
             this.panelEx5.PerformLayout();
             this.SaveFileBox.ResumeLayout(false);
             this.TileNameBox.ResumeLayout(false);
+            this.TileNameBox.PerformLayout();
             this.panelEx10.ResumeLayout(false);
             this.panelEx11.ResumeLayout(false);
             this.panelEx11.PerformLayout();
@@ -1169,6 +1169,8 @@
             this.panelEx15.PerformLayout();
             this.panelEx6.ResumeLayout(false);
             this.panelEx6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TileXSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TileYSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1239,11 +1241,10 @@
         private DevComponents.DotNetBar.PanelEx PreviewBox;
         private System.Windows.Forms.PictureBox DisplayImagePanel;
         private DevComponents.DotNetBar.LabelX labelX5;
-        private DevComponents.DotNetBar.LabelX labelX2;
-        private DevComponents.DotNetBar.Controls.TextBoxX textBoxX2;
         private DevComponents.DotNetBar.LabelX labelX1;
-        private DevComponents.DotNetBar.Controls.TextBoxX textBoxX1;
         private DevComponents.DotNetBar.PanelEx panelEx9;
         private DevComponents.DotNetBar.ButtonX Accept;
+        private DevComponents.Editors.IntegerInput TileYSize;
+        private DevComponents.Editors.IntegerInput TileXSize;
     }
 }
