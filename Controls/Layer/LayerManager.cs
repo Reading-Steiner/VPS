@@ -61,6 +61,16 @@ namespace VPS.Controls.Layer
             table.Columns.Add(col);
 
             col = new DataColumn();
+            col.ColumnName = "修改时间";
+            col.DataType = Type.GetType("System.String");
+            table.Columns.Add(col);
+
+            col = new DataColumn();
+            col.ColumnName = "创建时间";
+            col.DataType = Type.GetType("System.String");
+            table.Columns.Add(col);
+
+            col = new DataColumn();
             col.ColumnName = "删除";
             col.DataType = Type.GetType("System.String");
             table.Columns.Add(col);
@@ -74,6 +84,40 @@ namespace VPS.Controls.Layer
 
         const string FileLayerHandle = "FileLayer";
         public DataTable GetFileTable()
+        {
+            DataTable table = new DataTable(FileLayerHandle);
+
+            DataColumn col = new DataColumn();
+            col.ColumnName = "Key";
+            col.DataType = Type.GetType("System.String");
+            table.Columns.Add(col);
+
+
+            col = new DataColumn();
+            col.ColumnName = "图层原点";
+            col.DataType = typeof(Utilities.PointLatLngAlt);
+            table.Columns.Add(col);
+
+            col = new DataColumn();
+            col.ColumnName = "高度框架";
+            col.DataType = Type.GetType("System.String");
+            table.Columns.Add(col);
+
+            col = new DataColumn();
+            col.ColumnName = "图层比例尺";
+            col.DataType = Type.GetType("System.String");
+            table.Columns.Add(col);
+
+            col = new DataColumn();
+            col.ColumnName = "图层透明色";
+            col.DataType = typeof(Color);
+            table.Columns.Add(col);
+
+
+            return table;
+        }
+
+        public DataTable GetLayerTable()
         {
             DataTable table = new DataTable(FileLayerHandle);
 
@@ -129,13 +173,17 @@ namespace VPS.Controls.Layer
 
                 row[0] = emp[i].GetHashCode();
                 row[1] = emp[i].Layer;
+                row[3] = emp[i].CreateTime;
+                row[4] = emp[i].ModifyTime;
+
+                row[5] = "";
                 if (emp[i].Layer == Utilities.Settings.Instance["defaultTiffLayer"])
                 {
-                    row[4] = "True";
+                    row[6] = "True";
                 }
                 else
                 {
-                    row[4] = "false";
+                    row[6] = "false";
                 }
 
 
@@ -159,7 +207,6 @@ namespace VPS.Controls.Layer
                         break;
                 }
 
-                row[3] = "";
                 
 
 
@@ -206,15 +253,21 @@ namespace VPS.Controls.Layer
             panel.Columns[2].MinimumWidth = 80;
             panel.Columns[2].CellStyles.Default.Alignment = DevComponents.DotNetBar.SuperGrid.Style.Alignment.MiddleCenter;
 
-            panel.Columns[3].EditorType = typeof(ImageLabel);
-            panel.Columns[3].EditorParams = new object[] { ImageList.Images["Delete.png"] };
-            panel.Columns[3].MinimumWidth = 25;
-            panel.Columns[3].Width = 25;
+            //panel.Columns[3].EditorType = typeof(GridDateTimeInputEditControl);
+            panel.Columns[3].MinimumWidth = 150;
 
-            panel.Columns[4].EditorType = typeof(ImageCheckBox);
-            panel.Columns[4].EditorParams = new object[] { ImageList.Images["Default.png"] };
-            panel.Columns[4].MinimumWidth = 25;
-            panel.Columns[4].Width = 25;
+            //panel.Columns[4].EditorType = typeof(GridDateTimePickerEditControl);
+            panel.Columns[4].MinimumWidth = 150;
+
+            panel.Columns[5].EditorType = typeof(ImageLabel);
+            panel.Columns[5].EditorParams = new object[] { ImageList.Images["Delete.png"] };
+            panel.Columns[5].MinimumWidth = 25;
+            panel.Columns[5].Width = 25;
+
+            panel.Columns[6].EditorType = typeof(ImageCheckBox);
+            panel.Columns[6].EditorParams = new object[] { ImageList.Images["Default.png"] };
+            panel.Columns[6].MinimumWidth = 25;
+            panel.Columns[6].Width = 25;
             //panel.Columns[3].EditControl.EditorCellBitmap = ImageList.Images["Delete.png"];
 
         }

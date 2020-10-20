@@ -1,10 +1,8 @@
 ﻿namespace VPS.Layer
 {
-    using System.IO;
     using System;
-    using System.Collections.Generic;
-    using System.Xml;
     using System.Drawing;
+    using System.Xml;
 
     public struct LayerInfo
     {
@@ -82,7 +80,22 @@
             }
         }
 
-        public LayerInfo(string path, Utilities.PointLatLngAlt origin, System.Drawing.Color transparent)
+        private string createTime;
+        private string modifyTime;
+        public string CreateTime
+        {
+            get { return createTime; }
+        }
+        public string ModifyTime
+        {
+            get { return modifyTime; }
+        }
+
+        public LayerInfo(
+            string path, 
+            Utilities.PointLatLngAlt origin, 
+            System.Drawing.Color transparent,
+            string create = null, string modify = null)
         {
             this.originLat = 0.0;
             this.originLng = 0.0;
@@ -92,11 +105,22 @@
             this.scale = 1;
             this.transparent = transparent;
             this.layerType = LayerTypes.file;
+            if (create != null)
+                createTime = create;
+            else
+                createTime = DateTime.Now.ToString("F");
+            if (modify != null)
+                modifyTime = modify;
+            else
+                modifyTime = createTime;
             this.Origin = origin;
 
         }
 
-        public LayerInfo(string path, Utilities.PointLatLngAlt origin, double scale, System.Drawing.Color transparent)
+        public LayerInfo(string path, 
+            Utilities.PointLatLngAlt origin, double scale, 
+            System.Drawing.Color transparent, 
+            string create = null, string modify = null)
         {
             this.originLat = 0.0;
             this.originLng = 0.0;
@@ -106,6 +130,14 @@
             this.scale = scale;
             this.transparent = transparent;
             this.layerType = LayerTypes.file;
+            if (create != null)
+                createTime = create;
+            else
+                createTime = DateTime.Now.ToString("F");
+            if (modify != null)
+                modifyTime = modify;
+            else
+                modifyTime = createTime;
             this.Origin = origin;
         }
 
@@ -167,6 +199,18 @@
             frame.InnerText = this.frameOfAlt;
             keyIndex.AppendChild(frame);
 
+            XmlElement scale = xmlDoc.CreateElement("scale");
+            scale.InnerText = this.Scale.ToString();
+            keyIndex.AppendChild(scale);
+
+            XmlElement createTime = xmlDoc.CreateElement("createTime");
+            createTime.InnerText = this.createTime.ToString();
+            keyIndex.AppendChild(createTime);
+
+            XmlElement modifyTime = xmlDoc.CreateElement("modifyTime");
+            modifyTime.InnerText = this.modifyTime.ToString();
+            keyIndex.AppendChild(modifyTime);
+
             XmlElement Scale = xmlDoc.CreateElement("scale");
             Scale.InnerText = this.Scale.ToString();
             keyIndex.AppendChild(Scale);
@@ -201,6 +245,7 @@
                 string path = "";
                 Utilities.PointLatLngAlt origin = new Utilities.PointLatLngAlt();
                 double? scale = null;
+                string createTime = null, modifyTime = null;
                 Color transparent = Color.Transparent;
                 foreach (XmlNode Info in LayerInfoKeys.ChildNodes)
                 {
@@ -231,6 +276,12 @@
                             break;
                         case "scale":
                             scale = System.Convert.ToDouble(Info.InnerText);
+                            break;
+                        case "createTime":
+                            createTime = Info.InnerText;
+                            break;
+                        case "modifyTime":
+                            modifyTime = Info.InnerText;
                             break;
                         case "transparent":
                             {
@@ -268,13 +319,17 @@
                             path,
                             origin,
                             scale.GetValueOrDefault(),
-                            transparent);
+                            transparent,
+                            createTime,
+                            modifyTime);
                     default:
                         return new LayerInfo(
                             path,
                             origin,
                             scale.GetValueOrDefault(),
-                            transparent);
+                            transparent,
+                            createTime,
+                            modifyTime);
                 }
             }
             else
