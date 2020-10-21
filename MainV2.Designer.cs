@@ -125,7 +125,7 @@ namespace VPS
             this.LayerReaderPanel = new DevComponents.DotNetBar.PanelDockContainer();
             this.LayerReader = new VPS.Controls.Layer.LayerReader();
             this.MainLeftBarPanel = new DevComponents.DotNetBar.PanelDockContainer();
-            this.MainLeftInfo = new VPS.Controls.MainInfo.MainInfo();
+            this.MainLeftInfo = new VPS.Controls.MainInfo.LeftMainInfo();
             this.LayerReaderDockContainerItem = new DevComponents.DotNetBar.DockContainerItem();
             this.AutoGridDockContainerItem = new DevComponents.DotNetBar.DockContainerItem();
             this.MainInfoDockContainerItem = new DevComponents.DotNetBar.DockContainerItem();
@@ -1636,7 +1636,7 @@ namespace VPS
         private Controls.Command.CommandsPanel Commands;
         private DevComponents.DotNetBar.PanelDockContainer panelDockContainer1;
         private DevComponents.DotNetBar.DockContainerItem dockContainerItem4;
-        private Controls.MainInfo.MainInfo MainLeftInfo;
+        private Controls.MainInfo.LeftMainInfo MainLeftInfo;
         private DevComponents.DotNetBar.PanelDockContainer LayerManagerPanel;
         private Controls.Layer.LayerManager layerManager1;
         private DevComponents.DotNetBar.DockContainerItem LayerManagerDockContainerItem;

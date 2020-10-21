@@ -1,6 +1,6 @@
 ﻿namespace VPS.Controls.MainInfo
 {
-    partial class MainInfo
+    partial class LeftMainInfo
     {
         /// <summary> 
         /// 必需的设计器变量。

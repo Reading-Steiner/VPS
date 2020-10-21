@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace VPS.Controls.MainInfo
 {
-    public partial class MainInfo : UserControl
+    public partial class LeftMainInfo : UserControl
     {
-        public MainInfo()
+        public LeftMainInfo()
         {
             InitializeComponent();
 
             instance = this;
         }
 
-        public static MainInfo instance = null;
+        public static LeftMainInfo instance = null;
 
         private delegate void SetPositionInThread(Utilities.PointLatLngAlt position);
         private Utilities.PointLatLngAlt home = null;

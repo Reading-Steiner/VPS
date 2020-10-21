@@ -506,11 +506,11 @@
       <DependentUpon>LayerReader.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Layer\MemoryLayerCache.cs" />
-    <Compile Include="Controls\MainInfo\MainInfo.cs">
+    <Compile Include="Controls\MainInfo\LeftMainInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\MainInfo\MainInfo.Designer.cs">
-      <DependentUpon>MainInfo.cs</DependentUpon>
+    <Compile Include="Controls\MainInfo\LeftMainInfo.Designer.cs">
+      <DependentUpon>LeftMainInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ReturnButton.cs">
       <SubType>UserControl</SubType>
@@ -868,8 +868,8 @@
     <EmbeddedResource Include="Controls\Layer\LayerReader.resx">
       <DependentUpon>LayerReader.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\MainInfo\MainInfo.resx">
-      <DependentUpon>MainInfo.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\MainInfo\LeftMainInfo.resx">
+      <DependentUpon>LeftMainInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ReturnButton.resx">
       <DependentUpon>ReturnButton.cs</DependentUpon>
