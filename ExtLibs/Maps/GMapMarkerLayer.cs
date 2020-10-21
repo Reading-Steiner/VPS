@@ -52,7 +52,7 @@ namespace GMap.NET.WindowsForms.Markers
                             pos1.X, pos1.Y,
                             pos2.X - pos1.X, pos2.Y - pos1.Y);
                     }
-                    if (tiles != null && pos2.X - pos1.X > 4096)
+                    if (tiles != null && pos2.X - pos1.X > 2048)
                     {
                         for (int i = 0; i < tiles.Count; i++)
                         {
