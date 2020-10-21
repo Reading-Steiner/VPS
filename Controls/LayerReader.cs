@@ -100,7 +100,7 @@ namespace VPS.Controls
             Func<string, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (filePath) =>
                 {
                     var bitmap = GDAL.GDAL.LoadImageInfo(filePath);
-                    Image img = Image.FromHbitmap(bitmap.smallBitmap.GetHbitmap());
+                    Image img = Image.FromHbitmap(bitmap.PreviewBitmap.GetHbitmap());
                     return bitmap;
                 };
             IAsyncResult iarLoadBitmap = GetGeoBitmap.BeginInvoke(path, CallbackWhenLoadBitmapDone, this);
@@ -130,10 +130,10 @@ namespace VPS.Controls
 
                 this.MapScale.SetTextContent("1:100");
 
-                SetTransparent(geobitmap.smallBitmap.GetPixel(0, 0));
+                SetTransparent(geobitmap.PreviewBitmap.GetPixel(0, 0));
 
 
-                using (Bitmap bitmap = (Bitmap)geobitmap.smallBitmap.Clone())
+                using (Bitmap bitmap = (Bitmap)geobitmap.PreviewBitmap.Clone())
                 {
                     bitmap.MakeTransparent(GetTransparent());
 
@@ -202,7 +202,7 @@ namespace VPS.Controls
         {
             if (this.LayerPrevView.Image != null)
             {
-                using(Bitmap bitmap = (Bitmap)geobitmap.smallBitmap.Clone())
+                using(Bitmap bitmap = (Bitmap)geobitmap.PreviewBitmap.Clone())
                 {
                     bitmap.MakeTransparent(GetTransparent());
 

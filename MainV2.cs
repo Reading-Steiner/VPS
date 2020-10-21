@@ -1181,9 +1181,7 @@ namespace VPS
                     
                     Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (_bitmap, _transparent) =>
                     {
-                        _bitmap.Bitmap.MakeTransparent(_transparent);
-                        _bitmap.midBitmap.MakeTransparent(_transparent);
-                        _bitmap.smallBitmap.MakeTransparent(_transparent);
+                        _bitmap.SetTransparent(_transparent);
                         return _bitmap;
                     };
                     isLoadingLayerName = bitmap.File;
@@ -1213,7 +1211,7 @@ namespace VPS
             Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> geoFunc = (Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap>)ar.AsyncDelegate;
 
             var geoBitmap = geoFunc.EndInvoke(iar);
-            if (geoBitmap.Bitmap != null)
+            if (geoBitmap.DisplayBitmap != null)
             {
                 if (geoBitmap.File == isLoadingLayerName)
                 {

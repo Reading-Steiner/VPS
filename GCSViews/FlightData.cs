@@ -5143,15 +5143,6 @@ namespace VPS.GCSViews
 
         public void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
         {
-            layerPolygonsOverlay.Polygons.Clear();
-
-            PointLatLngAlt pos1 = new PointLatLngAlt(geoBitmap.Rect.Top, geoBitmap.Rect.Left);
-            PointLatLngAlt pos2 = new PointLatLngAlt(geoBitmap.Rect.Bottom, geoBitmap.Rect.Right);
-            var mark = new GMapMarkerLayer(pos1, pos2, geoBitmap.Bitmap, geoBitmap.midBitmap, geoBitmap.smallBitmap);
-
-            layerPolygonsOverlay.Polygons.Add(mark);
-
-            FlightPlanner.instance.zoomToTiffLayer();
         }
 
         public void zoomToTiffLayer()

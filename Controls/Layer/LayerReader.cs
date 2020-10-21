@@ -386,10 +386,10 @@ namespace VPS.Controls.Layer
             {
                 var info = GDAL.GDAL.LoadImageInfo(OpenFilePath.Text);
                 if (UsingTransparent.Checked)
-                    info.smallBitmap.MakeTransparent(ColorPickerButton.SelectedColor);
+                    info.PreviewBitmap.MakeTransparent(ColorPickerButton.SelectedColor);
                 else
-                    info.smallBitmap.MakeTransparent();
-                return info.smallBitmap;
+                    info.PreviewBitmap.MakeTransparent();
+                return info.PreviewBitmap;
             }
             catch
             {

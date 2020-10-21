@@ -799,7 +799,8 @@ namespace GMap.NET.WindowsForms
                                           new RectangleF(Core.tileRect.X, Core.tileRect.Y, Core.tileRect.Width,
                                               Core.tileRect.Height));
 
-                                      g.DrawString("Exception: " + ex.Message, MissingDataFont, Brushes.Red,
+
+                                        g.DrawString("Exception: " + ex.Message, MissingDataFont, Brushes.Red,
                                           new RectangleF(Core.tileRect.X + 11, Core.tileRect.Y + 11,
                                               Core.tileRect.Width - 11, Core.tileRect.Height - 11));
 

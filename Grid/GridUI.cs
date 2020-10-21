@@ -276,13 +276,13 @@ namespace VPS.Grid
 
         private void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
         {
-            tiffoverlay.Polygons.Clear();
-            var rect = geoBitmap.Rect;
-            PointLatLngAlt pos1 = new PointLatLngAlt(rect.Top, rect.Left);
-            PointLatLngAlt pos2 = new PointLatLngAlt(rect.Bottom, rect.Right);
-            var mark = new GMapMarkerLayer(pos1, pos2, geoBitmap.Bitmap, geoBitmap.midBitmap, geoBitmap.smallBitmap);
+            //tiffoverlay.Polygons.Clear();
+            //var rect = geoBitmap.Rect;
+            //PointLatLngAlt pos1 = new PointLatLngAlt(rect.Top, rect.Left);
+            //PointLatLngAlt pos2 = new PointLatLngAlt(rect.Bottom, rect.Right);
+            //var mark = new GMapMarkerLayer(pos1, pos2, geoBitmap.DisplayBitmap);
 
-            tiffoverlay.Polygons.Add(mark);
+            //tiffoverlay.Polygons.Add(mark);
         }
 
         void loadgriddata(GridData griddata)

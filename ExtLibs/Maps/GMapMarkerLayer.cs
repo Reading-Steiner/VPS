@@ -12,10 +12,10 @@ namespace GMap.NET.WindowsForms.Markers
     [Serializable]
     public class GMapMarkerLayer : GMapPolygon
     {
-        Bitmap smallBitmap;
-        Bitmap midBitmap;
-        Bitmap bitmap;
-        public GMapMarkerLayer(PointLatLng p1, PointLatLng p2, Bitmap bitMap, Bitmap midMap = null, Bitmap smallMap = null)
+        Bitmap displayBitmap;
+        List<Bitmap> tiles = new List<Bitmap>();
+        List<RectLatLng> tilesPosition = new List<RectLatLng>();
+        public GMapMarkerLayer(PointLatLng p1, PointLatLng p2, Bitmap display, List<Bitmap> tiles, List<RectLatLng> position)
          : base(new List<PointLatLng>(), p1.ToString() + p2.ToString())
         {
             double maxLat = p1.Lat > p2.Lat ? p1.Lat : p2.Lat;
@@ -26,9 +26,14 @@ namespace GMap.NET.WindowsForms.Markers
             this.Points.Add(new PointLatLng(maxLat, maxLng));
             this.Points.Add(new PointLatLng(minLat, maxLng));
             this.Points.Add(new PointLatLng(minLat, minLng));
-            this.bitmap = bitMap;
-            this.midBitmap = midMap;
-            this.smallBitmap = smallMap;
+            this.displayBitmap = display;
+            this.tiles = tiles;
+            this.tilesPosition = position;
+            for(int i = 0; i < tilesPosition.Count; i++)
+            {
+                this.Points.Add(tilesPosition[i].LocationTopLeft);
+                this.Points.Add(tilesPosition[i].LocationRightBottom);
+            }
         }
 
         public override void OnRender(IGraphics g)
@@ -40,26 +45,32 @@ namespace GMap.NET.WindowsForms.Markers
                 {
                     GPoint pos1 = this.LocalPoints[0];
                     GPoint pos2 = this.LocalPoints[2];
-                    if (this.bitmap != null)
+                    if (this.displayBitmap != null)
                     {
-                        //g.DrawImageUnscaled(this.bitmap, (int)pos1.X, (int)pos1.Y);
-                        if (smallBitmap != null && (pos2.X - pos1.X) < smallBitmap.Width)
-                            g.DrawImage(this.smallBitmap, pos1.X, pos1.Y, pos2.X - pos1.X, pos2.Y - pos1.Y);
-                        else if (midBitmap != null && (pos2.X - pos1.X) < midBitmap.Width)
-                            g.DrawImage(this.midBitmap, pos1.X, pos1.Y, pos2.X - pos1.X, pos2.Y - pos1.Y);
-                        else if (bitmap != null)
-                            g.DrawImage(this.bitmap, pos1.X, pos1.Y, pos2.X - pos1.X, pos2.Y - pos1.Y);
-                        else if (midBitmap != null)
-                            g.DrawImage(this.midBitmap, pos1.X, pos1.Y, pos2.X - pos1.X, pos2.Y - pos1.Y);
-                        else if (smallBitmap != null)
-                            g.DrawImage(this.smallBitmap, pos1.X, pos1.Y, pos2.X - pos1.X, pos2.Y - pos1.Y);
+                        g.DrawImage(
+                            this.displayBitmap,
+                            pos1.X, pos1.Y,
+                            pos2.X - pos1.X, pos2.Y - pos1.Y);
+                    }
+                    if (tiles != null && pos2.X - pos1.X > 4096)
+                    {
+                        for (int i = 0; i < tiles.Count; i++)
+                        {
+                            GPoint leftTop = LocalPoints[4 + 2 * i];
+                            GPoint rightBottom = LocalPoints[5 + 2 * i];
+                            
+                            g.DrawImage(
+                                this.tiles[i],
+                                leftTop.X, leftTop.Y,
+                                rightBottom.X - leftTop.X, rightBottom.Y - leftTop.Y);
+                        }
                     }
                 }
             }
 #else
             if (this.bitmap != null)
             {
-                DrawImageUnscaled(g, this.bitmap, LocalPosition.X, LocalPosition.Y);
+                DrawImageUnscaled(g, this.displayBitmap, LocalPosition.X, LocalPosition.Y);
             }
 #endif
         }

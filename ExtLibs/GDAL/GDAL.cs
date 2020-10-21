@@ -174,7 +174,9 @@ namespace GDAL
                 if (resolution == 1)
                     throw new Exception("Invalid coords");
 
-                return new GeoBitmap(file, resolution, ds.RasterXSize, ds.RasterYSize, TL[0], TL[1], BR[0], BR[1]);
+                double[] adfGeoTransform = new double[6];
+                ds.GetGeoTransform(adfGeoTransform);
+                return new GeoBitmap(file, resolution, ds.RasterXSize, ds.RasterYSize, TL[0], TL[1], BR[0], BR[1], adfGeoTransform);
             }
         }
 
@@ -230,11 +232,11 @@ namespace GDAL
                         {
                             lock (locker)
                             {
-                                if (image.Bitmap == null)
+                                if (image.DisplayBitmap == null)
                                     continue;
 
                                 // this is wrong
-                                g.DrawImage(image.Bitmap, new RectangleF(0, 0, width, height), rect, GraphicsUnit.Pixel);
+                                g.DrawImage(image.DisplayBitmap, new RectangleF(0, 0, width, height), rect, GraphicsUnit.Pixel);
 
                             }
                             a++;
@@ -793,46 +795,89 @@ namespace GDAL
 
         public class GeoBitmap
         {
-            Bitmap _bitmap = null;
-            Bitmap _smallbitmap = null;
-            Bitmap _midBitmap = null;
+            Bitmap _previewBitmap = null;
+            Bitmap _displayBitmap = null;
+            List<Tile> _tiles = null;
+
+            public struct Tile
+            {
+                public Bitmap _tile;
+                public RectLatLng _position;
+                public Tile(Bitmap tile, RectLatLng position)
+                {
+                    _tile = tile;
+                    _position = position;
+                }
+            } 
+
             // load on demand
-            public Bitmap Bitmap
+            public List<Tile> BitmapTile
             {
                 get
                 {
                     lock (this)
                     {
-                        if (_smallbitmap == null) _smallbitmap = LoadImage(File, 1024, 1024);
-                        if (_midBitmap == null) _midBitmap = LoadImage(File, 4096, 4096);
-                        if (_bitmap == null) _bitmap = LoadImage(File);
-                        return _bitmap;
+                        if(_tiles == null) {
+                            _tiles = new List<Tile>();
+                            int TileXLen = 1024;
+                            int TileYLen = 1024;
+                            int TileXSize = RasterXSize / TileXLen + (RasterXSize % TileXLen == 0 ? 0 : 1);
+                            int TileYSize = RasterYSize / TileYLen + (RasterYSize % TileYLen == 0 ? 0 : 1);
+                            for (int i = 0; i < TileXSize; i++)
+                            {
+                                for(int j = 0; j < TileYSize; j++)
+                                {
+                                    Bitmap tile = LoadTileImage(File, i * TileXLen, j * TileYLen, TileXLen, TileYLen);
+                                    double[] pos1 = GetPosition(i * TileXLen, j * TileYLen);
+                                    double[] pos2 = GetPosition(
+                                        Math.Min(RasterXSize, (i + 1) * TileXLen),
+                                        Math.Min(RasterYSize, (j + 1) * TileYLen));
+
+                                    RectLatLng position = new RectLatLng(
+                                        Math.Max(pos1[1], pos2[1]), Math.Min(pos1[0], pos2[0]),
+                                        Math.Abs(pos1[0] - pos2[0]), Math.Abs(pos1[1] - pos2[1]));
+                                    _tiles.Add(new Tile(tile, position));
+                                }
+                            }
+                        }
+                        return _tiles;
+                    }
+
+                }
+            }
+
+            public Bitmap DisplayBitmap
+            {
+                get
+                {
+                    lock (this)
+                    {
+                        if (_previewBitmap == null) _previewBitmap = LoadImage(File, 1024, 1024);
+                        if (_displayBitmap == null) _displayBitmap = LoadImage(File, 4096, 4096);
+                        return _displayBitmap;
                     }
                 }
             }
 
-            public Bitmap midBitmap
+            public Bitmap PreviewBitmap
             {
                 get
                 {
                     lock (this)
                     {
-                        if (_smallbitmap == null) _smallbitmap = LoadImage(File, 1024, 1024);
-                        if (_midBitmap == null) _midBitmap = LoadImage(File, 4096, 4096);
-                        return _midBitmap;
+                        if (_previewBitmap == null) _previewBitmap = LoadImage(File, 1024, 1024);
+                        return _previewBitmap;
                     }
                 }
             }
 
-            public Bitmap smallBitmap
+            public void SetTransparent(Color color)
             {
-                get
+                DisplayBitmap.MakeTransparent(color);
+                PreviewBitmap.MakeTransparent(color);
+                for (int i = 0; i <  BitmapTile.Count; i++)
                 {
-                    lock (this)
-                    {
-                        if (_smallbitmap == null) _smallbitmap = LoadImage(File, 1024, 1024);
-                        return _smallbitmap;
-                    }
+                    BitmapTile[i]._tile.MakeTransparent(color);
                 }
             }
 
@@ -841,14 +886,26 @@ namespace GDAL
             public int RasterXSize;
             public int RasterYSize;
             public double Resolution;
+            public double[] Projection;
 
-            public GeoBitmap(string file, double resolution, int rasterXSize, int rasterYSize, double Left, double Top, double Right, double Bottom)
+            public GeoBitmap(string file, double resolution, int rasterXSize, int rasterYSize, double Left, double Top, double Right, double Bottom, double[] projection)
             {
                 this.File = file;
                 this.Resolution = resolution;
                 this.RasterXSize = rasterXSize;
                 this.RasterYSize = rasterYSize;
                 Rect = new GMap.NET.RectLatLng(Top, Left, Right - Left, Top - Bottom);
+                this.Projection = projection;
+            }
+
+            public double[] GetPosition(double x,double y)
+            {
+                double dfGeoX, dfGeoY;
+
+                dfGeoX = Projection[0] + Projection[1] * x + Projection[2] * y;
+                dfGeoY = Projection[3] + Projection[4] * x + Projection[5] * y;
+
+                return new double[] { dfGeoX, dfGeoY };
             }
         }
 

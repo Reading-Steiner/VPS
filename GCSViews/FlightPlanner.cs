@@ -8884,7 +8884,16 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
             PointLatLngAlt pos1 = new PointLatLngAlt(geoBitmap.Rect.Top, geoBitmap.Rect.Left);
             PointLatLngAlt pos2 = new PointLatLngAlt(geoBitmap.Rect.Bottom, geoBitmap.Rect.Right);
-            var mark = new GMapMarkerLayer(pos1, pos2, geoBitmap.Bitmap, geoBitmap.midBitmap, geoBitmap.smallBitmap);
+            List<Bitmap> tiles = new List<Bitmap>();
+            List<RectLatLng> positions = new List<RectLatLng>();
+            for (int i = 0; i < geoBitmap.BitmapTile.Count; i++) {
+                tiles.Add(geoBitmap.BitmapTile[i]._tile);
+                positions.Add(geoBitmap.BitmapTile[i]._position);
+            }
+            var mark = new GMapMarkerLayer(
+                pos1, pos2,
+                geoBitmap.DisplayBitmap, tiles, positions);
+
 
             layerPolygonsOverlay.Polygons.Add(mark);
 
