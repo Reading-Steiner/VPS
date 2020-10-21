@@ -512,6 +512,18 @@
     <Compile Include="Controls\MainInfo\LeftMainInfo.Designer.cs">
       <DependentUpon>LeftMainInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MainInfo\ProgressBarMainInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MainInfo\ProgressBarMainInfo.Designer.cs">
+      <DependentUpon>ProgressBarMainInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ProgressBar\UserProgressBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ProgressBar\UserProgressBar.Designer.cs">
+      <DependentUpon>UserProgressBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ReturnButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -870,6 +882,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MainInfo\LeftMainInfo.resx">
       <DependentUpon>LeftMainInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MainInfo\ProgressBarMainInfo.resx">
+      <DependentUpon>ProgressBarMainInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ProgressBar\UserProgressBar.resx">
+      <DependentUpon>UserProgressBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ReturnButton.resx">
       <DependentUpon>ReturnButton.cs</DependentUpon>
