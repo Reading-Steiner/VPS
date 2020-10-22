@@ -36,6 +36,15 @@ namespace GMap.NET.WindowsForms.Markers
             }
         }
 
+        public override void Dispose()
+        {
+            displayBitmap.Dispose();
+            for(int i = 0; i < tiles.Count; i++)
+                tiles[i].Dispose();
+            tiles.Clear();
+            tilesPosition.Clear();
+            base.Dispose();
+        }
         public override void OnRender(IGraphics g)
         {
 #if !PocketPC
