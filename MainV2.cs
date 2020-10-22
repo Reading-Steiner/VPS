@@ -1208,6 +1208,10 @@ namespace VPS
                 topMainInfo.GetProgress(key).SetProgressFailure("加载失败");
                 return new List<GeoBitmap.Tile>();
             }
+            finally
+            {
+                topMainInfo.DisposeControlEnter(key, 5000);
+            }
             
         }
 
