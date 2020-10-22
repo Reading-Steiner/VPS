@@ -10,16 +10,20 @@ using System.Windows.Forms;
 
 namespace VPS.Controls.MainInfo
 {
-    public partial class ProgressBarMainInfo : UserControl
+    public partial class TopMainInfo : UserControl
     {
-        public ProgressBarMainInfo()
+        public TopMainInfo()
         {
             InitializeComponent();
+
+            instance = this;
         }
 
-        Dictionary<string, ProgressBar.UserProgressBar> progressBarList = new Dictionary<string, ProgressBar.UserProgressBar>();
+        static public TopMainInfo instance = null; 
 
+        Dictionary<string, Control> messageBarList = new Dictionary<string, Control>();
 
+        #region ProgressBar
         private delegate string CreateProgressInThread(string info, int maxData);
         public string CreateProgress(string info, int maxData)
         {
@@ -35,7 +39,7 @@ namespace VPS.Controls.MainInfo
                 bar.SetLabelInfo(info);
                 bar.SetProgress(0, maxData);
                 string key = bar.GetHashCode().ToString();
-                progressBarList.Add(key, bar);
+                messageBarList.Add(key, bar);
 
                 return key;
             }
@@ -51,14 +55,14 @@ namespace VPS.Controls.MainInfo
             return bar;
         }
 
-        public void SetProgress(string key, int progress)
+        public ProgressBar.UserProgressBar GetProgress(string key)
         {
-            if (progressBarList.ContainsKey(key))
-            {
-                progressBarList[key].SetProgress(progress);
-            }
+            if (messageBarList[key] is ProgressBar.UserProgressBar)
+                return messageBarList[key] as ProgressBar.UserProgressBar;
             else
-                return;
+                return null;
         }
+
+        #endregion
     }
 }

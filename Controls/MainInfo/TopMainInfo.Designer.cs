@@ -1,6 +1,6 @@
 ﻿namespace VPS.Controls.MainInfo
 {
-    partial class ProgressBarMainInfo
+    partial class TopMainInfo
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -30,13 +30,12 @@
         {
             this.SuspendLayout();
             // 
-            // ProgressBarMainInfo
+            // TopMainInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.Name = "ProgressBarMainInfo";
-            this.Size = new System.Drawing.Size(135, 25);
+            this.Name = "TopMainInfo";
+            this.Size = new System.Drawing.Size(710, 25);
             this.ResumeLayout(false);
 
         }

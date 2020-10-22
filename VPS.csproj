@@ -512,11 +512,11 @@
     <Compile Include="Controls\MainInfo\LeftMainInfo.Designer.cs">
       <DependentUpon>LeftMainInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MainInfo\ProgressBarMainInfo.cs">
+    <Compile Include="Controls\MainInfo\TopMainInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\MainInfo\ProgressBarMainInfo.Designer.cs">
-      <DependentUpon>ProgressBarMainInfo.cs</DependentUpon>
+    <Compile Include="Controls\MainInfo\TopMainInfo.Designer.cs">
+      <DependentUpon>TopMainInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ProgressBar\UserProgressBar.cs">
       <SubType>UserControl</SubType>
@@ -883,8 +883,8 @@
     <EmbeddedResource Include="Controls\MainInfo\LeftMainInfo.resx">
       <DependentUpon>LeftMainInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\MainInfo\ProgressBarMainInfo.resx">
-      <DependentUpon>ProgressBarMainInfo.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\MainInfo\TopMainInfo.resx">
+      <DependentUpon>TopMainInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressBar\UserProgressBar.resx">
       <DependentUpon>UserProgressBar.cs</DependentUpon>

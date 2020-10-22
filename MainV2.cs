@@ -1171,6 +1171,46 @@ namespace VPS
             return SetLayerOverlay(info);
         }
 
+
+        private List<GeoBitmap.Tile> CreateTile(GeoBitmap _bitmap, int _tileXSize, int _tileYSize)
+        {
+            List<GeoBitmap.Tile> _tiles = new List<GeoBitmap.Tile>();
+            int TileXLen = 1024, TileYLen = 1024, RasterXSize = _bitmap.RasterXSize, RasterYSize = _bitmap.RasterYSize;
+            int TileXSize = RasterXSize / TileXLen + (RasterXSize % TileXLen == 0 ? 0 : 1);
+            int TileYSize = RasterYSize / TileYLen + (RasterYSize % TileYLen == 0 ? 0 : 1);
+            //创建进度条
+            string key = topMainInfo.CreateProgress("加载工作区：" + Layer.MemoryLayerCache.GetHashCode(_bitmap.File), TileXSize * TileYSize);
+            try
+            {
+
+                for (int i = 0; i < TileXSize; i++)
+                {
+                    for (int j = 0; j < TileYSize; j++)
+                    {
+                        Bitmap tile = LoadTileImage(_bitmap.File, i * TileXLen, j * TileYLen, TileXLen, TileYLen);
+                        double[] pos1 = _bitmap.GetPosition(i * TileXLen, j * TileYLen);
+                        double[] pos2 = _bitmap.GetPosition(
+                            Math.Min(RasterXSize, (i + 1) * TileXLen),
+                            Math.Min(RasterYSize, (j + 1) * TileYLen));
+
+                        GMap.NET.RectLatLng position = new GMap.NET.RectLatLng(
+                            Math.Max(pos1[1], pos2[1]), Math.Min(pos1[0], pos2[0]),
+                            Math.Abs(pos1[0] - pos2[0]), Math.Abs(pos1[1] - pos2[1]));
+                        _tiles.Add(new GeoBitmap.Tile(tile, position));
+                        topMainInfo.GetProgress(key).SetProgress( i * TileYSize + j);
+                    }
+                }
+                topMainInfo.GetProgress(key).SetProgressSuccessful("加载完成");
+                return _tiles;
+            }
+            catch
+            {
+                topMainInfo.GetProgress(key).SetProgressFailure("加载失败");
+                return new List<GeoBitmap.Tile>();
+            }
+            
+        }
+
         private bool SetLayerOverlay(VPS.Layer.LayerInfo layerInfo)
         {
             if (File.Exists(layerInfo.Layer))
@@ -1181,7 +1221,9 @@ namespace VPS
                     
                     Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (_bitmap, _transparent) =>
                     {
+                        _bitmap.BitmapTile = CreateTile(_bitmap, 400, 400);
                         _bitmap.SetTransparent(_transparent);
+                        
                         return _bitmap;
                     };
                     isLoadingLayerName = bitmap.File;

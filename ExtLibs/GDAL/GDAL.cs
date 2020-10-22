@@ -815,34 +815,11 @@ namespace GDAL
             {
                 get
                 {
-                    lock (this)
-                    {
-                        if(_tiles == null) {
-                            _tiles = new List<Tile>();
-                            int TileXLen = 1024;
-                            int TileYLen = 1024;
-                            int TileXSize = RasterXSize / TileXLen + (RasterXSize % TileXLen == 0 ? 0 : 1);
-                            int TileYSize = RasterYSize / TileYLen + (RasterYSize % TileYLen == 0 ? 0 : 1);
-                            for (int i = 0; i < TileXSize; i++)
-                            {
-                                for(int j = 0; j < TileYSize; j++)
-                                {
-                                    Bitmap tile = LoadTileImage(File, i * TileXLen, j * TileYLen, TileXLen, TileYLen);
-                                    double[] pos1 = GetPosition(i * TileXLen, j * TileYLen);
-                                    double[] pos2 = GetPosition(
-                                        Math.Min(RasterXSize, (i + 1) * TileXLen),
-                                        Math.Min(RasterYSize, (j + 1) * TileYLen));
-
-                                    RectLatLng position = new RectLatLng(
-                                        Math.Max(pos1[1], pos2[1]), Math.Min(pos1[0], pos2[0]),
-                                        Math.Abs(pos1[0] - pos2[0]), Math.Abs(pos1[1] - pos2[1]));
-                                    _tiles.Add(new Tile(tile, position));
-                                }
-                            }
-                        }
-                        return _tiles;
-                    }
-
+                    return _tiles;
+                }
+                set
+                {
+                    _tiles = value;
                 }
             }
 
