@@ -102,6 +102,7 @@ namespace VPS.Controls.MainInfo
                 if (Convert.ToInt64((DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds) - start > data.time)
                 {
                     TopMainInfo.instance.DisposeControl(data.key);
+                    return;
                 }
                 else
                 {
