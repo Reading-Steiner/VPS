@@ -15,6 +15,7 @@ namespace GMap.NET.WindowsForms.Markers
         Bitmap displayBitmap;
         List<Bitmap> tiles = new List<Bitmap>();
         List<RectLatLng> tilesPosition = new List<RectLatLng>();
+        int count = 0;
         public GMapMarkerLayer(PointLatLng p1, PointLatLng p2, Bitmap display, List<Bitmap> tiles, List<RectLatLng> position)
          : base(new List<PointLatLng>(), p1.ToString() + p2.ToString())
         {
@@ -27,13 +28,18 @@ namespace GMap.NET.WindowsForms.Markers
             this.Points.Add(new PointLatLng(minLat, maxLng));
             this.Points.Add(new PointLatLng(minLat, minLng));
             this.displayBitmap = display;
-            this.tiles = tiles;
-            this.tilesPosition = position;
-            for(int i = 0; i < tilesPosition.Count; i++)
-            {
-                this.Points.Add(tilesPosition[i].LocationTopLeft);
-                this.Points.Add(tilesPosition[i].LocationRightBottom);
+            for(int i = 0; i< tiles.Count; i++) {
+                AddTile(tiles[i], position[i]);
             }
+        }
+
+        public void AddTile(Bitmap tile, RectLatLng position)
+        {
+            this.tiles.Add(tile);
+            this.tilesPosition.Add(position);
+            this.Points.Add(position.LocationTopLeft);
+            this.Points.Add(position.LocationRightBottom);
+            count++;
         }
 
         public override void Dispose()
@@ -63,7 +69,7 @@ namespace GMap.NET.WindowsForms.Markers
                     }
                     if (tiles != null && pos2.X - pos1.X > 2048)
                     {
-                        for (int i = 0; i < tiles.Count; i++)
+                        for (int i = 0; i < count; i++)
                         {
                             GPoint leftTop = LocalPoints[4 + 2 * i];
                             GPoint rightBottom = LocalPoints[5 + 2 * i];
