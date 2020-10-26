@@ -405,6 +405,12 @@ namespace GDAL
             }
         }
 
+        public static void CreateVRT(string vrt, List<string> tiffs)
+        {
+            var vrtDataset = Gdal.wrapper_GDALBuildVRT_names(vrt, tiffs.ToArray(), new GDALBuildVRTOptions(new[] { "-overwrite" }), null, null);
+            vrtDataset.Dispose();
+        }
+
         public static bool SaveTiffTile(string file, string saveFile, int xOffset, int yOffset, int xSize = 400, int ySize = 400)
         {
 

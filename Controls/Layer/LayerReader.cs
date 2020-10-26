@@ -39,7 +39,22 @@ namespace VPS.Controls.Layer
 
         private void FromFile_CheckedChanged(object sender, EventArgs e)
         {
-            this.FileReaderBox.Visible = this.FromFile.Checked;
+            this.FileReaderBox.Visible = this.FromFile.Checked || this.FromTile.Checked;
+            if (!OpenFilePath.Text.EndsWith(".tif"))
+            {
+                OpenFilePath.Text = "";
+                Clear();
+            }
+        }
+
+        private void FromTile_CheckedChanged(object sender, EventArgs e)
+        {
+            this.FileReaderBox.Visible = this.FromTile.Checked || this.FromFile.Checked;
+            if (!OpenFilePath.Text.EndsWith(".vrt"))
+            {
+                OpenFilePath.Text = "";
+                Clear();
+            }
         }
 
         private void ImageSave_CheckedChanged(object sender, EventArgs e)
@@ -76,9 +91,7 @@ namespace VPS.Controls.Layer
         {
             if (System.IO.File.Exists(this.OpenFilePath.Text))
             {
-                System.IO.FileInfo info = new System.IO.FileInfo(this.OpenFilePath.Text);
-                var FileInfo = new System.IO.FileInfo(this.OpenFilePath.Text);
-                this.TileName.Text = info.Name + "{x}_{y}";
+                this.TileName.Text = "{name}.{x}_{y}";
             }
         }
 
@@ -99,8 +112,15 @@ namespace VPS.Controls.Layer
         {
             using (OpenFileDialog openFile = new OpenFileDialog())
             {
-                openFile.Filter = "TIFF地理影像(*.tif)|*.tif";
-                openFile.ShowDialog();
+                if (FromFile.Checked)
+                {
+                    openFile.Filter = "TIFF地理影像(*.tif)|*.tif";
+                    openFile.ShowDialog();
+                }else if (FromTile.Checked)
+                {
+                    openFile.Filter = "TIFF切片地理影像(*.vrt)|*.vrt";
+                    openFile.ShowDialog();
+                }
                 if (System.IO.File.Exists(openFile.FileName))
                 {
                     this.OpenFilePath.Text = openFile.FileName;
@@ -145,6 +165,24 @@ namespace VPS.Controls.Layer
             }
         }
 
+        private void Clear()
+        {
+            FileName = "";
+            FullFileName = "";
+            FileExtend = "";
+            PointLeftTop = new PointLatLngAlt();
+            FileSize = 0;
+            RasterXSize = 0;
+            RasterYSize = 0;
+            this.BoundLeftText.Text = "";
+            this.BoundRightText.Text = "";
+            this.BoundTopText.Text = "";
+            this.BoundBottomText.Text = "";
+            this.Projection.Text = "";
+            bitmap = null;
+            ShowGeoBitmap();
+        }
+
         private void ImageTile_CheckedChanged(object sender, EventArgs e)
         {
             ImageSave.Checked = ImageTile.Checked;
@@ -157,7 +195,7 @@ namespace VPS.Controls.Layer
         {
             if (ImageTile.Checked)
             {
-                SaveTile();
+                System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(SaveTile));
             }
             else
             {
@@ -171,7 +209,7 @@ namespace VPS.Controls.Layer
             }
         }
 
-        private void SaveTile()
+        private void SaveTile(object obj)
         {
             string openPath = OpenFilePath.Text;
 
@@ -179,19 +217,40 @@ namespace VPS.Controls.Layer
 
             int tileXSize = TileXSize.Value;
             int tileYSize = TileYSize.Value;
-            int tileXCount = (int)(RasterXSize / tileXSize);
-            int tileYCount = (int)(RasterYSize / tileYSize);
+            int tileXCount = (int)(RasterXSize / tileXSize) + (RasterXSize % tileXSize == 0 ? 0 : 1);
+            int tileYCount = (int)(RasterYSize / tileYSize) + (RasterYSize % tileYSize == 0 ? 0 : 1);
+            string vrtFileName = savePath + FileName + ".tif.vrt";
+            List<string> tiffFileNames = new List<string>();
 
-            for (int i = 0; i <= tileYCount; i++)
+            string key = MainInfo.TopMainInfo.instance.CreateProgress("影像切片：" + FileName, tileXCount * tileYCount + 1);
+            try
             {
-                for (int j = 0; j <= tileXCount; j++)
+                
+                for (int i = 0; i < tileYCount; i++)
                 {
-                    string saveFullName = savePath + GetTileName(j, i) + ".tif.tif";
-                    GDAL.GDAL.SaveTiffTile(openPath, saveFullName,
-                        j * tileXSize, i * tileYSize, tileXSize, tileYSize);
+                    for (int j = 0; j < tileXCount; j++)
+                    {
+                        string saveFullName = savePath + GetTileName(j, i) + ".tif";
+                        tiffFileNames.Add(saveFullName);
+                        GDAL.GDAL.SaveTiffTile(openPath, saveFullName,
+                            j * tileXSize, i * tileYSize, tileXSize, tileYSize);
+
+                        MainInfo.TopMainInfo.instance.GetProgress(key).SetProgress(i * tileXCount + j);
+                    }
                 }
+                MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressInfo("创建VRT文件");
+                GDAL.GDAL.CreateVRT(vrtFileName, tiffFileNames);
+                MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressSuccessful("切片成功");
             }
-            LoadTile();
+            catch
+            {
+                MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressFailure("切片失败");
+            }
+            finally
+            {
+                VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+            }
+            //LoadTile();
         }
         
 
@@ -314,7 +373,8 @@ namespace VPS.Controls.Layer
 
         private string GetTileName(int xIndex, int yIndex)
         {
-            string TileFormat = this.TileName.Text;
+            string TileFormat = this.TileName.Text.ToLower();
+            TileFormat = TileFormat.Replace("{name}", FileName);
             var res = Regex.Matches(TileFormat, "[{][^{}]*[}]");
             foreach (Match data in res)
             {
@@ -420,5 +480,7 @@ namespace VPS.Controls.Layer
         {
             IsShowPreview = !IsShowPreview;
         }
+
+
     }
 }

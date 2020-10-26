@@ -4652,7 +4652,7 @@ namespace VPS
             int TileXSize = RasterXSize / TileXLen + (RasterXSize % TileXLen == 0 ? 0 : 1);
             int TileYSize = RasterYSize / TileYLen + (RasterYSize % TileYLen == 0 ? 0 : 1);
             //创建进度条
-            string key = topMainInfo.CreateProgress("加载工作区：" + Layer.MemoryLayerCache.GetHashCode(_bitmap.File), TileXSize * TileYSize);
+            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("加载工作区：" + Layer.MemoryLayerCache.GetHashCode(_bitmap.File), TileXSize * TileYSize);
             try
             {
 
@@ -4670,20 +4670,20 @@ namespace VPS
                             Math.Max(pos1[1], pos2[1]), Math.Min(pos1[0], pos2[0]),
                             Math.Abs(pos1[0] - pos2[0]), Math.Abs(pos1[1] - pos2[1]));
                         _tiles.Add(new GeoBitmap.Tile(tile, position));
-                        topMainInfo.GetProgress(key).SetProgress(i * TileYSize + j);
+                        VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key).SetProgress(i * TileYSize + j);
                     }
                 }
-                topMainInfo.GetProgress(key).SetProgressSuccessful("加载完成");
+                VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressSuccessful("加载完成");
                 return _tiles;
             }
             catch
             {
-                topMainInfo.GetProgress(key).SetProgressFailure("加载失败");
+                VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressFailure("加载失败");
                 return new List<GeoBitmap.Tile>();
             }
             finally
             {
-                topMainInfo.DisposeControlEnter(key, 5000);
+                VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 5000);
             }
 
         }

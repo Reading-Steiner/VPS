@@ -51,6 +51,8 @@
             this.SaveFile = new DevComponents.DotNetBar.ButtonX();
             this.SaveFilePath = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.TileNameBox = new DevComponents.DotNetBar.PanelEx();
+            this.TileYSize = new DevComponents.Editors.IntegerInput();
+            this.TileXSize = new DevComponents.Editors.IntegerInput();
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX7 = new DevComponents.DotNetBar.LabelX();
@@ -96,13 +98,14 @@
             this.FromFile = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.panelEx6 = new DevComponents.DotNetBar.PanelEx();
             this.label6 = new System.Windows.Forms.Label();
-            this.TileXSize = new DevComponents.Editors.IntegerInput();
-            this.TileYSize = new DevComponents.Editors.IntegerInput();
+            this.FromTile = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.panelEx2.SuspendLayout();
             this.panelEx9.SuspendLayout();
             this.panelEx5.SuspendLayout();
             this.SaveFileBox.SuspendLayout();
             this.TileNameBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TileYSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TileXSize)).BeginInit();
             this.panelEx10.SuspendLayout();
             this.panelEx11.SuspendLayout();
             this.panelEx3.SuspendLayout();
@@ -120,8 +123,6 @@
             this.FileReaderBox.SuspendLayout();
             this.panelEx15.SuspendLayout();
             this.panelEx6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TileXSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TileYSize)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxItem1
@@ -215,9 +216,9 @@
             this.panelEx9.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelEx9.Controls.Add(this.Accept);
             this.panelEx9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx9.Location = new System.Drawing.Point(0, 930);
+            this.panelEx9.Location = new System.Drawing.Point(0, 929);
             this.panelEx9.Name = "panelEx9";
-            this.panelEx9.Size = new System.Drawing.Size(310, 80);
+            this.panelEx9.Size = new System.Drawing.Size(310, 78);
             this.panelEx9.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx9.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelEx9.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -228,9 +229,10 @@
             // Accept
             // 
             this.Accept.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.Accept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Accept.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.Accept.Enabled = false;
-            this.Accept.Location = new System.Drawing.Point(205, 54);
+            this.Accept.Location = new System.Drawing.Point(210, 52);
             this.Accept.Name = "Accept";
             this.Accept.Size = new System.Drawing.Size(75, 23);
             this.Accept.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -249,9 +251,9 @@
             this.panelEx5.Controls.Add(this.panelEx10);
             this.panelEx5.Controls.Add(this.panelEx11);
             this.panelEx5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx5.Location = new System.Drawing.Point(0, 747);
+            this.panelEx5.Location = new System.Drawing.Point(0, 745);
             this.panelEx5.Name = "panelEx5";
-            this.panelEx5.Size = new System.Drawing.Size(310, 183);
+            this.panelEx5.Size = new System.Drawing.Size(310, 184);
             this.panelEx5.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx5.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx5.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
@@ -272,7 +274,7 @@
             this.SaveFileBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.SaveFileBox.Location = new System.Drawing.Point(0, 108);
             this.SaveFileBox.Name = "SaveFileBox";
-            this.SaveFileBox.Size = new System.Drawing.Size(310, 75);
+            this.SaveFileBox.Size = new System.Drawing.Size(310, 76);
             this.SaveFileBox.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.SaveFileBox.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.SaveFileBox.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -284,8 +286,9 @@
             // DefaultSavePath
             // 
             this.DefaultSavePath.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.DefaultSavePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.DefaultSavePath.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.DefaultSavePath.Location = new System.Drawing.Point(154, 49);
+            this.DefaultSavePath.Location = new System.Drawing.Point(173, 50);
             this.DefaultSavePath.Name = "DefaultSavePath";
             this.DefaultSavePath.Size = new System.Drawing.Size(52, 23);
             this.DefaultSavePath.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -308,8 +311,9 @@
             // SaveFile
             // 
             this.SaveFile.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.SaveFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.SaveFile.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.SaveFile.Location = new System.Drawing.Point(228, 49);
+            this.SaveFile.Location = new System.Drawing.Point(247, 50);
             this.SaveFile.Name = "SaveFile";
             this.SaveFile.Size = new System.Drawing.Size(52, 23);
             this.SaveFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -319,6 +323,8 @@
             // 
             // SaveFilePath
             // 
+            this.SaveFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.SaveFilePath.BackColor = System.Drawing.Color.White;
             // 
             // 
@@ -328,7 +334,7 @@
             this.SaveFilePath.ForeColor = System.Drawing.SystemColors.ControlText;
             this.SaveFilePath.Location = new System.Drawing.Point(12, 23);
             this.SaveFilePath.Name = "SaveFilePath";
-            this.SaveFilePath.Size = new System.Drawing.Size(284, 21);
+            this.SaveFilePath.Size = new System.Drawing.Size(287, 21);
             this.SaveFilePath.TabIndex = 16;
             // 
             // TileNameBox
@@ -354,6 +360,44 @@
             this.TileNameBox.Style.GradientAngle = 90;
             this.TileNameBox.TabIndex = 34;
             this.TileNameBox.Visible = false;
+            // 
+            // TileYSize
+            // 
+            this.TileYSize.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.TileYSize.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TileYSize.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TileYSize.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TileYSize.Increment = 10;
+            this.TileYSize.Location = new System.Drawing.Point(205, 36);
+            this.TileYSize.MaxValue = 100000000;
+            this.TileYSize.MinValue = 10;
+            this.TileYSize.Name = "TileYSize";
+            this.TileYSize.ShowUpDown = true;
+            this.TileYSize.Size = new System.Drawing.Size(80, 21);
+            this.TileYSize.TabIndex = 25;
+            this.TileYSize.Value = 400;
+            // 
+            // TileXSize
+            // 
+            this.TileXSize.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.TileXSize.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TileXSize.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TileXSize.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TileXSize.Increment = 10;
+            this.TileXSize.Location = new System.Drawing.Point(72, 36);
+            this.TileXSize.MaxValue = 100000000;
+            this.TileXSize.MinValue = 10;
+            this.TileXSize.Name = "TileXSize";
+            this.TileXSize.ShowUpDown = true;
+            this.TileXSize.Size = new System.Drawing.Size(80, 21);
+            this.TileXSize.TabIndex = 24;
+            this.TileXSize.Value = 400;
             // 
             // labelX5
             // 
@@ -394,6 +438,8 @@
             // 
             // TileName
             // 
+            this.TileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TileName.BackColor = System.Drawing.Color.White;
             // 
             // 
@@ -403,9 +449,9 @@
             this.TileName.ForeColor = System.Drawing.SystemColors.ControlText;
             this.TileName.Location = new System.Drawing.Point(72, 3);
             this.TileName.Name = "TileName";
-            this.TileName.Size = new System.Drawing.Size(224, 21);
+            this.TileName.Size = new System.Drawing.Size(227, 21);
             this.TileName.TabIndex = 16;
-            this.TileName.Text = "{x}_{y}";
+            this.TileName.Text = "{name}.{x}_{y}";
             // 
             // panelEx10
             // 
@@ -432,12 +478,13 @@
             // 
             // 
             this.ImageTile.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ImageTile.Location = new System.Drawing.Point(39, 4);
+            this.ImageTile.Location = new System.Drawing.Point(150, 5);
             this.ImageTile.Name = "ImageTile";
             this.ImageTile.Size = new System.Drawing.Size(76, 18);
             this.ImageTile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.ImageTile.TabIndex = 27;
             this.ImageTile.Text = "图像切片";
+            this.ImageTile.Visible = false;
             this.ImageTile.CheckedChanged += new System.EventHandler(this.ImageTile_CheckedChanged);
             // 
             // ImageSave
@@ -446,7 +493,7 @@
             // 
             // 
             this.ImageSave.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ImageSave.Location = new System.Drawing.Point(156, 5);
+            this.ImageSave.Location = new System.Drawing.Point(39, 5);
             this.ImageSave.Name = "ImageSave";
             this.ImageSave.Size = new System.Drawing.Size(86, 18);
             this.ImageSave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -507,7 +554,7 @@
             this.panelEx3.Controls.Add(this.panelEx7);
             this.panelEx3.Controls.Add(this.panelEx12);
             this.panelEx3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx3.Location = new System.Drawing.Point(0, 339);
+            this.panelEx3.Location = new System.Drawing.Point(0, 337);
             this.panelEx3.Name = "panelEx3";
             this.panelEx3.Size = new System.Drawing.Size(310, 408);
             this.panelEx3.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -721,7 +768,7 @@
             this.panelEx4.Controls.Add(this.panelEx13);
             this.panelEx4.Controls.Add(this.panelEx14);
             this.panelEx4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx4.Location = new System.Drawing.Point(0, 99);
+            this.panelEx4.Location = new System.Drawing.Point(0, 97);
             this.panelEx4.Name = "panelEx4";
             this.panelEx4.Size = new System.Drawing.Size(310, 240);
             this.panelEx4.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -859,6 +906,8 @@
             // 
             // Projection
             // 
+            this.Projection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -934,7 +983,7 @@
             this.panelEx8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEx8.Location = new System.Drawing.Point(0, 0);
             this.panelEx8.Name = "panelEx8";
-            this.panelEx8.Size = new System.Drawing.Size(310, 99);
+            this.panelEx8.Size = new System.Drawing.Size(310, 97);
             this.panelEx8.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx8.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx8.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
@@ -954,7 +1003,7 @@
             this.FileReaderBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.FileReaderBox.Location = new System.Drawing.Point(0, 46);
             this.FileReaderBox.Name = "FileReaderBox";
-            this.FileReaderBox.Size = new System.Drawing.Size(310, 53);
+            this.FileReaderBox.Size = new System.Drawing.Size(310, 51);
             this.FileReaderBox.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.FileReaderBox.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.FileReaderBox.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -978,9 +1027,9 @@
             // 
             this.OpenFile.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.OpenFile.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.OpenFile.Location = new System.Drawing.Point(243, 27);
+            this.OpenFile.Location = new System.Drawing.Point(102, 3);
             this.OpenFile.Name = "OpenFile";
-            this.OpenFile.Size = new System.Drawing.Size(54, 23);
+            this.OpenFile.Size = new System.Drawing.Size(54, 20);
             this.OpenFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.OpenFile.TabIndex = 17;
             this.OpenFile.Text = "打开";
@@ -988,6 +1037,8 @@
             // 
             // OpenFilePath
             // 
+            this.OpenFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.OpenFilePath.BackColor = System.Drawing.Color.White;
             // 
             // 
@@ -995,9 +1046,9 @@
             this.OpenFilePath.Border.Class = "TextBoxBorder";
             this.OpenFilePath.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.OpenFilePath.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.OpenFilePath.Location = new System.Drawing.Point(12, 28);
+            this.OpenFilePath.Location = new System.Drawing.Point(12, 27);
             this.OpenFilePath.Name = "OpenFilePath";
-            this.OpenFilePath.Size = new System.Drawing.Size(225, 21);
+            this.OpenFilePath.Size = new System.Drawing.Size(287, 21);
             this.OpenFilePath.TabIndex = 16;
             this.OpenFilePath.TextChanged += new System.EventHandler(this.OpenFilePath_TextChanged);
             // 
@@ -1007,6 +1058,7 @@
             this.panelEx15.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panelEx15.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx15.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx15.Controls.Add(this.FromTile);
             this.panelEx15.Controls.Add(this.labelX11);
             this.panelEx15.Controls.Add(this.FromFile);
             this.panelEx15.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1091,43 +1143,21 @@
             this.label6.TabIndex = 26;
             this.label6.Text = "文件设置";
             // 
-            // TileXSize
+            // FromTile
             // 
-            this.TileXSize.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.TileXSize.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.TileXSize.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.TileXSize.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.TileXSize.Increment = 10;
-            this.TileXSize.Location = new System.Drawing.Point(72, 36);
-            this.TileXSize.MaxValue = 100000000;
-            this.TileXSize.MinValue = 10;
-            this.TileXSize.Name = "TileXSize";
-            this.TileXSize.ShowUpDown = true;
-            this.TileXSize.Size = new System.Drawing.Size(80, 21);
-            this.TileXSize.TabIndex = 24;
-            this.TileXSize.Value = 400;
-            // 
-            // TileYSize
-            // 
-            this.TileYSize.AllowEmptyState = false;
+            this.FromTile.AutoSize = true;
             // 
             // 
             // 
-            this.TileYSize.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.TileYSize.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.TileYSize.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.TileYSize.Increment = 10;
-            this.TileYSize.Location = new System.Drawing.Point(205, 36);
-            this.TileYSize.MaxValue = 100000000;
-            this.TileYSize.MinValue = 10;
-            this.TileYSize.Name = "TileYSize";
-            this.TileYSize.ShowUpDown = true;
-            this.TileYSize.Size = new System.Drawing.Size(80, 21);
-            this.TileYSize.TabIndex = 25;
-            this.TileYSize.Value = 400;
+            this.FromTile.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.FromTile.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
+            this.FromTile.Location = new System.Drawing.Point(180, 3);
+            this.FromTile.Name = "FromTile";
+            this.FromTile.Size = new System.Drawing.Size(51, 18);
+            this.FromTile.TabIndex = 19;
+            this.FromTile.Text = "切片";
+            this.FromTile.Visible = false;
+            this.FromTile.CheckedChanged += new System.EventHandler(this.FromTile_CheckedChanged);
             // 
             // LayerReader
             // 
@@ -1144,6 +1174,8 @@
             this.SaveFileBox.ResumeLayout(false);
             this.TileNameBox.ResumeLayout(false);
             this.TileNameBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TileYSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TileXSize)).EndInit();
             this.panelEx10.ResumeLayout(false);
             this.panelEx11.ResumeLayout(false);
             this.panelEx11.PerformLayout();
@@ -1169,8 +1201,6 @@
             this.panelEx15.PerformLayout();
             this.panelEx6.ResumeLayout(false);
             this.panelEx6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TileXSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TileYSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1246,5 +1276,6 @@
         private DevComponents.DotNetBar.ButtonX Accept;
         private DevComponents.Editors.IntegerInput TileYSize;
         private DevComponents.Editors.IntegerInput TileXSize;
+        private DevComponents.DotNetBar.Controls.CheckBoxX FromTile;
     }
 }

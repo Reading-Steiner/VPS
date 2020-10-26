@@ -68,7 +68,7 @@ namespace VPS.Controls.ProgressBar
         }
 
         private delegate void SetTextInThread(string text);
-        private void SetProgressInfo(string text)
+        public void SetProgressInfo(string text)
         {
             if (this.InvokeRequired)
             {
