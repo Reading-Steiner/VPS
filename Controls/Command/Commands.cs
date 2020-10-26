@@ -133,7 +133,7 @@ namespace VPS.Controls.Command
             Terrain
         }
         private AltFrames currentFrame = AltFrames.Relative;
-        public DataChangeHandle AltFrameChange;
+        public StringChangeHandle AltFrameChange;
         private void AltFrame_SelectedIndexChanged(object sender, EventArgs e)
         {
             SetCurrentFrame((AltFrames)AltFrame.SelectedValue);
@@ -171,9 +171,13 @@ namespace VPS.Controls.Command
         }
 
         public delegate void DataChangeHandle(object data);
+        public delegate void IntegerChangeHandle(int data);
+        public delegate void StringChangeHandle(string str);
+        public delegate void PositionChangeHandle(Utilities.PointLatLngAlt point);
+        
 
         private int defaultAlt = 200;
-        public DataChangeHandle DefaultAltChange;
+        public IntegerChangeHandle DefaultAltChange;
         private void DefaultAlt_ValueChanged(object sender, EventArgs e)
         {
             defaultAlt = DefaultAlt.Value;
@@ -183,7 +187,7 @@ namespace VPS.Controls.Command
         }
 
         private int warnAlt = 0;
-        public DataChangeHandle WarnAltChange;
+        public IntegerChangeHandle WarnAltChange;
         private void WarnAlt_ValueChanged(object sender, EventArgs e)
         {
             warnAlt = WarnAlt.Value;
@@ -199,7 +203,7 @@ namespace VPS.Controls.Command
         }
 
         private int baseAlt = 0;
-        public DataChangeHandle BaseAltChange;
+        public IntegerChangeHandle BaseAltChange;
         private void BaseAlt_ValueChanged(object sender, EventArgs e)
         {
             baseAlt = BaseAlt.Value;
@@ -215,7 +219,7 @@ namespace VPS.Controls.Command
             MGRS
         }
         private CoordSystems currentCoord = CoordSystems.WGS84;
-        public DataChangeHandle CoordSystemChange;
+        public StringChangeHandle CoordSystemChange;
         private void CoordSystem_SelectedIndexChanged(object sender, EventArgs e)
         {
             SetCurrentCoord((CoordSystems)CoordSystem.SelectedValue);
@@ -265,7 +269,7 @@ namespace VPS.Controls.Command
         }
 
         private int wpRad = 20;
-        public DataChangeHandle WPRadChange;
+        public IntegerChangeHandle WPRadChange;
         private void WpRad_ValueChanged(object sender, EventArgs e)
         {
             wpRad = WpRad.Value;
@@ -275,7 +279,7 @@ namespace VPS.Controls.Command
         }
 
         private Utilities.PointLatLngAlt homePosition = new Utilities.PointLatLngAlt();
-        public DataChangeHandle HomeChange;
+        public PositionChangeHandle HomeChange;
         private void HomeLat_ValueChanged(object sender, EventArgs e)
         {
             homePosition.Lat = HomeLat.Value;
@@ -306,7 +310,6 @@ namespace VPS.Controls.Command
             HomeLat.Value = home.Lat;
             HomeLng.Value = home.Lng;
             HomeAlt.Value = home.Alt;
-
             EndEdit();
         }
 

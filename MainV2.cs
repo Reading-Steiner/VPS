@@ -793,16 +793,8 @@ namespace VPS
             {
                 Settings.Instance["defaultTiffLayer"] = "";
             }
-            if (!Settings.Instance.ContainsKey("defaultTiffLayer"))
-            {
-                Settings.Instance.AppendList("defaultTiffLayer", "");
-            }
-            else if (string.IsNullOrEmpty(Settings.Instance["defaultTiffLayer"]))
-            {
-                Settings.Instance["defaultTiffLayer"] = "";
-            }
 
-            
+
 
             SaveConfig();
         }
@@ -914,7 +906,7 @@ namespace VPS
                         new adsb.PointLatLngAltHdg(adsb.Lat, adsb.Lng,
                                 adsb.Alt, adsb.Heading, adsb.Speed, id,
                                 DateTime.Now)
-                            {CallSign = adsb.CallSign, Squawk = adsb.Squawk, Raw = adsb.Raw};
+                        { CallSign = adsb.CallSign, Squawk = adsb.Squawk, Raw = adsb.Raw };
                 }
 
                 try
@@ -1009,273 +1001,6 @@ namespace VPS
             _connectionControl.CMB_serialport.Items.Add("WS");
         }
 
-        #region new
-
-        private bool isLoadLayer;
-        private string isLoadingLayerName = "";
-        public delegate void delegateHandler();
-        public delegateHandler LoadLayerHandle;
-        public delegateHandler NoLoadLayerHandle;
-        public bool IsLoadLayer
-        {
-            set
-            {
-                isLoadLayer = value;
-                if (isLoadLayer)
-                {
-                    LoadLayerHandle();
-                }
-                else
-                {
-                    NoLoadLayerHandle();
-                }
-            }
-        }
-        private void SetInitHandler()
-        {
-            OutDrawPolygonState();
-
-            VPS.Controls.Command.CommandsPanel.instance.WPListChange += WPListChange;
-            VPS.Controls.Command.CommandsPanel.instance.CoordSystemChange += CoordSystemChange;
-            VPS.Controls.Command.CommandsPanel.instance.WPRadChange += WPRadChange;
-            VPS.Controls.Command.CommandsPanel.instance.AltFrameChange += AltFrameChange;
-            VPS.Controls.Command.CommandsPanel.instance.BaseAltChange += BaseAltChange;
-            VPS.Controls.Command.CommandsPanel.instance.WarnAltChange += WarnAltChange;
-            VPS.Controls.Command.CommandsPanel.instance.HomeChange += HomeChange;
-            GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.Command.CommandsPanel.instance.SetHome;
-            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.SetWPList;
-
-            GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetHomePosition;
-            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetWPList;
-            GCSViews.FlightPlanner.instance.CurrentChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetCurrentPosition;
-
-            FlightPlanner.ToDrawPolygonHandle += ToDrawPolygonState;
-            FlightPlanner.OutDrawPolygonHandle += OutDrawPolygonState;
-
-            FlightPlanner.ToDrawWPHandle += ToDrawWPState;
-            FlightPlanner.OutDrawWPHandle += OutDrawWPState;
-
-            NoLoadLayerHandle += SetNoLaodLayerState;
-            LoadLayerHandle += SetLaodLayerState;
-
-        }
-
-        private delegate void SetCheckedCallback(HLToolStripButton stripButton, bool value);
-        private void SetHLToolStripButtonChecked(HLToolStripButton stripButton, bool value)
-        {
-            stripButton.MyChecked = value;
-        }
-
-        private delegate bool GetCheckedCallback(HLToolStripButton stripButton);
-        private bool GetHLToolStripButtonChecked(HLToolStripButton stripButton)
-        {
-            return stripButton.MyChecked;
-        }
-
-        private void SetLaodLayerState()
-        {
-            this.ZoomTiffButton.Enabled = true;
-            this.ZoomToButton.Enabled = true;
-        }
-
-        private void SetNoLaodLayerState()
-        {
-            this.ZoomTiffButton.Enabled = false;
-            this.ZoomToButton.Enabled = false;
-        }
-
-        private void ToDrawPolygonState()
-        {
-            SetMenuItemChecked(this.DrawPolygonButton, true);
-        }
-
-        private void OutDrawPolygonState()
-        {
-            SetMenuItemChecked(this.DrawPolygonButton, false);
-        }
-
-        private void ToDrawWPState()
-        {
-            SetMenuItemChecked(this.AddWPButton, true);
-        }
-
-        private void OutDrawWPState()
-        {
-            SetMenuItemChecked(this.AddWPButton, false);
-        }
-
-
-
-        private void FlightPlannerShow()
-        {
-            //MyView.ShowScreen("FlightPlanner");
-            MyView.ShowScreen("FlightPlanner");
-        }
-
-
-        private void FlightDataShow()
-        {
-            MyView.ShowScreen("FlightData");
-        }
-
-
-
-        private void MenuZoomToLayer_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.zoomToTiffLayer();
-            //GCSViews.FlightData.instance.zoomToTiffLayer();
-        }
-
-
-        #region 图层信息
-        public string currentLayerPath;
-        public GMap.NET.RectLatLng displayRect = new GMap.NET.RectLatLng();
-        public PointLatLngAlt defaultOrigin = new PointLatLngAlt();
-        public PointLatLngAlt defaultHome = new PointLatLngAlt();
-        public GeoBitmap currentLayer;
-        public VPS.Layer.LayerInfo selectedLayer;
-        #endregion
-
-        public void LoadTiffLayer()
-        {
-            LoadTiffButton_Click(this, null);
-        }
-
-        public void ManagerTiffLayer()
-        {
-            TiffManagerButton_Click(this, null);
-        }
-
-        public bool LoadDefaultLayer()
-        {
-            var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
-            if (layerInfo != null)
-            {
-                return AddLayerOverlay(layerInfo.GetValueOrDefault());
-            }
-            else {
-                return false;
-            }
-        }
-
-        public bool AddLayerOverlay(string path, PointLatLngAlt origin, Color transparent)
-        {
-            var layerInfo = new VPS.Layer.LayerInfo(path, origin, transparent);
-            VPS.Layer.MemoryLayerCache.AddLayerToMemoryCache(layerInfo);
-            return SetLayerOverlay(layerInfo);
-        }
-
-        public bool AddLayerOverlay(VPS.Layer.LayerInfo info)
-        {
-            VPS.Layer.MemoryLayerCache.AddLayerToMemoryCache(info);
-            return SetLayerOverlay(info);
-        }
-
-
-        private List<GeoBitmap.Tile> CreateTile(GeoBitmap _bitmap, int _tileXSize, int _tileYSize)
-        {
-            List<GeoBitmap.Tile> _tiles = new List<GeoBitmap.Tile>();
-            int TileXLen = 1024, TileYLen = 1024, RasterXSize = _bitmap.RasterXSize, RasterYSize = _bitmap.RasterYSize;
-            int TileXSize = RasterXSize / TileXLen + (RasterXSize % TileXLen == 0 ? 0 : 1);
-            int TileYSize = RasterYSize / TileYLen + (RasterYSize % TileYLen == 0 ? 0 : 1);
-            //创建进度条
-            string key = topMainInfo.CreateProgress("加载工作区：" + Layer.MemoryLayerCache.GetHashCode(_bitmap.File), TileXSize * TileYSize);
-            try
-            {
-
-                for (int i = 0; i < TileXSize; i++)
-                {
-                    for (int j = 0; j < TileYSize; j++)
-                    {
-                        Bitmap tile = LoadTileImage(_bitmap.File, i * TileXLen, j * TileYLen, TileXLen, TileYLen);
-                        double[] pos1 = _bitmap.GetPosition(i * TileXLen, j * TileYLen);
-                        double[] pos2 = _bitmap.GetPosition(
-                            Math.Min(RasterXSize, (i + 1) * TileXLen),
-                            Math.Min(RasterYSize, (j + 1) * TileYLen));
-
-                        GMap.NET.RectLatLng position = new GMap.NET.RectLatLng(
-                            Math.Max(pos1[1], pos2[1]), Math.Min(pos1[0], pos2[0]),
-                            Math.Abs(pos1[0] - pos2[0]), Math.Abs(pos1[1] - pos2[1]));
-                        _tiles.Add(new GeoBitmap.Tile(tile, position));
-                        topMainInfo.GetProgress(key).SetProgress( i * TileYSize + j);
-                    }
-                }
-                topMainInfo.GetProgress(key).SetProgressSuccessful("加载完成");
-                return _tiles;
-            }
-            catch
-            {
-                topMainInfo.GetProgress(key).SetProgressFailure("加载失败");
-                return new List<GeoBitmap.Tile>();
-            }
-            finally
-            {
-                topMainInfo.DisposeControlEnter(key, 5000);
-            }
-            
-        }
-
-        private bool SetLayerOverlay(VPS.Layer.LayerInfo layerInfo)
-        {
-            if (File.Exists(layerInfo.Layer))
-            {
-                var bitmap = GDAL.GDAL.LoadImageInfo(layerInfo.Layer);
-                if (bitmap != null && !bitmap.Rect.IsEmpty)
-                {
-                    
-                    Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (_bitmap, _transparent) =>
-                    {
-                        _bitmap.BitmapTile = CreateTile(_bitmap, 400, 400);
-                        _bitmap.SetTransparent(_transparent);
-                        
-                        return _bitmap;
-                    };
-                    isLoadingLayerName = bitmap.File;
-                    IAsyncResult iar = GetGeoBitmap.BeginInvoke(bitmap, layerInfo.Transparent, CallbackWhenDone, this);
-
-                    this.currentLayerPath = layerInfo.Layer;
-                    this.displayRect = bitmap.Rect;
-                    this.defaultOrigin = layerInfo.Origin;
-                    this.defaultHome = layerInfo.Origin;
-                    this.selectedLayer = layerInfo;
-                    MenuZoomToLayer_Click(this, null);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-        private void CallbackWhenDone(IAsyncResult iar)
-        {
-            AsyncResult ar = (AsyncResult)iar;
-            Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> geoFunc = (Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap>)ar.AsyncDelegate;
-
-            var geoBitmap = geoFunc.EndInvoke(iar);
-            if (geoBitmap.DisplayBitmap != null)
-            {
-                if (geoBitmap.File == isLoadingLayerName)
-                {
-                    IsLoadLayer = true;
-                    currentLayer = geoBitmap;
-                    ShowLayerOverlay(geoBitmap);
-                }
-            }
-        }
-
-        private void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
-        {
-
-            GCSViews.FlightData.instance.ShowLayerOverlay(geoBitmap);
-            GCSViews.FlightPlanner.instance.ShowLayerOverlay(geoBitmap);
-
-        }
-        #endregion
 
         public void MenuSetup_Click(object sender, EventArgs e)
         {
@@ -1569,7 +1294,7 @@ namespace VPS
                 if (getparams)
                 {
                     var ftpfile = false;
-                    if ((MainV2.comPort.MAV.cs.capabilities & (int) MAVLink.MAV_PROTOCOL_CAPABILITY.FTP) > 0)
+                    if ((MainV2.comPort.MAV.cs.capabilities & (int)MAVLink.MAV_PROTOCOL_CAPABILITY.FTP) > 0)
                     {
                         var prd = new ProgressReporterDialogue();
                         prd.DoWork += (IProgressReporterDialogue sender) =>
@@ -1628,7 +1353,7 @@ namespace VPS
                     }
                 }
 
-                _connectionControl.UpdateSysIDS();             
+                _connectionControl.UpdateSysIDS();
 
                 // check for newer firmware
                 var softwares = Firmware.LoadSoftwares();
@@ -2913,554 +2638,6 @@ namespace VPS
             SerialThreadrunner.Set();
         }
 
-        protected override void OnLoad(EventArgs e)
-        {
-
-            MyView.AddScreen(new MainSwitcher.Screen("FlightData", FlightData, true));
-            MyView.AddScreen(new MainSwitcher.Screen("FlightPlanner", FlightPlanner, true));
-            MyView.AddScreen(new MainSwitcher.Screen("HWConfig", typeof(GCSViews.InitialSetup), false));
-            MyView.AddScreen(new MainSwitcher.Screen("SWConfig", typeof(GCSViews.SoftwareConfig), false));
-            //MyView.AddScreen(new MainSwitcher.Screen("Simulation", Simulation, true));
-            MyView.AddScreen(new MainSwitcher.Screen("Help", typeof(GCSViews.Help), false));
-
-            // hide simulation under mono
-            if (Program.MONO)
-            {
-                MenuSimulation.Visible = false;
-            }
-
-            try
-            {
-                if (Control.ModifierKeys == Keys.Shift)
-                {
-                }
-                else
-                {
-                    log.Info("Load Pluggins");
-                    Plugin.PluginLoader.DisabledPluginNames.Clear();
-                    foreach (var s in Settings.Instance.GetList("DisabledPlugins")) Plugin.PluginLoader.DisabledPluginNames.Add(s);
-                    Plugin.PluginLoader.LoadAll();
-                    log.Info("Load Pluggins... Done");
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-
-            this.PerformLayout();
-            FlightPlannerShow();
-
-            // for long running tasks using own threads.
-            // for short use threadpool
-
-            this.SuspendLayout();
-
-            // setup http server
-            try
-            {
-                log.Info("start http");
-                httpthread = new Thread(new httpserver().listernforclients)
-                {
-                    Name = "motion jpg stream-network kml",
-                    IsBackground = true
-                };
-                httpthread.Start();
-            }
-            catch (Exception ex)
-            {
-                log.Error("Error starting TCP listener thread: ", ex);
-                DevComponents.DotNetBar.MessageBoxEx.Show(ex.ToString());
-            }
-
-            log.Info("start joystick");
-            // setup joystick packet sender
-            joystickthread = new Thread(new ThreadStart(joysticksend))
-            {
-                IsBackground = true,
-                Priority = ThreadPriority.AboveNormal,
-                Name = "Main joystick sender"
-            };
-            joystickthread.Start();
-
-            log.Info("start serialreader");
-            // setup main serial reader
-            serialreaderthread = new Thread(SerialReader)
-            {
-                IsBackground = true,
-                Name = "Main Serial reader",
-                Priority = ThreadPriority.AboveNormal
-            };
-            serialreaderthread.Start();
-
-            log.Info("start plugin thread");
-            // setup main plugin thread
-            pluginthread = new Thread(PluginThread)
-            {
-                IsBackground = true,
-                Name = "plugin runner thread",
-                Priority = ThreadPriority.BelowNormal
-            };
-            pluginthread.Start();
-
-
-            ThreadPool.QueueUserWorkItem(LoadGDALImages);
-            
-            ThreadPool.QueueUserWorkItem(BGLoadAirports);
-
-            ThreadPool.QueueUserWorkItem(BGCreateMaps);
-
-            //ThreadPool.QueueUserWorkItem(BGGetAlmanac);
-
-            ThreadPool.QueueUserWorkItem(BGgetTFR);
-
-            ThreadPool.QueueUserWorkItem(BGNoFly);
-
-            ThreadPool.QueueUserWorkItem(BGGetKIndex);
-
-            // update firmware version list - only once per day
-            ThreadPool.QueueUserWorkItem(BGFirmwareCheck);
-
-            log.Info("start AutoConnect");
-            AutoConnect.NewMavlinkConnection += (sender, serial) =>
-            {
-                try
-                {
-                    log.Info("AutoConnect.NewMavlinkConnection " + serial.PortName);
-                    MainV2.instance.BeginInvoke((Action)delegate
-                   {
-                       if (MainV2.comPort.BaseStream.IsOpen)
-                       {
-                           var mav = new MAVLinkInterface();
-                           mav.BaseStream = serial;
-                           MainV2.instance.doConnect(mav, "preset", serial.PortName);
-
-                           MainV2.Comports.Add(mav);
-                       }
-                       else
-                       {
-                           MainV2.comPort.BaseStream = serial;
-                           MainV2.instance.doConnect(MainV2.comPort, "preset", serial.PortName);
-                       }
-                   });
-                }
-                catch (Exception ex) { log.Error(ex); }
-            };
-            AutoConnect.NewVideoStream += (sender, gststring) =>
-            {
-                try
-                {
-                    log.Info("AutoConnect.NewVideoStream " + gststring);
-                    GStreamer.gstlaunch = GStreamer.LookForGstreamer();
-
-                    if (!File.Exists(GStreamer.gstlaunch))
-                    {
-                        if (DevComponents.DotNetBar.MessageBoxEx.Show(
-                                "A video stream has been detected, but gstreamer has not been configured/installed.\nDo you want to install/config it now?",
-                                "GStreamer", System.Windows.Forms.MessageBoxButtons.YesNo) ==
-                            System.Windows.Forms.DialogResult.Yes)
-                        {
-                            {
-                                ProgressReporterDialogue prd = new ProgressReporterDialogue();
-                                ThemeManager.ApplyThemeTo(prd);
-                                prd.DoWork += sender2 =>
-                                {
-                                    GStreamer.DownloadGStreamer(((i, s) =>
-                                    {
-                                        prd.UpdateProgressAndStatus(i, s);
-                                        if (prd.doWorkArgs.CancelRequested) throw new Exception("User Request");
-                                    }));
-                                };
-                                prd.RunBackgroundOperationAsync();
-
-                                GStreamer.gstlaunch = GStreamer.LookForGstreamer();
-                            }
-                            if (!File.Exists(GStreamer.gstlaunch))
-                            {
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            return;
-                        }
-                    }
-
-                    GStreamer.StartA(gststring);
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
-                }
-            };
-            AutoConnect.Start();
-
-            BinaryLog.onFlightMode += (firmware, modeno) =>
-            {
-                try
-                {
-                    if (firmware == "")
-                        return null;
-
-                    var modes = ArduPilot.Common.getModesList((Firmwares)Enum.Parse(typeof(Firmwares), firmware));
-                    string currentmode = null;
-
-                    foreach (var mode in modes)
-                    {
-                        if (mode.Key == modeno)
-                        {
-                            currentmode = mode.Value;
-                            break;
-                        }
-                    }
-
-                    return currentmode;
-                }
-                catch
-                {
-                    return null;
-                }
-            };
-
-            GStreamer.onNewImage += (sender, image) =>
-            {
-                if (image == null)
-                {
-                    GCSViews.FlightData.myhud.bgimage = null;
-                    return;
-                }
-
-                if (!(image is Drawing::System.Drawing.Bitmap bmp))
-                    return;
-                var old = GCSViews.FlightData.myhud.bgimage;
-                GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
-                    PixelFormat.Format32bppPArgb,
-                    bmp.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888)
-                    .Scan0);
-                if (old != null)
-                    old.Dispose();
-            };
-
-            vlcrender.onNewImage += (sender, image) =>
-            {
-                if (image == null)
-                {
-                    GCSViews.FlightData.myhud.bgimage = null;
-                    return;
-                }
-                if (!(image is Drawing::System.Drawing.Bitmap bmp))
-                    return;
-                var old = GCSViews.FlightData.myhud.bgimage;
-                GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width,
-                                                               image.Height,
-                                                               4 * image.Width,
-                                                               PixelFormat.Format32bppPArgb,
-                                                               bmp.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888).Scan0);
-                if (old != null)
-                    old.Dispose();
-            };
-
-            CaptureMJPEG.onNewImage += (sender, image) =>
-            {
-                if (image == null)
-                {
-                    GCSViews.FlightData.myhud.bgimage = null;
-                    return;
-                }
-                if (!(image is Drawing::System.Drawing.Bitmap bmp))
-                    return;
-                var old = GCSViews.FlightData.myhud.bgimage;
-                GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
-                                                               PixelFormat.Format32bppPArgb,
-                                                               bmp.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888).Scan0);
-                if (old != null)
-                    old.Dispose();
-            };
-
-            try
-            {
-                ZeroConf.EnumerateAllServicesFromAllHosts().ContinueWith(a => ZeroConf.ProbeForRTSP());
-            }
-            catch
-            {
-            }
-
-            CommsSerialScan.doConnect += port =>
-            {
-                if (MainV2.instance.InvokeRequired)
-                {
-                    log.Info("CommsSerialScan.doConnect invoke");
-                    MainV2.instance.BeginInvoke(
-                        (Action)delegate ()
-                       {
-                           MAVLinkInterface mav = new MAVLinkInterface();
-                           mav.BaseStream = port;
-                           MainV2.instance.doConnect(mav, "preset", "0");
-                           MainV2.Comports.Add(mav);
-                       });
-                }
-                else
-                {
-
-                    log.Info("CommsSerialScan.doConnect NO invoke");
-                    MAVLinkInterface mav = new MAVLinkInterface();
-                    mav.BaseStream = port;
-                    MainV2.instance.doConnect(mav, "preset", "0");
-                    MainV2.Comports.Add(mav);
-                }
-            };
-
-            try
-            {
-                if (!MONO)
-                {
-                    log.Info("Load AltitudeAngel");
-                    AltitudeAngel.Configure();
-                    AltitudeAngel.Initialize();
-                    log.Info("Load AltitudeAngel... Done");
-                }
-            }
-            catch (TypeInitializationException) // windows xp lacking patch level
-            {
-                //CustomMessageBox.Show("Please update your .net version. kb2468871");
-            }
-            catch (Exception ex)
-            {
-                Tracking.AddException(ex);
-            }
-
-            this.ResumeLayout();
-
-            Program.Splash?.Close();
-
-            log.Info("appload time");
-            VPS.Utilities.Tracking.AddTiming("AppLoad", "Load Time",
-                (DateTime.Now - Program.starttime).TotalMilliseconds, "");
-
-            int p = (int) Environment.OSVersion.Platform;
-            bool isWin = (p != 4) && (p != 6) && (p != 128);
-            bool winXp = isWin && Environment.OSVersion.Version.Major == 5;
-            if (winXp)
-            {
-                Common.MessageShowAgain("Windows XP",
-                    "This is the last version that will support Windows XP, please update your OS");
-
-                // invalidate update url
-                System.Configuration.ConfigurationManager.AppSettings["UpdateLocationVersion"] =
-                    "https://firmware.ardupilot.org/MissionPlanner/xp/";
-                System.Configuration.ConfigurationManager.AppSettings["UpdateLocation"] =
-                    "https://firmware.ardupilot.org/MissionPlanner/xp/";
-                System.Configuration.ConfigurationManager.AppSettings["UpdateLocationMD5"] =
-                    "https://firmware.ardupilot.org/MissionPlanner/xp/checksums.txt";
-                System.Configuration.ConfigurationManager.AppSettings["BetaUpdateLocationVersion"] = "";
-            }
-
-            try
-            {
-                // single update check per day - in a seperate thread
-                if (Settings.Instance["update_check"] != DateTime.Now.ToShortDateString())
-                {
-                    System.Threading.ThreadPool.QueueUserWorkItem(checkupdate);
-                    Settings.Instance["update_check"] = DateTime.Now.ToShortDateString();
-                }
-                else if (Settings.Instance.GetBoolean("beta_updates") == true)
-                {
-                    VPS.Utilities.Update.dobeta = true;
-                    System.Threading.ThreadPool.QueueUserWorkItem(checkupdate);
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error("Update check failed", ex);
-            }
-
-            // play a tlog that was passed to the program/ load a bin log passed
-            if (Program.args.Length > 0)
-            {
-                var cmds = ProcessCommandLine(Program.args);
-
-                if (cmds.ContainsKey("file") && File.Exists(cmds["file"]) && cmds["file"].ToLower().EndsWith(".tlog"))
-                {
-                    FlightData.LoadLogFile(Program.args[0]);
-                    FlightData.BUT_playlog_Click(null, null);
-                }
-                else if (cmds.ContainsKey("file") && File.Exists(cmds["file"]) &&
-                         (cmds["file"].ToLower().EndsWith(".log") || cmds["file"].ToLower().EndsWith(".bin")))
-                {
-                    LogBrowse logbrowse = new LogBrowse();
-                    ThemeManager.ApplyThemeTo(logbrowse);
-                    logbrowse.logfilename = Program.args[0];
-                    logbrowse.Show(this);
-                    logbrowse.BringToFront();
-                }
-
-                if (cmds.ContainsKey("script") && File.Exists(cmds["script"]))
-                {
-                    // invoke for after onload finished
-                    this.BeginInvoke((Action)delegate ()
-                   {
-                       try
-                       {
-                           FlightData.selectedscript = cmds["script"];
-
-                           FlightData.BUT_run_script_Click(null, null);
-                       }
-                       catch (Exception ex)
-                       {
-                           DevComponents.DotNetBar.MessageBoxEx.Show("Start script failed: " + ex.ToString(), Strings.ERROR);
-                       }
-                   });
-                }
-
-                if (cmds.ContainsKey("joy") && cmds.ContainsKey("type"))
-                {
-                    if (cmds["type"].ToLower() == "plane")
-                    {
-                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduPlane;
-                    }
-                    else if (cmds["type"].ToLower() == "copter")
-                    {
-                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduCopter2;
-                    }
-                    else if (cmds["type"].ToLower() == "rover")
-                    {
-                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduRover;
-                    }
-                    else if (cmds["type"].ToLower() == "sub")
-                    {
-                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduSub;
-                    }
-
-                    var joy = new Joystick.Joystick(() => MainV2.comPort);
-
-                    if (joy.start(cmds["joy"]))
-                    {
-                        MainV2.joystick = joy;
-                        MainV2.joystick.enabled = true;
-                    }
-                    else
-                    {
-                        DevComponents.DotNetBar.MessageBoxEx.Show("Failed to start joystick");
-                    }
-                }
-
-                if (cmds.ContainsKey("rtk"))
-                {
-                    var inject = new ConfigSerialInjectGPS();
-                    if (cmds["rtk"].ToLower().Contains("http"))
-                    {
-                        inject.CMB_serialport.Text = "NTRIP";
-                        var nt = new CommsNTRIP();
-                        ConfigSerialInjectGPS.comPort = nt;
-                        Task.Run(() =>
-                        {
-                            try
-                            {
-                                nt.Open(cmds["rtk"]);
-                                nt.lat = MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat;
-                                nt.lng = MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng;
-                                nt.alt = MainV2.comPort.MAV.cs.PlannedHomeLocation.Alt;
-                                this.BeginInvokeIfRequired(() => { inject.DoConnect(); });
-                            }
-                            catch (Exception ex)
-                            {
-                                this.BeginInvokeIfRequired(() => { DevComponents.DotNetBar.MessageBoxEx.Show(ex.ToString()); });
-                            }
-                        });
-                    }
-                }
-
-                if (cmds.ContainsKey("cam"))
-                {
-                    try
-                    {
-                        MainV2.cam = new WebCamService.Capture(int.Parse(cmds["cam"]), null);
-
-                        MainV2.cam.Start();
-                    }
-                    catch (Exception ex)
-                    {
-                        DevComponents.DotNetBar.MessageBoxEx.Show(ex.ToString());
-                    }
-                }
-
-                if (cmds.ContainsKey("gstream"))
-                {
-                    GStreamer.gstlaunch = GStreamer.LookForGstreamer();
-
-                    if (!File.Exists(GStreamer.gstlaunch))
-                    {
-                        if (DevComponents.DotNetBar.MessageBoxEx.Show(
-                                "A video stream has been detected, but gstreamer has not been configured/installed.\nDo you want to install/config it now?",
-                                "GStreamer", System.Windows.Forms.MessageBoxButtons.YesNo) ==
-                            System.Windows.Forms.DialogResult.Yes)
-                        {
-                            GStreamerUI.DownloadGStreamer();
-                        }
-                    }
-
-                    try
-                    {
-                        new Thread(delegate ()
-                        {
-                            // 36 retrys
-                            for (int i = 0; i < 36; i++)
-                            {
-                                try
-                                {
-                                    var st = GStreamer.StartA(cmds["gstream"]);
-                                    if (st == null)
-                                    {
-                                        // prevent spam
-                                        Thread.Sleep(5000);
-                                    }
-                                    else
-                                    {
-                                        while (st.IsAlive)
-                                        {
-                                            Thread.Sleep(1000);
-                                        }
-                                    }
-                                }
-                                catch (BadImageFormatException ex)
-                                {
-                                    // not running on x64
-                                    log.Error(ex);
-                                    return;
-                                }
-                                catch (DllNotFoundException ex)
-                                {
-                                    // missing or failed download
-                                    log.Error(ex);
-                                    return;
-                                }
-                            }
-                        })
-                        { IsBackground = true, Name = "Gstreamer cli" }.Start();
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                    }
-                }
-
-                if (cmds.ContainsKey("port") && cmds.ContainsKey("baud"))
-                {
-                    _connectionControl.CMB_serialport.Text = cmds["port"];
-                    _connectionControl.CMB_baudrate.Text = cmds["baud"];
-
-                    doConnect(MainV2.comPort, cmds["port"], cmds["baud"]);
-                }
-            }
-
-            GMapMarkerBase.length = Settings.Instance.GetInt32("GMapMarkerBase_length", 500);
-            GMapMarkerBase.DisplayCOG = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayCOG", true);
-            GMapMarkerBase.DisplayHeading = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayHeading", true);
-            GMapMarkerBase.DisplayNavBearing = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayNavBearing", true);
-            GMapMarkerBase.DisplayRadius = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayRadius", true);
-            GMapMarkerBase.DisplayTarget = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayTarget", true);
-        }
-
         public void LoadGDALImages(object nothing)
         {
             if (Settings.Instance.ContainsKey("GDALImageDir"))
@@ -3662,107 +2839,6 @@ namespace VPS
         }
 
 
-        /// <summary>
-        /// keyboard shortcuts override
-        /// </summary>
-        /// <param name="msg"></param>
-        /// <param name="keyData"></param>
-        /// <returns></returns>
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            //if (GCSViews.ConfigTerminal.SSHTerminal) { return false; }
-            //if (keyData == Keys.F12)
-            //{
-            //    MenuConnect_Click(null, null);
-            //    return true;
-            //}
-
-            if (keyData == Keys.F1)
-            {
-                LoadProjectButton_Click(this, null);
-                return true;
-            }
-            if (keyData == Keys.F2)
-            {
-                SaveProjectButton_Click(this, null);
-                return true;
-            }
-
-            if (keyData == Keys.F5)
-            {
-                LoadTiffButton_Click(this, null);
-                return true;
-            }
-
-            if (keyData == Keys.F6)
-            {
-                ZoomTiffButton_Click(this, null);
-                return true;
-            }
-
-            if (keyData == Keys.F7)
-            {
-                TiffManagerButton_Click(this, null);
-                return true;
-            }
-
-            if (keyData == (Keys.Alt | Keys.E))
-            {
-                DrawPolygonButton_Click(this, null);
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.E))
-            {
-                AddWPButton_Click(this, null);
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.D))
-            {
-                ClearWPButton_Click(this, null);
-                return true;
-            }
-
-            if (keyData == (Keys.Alt | Keys.D))
-            {
-                ClearPolygonButton_Click(this, null);
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.G))
-            {
-                AutoWPButton_Click(this, null);
-                return true;
-            }
-
-            // open wp file
-            if (keyData == (Keys.Control | Keys.S))
-            {
-                SaveWPButton_Click(this, null);
-                return true;
-            }
-
-            // save wp file
-            if (keyData == (Keys.Control | Keys.O))
-            {
-                LoadWPButton_Click(this, null);
-                return true;
-            }
-
-            if (ProcessCmdKeyCallback != null)
-            {
-                return ProcessCmdKeyCallback(ref msg, keyData);
-            }
-
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
-
-
-        public delegate bool ProcessCmdKeyHandler(ref Message msg, Keys keyData);
-
-        public event ProcessCmdKeyHandler ProcessCmdKeyCallback;
-
         public void changelanguage(CultureInfo ci)
         {
             log.Info("change lang to " + ci.ToString() + " current " + Thread.CurrentThread.CurrentUICulture.ToString());
@@ -3910,13 +2986,6 @@ namespace VPS
         }
 
 
-
-        private void MainV2_KeyDown(object sender, KeyEventArgs e)
-        {
-            Message temp = new Message();
-            ProcessCmdKey(ref temp, e.KeyData);
-            Console.WriteLine("MainV2_KeyDown " + e.ToString());
-        }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -4203,6 +3272,1131 @@ namespace VPS
             }
         }
 
+        #region 更改主窗口
+
+        private void FlightPlannerShow()
+        {
+            //MyView.ShowScreen("FlightPlanner");
+            MyView.ShowScreen("FlightPlanner");
+        }
+
+
+        private void FlightDataShow()
+        {
+            MyView.ShowScreen("FlightData");
+        }
+        #endregion
+
+        #region 自定义初始化
+        private void SetInitHandler()
+        {
+            OutDrawPolygonState();
+
+            VPS.Controls.Command.CommandsPanel.instance.WPListChange += GCSViews.FlightPlanner.instance.SetWPListHandle;
+            VPS.Controls.Command.CommandsPanel.instance.CoordSystemChange += GCSViews.FlightPlanner.instance.SetCoordSystemHandle;
+            VPS.Controls.Command.CommandsPanel.instance.WPRadChange += GCSViews.FlightPlanner.instance.SetWPRadHandle;
+            VPS.Controls.Command.CommandsPanel.instance.AltFrameChange += GCSViews.FlightPlanner.instance.SetAltFrameHandle;
+            VPS.Controls.Command.CommandsPanel.instance.BaseAltChange += GCSViews.FlightPlanner.instance.SetBaseAltHandle;
+            VPS.Controls.Command.CommandsPanel.instance.WarnAltChange += GCSViews.FlightPlanner.instance.SetWarnAltHandle;
+            VPS.Controls.Command.CommandsPanel.instance.DefaultAltChange += GCSViews.FlightPlanner.instance.SetDefaultAltHandle;
+            VPS.Controls.Command.CommandsPanel.instance.HomeChange += GCSViews.FlightPlanner.instance.SetHomeHandle;
+            GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.Command.CommandsPanel.instance.SetHome;
+            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.SetWPList;
+
+            GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetHomePosition;
+            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetWPList;
+            GCSViews.FlightPlanner.instance.CurrentChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetCurrentPosition;
+
+            GCSViews.FlightPlanner.instance.ToDrawPolygonHandle += ToDrawPolygonState;
+            GCSViews.FlightPlanner.instance.OutDrawPolygonHandle += OutDrawPolygonState;
+
+            GCSViews.FlightPlanner.instance.ToDrawWPHandle += ToDrawWPState;
+            GCSViews.FlightPlanner.instance.OutDrawWPHandle += OutDrawWPState;
+
+            NoLoadLayerHandle += SetNoLaodLayerState;
+            LoadLayerHandle += SetLaodLayerState;
+
+        }
+
+        public bool LoadDefaultLayer()
+        {
+            var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
+            if (layerInfo != null)
+            {
+                return AddLayerOverlay(layerInfo.GetValueOrDefault());
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region OnLoad
+
+        #region 入口函数
+        protected override void OnLoad(EventArgs e)
+        {
+
+            MyView.AddScreen(new MainSwitcher.Screen("FlightData", FlightData, true));
+            MyView.AddScreen(new MainSwitcher.Screen("FlightPlanner", FlightPlanner, true));
+            MyView.AddScreen(new MainSwitcher.Screen("HWConfig", typeof(GCSViews.InitialSetup), false));
+            MyView.AddScreen(new MainSwitcher.Screen("SWConfig", typeof(GCSViews.SoftwareConfig), false));
+            //MyView.AddScreen(new MainSwitcher.Screen("Simulation", Simulation, true));
+            MyView.AddScreen(new MainSwitcher.Screen("Help", typeof(GCSViews.Help), false));
+
+            // hide simulation under mono
+            if (Program.MONO)
+            {
+                MenuSimulation.Visible = false;
+            }
+
+            try
+            {
+                if (Control.ModifierKeys == Keys.Shift)
+                {
+                }
+                else
+                {
+                    log.Info("Load Pluggins");
+                    Plugin.PluginLoader.DisabledPluginNames.Clear();
+                    foreach (var s in Settings.Instance.GetList("DisabledPlugins")) Plugin.PluginLoader.DisabledPluginNames.Add(s);
+                    Plugin.PluginLoader.LoadAll();
+                    log.Info("Load Pluggins... Done");
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+
+            this.PerformLayout();
+            FlightPlannerShow();
+
+            // for long running tasks using own threads.
+            // for short use threadpool
+
+            this.SuspendLayout();
+
+            // setup http server
+            try
+            {
+                log.Info("start http");
+                httpthread = new Thread(new httpserver().listernforclients)
+                {
+                    Name = "motion jpg stream-network kml",
+                    IsBackground = true
+                };
+                httpthread.Start();
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error starting TCP listener thread: ", ex);
+                DevComponents.DotNetBar.MessageBoxEx.Show(ex.ToString());
+            }
+
+            log.Info("start joystick");
+            // setup joystick packet sender
+            joystickthread = new Thread(new ThreadStart(joysticksend))
+            {
+                IsBackground = true,
+                Priority = ThreadPriority.AboveNormal,
+                Name = "Main joystick sender"
+            };
+            joystickthread.Start();
+
+            log.Info("start serialreader");
+            // setup main serial reader
+            serialreaderthread = new Thread(SerialReader)
+            {
+                IsBackground = true,
+                Name = "Main Serial reader",
+                Priority = ThreadPriority.AboveNormal
+            };
+            serialreaderthread.Start();
+
+            log.Info("start plugin thread");
+            // setup main plugin thread
+            pluginthread = new Thread(PluginThread)
+            {
+                IsBackground = true,
+                Name = "plugin runner thread",
+                Priority = ThreadPriority.BelowNormal
+            };
+            pluginthread.Start();
+
+
+            ThreadPool.QueueUserWorkItem(LoadGDALImages);
+
+            ThreadPool.QueueUserWorkItem(BGLoadAirports);
+
+            ThreadPool.QueueUserWorkItem(BGCreateMaps);
+
+            //ThreadPool.QueueUserWorkItem(BGGetAlmanac);
+
+            ThreadPool.QueueUserWorkItem(BGgetTFR);
+
+            ThreadPool.QueueUserWorkItem(BGNoFly);
+
+            ThreadPool.QueueUserWorkItem(BGGetKIndex);
+
+            // update firmware version list - only once per day
+            ThreadPool.QueueUserWorkItem(BGFirmwareCheck);
+
+            log.Info("start AutoConnect");
+            AutoConnect.NewMavlinkConnection += (sender, serial) =>
+            {
+                try
+                {
+                    log.Info("AutoConnect.NewMavlinkConnection " + serial.PortName);
+                    MainV2.instance.BeginInvoke((Action)delegate
+                    {
+                        if (MainV2.comPort.BaseStream.IsOpen)
+                        {
+                            var mav = new MAVLinkInterface();
+                            mav.BaseStream = serial;
+                            MainV2.instance.doConnect(mav, "preset", serial.PortName);
+
+                            MainV2.Comports.Add(mav);
+                        }
+                        else
+                        {
+                            MainV2.comPort.BaseStream = serial;
+                            MainV2.instance.doConnect(MainV2.comPort, "preset", serial.PortName);
+                        }
+                    });
+                }
+                catch (Exception ex) { log.Error(ex); }
+            };
+            AutoConnect.NewVideoStream += (sender, gststring) =>
+            {
+                try
+                {
+                    log.Info("AutoConnect.NewVideoStream " + gststring);
+                    GStreamer.gstlaunch = GStreamer.LookForGstreamer();
+
+                    if (!File.Exists(GStreamer.gstlaunch))
+                    {
+                        if (DevComponents.DotNetBar.MessageBoxEx.Show(
+                                "A video stream has been detected, but gstreamer has not been configured/installed.\nDo you want to install/config it now?",
+                                "GStreamer", System.Windows.Forms.MessageBoxButtons.YesNo) ==
+                            System.Windows.Forms.DialogResult.Yes)
+                        {
+                            {
+                                ProgressReporterDialogue prd = new ProgressReporterDialogue();
+                                ThemeManager.ApplyThemeTo(prd);
+                                prd.DoWork += sender2 =>
+                                {
+                                    GStreamer.DownloadGStreamer(((i, s) =>
+                                    {
+                                        prd.UpdateProgressAndStatus(i, s);
+                                        if (prd.doWorkArgs.CancelRequested) throw new Exception("User Request");
+                                    }));
+                                };
+                                prd.RunBackgroundOperationAsync();
+
+                                GStreamer.gstlaunch = GStreamer.LookForGstreamer();
+                            }
+                            if (!File.Exists(GStreamer.gstlaunch))
+                            {
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+
+                    GStreamer.StartA(gststring);
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
+            };
+            AutoConnect.Start();
+
+            BinaryLog.onFlightMode += (firmware, modeno) =>
+            {
+                try
+                {
+                    if (firmware == "")
+                        return null;
+
+                    var modes = ArduPilot.Common.getModesList((Firmwares)Enum.Parse(typeof(Firmwares), firmware));
+                    string currentmode = null;
+
+                    foreach (var mode in modes)
+                    {
+                        if (mode.Key == modeno)
+                        {
+                            currentmode = mode.Value;
+                            break;
+                        }
+                    }
+
+                    return currentmode;
+                }
+                catch
+                {
+                    return null;
+                }
+            };
+
+            GStreamer.onNewImage += (sender, image) =>
+            {
+                if (image == null)
+                {
+                    GCSViews.FlightData.myhud.bgimage = null;
+                    return;
+                }
+
+                if (!(image is Drawing::System.Drawing.Bitmap bmp))
+                    return;
+                var old = GCSViews.FlightData.myhud.bgimage;
+                GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
+                    PixelFormat.Format32bppPArgb,
+                    bmp.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888)
+                    .Scan0);
+                if (old != null)
+                    old.Dispose();
+            };
+
+            vlcrender.onNewImage += (sender, image) =>
+            {
+                if (image == null)
+                {
+                    GCSViews.FlightData.myhud.bgimage = null;
+                    return;
+                }
+                if (!(image is Drawing::System.Drawing.Bitmap bmp))
+                    return;
+                var old = GCSViews.FlightData.myhud.bgimage;
+                GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width,
+                                                               image.Height,
+                                                               4 * image.Width,
+                                                               PixelFormat.Format32bppPArgb,
+                                                               bmp.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888).Scan0);
+                if (old != null)
+                    old.Dispose();
+            };
+
+            CaptureMJPEG.onNewImage += (sender, image) =>
+            {
+                if (image == null)
+                {
+                    GCSViews.FlightData.myhud.bgimage = null;
+                    return;
+                }
+                if (!(image is Drawing::System.Drawing.Bitmap bmp))
+                    return;
+                var old = GCSViews.FlightData.myhud.bgimage;
+                GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
+                                                               PixelFormat.Format32bppPArgb,
+                                                               bmp.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888).Scan0);
+                if (old != null)
+                    old.Dispose();
+            };
+
+            try
+            {
+                ZeroConf.EnumerateAllServicesFromAllHosts().ContinueWith(a => ZeroConf.ProbeForRTSP());
+            }
+            catch
+            {
+            }
+
+            CommsSerialScan.doConnect += port =>
+            {
+                if (MainV2.instance.InvokeRequired)
+                {
+                    log.Info("CommsSerialScan.doConnect invoke");
+                    MainV2.instance.BeginInvoke(
+                        (Action)delegate ()
+                        {
+                            MAVLinkInterface mav = new MAVLinkInterface();
+                            mav.BaseStream = port;
+                            MainV2.instance.doConnect(mav, "preset", "0");
+                            MainV2.Comports.Add(mav);
+                        });
+                }
+                else
+                {
+
+                    log.Info("CommsSerialScan.doConnect NO invoke");
+                    MAVLinkInterface mav = new MAVLinkInterface();
+                    mav.BaseStream = port;
+                    MainV2.instance.doConnect(mav, "preset", "0");
+                    MainV2.Comports.Add(mav);
+                }
+            };
+
+            try
+            {
+                if (!MONO)
+                {
+                    log.Info("Load AltitudeAngel");
+                    AltitudeAngel.Configure();
+                    AltitudeAngel.Initialize();
+                    log.Info("Load AltitudeAngel... Done");
+                }
+            }
+            catch (TypeInitializationException) // windows xp lacking patch level
+            {
+                //CustomMessageBox.Show("Please update your .net version. kb2468871");
+            }
+            catch (Exception ex)
+            {
+                Tracking.AddException(ex);
+            }
+
+            this.ResumeLayout();
+
+            Program.Splash?.Close();
+
+            log.Info("appload time");
+            VPS.Utilities.Tracking.AddTiming("AppLoad", "Load Time",
+                (DateTime.Now - Program.starttime).TotalMilliseconds, "");
+
+            int p = (int)Environment.OSVersion.Platform;
+            bool isWin = (p != 4) && (p != 6) && (p != 128);
+            bool winXp = isWin && Environment.OSVersion.Version.Major == 5;
+            if (winXp)
+            {
+                Common.MessageShowAgain("Windows XP",
+                    "This is the last version that will support Windows XP, please update your OS");
+
+                // invalidate update url
+                System.Configuration.ConfigurationManager.AppSettings["UpdateLocationVersion"] =
+                    "https://firmware.ardupilot.org/MissionPlanner/xp/";
+                System.Configuration.ConfigurationManager.AppSettings["UpdateLocation"] =
+                    "https://firmware.ardupilot.org/MissionPlanner/xp/";
+                System.Configuration.ConfigurationManager.AppSettings["UpdateLocationMD5"] =
+                    "https://firmware.ardupilot.org/MissionPlanner/xp/checksums.txt";
+                System.Configuration.ConfigurationManager.AppSettings["BetaUpdateLocationVersion"] = "";
+            }
+
+            try
+            {
+                // single update check per day - in a seperate thread
+                if (Settings.Instance["update_check"] != DateTime.Now.ToShortDateString())
+                {
+                    System.Threading.ThreadPool.QueueUserWorkItem(checkupdate);
+                    Settings.Instance["update_check"] = DateTime.Now.ToShortDateString();
+                }
+                else if (Settings.Instance.GetBoolean("beta_updates") == true)
+                {
+                    VPS.Utilities.Update.dobeta = true;
+                    System.Threading.ThreadPool.QueueUserWorkItem(checkupdate);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("Update check failed", ex);
+            }
+
+            // play a tlog that was passed to the program/ load a bin log passed
+            if (Program.args.Length > 0)
+            {
+                var cmds = ProcessCommandLine(Program.args);
+
+                if (cmds.ContainsKey("file") && File.Exists(cmds["file"]) && cmds["file"].ToLower().EndsWith(".tlog"))
+                {
+                    FlightData.LoadLogFile(Program.args[0]);
+                    FlightData.BUT_playlog_Click(null, null);
+                }
+                else if (cmds.ContainsKey("file") && File.Exists(cmds["file"]) &&
+                         (cmds["file"].ToLower().EndsWith(".log") || cmds["file"].ToLower().EndsWith(".bin")))
+                {
+                    LogBrowse logbrowse = new LogBrowse();
+                    ThemeManager.ApplyThemeTo(logbrowse);
+                    logbrowse.logfilename = Program.args[0];
+                    logbrowse.Show(this);
+                    logbrowse.BringToFront();
+                }
+
+                if (cmds.ContainsKey("script") && File.Exists(cmds["script"]))
+                {
+                    // invoke for after onload finished
+                    this.BeginInvoke((Action)delegate ()
+                    {
+                        try
+                        {
+                            FlightData.selectedscript = cmds["script"];
+
+                            FlightData.BUT_run_script_Click(null, null);
+                        }
+                        catch (Exception ex)
+                        {
+                            DevComponents.DotNetBar.MessageBoxEx.Show("Start script failed: " + ex.ToString(), Strings.ERROR);
+                        }
+                    });
+                }
+
+                if (cmds.ContainsKey("joy") && cmds.ContainsKey("type"))
+                {
+                    if (cmds["type"].ToLower() == "plane")
+                    {
+                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduPlane;
+                    }
+                    else if (cmds["type"].ToLower() == "copter")
+                    {
+                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduCopter2;
+                    }
+                    else if (cmds["type"].ToLower() == "rover")
+                    {
+                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduRover;
+                    }
+                    else if (cmds["type"].ToLower() == "sub")
+                    {
+                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduSub;
+                    }
+
+                    var joy = new Joystick.Joystick(() => MainV2.comPort);
+
+                    if (joy.start(cmds["joy"]))
+                    {
+                        MainV2.joystick = joy;
+                        MainV2.joystick.enabled = true;
+                    }
+                    else
+                    {
+                        DevComponents.DotNetBar.MessageBoxEx.Show("Failed to start joystick");
+                    }
+                }
+
+                if (cmds.ContainsKey("rtk"))
+                {
+                    var inject = new ConfigSerialInjectGPS();
+                    if (cmds["rtk"].ToLower().Contains("http"))
+                    {
+                        inject.CMB_serialport.Text = "NTRIP";
+                        var nt = new CommsNTRIP();
+                        ConfigSerialInjectGPS.comPort = nt;
+                        Task.Run(() =>
+                        {
+                            try
+                            {
+                                nt.Open(cmds["rtk"]);
+                                nt.lat = MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat;
+                                nt.lng = MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng;
+                                nt.alt = MainV2.comPort.MAV.cs.PlannedHomeLocation.Alt;
+                                this.BeginInvokeIfRequired(() => { inject.DoConnect(); });
+                            }
+                            catch (Exception ex)
+                            {
+                                this.BeginInvokeIfRequired(() => { DevComponents.DotNetBar.MessageBoxEx.Show(ex.ToString()); });
+                            }
+                        });
+                    }
+                }
+
+                if (cmds.ContainsKey("cam"))
+                {
+                    try
+                    {
+                        MainV2.cam = new WebCamService.Capture(int.Parse(cmds["cam"]), null);
+
+                        MainV2.cam.Start();
+                    }
+                    catch (Exception ex)
+                    {
+                        DevComponents.DotNetBar.MessageBoxEx.Show(ex.ToString());
+                    }
+                }
+
+                if (cmds.ContainsKey("gstream"))
+                {
+                    GStreamer.gstlaunch = GStreamer.LookForGstreamer();
+
+                    if (!File.Exists(GStreamer.gstlaunch))
+                    {
+                        if (DevComponents.DotNetBar.MessageBoxEx.Show(
+                                "A video stream has been detected, but gstreamer has not been configured/installed.\nDo you want to install/config it now?",
+                                "GStreamer", System.Windows.Forms.MessageBoxButtons.YesNo) ==
+                            System.Windows.Forms.DialogResult.Yes)
+                        {
+                            GStreamerUI.DownloadGStreamer();
+                        }
+                    }
+
+                    try
+                    {
+                        new Thread(delegate ()
+                        {
+                            // 36 retrys
+                            for (int i = 0; i < 36; i++)
+                            {
+                                try
+                                {
+                                    var st = GStreamer.StartA(cmds["gstream"]);
+                                    if (st == null)
+                                    {
+                                        // prevent spam
+                                        Thread.Sleep(5000);
+                                    }
+                                    else
+                                    {
+                                        while (st.IsAlive)
+                                        {
+                                            Thread.Sleep(1000);
+                                        }
+                                    }
+                                }
+                                catch (BadImageFormatException ex)
+                                {
+                                    // not running on x64
+                                    log.Error(ex);
+                                    return;
+                                }
+                                catch (DllNotFoundException ex)
+                                {
+                                    // missing or failed download
+                                    log.Error(ex);
+                                    return;
+                                }
+                            }
+                        })
+                        { IsBackground = true, Name = "Gstreamer cli" }.Start();
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                    }
+                }
+
+                if (cmds.ContainsKey("port") && cmds.ContainsKey("baud"))
+                {
+                    _connectionControl.CMB_serialport.Text = cmds["port"];
+                    _connectionControl.CMB_baudrate.Text = cmds["baud"];
+
+                    doConnect(MainV2.comPort, cmds["port"], cmds["baud"]);
+                }
+            }
+
+            GMapMarkerBase.length = Settings.Instance.GetInt32("GMapMarkerBase_length", 500);
+            GMapMarkerBase.DisplayCOG = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayCOG", true);
+            GMapMarkerBase.DisplayHeading = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayHeading", true);
+            GMapMarkerBase.DisplayNavBearing = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayNavBearing", true);
+            GMapMarkerBase.DisplayRadius = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayRadius", true);
+            GMapMarkerBase.DisplayTarget = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayTarget", true);
+        }
+        #endregion
+
+        #endregion
+
+        #region 主菜单项Checked
+        #region SetCheckedState
+        private delegate void SetMenuItemCheckedCallback(DevComponents.DotNetBar.ButtonItem stripButton, bool value);
+        private void SetMenuItemChecked(DevComponents.DotNetBar.ButtonItem stripButton, bool value)
+        {
+            if (stripButton.InvokeRequired)
+            {
+                SetMenuItemCheckedCallback callback = new SetMenuItemCheckedCallback(SetMenuItemChecked);
+                stripButton.Invoke(callback, new object[] { stripButton, value });
+            }
+            else
+            {
+                stripButton.Checked = value;
+            }
+        }
+        #endregion
+        #region GetCheckedState
+        private delegate bool GetMenuItemCheckedCallback(DevComponents.DotNetBar.ButtonItem stripButton);
+        private bool GetMenuItemChecked(DevComponents.DotNetBar.ButtonItem stripButton)
+        {
+            if (stripButton.InvokeRequired)
+            {
+                GetMenuItemCheckedCallback callback = new GetMenuItemCheckedCallback(GetMenuItemChecked);
+                IAsyncResult iar = this.BeginInvoke(callback, new object[] { stripButton });
+                return (bool)this.EndInvoke(iar);
+            }
+            else
+            {
+                return stripButton.Checked;
+            }
+        }
+        #endregion
+
+        private void ToDrawPolygonState()
+        {
+            SetMenuItemChecked(this.DrawPolygonButton, true);
+        }
+
+        private void OutDrawPolygonState()
+        {
+            SetMenuItemChecked(this.DrawPolygonButton, false);
+        }
+
+        private void ToDrawWPState()
+        {
+            SetMenuItemChecked(this.DrawWPButton, true);
+        }
+
+        private void OutDrawWPState()
+        {
+            SetMenuItemChecked(this.DrawWPButton, false);
+        }
+        #endregion
+
+        #region 主菜单项
+
+        #region 工程模块
+        #region LoadProject
+        #region LoadProject 入口函数
+        /// <summary>
+        /// 提取工程文件数据
+        /// </summary>
+        private void LoadProjectButton_Click(object sender, EventArgs e)
+        {
+            System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(GCSViews.ProjectData));
+
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "项目工程(*.vps)|*.vps";
+                ofd.ShowDialog();
+
+                if (File.Exists(ofd.FileName))
+                {
+                    using (StreamReader sr = new StreamReader(ofd.FileName))
+                    {
+                        var data = (GCSViews.ProjectData)reader.Deserialize(sr);
+                        loadProjectData(data);
+                    }
+                }
+            }
+        }
+        #endregion
+        #region LoadProject 主体函数
+        /// <summary>
+        /// 使用工程文件提取出的数据，布置界面控件
+        /// </summary>
+        private void loadProjectData(GCSViews.ProjectData data)
+        {
+            GCSViews.FlightPlanner.instance.SetPolygonListHandle(data.poly);
+            GCSViews.FlightPlanner.instance.SetWPListHandle(data.wp);
+            currentLayerPath = data.layer;
+            defaultOrigin = data.layerPosition;
+            displayRect = data.layerRect;
+            GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(displayRect);
+            defaultHome = data.homePosition;
+            SetHome(defaultHome);
+            AddLayerOverlay(selectedLayer);
+            if (LoadTiffButton.Checked != data.isLayerReaderOpen)
+                LoadTiffButton_Click(this, null);
+            if (ManagerTiffButton.Checked != data.isLayerManagerOpen)
+                ManagerTiffButton_Click(this, null);
+            if (AutoWPButton.Checked != data.isGridConfigOpen)
+                AutoWPButton_Click(this, null);
+        }
+        #endregion
+        #endregion
+
+        #region SaveProject
+        #region LoadProject 入口函数
+        /// <summary>
+        /// 将提取的数据保存到文件中
+        /// </summary>
+        private void SaveProjectButton_Click(object sender, EventArgs e)
+        {
+            System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(GCSViews.ProjectData));
+
+            var data = saveProjectData();
+
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "项目工程(*.vps)|*.vps";
+                var result = sfd.ShowDialog();
+
+                if (sfd.FileName != "" && result == DialogResult.OK)
+                {
+                    using (StreamWriter sw = new StreamWriter(sfd.FileName))
+                    {
+                        writer.Serialize(sw, data);
+                    }
+                }
+            }
+        }
+        #endregion
+        #region SaveProject 主体函数
+        /// <summary>
+        /// 从控件中提取参数
+        /// </summary>
+        private GCSViews.ProjectData saveProjectData()
+        {
+            var data = new GCSViews.ProjectData();
+            data.poly = GCSViews.FlightPlanner.instance.GetPolygonList();
+            data.wp = GCSViews.FlightPlanner.instance.GetWPList();
+            data.layer = currentLayerPath;
+            data.layerPosition = defaultOrigin;
+            data.layerRect = displayRect;
+            data.homePosition = defaultHome;
+            data.layerInfo = selectedLayer;
+            data.isLayerReaderOpen = LoadTiffButton.Checked;
+            data.isLayerManagerOpen = ManagerTiffButton.Checked;
+            data.isGridConfigOpen = AutoWPButton.Checked;
+
+
+            return data;
+        }
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region 工作区模块
+
+        #region LoadTiff
+        #region LoadTiff 入口函数
+        /// <summary>
+        /// 显示或隐藏LayerReader停靠栏
+        /// </summary>
+        private void LoadTiffButton_Click(object sender, EventArgs e)
+        {
+            if (!LoadTiffButton.Checked)
+            {
+                LoadTiffButton.Checked = true;
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
+                LayerReaderDockContainerItem.Visible = true;
+                LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
+                this.LeftBar.ResumeLayout(false);
+            }
+            else
+            {
+                LoadTiffButton.Checked = false;
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
+                LayerReaderDockContainerItem.Visible = false;
+                //LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
+                this.LeftBar.ResumeLayout(false);
+            }
+        }
+        #endregion
+        #region LoadTiff 接口函数
+        public void LoadTiffLayer()
+        {
+            LoadTiffButton_Click(this, null);
+        }
+        #endregion
+        #region LoadTiff 相应函数
+        public delegate void delegateHandler();
+        public delegateHandler LoadLayerHandle;
+        public delegateHandler NoLoadLayerHandle;
+        private void SetLaodLayerState()
+        {
+            this.ZoomTiffButton.Enabled = true;
+            this.ZoomToButton.Enabled = true;
+        }
+
+        private void SetNoLaodLayerState()
+        {
+            this.ZoomTiffButton.Enabled = false;
+            this.ZoomToButton.Enabled = false;
+        }
+        #endregion
+
+        #region LoadTiff 标记 
+        #region LoadTiff 是否已经加载标记
+        private bool isLoadLayer;
+        public bool IsLoadLayer
+        {
+            set
+            {
+                isLoadLayer = value;
+                if (isLoadLayer)
+                {
+                    LoadLayerHandle?.Invoke();
+                }
+                else
+                {
+                    NoLoadLayerHandle?.Invoke();
+                }
+            }
+        }
+        #endregion
+        #region LoadTiff 加载中的名称标记 
+        object layerLock = new object();
+        private string isLoadingLayerName = "";
+        public void SetLoadingLayer(string layerName)
+        {
+            lock (layerLock)
+            {
+                isLoadingLayerName = layerName;
+            }
+        }
+
+        public bool IsLoadingLayer(string layerName)
+        {
+            lock (layerLock)
+            {
+                return isLoadingLayerName == layerName;
+            }
+        }
+        #endregion
+        #endregion
+        #endregion
+
+        #region ZoomTiff
+        /// <summary>
+        /// 定位到地图指定工作区
+        /// </summary>
+        private void ZoomTiffButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.zoomToTiffLayer();
+            //GCSViews.FlightData.instance.zoomToTiffLayer();
+        }
+        #endregion
+
+        #region ManagerTiff
+        #region ManagerTiff 入口函数
+        /// <summary>
+        /// 显示或隐藏LayerManager停靠栏
+        /// </summary>
+        private void ManagerTiffButton_Click(object sender, EventArgs e)
+        {
+            if (!ManagerTiffButton.Checked)
+            {
+                ManagerTiffButton.Checked = true;
+                ((System.ComponentModel.ISupportInitialize)(this.BottomBar)).BeginInit();
+                LayerManagerDockContainerItem.Visible = true;
+                BottomBar.SelectedDockContainerItem = LayerManagerDockContainerItem;
+                ((System.ComponentModel.ISupportInitialize)(this.BottomBar)).EndInit();
+                this.BottomBar.ResumeLayout(false);
+            }
+            else
+            {
+                ManagerTiffButton.Checked = false;
+                ((System.ComponentModel.ISupportInitialize)(this.BottomBar)).BeginInit();
+                LayerManagerDockContainerItem.Visible = false;
+                //LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;
+                ((System.ComponentModel.ISupportInitialize)(this.BottomBar)).EndInit();
+                this.BottomBar.ResumeLayout(false);
+            }
+        }
+        #endregion
+        #region 接口函数
+        public void ManagerTiffLayer()
+        {
+            ManagerTiffButton_Click(this, null);
+        }
+        #endregion
+        #endregion
+
+        #endregion
+
+        #region 航摄区域模块
+        #region DrawPolygon
+        private void DrawPolygonButton_Click(object sender, EventArgs e)
+        {
+            if (!DrawPolygonButton.Checked)
+                GCSViews.FlightPlanner.instance.AddPolygon();
+            else
+                GCSViews.FlightPlanner.instance.NoAddPolygon();
+        }
+        #endregion
+
+        #region ClearPolygon
+        private void ClearPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.ClearPloygon();
+        }
+        #endregion
+
+        #region SelectedPolygon
+        #region SelectedPolygon 选中首个
+        private void FirstPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.polygonMarkersGroupFirst();
+        }
+        #endregion
+        #region SelectedPolygon 选中下一个
+        private void NextPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.polygonMarkersGroupNext();
+        }
+        #endregion
+        #region SelectedPolygon 选中上一个
+        private void PrevPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.polygonMarkersGroupPrev();
+        }
+        #endregion
+        #region SelectedPolygon 选中全部
+        private void AllPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.polygonMarkersGroupAddAll();
+        }
+        #endregion
+        #region SelectedPolygon 取消选中
+        private void CancelPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.polygonMarkersGroupClear();
+        }
+        #endregion
+        #region SelectedPolygon 删除选中
+        private void DeleteSelectedPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.DeleteCurrentPolygon();
+        }
+        #endregion
+        #endregion
+
+        #region PolygonList
+        #region PolygonList 访问器
+        private void SetPolygonList(List<PointLatLngAlt> polygonList)
+        {
+
+        }
+
+        #endregion
+        #endregion
+        #endregion
+
+        #region 航点规划模块
+
+        #region DrawWP
+        private void DrawWPButton_Click(object sender, EventArgs e)
+        {
+            if (!DrawWPButton.Checked)
+                GCSViews.FlightPlanner.instance.AddWP();
+            else
+                GCSViews.FlightPlanner.instance.NoAddWP();
+        }
+        #endregion
+
+        #region ClearWP
+        private void ClearWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.ClearMission();
+        }
+        #endregion
+
+        #region AutoWP
+
+        #region AutoWP 入口函数
+        private void AutoWPButton_Click(object sender, EventArgs e)
+        {
+            if (!AutoWPButton.Checked)
+            {
+                AutoWPButton.Checked = true;
+                //GCSViews.FlightPlanner.instance.surveyGrid();
+                VPS.Controls.Grid.GridConfig.instance.WPListChangeHandle -= GCSViews.FlightPlanner.instance.SetWPListHandle;
+                VPS.Controls.Grid.GridConfig.instance.WPListChangeHandle += GCSViews.FlightPlanner.instance.SetWPListHandle;
+                GCSViews.FlightPlanner.instance.PolygonListChange -= VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
+                GCSViews.FlightPlanner.instance.PolygonListChange += VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
+
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
+                AutoGridDockContainerItem.Visible = true;
+                LeftBar.SelectedDockContainerItem = AutoGridDockContainerItem;
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
+                this.LeftBar.ResumeLayout(false);
+
+                VPS.Controls.Grid.GridConfig.instance.SetPolygonList(
+                    GCSViews.FlightPlanner.instance.GetPolygonList()
+                    );
+            }
+            else
+            {
+                AutoWPButton.Checked = false;
+                VPS.Controls.Grid.GridConfig.instance.WPListChangeHandle -= GCSViews.FlightPlanner.instance.SetWPListHandle;
+                GCSViews.FlightPlanner.instance.PolygonListChange -= VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
+
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
+                VPS.Controls.Grid.GridConfig.instance.SaveSetting();
+                AutoGridDockContainerItem.Visible = false;
+                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
+                this.LeftBar.ResumeLayout(false);
+            }
+        }
+        #endregion
+        #region AutoWP 对外接口
+        public void AutoWP()
+        {
+            AutoWPButton_Click(null, null);
+        }
+        #endregion
+        #endregion
+
+        #region SelectedWP
+        
+        #region SelectedWP 选中首个
+        private void FirstWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.wpMarkersGroupFirst();
+        }
+        #endregion
+        #region SelectedWP 选中下一个
+        private void NextWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.wpMarkersGroupNext();
+        }
+        #endregion
+        #region SelectedWP 选中上一个
+        private void PrevWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.wpMarkersGroupPrev();
+        }
+        #endregion
+        #region SelectedWP 选中全部
+        private void AllWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.wpMarkersGroupAddAll();
+        }
+        #endregion
+        #region SelectedWP 取消选中
+        private void CancelWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.wpMarkersGroupClear();
+        }
+        #endregion
+        #region SelectedWP 删除选中
+        private void DeleteSelectedWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.DeleteCurrentWP();
+        }
+        #endregion
+        #endregion
+
+        #region SaveWP
+        private void SaveWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.SaveWPFile();
+        }
+        #endregion
+
+        #region LoadWP
+        private void LoadWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.LoadWPFile();
+        }
+        #endregion
+
+        #endregion
+
+        #region 撤销模块
+        #region Undo 入口函数
+        private void UndoButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.Undo();
+        }
+        #endregion
+
+        #region Undo 状态更改
+        private void historyChange(int Count)
+        {
+            if (Count > 0)
+                this.UndoButton.Enabled = true;
+            else
+                this.UndoButton.Enabled = false;
+        }
+        #endregion
+
+        #endregion
+
+        #region 切换主体
         private void AppCommandTheme_Executed(object sender, EventArgs e)
         {
             ICommandSource source = sender as ICommandSource;
@@ -4225,456 +4419,275 @@ namespace VPS
                 this.styleManager.ManagerColorTint = (Color)source.CommandParameter;
             }
         }
+        #endregion
 
+        #region 隐藏功能区
         private void RibbonStateCommand_Executed(object sender, EventArgs e)
         {
             MinMenuBar.Expanded = RibbonStateCommand.Checked;
             RibbonStateCommand.Checked = !RibbonStateCommand.Checked;
         }
+        #endregion
+        #endregion
 
-
-        private delegate void SetMenuItemCheckedCallback(DevComponents.DotNetBar.ButtonItem stripButton, bool value);
-        private void SetMenuItemChecked(DevComponents.DotNetBar.ButtonItem stripButton, bool value)
+        #region 快捷键
+        #region 入口函数
+        private void MainV2_KeyDown(object sender, KeyEventArgs e)
         {
-            if (stripButton.InvokeRequired)
-            {
-                SetMenuItemCheckedCallback callback = new SetMenuItemCheckedCallback(SetMenuItemChecked);
-                stripButton.Invoke(callback, new object[] { stripButton, value });
-            }
-            else
-            {
-                stripButton.Checked = value;
-            }
+            Message temp = new Message();
+            ProcessCmdKey(ref temp, e.KeyData);
+            Console.WriteLine("MainV2_KeyDown " + e.ToString());
         }
+        #endregion
 
-        private delegate bool GetMenuItemCheckedCallback(DevComponents.DotNetBar.ButtonItem stripButton);
-        private bool GetMenuItemChecked(DevComponents.DotNetBar.ButtonItem stripButton)
+        #region 快捷键触发函数
+        /// <summary>
+        /// keyboard shortcuts override
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="keyData"></param>
+        /// <returns></returns>
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (stripButton.InvokeRequired)
+            //if (GCSViews.ConfigTerminal.SSHTerminal) { return false; }
+            //if (keyData == Keys.F12)
+            //{
+            //    MenuConnect_Click(null, null);
+            //    return true;
+            //}
+
+            if (keyData == Keys.F1)
             {
-                GetMenuItemCheckedCallback callback = new GetMenuItemCheckedCallback(GetMenuItemChecked);
-                IAsyncResult iar = this.BeginInvoke(callback, new object[] { stripButton });
-                return (bool)this.EndInvoke(iar);
+                LoadProjectButton_Click(this, null);
+                return true;
             }
-            else
+            if (keyData == Keys.F2)
             {
-                return stripButton.Checked;
+                SaveProjectButton_Click(this, null);
+                return true;
             }
-        }
 
-
-        private void LoadProjectButton_Click(object sender, EventArgs e)
-        {
-            System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(GCSViews.ProjectData));
-
-            using (OpenFileDialog ofd = new OpenFileDialog())
+            if (keyData == Keys.F5)
             {
-                ofd.Filter = "项目工程(*.vps)|*.vps";
-                ofd.ShowDialog();
-
-                if (File.Exists(ofd.FileName))
-                {
-                    using (StreamReader sr = new StreamReader(ofd.FileName))
-                    {
-                        var data = (GCSViews.ProjectData)reader.Deserialize(sr);
-                        loadProjectData(data);
-                    }
-                }
-            }
-        }
-
-        private void SaveProjectButton_Click(object sender, EventArgs e)
-        {
-            System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(GCSViews.ProjectData));
-
-            var data = saveProjectData();
-
-            using (SaveFileDialog sfd = new SaveFileDialog())
-            {
-                sfd.Filter = "项目工程(*.vps)|*.vps";
-                var result = sfd.ShowDialog();
-
-                if (sfd.FileName != "" && result == DialogResult.OK)
-                {
-                    using (StreamWriter sw = new StreamWriter(sfd.FileName))
-                    {
-                        writer.Serialize(sw, data);
-                    }
-                }
-            }
-        }
-
-        private void loadProjectData(GCSViews.ProjectData data)
-        {
-            SetPolygonList(data.poly);
-            SetWPList(data.wp);
-            currentLayerPath = data.layer;
-            defaultOrigin = data.layerPosition;
-            displayRect = data.layerRect;
-            GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(displayRect);
-            defaultHome = data.homePosition;
-            SetHome(defaultHome);
-            AddLayerOverlay(selectedLayer);
-            if (LoadTiffButton.Checked != data.isLayerReaderOpen)
                 LoadTiffButton_Click(this, null);
-            if (TiffManagerButton.Checked != data.isLayerManagerOpen)
-                TiffManagerButton_Click(this, null);
-            if (AutoWPButton.Checked != data.isGridConfigOpen)
+                return true;
+            }
+
+            if (keyData == Keys.F6)
+            {
+                ZoomTiffButton_Click(this, null);
+                return true;
+            }
+
+            if (keyData == Keys.F7)
+            {
+                ManagerTiffButton_Click(this, null);
+                return true;
+            }
+
+            if (keyData == (Keys.Alt | Keys.E))
+            {
+                DrawPolygonButton_Click(this, null);
+                return true;
+            }
+
+            if (keyData == (Keys.Control | Keys.E))
+            {
+                DrawWPButton_Click(this, null);
+                return true;
+            }
+
+            if (keyData == (Keys.Control | Keys.D))
+            {
+                ClearWPButton_Click(this, null);
+                return true;
+            }
+
+            if (keyData == (Keys.Alt | Keys.D))
+            {
+                ClearPolygonButton_Click(this, null);
+                return true;
+            }
+
+            if (keyData == (Keys.Control | Keys.G))
+            {
                 AutoWPButton_Click(this, null);
-        }
+                return true;
+            }
 
-        private GCSViews.ProjectData saveProjectData()
-        {
-            var data = new GCSViews.ProjectData();
-            GetPolygonList(out data.poly);
-            data.wp = GCSViews.FlightPlanner.instance.GetWPList();
-            data.layer = currentLayerPath;
-            data.layerPosition = defaultOrigin;
-            data.layerRect = displayRect;
-            data.homePosition = defaultHome;
-            data.layerInfo = selectedLayer;
-            data.isLayerReaderOpen = LoadTiffButton.Checked;
-            data.isLayerManagerOpen = TiffManagerButton.Checked;
-            data.isGridConfigOpen = AutoWPButton.Checked;
-
-
-            return data;
-        }
-
-        private void LoadTiffButton_Click(object sender, EventArgs e)
-        {
-            if (!LoadTiffButton.Checked)
+            // open wp file
+            if (keyData == (Keys.Control | Keys.S))
             {
-                LoadTiffButton.Checked = true;
-                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
-                LayerReaderDockContainerItem.Visible = true;
-                LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;
-                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
-                this.LeftBar.ResumeLayout(false);
+                SaveWPButton_Click(this, null);
+                return true;
             }
-            else
+
+            // save wp file
+            if (keyData == (Keys.Control | Keys.O))
             {
-                LoadTiffButton.Checked = false;
-                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
-                LayerReaderDockContainerItem.Visible = false;
-                //LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;
-                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
-                this.LeftBar.ResumeLayout(false);
+                LoadWPButton_Click(this, null);
+                return true;
             }
+
+            if (ProcessCmdKeyCallback != null)
+            {
+                return ProcessCmdKeyCallback(ref msg, keyData);
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
         }
+        #endregion
 
-        private void ZoomTiffButton_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.zoomToTiffLayer();
-            //GCSViews.FlightData.instance.zoomToTiffLayer();
-        }
+        public delegate bool ProcessCmdKeyHandler(ref Message msg, Keys keyData);
 
-        private void TiffManagerButton_Click(object sender, EventArgs e)
-        {
-            if (!TiffManagerButton.Checked)
-            {
-                TiffManagerButton.Checked = true;
-                ((System.ComponentModel.ISupportInitialize)(this.BottomBar)).BeginInit();
-                LayerManagerDockContainerItem.Visible = true;
-                BottomBar.SelectedDockContainerItem = LayerManagerDockContainerItem;
-                ((System.ComponentModel.ISupportInitialize)(this.BottomBar)).EndInit();
-                this.BottomBar.ResumeLayout(false);
-            }
-            else
-            {
-                TiffManagerButton.Checked = false;
-                ((System.ComponentModel.ISupportInitialize)(this.BottomBar)).BeginInit();
-                LayerManagerDockContainerItem.Visible = false;
-                //LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;
-                ((System.ComponentModel.ISupportInitialize)(this.BottomBar)).EndInit();
-                this.BottomBar.ResumeLayout(false);
-            }
-        }
+        public event ProcessCmdKeyHandler ProcessCmdKeyCallback;
 
-        private void DrawPolygonButton_Click(object sender, EventArgs e)
-        {
-            if (!DrawPolygonButton.Checked)
-                GCSViews.FlightPlanner.instance.AddPolygon();
-            else
-                GCSViews.FlightPlanner.instance.NoAddPolygon();
-        }
+        #endregion
 
-        private void ClearPolygonButton_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.ClearPloygon();
-        }
-
-        private void AddWPButton_Click(object sender, EventArgs e)
-        {
-            if (!AddWPButton.Checked)
-                GCSViews.FlightPlanner.instance.AddWP();
-            else
-                GCSViews.FlightPlanner.instance.NoAddWP();
-        }
-
-        private void ClearWPButton_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.ClearMission();
-        }
-
-        public void AutoWP()
-        {
-            AutoWPButton_Click(null, null);
-        }
-
-        private void AutoWPButton_Click(object sender, EventArgs e)
-        {
-            if (!AutoWPButton.Checked)
-            {
-                AutoWPButton.Checked = true;
-                //GCSViews.FlightPlanner.instance.surveyGrid();
-                GridConfig.WPListChangeHandle -= WPListChange;
-                GridConfig.WPListChangeHandle += WPListChange;
-                GCSViews.FlightPlanner.instance.PolygonListChange -= PolygonListChange;
-                GCSViews.FlightPlanner.instance.PolygonListChange += PolygonListChange;
-                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
-                AutoGridDockContainerItem.Visible = true;
-                LeftBar.SelectedDockContainerItem = AutoGridDockContainerItem;
-                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
-                this.LeftBar.ResumeLayout(false);
-
-                PolygonListChange();
-            }
-            else
-            {
-                AutoWPButton.Checked = false;
-                GridConfig.WPListChangeHandle -= WPListChange;
-                GCSViews.FlightPlanner.instance.PolygonListChange -= PolygonListChange;
-                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
-                GridConfig.SaveSetting();
-                AutoGridDockContainerItem.Visible = false;
-                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
-                this.LeftBar.ResumeLayout(false);
-            }
-        }
-
-        private void PolygonListChange()
-        {
-            GetPolygonList(out List<PointLatLngAlt> polygonList);
-            GridConfig.SetPolygonList(polygonList);
-        }
-
-        private void SetPolygonList(List<PointLatLngAlt> polygonList)
-        {
-            foreach (var mark in polygonList)
-            {
-                GCSViews.FlightPlanner.instance.AddPolygonPoint(mark.Lat, mark.Lng);
-            }
-        }
-
-        private void GetPolygonList(out List<PointLatLngAlt> polygonList)
-        {
-            polygonList = new List<PointLatLngAlt>();
-            foreach (var mark in GCSViews.FlightPlanner.instance.drawnpolygon.Points)
-            {
-                polygonList.Add(mark);
-            }
-        }
-
-        public delegate void WPListChangeInThread(List<PointLatLngAlt> wpList);
-        private void WPListChange(List<PointLatLngAlt> wpList)
-        {
-            if (this.InvokeRequired) {
-                WPListChangeInThread thread = new WPListChangeInThread(WPListChange);
-                this.Invoke(thread,new object[] { wpList });
-            }
-            else
-            {
-                GCSViews.FlightPlanner.instance.SetWPList(wpList);
-            }
-        }
-
-        public delegate void DataChangeInThread(object data);
-        private void WPRadChange(object wpRad)
-        {
-            if (this.InvokeRequired)
-            {
-                DataChangeInThread thread = new DataChangeInThread(WPRadChange);
-                this.Invoke(thread, new object[] { wpRad });
-            }
-            else
-            {
-                GCSViews.FlightPlanner.instance.SetWPRad((int)wpRad);
-            }
-        }
-
-        private void BaseAltChange(object baseAlt)
-        {
-            if (this.InvokeRequired)
-            {
-                DataChangeInThread thread = new DataChangeInThread(BaseAltChange);
-                this.Invoke(thread, new object[] { baseAlt });
-            }
-            else
-            {
-                GCSViews.FlightPlanner.instance.SetBaseAlt((int)baseAlt);
-            }
-        }
-
-        private void DefaultAltChange(object defaultAlt)
-        {
-            if (this.InvokeRequired)
-            {
-                DataChangeInThread thread = new DataChangeInThread(DefaultAltChange);
-                this.Invoke(thread, new object[] { defaultAlt });
-            }
-            else
-            {
-                GCSViews.FlightPlanner.instance.SetDefaultAlt((int)defaultAlt);
-            }
-        }
-
-        private void WarnAltChange(object warnAlt)
-        {
-            if (this.InvokeRequired)
-            {
-                DataChangeInThread thread = new DataChangeInThread(WarnAltChange);
-                this.Invoke(thread, new object[] { warnAlt });
-            }
-            else
-            {
-                GCSViews.FlightPlanner.instance.SetWarnAlt((int)warnAlt);
-            }
-        }
-
-        private void HomeChange(object home)
-        {
-            if (this.InvokeRequired)
-            {
-                DataChangeInThread thread = new DataChangeInThread(HomeChange);
-                this.Invoke(thread, new object[] { home });
-            }
-            else
-            {
-                GCSViews.FlightPlanner.instance.setHomeHere((PointLatLngAlt)home);
-            }
-        }
-
-        private void CoordSystemChange(object coord)
-        {
-            if (this.InvokeRequired)
-            {
-                DataChangeInThread thread = new DataChangeInThread(CoordSystemChange);
-                this.Invoke(thread, new object[] { coord });
-            }
-            else
-            {
-                GCSViews.FlightPlanner.instance.SetCoordSystem(coord.ToString());
-            }
-        }
-
-        private void AltFrameChange(object altFrame)
-        {
-            if (this.InvokeRequired)
-            {
-                DataChangeInThread thread = new DataChangeInThread(AltFrameChange);
-                this.Invoke(thread, new object[] { altFrame });
-            }
-            else
-            {
-                GCSViews.FlightPlanner.instance.SetAltFrame(altFrame.ToString());
-            }
-        }
-
-        private void SetWPList(List<PointLatLngAlt> wpList)
-        {
-            GCSViews.FlightPlanner.instance.SetWPList(wpList);
-            VPS.Controls.Command.CommandsPanel.instance.SetWPList(wpList);
-        }
-
+        #region Home
         private void SetHome(PointLatLngAlt position)
         {
-            GCSViews.FlightPlanner.instance.setHomeHere(position);
+            GCSViews.FlightPlanner.instance.SetHomeHandle(position);
             VPS.Controls.Command.CommandsPanel.instance.SetHome(position);
         }
+        #endregion
 
+        #region 图层信息
+        public string currentLayerPath;
+        public GMap.NET.RectLatLng displayRect = new GMap.NET.RectLatLng();
+        public PointLatLngAlt defaultOrigin = new PointLatLngAlt();
+        public PointLatLngAlt defaultHome = new PointLatLngAlt();
+        public GeoBitmap currentLayer;
+        public VPS.Layer.LayerInfo selectedLayer;
+        #endregion
 
-        private void DeleteSelectedPolygonButton_Click(object sender, EventArgs e)
+        #region 工作区
+
+        #region AddLayer 入口函数
+        public bool AddLayerOverlay(string path, PointLatLngAlt origin, Color transparent)
         {
-            GCSViews.FlightPlanner.instance.DeleteCurrentPolygon();
+            var layerInfo = new VPS.Layer.LayerInfo(path, origin, transparent);
+            VPS.Layer.MemoryLayerCache.AddLayerToMemoryCache(layerInfo);
+            return SetLayerOverlay(layerInfo);
         }
 
-        private void DeleteSelectedWPButton_Click(object sender, EventArgs e)
+        public bool AddLayerOverlay(VPS.Layer.LayerInfo info)
         {
-            GCSViews.FlightPlanner.instance.DeleteCurrentWP();
+            VPS.Layer.MemoryLayerCache.AddLayerToMemoryCache(info);
+            return SetLayerOverlay(info);
         }
+        #endregion
 
-        private void SaveWPButton_Click(object sender, EventArgs e)
+        #region LoadLayer 入口函数
+        private bool SetLayerOverlay(VPS.Layer.LayerInfo layerInfo)
         {
-            GCSViews.FlightPlanner.instance.SaveWPFile();
-        }
+            if (File.Exists(layerInfo.Layer))
+            {
+                var bitmap = GDAL.GDAL.LoadImageInfo(layerInfo.Layer);
+                if (bitmap != null && !bitmap.Rect.IsEmpty)
+                {
+                    SetLoadingLayer(bitmap.File);
 
-        private void LoadWPButton_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.LoadWPFile();
-        }
+                    Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (_bitmap, _transparent) =>
+                    {
+                        _bitmap.BitmapTile = CreateTile(_bitmap, 400, 400);
+                        _bitmap.SetTransparent(_transparent);
 
-        private void FirstPolygonButton_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.polygonMarkersGroupFirst();
-        }
+                        return _bitmap;
+                    };
+                    
+                    IAsyncResult iar = GetGeoBitmap.BeginInvoke(bitmap, layerInfo.Transparent, CallbackWhenDone, this);
 
-        private void NextPolygonButton_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.polygonMarkersGroupNext();
-        }
-
-        private void PrevPolygonButton_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.polygonMarkersGroupPrev();
-        }
-
-        private void CancelPolygonButton_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.polygonMarkersGroupClear();
-        }
-
-        private void FirstWPButton_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.wpMarkersGroupFirst();
-        }
-
-        private void NextWPButton_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.wpMarkersGroupNext();
-        }
-
-        private void PrevWPButton_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.wpMarkersGroupPrev();
-        }
-
-        private void CancelWPButton_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.wpMarkersGroupClear();
-        }
-
-        private void AllPolygonButton_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.polygonMarkersGroupAddAll();
-        }
-
-        private void AllWPButton_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.wpMarkersGroupAddAll();
-        }
-
-        private void UndoButton_Click(object sender, EventArgs e)
-        {
-            GCSViews.FlightPlanner.instance.Undo();
-        }
-
-        private void historyChange(int Count)
-        {
-            if (Count > 0)
-                this.UndoButton.Enabled = true;
+                    this.currentLayerPath = layerInfo.Layer;
+                    this.displayRect = bitmap.Rect;
+                    this.defaultOrigin = layerInfo.Origin;
+                    this.defaultHome = layerInfo.Origin;
+                    this.selectedLayer = layerInfo;
+                    ZoomTiffButton_Click(this, null);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
             else
-                this.UndoButton.Enabled = false;
+            {
+                return false;
+            }
         }
+        private void CallbackWhenDone(IAsyncResult iar)
+        {
+            AsyncResult ar = (AsyncResult)iar;
+            Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> geoFunc = (Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap>)ar.AsyncDelegate;
+
+            var geoBitmap = geoFunc.EndInvoke(iar);
+            if (geoBitmap.DisplayBitmap != null)
+            {
+                if (IsLoadingLayer(geoBitmap.File))
+                {
+                    IsLoadLayer = true;
+                    currentLayer = geoBitmap;
+                    ShowLayerOverlay(geoBitmap);
+                }
+            }
+        }
+        #endregion
+
+        #region ShowLayer 入口函数
+        private void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
+        {
+
+            GCSViews.FlightData.instance.ShowLayerOverlay(geoBitmap);
+            GCSViews.FlightPlanner.instance.ShowLayerOverlay(geoBitmap);
+
+        }
+        #endregion
+
+        #region 图像切片
+        private List<GeoBitmap.Tile> CreateTile(GeoBitmap _bitmap, int _tileXSize, int _tileYSize)
+        {
+            List<GeoBitmap.Tile> _tiles = new List<GeoBitmap.Tile>();
+            int TileXLen = 1024, TileYLen = 1024, RasterXSize = _bitmap.RasterXSize, RasterYSize = _bitmap.RasterYSize;
+            int TileXSize = RasterXSize / TileXLen + (RasterXSize % TileXLen == 0 ? 0 : 1);
+            int TileYSize = RasterYSize / TileYLen + (RasterYSize % TileYLen == 0 ? 0 : 1);
+            //创建进度条
+            string key = topMainInfo.CreateProgress("加载工作区：" + Layer.MemoryLayerCache.GetHashCode(_bitmap.File), TileXSize * TileYSize);
+            try
+            {
+
+                for (int i = 0; i < TileXSize; i++)
+                {
+                    for (int j = 0; j < TileYSize; j++)
+                    {
+                        Bitmap tile = LoadTileImage(_bitmap.File, i * TileXLen, j * TileYLen, TileXLen, TileYLen);
+                        double[] pos1 = _bitmap.GetPosition(i * TileXLen, j * TileYLen);
+                        double[] pos2 = _bitmap.GetPosition(
+                            Math.Min(RasterXSize, (i + 1) * TileXLen),
+                            Math.Min(RasterYSize, (j + 1) * TileYLen));
+
+                        GMap.NET.RectLatLng position = new GMap.NET.RectLatLng(
+                            Math.Max(pos1[1], pos2[1]), Math.Min(pos1[0], pos2[0]),
+                            Math.Abs(pos1[0] - pos2[0]), Math.Abs(pos1[1] - pos2[1]));
+                        _tiles.Add(new GeoBitmap.Tile(tile, position));
+                        topMainInfo.GetProgress(key).SetProgress(i * TileYSize + j);
+                    }
+                }
+                topMainInfo.GetProgress(key).SetProgressSuccessful("加载完成");
+                return _tiles;
+            }
+            catch
+            {
+                topMainInfo.GetProgress(key).SetProgressFailure("加载失败");
+                return new List<GeoBitmap.Tile>();
+            }
+            finally
+            {
+                topMainInfo.DisposeControlEnter(key, 5000);
+            }
+
+        }
+        #endregion
+        #endregion
     }
 }

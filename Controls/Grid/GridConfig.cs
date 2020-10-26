@@ -281,13 +281,10 @@ namespace VPS.Controls.Grid
         List<PointLatLngAlt> list = new List<PointLatLngAlt>();
         List<PointLatLngAlt> grid = new List<PointLatLngAlt>();
 
-        public void SetPolygonList(List<PointLatLngAlt> polygons, bool isGenerate = true)
+        public void SetPolygonList(List<PointLatLngAlt> polygons)
         {
             list = polygons;
-            bool preeditable = editable;
-            editable = isGenerate;
             domainUpDown2_ValueChanged(null, null);
-            editable = preeditable;
         }
 
         public List<PointLatLngAlt> GetWPList()
