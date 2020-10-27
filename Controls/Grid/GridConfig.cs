@@ -607,7 +607,7 @@ namespace VPS.Controls.Grid
 
             editable = true;
 
-            defaultAngleTooltip.SetSuperTooltip(DefaultAngle, defaultAngleTooltip.DefaultTooltipSettings);
+            //defaultAngleTooltip.SetSuperTooltip(DefaultAngle, defaultAngleTooltip.DefaultTooltipSettings);
             // set and angle that is good
             //NUM_angle.Value = (int)((getAngleOfLongestSide(list) + 360) % 360);
         }
