@@ -8149,16 +8149,37 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         #endregion
 
         #region GetWPList
-        public List<PointLatLngAlt> GetWPList()
+        public List<PointLatLngAlt> GetWPList(string altitudeMode = "Relative")
         {
             List<PointLatLngAlt> wpList = new List<PointLatLngAlt>();
             int count = Commands.Rows.Count;
+            double totalAlt = 0;
             for (int i = 0; i < count; i++)
             {
                 GetWPPoint(i, out PointLatLngAlt wp);
-
+                totalAlt += srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
                 wpList.Add(wp);
             }
+            double baseAlt = totalAlt / count;
+            for (int i = 0; i < count; i++)
+            {
+                switch (altitudeMode.ToLower())
+                {
+                    case "relative":
+                        wpList[i].Tag2 = "Relative";
+                        break;
+                    case "absolute":
+                        wpList[i].Alt = wpList[i].Alt + baseAlt;
+                        wpList[i].Tag2 = "Absolute";
+                        break;
+                    case "terrain":
+                        wpList[i].Alt = wpList[i].Alt + baseAlt - 
+                            srtm.getAltitude(wpList[i].Lat, wpList[i].Lng).alt * CurrentState.multiplieralt;
+                        wpList[i].Tag2 = "Terrain";
+                        break;
+                }
+            }
+
             return wpList;
         }
 
@@ -8356,6 +8377,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             w.WriteString("Waypoints in the Mission.");
             w.WriteEndElement();//description
             {
+                #region HomePoint
                 w.WriteStartElement("Placemark");
 
                 // Write Point element
@@ -8408,24 +8430,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 w.WriteStartElement("Point");
                 w.WriteStartElement("altitudeMode");
                 int mode = System.Convert.ToInt32(CMB_altmode.SelectedValue);
-                switch (mode)
                 {
-                    case 3:
-                        w.WriteAttributeString("id", "3");
-                        w.WriteString("relativeToGround");
-                        break;
-                    case 0:
-                        w.WriteAttributeString("id", "0");
-                        w.WriteString("absolute");
-                        break;
-                    case 10:
-                        w.WriteAttributeString("id", "10");
-                        w.WriteString("clampedToGround");
-                        break;
-                    default:
-                        w.WriteAttributeString("id", "0");
-                        w.WriteString("relativeToGround");
-                        break;
+                    w.WriteAttributeString("id", "10");
+                    w.WriteString("relativeToGround");
                 }
 
                 w.WriteEndElement();//altitudeMode
@@ -8435,28 +8442,47 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 w.WriteEndElement();//coordinates
                 w.WriteEndElement();//Point
                 w.WriteEndElement();//Placemark
+                #endregion
             }
+            List<PointLatLngAlt> wpList = null;
+            switch (CMB_altmode.SelectedIndex)
+            {
+                case 0:
+                    wpList = GetWPList("Terrain");
+                    break;
+                case 1:
+                    wpList = GetWPList("Absolute");
+                    break;
+                case 2:
+                    wpList = GetWPList("Terrain");
+                    break;
+                default:
+                    wpList = GetWPList("Terrain");
+                    break;
+            }
+            #region WPPoints
             int index = 0;
             for (int i = 0; i < Commands.Rows.Count; i++)
             {
                 bool isVisbility = false;
-                if (Commands.Rows[i].Cells[Command.Index].Value.ToString() == "WAYPOINT")
+                if (wpList[i].Tag == "WAYPOINT")
                     isVisbility = true;
                 w.WriteStartElement("Placemark");
 
                 // Write Point element
                 w.WriteStartElement("name");
                 if (isVisbility)
-                    w.WriteString(string.Format(Commands.Rows[i].Cells[Command.Index].Value.ToString().Replace("WAYPOINT", "") + (++index).ToString()));
+                    w.WriteString(wpList[index].Tag + " " + (index).ToString());
                 else
-                    w.WriteString(string.Format(Commands.Rows[i].Cells[Command.Index].Value.ToString()));
+                    w.WriteString(Commands.Rows[i].Cells[Command.Index].Value.ToString());
                 w.WriteEndElement();//name
 
                 w.WriteStartElement("visibility");
-                if (isVisbility)
-                    w.WriteString("true");
-                else
-                    w.WriteString("false");
+                w.WriteString(isVisbility.ToString());
+                //if (isVisbility)
+                //    w.WriteString("true");
+                //else
+                //    w.WriteString("false");
                 w.WriteEndElement();//visibility
 
                 w.WriteStartElement("description");
@@ -8483,34 +8509,18 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 w.WriteStartElement("param4");
                 w.WriteString(Commands.Rows[i].Cells[Param4.Index].Value.ToString());
                 w.WriteEndElement();//param4
-                if (!isVisbility)
-                {
-                    w.WriteStartElement("mode");
-                    w.WriteString(Commands.Rows[i].Cells[Frame.Index].Value.ToString());
-                    w.WriteEndElement();//mode
-                    w.WriteStartElement("coord");
-                    w.WriteString(string.Format("{0},{1},{2}",
-                        Commands.Rows[i].Cells[Lon.Index].Value.ToString(),
-                        Commands.Rows[i].Cells[Lat.Index].Value.ToString(),
-                        Commands.Rows[i].Cells[Alt.Index].Value.ToString()));
-                    w.WriteEndElement();//coord
-                }
                 w.WriteEndElement();//ExtendedData
 
                 if (isVisbility)
                 {
                     w.WriteStartElement("Point");
                     w.WriteStartElement("altitudeMode");
-                    int mode = System.Convert.ToInt32(Commands.Rows[i].Cells[Frame.Index].Value.ToString());
-                    switch (mode)
+                    switch (wpList[i].Tag2)
                     {
-                        case 3:
-                            w.WriteString("relativeToGround");
-                            break;
-                        case 0:
+                        case "Absolute":
                             w.WriteString("absolute");
                             break;
-                        case 10:
+                        case "Terrain":
                             w.WriteString("relativeToGround");
                             break;
                         default:
@@ -8521,18 +8531,21 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     w.WriteEndElement();//altitudeMode
                     w.WriteStartElement("coordinates");
                     w.WriteString(string.Format("{0},{1},{2}",
-                        Commands.Rows[i].Cells[Lon.Index].Value.ToString(),
-                        Commands.Rows[i].Cells[Lat.Index].Value.ToString(),
-                        Commands.Rows[i].Cells[Alt.Index].Value.ToString()));
+                        wpList[index].Lng,
+                        wpList[index].Lat,
+                        wpList[index].Alt));
                     w.WriteEndElement();//coordinates
                     w.WriteEndElement();//Point
                 }
                 w.WriteEndElement();//Placemark
+
+                if (isVisbility)
+                    index++;
             }
             w.WriteEndElement();//Folder
-
-            for (int i = 1; i < overlay.route.Overlay.Routes.Count; i++)
+            #endregion
             {
+                #region WPLines
                 //MainData Lines
                 w.WriteStartElement("Placemark");
                 // Write Lines element
@@ -8540,7 +8553,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 w.WriteString(string.Format("Wayline"));
                 w.WriteEndElement();//name
                 w.WriteStartElement("visibility");
-                w.WriteString("1");
+                w.WriteString("true");
                 w.WriteEndElement();//visibility
                 w.WriteStartElement("description");
                 w.WriteString("Wayline");
@@ -8575,30 +8588,21 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                 string pointList = "";
 
-                foreach (var marker in overlay.route.Overlay.Routes[i].Overlay.Markers)
+                foreach (var marker in wpList)
                 {
                     if (marker != null)
                     {
-                        if (marker.Tag.ToString() == "H")
-                            continue;
-                        string alt = "100";
-                        if (marker is VPS.Maps.GMapMarkerWP)
-                            alt = ((GMapMarkerWP)marker).ToolTipText.Replace("Alt: ", "");
-                        else
-                        {
-                            continue;
-                        }
-
-                        pointList += string.Format("{0},{1},{2} ", marker.Position.Lng, marker.Position.Lat, alt);
+                        pointList += string.Format("{0},{1},{2} ", marker.Lng, marker.Lat, marker.Alt);
                     }
                 }
 
                 w.WriteString(pointList);
                 w.WriteEndElement();//coordinates
                 w.WriteEndElement();//LineString
-            }
-            w.WriteEndElement();//Placemark
 
+                w.WriteEndElement();//Placemark
+                #endregion
+            }
             w.WriteEndElement();//document
             w.WriteEndElement();//kml
 
@@ -9066,7 +9070,8 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                                         Locationwp temp = new Locationwp();
                                         temp.frame = (byte)int.Parse(altitudeMode.ToString(), CultureInfo.InvariantCulture);
-
+                                        if (cmd != "WAYPOINT")
+                                            continue;
                                         if (Enum.TryParse(cmd, false, out MAVLink.MAV_CMD data))
                                         {
                                             temp.id = (ushort)data;

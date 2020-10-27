@@ -341,7 +341,7 @@ namespace VPS.Controls.Command
                     {
                         CommandDataList[Lat.Index, index].Value = wp.Lat;
                         CommandDataList[Lon.Index, index].Value = wp.Lng;
-
+                        SetAltitude(index, wp);
                         int zone = wp.GetUTMZone();
                         var utm = wp.ToUTM();
                         CommandDataList[Zone.Index, index].Value = zone;
@@ -355,7 +355,21 @@ namespace VPS.Controls.Command
                     {
                         CommandDataList[Lat.Index, index].Value = wp.Lat;
                         CommandDataList[Lon.Index, index].Value = wp.Lng;
-
+                        switch (wp.Tag2.ToLower())
+                        {
+                            case "relative":
+                                CommandDataList[RelativeAlt.Index, index].Value = wp.Alt;
+                                break;
+                            case "absolute":
+                                CommandDataList[AbsoluteAlt.Index, index].Value = wp.Alt;
+                                break;
+                            case "terrain":
+                                CommandDataList[TerrainAlt.Index, index].Value = wp.Alt;
+                                break;
+                            default:
+                                CommandDataList[RelativeAlt.Index, index].Value = wp.Alt;
+                                break;
+                        }
                         int zone = wp.GetUTMZone();
                         var utm = wp.ToUTM();
                         CommandDataList[Zone.Index, index].Value = zone;
@@ -409,35 +423,35 @@ namespace VPS.Controls.Command
                 WarnAlt.Value = (int)(maxAlt - baseAlt);
         }
 
-        private void SetAltitude(List<Utilities.PointLatLngAlt> wpList)
+        private void SetAltitude(int index, Utilities.PointLatLngAlt wp)
         {
-            for (int index = 0; index < wpList.Count; index++)
+
+            double terrain = Utilities.srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
+            switch (wp.Tag2)
             {
-                double terrain = Utilities.srtm.getAltitude(wpList[index].Lat, wpList[index].Lng).alt * CurrentState.multiplieralt;
-                switch (wpList[index].Tag2)
-                {
-                    case "Relative":
-                        CommandDataList[RelativeAlt.Index, index].Value = wpList[index].Alt;
-                        CommandDataList[AbsoluteAlt.Index, index].Value = wpList[index].Alt + baseAlt;
-                        CommandDataList[TerrainAlt.Index, index].Value = wpList[index].Alt + baseAlt - terrain;
-                        break;
-                    case "Absolute":
-                        CommandDataList[RelativeAlt.Index, index].Value = wpList[index].Alt - baseAlt;
-                        CommandDataList[AbsoluteAlt.Index, index].Value = wpList[index].Alt;
-                        CommandDataList[TerrainAlt.Index, index].Value = wpList[index].Alt - terrain;
-                        break;
-                    case "Terrain":
-                        CommandDataList[RelativeAlt.Index, index].Value = wpList[index].Alt + terrain - baseAlt;
-                        CommandDataList[AbsoluteAlt.Index, index].Value = wpList[index].Alt + terrain;
-                        CommandDataList[TerrainAlt.Index, index].Value = wpList[index].Alt;
-                        break;
-                    default:
-                        CommandDataList[RelativeAlt.Index, index].Value = wpList[index].Alt;
-                        CommandDataList[AbsoluteAlt.Index, index].Value = wpList[index].Alt + baseAlt;
-                        CommandDataList[TerrainAlt.Index, index].Value = wpList[index].Alt + baseAlt - terrain;
-                        break;
-                }
+                case "Relative":
+                    CommandDataList[RelativeAlt.Index, index].Value = wp.Alt;
+                    CommandDataList[AbsoluteAlt.Index, index].Value = wp.Alt + baseAlt;
+                    CommandDataList[TerrainAlt.Index, index].Value = wp.Alt + baseAlt - terrain;
+                    break;
+                case "Absolute":
+                    CommandDataList[RelativeAlt.Index, index].Value = wp.Alt - baseAlt;
+                    CommandDataList[AbsoluteAlt.Index, index].Value = wp.Alt;
+                    CommandDataList[TerrainAlt.Index, index].Value = wp.Alt - terrain;
+                    break;
+                case "Terrain":
+                    CommandDataList[RelativeAlt.Index, index].Value = wp.Alt + terrain - baseAlt;
+                    CommandDataList[AbsoluteAlt.Index, index].Value = wp.Alt + terrain;
+                    CommandDataList[TerrainAlt.Index, index].Value = wp.Alt;
+                    break;
+                default:
+                    CommandDataList[RelativeAlt.Index, index].Value = wp.Alt;
+                    CommandDataList[AbsoluteAlt.Index, index].Value = wp.Alt + baseAlt;
+                    CommandDataList[TerrainAlt.Index, index].Value = wp.Alt + baseAlt - terrain;
+                    break;
             }
+
+
         }
 
         private void SetWpListParam(List<Utilities.PointLatLngAlt> wpList)
@@ -478,7 +492,7 @@ namespace VPS.Controls.Command
                 Utilities.PointLatLngAlt wpPoint = new Utilities.PointLatLngAlt();
                 wpPoint.Lat = (double)CommandDataList[Lat.Index, index].Value;
                 wpPoint.Lng = (double)CommandDataList[Lon.Index, index].Value;
-                wpPoint.Alt = (int)CommandDataList[Alt.Index, index].Value;
+                wpPoint.Alt = (int)CommandDataList[RelativeAlt.Index, index].Value;
                 wpPoint.Tag = CommandDataList[Command.Index, index].Value.ToString();
                 wpPoint.Tag2 = "Relative";
                 wpList.Add(wpPoint);
@@ -488,8 +502,9 @@ namespace VPS.Controls.Command
 
         public void SetWPList(List<Utilities.PointLatLngAlt> wpList)
         {
+            SetBaseAlt(wpList);
             StartEdit();
-
+            
             int count = CommandDataList.Rows.Count;
             int index = 0;
             for (; index < wpList.Count; index++)
@@ -501,11 +516,11 @@ namespace VPS.Controls.Command
                 DeleteWPPoint(index);
                 count--;
             }
-            SetWpListParam(wpList);
+            
             EndEdit();
 
-            SetBaseAlt(wpList);
-            SetAltitude(wpList);
+            SetWpListParam(wpList);
+
         }
 
         private void CommandDataList_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -549,6 +564,40 @@ namespace VPS.Controls.Command
                     }
                 }
             }
+        }
+
+        private void CommandDataList_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+        }
+
+        private void CommandDataList_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+        }
+
+        private void CommandDataList_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            //if (e.RowIndex < CommandDataList.Rows.Count - 1)
+            //{
+            //    DataGridViewRow dgrSingle = CommandDataList.Rows[e.RowIndex];
+            //    if (e.ColumnIndex == RelativeAlt.Index)
+            //    {
+            //        try
+            //        {
+            //            if ((int)dgrSingle.Cells[RelativeAlt.Index].Value < warnAlt)
+            //            {
+            //                dgrSingle.DefaultCellStyle.ForeColor = Color.Red;
+            //            }
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //        }
+            //    }
+            //}
+        }
+
+        private void CommandDataList_GridColorChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

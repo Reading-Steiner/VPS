@@ -499,7 +499,7 @@
             this.CommandDataList.DefaultCellStyle = dataGridViewCellStyle2;
             this.CommandDataList.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.CommandDataList.EnableHeadersVisualStyles = false;
-            this.CommandDataList.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
+            this.CommandDataList.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
             this.CommandDataList.HighlightSelectedColumnHeaders = false;
             this.CommandDataList.Location = new System.Drawing.Point(156, 3);
             this.CommandDataList.Name = "CommandDataList";
@@ -514,7 +514,11 @@
             this.CommandDataList.RowTemplate.Height = 23;
             this.CommandDataList.Size = new System.Drawing.Size(984, 272);
             this.CommandDataList.TabIndex = 0;
+            this.CommandDataList.GridColorChanged += new System.EventHandler(this.CommandDataList_GridColorChanged);
             this.CommandDataList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CommandDataList_CellContentClick);
+            this.CommandDataList.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.CommandDataList_CellPainting);
+            this.CommandDataList.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.CommandDataList_CellValueChanged);
+            this.CommandDataList.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.CommandDataList_RowPrePaint);
             // 
             // Command
             // 
@@ -826,7 +830,6 @@
         private DevComponents.DotNetBar.LabelX labelX2;
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.Controls.ComboBoxEx AltFrame;
-        private DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn Alt;
         private DevComponents.Editors.DoubleInput HomeLng;
         private DevComponents.Editors.DoubleInput HomeAlt;
         private DevComponents.Editors.DoubleInput HomeLat;
