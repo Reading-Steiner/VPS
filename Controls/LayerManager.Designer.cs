@@ -96,10 +96,10 @@ namespace VPS.Controls
             this.SelectedGroup = this.LayerInfoList.Groups[0];
             this.NormalGroup = this.LayerInfoList.Groups[1];
             
-            for (int i =0; i < VPS.Layer.MemoryLayerCache.Count; i++)
+            for (int i =0; i < VPS.Layer.MemoryLayerCache.TotalCount; i++)
             {
                 System.Windows.Forms.ListViewItem item = new System.Windows.Forms.ListViewItem();
-                var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(i);
+                var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(i, true);
                 if (layerInfo == null)
                     continue;
                 item.Text = layerInfo.GetValueOrDefault().Layer;

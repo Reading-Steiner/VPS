@@ -9,7 +9,6 @@
     public class MemoryLayerCache
     {
         static readonly LayerInfoCache layerInfoInMemory = new LayerInfoCache();
-        static readonly List<string> layerInfoKey = new List<string>();
 
         static MemoryLayerCache()
         {
@@ -107,13 +106,18 @@
             return null;
         }
 
-        static public LayerInfo? GetLayerFromMemoryCache(int index,bool vaild = false)
+        static public LayerInfo? GetLayerFromMemoryCache(int index, bool vaild = false)
         {
             try
             {
-                if (index >= layerInfoInMemory.Count || index < 0)
+                if (index < 0 ||
+                    vaild ? index >= layerInfoInMemory.TotalCount : index >= layerInfoInMemory.Count)
                     return null;
                 return layerInfoInMemory[index, vaild];
+            }
+            catch
+            {
+                return null;
             }
             finally
             {
@@ -165,15 +169,7 @@
 
         internal static string GetHashCode(LayerInfo data)
         {
-            if (data.Layer != null || data.Layer != "")
-            {
-                return ((uint)data.Layer.GetHashCode()).ToString("X");
-            }
-            else
-            {
-
-                return ((uint)(data.Origin).GetHashCode()).ToString("X");
-            }
+            return data.GetHashCode();
         }
 
         internal static string GetHashCode(string data)
@@ -198,7 +194,7 @@
             {
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.Load(file);
-                layerInfoInMemory.FromXML(xmlDoc, out string selectedLayer);
+                layerInfoInMemory.FromXML(xmlDoc);
                 LayerInfosChange?.Invoke();
             }
             catch(Exception ex)

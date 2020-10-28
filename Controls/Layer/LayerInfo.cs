@@ -113,7 +113,7 @@
             if (create != null)
                 createTime = create;
             else
-                createTime = DateTime.Now.ToString("F");
+                createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");
             if (modify != null)
                 modifyTime = modify;
             else
@@ -133,11 +133,11 @@
                 switch (info.layerType)
                 {
                     case LayerTypes.file:
-                        SetLayerInfo(info.path, info.Origin, info.transparent, info.scale, createTime, DateTime.Now.ToString("F"));
+                        this.SetLayerInfo(info.path, info.Origin, info.transparent, info.scale, this.createTime, DateTime.Now.ToString("yyyy 年 MM月 dd日 hh: mm:ss"));
                         break;
                 }
             }
-            return info;
+            return this;
         }
         #endregion
 
@@ -149,10 +149,12 @@
         double scale = 1,
         string create = null, string modify = null)
         {
+            #region 初始化参数
             this.originLat = 0.0;
             this.originLng = 0.0;
             this.originAlt = 0.0;
             this.frameOfAlt = "Relative";
+            #endregion
             this.path = path;
             this.scale = scale;
             this.transparent = transparent;
@@ -160,7 +162,7 @@
             if (create != null)
                 createTime = create;
             else
-                createTime = DateTime.Now.ToString("F");
+                createTime = DateTime.Now.ToString("yyyy 年 MM月 dd日 hh: mm:ss");
             if (modify != null)
                 modifyTime = modify;
             else
@@ -397,6 +399,19 @@
             return new LayerInfo(path, origin, transparent, scale, createTime, modifyTime);
         }
         #endregion
+
+        #endregion
+
+        #region LayerInfo LayerInvaild
+        public bool LayerInvaild()
+        {
+            switch (layerType)
+            {
+                case LayerTypes.file:
+                    return System.IO.File.Exists(path);
+            }
+            return false;
+        }
 
         #endregion
     }

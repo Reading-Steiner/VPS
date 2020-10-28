@@ -47,19 +47,17 @@ namespace VPS.Layer
 
         public new bool Add(string key, LayerInfo value)
         {
-            base.Add(key, value);
-            if (File.Exists(value.Layer))
+            if (!Queue.Contains(key))
             {
-                Queue.Add(key);
+
+                base.Add(key, value);
+                if (value.LayerInvaild())
+                    Queue.Add(key);
+                else
+                    Queue.Insert(0, key);
                 return true;
             }
-            else
-            {
-                Queue.Insert(0, key);
-                vaildIndex++;
-                return false;
-            }
-
+            return false;
         }
 
 
@@ -67,7 +65,17 @@ namespace VPS.Layer
         {
             if (Queue.Contains(key))
             {
-                base[key].SetLayerInfo(value);
+                base[key] = base[key].SetLayerInfo(value);
+                if (value.LayerInvaild())
+                {
+                    Queue.Remove(key);
+                    Queue.Add(key);
+                }
+                else
+                {
+                    Queue.Remove(key);
+                    Queue.Insert(0, key);
+                }
                 return true;
             }
             return false;
@@ -78,8 +86,11 @@ namespace VPS.Layer
         // do not allow directly removal of elements
         public new void Remove(string key)
         {
-            Queue.Remove(key);
-            base.Remove(key);
+            if (Queue.Contains(key))
+            {
+                Queue.Remove(key);
+                base.Remove(key);
+            }
         }
 
         public new void Clear()
@@ -99,8 +110,9 @@ namespace VPS.Layer
                 // (4)给根节点Books创建第1个子节点
                 try
                 {
-                    base.TryGetValue(Queue[i], out LayerInfo layerInfo);
-                    LayerInfos.AppendChild(layerInfo.GetXML(xmlDoc, Queue[i]));
+                    if (base.TryGetValue(Queue[i], out LayerInfo layerInfo))
+
+                        LayerInfos.AppendChild(layerInfo.GetXML(xmlDoc, Queue[i]));
                 }
                 catch
                 {
@@ -110,9 +122,8 @@ namespace VPS.Layer
             return LayerInfos;
         }
 
-        public void FromXML(XmlDocument xmlDoc, out string selectedKey)
+        public void FromXML(XmlDocument xmlDoc)
         {
-            selectedKey = null;
             XmlNode root = xmlDoc.SelectSingleNode("MemoryLayerCache");
             foreach (XmlNode LayerInfoKey in root)
             {
@@ -122,8 +133,7 @@ namespace VPS.Layer
                     LayerInfo? layer = LayerInfo.FromXML(LayerInfoKey);
                     if (layer != null)
                     {
-                        if (Add(key, layer.GetValueOrDefault()))
-                            selectedKey = key;
+                        Add(key, layer.GetValueOrDefault());
                     }
                 }
             }
