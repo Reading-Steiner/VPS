@@ -4,14 +4,18 @@
     using System.Drawing;
     using System.Xml;
 
-    public struct LayerInfo
+    public class LayerInfo
     {
-        private enum LayerTypes
+        protected enum LayerTypes
         {
-            file,
-            limit
+            tiff,
+            none
         }
-        private LayerTypes layerType;
+        protected LayerTypes layerType;
+
+        #region LayerType
+
+        #region 访问器
         public string LayerType
         {
             get
@@ -19,10 +23,16 @@
                 return layerType.ToString();
             }
         }
+        #endregion
+        #endregion
+
+        #region LayerOrigin
         private double originLng;
         private double originLat;
         private double originAlt;
         private string frameOfAlt;
+
+        #region 访问器
         public Utilities.PointLatLngAlt Origin
         {
             get
@@ -42,8 +52,13 @@
                     frameOfAlt = "Relative";
             }
         }
+        #endregion
+        #endregion
 
+        #region LayerScale
         private double scale;
+
+        #region 访问器
         public double Scale
         {
             get
@@ -63,27 +78,29 @@
                 return "1:" + scale.ToString();
             }
         }
+        #endregion
+        #endregion
 
-        private string path;
+        #region LayerUrl
+        private string url;
+
+        #region 访问器
         public string Layer
         {
             get
             {
-                return path;
+                return url;
             }
         }
+        #endregion
+        #endregion
 
-        private Color transparent;
-        public Color Transparent
-        {
-            get
-            {
-                return transparent;
-            }
-        }
+        #region LayerTime
+        protected string createTime;
+        protected string modifyTime;
 
-        private string createTime;
-        private string modifyTime;
+        #region 访问器
+
         public string CreateTime
         {
             get { return createTime; }
@@ -92,24 +109,24 @@
         {
             get { return modifyTime; }
         }
+        #endregion
+        #endregion
 
         #region LayerInfo 构造函数
-        #region Type:file
-        public LayerInfo(
-            string path,
-            Utilities.PointLatLngAlt origin,
-            System.Drawing.Color transparent,
-            double scale = 1,
+
+        protected LayerInfo(
+            LayerTypes layerInfo, string url,
+            Utilities.PointLatLngAlt origin, double scale = 1,
             string create = null, string modify = null)
         {
-            this.originLat = 0.0;
-            this.originLng = 0.0;
-            this.originAlt = 0.0;
-            this.frameOfAlt = "Relative";
-            this.path = path;
+            this.layerType = layerInfo;
+
+            this.url = url;
+
+            this.Origin = origin;
+
             this.scale = scale;
-            this.transparent = transparent;
-            this.layerType = LayerTypes.file;
+
             if (create != null)
                 createTime = create;
             else
@@ -118,118 +135,83 @@
                 modifyTime = modify;
             else
                 modifyTime = createTime;
-            this.Origin = origin;
-        }
-        #endregion
-        #endregion
-
-        #region LayerInfo SetLayerInfo
-
-        #region 入口函数
-        public LayerInfo SetLayerInfo(LayerInfo info)
-        {
-            if (GetHashCode() == info.GetHashCode())
-            {
-                switch (info.layerType)
-                {
-                    case LayerTypes.file:
-                        this.SetLayerInfo(info.path, info.Origin, info.transparent, info.scale, this.createTime, DateTime.Now.ToString("yyyy 年 MM月 dd日 hh: mm:ss"));
-                        break;
-                }
-            }
-            return this;
         }
         #endregion
 
-        #region Type:file
-        private void SetLayerInfo(
-        string path,
-        Utilities.PointLatLngAlt origin,
-        System.Drawing.Color transparent,
-        double scale = 1,
-        string create = null, string modify = null)
-        {
-            #region 初始化参数
-            this.originLat = 0.0;
-            this.originLng = 0.0;
-            this.originAlt = 0.0;
-            this.frameOfAlt = "Relative";
-            #endregion
-            this.path = path;
-            this.scale = scale;
-            this.transparent = transparent;
-            this.layerType = LayerTypes.file;
-            if (create != null)
-                createTime = create;
-            else
-                createTime = DateTime.Now.ToString("yyyy 年 MM月 dd日 hh: mm:ss");
-            if (modify != null)
-                modifyTime = modify;
-            else
-                modifyTime = createTime;
-            this.Origin = origin;
-        }
-        #endregion
 
-        #endregion
 
         #region LayerInfo  函数重载
+
         #region LayerInfo GetHashCode
-        public new string GetHashCode()
+
+        public virtual string GetOnlyCode()
         {
-            switch (layerType)
-            {
-                case LayerTypes.file:
-                    return ((uint)Layer.GetHashCode()).ToString("X");
-            }
             return "";
         }
         #endregion
 
         #region LayerInfo ToString
+
         public override string ToString()
         {
-            switch (layerType)
-            {
-                case LayerTypes.file:
-                    return GetHashCode() + " with origin (" + originLng + "," + originLat + "," + originAlt + "), scale (" + ScaleFormat + ")";
-            }
-            return "";
+            return GetOnlyCode() + " with origin (" + Origin.ToString() + "), type (" + layerType + ")";
         }
         #endregion
 
         #region LayerInfo Equals
-        public bool Equals(LayerInfo obj)
+
+        public virtual bool Equals(LayerInfo obj)
         {
-            if (obj.GetHashCode() != GetHashCode())
-                return false;
-            return true;
+            return obj.GetOnlyCode() == GetOnlyCode();
         }
         #endregion
 
+        //自定义
+
+        #region LayerInfo SetLayerInfo
+
+        public virtual void SetLayerInfo(LayerInfo info)
+        {
+            if (GetOnlyCode() == info.GetOnlyCode())
+            {
+
+                this.SetLayerInfo(
+                    info.layerType,
+                    info.url,
+                    info.Origin,
+                    info.scale,
+                    this.CreateTime,
+                    DateTime.Now.ToString("yyyy 年 MM月 dd日 hh: mm:ss"));
+            }
+        }
+
+        protected virtual void SetLayerInfo(
+            LayerTypes layerInfo, string url,
+            Utilities.PointLatLngAlt origin, double scale = 1,
+            string create = null, string modify = null)
+        {
+            this.layerType = layerInfo;
+
+            this.url = url;
+
+            this.Origin = origin;
+
+            this.scale = scale;
+
+            if (create != null)
+                createTime = create;
+            else
+                createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");
+            if (modify != null)
+                modifyTime = modify;
+            else
+                modifyTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");
+        }
         #endregion
 
         #region LayerInfo 生成XML
 
-        #region 入口函数
-        public XmlElement GetXML(XmlDocument xmlDoc, string key)
-        {
-            switch (this.layerType)
-            {
-                case LayerTypes.file:
-                    {
-                        return GetXMLFromFile(xmlDoc, key);
-                    }
-            }
-
-            XmlElement keyIndex = xmlDoc.CreateElement("key");
-            keyIndex.InnerText = key;
-            return keyIndex;
-        }
-        #endregion
-
-        #region Type:file
-        private XmlElement GetXMLFromFile(XmlDocument xmlDoc, string key)
+        public virtual XmlElement GetXML(XmlDocument xmlDoc, string key)
         {
             XmlElement keyIndex = xmlDoc.CreateElement("key");
             keyIndex.InnerText = key;
@@ -243,19 +225,19 @@
                 keyIndex.AppendChild(path);
 
                 XmlElement originX = xmlDoc.CreateElement("originLng");
-                originX.InnerText = this.originLng.ToString();
+                originX.InnerText = this.Origin.Lng.ToString();
                 keyIndex.AppendChild(originX);
 
                 XmlElement originY = xmlDoc.CreateElement("originLat");
-                originY.InnerText = this.originLat.ToString();
+                originY.InnerText = this.Origin.Lat.ToString();
                 keyIndex.AppendChild(originY);
 
                 XmlElement originZ = xmlDoc.CreateElement("originAlt");
-                originZ.InnerText = this.originAlt.ToString();
+                originZ.InnerText = this.Origin.Alt.ToString();
                 keyIndex.AppendChild(originZ);
 
                 XmlElement frame = xmlDoc.CreateElement("frameOfAlt");
-                frame.InnerText = this.frameOfAlt;
+                frame.InnerText = this.Origin.Tag2;
                 keyIndex.AppendChild(frame);
 
                 XmlElement scale = xmlDoc.CreateElement("scale");
@@ -273,40 +255,29 @@
                 XmlElement Scale = xmlDoc.CreateElement("scale");
                 Scale.InnerText = this.Scale.ToString();
                 keyIndex.AppendChild(Scale);
-
-                XmlElement transparent = xmlDoc.CreateElement("transparent");
-                keyIndex.AppendChild(transparent);
-
-                XmlElement A = xmlDoc.CreateElement("A");
-                A.InnerText = this.Transparent.A.ToString();
-                transparent.AppendChild(A);
-
-                XmlElement R = xmlDoc.CreateElement("R");
-                R.InnerText = this.Transparent.R.ToString();
-                transparent.AppendChild(R);
-
-                XmlElement G = xmlDoc.CreateElement("G");
-                G.InnerText = this.Transparent.G.ToString();
-                transparent.AppendChild(G);
-
-                XmlElement B = xmlDoc.CreateElement("B");
-                B.InnerText = this.Transparent.B.ToString();
-                transparent.AppendChild(B);
             }
             return keyIndex;
         }
         #endregion
 
+        #region LayerInfo LayerInvaild
+
+        public virtual bool LayerInvaild()
+        {
+            return false;
+        }
         #endregion
+
+        #endregion
+
 
         #region LayerInfo 解析XML
 
-        #region 入口函数
-        static public LayerInfo? FromXML(XmlNode LayerInfoKeys)
+        static public LayerInfo FromXML(XmlNode LayerInfoKeys)
         {
             if (LayerInfoKeys.Name == "key")
             {
-                LayerTypes layerType = LayerTypes.file;
+                LayerTypes layerType = LayerTypes.tiff;
                 foreach (XmlNode Info in LayerInfoKeys.ChildNodes)
                 {
                     switch (Info.Name)
@@ -314,8 +285,8 @@
                         case "layerType":
                             switch (Info.InnerText)
                             {
-                                case "file":
-                                    layerType = LayerTypes.file;
+                                case "tiff":
+                                    layerType = LayerTypes.tiff;
                                     break;
                             }
                             break;
@@ -323,21 +294,22 @@
                 }
                 switch (layerType)
                 {
-                    case LayerTypes.file:
-                        return FromXMLGetFile(LayerInfoKeys);
+                    case LayerTypes.tiff:
+                        return TiffLayerInfo.FromXMLToTiff(LayerInfoKeys);
+                    default:
+                        return LayerInfo.FromXMLToBase(LayerInfoKeys);
                 }
             }
             return null;
         }
-        #endregion
 
-        #region Type:file
-        static private LayerInfo? FromXMLGetFile(XmlNode LayerInfoKeys)
+        static public LayerInfo FromXMLToBase(XmlNode LayerInfoKeys)
         {
             string path = "";
             Utilities.PointLatLngAlt origin = new Utilities.PointLatLngAlt();
             double scale = 1;
-            string createTime = DateTime.Now.ToString("F"), modifyTime = DateTime.Now.ToString("F");
+            string createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");
+            string modifyTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");
             Color transparent = Color.Transparent;
             foreach (XmlNode Info in LayerInfoKeys.ChildNodes)
             {
@@ -367,52 +339,15 @@
                     case "modifyTime":
                         modifyTime = Info.InnerText;
                         break;
-                    case "transparent":
-                        {
-                            int A = 0, R = 0, G = 0, B = 0;
-                            foreach (XmlNode channel in Info.ChildNodes)
-                            {
-                                switch (channel.Name)
-                                {
-                                    case "A":
-                                        A = System.Convert.ToUInt16(channel.InnerText);
-                                        break;
-                                    case "R":
-                                        R = System.Convert.ToUInt16(channel.InnerText);
-                                        break;
-                                    case "G":
-                                        G = System.Convert.ToUInt16(channel.InnerText);
-                                        break;
-                                    case "B":
-                                        B = System.Convert.ToUInt16(channel.InnerText);
-                                        break;
-
-                                }
-                            }
-                            transparent = Color.FromArgb(A, R, G, B);
-                        }
-                        break;
                 }
             }
             if (path == null)
                 return null;
-            return new LayerInfo(path, origin, transparent, scale, createTime, modifyTime);
+            return new LayerInfo(LayerTypes.none, path, origin, scale, createTime, modifyTime);
         }
         #endregion
 
-        #endregion
-
-        #region LayerInfo LayerInvaild
-        public bool LayerInvaild()
-        {
-            switch (layerType)
-            {
-                case LayerTypes.file:
-                    return System.IO.File.Exists(path);
-            }
-            return false;
-        }
-
-        #endregion
     }
+
 }
+

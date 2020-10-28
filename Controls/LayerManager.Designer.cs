@@ -102,11 +102,11 @@ namespace VPS.Controls
                 var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(i, true);
                 if (layerInfo == null)
                     continue;
-                item.Text = layerInfo.GetValueOrDefault().Layer;
-                item.SubItems.Add(layerInfo.GetValueOrDefault().Origin.Lng.ToString());
-                item.SubItems.Add(layerInfo.GetValueOrDefault().Origin.Lat.ToString());
-                item.SubItems.Add(layerInfo.GetValueOrDefault().Origin.Alt.ToString());
-                if (layerInfo.GetValueOrDefault().Layer == Utilities.Settings.Instance["defaultTiffLayer"])
+                item.Text = layerInfo.Layer;
+                item.SubItems.Add(layerInfo.Origin.Lng.ToString());
+                item.SubItems.Add(layerInfo.Origin.Lat.ToString());
+                item.SubItems.Add(layerInfo.Origin.Alt.ToString());
+                if (layerInfo.Layer == Utilities.Settings.Instance["defaultTiffLayer"])
                     this.SelectedGroup.Items.Add(item);
                 else
                     this.NormalGroup.Items.Add(item);

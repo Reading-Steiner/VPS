@@ -65,7 +65,7 @@ namespace VPS.Layer
         {
             if (Queue.Contains(key))
             {
-                base[key] = base[key].SetLayerInfo(value);
+                base[key].SetLayerInfo(value);
                 if (value.LayerInvaild())
                 {
                     Queue.Remove(key);
@@ -130,10 +130,10 @@ namespace VPS.Layer
                 if (LayerInfoKey.Name == "key")
                 {
                     string key = LayerInfoKey.FirstChild.Value;
-                    LayerInfo? layer = LayerInfo.FromXML(LayerInfoKey);
+                    LayerInfo layer = LayerInfo.FromXML(LayerInfoKey);
                     if (layer != null)
                     {
-                        Add(key, layer.GetValueOrDefault());
+                        Add(key, layer);
                     }
                 }
             }

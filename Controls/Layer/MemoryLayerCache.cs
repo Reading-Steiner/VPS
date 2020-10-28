@@ -67,15 +67,14 @@
             }
         }
 
-        static public LayerInfo? GetLayerFromMemoryCache(string layer)
+        static public LayerInfo GetLayerFromMemoryCache(string layer)
         {
             try
             {
                 string hash = GetHashCode(layer);
                 if (string.IsNullOrEmpty(layer) || !layerInfoInMemory.ContainsKey(hash))
                     return null;
-                LayerInfo ret;
-                if (layerInfoInMemory.TryGetValue(hash, out ret))
+                if (layerInfoInMemory.TryGetValue(hash, out LayerInfo ret))
                 {
                     return ret;
                 }
@@ -87,14 +86,13 @@
             return null;
         }
 
-        static private LayerInfo? GetLayerFromMemoryCacheWithHashCode(string key)
+        static private LayerInfo GetLayerFromMemoryCacheWithHashCode(string key)
         {
             try
             {
                 if (string.IsNullOrEmpty(key) || !layerInfoInMemory.ContainsKey(key))
                     return null;
-                LayerInfo ret;
-                if (layerInfoInMemory.TryGetValue(key, out ret))
+                if (layerInfoInMemory.TryGetValue(key, out LayerInfo ret))
                 {
                     return ret;
                 }
@@ -106,7 +104,7 @@
             return null;
         }
 
-        static public LayerInfo? GetLayerFromMemoryCache(int index, bool vaild = false)
+        static public LayerInfo GetLayerFromMemoryCache(int index, bool vaild = false)
         {
             try
             {
@@ -169,7 +167,7 @@
 
         internal static string GetHashCode(LayerInfo data)
         {
-            return data.GetHashCode();
+            return data.GetOnlyCode();
         }
 
         internal static string GetHashCode(string data)
