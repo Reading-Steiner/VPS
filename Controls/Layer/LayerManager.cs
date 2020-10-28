@@ -94,22 +94,22 @@ namespace VPS.Controls.Layer
 
 
             col = new DataColumn();
-            col.ColumnName = "图层原点";
+            col.ColumnName = "文件";
             col.DataType = typeof(Utilities.PointLatLngAlt);
             table.Columns.Add(col);
 
             col = new DataColumn();
-            col.ColumnName = "高度框架";
+            col.ColumnName = "文件类型";
             col.DataType = Type.GetType("System.String");
             table.Columns.Add(col);
 
             col = new DataColumn();
-            col.ColumnName = "图层比例尺";
+            col.ColumnName = "文件大小";
             col.DataType = Type.GetType("System.String");
             table.Columns.Add(col);
 
             col = new DataColumn();
-            col.ColumnName = "图层透明色";
+            col.ColumnName = "有效文件";
             col.DataType = typeof(Color);
             table.Columns.Add(col);
 
@@ -120,7 +120,7 @@ namespace VPS.Controls.Layer
         const string LayerLayerHandle = "LayerLayer";
         public DataTable GetLayerTable()
         {
-            DataTable table = new DataTable(FileLayerHandle);
+            DataTable table = new DataTable(LayerLayerHandle);
 
             DataColumn col = new DataColumn();
             col.ColumnName = "Key";
@@ -160,10 +160,10 @@ namespace VPS.Controls.Layer
             DataSet set = new DataSet("LayerManager");
 
             var table = GetMainTable();
-            var fileTable = GetFileTable();
+            var layerTable = GetLayerTable();
 
             set.Tables.Add(table);
-            set.Tables.Add(fileTable);
+            set.Tables.Add(layerTable);
             table.BeginLoadData();
 
             // Add 50 rows to fiddle with
@@ -193,18 +193,18 @@ namespace VPS.Controls.Layer
                 {
                     case "file":
                         row[2] = "本地文件";
-                        fileTable.BeginLoadData();
-                        DataRow fileRow = fileTable.NewRow();
+                        layerTable.BeginLoadData();
+                        DataRow fileRow = layerTable.NewRow();
                         fileRow[0] = emp[i].GetHashCode();
                         fileRow[1] = emp[i].Origin;
                         fileRow[2] = emp[i].Origin.Tag2;
                         fileRow[3] = emp[i].ScaleFormat;
                         fileRow[4] = emp[i].Transparent;
 
-                        fileTable.Rows.Add(fileRow);
+                        layerTable.Rows.Add(fileRow);
 
                         fileRow.AcceptChanges();
-                        fileTable.EndLoadData();
+                        layerTable.EndLoadData();
                         break;
                 }
 
@@ -218,7 +218,7 @@ namespace VPS.Controls.Layer
             table.EndLoadData();
 
             set.Relations.Add("1", set.Tables[MainLayerHandle].Columns["Key"],
-                                           set.Tables[FileLayerHandle].Columns["Key"], false);
+                                           set.Tables[LayerLayerHandle].Columns["Key"], false);
             LayerDataList.PrimaryGrid.DataSource = set;
             LayerDataList.PrimaryGrid.DataMember = MainLayerHandle;
             EndEdit();
@@ -234,7 +234,7 @@ namespace VPS.Controls.Layer
                     CustomizeMainLayerPanel(panel);
                     break;
 
-                case FileLayerHandle:
+                case LayerLayerHandle:
                     CustomizeFileLayerPanel(panel);
                     break;
             }

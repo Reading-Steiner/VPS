@@ -3985,7 +3985,7 @@ namespace VPS
             AddLayerOverlay(selectedLayer);
             if (LoadTiffButton.Checked != data.isLayerReaderOpen)
                 LoadTiffButton_Click(this, null);
-            if (ManagerTiffButton.Checked != data.isLayerManagerOpen)
+            if (TiffManagerButton.Checked != data.isLayerManagerOpen)
                 ManagerTiffButton_Click(this, null);
             if (AutoWPButton.Checked != data.isGridConfigOpen)
                 AutoWPButton_Click(this, null);
@@ -4034,7 +4034,7 @@ namespace VPS
             data.homePosition = defaultHome;
             data.layerInfo = selectedLayer;
             data.isLayerReaderOpen = LoadTiffButton.Checked;
-            data.isLayerManagerOpen = ManagerTiffButton.Checked;
+            data.isLayerManagerOpen = TiffManagerButton.Checked;
             data.isGridConfigOpen = AutoWPButton.Checked;
 
 
@@ -4157,9 +4157,9 @@ namespace VPS
         /// </summary>
         private void ManagerTiffButton_Click(object sender, EventArgs e)
         {
-            if (!ManagerTiffButton.Checked)
+            if (!TiffManagerButton.Checked)
             {
-                ManagerTiffButton.Checked = true;
+                TiffManagerButton.Checked = true;
                 ((System.ComponentModel.ISupportInitialize)(this.BottomBar)).BeginInit();
                 LayerManagerDockContainerItem.Visible = true;
                 BottomBar.SelectedDockContainerItem = LayerManagerDockContainerItem;
@@ -4168,7 +4168,7 @@ namespace VPS
             }
             else
             {
-                ManagerTiffButton.Checked = false;
+                TiffManagerButton.Checked = false;
                 ((System.ComponentModel.ISupportInitialize)(this.BottomBar)).BeginInit();
                 LayerManagerDockContainerItem.Visible = false;
                 //LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;

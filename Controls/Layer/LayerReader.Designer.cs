@@ -1033,7 +1033,7 @@
             this.OpenFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.OpenFile.TabIndex = 17;
             this.OpenFile.Text = "打开";
-            this.OpenFile.Click += new System.EventHandler(this.OpenFile_Click);
+            this.OpenFile.Click += new System.EventHandler(this.OpenFileFromTiff_Click);
             // 
             // OpenFilePath
             // 
