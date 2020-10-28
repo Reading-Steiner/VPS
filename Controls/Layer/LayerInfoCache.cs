@@ -67,21 +67,10 @@ namespace VPS.Layer
         {
             if (Queue.Contains(key))
             {
-                Queue.Remove(key);
-                base.Remove(key);
-            }
-            base.Add(key, value);
-            if (File.Exists(value.Layer))
-            {
-                Queue.Add(key);
+                base[key].SetLayerInfo(value);
                 return true;
             }
-            else
-            {
-                Queue.Insert(0, key);
-                vaildIndex++;
-                return false;
-            }
+            return false;
 
         }
 

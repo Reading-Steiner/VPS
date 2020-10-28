@@ -496,7 +496,7 @@ namespace VPS.Controls.Layer
             if (UsingTransparent.Checked)
             {
                 VPS.Layer.LayerInfo layerInfo =
-                    new VPS.Layer.LayerInfo(openPath, PointLeftTop, ColorPickerButton.SelectedColor);
+                    new VPS.Layer.LayerInfo(openPath, PointLeftTop,ColorPickerButton.SelectedColor);
                 MainV2.instance.AddLayerOverlay(layerInfo);
             }
             else
