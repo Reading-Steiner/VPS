@@ -327,9 +327,6 @@ namespace VPS.GCSViews
             //set default
             CMB_altmode.SelectedItem = altmode.Relative;
 
-            cmb_missiontype.DataSource = new List<MAVLink.MAV_MISSION_TYPE>()
-                {MAVLink.MAV_MISSION_TYPE.MISSION, MAVLink.MAV_MISSION_TYPE.FENCE, MAVLink.MAV_MISSION_TYPE.RALLY};
-
             updateCMDParams();
 
             foreach (DataGridViewColumn commandsColumn in Commands.Columns)
@@ -872,27 +869,11 @@ namespace VPS.GCSViews
                 if (int.TryParse(midline.next.Tag, out pnt2))
                 {
                     //点击到航点中线
-                    if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue ==
-                        MAVLink.MAV_MISSION_TYPE.FENCE)
-                    {
-                        var prevtype = Commands.Rows[(int)Math.Max(pnt2 - 2, 0)].Cells[Command.Index].Value.ToString();
-                        // match type of prev row
-                        InsertCommand(pnt2 - 1, (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD), prevtype),
-                            0, 0, 0, 0,
-                            CurrentMidLine.Position.Lng,
-                            CurrentMidLine.Position.Lat, 0);
 
-                        ReCalcFence(pnt2 - 1, true, false);
-                    }
-                    else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue ==
-                             MAVLink.MAV_MISSION_TYPE.MISSION)
-                    {
-
-                        InsertCommand(pnt2 - 1, MAVLink.MAV_CMD.WAYPOINT, 0, 0, 0, 0,
-                            CurrentMidLine.Position.Lng,
-                            CurrentMidLine.Position.Lat, float.Parse(TXT_DefaultAlt.Text));
-
-                    }
+                    InsertCommand(
+                        pnt2 - 1, MAVLink.MAV_CMD.WAYPOINT, 0, 0, 0, 0,
+                        CurrentMidLine.Position.Lng,
+                        CurrentMidLine.Position.Lat, float.Parse(TXT_DefaultAlt.Text));
                 }
             }
 
@@ -2405,10 +2386,6 @@ namespace VPS.GCSViews
                 {
                     try
                     {
-                        if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue ==
-                            MAVLink.MAV_MISSION_TYPE.FENCE)
-                            ReCalcFence(no - 1, false, true);
-
                         Commands.Rows.RemoveAt(no - 1); // home is 0
                     }
                     catch (Exception ex)
@@ -3994,7 +3971,8 @@ namespace VPS.GCSViews
             // mono fix
             Commands.CurrentCell = null;
 
-            while (Commands.Rows.Count > 0 && !append) Commands.Rows.Clear();
+            while (Commands.Rows.Count > 0 && !append)
+                Commands.Rows.Clear();
 
             if (cmds.Count == 0)
             {
@@ -4082,12 +4060,7 @@ namespace VPS.GCSViews
 
             setWPParams();
 
-            var type = (MAVLink.MAV_MISSION_TYPE)Invoke((Func<MAVLink.MAV_MISSION_TYPE>)delegate
-            {
-                return (MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue;
-            });
-
-            if (!append && type == MAVLink.MAV_MISSION_TYPE.MISSION && Commands.RowCount > 0)
+            if (!append && Commands.RowCount > 0)
             {
                 if (home)
                 {
@@ -4793,44 +4766,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         private void updateCMDParams()
         {
             cmdParamNames = readCMDXML();
-
-            if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
-            {
-                var fence = new[]
-                {
-                    "",
-                    "",
-                    "",
-                    "",
-                    "Lat",
-                    "Long",
-                    ""
-                };
-                cmdParamNames.Clear();
-                cmdParamNames.Add(MAVLink.MAV_CMD.FENCE_RETURN_POINT.ToString(), fence.ToArray());
-                fence[0] = "Points";
-                cmdParamNames.Add(MAVLink.MAV_CMD.FENCE_POLYGON_VERTEX_INCLUSION.ToString(), fence.ToArray());
-                cmdParamNames.Add(MAVLink.MAV_CMD.FENCE_POLYGON_VERTEX_EXCLUSION.ToString(), fence.ToArray());
-                fence[0] = "Radius";
-                cmdParamNames.Add(MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString(), fence.ToArray());
-                cmdParamNames.Add(MAVLink.MAV_CMD.FENCE_CIRCLE_INCLUSION.ToString(), fence.ToArray());
-
-            }
-            if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.RALLY)
-            {
-                var rally = new[]
-                {
-                    "",
-                    "",
-                    "",
-                    "",
-                    "Lat",
-                    "Long",
-                    "Alt"
-                };
-                cmdParamNames.Clear();
-                cmdParamNames.Add(MAVLink.MAV_CMD.RALLY_POINT.ToString(), rally);
-            }
 
             List<string> cmds = new List<string>();
 
@@ -6747,204 +6682,116 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             {
                 var commandlist = GetCommandList();
 
-                if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.MISSION)
+                overlay = new WPOverlay();
+                overlay.overlay.Id = "WPOverlay";
+
+                try
                 {
-                    overlay = new WPOverlay();
-                    overlay.overlay.Id = "WPOverlay";
+                    if (TXT_WPRad.Text == "") TXT_WPRad.Text = "5";
+                    if (TXT_loiterrad.Text == "") TXT_loiterrad.Text = "30";
 
-                    try
+                    overlay.CreateOverlay(home,
+                        commandlist,
+                        double.Parse(TXT_WPRad.Text) / CurrentState.multiplieralt,
+                        double.Parse(TXT_loiterrad.Text) / CurrentState.multiplieralt);
+                    foreach (var marker in overlay.overlay.Markers)
                     {
-                        if (TXT_WPRad.Text == "") TXT_WPRad.Text = "5";
-                        if (TXT_loiterrad.Text == "") TXT_loiterrad.Text = "30";
-
-                        overlay.CreateOverlay(home,
-                            commandlist,
-                            double.Parse(TXT_WPRad.Text) / CurrentState.multiplieralt,
-                            double.Parse(TXT_loiterrad.Text) / CurrentState.multiplieralt);
-                        foreach (var marker in overlay.overlay.Markers)
+                        try
                         {
-                            try
+                            if (marker is GMapMarkerWP)
                             {
-                                if (marker is GMapMarkerWP)
+                                if (int.TryParse(((GMapMarkerWP)marker).Tag.ToString(), out int no))
                                 {
-                                    if (int.TryParse(((GMapMarkerWP)marker).Tag.ToString(), out int no))
+                                    if (wpMarkersGroup.Contains(no))
                                     {
-                                        if (wpMarkersGroup.Contains(no))
-                                        {
-                                            ((GMapMarkerWP)marker).selected = true;
-                                        }
+                                        ((GMapMarkerWP)marker).selected = true;
                                     }
                                 }
                             }
-                            catch (Exception ex)
-                            {
-
-                            }
                         }
-                    }
-                    catch (FormatException ex)
-                    {
-                        DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidNumberEntered + "\n" + "WP Radius or Loiter Radius",
-                            Strings.ERROR);
-                    }
-
-                    MainMap.HoldInvalidation = true;
-
-                    var existing = MainMap.Overlays.Where(a => a.Id == overlay.overlay.Id).ToList();
-                    foreach (var b in existing)
-                    {
-                        MainMap.Overlays.Remove(b);
-                    }
-
-                    MainMap.Overlays.Add(overlay.overlay);
-
-                    overlay.overlay.ForceUpdate();
-
-                    SetGradAndDistAndAZ(overlay.pointlist, home);
-
-                    if (overlay.pointlist.Count <= 1)
-                    {
-                        //RectLatLng? rect = MainMap.GetRectOfAllMarkers(overlay.overlay.Id);
-                        //if (rect.HasValue)
-                        //{
-                        //    MainMap.Position = rect.Value.LocationMiddle;
-                        //}
-
-                        //MainMap_OnMapZoomChanged();
-                    }
-
-                    pointlist = overlay.pointlist;
-
-                    {
-                        foreach (var pointLatLngAlt in pointlist.PrevNowNext())
-                        {
-                            var prev = pointLatLngAlt.Item1;
-                            var now = pointLatLngAlt.Item2;
-                            var next = pointLatLngAlt.Item3;
-
-                            if (now == null || next == null)
-                                continue;
-
-                            var mid = new PointLatLngAlt((now.Lat + next.Lat) / 2, (now.Lng + next.Lng) / 2,
-                                (now.Alt + next.Alt) / 2);
-
-                            var pnt = new GMapMarkerPlus(mid);
-                            pnt.Tag = new midline() { now = now, next = next };
-                            overlay.overlay.Markers.Add(pnt);
-                        }
-                    }
-
-                    // draw fence
-                    {
-                        var fenceoverlay = new WPOverlay();
-                        fenceoverlay.overlay.Id = "fence";
-                        try
-                        {
-                            fenceoverlay.CreateOverlay(PointLatLngAlt.Zero,
-                            MainV2.comPort.MAV.fencepoints.Values.Select(a => (Locationwp)a).ToList(), 0, 0);
-                        }
-                        catch
+                        catch (Exception ex)
                         {
 
                         }
-                        fenceoverlay.overlay.Markers.Select(a => a.IsHitTestVisible = false).ToArray();
-                        var fence = MainMap.Overlays.Where(a => a.Id == "fence");
-                        if (fence.Count() > 0)
-                            MainMap.Overlays.Remove(fence.First());
-                        MainMap.Overlays.Add(fenceoverlay.overlay);
-
-                        fenceoverlay.overlay.ForceUpdate();
                     }
-
-                    MainMap.RefreshInThread();
+                }
+                catch (FormatException ex)
+                {
+                    DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidNumberEntered + "\n" + "WP Radius or Loiter Radius",
+                        Strings.ERROR);
                 }
 
-                if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
-                {
-                    var overlay = new WPOverlay();
-                    overlay.overlay.Id = "fence";
+                MainMap.HoldInvalidation = true;
 
+                var existing = MainMap.Overlays.Where(a => a.Id == overlay.overlay.Id).ToList();
+                foreach (var b in existing)
+                {
+                    MainMap.Overlays.Remove(b);
+                }
+
+                MainMap.Overlays.Add(overlay.overlay);
+
+                overlay.overlay.ForceUpdate();
+
+                SetGradAndDistAndAZ(overlay.pointlist, home);
+
+                if (overlay.pointlist.Count <= 1)
+                {
+                    //RectLatLng? rect = MainMap.GetRectOfAllMarkers(overlay.overlay.Id);
+                    //if (rect.HasValue)
+                    //{
+                    //    MainMap.Position = rect.Value.LocationMiddle;
+                    //}
+
+                    //MainMap_OnMapZoomChanged();
+                }
+
+                pointlist = overlay.pointlist;
+
+                {
+                    foreach (var pointLatLngAlt in pointlist.PrevNowNext())
+                    {
+                        var prev = pointLatLngAlt.Item1;
+                        var now = pointLatLngAlt.Item2;
+                        var next = pointLatLngAlt.Item3;
+
+                        if (now == null || next == null)
+                            continue;
+
+                        var mid = new PointLatLngAlt((now.Lat + next.Lat) / 2, (now.Lng + next.Lng) / 2,
+                            (now.Alt + next.Alt) / 2);
+
+                        var pnt = new GMapMarkerPlus(mid);
+                        pnt.Tag = new midline() { now = now, next = next };
+                        overlay.overlay.Markers.Add(pnt);
+                    }
+                }
+
+                // draw fence
+                {
+                    var fenceoverlay = new WPOverlay();
+                    fenceoverlay.overlay.Id = "fence";
                     try
                     {
-                        overlay.CreateOverlay(PointLatLngAlt.Zero,
-                            commandlist, 0, 0);
+                        fenceoverlay.CreateOverlay(PointLatLngAlt.Zero,
+                        MainV2.comPort.MAV.fencepoints.Values.Select(a => (Locationwp)a).ToList(), 0, 0);
                     }
-                    catch (FormatException ex)
+                    catch
                     {
-                        DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidNumberEntered, Strings.ERROR);
+
                     }
+                    fenceoverlay.overlay.Markers.Select(a => a.IsHitTestVisible = false).ToArray();
+                    var fence = MainMap.Overlays.Where(a => a.Id == "fence");
+                    if (fence.Count() > 0)
+                        MainMap.Overlays.Remove(fence.First());
+                    MainMap.Overlays.Add(fenceoverlay.overlay);
 
-                    MainMap.HoldInvalidation = true;
-
-                    var existing = MainMap.Overlays.Where(a => a.Id == overlay.overlay.Id).ToList();
-                    foreach (var b in existing)
-                    {
-                        MainMap.Overlays.Remove(b);
-                    }
-
-                    MainMap.Overlays.Add(overlay.overlay);
-
-                    overlay.overlay.ForceUpdate();
-
-                    if (true)
-                    {
-                        foreach (var poly in overlay.overlay.Polygons)
-                        {
-                            var startwp = int.Parse(poly.Name);
-                            var a = 1;
-                            foreach (var pointLatLngAlt in poly.Points.CloseLoop().PrevNowNext())
-                            {
-                                var now = pointLatLngAlt.Item2;
-                                var next = pointLatLngAlt.Item3;
-
-                                if (now == null || next == null)
-                                    continue;
-
-                                var mid = new PointLatLngAlt((now.Lat + next.Lat) / 2, (now.Lng + next.Lng) / 2, 0);
-
-                                var pnt = new GMapMarkerPlus(mid);
-                                pnt.Tag = new midline() { now = now, next = next };
-                                ((midline)pnt.Tag).now.Tag = (startwp + a).ToString();
-                                ((midline)pnt.Tag).next.Tag = (startwp + a + 1).ToString();
-                                overlay.overlay.Markers.Add(pnt);
-
-                                a++;
-                            }
-                        }
-                    }
-
-                    MainMap.Refresh();
+                    fenceoverlay.overlay.ForceUpdate();
                 }
 
-                if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.RALLY)
-                {
-                    var overlay = new WPOverlay();
-                    overlay.overlay.Id = "rally";
+                MainMap.RefreshInThread();
 
-                    try
-                    {
-                        overlay.CreateOverlay(PointLatLngAlt.Zero,
-                            commandlist, 0, 0);
-                    }
-                    catch (FormatException ex)
-                    {
-                        DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidNumberEntered, Strings.ERROR);
-                    }
 
-                    MainMap.HoldInvalidation = true;
-
-                    var existing = MainMap.Overlays.Where(a => a.Id == overlay.overlay.Id).ToList();
-                    foreach (var b in existing)
-                    {
-                        MainMap.Overlays.Remove(b);
-                    }
-
-                    MainMap.Overlays.Add(overlay.overlay);
-
-                    overlay.overlay.ForceUpdate();
-
-                    MainMap.Refresh();
-                }
             }
             catch (FormatException ex)
             {
@@ -8344,18 +8191,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         {
             selectedrow = Commands.Rows.Add();
 
-            if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.RALLY)
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.RALLY_POINT.ToString();
-                ChangeColumnHeader(MAVLink.MAV_CMD.RALLY_POINT.ToString());
-            }
-            else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString();
-                Commands.Rows[selectedrow].Cells[Param1.Index].Value = 5;
-                ChangeColumnHeader(MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString());
-            }
-            else if (splinemode)
+            if (splinemode)
             {
                 Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString();
                 ChangeColumnHeader(MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString());
@@ -8374,18 +8210,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         {
             selectedrow = index;
 
-            if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.RALLY)
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.RALLY_POINT.ToString();
-                ChangeColumnHeader(MAVLink.MAV_CMD.RALLY_POINT.ToString());
-            }
-            else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString();
-                Commands.Rows[selectedrow].Cells[Param1.Index].Value = 5;
-                ChangeColumnHeader(MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString());
-            }
-            else if (splinemode)
+            if (splinemode)
             {
                 Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString();
                 ChangeColumnHeader(MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString());
