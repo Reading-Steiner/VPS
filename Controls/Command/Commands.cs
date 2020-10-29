@@ -492,7 +492,7 @@ namespace VPS.Controls.Command
                 Utilities.PointLatLngAlt wpPoint = new Utilities.PointLatLngAlt();
                 wpPoint.Lat = (double)CommandDataList[Lat.Index, index].Value;
                 wpPoint.Lng = (double)CommandDataList[Lon.Index, index].Value;
-                wpPoint.Alt = (int)CommandDataList[RelativeAlt.Index, index].Value;
+                wpPoint.Alt = (double)CommandDataList[RelativeAlt.Index, index].Value;
                 wpPoint.Tag = CommandDataList[Command.Index, index].Value.ToString();
                 wpPoint.Tag2 = "Relative";
                 wpList.Add(wpPoint);
