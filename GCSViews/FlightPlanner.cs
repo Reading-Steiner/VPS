@@ -369,10 +369,7 @@ namespace VPS.GCSViews
             */
         }
 
-        public delegate void delegateHandler();
-        public delegate void delegateIntChangeHandler(int data);
         
-        public delegateIntChangeHandler historyChange;
         
 
 
@@ -1937,7 +1934,7 @@ namespace VPS.GCSViews
                 Settings.Instance["FP_HomeAlt"] = homePosition.Alt.ToString();
                 Settings.Instance["FP_HomeFrame"] = homePosition.Tag2.ToString();
 
-                Settings.Instance["FP_WPRad"] = TXT_WPRad.Text;
+                Settings.Instance["FP_WPRad"] = wpRad.ToString();
 
                 Settings.Instance["FP_LoiterRad"] = TXT_loiterrad.Text;
 
@@ -1971,7 +1968,8 @@ namespace VPS.GCSViews
                             homePosition.Tag2 = "" + Settings.Instance[key];
                             break;
                         case "FP_WPRad":
-                            TXT_WPRad.Text = "" + Settings.Instance[key];
+                            if (int.TryParse(Settings.Instance[key], out int rad))
+                                SetWPRadHandle(rad);
                             break;
                         case "FP_LoiterRad":
                             TXT_loiterrad.Text = "" + Settings.Instance[key];
@@ -1980,7 +1978,7 @@ namespace VPS.GCSViews
                             TXT_DefaultAlt.Text = "" + Settings.Instance[key];
                             break;
                         case "FP_AltMode":
-                            SetAltFrame("" + Settings.Instance[key]);
+                            SetAltFrameHandle("" + Settings.Instance[key]);
                             break;
                         case "FP_AltWarn":
                             TXT_altwarn.Text = "" + Settings.Instance["FP_AltWarn"];
@@ -4468,14 +4466,14 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                 if (param.ContainsKey("WP_RADIUS"))
                 {
-                    TXT_WPRad.Text = (((double)param["WP_RADIUS"] * CurrentState.multiplierdist)).ToString();
+                    SetWPRadHandle((int)((double)param["WP_RADIUS"] * CurrentState.multiplierdist));
                 }
                 if (param.ContainsKey("WPNAV_RADIUS"))
                 {
-                    TXT_WPRad.Text = (((double)param["WPNAV_RADIUS"] * CurrentState.multiplierdist / 100.0)).ToString();
+                    SetWPRadHandle((int)((double)param["WPNAV_RADIUS"] * CurrentState.multiplierdist / 100.0));
                 }
 
-                log.Info("param WP_RADIUS " + TXT_WPRad.Text);
+                log.Info("param WP_RADIUS " + wpRad.ToString());
 
                 try
                 {
@@ -4700,29 +4698,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             {
                 TXT_loiterrad.Text = "45";
             }
-        }
-
-        public void TXT_WPRad_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            float isNumber = 0;
-            if (e.KeyChar.ToString() == "\b")
-                return;
-            e.Handled = !float.TryParse(e.KeyChar.ToString(), out isNumber);
-        }
-
-        public void TXT_WPRad_Leave(object sender, EventArgs e)
-        {
-            float isNumber = 0;
-            if (!float.TryParse(TXT_WPRad.Text, out isNumber))
-            {
-                TXT_WPRad.Text = "30";
-            }
-            if (isNumber > (127 * CurrentState.multiplierdist))
-            {
-                //CustomMessageBox.Show("The value can only be between 0 and 127 m");
-                //TXT_WPRad.Text = (127 * CurrentState.multiplierdist).ToString();
-            }
-            writeKML();
         }
 
         private void updateCMDParams()
@@ -6342,31 +6317,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             MainMap.SetZoomToFitRect(MainV2.instance.displayRect);
         }
 
-
-        #region WPRad
-        #region WPRad 接口函数
-        private delegate void SetWPRadInThread(int wpRad);
-        public void SetWPRadHandle(int wpRad)
-        {
-            if (this.InvokeRequired)
-            {
-                SetWPRadInThread inThread = new SetWPRadInThread(SetWPRadHandle);
-                this.Invoke(inThread, new object[] { wpRad });
-            }
-            else
-            {
-                SetWPRad(wpRad);
-            }
-        }
-        #endregion
-        #region WPRad 入口函数
-        private void SetWPRad(int wpRad)
-        {
-            TXT_WPRad.Text = wpRad.ToString();
-        }
-        #endregion
-        #endregion
-
         #region Alt
         #region BaseAlt
         #region BaseAlt 接口函数
@@ -6611,12 +6561,12 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                 try
                 {
-                    if (TXT_WPRad.Text == "") TXT_WPRad.Text = "5";
+                    if (wpRad <= 0) wpRad = 5;
                     if (TXT_loiterrad.Text == "") TXT_loiterrad.Text = "30";
 
                     overlay.CreateOverlay(home,
                         commandlist,
-                        double.Parse(TXT_WPRad.Text) / CurrentState.multiplieralt,
+                        wpRad / CurrentState.multiplieralt,
                         double.Parse(TXT_loiterrad.Text) / CurrentState.multiplieralt);
                     foreach (var marker in overlay.overlay.Markers)
                     {
@@ -7925,6 +7875,10 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         #region 全局参数
         public delegate void PositionChangeHandle(PointLatLngAlt position);
         public delegate void StringChangeHandle(string str);
+        public delegate void delegateHandler();
+        public delegate void IntegerChangeHandler(int integer);
+
+        public IntegerChangeHandler historyChange;
         public PositionChangeHandle CurrentChange;
 
         #region NoHandle
@@ -7944,7 +7898,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         #endregion
 
         #endregion
-
 
         #region Home
         private PointLatLngAlt homePosition = new PointLatLngAlt();
@@ -8042,21 +7995,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         #endregion
 
         #region AltFrame
-        #region AltFrame 接口函数
-        private delegate void SetAltFrameInThread(string frame);
-        public void SetAltFrameHandle(string frame)
-        {
-            if (this.InvokeRequired)
-            {
-                SetAltFrameInThread inThread = new SetAltFrameInThread(SetAltFrameHandle);
-                this.Invoke(inThread, new object[] { frame });
-            }
-            else
-            {
-                SetAltFrame(frame);
-            }
-        }
-        #endregion
         //public enum altmode
         //{
         //    Relative = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT,
@@ -8071,6 +8009,27 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         }
 
         private AltMode altFrame = AltMode.Relative;
+
+        public StringChangeHandle altFrameChange;
+
+        #region SetAltFrame
+        #region AltFrame 接口函数
+        private delegate void SetAltFrameInThread(string frame);
+        public void SetAltFrameHandle(string frame)
+        {
+            if (this.InvokeRequired)
+            {
+                SetAltFrameInThread inThread = new SetAltFrameInThread(SetAltFrameHandle);
+                this.Invoke(inThread, new object[] { frame });
+            }
+            else
+            {
+                BeginQuickChange();
+                SetAltFrame(frame);
+                EndQuickChange();
+            }
+        }
+        #endregion
 
         #region AltFrame 入口函数
         private void SetAltFrame(string frame)
@@ -8090,7 +8049,44 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     altFrame = AltMode.Relative;
                     break;
             }
+            if (onlyChangeValue)
+                altFrameChange?.Invoke(altFrame.ToString());
         }
+        #endregion
+        #endregion
+        #endregion
+
+        #region WPRad
+        private int wpRad = 20;
+
+        public IntegerChangeHandler wpRadChange;
+        #region SetWPRad
+        #region WPRad 接口函数
+        private delegate void SetWPRadInThread(int wpRad);
+        public void SetWPRadHandle(int wpRad)
+        {
+            if (this.InvokeRequired)
+            {
+                SetWPRadInThread inThread = new SetWPRadInThread(SetWPRadHandle);
+                this.Invoke(inThread, new object[] { wpRad });
+            }
+            else
+            {
+                BeginQuickChange();
+                SetWPRad(wpRad);
+                EndQuickChange();
+            }
+        }
+        #endregion
+
+        #region WPRad 入口函数
+        private void SetWPRad(int rad)
+        {
+            wpRad = rad;
+            if (onlyChangeValue)
+                wpRadChange?.Invoke(wpRad);
+        }
+        #endregion
         #endregion
         #endregion
 
@@ -8114,6 +8110,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         public bool isSendChange = false;
         public delegate void WPListChangeHandle(List<PointLatLngAlt> wpList);
         public WPListChangeHandle WPListChange;
+
 
         #region SetWPList
 
