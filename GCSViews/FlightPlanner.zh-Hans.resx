@@ -160,31 +160,6 @@
   <data name="label5.Text" xml:space="preserve">
     <value>悬停半径</value>
   </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
-  </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>起始位置</value>
-  </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>相对高度</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>经度</value>
-  </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 12</value>
-  </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>纬度</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="panel1.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="dataGridViewImageColumn1.HeaderText" xml:space="preserve">
     <value>向上</value>
   </data>
@@ -207,6 +182,7 @@
         AIlYQ9mY+lgaAAAAAElFTkSuQmCC
 </value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="coords1.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>

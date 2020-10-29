@@ -60,14 +60,6 @@ namespace VPS.GCSViews
             this.LBL_defalutalt = new System.Windows.Forms.Label();
             this.TXT_loiterrad = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.LinkLabel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.Label1 = new System.Windows.Forms.Label();
-            this.TXT_homealt = new System.Windows.Forms.TextBox();
-            this.TXT_homelng = new System.Windows.Forms.TextBox();
-            this.TXT_homelat = new System.Windows.Forms.TextBox();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.label6 = new System.Windows.Forms.Label();
@@ -151,7 +143,6 @@ namespace VPS.GCSViews
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel1.SuspendLayout();
             this.panelWaypoints.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
             this.panel3.SuspendLayout();
@@ -210,69 +201,6 @@ namespace VPS.GCSViews
             resources.ApplyResources(this.label5, "label5");
             this.label5.Name = "label5";
             this.toolTip1.SetToolTip(this.label5, resources.GetString("label5.ToolTip"));
-            // 
-            // panel1
-            // 
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.Label1);
-            this.panel1.Controls.Add(this.TXT_homealt);
-            this.panel1.Controls.Add(this.TXT_homelng);
-            this.panel1.Controls.Add(this.TXT_homelat);
-            this.panel1.Name = "panel1";
-            this.toolTip1.SetToolTip(this.panel1, resources.GetString("panel1.ToolTip"));
-            // 
-            // label4
-            // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.Name = "label4";
-            this.label4.TabStop = true;
-            this.toolTip1.SetToolTip(this.label4, resources.GetString("label4.ToolTip"));
-            this.label4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.label4_LinkClicked);
-            // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
-            this.toolTip1.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            this.toolTip1.SetToolTip(this.label2, resources.GetString("label2.ToolTip"));
-            // 
-            // Label1
-            // 
-            resources.ApplyResources(this.Label1, "Label1");
-            this.Label1.Name = "Label1";
-            this.toolTip1.SetToolTip(this.Label1, resources.GetString("Label1.ToolTip"));
-            // 
-            // TXT_homealt
-            // 
-            resources.ApplyResources(this.TXT_homealt, "TXT_homealt");
-            this.TXT_homealt.Name = "TXT_homealt";
-            this.TXT_homealt.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.TXT_homealt, resources.GetString("TXT_homealt.ToolTip"));
-            this.TXT_homealt.TextChanged += new System.EventHandler(this.TXT_homealt_TextChanged);
-            // 
-            // TXT_homelng
-            // 
-            resources.ApplyResources(this.TXT_homelng, "TXT_homelng");
-            this.TXT_homelng.Name = "TXT_homelng";
-            this.TXT_homelng.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.TXT_homelng, resources.GetString("TXT_homelng.ToolTip"));
-            this.TXT_homelng.TextChanged += new System.EventHandler(this.TXT_homelng_TextChanged);
-            // 
-            // TXT_homelat
-            // 
-            resources.ApplyResources(this.TXT_homelat, "TXT_homelat");
-            this.TXT_homelat.Name = "TXT_homelat";
-            this.TXT_homelat.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.TXT_homelat, resources.GetString("TXT_homelat.ToolTip"));
-            this.TXT_homelat.TextChanged += new System.EventHandler(this.TXT_homelat_TextChanged);
             // 
             // dataGridViewImageColumn1
             // 
@@ -569,7 +497,6 @@ namespace VPS.GCSViews
             this.BUT_Add.Name = "BUT_Add";
             this.toolTip1.SetToolTip(this.BUT_Add, resources.GetString("BUT_Add.ToolTip"));
             this.BUT_Add.UseVisualStyleBackColor = true;
-            this.BUT_Add.Click += new System.EventHandler(this.BUT_Add_Click);
             // 
             // splitter1
             // 
@@ -623,7 +550,6 @@ namespace VPS.GCSViews
             // 
             resources.ApplyResources(this.panelMap, "panelMap");
             this.panelMap.Controls.Add(this.coords1);
-            this.panelMap.Controls.Add(this.panel1);
             this.panelMap.Controls.Add(this.panel3);
             this.panelMap.Controls.Add(this.lbl_homedist);
             this.panelMap.Controls.Add(this.lbl_prevdist);
@@ -960,8 +886,6 @@ namespace VPS.GCSViews
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FlightPlanner_FormClosing);
             this.Load += new System.EventHandler(this.FlightPlanner_Load);
             this.Resize += new System.EventHandler(this.Planner_Resize);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panelWaypoints.ResumeLayout(false);
             this.panelWaypoints.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Commands)).EndInit();
@@ -988,13 +912,6 @@ namespace VPS.GCSViews
         public System.Windows.Forms.TextBox TXT_loiterrad;
         public System.Windows.Forms.CheckBox CHK_splinedefault;
         public System.Windows.Forms.ComboBox CMB_altmode;
-        public Panel panel1;
-        public LinkLabel label4;
-        public Label label3;
-        public Label label2;
-        public Label Label1;
-        public TextBox TXT_homelng;
-        public TextBox TXT_homelat;
         public DataGridViewImageColumn dataGridViewImageColumn1;
         public DataGridViewImageColumn dataGridViewImageColumn2;
         public Label label6;
@@ -1144,7 +1061,6 @@ namespace VPS.GCSViews
         private DataGridViewTextBoxColumn Dist;
         private DataGridViewTextBoxColumn AZ;
         private DataGridViewTextBoxColumn TagData;
-        public TextBox TXT_homealt;
         private ToolStripMenuItem drawWPToolStripMenuItem;
     }
 }

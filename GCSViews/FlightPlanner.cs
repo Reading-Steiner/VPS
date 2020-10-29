@@ -945,95 +945,6 @@ namespace VPS.GCSViews
             frmProgressReporter.Dispose();
         }
 
-        /// <summary>
-        /// Writes the mission from the datagrid and values to the EEPROM
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void BUT_write_Click(object sender, EventArgs e)
-        {
-            if ((altmode)CMB_altmode.SelectedValue == altmode.Absolute)
-            {
-                if (DialogResult.No ==
-                    DevComponents.DotNetBar.MessageBoxEx.Show("确定使用绝对高度?", "高度模式",MessageBoxButtons.YesNo))
-                {
-                    CMB_altmode.SelectedValue = (int)altmode.Relative;
-                }
-            }
-
-            // check home
-            Locationwp home = new Locationwp();
-            try
-            {
-                home.frame = (byte)MAVLink.MAV_FRAME.GLOBAL;
-                home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-                home.lat = (double.Parse(TXT_homelat.Text));
-                home.lng = (double.Parse(TXT_homelng.Text));
-                home.alt = (float.Parse(TXT_homealt.Text) / CurrentState.multiplierdist); // use saved home
-            }
-            catch
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Home位置无效", Strings.ERROR);
-                return;
-            }
-
-            // check for invalid grid data
-            for (int a = 0; a < Commands.Rows.Count - 0; a++)
-            {
-                for (int b = 0; b < Commands.ColumnCount - 0; b++)
-                {
-                    double answer;
-                    if (b >= 1 && b <= 7)
-                    {
-                        if (!double.TryParse(Commands[b, a].Value.ToString(), out answer))
-                        {
-                            DevComponents.DotNetBar.MessageBoxEx.Show("航线计划错误");
-                            return;
-                        }
-                    }
-
-                    if (TXT_altwarn.Text == "") TXT_altwarn.Text = (0).ToString();
-
-                    if (Commands.Rows[a].Cells[Command.Index].Value.ToString().Contains("UNKNOWN"))
-                        continue;
-
-                    ushort cmd =
-                        (ushort)
-                        Enum.Parse(typeof(MAVLink.MAV_CMD), Commands.Rows[a].Cells[Command.Index].Value.ToString(), false);
-
-                    if (cmd < (ushort)MAVLink.MAV_CMD.LAST &&
-                        double.Parse(Commands[Alt.Index, a].Value.ToString()) < double.Parse(TXT_altwarn.Text))
-                    {
-                        if (cmd != (ushort)MAVLink.MAV_CMD.TAKEOFF &&
-                            cmd != (ushort)MAVLink.MAV_CMD.LAND &&
-                            cmd != (ushort)MAVLink.MAV_CMD.RETURN_TO_LAUNCH)
-                        {
-                            DevComponents.DotNetBar.MessageBoxEx.Show("WP#" + (a + 1) + "高度过低" +
-                                                  "\n请降低高度警告线, 或增加航点高度");
-                            return;
-                        }
-                    }
-                }
-            }
-
-            IProgressReporterDialogue frmProgressReporter = new ProgressReporterDialogue
-            {
-                StartPosition = FormStartPosition.CenterScreen,
-                Text = "Sending WP's"
-            };
-
-            frmProgressReporter.DoWork += saveWPs;
-
-            frmProgressReporter.UpdateProgressAndStatus(-1, "Sending WP's");
-
-            ThemeManager.ApplyThemeTo(frmProgressReporter);
-
-            frmProgressReporter.RunBackgroundOperationAsync();
-
-            frmProgressReporter.Dispose();
-
-            MainMap.Focus();
-        }
 
         /// <summary>
         /// used to adjust existing point in the datagrid including "H"
@@ -1588,201 +1499,7 @@ namespace VPS.GCSViews
                 areaha.ToString("0.00") + " Hectare\n\t" + areasqf.ToString("0") + " sqf", "Area");
         }
 
-        /// <summary>
-        /// Adds a new row to the datagrid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void BUT_Add_Click(object sender, EventArgs e)
-        {
-            if (Commands.CurrentRow == null)
-            {
-                selectedrow = 0;
-            }
-            else
-            {
-                selectedrow = Commands.CurrentRow.Index;
-            }
 
-            if (Commands.RowCount <= 1)
-            {
-                selectedrow = Commands.Rows.Add();
-            }
-            else
-            {
-                if (Commands.RowCount == selectedrow + 1)
-                {
-                    DataGridViewRow temp = Commands.Rows[selectedrow];
-                    selectedrow = Commands.Rows.Add();
-                }
-                else
-                {
-                    Commands.Rows.Insert(selectedrow + 1, 1);
-                }
-            }
-            writeKML();
-        }
-
-        private void BUT_grid_Click(object sender, EventArgs e)
-        {
-        }
-
-        //public void BUT_loadwpfile_Click(object sender, EventArgs e)
-        //{
-        //    using (OpenFileDialog fd = new OpenFileDialog())
-        //    {
-        //        fd.Filter = "All Supported Types|*.txt;*.waypoints;*.shp;*.plan";
-        //        if (Directory.Exists(Settings.Instance["WPFileDirectory"] ?? ""))
-        //            fd.InitialDirectory = Settings.Instance["WPFileDirectory"];
-        //        DialogResult result = fd.ShowDialog();
-        //        string file = fd.FileName;
-
-        //        if (File.Exists(file))
-        //        {
-        //            Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
-        //            if (file.ToLower().EndsWith(".shp"))
-        //            {
-        //                try
-        //                {
-        //                    LoadSHPFile(file);
-        //                }
-        //                catch
-        //                {
-        //                    CustomMessageBox.Show("Error opening File", Strings.ERROR);
-        //                    return;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                string line = "";
-        //                using (var fstream = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-        //                using (var fs = new StreamReader(fstream))
-        //                {
-        //                    line = fs.ReadLine();
-        //                }
-
-        //                if (line.StartsWith("{"))
-        //                {
-        //                    var format = MissionFile.ReadFile(file);
-
-        //                    var cmds = MissionFile.ConvertToLocationwps(format);
-
-        //                    processToScreen(cmds);
-
-        //                    writeKML();
-
-        //                    MainMap.ZoomAndCenterMarkers("WPOverlay");
-        //                }
-        //                else
-        //                {
-        //                    wpfilename = file;
-        //                    readQGC110wpfile(file);
-        //                }
-        //            }
-
-        //            //lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
-        //        }
-        //    }
-        //}
-
-        private void BUT_Prefetch_Click(object sender, EventArgs e)
-        {
-        }
-
-        public void BUT_saveWPFile_Click(object sender, EventArgs e)
-        {
-            SaveFile_Click(null, null);
-        }
-
-        public void but_writewpfast_Click(object sender, EventArgs e)
-        {
-            if ((altmode)CMB_altmode.SelectedValue == altmode.Absolute)
-            {
-                if (DialogResult.No ==
-                    DevComponents.DotNetBar.MessageBoxEx.Show("确定使用绝对高度?", "高度模式", MessageBoxButtons.YesNo))
-                {
-                    CMB_altmode.SelectedValue = (int)altmode.Relative;
-                }
-            }
-
-            if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue != MAVLink.MAV_MISSION_TYPE.MISSION)
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("仅适用于Mission");
-                return;
-            }
-
-            // check home
-            Locationwp home = new Locationwp();
-            try
-            {
-                home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-                home.lat = (double.Parse(TXT_homelat.Text));
-                home.lng = (double.Parse(TXT_homelng.Text));
-                home.alt = (float.Parse(TXT_homealt.Text) / CurrentState.multiplierdist); // use saved home
-            }
-            catch
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Home位置无效", Strings.ERROR);
-                return;
-            }
-
-            // check for invalid grid data
-            for (int a = 0; a < Commands.Rows.Count - 0; a++)
-            {
-                for (int b = 0; b < Commands.ColumnCount - 0; b++)
-                {
-                    double answer;
-                    if (b >= 1 && b <= 7)
-                    {
-                        if (!double.TryParse(Commands[b, a].Value.ToString(), out answer))
-                        {
-                            DevComponents.DotNetBar.MessageBoxEx.Show("航线计划有错误");
-                            return;
-                        }
-                    }
-
-                    if (TXT_altwarn.Text == "") TXT_altwarn.Text = (0).ToString();
-
-                    if (Commands.Rows[a].Cells[Command.Index].Value.ToString().Contains("UNKNOWN"))
-                        continue;
-
-                    ushort cmd =
-                        (ushort)
-                        Enum.Parse(typeof(MAVLink.MAV_CMD), Commands.Rows[a].Cells[Command.Index].Value.ToString(), false);
-
-                    if (cmd < (ushort)MAVLink.MAV_CMD.LAST &&
-                        double.Parse(Commands[Alt.Index, a].Value.ToString()) < double.Parse(TXT_altwarn.Text))
-                    {
-                        if (cmd != (ushort)MAVLink.MAV_CMD.TAKEOFF &&
-                            cmd != (ushort)MAVLink.MAV_CMD.LAND &&
-                            cmd != (ushort)MAVLink.MAV_CMD.RETURN_TO_LAUNCH)
-                        {
-                            DevComponents.DotNetBar.MessageBoxEx.Show("WP#" + (a + 1) + "高度过低" +
-                                                  "\n请降低高度警告线，或增加航点高度");
-                            return;
-                        }
-                    }
-                }
-            }
-
-            IProgressReporterDialogue frmProgressReporter = new ProgressReporterDialogue
-            {
-                StartPosition = FormStartPosition.CenterScreen,
-                Text = "Sending WP's"
-            };
-
-            frmProgressReporter.DoWork += saveWPsFast;
-
-            frmProgressReporter.UpdateProgressAndStatus(-1, "Sending WP's");
-
-            ThemeManager.ApplyThemeTo(frmProgressReporter);
-
-            frmProgressReporter.RunBackgroundOperationAsync();
-
-            frmProgressReporter.Dispose();
-
-            MainMap.Focus();
-        }
 
         private double calcpolygonarea(List<PointLatLng> polygon)
         {
@@ -2313,22 +2030,22 @@ namespace VPS.GCSViews
         {
             if (write)
             {
-                Settings.Instance["TXT_homelat"] = TXT_homelat.Text;
-                Settings.Instance["TXT_homelng"] = TXT_homelng.Text;
-                Settings.Instance["TXT_homealt"] = TXT_homealt.Text;
+                Settings.Instance["FP_HomeLat"] = homePosition.Lat.ToString();
+                Settings.Instance["FP_HomeLng"] = homePosition.Lng.ToString();
+                Settings.Instance["FP_HomeAlt"] = homePosition.Alt.ToString();
 
 
-                Settings.Instance["TXT_WPRad"] = TXT_WPRad.Text;
+                Settings.Instance["FP_WPRad"] = TXT_WPRad.Text;
 
-                Settings.Instance["TXT_loiterrad"] = TXT_loiterrad.Text;
+                Settings.Instance["FP_LoiterRad"] = TXT_loiterrad.Text;
 
-                Settings.Instance["TXT_DefaultAlt"] = TXT_DefaultAlt.Text;
+                Settings.Instance["FP_DefaultAlt"] = TXT_DefaultAlt.Text;
 
-                Settings.Instance["CMB_altmode"] = CMB_altmode.Text;
+                Settings.Instance["FP_AltMode"] = CMB_altmode.Text;
 
-                Settings.Instance["fpminaltwarning"] = TXT_altwarn.Text;
+                Settings.Instance["FP_AltWarn"] = TXT_altwarn.Text;
 
-                Settings.Instance["fpcoordmouse"] = coords1.System;
+                Settings.Instance["FP_CoordSystem"] = coords1.System;
             }
             else
             {
@@ -2336,22 +2053,22 @@ namespace VPS.GCSViews
                 {
                     switch (key)
                     {
-                        case "TXT_WPRad":
+                        case "FP_WPRad":
                             TXT_WPRad.Text = "" + Settings.Instance[key];
                             break;
-                        case "TXT_loiterrad":
+                        case "FP_LoiterRad":
                             TXT_loiterrad.Text = "" + Settings.Instance[key];
                             break;
-                        case "TXT_DefaultAlt":
+                        case "FP_DefaultAlt":
                             TXT_DefaultAlt.Text = "" + Settings.Instance[key];
                             break;
-                        case "CMB_altmode":
+                        case "FP_AltMode":
                             CMB_altmode.Text = "" + Settings.Instance[key];
                             break;
-                        case "fpminaltwarning":
-                            TXT_altwarn.Text = "" + Settings.Instance["fpminaltwarning"];
+                        case "FP_AltWarn":
+                            TXT_altwarn.Text = "" + Settings.Instance["FP_AltWarn"];
                             break;
-                        case "fpcoordmouse":
+                        case "FP_CoordSystem":
                             coords1.System = "" + Settings.Instance[key];
                             break;
                         default:
@@ -3039,9 +2756,9 @@ namespace VPS.GCSViews
             //set home
             try
             {
-                if (TXT_homelat.Text != "")
+                if (homePosition != null)
                 {
-                    MainMap.Position = new PointLatLng(double.Parse(TXT_homelat.Text), double.Parse(TXT_homelng.Text));
+                    MainMap.Position = new PointLatLng(homePosition.Lat, homePosition.Lng);
                     MainMap.Zoom = 16;
                 }
             }
@@ -3358,19 +3075,6 @@ namespace VPS.GCSViews
             }
         }
 
-        private List<Locationwp> GetCommandList()
-        {
-            List<Locationwp> commands = new List<Locationwp>();
-
-            for (int a = 0; a < Commands.Rows.Count - 0; a++)
-            {
-                var temp = DataViewtoLocationwp(a);
-
-                commands.Add(temp);
-            }
-
-            return commands;
-        }
 
         /// <summary>
         /// Get the Google earth ALT for a given coord
@@ -4453,7 +4157,7 @@ namespace VPS.GCSViews
                         cellhome = Commands.Rows[0].Cells[Lat.Index] as DataGridViewTextBoxCell;
                         if (cellhome.Value != null)
                         {
-                            if (cellhome.Value.ToString() != TXT_homelat.Text && cellhome.Value.ToString() != "0")
+                            if (cellhome.Value.ToString() != homePosition.Lat.ToString() && cellhome.Value.ToString() != "0")
                             {
                                 //DevComponents.DotNetBar.MessageBoxEx.Show(this, "变更Home位置", "重设Home位置", MessageBoxButtons.YesNo);
                                 //var dr = CustomMessageBox.Show("变更Home位置", "重设Home位置",
@@ -4833,329 +4537,8 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             SaveFile_Click(null, null);
         }
 
-        private void saveWPs(IProgressReporterDialogue sender)
-        {
-            try
-            {
-                MAVLinkInterface port = MainV2.comPort;
 
-                if (!port.BaseStream.IsOpen)
-                {
-                    throw new Exception("Please connect first!");
-                }
-
-                int a = 0;
-
-                // define the home point
-                Locationwp home = new Locationwp();
-                try
-                {
-                    home.frame = (byte)MAVLink.MAV_FRAME.GLOBAL;
-                    home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-                    home.lat = (double.Parse(TXT_homelat.Text));
-                    home.lng = (double.Parse(TXT_homelng.Text));
-                    home.alt = (float.Parse(TXT_homealt.Text) / CurrentState.multiplieralt); // use saved home
-                }
-                catch
-                {
-                    throw new Exception("Your home location is invalid");
-                }
-
-                // log
-                log.Info("wps values " + MainV2.comPort.MAV.wps.Values.Count);
-                log.Info("cmd rows " + (Commands.Rows.Count + 1)); // + home
-
-                var type = (MAVLink.MAV_MISSION_TYPE)Invoke((Func<MAVLink.MAV_MISSION_TYPE>)delegate
-                {
-                    return (MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue;
-                });
-
-                // get the command list from the datagrid
-                var commandlist = GetCommandList();
-
-                if (type == MAVLink.MAV_MISSION_TYPE.MISSION && MainV2.comPort.MAV.apname == MAVLink.MAV_AUTOPILOT.ARDUPILOTMEGA)
-                    commandlist.Insert(0, home);
-
-                // fence does not use alt, and needs to be global
-                if (type == MAVLink.MAV_MISSION_TYPE.FENCE)
-                {
-                    commandlist = commandlist.Select((fp) =>
-                    {
-                        fp.frame = (byte)MAVLink.MAV_FRAME.GLOBAL;
-                        return fp;
-                    }).ToList();
-                }
-
-                Task.Run(async () =>
-                {
-                    await mav_mission.upload(MainV2.comPort, MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid, type,
-                        commandlist,
-                        (percent, status) =>
-                        {
-                            if (sender.doWorkArgs.CancelRequested)
-                            {
-                                sender.doWorkArgs.CancelAcknowledged = true;
-                                sender.doWorkArgs.ErrorMessage = "User Canceled";
-                                throw new Exception("User Canceled");
-                            }
-
-                            sender.UpdateProgressAndStatus((int) (percent * 0.95), status);
-                        }).ConfigureAwait(false);
-
-                    try
-                    {
-                        await MainV2.comPort.getHomePositionAsync((byte) MainV2.comPort.sysidcurrent,
-                            (byte) MainV2.comPort.compidcurrent).ConfigureAwait(false);
-                    }
-                    catch (Exception ex2)
-                    {
-                        log.Error(ex2);
-                        try
-                        {
-                            MainV2.comPort.getWP((byte) MainV2.comPort.sysidcurrent,
-                                (byte) MainV2.comPort.compidcurrent, 0);
-                        }
-                        catch (Exception ex3)
-                        {
-                            log.Error(ex3);
-                        }
-                    }
-                }).GetAwaiter().GetResult();
-
-                ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(95, "Setting params");
-
-                // m
-                port.setParam("WP_RADIUS", float.Parse(TXT_WPRad.Text) / CurrentState.multiplierdist);
-
-                // cm's
-                port.setParam("WPNAV_RADIUS", float.Parse(TXT_WPRad.Text) / CurrentState.multiplierdist * 100.0);
-
-                try
-                {
-                    port.setParam(new[] { "LOITER_RAD", "WP_LOITER_RAD" },
-                        float.Parse(TXT_loiterrad.Text) / CurrentState.multiplierdist);
-                }
-                catch
-                {
-                }
-
-                ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(100, "Done.");
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-                throw;
-            }
-
-            MainV2.comPort.giveComport = false;
-        }
-
-        private void saveWPsFast(IProgressReporterDialogue sender)
-        {
-            var totalwpcountforupload = (ushort)(Commands.RowCount + 1);
-            var reqno = 0;
-            MAVLink.MAV_MISSION_RESULT result = MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;
-
-            var sub1 = MainV2.comPort.SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID.MISSION_ACK,
-                message =>
-                {
-                    var data = ((MAVLink.mavlink_mission_ack_t)message.data);
-                    var ans = (MAVLink.MAV_MISSION_RESULT)data.type;
-                    if (MainV2.comPort.MAV.sysid != message.sysid &&
-                        MainV2.comPort.MAV.compid != message.compid)
-                        return true;
-                    // check this gcs sent it
-                    if (data.target_system != MAVLinkInterface.gcssysid ||
-                        data.target_component != (byte)MAVLink.MAV_COMPONENT.MAV_COMP_ID_MISSIONPLANNER)
-                        return true;
-                    result = ans;
-                    Console.WriteLine("MISSION_ACK " + ans + " " + data.ToJSON(Formatting.None));
-                    return true;
-                });
-
-            var sub2 = MainV2.comPort.SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID.MISSION_REQUEST,
-                message =>
-                {
-                    var data = ((MAVLink.mavlink_mission_request_t)message.data);
-                    // check what we sent is what the message is.
-                    if (MainV2.comPort.MAV.sysid != message.sysid &&
-                        MainV2.comPort.MAV.compid != message.compid)
-                        return true;
-                    // check this gcs sent it
-                    if (data.target_system != MAVLinkInterface.gcssysid ||
-                        data.target_component != (byte)MAVLink.MAV_COMPONENT.MAV_COMP_ID_MISSIONPLANNER)
-                        return true;
-                    reqno = data.seq;
-                    Console.WriteLine("MISSION_REQUEST " + reqno + " " + data.ToJSON(Formatting.None));
-                    return true;
-                });
-
-            ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(0, "Set total wps ");
-            MainV2.comPort.setWPTotal(totalwpcountforupload);
-
-            // define the home point
-            Locationwp home = new Locationwp();
-            try
-            {
-                home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-                home.frame = (byte)altmode.Absolute;
-                home.lat = (double.Parse(TXT_homelat.Text));
-                home.lng = (double.Parse(TXT_homelng.Text));
-                home.alt = (float.Parse(TXT_homealt.Text) / CurrentState.multiplieralt); // use saved home
-            }
-            catch
-            {
-                MainV2.comPort.UnSubscribeToPacketType(sub1);
-                MainV2.comPort.UnSubscribeToPacketType(sub2);
-                throw new Exception("Your home location is invalid");
-            }
-
-            // define the default frame.
-            MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
-
-            // get the command list from the datagrid
-            var commandlist = GetCommandList();
-
-            commandlist.Insert(0, home);
-
-            // process commandlist to the mav
-            for (var a = 0; a < commandlist.Count; a++)
-            {
-                if (a % 10 == 0 && a != 0)
-                {
-                    var start = DateTime.Now;
-                    while (true)
-                    {
-                        if (sender.doWorkArgs.CancelRequested)
-                        {
-                            MainV2.comPort.setWPTotal(0);
-                            MainV2.comPort.UnSubscribeToPacketType(sub1);
-                            MainV2.comPort.UnSubscribeToPacketType(sub2);
-                            return;
-                        }
-
-                        if (reqno == a)
-                        {
-                            // all received
-                            break;
-                        }
-
-                        if (start.AddSeconds(1.1) < DateTime.Now)
-                        {
-                            // do next 10 starting at reqno
-                            a = reqno;
-                            break;
-                        }
-
-                        if (result == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
-                            Thread.Sleep(500);
-
-                        if (result == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ERROR)
-                        {
-                            // resend for partial upload
-                            MainV2.comPort.setWPPartialUpdate((ushort)(reqno), totalwpcountforupload);
-                            a = reqno;
-                            break;
-                        }
-
-                        if (result == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE)
-                        {
-                            sender.doWorkArgs.ErrorMessage = "Upload failed, please reduce the number of wp's";
-                            MainV2.comPort.UnSubscribeToPacketType(sub1);
-                            MainV2.comPort.UnSubscribeToPacketType(sub2);
-                            return;
-                        }
-                        if (result == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID)
-                        {
-                            sender.doWorkArgs.ErrorMessage =
-                                "Upload failed, mission was rejected byt the Mav,\n item had a bad option wp# " + a + " " +
-                                result;
-                            MainV2.comPort.UnSubscribeToPacketType(sub1);
-                            MainV2.comPort.UnSubscribeToPacketType(sub2);
-                            return;
-                        }
-                        if (result != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
-                        {
-                            sender.doWorkArgs.ErrorMessage = "Upload wps failed " + reqno +
-                                                             " " + Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), result.ToString());
-                            MainV2.comPort.UnSubscribeToPacketType(sub1);
-                            MainV2.comPort.UnSubscribeToPacketType(sub2);
-                            return;
-                        }
-
-                        System.Threading.Thread.Sleep(10);
-                    }
-                }
-
-                var loc = commandlist[a];
-
-                // make sure we are using the correct frame for these commands
-                if (loc.id < (ushort)MAVLink.MAV_CMD.LAST || loc.id == (ushort)MAVLink.MAV_CMD.DO_SET_HOME)
-                {
-                    var mode = currentaltmode;
-
-                    if (mode == altmode.Terrain)
-                    {
-                        frame = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT;
-                    }
-                    else if (mode == altmode.Absolute)
-                    {
-                        frame = MAVLink.MAV_FRAME.GLOBAL;
-                    }
-                    else
-                    {
-                        frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
-                    }
-                }
-
-                MAVLink.mavlink_mission_item_int_t req = new MAVLink.mavlink_mission_item_int_t();
-
-                req.target_system = MainV2.comPort.MAV.sysid;
-                req.target_component = MainV2.comPort.MAV.compid;
-
-                req.command = loc.id;
-
-                req.current = 0;
-                req.autocontinue = 1;
-
-                req.frame = (byte)frame;
-                if (loc.id == (ushort)MAVLink.MAV_CMD.DO_DIGICAM_CONTROL || loc.id == (ushort)MAVLink.MAV_CMD.DO_DIGICAM_CONFIGURE)
-                {
-                    req.y = (int)(loc.lng);
-                    req.x = (int)(loc.lat);
-                }
-                else
-                {
-                    req.y = (int)(loc.lng * 1.0e7);
-                    req.x = (int)(loc.lat * 1.0e7);
-                }
-                req.z = (float)(loc.alt);
-
-                req.param1 = loc.p1;
-                req.param2 = loc.p2;
-                req.param3 = loc.p3;
-                req.param4 = loc.p4;
-
-                req.seq = (ushort)a;
-
-                if (Commands.Rows.Count > 0)
-                    ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(a * 100 / Commands.Rows.Count, "Setting WP " + a);
-                log.Info("WP no " + a + " " + req.ToJSON(Formatting.None));
-
-
-                MainV2.comPort.sendPacket(req, MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid);
-            }
-            
-            MainV2.comPort.UnSubscribeToPacketType(sub1);
-            MainV2.comPort.UnSubscribeToPacketType(sub2);
-
-            MainV2.comPort.setWPACK();
-
-            MainV2.comPort.getHomePositionAsync((byte)MainV2.comPort.sysidcurrent,
-                (byte)MainV2.comPort.compidcurrent);
-        }
-
-        private void setgradanddistandaz(List<PointLatLngAlt> pointlist, PointLatLngAlt HomeLocation)
+        private void SetGradAndDistAndAZ(List<PointLatLngAlt> pointlist, PointLatLngAlt HomeLocation)
         {
             int a = 0;
             PointLatLngAlt last = HomeLocation;
@@ -5200,48 +4583,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
 
 
-
-
-        public void setRallyPointToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string altstring = TXT_DefaultAlt.Text;
-
-            if (InputBox.Show("Altitude", "Altitude", ref altstring) == DialogResult.Cancel)
-                return;
-
-            int alt = 0;
-
-            if (int.TryParse(altstring, out alt))
-            {
-                PointLatLngAlt rallypt = new PointLatLngAlt(MouseDownStart.Lat, MouseDownStart.Lng,
-                    alt / CurrentState.multiplieralt, "Rally Point");
-                rallypointoverlay.Markers.Add(
-                    new GMapMarkerRallyPt(rallypt)
-                    {
-                        ToolTipMode = MarkerTooltipMode.OnMouseOver,
-                        ToolTipText = "Rally Point" + "\nAlt: " + alt,
-                        Tag = rallypointoverlay.Markers.Count,
-                        Alt = (int)rallypt.Alt
-                    }
-                );
-            }
-            else
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidAlt, Strings.ERROR);
-            }
-
-            IsMouseClickOffMenu = false;
-        }
-
-        public void setReturnLocationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            geofenceoverlay.Markers.Clear();
-            geofenceoverlay.Markers.Add(new GMarkerGoogle(new PointLatLng(MouseDownStart.Lat, MouseDownStart.Lng),
-                    GMarkerGoogleType.red)
-            { ToolTipMode = MarkerTooltipMode.OnMouseOver, ToolTipText = "GeoFence Return" });
-
-            MainMap.Invalidate();
-        }
 
         private void setWPParams()
         {
@@ -5465,55 +4806,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
-        public void TXT_homealt_TextChanged(object sender, EventArgs e)
-        {
-            sethome = false;
-            try
-            {
-                MainV2.comPort.MAV.cs.PlannedHomeLocation.Alt = double.Parse(TXT_homealt.Text);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-            writeKML();
-        }
-
-        public void TXT_homelat_Enter(object sender, EventArgs e)
-        {
-            if (!sethome)
-                DevComponents.DotNetBar.MessageBoxEx.Show("点击地图设置 Home ");
-            sethome = true;
-
-        }
-
-        public void TXT_homelat_TextChanged(object sender, EventArgs e)
-        {
-            sethome = false;
-            try
-            {
-                MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat = double.Parse(TXT_homelat.Text);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-            writeKML();
-        }
-
-        public void TXT_homelng_TextChanged(object sender, EventArgs e)
-        {
-            sethome = false;
-            try
-            {
-                MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng = double.Parse(TXT_homelng.Text);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-            writeKML();
-        }
 
         public void TXT_loiterrad_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -7404,39 +6696,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         #endregion
         #endregion
 
-        #region Home
-        public PositionChangeHandle HomeChange;
-
-        #region SetHome
-
-        #region SetHome 接口函数
-        private delegate void SetHomeInThread(PointLatLngAlt home);
-        public void SetHomeHandle(PointLatLngAlt home)
-        {
-            if (this.InvokeRequired)
-            {
-                SetHomeInThread inThread = new SetHomeInThread(SetHomeHandle);
-                this.Invoke(inThread, new object[] { home });
-            }
-            else
-            {
-                SetHomeHere(home);
-            }
-        }
-        #endregion
-
-        #region SetHome 入口函数
-        private void SetHomeHere(PointLatLngAlt position)
-        {
-            TXT_homealt.Text = position.Alt.ToString();
-            TXT_homelat.Text = position.Lat.ToString();
-            TXT_homelng.Text = position.Lng.ToString();
-            HomeChange?.Invoke(position);
-        }
-        #endregion
-        #endregion
-        #endregion
-
         #region AddMarkToMap
 
         #region PolygonMark
@@ -7583,23 +6842,22 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             if (Disposing)
                 return;
 
+            if (onlyChangeValue)
+                return;
+
             updateRowNumbers();
 
             PointLatLngAlt home = new PointLatLngAlt();
-            if (TXT_homealt.Text != "" && TXT_homelat.Text != "" && TXT_homelng.Text != "")
+            if (homePosition != null)
             {
-                try
-                {
-                    home = new PointLatLngAlt(
-                            double.Parse(TXT_homelat.Text), double.Parse(TXT_homelng.Text),
-                            double.Parse(TXT_homealt.Text) / CurrentState.multiplieralt, "H")
-                    { Tag2 = CMB_altmode.SelectedValue.ToString() };
-                }
-                catch (Exception ex)
-                {
-                    DevComponents.DotNetBar.MessageBoxEx.Show(Strings.Invalid_home_location, Strings.ERROR);
-                    log.Error(ex);
-                }
+                home = homePosition;
+                home.Tag = "H";
+            }
+            else
+            {
+                home = new PointLatLngAlt();
+                home.Tag = "H";
+                home.Tag2 = "Terrain";
             }
 
             try
@@ -7667,7 +6925,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                                                                               .Aggregate(0.0, (d, p1, p2) => d + p1.GetDistance(p2))) /
                                                                       1000.0, false);
 
-                    setgradanddistandaz(overlay.pointlist, home);
+                    SetGradAndDistAndAZ(overlay.pointlist, home);
 
                     if (overlay.pointlist.Count <= 1)
                     {
@@ -7826,366 +7084,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         #endregion
         #endregion
 
-        #region WPList
-        public bool isSendChange = false;
-        public delegate void WPListChangeHandle(List<PointLatLngAlt> wpList);
-        public WPListChangeHandle WPListChange;
 
-        #region SetWPList
-
-        #region SetWPList 对外接口
-        private delegate void SetWPListInThread(List<PointLatLngAlt> wpList);
-        public void SetWPListHandle(List<PointLatLngAlt> wpList)
-        {
-            if (this.InvokeRequired)
-            {
-                SetWPListInThread inThread = new SetWPListInThread(SetWPListHandle);
-                this.Invoke(inThread, new object[] { wpList });
-            }
-            else
-            {
-                SetWPList(wpList);
-            }
-        }
-        #endregion
-
-        #region SetWPList 入口函数
-        private void SetWPList(List<PointLatLngAlt> wpList)
-        {
-            int counter = 0;
-            int have = Commands.Rows.Count;
-            foreach (var wp in wpList)
-            {
-                if (counter < have)
-                    SetWPPoint(wp.Lat, wp.Lng, (int)wp.Alt, counter);
-                else
-                    AddWPPoint(wp.Lat, wp.Lng, (int)wp.Alt);
-                counter++;
-            }
-            while (counter < have)
-            {
-                DeleteWPPoint(counter);
-                have--;
-            }
-
-            isSendChange = true;
-            writeKML();
-            isSendChange = false;
-        }
-        #endregion
-
-        #region WPPoint
-        #region AddWPPoint
-        public void AddWPPoint(double lat, double lng, int alt)
-        {
-            selectedrow = Commands.Rows.Add();
-
-            if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.RALLY)
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.RALLY_POINT.ToString();
-                ChangeColumnHeader(MAVLink.MAV_CMD.RALLY_POINT.ToString());
-            }
-            else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString();
-                Commands.Rows[selectedrow].Cells[Param1.Index].Value = 5;
-                ChangeColumnHeader(MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString());
-            }
-            else if (splinemode)
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString();
-                ChangeColumnHeader(MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString());
-            }
-            else
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.WAYPOINT.ToString();
-                ChangeColumnHeader(MAVLink.MAV_CMD.WAYPOINT.ToString());
-            }
-
-            setfromMap(lat, lng, alt);
-        }
-        #endregion
-        #region SetWPPoint
-        public void SetWPPoint(double lat, double lng, int alt, int index)
-        {
-            selectedrow = index;
-
-            if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.RALLY)
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.RALLY_POINT.ToString();
-                ChangeColumnHeader(MAVLink.MAV_CMD.RALLY_POINT.ToString());
-            }
-            else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString();
-                Commands.Rows[selectedrow].Cells[Param1.Index].Value = 5;
-                ChangeColumnHeader(MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString());
-            }
-            else if (splinemode)
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString();
-                ChangeColumnHeader(MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString());
-            }
-            else
-            {
-                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.WAYPOINT.ToString();
-                ChangeColumnHeader(MAVLink.MAV_CMD.WAYPOINT.ToString());
-            }
-
-            setfromMap(lat, lng, alt);
-        }
-        #endregion
-        #region DeletePoint
-        public void DeleteWPPoint(int index)
-        {
-            quickadd = true;
-
-            if (selectedrow == index)
-            {
-                selectedrow = 0;
-                // mono fix
-                try
-                {
-                    Commands.CurrentCell = null;
-                }
-                catch { }
-            }
-            Commands.Rows.RemoveAt(index);
-
-            quickadd = false;
-
-            writeKML();
-        }
-        #endregion
-        #region SetFromMap
-        /// <summary>
-        /// Actualy Sets the values into the datagrid and verifys height if turned on
-        /// </summary>
-        /// <param name="lat"></param>
-        /// <param name="lng"></param>
-        /// <param name="alt"></param>
-        public void setfromMap(double lat, double lng, int alt, double p1 = -1)
-        {
-            if (selectedrow > Commands.RowCount)
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("无效操作");
-                return;
-            }
-
-            try
-            {
-                if (!quickadd)
-                {
-                    // get current command list
-                    var currentlist = GetCommandList();
-                    // remove the current blank row that has not been populated yet
-                    currentlist.RemoveAt(selectedrow);
-                    // add history
-                    history.Add(currentlist);
-                    historyChange?.Invoke(history.Count);
-                }
-            }
-            catch (Exception ex)
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("检测到无效条目\n" + ex.Message, Strings.ERROR);
-            }
-
-            // remove more than 40 revisions
-            if (history.Count > 40)
-            {
-                history.RemoveRange(0, history.Count - 40);
-            }
-
-            DataGridViewTextBoxCell cell;
-            if (alt == -2 && Commands.Columns[Alt.Index].HeaderText.Equals("Alt"))
-            {
-                if (CHK_verifyheight.Checked && (altmode)CMB_altmode.SelectedValue != altmode.Terrain) //Drag with verifyheight // use srtm data
-                {
-                    cell = Commands.Rows[selectedrow].Cells[Alt.Index] as DataGridViewTextBoxCell;
-                    float ans;
-                    if (float.TryParse(cell.Value.ToString(), out ans))
-                    {
-                        ans = (int)ans;
-
-                        DataGridViewTextBoxCell celllat = Commands.Rows[selectedrow].Cells[Lat.Index] as DataGridViewTextBoxCell;
-                        DataGridViewTextBoxCell celllon = Commands.Rows[selectedrow].Cells[Lon.Index] as DataGridViewTextBoxCell;
-                        int oldsrtm =
-                            (int)
-                            ((srtm.getAltitude(double.Parse(celllat.Value.ToString()),
-                                 double.Parse(celllon.Value.ToString())).alt) * CurrentState.multiplieralt);
-                        int newsrtm = (int)((srtm.getAltitude(lat, lng).alt) * CurrentState.multiplieralt);
-                        int newh = (int)(ans + newsrtm - oldsrtm);
-
-                        cell.Value = newh;
-
-                        cell.DataGridView.EndEdit();
-                    }
-                }
-            }
-            if (Commands.Columns[Lat.Index].HeaderText.Equals("Lat"))
-            {
-                cell = Commands.Rows[selectedrow].Cells[Lat.Index] as DataGridViewTextBoxCell;
-                cell.Value = lat.ToString("0.0000000");
-                cell.DataGridView.EndEdit();
-            }
-            if (Commands.Columns[Lon.Index].HeaderText.Equals("Long"))
-            {
-                cell = Commands.Rows[selectedrow].Cells[Lon.Index] as DataGridViewTextBoxCell;
-                cell.Value = lng.ToString("0.0000000");
-                cell.DataGridView.EndEdit();
-            }
-            if (alt != -1 && alt != -2 && Commands.Columns[Alt.Index].HeaderText.Equals("Alt"))
-            {
-                cell = Commands.Rows[selectedrow].Cells[Alt.Index] as DataGridViewTextBoxCell;
-
-                {
-                    //    double result;
-                    //    bool pass = double.TryParse(TXT_homealt.Text, out result);
-
-                    //    if (pass == false)
-                    //    {
-                    //        DevComponents.DotNetBar.MessageBoxEx.Show("Home点信息必须包含高度");
-                    //        string homealt = "100";
-                    //        if (DialogResult.Cancel == InputBox.Show("Home高度信息", "Home高度", ref homealt))
-                    //            return;
-                    //        if (double.TryParse(homealt, out double homeAlt))
-                    //        {
-                    //            SetHomeHere(new PointLatLngAlt(
-                    //                double.Parse(TXT_homelat.Text),
-                    //                double.Parse(TXT_homelng.Text),
-                    //                homeAlt));
-                    //        }
-                    //        else
-                    //        {
-                    //            SetHomeHere(new PointLatLngAlt(
-                    //                double.Parse(TXT_homelat.Text),
-                    //                double.Parse(TXT_homelng.Text),
-                    //                double.Parse(TXT_DefaultAlt.Text)));
-                    //        }
-                    //    }
-                    //    int results1;
-                    //    if (!int.TryParse(TXT_DefaultAlt.Text, out results1))
-                    //    {
-                    //        DevComponents.DotNetBar.MessageBoxEx.Show("默认高度无效");
-                    //        return;
-                    //    }
-
-                    //    if (results1 == 0)
-                    //    {
-                    //        string defalt = "100";
-                    //        if (DialogResult.Cancel == InputBox.Show("默认高度", "默认高度", ref defalt))
-                    //            return;
-                    //        TXT_DefaultAlt.Text = defalt;
-                    //    }
-                }
-
-                cell.Value = TXT_DefaultAlt.Text;
-
-                float ans;
-                if (float.TryParse(cell.Value.ToString(), out ans))
-                {
-                    ans = (int)ans;
-                    if (alt != 0) // use passed in value;
-                        cell.Value = alt.ToString();
-                    if (ans == 0) // default
-                        cell.Value = 50;
-                    if (ans == 0 && (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2))
-                        cell.Value = 15;
-
-                    // not online and verify alt via srtm
-                    if (CHK_verifyheight.Checked) // use srtm data
-                    {
-                        // is absolute but no verify
-                        if ((altmode)CMB_altmode.SelectedValue == altmode.Absolute)
-                        {
-                            //abs
-                            cell.Value =
-                                ((srtm.getAltitude(lat, lng).alt) * CurrentState.multiplieralt +
-                                 int.Parse(TXT_DefaultAlt.Text)).ToString();
-                        }
-                        else if ((altmode)CMB_altmode.SelectedValue == altmode.Terrain)
-                        {
-                            cell.Value = int.Parse(TXT_DefaultAlt.Text);
-                        }
-                        else
-                        {
-                            //relative and verify
-                            cell.Value =
-                                ((int)(srtm.getAltitude(lat, lng).alt) * CurrentState.multiplieralt +
-                                 int.Parse(TXT_DefaultAlt.Text) -
-                                 (int)
-                                 srtm.getAltitude(MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat,
-                                     MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng).alt * CurrentState.multiplieralt)
-                                .ToString();
-                        }
-                    }
-
-                    cell.DataGridView.EndEdit();
-                }
-                else
-                {
-                    DevComponents.DotNetBar.MessageBoxEx.Show("高度无效");
-                    cell.Style.BackColor = Color.Red;
-                }
-            }
-
-            // convert to utm
-            convertFromGeographic(lat, lng);
-
-            // Add more for other params
-            if (Commands.Columns[Param1.Index].HeaderText.Equals("Delay") && p1 != -1)
-            {
-                cell = Commands.Rows[selectedrow].Cells[Param1.Index] as DataGridViewTextBoxCell;
-                cell.Value = p1;
-                cell.DataGridView.EndEdit();
-            }
-
-            writeKML();
-            Commands.EndEdit();
-        }
-        #endregion
-        #endregion
-
-        #endregion
-
-        #region GetWPList
-        public List<PointLatLngAlt> GetWPList(string altitudeMode = "Relative")
-        {
-            List<PointLatLngAlt> wpList = new List<PointLatLngAlt>();
-            int count = Commands.Rows.Count;
-            double totalAlt = 0;
-            for (int i = 0; i < count; i++)
-            {
-                GetWPPoint(i, out PointLatLngAlt wp);
-                totalAlt += srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
-                wpList.Add(wp);
-            }
-            double baseAlt = totalAlt / count;
-            for (int i = 0; i < count; i++)
-            {
-                switch (altitudeMode.ToLower())
-                {
-                    case "relative":
-                        wpList[i].Tag2 = "Relative";
-                        break;
-                    case "absolute":
-                        wpList[i].Alt = wpList[i].Alt + baseAlt;
-                        wpList[i].Tag2 = "Absolute";
-                        break;
-                    case "terrain":
-                        wpList[i].Alt = wpList[i].Alt + baseAlt - 
-                            srtm.getAltitude(wpList[i].Lat, wpList[i].Lng).alt * CurrentState.multiplieralt;
-                        wpList[i].Tag2 = "Terrain";
-                        break;
-                }
-            }
-
-            return wpList;
-        }
-
-        #endregion
-
-        #endregion
 
         #region PolygonList
         public delegate void PlygonListChangeHandle(List<PointLatLngAlt> polygonList);
@@ -8401,9 +7300,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     w.WriteStartElement("local");
                     w.WriteStartElement("coordinates");
                     CovertToWorkCoordinate(
-                        System.Convert.ToDouble(TXT_homelng.Text),
-                        System.Convert.ToDouble(TXT_homelat.Text),
-                        System.Convert.ToDouble(TXT_homealt.Text),
+                        homePosition.Lng,
+                        homePosition.Lat,
+                        homePosition.Alt,
                         out double x, out double y, out double z);
                     w.WriteString(string.Format("{0},{1},{2}", x, y, z));
                     w.WriteEndElement();//coordinates
@@ -8438,7 +7337,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 w.WriteEndElement();//altitudeMode
                 w.WriteStartElement("coordinates");
                 w.WriteString(string.Format("{0},{1},{2}",
-                    TXT_homelng.Text, TXT_homelat.Text, TXT_homealt.Text));
+                        homePosition.Lng,
+                        homePosition.Lat,
+                        homePosition.Alt));
                 w.WriteEndElement();//coordinates
                 w.WriteEndElement();//Point
                 w.WriteEndElement();//Placemark
@@ -8628,7 +7529,11 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 sw.WriteLine("QGC WPL 111");
                 try
                 {
-                    CovertToWorkCoordinate(double.Parse(TXT_homelng.Text), double.Parse(TXT_homelat.Text), double.Parse(TXT_homealt.Text), out double x, out double y, out double z);
+                    CovertToWorkCoordinate(
+                        homePosition.Lng,
+                        homePosition.Lat,
+                        homePosition.Alt, 
+                        out double x, out double y, out double z);
                     sw.WriteLine("0\t1\t0\t16\t0\t0\t0\t0\t" +
                                  y.ToString("0.000000", new CultureInfo("en-US")) +
                                  "\t" +
@@ -8715,11 +7620,11 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 try
                 {
                     sw.WriteLine("0\t1\t0\t16\t0\t0\t0\t0\t" +
-                                 double.Parse(TXT_homelat.Text).ToString("0.000000", new CultureInfo("en-US")) +
+                                 homePosition.Lat.ToString("0.000000", new CultureInfo("en-US")) +
                                  "\t" +
-                                 double.Parse(TXT_homelng.Text).ToString("0.000000", new CultureInfo("en-US")) +
+                                 homePosition.Lng.ToString("0.000000", new CultureInfo("en-US")) +
                                  "\t" +
-                                 double.Parse(TXT_homealt.Text).ToString("0.000000", new CultureInfo("en-US")) +
+                                 homePosition.Alt.ToString("0.000000", new CultureInfo("en-US")) +
                                  "\t1");
                 }
                 catch (Exception ex)
@@ -9373,6 +8278,437 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         #endregion
 
         #endregion
+        #endregion
+
+        #region 全局参数
+        #region NoHandle
+        private bool onlyChangeValue = false;
+
+        #region 接口函数
+        public void BeginQuickChange()
+        {
+            onlyChangeValue = true;
+        }
+
+
+        public void EndQuickChange()
+        {
+            onlyChangeValue = false;
+        }
+        #endregion
+
+        #endregion
+
+
+        #region Home
+        private PointLatLngAlt homePosition;
+
+        public PositionChangeHandle HomeChange;
+        #region SetHome
+
+        #region SetHome 接口函数
+        private delegate void SetHomeInThread(PointLatLngAlt home);
+        public void SetHomeHandle(PointLatLngAlt home)
+        {
+            if (this.InvokeRequired)
+            {
+                SetHomeInThread inThread = new SetHomeInThread(SetHomeHandle);
+                this.Invoke(inThread, new object[] { home });
+            }
+            else
+            {
+                SetHomeHere(home);
+            }
+        }
+        #endregion
+
+        #region SetHome 入口函数
+        private void SetHomeHere(PointLatLngAlt position)
+        {
+            homePosition = position;
+            if (onlyChangeValue)
+                return;
+            HomeChange?.Invoke(position);
+        }
+        #endregion
+        #endregion
+        #endregion
+
+        #endregion
+
+        private List<Locationwp> GetCommandList()
+        {
+            List<Locationwp> commands = new List<Locationwp>();
+
+            for (int a = 0; a < Commands.Rows.Count - 0; a++)
+            {
+                var temp = DataViewtoLocationwp(a);
+
+                commands.Add(temp);
+            }
+
+            return commands;
+        }
+
+        #region WPList
+        public bool isSendChange = false;
+        public delegate void WPListChangeHandle(List<PointLatLngAlt> wpList);
+        public WPListChangeHandle WPListChange;
+
+        #region SetWPList
+
+        #region SetWPList 对外接口
+        private delegate void SetWPListInThread(List<PointLatLngAlt> wpList);
+        public void SetWPListHandle(List<PointLatLngAlt> wpList)
+        {
+            if (this.InvokeRequired)
+            {
+                SetWPListInThread inThread = new SetWPListInThread(SetWPListHandle);
+                this.Invoke(inThread, new object[] { wpList });
+            }
+            else
+            {
+                SetWPList(wpList);
+            }
+        }
+        #endregion
+
+        #region SetWPList 入口函数
+        private void SetWPList(List<PointLatLngAlt> wpList)
+        {
+            int counter = 0;
+            int have = Commands.Rows.Count;
+            foreach (var wp in wpList)
+            {
+                if (counter < have)
+                    SetWPPoint(wp.Lat, wp.Lng, (int)wp.Alt, counter);
+                else
+                    AddWPPoint(wp.Lat, wp.Lng, (int)wp.Alt);
+                counter++;
+            }
+            while (counter < have)
+            {
+                DeleteWPPoint(counter);
+                have--;
+            }
+
+            isSendChange = true;
+            writeKML();
+            isSendChange = false;
+        }
+        #endregion
+
+        #region WPPoint
+        #region AddWPPoint
+        public void AddWPPoint(double lat, double lng, int alt)
+        {
+            selectedrow = Commands.Rows.Add();
+
+            if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.RALLY)
+            {
+                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.RALLY_POINT.ToString();
+                ChangeColumnHeader(MAVLink.MAV_CMD.RALLY_POINT.ToString());
+            }
+            else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
+            {
+                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString();
+                Commands.Rows[selectedrow].Cells[Param1.Index].Value = 5;
+                ChangeColumnHeader(MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString());
+            }
+            else if (splinemode)
+            {
+                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString();
+                ChangeColumnHeader(MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString());
+            }
+            else
+            {
+                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.WAYPOINT.ToString();
+                ChangeColumnHeader(MAVLink.MAV_CMD.WAYPOINT.ToString());
+            }
+
+            setfromMap(lat, lng, alt);
+        }
+        #endregion
+        #region SetWPPoint
+        public void SetWPPoint(double lat, double lng, int alt, int index)
+        {
+            selectedrow = index;
+
+            if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.RALLY)
+            {
+                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.RALLY_POINT.ToString();
+                ChangeColumnHeader(MAVLink.MAV_CMD.RALLY_POINT.ToString());
+            }
+            else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
+            {
+                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString();
+                Commands.Rows[selectedrow].Cells[Param1.Index].Value = 5;
+                ChangeColumnHeader(MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION.ToString());
+            }
+            else if (splinemode)
+            {
+                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString();
+                ChangeColumnHeader(MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString());
+            }
+            else
+            {
+                Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.WAYPOINT.ToString();
+                ChangeColumnHeader(MAVLink.MAV_CMD.WAYPOINT.ToString());
+            }
+
+            setfromMap(lat, lng, alt);
+        }
+        #endregion
+        #region DeletePoint
+        public void DeleteWPPoint(int index)
+        {
+            quickadd = true;
+
+            if (selectedrow == index)
+            {
+                selectedrow = 0;
+                // mono fix
+                try
+                {
+                    Commands.CurrentCell = null;
+                }
+                catch { }
+            }
+            Commands.Rows.RemoveAt(index);
+
+            quickadd = false;
+
+            writeKML();
+        }
+        #endregion
+        #region SetFromMap
+        /// <summary>
+        /// Actualy Sets the values into the datagrid and verifys height if turned on
+        /// </summary>
+        /// <param name="lat"></param>
+        /// <param name="lng"></param>
+        /// <param name="alt"></param>
+        public void setfromMap(double lat, double lng, int alt, double p1 = -1)
+        {
+            if (selectedrow > Commands.RowCount)
+            {
+                DevComponents.DotNetBar.MessageBoxEx.Show("无效操作");
+                return;
+            }
+
+            try
+            {
+                if (!quickadd)
+                {
+                    // get current command list
+                    var currentlist = GetCommandList();
+                    // remove the current blank row that has not been populated yet
+                    currentlist.RemoveAt(selectedrow);
+                    // add history
+                    history.Add(currentlist);
+                    historyChange?.Invoke(history.Count);
+                }
+            }
+            catch (Exception ex)
+            {
+                DevComponents.DotNetBar.MessageBoxEx.Show("检测到无效条目\n" + ex.Message, Strings.ERROR);
+            }
+
+            // remove more than 40 revisions
+            if (history.Count > 40)
+            {
+                history.RemoveRange(0, history.Count - 40);
+            }
+
+            DataGridViewTextBoxCell cell;
+            if (alt == -2 && Commands.Columns[Alt.Index].HeaderText.Equals("Alt"))
+            {
+                if (CHK_verifyheight.Checked && (altmode)CMB_altmode.SelectedValue != altmode.Terrain) //Drag with verifyheight // use srtm data
+                {
+                    cell = Commands.Rows[selectedrow].Cells[Alt.Index] as DataGridViewTextBoxCell;
+                    float ans;
+                    if (float.TryParse(cell.Value.ToString(), out ans))
+                    {
+                        ans = (int)ans;
+
+                        DataGridViewTextBoxCell celllat = Commands.Rows[selectedrow].Cells[Lat.Index] as DataGridViewTextBoxCell;
+                        DataGridViewTextBoxCell celllon = Commands.Rows[selectedrow].Cells[Lon.Index] as DataGridViewTextBoxCell;
+                        int oldsrtm =
+                            (int)
+                            ((srtm.getAltitude(double.Parse(celllat.Value.ToString()),
+                                 double.Parse(celllon.Value.ToString())).alt) * CurrentState.multiplieralt);
+                        int newsrtm = (int)((srtm.getAltitude(lat, lng).alt) * CurrentState.multiplieralt);
+                        int newh = (int)(ans + newsrtm - oldsrtm);
+
+                        cell.Value = newh;
+
+                        cell.DataGridView.EndEdit();
+                    }
+                }
+            }
+            if (Commands.Columns[Lat.Index].HeaderText.Equals("Lat"))
+            {
+                cell = Commands.Rows[selectedrow].Cells[Lat.Index] as DataGridViewTextBoxCell;
+                cell.Value = lat.ToString("0.0000000");
+                cell.DataGridView.EndEdit();
+            }
+            if (Commands.Columns[Lon.Index].HeaderText.Equals("Long"))
+            {
+                cell = Commands.Rows[selectedrow].Cells[Lon.Index] as DataGridViewTextBoxCell;
+                cell.Value = lng.ToString("0.0000000");
+                cell.DataGridView.EndEdit();
+            }
+            if (alt != -1 && alt != -2 && Commands.Columns[Alt.Index].HeaderText.Equals("Alt"))
+            {
+                cell = Commands.Rows[selectedrow].Cells[Alt.Index] as DataGridViewTextBoxCell;
+
+                {
+                    //    double result;
+                    //    bool pass = double.TryParse(TXT_homealt.Text, out result);
+
+                    //    if (pass == false)
+                    //    {
+                    //        DevComponents.DotNetBar.MessageBoxEx.Show("Home点信息必须包含高度");
+                    //        string homealt = "100";
+                    //        if (DialogResult.Cancel == InputBox.Show("Home高度信息", "Home高度", ref homealt))
+                    //            return;
+                    //        if (double.TryParse(homealt, out double homeAlt))
+                    //        {
+                    //            SetHomeHere(new PointLatLngAlt(
+                    //                double.Parse(TXT_homelat.Text),
+                    //                double.Parse(TXT_homelng.Text),
+                    //                homeAlt));
+                    //        }
+                    //        else
+                    //        {
+                    //            SetHomeHere(new PointLatLngAlt(
+                    //                double.Parse(TXT_homelat.Text),
+                    //                double.Parse(TXT_homelng.Text),
+                    //                double.Parse(TXT_DefaultAlt.Text)));
+                    //        }
+                    //    }
+                    //    int results1;
+                    //    if (!int.TryParse(TXT_DefaultAlt.Text, out results1))
+                    //    {
+                    //        DevComponents.DotNetBar.MessageBoxEx.Show("默认高度无效");
+                    //        return;
+                    //    }
+
+                    //    if (results1 == 0)
+                    //    {
+                    //        string defalt = "100";
+                    //        if (DialogResult.Cancel == InputBox.Show("默认高度", "默认高度", ref defalt))
+                    //            return;
+                    //        TXT_DefaultAlt.Text = defalt;
+                    //    }
+                }
+
+                cell.Value = TXT_DefaultAlt.Text;
+
+                float ans;
+                if (float.TryParse(cell.Value.ToString(), out ans))
+                {
+                    ans = (int)ans;
+                    if (alt != 0) // use passed in value;
+                        cell.Value = alt.ToString();
+                    if (ans == 0) // default
+                        cell.Value = 50;
+                    if (ans == 0 && (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2))
+                        cell.Value = 15;
+
+                    // not online and verify alt via srtm
+                    if (CHK_verifyheight.Checked) // use srtm data
+                    {
+                        // is absolute but no verify
+                        if ((altmode)CMB_altmode.SelectedValue == altmode.Absolute)
+                        {
+                            //abs
+                            cell.Value =
+                                ((srtm.getAltitude(lat, lng).alt) * CurrentState.multiplieralt +
+                                 int.Parse(TXT_DefaultAlt.Text)).ToString();
+                        }
+                        else if ((altmode)CMB_altmode.SelectedValue == altmode.Terrain)
+                        {
+                            cell.Value = int.Parse(TXT_DefaultAlt.Text);
+                        }
+                        else
+                        {
+                            //relative and verify
+                            cell.Value =
+                                ((int)(srtm.getAltitude(lat, lng).alt) * CurrentState.multiplieralt +
+                                 int.Parse(TXT_DefaultAlt.Text) -
+                                 (int)
+                                 srtm.getAltitude(MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat,
+                                     MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng).alt * CurrentState.multiplieralt)
+                                .ToString();
+                        }
+                    }
+
+                    cell.DataGridView.EndEdit();
+                }
+                else
+                {
+                    DevComponents.DotNetBar.MessageBoxEx.Show("高度无效");
+                    cell.Style.BackColor = Color.Red;
+                }
+            }
+
+            // convert to utm
+            convertFromGeographic(lat, lng);
+
+            // Add more for other params
+            if (Commands.Columns[Param1.Index].HeaderText.Equals("Delay") && p1 != -1)
+            {
+                cell = Commands.Rows[selectedrow].Cells[Param1.Index] as DataGridViewTextBoxCell;
+                cell.Value = p1;
+                cell.DataGridView.EndEdit();
+            }
+
+            writeKML();
+            Commands.EndEdit();
+        }
+        #endregion
+        #endregion
+
+        #endregion
+
+        #region GetWPList
+        public List<PointLatLngAlt> GetWPList(string altitudeMode = "Relative")
+        {
+            List<PointLatLngAlt> wpList = new List<PointLatLngAlt>();
+            int count = Commands.Rows.Count;
+            double totalAlt = 0;
+            for (int i = 0; i < count; i++)
+            {
+                GetWPPoint(i, out PointLatLngAlt wp);
+                totalAlt += srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
+                wpList.Add(wp);
+            }
+            double baseAlt = totalAlt / count;
+            for (int i = 0; i < count; i++)
+            {
+                switch (altitudeMode.ToLower())
+                {
+                    case "relative":
+                        wpList[i].Tag2 = "Relative";
+                        break;
+                    case "absolute":
+                        wpList[i].Alt = wpList[i].Alt + baseAlt;
+                        wpList[i].Tag2 = "Absolute";
+                        break;
+                    case "terrain":
+                        wpList[i].Alt = wpList[i].Alt + baseAlt -
+                            srtm.getAltitude(wpList[i].Lat, wpList[i].Lng).alt * CurrentState.multiplieralt;
+                        wpList[i].Tag2 = "Terrain";
+                        break;
+                }
+            }
+
+            return wpList;
+        }
+
+        #endregion
+
         #endregion
     }
 }
