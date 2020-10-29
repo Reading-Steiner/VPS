@@ -8301,7 +8301,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
 
         #region Home
-        private PointLatLngAlt homePosition;
+        private PointLatLngAlt homePosition = new PointLatLngAlt();
 
         public PositionChangeHandle HomeChange;
         #region SetHome
