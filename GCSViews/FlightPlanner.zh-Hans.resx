@@ -289,6 +289,9 @@
   <data name="lnk_kml.Text" xml:space="preserve">
     <value>查看KML</value>
   </data>
+  <data name="panel3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>940, 5</value>
+  </data>
   <data name="label11.Text" xml:space="preserve">
     <value>放大</value>
   </data>

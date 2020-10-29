@@ -91,7 +91,6 @@ namespace VPS.GCSViews
         public GMapMarker center = new GMarkerGoogle(new PointLatLng(0.0, 0.0), GMarkerGoogleType.none);
         private Dictionary<string, string[]> cmdParamNames = new Dictionary<string, string[]>();
         private GMapMarkerRect CurentRectMarker;
-        private altmode currentaltmode = altmode.Relative;
         private GMapMarker CurrentGMapMarker;
         public GMapMarker currentMarker;
         private GMapMarkerPOI CurrentPOIMarker;
@@ -320,13 +319,6 @@ namespace VPS.GCSViews
 
             MainMap.Zoom = 3;
 
-            CMB_altmode.DisplayMember = "Value";
-            CMB_altmode.ValueMember = "Key";
-            CMB_altmode.DataSource = EnumTranslator.EnumToList<altmode>();
-
-            //set default
-            CMB_altmode.SelectedItem = altmode.Relative;
-
             updateCMDParams();
 
             foreach (DataGridViewColumn commandsColumn in Commands.Columns)
@@ -345,7 +337,7 @@ namespace VPS.GCSViews
 
             Frame.DisplayMember = "Value";
             Frame.ValueMember = "Key";
-            Frame.DataSource = EnumTranslator.EnumToList<altmode>();
+            Frame.DataSource = EnumTranslator.EnumToList<AltMode>();
 
             updateMapType(null, null);
 
@@ -444,17 +436,6 @@ namespace VPS.GCSViews
         public void Activate()
         {
             timer1.Start();
-
-            // hide altmode if old copter version
-            if (MainV2.comPort.BaseStream.IsOpen && MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2 &&
-                MainV2.comPort.MAV.cs.version < new Version(3, 3))
-            {
-                CMB_altmode.Visible = false;
-            }
-            else
-            {
-                CMB_altmode.Visible = true;
-            }
 
             // hide spline wp options if not arducopter
             if (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2)
@@ -712,13 +693,6 @@ namespace VPS.GCSViews
             //}
 
             return base.ProcessCmdKey(ref msg, keyData);
-        }
-
-        public enum altmode
-        {
-            Relative = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT,
-            Absolute = MAVLink.MAV_FRAME.GLOBAL,
-            Terrain = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT
         }
 
         public static RectLatLng GetBoundingLayer(GMapOverlay o)
@@ -1404,7 +1378,7 @@ namespace VPS.GCSViews
             wp = new PointLatLngAlt(lat, lng, alt);
             wp.Tag = Commands.Rows[index].Cells[Command.Index].Value.ToString();
             
-            wp.Tag2 = ((altmode)Commands.Rows[index].Cells[Frame.Index].Value).ToString();
+            wp.Tag2 = ((AltMode)Commands.Rows[index].Cells[Frame.Index].Value).ToString();
         }
 
         
@@ -1617,18 +1591,6 @@ namespace VPS.GCSViews
             geofencepolygon.Points.Clear();
         }
 
-        public void CMB_altmode_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (CMB_altmode.SelectedValue == null)
-            {
-                CMB_altmode.SelectedIndex = 0;
-            }
-            else
-            {
-                currentaltmode = (altmode)CMB_altmode.SelectedValue;
-            }
-        }
-
 
         private void comboBoxMapType_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -1761,7 +1723,7 @@ namespace VPS.GCSViews
 
         public void Commands_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
         {
-            e.Row.Cells[Frame.Index].Value = CMB_altmode.SelectedValue;
+            e.Row.Cells[Frame.Index].Value = altFrame;
             e.Row.Cells[Delete.Index].Value = "X";
             e.Row.Cells[Up.Index].Value = Resources.up;
             e.Row.Cells[Down.Index].Value = Resources.down;
@@ -1849,7 +1811,7 @@ namespace VPS.GCSViews
             DataGridViewComboBoxCell cellFrame = Commands.Rows[e.RowIndex].Cells[Frame.Index] as DataGridViewComboBoxCell;
             if (cellFrame.Value == null)
             {
-                cellFrame.Value = CMB_altmode.SelectedValue;
+                cellFrame.Value = altFrame;
             }
 
 
@@ -1981,7 +1943,7 @@ namespace VPS.GCSViews
 
                 Settings.Instance["FP_DefaultAlt"] = TXT_DefaultAlt.Text;
 
-                Settings.Instance["FP_AltMode"] = CMB_altmode.Text;
+                Settings.Instance["FP_AltMode"] = altFrame.ToString();
 
                 Settings.Instance["FP_AltWarn"] = TXT_altwarn.Text;
 
@@ -2018,7 +1980,7 @@ namespace VPS.GCSViews
                             TXT_DefaultAlt.Text = "" + Settings.Instance[key];
                             break;
                         case "FP_AltMode":
-                            CMB_altmode.Text = "" + Settings.Instance[key];
+                            SetAltFrame("" + Settings.Instance[key]);
                             break;
                         case "FP_AltWarn":
                             TXT_altwarn.Text = "" + Settings.Instance["FP_AltWarn"];
@@ -4029,7 +3991,7 @@ namespace VPS.GCSViews
                     // not home
                     if (i != 0)
                     {
-                        CMB_altmode.SelectedValue = temp.frame;
+                        SetAltFrame(temp.frame.ToString());
                     }
                 }
 
@@ -6381,44 +6343,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         }
 
 
-        #region AltFrame
-        #region AltFrame 接口函数
-        private delegate void SetAltFrameInThread(string frame);
-        public void SetAltFrameHandle(string frame)
-        {
-            if (this.InvokeRequired)
-            {
-                SetAltFrameInThread inThread = new SetAltFrameInThread(SetAltFrameHandle);
-                this.Invoke(inThread, new object[] { frame });
-            }
-            else
-            {
-                SetAltFrame(frame);
-            }
-        }
-        #endregion
-        #region AltFrame 入口函数
-        private void SetAltFrame(string frame)
-        {
-            switch (frame.ToString())
-            {
-                case "Relative":
-                    CMB_altmode.SelectedText = GCSViews.FlightPlanner.altmode.Relative.ToString();
-                    break;
-                case "Absolute":
-                    CMB_altmode.SelectedText = GCSViews.FlightPlanner.altmode.Absolute.ToString();
-                    break;
-                case "Terrain":
-                    CMB_altmode.SelectedText = GCSViews.FlightPlanner.altmode.Terrain.ToString();
-                    break;
-                default:
-                    CMB_altmode.SelectedText = GCSViews.FlightPlanner.altmode.Relative.ToString();
-                    break;
-            }
-        }
-        #endregion
-        #endregion
-
         #region WPRad
         #region WPRad 接口函数
         private delegate void SetWPRadInThread(int wpRad);
@@ -7049,13 +6973,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 w.WriteEndElement();//ExtendedData
 
                 w.WriteStartElement("Point");
-                w.WriteStartElement("altitudeMode");
-                int mode = System.Convert.ToInt32(CMB_altmode.SelectedValue);
-                {
-                    w.WriteAttributeString("id", "10");
-                    w.WriteString("relativeToGround");
-                }
 
+                w.WriteStartElement("altitudeMode");
+                w.WriteString("relativeToGround");
                 w.WriteEndElement();//altitudeMode
                 w.WriteStartElement("coordinates");
                 w.WriteString(string.Format("{0},{1},{2}",
@@ -7068,15 +6988,15 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 #endregion
             }
             List<PointLatLngAlt> wpList = null;
-            switch (CMB_altmode.SelectedIndex)
+            switch (altFrame)
             {
-                case 0:
+                case AltMode.Relative:
                     wpList = GetWPList("Terrain");
                     break;
-                case 1:
+                case AltMode.Absolute:
                     wpList = GetWPList("Absolute");
                     break;
-                case 2:
+                case AltMode.Terrain:
                     wpList = GetWPList("Terrain");
                     break;
                 default:
@@ -7191,15 +7111,15 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 w.WriteString("1");
                 w.WriteEndElement();//tessellate
                 w.WriteStartElement("altitudeMode");
-                switch (CMB_altmode.SelectedIndex)
+                switch (altFrame)
                 {
-                    case 0:
+                    case AltMode.Relative:
                         w.WriteString("relativeToGround");
                         break;
-                    case 1:
+                    case AltMode.Absolute:
                         w.WriteString("absolute");
                         break;
-                    case 2:
+                    case AltMode.Terrain:
                         w.WriteString("relativeToGround");
                         break;
                     default:
@@ -8121,6 +8041,59 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         #endregion
         #endregion
 
+        #region AltFrame
+        #region AltFrame 接口函数
+        private delegate void SetAltFrameInThread(string frame);
+        public void SetAltFrameHandle(string frame)
+        {
+            if (this.InvokeRequired)
+            {
+                SetAltFrameInThread inThread = new SetAltFrameInThread(SetAltFrameHandle);
+                this.Invoke(inThread, new object[] { frame });
+            }
+            else
+            {
+                SetAltFrame(frame);
+            }
+        }
+        #endregion
+        //public enum altmode
+        //{
+        //    Relative = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT,
+        //    Absolute = MAVLink.MAV_FRAME.GLOBAL,
+        //    Terrain = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT
+        //}
+        public enum AltMode
+        {
+            Relative,
+            Absolute,
+            Terrain
+        }
+
+        private AltMode altFrame = AltMode.Relative;
+
+        #region AltFrame 入口函数
+        private void SetAltFrame(string frame)
+        {
+            switch (frame.ToString())
+            {
+                case "Relative":
+                    altFrame = AltMode.Relative;
+                    break;
+                case "Absolute":
+                    altFrame = AltMode.Absolute;
+                    break;
+                case "Terrain":
+                    altFrame = AltMode.Terrain;
+                    break;
+                default:
+                    altFrame = AltMode.Relative;
+                    break;
+            }
+        }
+        #endregion
+        #endregion
+
         #endregion
 
         private List<Locationwp> GetCommandList()
@@ -8288,7 +8261,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             DataGridViewTextBoxCell cell;
             if (alt == -2 && Commands.Columns[Alt.Index].HeaderText.Equals("Alt"))
             {
-                if (CHK_verifyheight.Checked && (altmode)CMB_altmode.SelectedValue != altmode.Terrain) //Drag with verifyheight // use srtm data
+                if (CHK_verifyheight.Checked ) //Drag with verifyheight // use srtm data
                 {
                     cell = Commands.Rows[selectedrow].Cells[Alt.Index] as DataGridViewTextBoxCell;
                     float ans;
@@ -8385,14 +8358,14 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     if (CHK_verifyheight.Checked) // use srtm data
                     {
                         // is absolute but no verify
-                        if ((altmode)CMB_altmode.SelectedValue == altmode.Absolute)
+                        if (altFrame == AltMode.Absolute)
                         {
                             //abs
                             cell.Value =
                                 ((srtm.getAltitude(lat, lng).alt) * CurrentState.multiplieralt +
                                  int.Parse(TXT_DefaultAlt.Text)).ToString();
                         }
-                        else if ((altmode)CMB_altmode.SelectedValue == altmode.Terrain)
+                        else if (altFrame == AltMode.Terrain)
                         {
                             cell.Value = int.Parse(TXT_DefaultAlt.Text);
                         }
