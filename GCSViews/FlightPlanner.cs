@@ -447,16 +447,6 @@ namespace VPS.GCSViews
             updateCMDParams();
 
             updateDisplayView();
-
-            try
-            {
-                int.Parse(TXT_DefaultAlt.Text);
-            }
-            catch
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("请修正默认Alt");
-                TXT_DefaultAlt.Text = (50 * CurrentState.multiplieralt).ToString("0");
-            }
         }
 
         public void Deactivate()
@@ -844,7 +834,8 @@ namespace VPS.GCSViews
                     InsertCommand(
                         pnt2 - 1, MAVLink.MAV_CMD.WAYPOINT, 0, 0, 0, 0,
                         CurrentMidLine.Position.Lng,
-                        CurrentMidLine.Position.Lat, float.Parse(TXT_DefaultAlt.Text));
+                        CurrentMidLine.Position.Lat, 
+                        defaultAlt);
                 }
             }
 
@@ -1387,9 +1378,8 @@ namespace VPS.GCSViews
                 IsDrawWPMode = true;
                 return;
             }
-            int.TryParse(TXT_DefaultAlt.Text, out int alt);
 
-            AddWPPoint(MouseDownStart.Lat, MouseDownStart.Lng, alt);
+            AddWPPoint(MouseDownStart.Lat, MouseDownStart.Lng, defaultAlt);
         }
 
 
@@ -1878,7 +1868,7 @@ namespace VPS.GCSViews
                 // default takeoff to non 0 alt
                 if (((ComboBox)sender).Text == "TAKEOFF")
                 {
-                    if (Commands.Rows[selectedrow].Cells[Alt.Index].Value != null && Commands.Rows[selectedrow].Cells[Alt.Index].Value.ToString() == "0") Commands.Rows[selectedrow].Cells[Alt.Index].Value = TXT_DefaultAlt.Text;
+                    if (Commands.Rows[selectedrow].Cells[Alt.Index].Value != null && Commands.Rows[selectedrow].Cells[Alt.Index].Value.ToString() == "0") Commands.Rows[selectedrow].Cells[Alt.Index].Value = defaultAlt;
                 }
 
                 // default land to 0
@@ -1938,7 +1928,7 @@ namespace VPS.GCSViews
 
                 Settings.Instance["FP_LoiterRad"] = TXT_loiterrad.Text;
 
-                Settings.Instance["FP_DefaultAlt"] = TXT_DefaultAlt.Text;
+                Settings.Instance["FP_DefaultAlt"] = defaultAlt.ToString();
 
                 Settings.Instance["FP_AltMode"] = altFrame.ToString();
 
@@ -1953,16 +1943,22 @@ namespace VPS.GCSViews
                     switch (key)
                     {
                         case "FP_HomeLat":
-                            if (double.TryParse(Settings.Instance[key], out double lat))
-                                homePosition.Lat = lat;
+                            {
+                                if (double.TryParse(Settings.Instance[key], out double lat))
+                                    homePosition.Lat = lat;
+                            }
                             break;
                         case "FP_HomeLng":
-                            if (double.TryParse(Settings.Instance[key], out double lng))
-                                homePosition.Lng = lng;
+                            {
+                                if (double.TryParse(Settings.Instance[key], out double lng))
+                                    homePosition.Lng = lng;
+                            }
                             break;
                         case "FP_HomeAlt":
-                            if (double.TryParse(Settings.Instance[key], out double alt))
-                                homePosition.Alt = alt;
+                            {
+                                if (double.TryParse(Settings.Instance[key], out double alt))
+                                    homePosition.Alt = alt;
+                            }
                             break;
                         case "FP_HomeFrame":
                             homePosition.Tag2 = "" + Settings.Instance[key];
@@ -1975,7 +1971,10 @@ namespace VPS.GCSViews
                             TXT_loiterrad.Text = "" + Settings.Instance[key];
                             break;
                         case "FP_DefaultAlt":
-                            TXT_DefaultAlt.Text = "" + Settings.Instance[key];
+                            {
+                                if (int.TryParse(Settings.Instance[key], out int alt))
+                                    SetDefaultAltHandle(alt);
+                            }
                             break;
                         case "FP_AltMode":
                             SetAltFrameHandle("" + Settings.Instance[key]);
@@ -3072,7 +3071,7 @@ namespace VPS.GCSViews
 
                 ChangeColumnHeader(MAVLink.MAV_CMD.SPLINE_WAYPOINT.ToString());
 
-                setfromMap(MouseDownStart.Lat, MouseDownStart.Lng, (int)float.Parse(TXT_DefaultAlt.Text));
+                setfromMap(MouseDownStart.Lat, MouseDownStart.Lng, defaultAlt);
             }
         }
 
@@ -3095,7 +3094,7 @@ namespace VPS.GCSViews
 
                 ChangeColumnHeader(MAVLink.MAV_CMD.WAYPOINT.ToString());
 
-                setfromMap(MouseDownStart.Lat, MouseDownStart.Lng, (int)float.Parse(TXT_DefaultAlt.Text));
+                setfromMap(MouseDownStart.Lat, MouseDownStart.Lng, defaultAlt);
             }
         }
 
@@ -4650,31 +4649,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             catch (Exception ex)
             {
                 log.Error(ex);
-            }
-        }
-
-        public void trackerHomeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MainV2.comPort.MAV.cs.TrackerLocation = new PointLatLngAlt(MouseDownEnd)
-            {
-                Alt = MainV2.comPort.MAV.cs.HomeAlt
-            };
-        }
-
-        public void TXT_DefaultAlt_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            float isNumber = 0;
-            if (e.KeyChar.ToString() == "\b")
-                return;
-            e.Handled = !float.TryParse(e.KeyChar.ToString(), out isNumber);
-        }
-
-        public void TXT_DefaultAlt_Leave(object sender, EventArgs e)
-        {
-            float isNumber = 0;
-            if (!float.TryParse(TXT_DefaultAlt.Text, out isNumber))
-            {
-                TXT_DefaultAlt.Text = "200";
             }
         }
 
@@ -6316,80 +6290,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
             MainMap.SetZoomToFitRect(MainV2.instance.displayRect);
         }
-
-        #region Alt
-        #region BaseAlt
-        #region BaseAlt 接口函数
-        private delegate void SetBaseAltInThread(int baseAlt);
-        public void SetBaseAltHandle(int baseAlt)
-        {
-            if (this.InvokeRequired)
-            {
-                SetBaseAltInThread inThread = new SetBaseAltInThread(SetBaseAltHandle);
-                this.Invoke(inThread, new object[] { baseAlt });
-            }
-            else
-            {
-                SetBaseAlt(baseAlt);
-            }
-        }
-        #endregion
-        #region BaseAlt 入口函数
-        private void SetBaseAlt(int baseAlt)
-        {
-        }
-        #endregion
-        #endregion
-
-        #region DefaultAlt
-        #region DefaultAlt 接口函数
-        private delegate void SetDefaultAltInThread(int defaultAlt);
-        public void SetDefaultAltHandle(int defaultAlt)
-        {
-            if (this.InvokeRequired)
-            {
-                SetDefaultAltInThread inThread = new SetDefaultAltInThread(SetDefaultAltHandle);
-                this.Invoke(inThread, new object[] { defaultAlt });
-            }
-            else
-            {
-                SetDefaultAlt(defaultAlt);
-            }
-        }
-        #endregion
-        #region DefaultAlt 入口函数
-        private void SetDefaultAlt(int defaultAlt)
-        {
-            TXT_DefaultAlt.Text = defaultAlt.ToString();
-        }
-        #endregion
-        #endregion
-
-        #region WarnAlt
-        #region WarnAlt 接口函数
-        private delegate void SetWarnAltInThread(int warnAlt);
-        public void SetWarnAltHandle(int warnAlt)
-        {
-            if (this.InvokeRequired)
-            {
-                SetWarnAltInThread inThread = new SetWarnAltInThread(SetWarnAltHandle);
-                this.Invoke(inThread, new object[] { warnAlt });
-            }
-            else
-            {
-                SetWarnAlt(warnAlt);
-            }
-        }
-        #endregion
-        #region WarnAlt 入口函数
-        private void SetWarnAlt(int warnAlt)
-        {
-            TXT_altwarn.Text = warnAlt.ToString();
-        }
-        #endregion
-        #endregion
-
-        #endregion
 
         #region AddMarkToMap
 
@@ -8090,6 +7990,87 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         #endregion
         #endregion
 
+        #region BaseAlt
+        #region BaseAlt 接口函数
+        private delegate void SetBaseAltInThread(int baseAlt);
+        public void SetBaseAltHandle(int baseAlt)
+        {
+            if (this.InvokeRequired)
+            {
+                SetBaseAltInThread inThread = new SetBaseAltInThread(SetBaseAltHandle);
+                this.Invoke(inThread, new object[] { baseAlt });
+            }
+            else
+            {
+                SetBaseAlt(baseAlt);
+            }
+        }
+        #endregion
+        #region BaseAlt 入口函数
+        private void SetBaseAlt(int baseAlt)
+        {
+        }
+        #endregion
+        #endregion
+
+        #region DefaultAlt
+        private int defaultAlt = 200;
+
+        public IntegerChangeHandler defaultAltChange;
+        #region SetDefaultAlt
+        #region DefaultAlt 接口函数
+        private delegate void SetDefaultAltInThread(int defaultAlt);
+        public void SetDefaultAltHandle(int defaultAlt)
+        {
+            if (this.InvokeRequired)
+            {
+                SetDefaultAltInThread inThread = new SetDefaultAltInThread(SetDefaultAltHandle);
+                this.Invoke(inThread, new object[] { defaultAlt });
+            }
+            else
+            {
+                BeginQuickChange();
+                SetDefaultAlt(defaultAlt);
+                EndQuickChange();
+            }
+        }
+        #endregion
+
+        #region DefaultAlt 入口函数
+        private void SetDefaultAlt(int alt)
+        {
+            defaultAlt = alt;
+            if (onlyChangeValue)
+                defaultAltChange?.Invoke(defaultAlt);
+        }
+        #endregion
+        #endregion
+        #endregion
+
+        #region WarnAlt
+        #region WarnAlt 接口函数
+        private delegate void SetWarnAltInThread(int warnAlt);
+        public void SetWarnAltHandle(int warnAlt)
+        {
+            if (this.InvokeRequired)
+            {
+                SetWarnAltInThread inThread = new SetWarnAltInThread(SetWarnAltHandle);
+                this.Invoke(inThread, new object[] { warnAlt });
+            }
+            else
+            {
+                SetWarnAlt(warnAlt);
+            }
+        }
+        #endregion
+        #region WarnAlt 入口函数
+        private void SetWarnAlt(int warnAlt)
+        {
+            TXT_altwarn.Text = warnAlt.ToString();
+        }
+        #endregion
+        #endregion
+
         #endregion
 
         private List<Locationwp> GetCommandList()
@@ -8338,7 +8319,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     //    }
                 }
 
-                cell.Value = TXT_DefaultAlt.Text;
+                cell.Value = defaultAlt;
 
                 float ans;
                 if (float.TryParse(cell.Value.ToString(), out ans))
@@ -8359,19 +8340,18 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         {
                             //abs
                             cell.Value =
-                                ((srtm.getAltitude(lat, lng).alt) * CurrentState.multiplieralt +
-                                 int.Parse(TXT_DefaultAlt.Text)).ToString();
+                                ((srtm.getAltitude(lat, lng).alt) * CurrentState.multiplieralt + defaultAlt).ToString();
                         }
                         else if (altFrame == AltMode.Terrain)
                         {
-                            cell.Value = int.Parse(TXT_DefaultAlt.Text);
+                            cell.Value = defaultAlt;
                         }
                         else
                         {
                             //relative and verify
                             cell.Value =
                                 ((int)(srtm.getAltitude(lat, lng).alt) * CurrentState.multiplieralt +
-                                 int.Parse(TXT_DefaultAlt.Text) -
+                                 defaultAlt -
                                  (int)
                                  srtm.getAltitude(MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat,
                                      MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng).alt * CurrentState.multiplieralt)

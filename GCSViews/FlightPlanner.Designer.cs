@@ -54,8 +54,6 @@ namespace VPS.GCSViews
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.CHK_verifyheight = new System.Windows.Forms.CheckBox();
-            this.TXT_DefaultAlt = new System.Windows.Forms.TextBox();
-            this.LBL_defalutalt = new System.Windows.Forms.Label();
             this.TXT_loiterrad = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
@@ -152,20 +150,6 @@ namespace VPS.GCSViews
             this.toolTip1.SetToolTip(this.CHK_verifyheight, resources.GetString("CHK_verifyheight.ToolTip"));
             this.CHK_verifyheight.UseVisualStyleBackColor = true;
             // 
-            // TXT_DefaultAlt
-            // 
-            resources.ApplyResources(this.TXT_DefaultAlt, "TXT_DefaultAlt");
-            this.TXT_DefaultAlt.Name = "TXT_DefaultAlt";
-            this.toolTip1.SetToolTip(this.TXT_DefaultAlt, resources.GetString("TXT_DefaultAlt.ToolTip"));
-            this.TXT_DefaultAlt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TXT_DefaultAlt_KeyPress);
-            this.TXT_DefaultAlt.Leave += new System.EventHandler(this.TXT_DefaultAlt_Leave);
-            // 
-            // LBL_defalutalt
-            // 
-            resources.ApplyResources(this.LBL_defalutalt, "LBL_defalutalt");
-            this.LBL_defalutalt.Name = "LBL_defalutalt";
-            this.toolTip1.SetToolTip(this.LBL_defalutalt, resources.GetString("LBL_defalutalt.ToolTip"));
-            // 
             // TXT_loiterrad
             // 
             resources.ApplyResources(this.TXT_loiterrad, "TXT_loiterrad");
@@ -219,9 +203,7 @@ namespace VPS.GCSViews
             this.panelWaypoints.Controls.Add(this.TXT_altwarn);
             this.panelWaypoints.Controls.Add(this.label5);
             this.panelWaypoints.Controls.Add(this.TXT_loiterrad);
-            this.panelWaypoints.Controls.Add(this.LBL_defalutalt);
             this.panelWaypoints.Controls.Add(this.Commands);
-            this.panelWaypoints.Controls.Add(this.TXT_DefaultAlt);
             this.panelWaypoints.Controls.Add(this.CHK_verifyheight);
             this.panelWaypoints.Controls.Add(this.BUT_Add);
             this.panelWaypoints.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -827,7 +809,6 @@ namespace VPS.GCSViews
         public Controls.myGMAP MainMap;
 
         public System.Windows.Forms.CheckBox CHK_verifyheight;
-        public System.Windows.Forms.TextBox TXT_DefaultAlt;
         public System.Windows.Forms.TextBox TXT_loiterrad;
         public System.Windows.Forms.CheckBox CHK_splinedefault;
         public DataGridViewImageColumn dataGridViewImageColumn1;
@@ -836,7 +817,6 @@ namespace VPS.GCSViews
         public Label lbl_status;
         public MyDataGridView Commands;
         public MyButton BUT_Add;
-        public Label LBL_defalutalt;
         public Label label5;
         public Panel panelMap;
         public MyTrackBar trackBar1;
