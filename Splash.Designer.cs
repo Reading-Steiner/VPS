@@ -93,7 +93,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "VPS";
             this.TopLeftCornerSize = 60;
-            this.TopMost = true;
             this.TopRightCornerSize = 60;
             this.ResumeLayout(false);
 

@@ -130,6 +130,9 @@
   <data name="TXT_DefaultAlt.Location" type="System.Drawing.Point, System.Drawing">
     <value>154, 18</value>
   </data>
+  <data name="TXT_DefaultAlt.Text" xml:space="preserve">
+    <value>200</value>
+  </data>
   <data name="LBL_WPRad.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 1</value>
   </data>
@@ -396,9 +399,6 @@
   </data>
   <data name="polygonToolStripMenuItem.Text" xml:space="preserve">
     <value>划定区域</value>
-  </data>
-  <data name="drawWPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
   </data>
   <data name="drawWPToolStripMenuItem.Text" xml:space="preserve">
     <value>设置航点</value>

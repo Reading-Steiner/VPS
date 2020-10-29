@@ -496,13 +496,13 @@ namespace VPS.Controls.Layer
             if (UsingTransparent.Checked)
             {
                 VPS.Layer.LayerInfo layerInfo =
-                    new VPS.Layer.LayerInfo(openPath, PointLeftTop,ColorPickerButton.SelectedColor);
+                    new VPS.Layer.TiffLayerInfo(openPath, PointLeftTop,ColorPickerButton.SelectedColor);
                 MainV2.instance.AddLayerOverlay(layerInfo);
             }
             else
             {
                 VPS.Layer.LayerInfo layerInfo =
-                    new VPS.Layer.LayerInfo(openPath, PointLeftTop, Color.FromArgb(0, 255, 255, 255));
+                    new VPS.Layer.TiffLayerInfo(openPath, PointLeftTop, Color.FromArgb(0, 255, 255, 255));
                 MainV2.instance.AddLayerOverlay(layerInfo);
             }
             if (SettingDefaultMap.Checked)

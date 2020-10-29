@@ -506,15 +506,14 @@
       <DependentUpon>LayerReader.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Layer\MemoryLayerCache.cs" />
+    <Compile Include="Controls\Layer\TiffLayerInfo.cs" />
     <Compile Include="Controls\MainInfo\LeftMainInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\MainInfo\LeftMainInfo.Designer.cs">
       <DependentUpon>LeftMainInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MainInfo\TopMainInfo.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Controls\MainInfo\TopMainInfo.cs" />
     <Compile Include="Controls\MainInfo\TopMainInfo.Designer.cs">
       <DependentUpon>TopMainInfo.cs</DependentUpon>
     </Compile>

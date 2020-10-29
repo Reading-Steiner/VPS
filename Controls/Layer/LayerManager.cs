@@ -26,6 +26,10 @@ namespace VPS.Controls.Layer
             VPS.Layer.MemoryLayerCache.LayerInfosChange += BindingDataSource;
         }
 
+        #region LayerManager 数据绑定
+
+        #region 获取LayerInfoList
+
         public List<VPS.Layer.LayerInfo> GetDataSource()
         {
             List<VPS.Layer.LayerInfo> dataSource = new List<VPS.Layer.LayerInfo>();
@@ -34,12 +38,16 @@ namespace VPS.Controls.Layer
                 var info = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(index, true);
                 if (info != null) 
                 {
-                    dataSource.Add(info.GetValueOrDefault());
+                    dataSource.Add(info);
                 }
             }
             return dataSource;
         }
+        #endregion
 
+        #region 生成表格
+
+        #region 生成主表
         const string MainLayerHandle = "MainLayer";
         public DataTable GetMainTable()
         {
@@ -81,6 +89,9 @@ namespace VPS.Controls.Layer
             table.Columns.Add(col);
             return table;
         }
+        #endregion
+
+        #region 生成 文件表
 
         const string FileLayerHandle = "FileLayer";
         public DataTable GetFileTable()
@@ -116,11 +127,14 @@ namespace VPS.Controls.Layer
 
             return table;
         }
+        #endregion
 
-        const string LayerLayerHandle = "LayerLayer";
+        #region 生成Tiff表
+
+        const string TiffLayerHandle = "TiffLayer";
         public DataTable GetLayerTable()
         {
-            DataTable table = new DataTable(LayerLayerHandle);
+            DataTable table = new DataTable(TiffLayerHandle);
 
             DataColumn col = new DataColumn();
             col.ColumnName = "Key";
@@ -151,6 +165,11 @@ namespace VPS.Controls.Layer
 
             return table;
         }
+        #endregion
+
+        #endregion
+
+        #region 绑定数据 入口函数
 
         public void BindingDataSource()
         {
@@ -172,10 +191,10 @@ namespace VPS.Controls.Layer
             {
                 DataRow row = table.NewRow();
 
-                row[0] = emp[i].GetHashCode();
+                row[0] = emp[i].GetOnlyCode();
                 row[1] = emp[i].Layer;
-                row[3] = emp[i].CreateTime;
-                row[4] = emp[i].ModifyTime;
+                row[3] = emp[i].ModifyTime;
+                row[4] = emp[i].CreateTime;
 
                 row[5] = "";
                 if (emp[i].Layer == Utilities.Settings.Instance["defaultTiffLayer"])
@@ -188,28 +207,22 @@ namespace VPS.Controls.Layer
                 }
 
 
-
-                switch (emp[i].LayerType)
+                if (emp[i] is VPS.Layer.TiffLayerInfo)
                 {
-                    case "file":
-                        row[2] = "本地文件";
-                        layerTable.BeginLoadData();
-                        DataRow fileRow = layerTable.NewRow();
-                        fileRow[0] = emp[i].GetHashCode();
-                        fileRow[1] = emp[i].Origin;
-                        fileRow[2] = emp[i].Origin.Tag2;
-                        fileRow[3] = emp[i].ScaleFormat;
-                        fileRow[4] = emp[i].Transparent;
+                    row[2] = "本地文件";
+                    layerTable.BeginLoadData();
+                    DataRow fileRow = layerTable.NewRow();
+                    fileRow[0] = emp[i].GetOnlyCode();
+                    fileRow[1] = emp[i].Origin;
+                    fileRow[2] = emp[i].Origin.Tag2;
+                    fileRow[3] = emp[i].ScaleFormat;
+                    fileRow[4] = ((VPS.Layer.TiffLayerInfo)emp[i]).Transparent;
 
-                        layerTable.Rows.Add(fileRow);
+                    layerTable.Rows.Add(fileRow);
 
-                        fileRow.AcceptChanges();
-                        layerTable.EndLoadData();
-                        break;
+                    fileRow.AcceptChanges();
+                    layerTable.EndLoadData();
                 }
-
-                
-
 
                 table.Rows.Add(row);
 
@@ -218,12 +231,16 @@ namespace VPS.Controls.Layer
             table.EndLoadData();
 
             set.Relations.Add("1", set.Tables[MainLayerHandle].Columns["Key"],
-                                           set.Tables[LayerLayerHandle].Columns["Key"], false);
+                                           set.Tables[TiffLayerHandle].Columns["Key"], false);
             LayerDataList.PrimaryGrid.DataSource = set;
             LayerDataList.PrimaryGrid.DataMember = MainLayerHandle;
             EndEdit();
         }
+        #endregion
 
+        #region 绑定成功后的响应函数（设置表格格式）
+
+        #region 入口函数
         private void LayerDataList_DataBindingComplete(object sender, DevComponents.DotNetBar.SuperGrid.GridDataBindingCompleteEventArgs e)
         {
             GridPanel panel = e.GridPanel;
@@ -234,11 +251,14 @@ namespace VPS.Controls.Layer
                     CustomizeMainLayerPanel(panel);
                     break;
 
-                case LayerLayerHandle:
-                    CustomizeFileLayerPanel(panel);
+                case TiffLayerHandle:
+                    CustomizeTiffLayerPanel(panel);
                     break;
             }
         }
+        #endregion
+
+        #region 主表
 
         private void CustomizeMainLayerPanel(GridPanel panel)
         {
@@ -248,17 +268,20 @@ namespace VPS.Controls.Layer
 
             panel.ColumnAutoSizeMode = ColumnAutoSizeMode.None;
             panel.Columns[0].MinimumWidth = 80;
+            panel.Columns[0].ReadOnly = true;
 
             panel.Columns[1].MinimumWidth = 400;
+            panel.Columns[1].ReadOnly = true;
 
             panel.Columns[2].MinimumWidth = 80;
             panel.Columns[2].CellStyles.Default.Alignment = DevComponents.DotNetBar.SuperGrid.Style.Alignment.MiddleCenter;
+            panel.Columns[2].ReadOnly = true;
 
-            //panel.Columns[3].EditorType = typeof(GridDateTimeInputEditControl);
-            panel.Columns[3].MinimumWidth = 150;
+            panel.Columns[3].MinimumWidth = 200;
+            panel.Columns[3].ReadOnly = true;
 
-            //panel.Columns[4].EditorType = typeof(GridDateTimePickerEditControl);
-            panel.Columns[4].MinimumWidth = 150;
+            panel.Columns[4].MinimumWidth = 200;
+            panel.Columns[4].ReadOnly = true;
 
             panel.Columns[5].EditorType = typeof(ImageLabel);
             panel.Columns[5].EditorParams = new object[] { ImageList.Images["Delete.png"] };
@@ -269,11 +292,12 @@ namespace VPS.Controls.Layer
             panel.Columns[6].EditorParams = new object[] { ImageList.Images["Default.png"] };
             panel.Columns[6].MinimumWidth = 25;
             panel.Columns[6].Width = 25;
-            //panel.Columns[3].EditControl.EditorCellBitmap = ImageList.Images["Delete.png"];
-
         }
+        #endregion
 
-        private void CustomizeFileLayerPanel(GridPanel panel)
+        #region Tiff表
+
+        private void CustomizeTiffLayerPanel(GridPanel panel)
         {
             panel.FrozenColumnCount = 1;
             panel.ColumnHeader.RowHeight = 30;
@@ -281,21 +305,30 @@ namespace VPS.Controls.Layer
 
             panel.Columns[0].MinimumWidth = 80;
             panel.Columns[0].Visible = false;
+            panel.Columns[0].ReadOnly = true;
 
             panel.Columns[1].MinimumWidth = 250;
+            panel.Columns[0].ReadOnly = true;
 
+            panel.Columns[2].EditorType = typeof(GridComboBoxExEditControl);
+            panel.Columns[2].EditorParams = new object[] {};
             panel.Columns[2].MinimumWidth = 80;
             panel.Columns[2].CellStyles.Default.Alignment = DevComponents.DotNetBar.SuperGrid.Style.Alignment.MiddleCenter;
 
+            
             panel.Columns[3].MinimumWidth = 80;
             panel.Columns[3].CellStyles.Default.Alignment = DevComponents.DotNetBar.SuperGrid.Style.Alignment.MiddleCenter;
+            panel.Columns[3].Visible = false;
 
             panel.Columns[4].MinimumWidth = 200;
-            panel.Columns[4].CellStyles.Default.TextColor = FromString(panel.GetCell(0, 4).Value.ToString());
-
-
         }
+        #endregion
 
+        #endregion
+
+        #endregion
+
+        #region 解析Color StringFromat
         private Color FromString(string fromat)
         {
             List<int> color = new List<int>();
@@ -310,7 +343,9 @@ namespace VPS.Controls.Layer
                 color.Count > 3 ? color[3] : 0
                 );
         }
+        #endregion
 
+        #region LayerManager Cell点击
         private void LayerDataList_CellClick(object sender, GridCellClickEventArgs e)
         {
             var cell = e.GridCell;
@@ -335,6 +370,7 @@ namespace VPS.Controls.Layer
             }
         }
 
+        #region 删除Row
         private void DeleteLayer(string key)
         {
             StartEdit();
@@ -349,8 +385,13 @@ namespace VPS.Controls.Layer
             }
             EndEdit();
         }
+        #endregion
+
+        #endregion
+
     }
 
+    #region ControlItem
     internal class ImageLabel : GridLabelXEditControl
     {
         #region Private variables
@@ -374,4 +415,13 @@ namespace VPS.Controls.Layer
             this.CheckBoxImageChecked = image;
         }
     }
+
+    internal class AltitudeFrame : GridComboBoxExEditControl
+    {
+        public AltitudeFrame()
+        {
+            this.DataSource = new List<string> (){ "Relative", "Absolute", "Terrain" };
+        }
+    }
+    #endregion
 }

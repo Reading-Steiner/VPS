@@ -130,7 +130,7 @@
             if (create != null)
                 createTime = create;
             else
-                createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");
+                createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 HH:mm:ss");
             if (modify != null)
                 modifyTime = modify;
             else
@@ -181,7 +181,7 @@
                     info.Origin,
                     info.scale,
                     this.CreateTime,
-                    DateTime.Now.ToString("yyyy 年 MM月 dd日 hh: mm:ss"));
+                    DateTime.Now.ToString("yyyy年 MM月 dd日 HH:mm:ss"));
             }
         }
 
@@ -201,11 +201,11 @@
             if (create != null)
                 createTime = create;
             else
-                createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");
+                createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 HH:mm:ss");
             if (modify != null)
                 modifyTime = modify;
             else
-                modifyTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");
+                modifyTime = DateTime.Now.ToString("yyyy年 MM月 dd日 HH:mm:ss");
         }
         #endregion
 
@@ -308,8 +308,8 @@
             string path = "";
             Utilities.PointLatLngAlt origin = new Utilities.PointLatLngAlt();
             double scale = 1;
-            string createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");
-            string modifyTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");
+            string createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 HH:mm:ss");
+            string modifyTime = DateTime.Now.ToString("yyyy年 MM月 dd日 HH:mm:ss");
             Color transparent = Color.Transparent;
             foreach (XmlNode Info in LayerInfoKeys.ChildNodes)
             {

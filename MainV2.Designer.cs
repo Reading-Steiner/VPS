@@ -107,14 +107,11 @@ namespace VPS
             this.styleManager = new DevComponents.DotNetBar.StyleManager(this.components);
             this.dockContainerItem1 = new DevComponents.DotNetBar.DockContainerItem();
             this.RibbonClientPanel = new DevComponents.DotNetBar.Ribbon.RibbonClientPanel();
-            this.topMainInfo = new VPS.Controls.MainInfo.TopMainInfo();
             this.dotNetBarManager1 = new DevComponents.DotNetBar.DotNetBarManager(this.components);
             this.BottomDockSite = new DevComponents.DotNetBar.DockSite();
             this.BottomBar = new DevComponents.DotNetBar.Bar();
             this.LayerManagerPanel = new DevComponents.DotNetBar.PanelDockContainer();
-            this.layerManager1 = new VPS.Controls.Layer.LayerManager();
             this.CommandsPanel = new DevComponents.DotNetBar.PanelDockContainer();
-            this.Commands = new VPS.Controls.Command.CommandsPanel();
             this.panelDockContainer1 = new DevComponents.DotNetBar.PanelDockContainer();
             this.CommandsDockContainerItem = new DevComponents.DotNetBar.DockContainerItem();
             this.LayerManagerDockContainerItem = new DevComponents.DotNetBar.DockContainerItem();
@@ -122,11 +119,8 @@ namespace VPS
             this.LeftDockSite = new DevComponents.DotNetBar.DockSite();
             this.LeftBar = new DevComponents.DotNetBar.Bar();
             this.LayerReaderPanel = new DevComponents.DotNetBar.PanelDockContainer();
-            this.LayerReader = new VPS.Controls.Layer.LayerReader();
             this.AutoGridParamPanel = new DevComponents.DotNetBar.PanelDockContainer();
-            this.GridConfig = new VPS.Controls.Grid.GridConfig();
             this.MainLeftBarPanel = new DevComponents.DotNetBar.PanelDockContainer();
-            this.MainLeftInfo = new VPS.Controls.MainInfo.LeftMainInfo();
             this.LayerReaderDockContainerItem = new DevComponents.DotNetBar.DockContainerItem();
             this.AutoGridDockContainerItem = new DevComponents.DotNetBar.DockContainerItem();
             this.MainInfoDockContainerItem = new DevComponents.DotNetBar.DockContainerItem();
@@ -139,8 +133,14 @@ namespace VPS
             this.microChartItem1 = new DevComponents.DotNetBar.MicroChartItem();
             this.microChartItem2 = new DevComponents.DotNetBar.MicroChartItem();
             this.SuperTooltip = new DevComponents.DotNetBar.SuperTooltip();
-            this.toolStripConnectionControl = new VPS.Controls.ToolStripConnectionControl();
             this.styleManager1 = new DevComponents.DotNetBar.StyleManager(this.components);
+            this.topMainInfo = new VPS.Controls.MainInfo.TopMainInfo();
+            this.layerManager1 = new VPS.Controls.Layer.LayerManager();
+            this.Commands = new VPS.Controls.Command.CommandsPanel();
+            this.LayerReader = new VPS.Controls.Layer.LayerReader();
+            this.GridConfig = new VPS.Controls.Grid.GridConfig();
+            this.MainLeftInfo = new VPS.Controls.MainInfo.LeftMainInfo();
+            this.toolStripConnectionControl = new VPS.Controls.ToolStripConnectionControl();
             this.MinMenuBar.SuspendLayout();
             this.FileRibbonPanel.SuspendLayout();
             this.FuncRibbonPanel.SuspendLayout();
@@ -254,11 +254,10 @@ namespace VPS
             // 
             this.MinMenuBar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.MinMenuBar.CaptionVisible = true;
-            this.MinMenuBar.Controls.Add(this.FileRibbonPanel);
             this.MinMenuBar.Controls.Add(this.FuncRibbonPanel);
+            this.MinMenuBar.Controls.Add(this.FileRibbonPanel);
             this.MinMenuBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.MinMenuBar.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.StartButton,
             this.UndoButton,
             this.ZoomToButton,
             this.FileRibbonTabItem,
@@ -270,8 +269,9 @@ namespace VPS
             this.MinMenuBar.Name = "MinMenuBar";
             this.MinMenuBar.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
             this.MinMenuBar.QuickToolbarItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.StartButton,
             this.qatCustomizeItem});
-            this.MinMenuBar.Size = new System.Drawing.Size(1420, 146);
+            this.MinMenuBar.Size = new System.Drawing.Size(1376, 146);
             this.MinMenuBar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.MinMenuBar.SystemText.MaximizeRibbonText = "显示功能区";
             this.MinMenuBar.SystemText.MinimizeRibbonText = "隐藏功能区";
@@ -301,7 +301,7 @@ namespace VPS
             this.FileRibbonPanel.Location = new System.Drawing.Point(0, 53);
             this.FileRibbonPanel.Name = "FileRibbonPanel";
             this.FileRibbonPanel.Padding = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.FileRibbonPanel.Size = new System.Drawing.Size(1420, 90);
+            this.FileRibbonPanel.Size = new System.Drawing.Size(1376, 90);
             // 
             // 
             // 
@@ -315,6 +315,7 @@ namespace VPS
             // 
             this.FileRibbonPanel.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.FileRibbonPanel.TabIndex = 1;
+            this.FileRibbonPanel.Visible = false;
             // 
             // ribbonBar1
             // 
@@ -441,7 +442,7 @@ namespace VPS
             this.FuncRibbonPanel.Location = new System.Drawing.Point(0, 53);
             this.FuncRibbonPanel.Name = "FuncRibbonPanel";
             this.FuncRibbonPanel.Padding = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.FuncRibbonPanel.Size = new System.Drawing.Size(1420, 90);
+            this.FuncRibbonPanel.Size = new System.Drawing.Size(1376, 90);
             // 
             // 
             // 
@@ -455,7 +456,6 @@ namespace VPS
             // 
             this.FuncRibbonPanel.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.FuncRibbonPanel.TabIndex = 2;
-            this.FuncRibbonPanel.Visible = false;
             // 
             // WPFileRibbonBar
             // 
@@ -828,9 +828,8 @@ namespace VPS
             this.StartButton.CanCustomize = false;
             this.StartButton.HotTrackingStyle = DevComponents.DotNetBar.eHotTrackingStyle.Image;
             this.StartButton.Image = ((System.Drawing.Image)(resources.GetObject("StartButton.Image")));
-            this.StartButton.ImageFixedSize = new System.Drawing.Size(16, 16);
-            this.StartButton.ImagePaddingHorizontal = 0;
-            this.StartButton.ImagePaddingVertical = 0;
+            this.StartButton.ImagePaddingHorizontal = 2;
+            this.StartButton.ImagePaddingVertical = 2;
             this.StartButton.Name = "StartButton";
             this.StartButton.ShowSubItems = false;
             this.StartButton.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
@@ -944,13 +943,13 @@ namespace VPS
             // 
             // FileRibbonTabItem
             // 
-            this.FileRibbonTabItem.Checked = true;
             this.FileRibbonTabItem.Name = "FileRibbonTabItem";
             this.FileRibbonTabItem.Panel = this.FileRibbonPanel;
             this.FileRibbonTabItem.Text = "文件";
             // 
             // FuncRibbonTabItem
             // 
+            this.FuncRibbonTabItem.Checked = true;
             this.FuncRibbonTabItem.Name = "FuncRibbonTabItem";
             this.FuncRibbonTabItem.Panel = this.FuncRibbonPanel;
             this.FuncRibbonTabItem.Text = "航线规划";
@@ -1047,7 +1046,7 @@ namespace VPS
             // 
             // styleManager
             // 
-            this.styleManager.ManagerStyle = DevComponents.DotNetBar.eStyle.Office2010Blue;
+            this.styleManager.ManagerStyle = DevComponents.DotNetBar.eStyle.Office2007Blue;
             this.styleManager.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(163)))), ((int)(((byte)(26))))));
             // 
             // dockContainerItem1
@@ -1063,7 +1062,7 @@ namespace VPS
             this.RibbonClientPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RibbonClientPanel.Location = new System.Drawing.Point(340, 147);
             this.RibbonClientPanel.Name = "RibbonClientPanel";
-            this.RibbonClientPanel.Size = new System.Drawing.Size(1085, 172);
+            this.RibbonClientPanel.Size = new System.Drawing.Size(1041, 170);
             // 
             // 
             // 
@@ -1079,15 +1078,6 @@ namespace VPS
             this.RibbonClientPanel.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.RibbonClientPanel.TabIndex = 1;
             this.RibbonClientPanel.Text = "ClientPanel";
-            // 
-            // topMainInfo
-            // 
-            this.topMainInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.topMainInfo.Location = new System.Drawing.Point(0, 0);
-            this.topMainInfo.Name = "topMainInfo";
-            this.topMainInfo.Size = new System.Drawing.Size(1085, 23);
-            this.topMainInfo.TabIndex = 0;
-            this.topMainInfo.Visible = false;
             // 
             // dotNetBarManager1
             // 
@@ -1118,10 +1108,10 @@ namespace VPS
             this.BottomDockSite.Controls.Add(this.BottomBar);
             this.BottomDockSite.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BottomDockSite.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.BottomBar, 1085, 323)))}, DevComponents.DotNetBar.eOrientation.Vertical);
-            this.BottomDockSite.Location = new System.Drawing.Point(340, 319);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.BottomBar, 1041, 323)))}, DevComponents.DotNetBar.eOrientation.Vertical);
+            this.BottomDockSite.Location = new System.Drawing.Point(340, 317);
             this.BottomDockSite.Name = "BottomDockSite";
-            this.BottomDockSite.Size = new System.Drawing.Size(1085, 326);
+            this.BottomDockSite.Size = new System.Drawing.Size(1041, 326);
             this.BottomDockSite.TabIndex = 5;
             this.BottomDockSite.TabStop = false;
             // 
@@ -1140,8 +1130,8 @@ namespace VPS
             this.BottomBar.CanUndock = false;
             this.BottomBar.CloseSingleTab = true;
             this.BottomBar.Controls.Add(this.LayerManagerPanel);
-            this.BottomBar.Controls.Add(this.CommandsPanel);
             this.BottomBar.Controls.Add(this.panelDockContainer1);
+            this.BottomBar.Controls.Add(this.CommandsPanel);
             this.BottomBar.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.BottomBar.GrabHandleStyle = DevComponents.DotNetBar.eGrabHandleStyle.Caption;
             this.BottomBar.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
@@ -1152,7 +1142,7 @@ namespace VPS
             this.BottomBar.Location = new System.Drawing.Point(0, 3);
             this.BottomBar.Name = "BottomBar";
             this.BottomBar.SelectedDockTab = 1;
-            this.BottomBar.Size = new System.Drawing.Size(1085, 323);
+            this.BottomBar.Size = new System.Drawing.Size(1041, 323);
             this.BottomBar.Stretch = true;
             this.BottomBar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.BottomBar.TabIndex = 0;
@@ -1165,21 +1155,13 @@ namespace VPS
             this.LayerManagerPanel.Controls.Add(this.layerManager1);
             this.LayerManagerPanel.Location = new System.Drawing.Point(3, 23);
             this.LayerManagerPanel.Name = "LayerManagerPanel";
-            this.LayerManagerPanel.Size = new System.Drawing.Size(1079, 272);
+            this.LayerManagerPanel.Size = new System.Drawing.Size(1035, 272);
             this.LayerManagerPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.LayerManagerPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.LayerManagerPanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.LayerManagerPanel.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.LayerManagerPanel.Style.GradientAngle = 90;
             this.LayerManagerPanel.TabIndex = 0;
-            // 
-            // layerManager1
-            // 
-            this.layerManager1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.layerManager1.Location = new System.Drawing.Point(0, 0);
-            this.layerManager1.Name = "layerManager1";
-            this.layerManager1.Size = new System.Drawing.Size(1079, 278);
-            this.layerManager1.TabIndex = 0;
             // 
             // CommandsPanel
             // 
@@ -1188,7 +1170,7 @@ namespace VPS
             this.CommandsPanel.Controls.Add(this.Commands);
             this.CommandsPanel.Location = new System.Drawing.Point(3, 23);
             this.CommandsPanel.Name = "CommandsPanel";
-            this.CommandsPanel.Size = new System.Drawing.Size(1079, 272);
+            this.CommandsPanel.Size = new System.Drawing.Size(1035, 272);
             this.CommandsPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.CommandsPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.CommandsPanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -1196,20 +1178,12 @@ namespace VPS
             this.CommandsPanel.Style.GradientAngle = 90;
             this.CommandsPanel.TabIndex = 0;
             // 
-            // Commands
-            // 
-            this.Commands.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Commands.Location = new System.Drawing.Point(0, 0);
-            this.Commands.Name = "Commands";
-            this.Commands.Size = new System.Drawing.Size(1079, 272);
-            this.Commands.TabIndex = 0;
-            // 
             // panelDockContainer1
             // 
             this.panelDockContainer1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelDockContainer1.Location = new System.Drawing.Point(3, 23);
             this.panelDockContainer1.Name = "panelDockContainer1";
-            this.panelDockContainer1.Size = new System.Drawing.Size(1079, 272);
+            this.panelDockContainer1.Size = new System.Drawing.Size(1035, 272);
             this.panelDockContainer1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelDockContainer1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelDockContainer1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -1242,10 +1216,10 @@ namespace VPS
             this.LeftDockSite.Controls.Add(this.LeftBar);
             this.LeftDockSite.Dock = System.Windows.Forms.DockStyle.Left;
             this.LeftDockSite.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.LeftBar, 332, 498)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.LeftBar, 332, 496)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
             this.LeftDockSite.Location = new System.Drawing.Point(5, 147);
             this.LeftDockSite.Name = "LeftDockSite";
-            this.LeftDockSite.Size = new System.Drawing.Size(335, 498);
+            this.LeftDockSite.Size = new System.Drawing.Size(335, 496);
             this.LeftDockSite.TabIndex = 2;
             this.LeftDockSite.TabStop = false;
             // 
@@ -1279,7 +1253,7 @@ namespace VPS
             this.LeftBar.Location = new System.Drawing.Point(0, 0);
             this.LeftBar.Name = "LeftBar";
             this.LeftBar.SelectedDockTab = 0;
-            this.LeftBar.Size = new System.Drawing.Size(332, 498);
+            this.LeftBar.Size = new System.Drawing.Size(332, 496);
             this.LeftBar.Stretch = true;
             this.LeftBar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.LeftBar.TabIndex = 0;
@@ -1294,23 +1268,13 @@ namespace VPS
             this.LayerReaderPanel.Controls.Add(this.LayerReader);
             this.LayerReaderPanel.Location = new System.Drawing.Point(3, 23);
             this.LayerReaderPanel.Name = "LayerReaderPanel";
-            this.LayerReaderPanel.Size = new System.Drawing.Size(326, 447);
+            this.LayerReaderPanel.Size = new System.Drawing.Size(326, 445);
             this.LayerReaderPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.LayerReaderPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.LayerReaderPanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.LayerReaderPanel.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.LayerReaderPanel.Style.GradientAngle = 90;
             this.LayerReaderPanel.TabIndex = 0;
-            // 
-            // LayerReader
-            // 
-            this.LayerReader.AutoScroll = true;
-            this.LayerReader.AutoSize = true;
-            this.LayerReader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.LayerReader.Location = new System.Drawing.Point(0, 0);
-            this.LayerReader.Name = "LayerReader";
-            this.LayerReader.Size = new System.Drawing.Size(309, 456);
-            this.LayerReader.TabIndex = 0;
             // 
             // AutoGridParamPanel
             // 
@@ -1319,22 +1283,13 @@ namespace VPS
             this.AutoGridParamPanel.Controls.Add(this.GridConfig);
             this.AutoGridParamPanel.Location = new System.Drawing.Point(3, 23);
             this.AutoGridParamPanel.Name = "AutoGridParamPanel";
-            this.AutoGridParamPanel.Size = new System.Drawing.Size(326, 447);
+            this.AutoGridParamPanel.Size = new System.Drawing.Size(326, 445);
             this.AutoGridParamPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.AutoGridParamPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.AutoGridParamPanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.AutoGridParamPanel.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.AutoGridParamPanel.Style.GradientAngle = 90;
             this.AutoGridParamPanel.TabIndex = 0;
-            // 
-            // GridConfig
-            // 
-            this.GridConfig.AutoSize = true;
-            this.GridConfig.Dock = System.Windows.Forms.DockStyle.Top;
-            this.GridConfig.Location = new System.Drawing.Point(0, 0);
-            this.GridConfig.Name = "GridConfig";
-            this.GridConfig.Size = new System.Drawing.Size(309, 559);
-            this.GridConfig.TabIndex = 0;
             // 
             // MainLeftBarPanel
             // 
@@ -1343,22 +1298,13 @@ namespace VPS
             this.MainLeftBarPanel.Controls.Add(this.MainLeftInfo);
             this.MainLeftBarPanel.Location = new System.Drawing.Point(3, 23);
             this.MainLeftBarPanel.Name = "MainLeftBarPanel";
-            this.MainLeftBarPanel.Size = new System.Drawing.Size(326, 447);
+            this.MainLeftBarPanel.Size = new System.Drawing.Size(326, 445);
             this.MainLeftBarPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.MainLeftBarPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.MainLeftBarPanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.MainLeftBarPanel.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.MainLeftBarPanel.Style.GradientAngle = 90;
             this.MainLeftBarPanel.TabIndex = 0;
-            // 
-            // MainLeftInfo
-            // 
-            this.MainLeftInfo.AutoSize = true;
-            this.MainLeftInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.MainLeftInfo.Location = new System.Drawing.Point(0, 0);
-            this.MainLeftInfo.Name = "MainLeftInfo";
-            this.MainLeftInfo.Size = new System.Drawing.Size(326, 364);
-            this.MainLeftInfo.TabIndex = 0;
             // 
             // LayerReaderDockContainerItem
             // 
@@ -1385,9 +1331,9 @@ namespace VPS
             this.RightDockSite.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.RightDockSite.Dock = System.Windows.Forms.DockStyle.Right;
             this.RightDockSite.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
-            this.RightDockSite.Location = new System.Drawing.Point(1425, 147);
+            this.RightDockSite.Location = new System.Drawing.Point(1381, 147);
             this.RightDockSite.Name = "RightDockSite";
-            this.RightDockSite.Size = new System.Drawing.Size(0, 498);
+            this.RightDockSite.Size = new System.Drawing.Size(0, 496);
             this.RightDockSite.TabIndex = 3;
             this.RightDockSite.TabStop = false;
             // 
@@ -1395,9 +1341,9 @@ namespace VPS
             // 
             this.ToolbarBottomDockSite.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.ToolbarBottomDockSite.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ToolbarBottomDockSite.Location = new System.Drawing.Point(5, 645);
+            this.ToolbarBottomDockSite.Location = new System.Drawing.Point(5, 643);
             this.ToolbarBottomDockSite.Name = "ToolbarBottomDockSite";
-            this.ToolbarBottomDockSite.Size = new System.Drawing.Size(1420, 0);
+            this.ToolbarBottomDockSite.Size = new System.Drawing.Size(1376, 0);
             this.ToolbarBottomDockSite.TabIndex = 9;
             this.ToolbarBottomDockSite.TabStop = false;
             // 
@@ -1407,7 +1353,7 @@ namespace VPS
             this.ToolbarLeftDockSite.Dock = System.Windows.Forms.DockStyle.Left;
             this.ToolbarLeftDockSite.Location = new System.Drawing.Point(5, 147);
             this.ToolbarLeftDockSite.Name = "ToolbarLeftDockSite";
-            this.ToolbarLeftDockSite.Size = new System.Drawing.Size(0, 498);
+            this.ToolbarLeftDockSite.Size = new System.Drawing.Size(0, 496);
             this.ToolbarLeftDockSite.TabIndex = 6;
             this.ToolbarLeftDockSite.TabStop = false;
             // 
@@ -1415,9 +1361,9 @@ namespace VPS
             // 
             this.ToolbarRightDockSite.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.ToolbarRightDockSite.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ToolbarRightDockSite.Location = new System.Drawing.Point(1425, 147);
+            this.ToolbarRightDockSite.Location = new System.Drawing.Point(1381, 147);
             this.ToolbarRightDockSite.Name = "ToolbarRightDockSite";
-            this.ToolbarRightDockSite.Size = new System.Drawing.Size(0, 498);
+            this.ToolbarRightDockSite.Size = new System.Drawing.Size(0, 496);
             this.ToolbarRightDockSite.TabIndex = 7;
             this.ToolbarRightDockSite.TabStop = false;
             // 
@@ -1427,7 +1373,7 @@ namespace VPS
             this.ToolbarTopDockSite.Dock = System.Windows.Forms.DockStyle.Top;
             this.ToolbarTopDockSite.Location = new System.Drawing.Point(5, 147);
             this.ToolbarTopDockSite.Name = "ToolbarTopDockSite";
-            this.ToolbarTopDockSite.Size = new System.Drawing.Size(1420, 0);
+            this.ToolbarTopDockSite.Size = new System.Drawing.Size(1376, 0);
             this.ToolbarTopDockSite.TabIndex = 8;
             this.ToolbarTopDockSite.TabStop = false;
             // 
@@ -1438,7 +1384,7 @@ namespace VPS
             this.TopDockSite.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
             this.TopDockSite.Location = new System.Drawing.Point(340, 147);
             this.TopDockSite.Name = "TopDockSite";
-            this.TopDockSite.Size = new System.Drawing.Size(1085, 0);
+            this.TopDockSite.Size = new System.Drawing.Size(1041, 0);
             this.TopDockSite.TabIndex = 4;
             this.TopDockSite.TabStop = false;
             // 
@@ -1449,6 +1395,64 @@ namespace VPS
             // microChartItem2
             // 
             this.microChartItem2.Name = "microChartItem2";
+            // 
+            // styleManager1
+            // 
+            this.styleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Office2007Blue;
+            this.styleManager1.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(163)))), ((int)(((byte)(26))))));
+            // 
+            // topMainInfo
+            // 
+            this.topMainInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.topMainInfo.Location = new System.Drawing.Point(0, 0);
+            this.topMainInfo.Name = "topMainInfo";
+            this.topMainInfo.Size = new System.Drawing.Size(1041, 23);
+            this.topMainInfo.TabIndex = 0;
+            this.topMainInfo.Visible = false;
+            // 
+            // layerManager1
+            // 
+            this.layerManager1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.layerManager1.Location = new System.Drawing.Point(0, 0);
+            this.layerManager1.Name = "layerManager1";
+            this.layerManager1.Size = new System.Drawing.Size(1035, 278);
+            this.layerManager1.TabIndex = 0;
+            // 
+            // Commands
+            // 
+            this.Commands.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Commands.Location = new System.Drawing.Point(0, 0);
+            this.Commands.Name = "Commands";
+            this.Commands.Size = new System.Drawing.Size(1035, 272);
+            this.Commands.TabIndex = 0;
+            // 
+            // LayerReader
+            // 
+            this.LayerReader.AutoScroll = true;
+            this.LayerReader.AutoSize = true;
+            this.LayerReader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LayerReader.Location = new System.Drawing.Point(0, 0);
+            this.LayerReader.Name = "LayerReader";
+            this.LayerReader.Size = new System.Drawing.Size(309, 456);
+            this.LayerReader.TabIndex = 0;
+            // 
+            // GridConfig
+            // 
+            this.GridConfig.AutoSize = true;
+            this.GridConfig.Dock = System.Windows.Forms.DockStyle.Top;
+            this.GridConfig.Location = new System.Drawing.Point(0, 0);
+            this.GridConfig.Name = "GridConfig";
+            this.GridConfig.Size = new System.Drawing.Size(309, 559);
+            this.GridConfig.TabIndex = 0;
+            // 
+            // MainLeftInfo
+            // 
+            this.MainLeftInfo.AutoSize = true;
+            this.MainLeftInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.MainLeftInfo.Location = new System.Drawing.Point(0, 0);
+            this.MainLeftInfo.Name = "MainLeftInfo";
+            this.MainLeftInfo.Size = new System.Drawing.Size(326, 364);
+            this.MainLeftInfo.TabIndex = 0;
             // 
             // toolStripConnectionControl
             // 
@@ -1462,16 +1466,11 @@ namespace VPS
             this.toolStripConnectionControl.Padding = new System.Windows.Forms.Padding(0, 0, 200, 38);
             this.toolStripConnectionControl.Size = new System.Drawing.Size(200, 38);
             // 
-            // styleManager1
-            // 
-            this.styleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Office2010Blue;
-            this.styleManager1.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(163)))), ((int)(((byte)(26))))));
-            // 
             // MainV2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1430, 647);
+            this.ClientSize = new System.Drawing.Size(1386, 644);
             this.Controls.Add(this.RibbonClientPanel);
             this.Controls.Add(this.TopDockSite);
             this.Controls.Add(this.BottomDockSite);

@@ -3323,7 +3323,7 @@ namespace VPS
             var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
             if (layerInfo != null)
             {
-                return AddLayerOverlay(layerInfo.GetValueOrDefault());
+                return AddLayerOverlay(layerInfo);
             }
             else
             {
@@ -3977,7 +3977,6 @@ namespace VPS
             GCSViews.FlightPlanner.instance.SetPolygonListHandle(data.poly);
             GCSViews.FlightPlanner.instance.SetWPListHandle(data.wp);
             currentLayerPath = data.layer;
-            defaultOrigin = data.layerPosition;
             displayRect = data.layerRect;
             GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(displayRect);
             defaultHome = data.homePosition;
@@ -4029,7 +4028,6 @@ namespace VPS
             data.poly = GCSViews.FlightPlanner.instance.GetPolygonList();
             data.wp = GCSViews.FlightPlanner.instance.GetWPList();
             data.layer = currentLayerPath;
-            data.layerPosition = defaultOrigin;
             data.layerRect = displayRect;
             data.homePosition = defaultHome;
             data.layerInfo = selectedLayer;
@@ -4555,7 +4553,6 @@ namespace VPS
         #region 图层信息
         public string currentLayerPath;
         public GMap.NET.RectLatLng displayRect = new GMap.NET.RectLatLng();
-        public PointLatLngAlt defaultOrigin = new PointLatLngAlt();
         public PointLatLngAlt defaultHome = new PointLatLngAlt();
         public GeoBitmap currentLayer;
         public VPS.Layer.LayerInfo selectedLayer;
@@ -4566,7 +4563,7 @@ namespace VPS
         #region AddLayer 入口函数
         public bool AddLayerOverlay(string path, PointLatLngAlt origin, Color transparent)
         {
-            var layerInfo = new VPS.Layer.LayerInfo(path, origin, transparent);
+            var layerInfo = new VPS.Layer.TiffLayerInfo(path, origin, transparent);
             VPS.Layer.MemoryLayerCache.AddLayerToMemoryCache(layerInfo);
             return SetLayerOverlay(layerInfo);
         }
@@ -4588,19 +4585,21 @@ namespace VPS
                 {
                     SetLoadingLayer(bitmap.File);
 
-                    Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (_bitmap, _transparent) =>
+                    if (layerInfo is Layer.TiffLayerInfo)
                     {
-                        _bitmap.BitmapTile = CreateTile(_bitmap, 400, 400);
-                        _bitmap.SetTransparent(_transparent);
+                        Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (_bitmap, _transparent) =>
+                        {
+                            _bitmap.BitmapTile = CreateTile(_bitmap, 400, 400);
+                            _bitmap.SetTransparent(_transparent);
 
-                        return _bitmap;
-                    };
-                    
-                    IAsyncResult iar = GetGeoBitmap.BeginInvoke(bitmap, layerInfo.Transparent, CallbackWhenDone, this);
+                            return _bitmap;
+                        };
+
+                        IAsyncResult iar = GetGeoBitmap.BeginInvoke(bitmap, ((Layer.TiffLayerInfo)layerInfo).Transparent, CallbackWhenDone, this);
+                    }
 
                     this.currentLayerPath = layerInfo.Layer;
                     this.displayRect = bitmap.Rect;
-                    this.defaultOrigin = layerInfo.Origin;
                     this.defaultHome = layerInfo.Origin;
                     this.selectedLayer = layerInfo;
                     ZoomTiffButton_Click(this, null);

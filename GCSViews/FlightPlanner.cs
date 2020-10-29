@@ -4747,9 +4747,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             if (layer == null)
             {
             }
-            double Scale = layer.GetValueOrDefault().Scale;
+            double Scale = layer.Scale;
 
-            PointLatLngAlt Origin = layer.GetValueOrDefault().Origin;
+            PointLatLngAlt Origin = layer.Origin;
 
             int OriginZone = Origin.GetUTMZone();
             double[] OriginCoord = Origin.ToUTM(OriginZone);
@@ -4795,9 +4795,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             if (layer == null)
             {
             }
-            double Scale = layer.GetValueOrDefault().Scale;
+            double Scale = layer.Scale;
 
-            PointLatLngAlt Origin = layer.GetValueOrDefault().Origin;
+            PointLatLngAlt Origin = layer.Origin;
 
             int OriginZone = Origin.GetUTMZone();
             double[] OriginCoord = Origin.ToUTM();
@@ -5461,7 +5461,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             float isNumber = 0;
             if (!float.TryParse(TXT_DefaultAlt.Text, out isNumber))
             {
-                TXT_DefaultAlt.Text = "100";
+                TXT_DefaultAlt.Text = "200";
             }
         }
 
@@ -8039,44 +8039,44 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 cell = Commands.Rows[selectedrow].Cells[Alt.Index] as DataGridViewTextBoxCell;
 
                 {
-                    double result;
-                    bool pass = double.TryParse(TXT_homealt.Text, out result);
+                    //    double result;
+                    //    bool pass = double.TryParse(TXT_homealt.Text, out result);
 
-                    if (pass == false)
-                    {
-                        DevComponents.DotNetBar.MessageBoxEx.Show("Home点信息必须包含高度");
-                        string homealt = "100";
-                        if (DialogResult.Cancel == InputBox.Show("Home高度信息", "Home高度", ref homealt))
-                            return;
-                        if (double.TryParse(homealt, out double homeAlt))
-                        {
-                            SetHomeHere(new PointLatLngAlt(
-                                double.Parse(TXT_homelat.Text),
-                                double.Parse(TXT_homelng.Text),
-                                homeAlt));
-                        }
-                        else
-                        {
-                            SetHomeHere(new PointLatLngAlt(
-                                double.Parse(TXT_homelat.Text),
-                                double.Parse(TXT_homelng.Text),
-                                double.Parse(TXT_DefaultAlt.Text)));
-                        }
-                    }
-                    int results1;
-                    if (!int.TryParse(TXT_DefaultAlt.Text, out results1))
-                    {
-                        DevComponents.DotNetBar.MessageBoxEx.Show("默认高度无效");
-                        return;
-                    }
+                    //    if (pass == false)
+                    //    {
+                    //        DevComponents.DotNetBar.MessageBoxEx.Show("Home点信息必须包含高度");
+                    //        string homealt = "100";
+                    //        if (DialogResult.Cancel == InputBox.Show("Home高度信息", "Home高度", ref homealt))
+                    //            return;
+                    //        if (double.TryParse(homealt, out double homeAlt))
+                    //        {
+                    //            SetHomeHere(new PointLatLngAlt(
+                    //                double.Parse(TXT_homelat.Text),
+                    //                double.Parse(TXT_homelng.Text),
+                    //                homeAlt));
+                    //        }
+                    //        else
+                    //        {
+                    //            SetHomeHere(new PointLatLngAlt(
+                    //                double.Parse(TXT_homelat.Text),
+                    //                double.Parse(TXT_homelng.Text),
+                    //                double.Parse(TXT_DefaultAlt.Text)));
+                    //        }
+                    //    }
+                    //    int results1;
+                    //    if (!int.TryParse(TXT_DefaultAlt.Text, out results1))
+                    //    {
+                    //        DevComponents.DotNetBar.MessageBoxEx.Show("默认高度无效");
+                    //        return;
+                    //    }
 
-                    if (results1 == 0)
-                    {
-                        string defalt = "100";
-                        if (DialogResult.Cancel == InputBox.Show("默认高度", "默认高度", ref defalt))
-                            return;
-                        TXT_DefaultAlt.Text = defalt;
-                    }
+                    //    if (results1 == 0)
+                    //    {
+                    //        string defalt = "100";
+                    //        if (DialogResult.Cancel == InputBox.Show("默认高度", "默认高度", ref defalt))
+                    //            return;
+                    //        TXT_DefaultAlt.Text = defalt;
+                    //    }
                 }
 
                 cell.Value = TXT_DefaultAlt.Text;
@@ -8408,7 +8408,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     w.WriteString(string.Format("{0},{1},{2}", x, y, z));
                     w.WriteEndElement();//coordinates
                     w.WriteStartElement("scale");
-                    w.WriteString(layerInfo.GetValueOrDefault().Scale.ToString());
+                    w.WriteString(layerInfo.Scale.ToString());
                     w.WriteEndElement();//scale
 
                     w.WriteEndElement();//local
@@ -9096,7 +9096,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                                         cmds.Add(temp);
                                     }
                                 }
-                                WPtoScreen(cmds, true, append);
+                                WPtoScreen(cmds, false, append);
                                 isSendChange = true;
                                 writeKML();
                                 isSendChange = false;

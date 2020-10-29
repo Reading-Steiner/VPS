@@ -29,9 +29,9 @@ namespace VPS.Utilities.AltitudeAngel
                 await service.SignInIfAuthenticated();
                 return;
             }
-            if (CustomMessageBox.Show(
-                    "Do you wish to enable Altitude Angel airspace management data?\nFor more information visit [link;http://www.altitudeangel.com;www.altitudeangel.com]",
-                    "Altitude Angel - Enable", CustomMessageBox.MessageBoxButtons.YesNo) == CustomMessageBox.DialogResult.Yes)
+            if (DevComponents.DotNetBar.MessageBoxEx.Show(
+                    "是否启用 Altitude Angel 进行空域数据管理?\n\n了解更多 <a href=\"http://www.altitudeangel.com\">www.altitudeangel.com</a>",
+                    "Altitude Angel - 启用", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
             {
                 await service.SignInAsync();
             }
