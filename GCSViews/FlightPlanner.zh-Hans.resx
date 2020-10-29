@@ -182,10 +182,6 @@
         AIlYQ9mY+lgaAAAAAElFTkSuQmCC
 </value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="coords1.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="lbl_status.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 12</value>
   </data>
@@ -277,6 +273,7 @@
   <data name="panelWaypoints.Text" xml:space="preserve">
     <value>航点</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="panelWaypoints.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -292,35 +289,8 @@
   <data name="lnk_kml.Text" xml:space="preserve">
     <value>查看KML</value>
   </data>
-  <data name="lbl_homedist.Size" type="System.Drawing.Size, System.Drawing">
-    <value>17, 12</value>
-  </data>
-  <data name="lbl_homedist.Text" xml:space="preserve">
-    <value>家</value>
-  </data>
-  <data name="lbl_homedist.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="lbl_prevdist.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 12</value>
-  </data>
-  <data name="lbl_prevdist.Text" xml:space="preserve">
-    <value>上一点</value>
-  </data>
-  <data name="lbl_prevdist.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="label11.Text" xml:space="preserve">
     <value>放大</value>
-  </data>
-  <data name="lbl_distance.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 12</value>
-  </data>
-  <data name="lbl_distance.Text" xml:space="preserve">
-    <value>距离</value>
-  </data>
-  <data name="lbl_distance.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="deleteMarkerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 22</value>

@@ -1235,47 +1235,6 @@ namespace VPS.GCSViews
             mouseposdisplay.Alt = alt;
 
             CurrentChange?.Invoke(mouseposdisplay);
-
-            coords1.Lat = mouseposdisplay.Lat;
-            coords1.Lng = mouseposdisplay.Lng;
-            var altdata = srtm.getAltitude(mouseposdisplay.Lat, mouseposdisplay.Lng, MainMap.Zoom);
-            coords1.Alt = altdata.alt * CurrentState.multiplieralt;
-            coords1.AltSource = altdata.altsource;
-            coords1.AltUnit = CurrentState.AltUnit;
-
-            try
-            {
-                PointLatLng last;
-
-                if (pointlist.Count == 0 || pointlist[pointlist.Count - 1] == null)
-                    return;
-
-                last = pointlist[pointlist.Count - 1];
-
-                double lastdist = MainMap.MapProvider.Projection.GetDistance(last, currentMarker.Position);
-
-                double lastbearing = 0;
-
-                if (pointlist.Count > 0)
-                {
-                    lastbearing = MainMap.MapProvider.Projection.GetBearing(last, currentMarker.Position);
-                }
-
-                lbl_prevdist.Text = rm.GetString("lbl_prevdist.Text") + ": " + FormatDistance(lastdist, true) + " AZ: " +
-                                                   lastbearing.ToString("0");
-
-                // 0 is home
-                if (pointlist[0] != null)
-                {
-                    double homedist = MainMap.MapProvider.Projection.GetDistance(currentMarker.Position, pointlist[0]);
-
-                    lbl_homedist.Text = rm.GetString("lbl_homedist.Text") + ": " + FormatDistance(homedist, true);
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
         }
 
         public void updateDisplayView()
@@ -2033,7 +1992,7 @@ namespace VPS.GCSViews
                 Settings.Instance["FP_HomeLat"] = homePosition.Lat.ToString();
                 Settings.Instance["FP_HomeLng"] = homePosition.Lng.ToString();
                 Settings.Instance["FP_HomeAlt"] = homePosition.Alt.ToString();
-
+                Settings.Instance["FP_HomeFrame"] = homePosition.Tag2.ToString();
 
                 Settings.Instance["FP_WPRad"] = TXT_WPRad.Text;
 
@@ -2045,7 +2004,7 @@ namespace VPS.GCSViews
 
                 Settings.Instance["FP_AltWarn"] = TXT_altwarn.Text;
 
-                Settings.Instance["FP_CoordSystem"] = coords1.System;
+                Settings.Instance["FP_CoordSystem"] = coordSystem.ToString();
             }
             else
             {
@@ -2053,6 +2012,21 @@ namespace VPS.GCSViews
                 {
                     switch (key)
                     {
+                        case "FP_HomeLat":
+                            if (double.TryParse(Settings.Instance[key], out double lat))
+                                homePosition.Lat = lat;
+                            break;
+                        case "FP_HomeLng":
+                            if (double.TryParse(Settings.Instance[key], out double lng))
+                                homePosition.Lng = lng;
+                            break;
+                        case "FP_HomeAlt":
+                            if (double.TryParse(Settings.Instance[key], out double alt))
+                                homePosition.Alt = alt;
+                            break;
+                        case "FP_HomeFrame":
+                            homePosition.Tag2 = "" + Settings.Instance[key];
+                            break;
                         case "FP_WPRad":
                             TXT_WPRad.Text = "" + Settings.Instance[key];
                             break;
@@ -2069,7 +2043,7 @@ namespace VPS.GCSViews
                             TXT_altwarn.Text = "" + Settings.Instance["FP_AltWarn"];
                             break;
                         case "FP_CoordSystem":
-                            coords1.System = "" + Settings.Instance[key];
+                            SetCoordSystemHandle("" + Settings.Instance[key]);
                             break;
                         default:
                             break;
@@ -2290,40 +2264,6 @@ namespace VPS.GCSViews
                 // save it back
                 route.Points[i] = llh;
                 //route.Points[i].Lng = llh.Lng;
-            }
-        }
-
-        public void Coords1_SystemChanged(object sender, EventArgs e)
-        {
-            if (coords1.System == Coords.CoordsSystems.GEO.ToString())
-            {
-                Lat.Visible = true;
-                Lon.Visible = true;
-
-                coordZone.Visible = false;
-                coordEasting.Visible = false;
-                coordNorthing.Visible = false;
-                MGRS.Visible = false;
-            }
-            else if (coords1.System == Coords.CoordsSystems.MGRS.ToString())
-            {
-                Lat.Visible = false;
-                Lon.Visible = false;
-
-                coordZone.Visible = false;
-                coordEasting.Visible = false;
-                coordNorthing.Visible = false;
-                MGRS.Visible = true;
-            }
-            else if (coords1.System == Coords.CoordsSystems.UTM.ToString())
-            {
-                Lat.Visible = false;
-                Lon.Visible = false;
-
-                coordZone.Visible = true;
-                coordEasting.Visible = true;
-                coordNorthing.Visible = true;
-                MGRS.Visible = false;
             }
         }
 
@@ -4577,9 +4517,8 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
-        public delegate void PositionChangeHandle(PointLatLngAlt position);
+
         
-        public PositionChangeHandle CurrentChange;
 
 
 
@@ -6057,22 +5996,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
             center.Position = point;
 
-            coords1.Lat = point.Lat;
-            coords1.Lng = point.Lng;
 
-            // always show on planner view
-            //if (MainV2.ShowAirports)
-            //{
-            //    airportsoverlay.Clear();
-            //    foreach (var item in Airports.getAirports(MainMap.Position))
-            //    {
-            //        airportsoverlay.Markers.Add(new GMapMarkerAirport(item)
-            //        {
-            //            ToolTipText = item.Tag,
-            //            ToolTipMode = MarkerTooltipMode.OnMouseOver
-            //        });
-            //    }
-            //}
         }
 
         private void MainMap_OnMapTypeChanged(GMapProvider type)
@@ -6658,44 +6582,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
         #endregion
 
-        #region CoordSystem
-        #region 接口函数
-        private delegate void SetCoordSystemInThread(string coord);
-        public void SetCoordSystemHandle(string coord)
-        {
-            if (this.InvokeRequired)
-            {
-                SetCoordSystemInThread inThread = new SetCoordSystemInThread(SetCoordSystemHandle);
-                this.Invoke(inThread);
-            }
-            else
-            {
-                SetCoordSystem(coord);
-            }
-        }
-        #endregion
-        #region 入口函数
-        private void SetCoordSystem(string coord)
-        {
-            switch (coord.ToString())
-            {
-                case "WGS84":
-                    coords1.System = Coords.CoordsSystems.GEO.ToString();
-                    break;
-                case "UTM":
-                    coords1.System = Coords.CoordsSystems.UTM.ToString();
-                    break;
-                case "MGRS":
-                    coords1.System = Coords.CoordsSystems.MGRS.ToString();
-                    break;
-                default:
-                    coords1.System = Coords.CoordsSystems.GEO.ToString();
-                    break;
-            }
-        }
-        #endregion
-        #endregion
-
         #region AddMarkToMap
 
         #region PolygonMark
@@ -6916,14 +6802,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     MainMap.Overlays.Add(overlay.overlay);
 
                     overlay.overlay.ForceUpdate();
-
-                    lbl_distance.Text = rm.GetString("lbl_distance.Text") + ": " +
-                                                       FormatDistance((
-                                                                          overlay.route.Points.Select(a => (PointLatLngAlt)a)
-                                                                              .Aggregate(0.0, (d, p1, p2) => d + p1.GetDistance(p2)) +
-                                                                          overlay.homeroute.Points.Select(a => (PointLatLngAlt)a)
-                                                                              .Aggregate(0.0, (d, p1, p2) => d + p1.GetDistance(p2))) /
-                                                                      1000.0, false);
 
                     SetGradAndDistAndAZ(overlay.pointlist, home);
 
@@ -8281,6 +8159,10 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         #endregion
 
         #region 全局参数
+        public delegate void PositionChangeHandle(PointLatLngAlt position);
+        public delegate void StringChangeHandle(string str);
+        public PositionChangeHandle CurrentChange;
+
         #region NoHandle
         private bool onlyChangeValue = false;
 
@@ -8304,6 +8186,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         private PointLatLngAlt homePosition = new PointLatLngAlt();
 
         public PositionChangeHandle HomeChange;
+
         #region SetHome
 
         #region SetHome 接口函数
@@ -8317,7 +8200,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
             else
             {
+                BeginQuickChange();
                 SetHomeHere(home);
+                EndQuickChange();
             }
         }
         #endregion
@@ -8329,6 +8214,63 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             if (onlyChangeValue)
                 return;
             HomeChange?.Invoke(position);
+        }
+        #endregion
+        #endregion
+        #endregion
+
+        #region CoordSystem
+        private enum CoordsSystems
+        {
+            WGS84,
+            UTM,
+            MGRS
+        }
+        private CoordsSystems coordSystem = CoordsSystems.WGS84;
+
+        public StringChangeHandle coordChange;
+
+        #region SetCoordSystem
+
+        #region 接口函数
+        private delegate void SetCoordSystemInThread(string coord);
+        public void SetCoordSystemHandle(string coord)
+        {
+            if (this.InvokeRequired)
+            {
+                SetCoordSystemInThread inThread = new SetCoordSystemInThread(SetCoordSystemHandle);
+                this.Invoke(inThread);
+            }
+            else
+            {
+                BeginQuickChange();
+                SetCoordSystem(coord);
+                EndQuickChange();
+            }
+        }
+        #endregion
+
+        #region 入口函数
+        private void SetCoordSystem(string coord)
+        {
+            switch (coord.ToString())
+            {
+                case "WGS84":
+                    coordSystem = CoordsSystems.WGS84;
+                    break;
+                case "UTM":
+                    coordSystem = CoordsSystems.UTM;
+                    break;
+                case "MGRS":
+                    coordSystem = CoordsSystems.MGRS;
+                    break;
+                default:
+                    coordSystem = CoordsSystems.WGS84;
+                    break;
+            }
+            if (onlyChangeValue)
+                return;
+            coordChange?.Invoke(coordSystem.ToString());
         }
         #endregion
         #endregion

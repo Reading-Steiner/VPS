@@ -394,7 +394,7 @@
     <value>41, 12</value>
   </data>
   <data name="&gt;&gt;lbl_distance.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;Down.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewImageColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -565,7 +565,7 @@
     <value>Spline</value>
   </data>
   <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>2</value>
   </data>
   <data name="label2.ToolTip" xml:space="preserve">
     <value />
@@ -658,7 +658,7 @@
     <value>0, 0</value>
   </data>
   <data name="&gt;&gt;panel3.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -736,7 +736,7 @@
     <value>0</value>
   </data>
   <data name="&gt;&gt;MainMap.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;Frame.Name" xml:space="preserve">
     <value>Frame</value>
@@ -892,7 +892,7 @@
     <value>83, 12</value>
   </data>
   <data name="&gt;&gt;Commands.Type" xml:space="preserve">
-    <value>VPS.Controls.MyDataGridView, VPS, Version=1.0.7607.23747, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.MyDataGridView, VPS, Version=1.0.7607.25970, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="CMB_altmode.TabIndex" type="System.Int32, mscorlib">
     <value>54</value>
@@ -922,7 +922,7 @@
     <value>clearMissionToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;lbl_prevdist.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="lbl_distance.Text" xml:space="preserve">
     <value>Distance</value>
@@ -1525,7 +1525,7 @@
     <value>NoControl</value>
   </data>
   <data name="&gt;&gt;trackBar1.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>1</value>
   </data>
   <data name="chk_grid.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1822,7 +1822,7 @@
     <value>Top, Bottom, Right</value>
   </data>
   <data name="&gt;&gt;lbl_homedist.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;AZ.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1909,7 +1909,7 @@
     <value>1</value>
   </data>
   <data name="&gt;&gt;cmb_missiontype.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>3</value>
   </data>
   <data name="lbl_homedist.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>

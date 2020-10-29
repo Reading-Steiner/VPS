@@ -63,7 +63,6 @@ namespace VPS.GCSViews
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.label6 = new System.Windows.Forms.Label();
-            this.coords1 = new VPS.Controls.Coords();
             this.lbl_status = new System.Windows.Forms.Label();
             this.panelWaypoints = new System.Windows.Forms.Panel();
             this.but_mincommands = new VPS.Controls.MyButton();
@@ -101,11 +100,8 @@ namespace VPS.GCSViews
             this.lnk_kml = new System.Windows.Forms.LinkLabel();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.panelMap = new System.Windows.Forms.Panel();
-            this.lbl_homedist = new System.Windows.Forms.Label();
-            this.lbl_prevdist = new System.Windows.Forms.Label();
             this.trackBar1 = new VPS.Controls.MyTrackBar();
             this.label11 = new System.Windows.Forms.Label();
-            this.lbl_distance = new System.Windows.Forms.Label();
             this.cmb_missiontype = new System.Windows.Forms.ComboBox();
             this.MainMap = new VPS.Controls.myGMAP();
             this.contextMenuStripMain = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -225,19 +221,6 @@ namespace VPS.GCSViews
             resources.ApplyResources(this.label6, "label6");
             this.label6.Name = "label6";
             this.toolTip1.SetToolTip(this.label6, resources.GetString("label6.ToolTip"));
-            // 
-            // coords1
-            // 
-            resources.ApplyResources(this.coords1, "coords1");
-            this.coords1.Alt = 0D;
-            this.coords1.AltSource = "";
-            this.coords1.AltUnit = "m";
-            this.coords1.Lat = 0D;
-            this.coords1.Lng = 0D;
-            this.coords1.Name = "coords1";
-            this.toolTip1.SetToolTip(this.coords1, resources.GetString("coords1.ToolTip"));
-            this.coords1.Vertical = true;
-            this.coords1.SystemChanged += new System.EventHandler(this.Coords1_SystemChanged);
             // 
             // lbl_status
             // 
@@ -549,31 +532,15 @@ namespace VPS.GCSViews
             // panelMap
             // 
             resources.ApplyResources(this.panelMap, "panelMap");
-            this.panelMap.Controls.Add(this.coords1);
             this.panelMap.Controls.Add(this.panel3);
-            this.panelMap.Controls.Add(this.lbl_homedist);
-            this.panelMap.Controls.Add(this.lbl_prevdist);
             this.panelMap.Controls.Add(this.trackBar1);
             this.panelMap.Controls.Add(this.label11);
-            this.panelMap.Controls.Add(this.lbl_distance);
             this.panelMap.Controls.Add(this.cmb_missiontype);
             this.panelMap.Controls.Add(this.MainMap);
             this.panelMap.ForeColor = System.Drawing.SystemColors.ControlText;
             this.panelMap.Name = "panelMap";
             this.toolTip1.SetToolTip(this.panelMap, resources.GetString("panelMap.ToolTip"));
             this.panelMap.Resize += new System.EventHandler(this.panelMap_Resize);
-            // 
-            // lbl_homedist
-            // 
-            resources.ApplyResources(this.lbl_homedist, "lbl_homedist");
-            this.lbl_homedist.Name = "lbl_homedist";
-            this.toolTip1.SetToolTip(this.lbl_homedist, resources.GetString("lbl_homedist.ToolTip"));
-            // 
-            // lbl_prevdist
-            // 
-            resources.ApplyResources(this.lbl_prevdist, "lbl_prevdist");
-            this.lbl_prevdist.Name = "lbl_prevdist";
-            this.toolTip1.SetToolTip(this.lbl_prevdist, resources.GetString("lbl_prevdist.ToolTip"));
             // 
             // trackBar1
             // 
@@ -594,12 +561,6 @@ namespace VPS.GCSViews
             resources.ApplyResources(this.label11, "label11");
             this.label11.Name = "label11";
             this.toolTip1.SetToolTip(this.label11, resources.GetString("label11.ToolTip"));
-            // 
-            // lbl_distance
-            // 
-            resources.ApplyResources(this.lbl_distance, "lbl_distance");
-            this.lbl_distance.Name = "lbl_distance";
-            this.toolTip1.SetToolTip(this.lbl_distance, resources.GetString("lbl_distance.ToolTip"));
             // 
             // cmb_missiontype
             // 
@@ -924,11 +885,8 @@ namespace VPS.GCSViews
         public Panel panelMap;
         public MyTrackBar trackBar1;
         public Label label11;
-        public Label lbl_distance;
-        public Label lbl_prevdist;
         public Splitter splitter1;
         public Panel panelBASE;
-        public Label lbl_homedist;
         public ToolTip toolTip1;
 
         public System.Windows.Forms.ContextMenuStrip contextMenuStripMain;
@@ -997,8 +955,6 @@ namespace VPS.GCSViews
         //public ToolStripMenuItem poieditToolStripMenuItem;
         //public ToolStripMenuItem enterUTMCoordToolStripMenuItem;
         public ToolStripMenuItem loadSHPFileToolStripMenuItem;
-
-        public Coords coords1;
         public Panel panel3;
         //public ToolStripMenuItem switchDockingToolStripMenuItem;
         public Splitter splitter2;
