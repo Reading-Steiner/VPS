@@ -6728,9 +6728,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             if (Disposing)
                 return;
 
-            if (onlyChangeValue)
-                return;
-
             updateRowNumbers();
 
             PointLatLngAlt home = new PointLatLngAlt();
@@ -8211,6 +8208,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         private void SetHomeHere(PointLatLngAlt position)
         {
             homePosition = position;
+            writeKML();
             if (onlyChangeValue)
                 return;
             HomeChange?.Invoke(position);
