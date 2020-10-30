@@ -7784,9 +7784,11 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         public PositionChangeHandle CurrentChange;
 
         #region NoHandle
+
         private bool onlyChangeValue = false;
 
         #region 接口函数
+
         public void BeginQuickChange()
         {
             onlyChangeValue = true;
@@ -7797,11 +7799,20 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         {
             onlyChangeValue = false;
         }
+
+        #endregion
+
+        #region 判断函数
+        private bool NotQuickChange()
+        {
+            return !onlyChangeValue;
+        }
         #endregion
 
         #endregion
 
         #region Home
+
         private PointLatLngAlt homePosition = new PointLatLngAlt();
 
         public PositionChangeHandle HomeChange;
@@ -7831,15 +7842,18 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         {
             homePosition = position;
             writeKML();
-            if (onlyChangeValue)
+            if (NotQuickChange())
                 return;
             HomeChange?.Invoke(position);
         }
         #endregion
+
         #endregion
+
         #endregion
 
         #region CoordSystem
+
         private enum CoordsSystems
         {
             WGS84,
@@ -7888,15 +7902,18 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     coordSystem = CoordsSystems.WGS84;
                     break;
             }
-            if (onlyChangeValue)
+            if (NotQuickChange())
                 return;
             coordChange?.Invoke(coordSystem.ToString());
         }
         #endregion
+
         #endregion
+
         #endregion
 
         #region AltFrame
+
         //public enum altmode
         //{
         //    Relative = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT,
@@ -7915,6 +7932,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         public StringChangeHandle altFrameChange;
 
         #region SetAltFrame
+
         #region AltFrame 接口函数
         private delegate void SetAltFrameInThread(string frame);
         public void SetAltFrameHandle(string frame)
@@ -7951,18 +7969,23 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     altFrame = AltMode.Relative;
                     break;
             }
-            if (onlyChangeValue)
+            if (NotQuickChange())
                 altFrameChange?.Invoke(altFrame.ToString());
         }
         #endregion
+
         #endregion
+
         #endregion
 
         #region WPRad
+
         private int wpRad = 20;
 
         public IntegerChangeHandler wpRadChange;
+
         #region SetWPRad
+
         #region WPRad 接口函数
         private delegate void SetWPRadInThread(int wpRad);
         public void SetWPRadHandle(int wpRad)
@@ -7985,41 +8008,23 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         private void SetWPRad(int rad)
         {
             wpRad = rad;
-            if (onlyChangeValue)
+            if (!onlyChangeValue)
                 wpRadChange?.Invoke(wpRad);
         }
         #endregion
-        #endregion
+
         #endregion
 
-        #region BaseAlt
-        #region BaseAlt 接口函数
-        private delegate void SetBaseAltInThread(int baseAlt);
-        public void SetBaseAltHandle(int baseAlt)
-        {
-            if (this.InvokeRequired)
-            {
-                SetBaseAltInThread inThread = new SetBaseAltInThread(SetBaseAltHandle);
-                this.Invoke(inThread, new object[] { baseAlt });
-            }
-            else
-            {
-                SetBaseAlt(baseAlt);
-            }
-        }
-        #endregion
-        #region BaseAlt 入口函数
-        private void SetBaseAlt(int baseAlt)
-        {
-        }
-        #endregion
         #endregion
 
         #region DefaultAlt
+
         private int defaultAlt = 200;
 
         public IntegerChangeHandler defaultAltChange;
+
         #region SetDefaultAlt
+
         #region DefaultAlt 接口函数
         private delegate void SetDefaultAltInThread(int defaultAlt);
         public void SetDefaultAltHandle(int defaultAlt)
@@ -8042,17 +8047,23 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         private void SetDefaultAlt(int alt)
         {
             defaultAlt = alt;
-            if (onlyChangeValue)
+            if (NotQuickChange())
                 defaultAltChange?.Invoke(defaultAlt);
         }
         #endregion
+
         #endregion
+
         #endregion
 
         #region WarnAlt
+
         private int warnAlt = 40;
 
         public IntegerChangeHandler warnAltChange;
+
+        #region SetWarnAlt
+
         #region WarnAlt 接口函数
         private delegate void SetWarnAltInThread(int warnAlt);
         public void SetWarnAltHandle(int warnAlt)
@@ -8064,16 +8075,33 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
             else
             {
+                BeginQuickChange();
                 SetWarnAlt(warnAlt);
+                EndQuickChange();
             }
         }
         #endregion
+
         #region WarnAlt 入口函数
         private void SetWarnAlt(int alt)
         {
             warnAlt = alt;
+            if (NotQuickChange())
+                warnAltChange?.Invoke(warnAlt);
+
         }
         #endregion
+
+        #endregion
+
+        #endregion
+
+        #region BaseAlt
+
+        #region GetBaseAlt
+
+        #endregion
+
         #endregion
 
         #endregion

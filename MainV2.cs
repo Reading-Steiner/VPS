@@ -3296,7 +3296,6 @@ namespace VPS
             VPS.Controls.Command.CommandsPanel.instance.CoordSystemChange += GCSViews.FlightPlanner.instance.SetCoordSystemHandle;
             VPS.Controls.Command.CommandsPanel.instance.WPRadChange += GCSViews.FlightPlanner.instance.SetWPRadHandle;
             VPS.Controls.Command.CommandsPanel.instance.AltFrameChange += GCSViews.FlightPlanner.instance.SetAltFrameHandle;
-            VPS.Controls.Command.CommandsPanel.instance.BaseAltChange += GCSViews.FlightPlanner.instance.SetBaseAltHandle;
             VPS.Controls.Command.CommandsPanel.instance.WarnAltChange += GCSViews.FlightPlanner.instance.SetWarnAltHandle;
             VPS.Controls.Command.CommandsPanel.instance.DefaultAltChange += GCSViews.FlightPlanner.instance.SetDefaultAltHandle;
             VPS.Controls.Command.CommandsPanel.instance.HomeChange += GCSViews.FlightPlanner.instance.SetHomeHandle;
