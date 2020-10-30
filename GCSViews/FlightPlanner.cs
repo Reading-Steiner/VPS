@@ -1925,7 +1925,7 @@ namespace VPS.GCSViews
 
                 Settings.Instance["FP_WPRad"] = wpRad.ToString();
 
-                Settings.Instance["FP_LoiterRad"] = TXT_loiterrad.Text;
+                Settings.Instance["FP_LoiterRad"] = loiterRad.ToString();
 
                 Settings.Instance["FP_DefaultAlt"] = defaultAlt.ToString();
 
@@ -1963,11 +1963,16 @@ namespace VPS.GCSViews
                             homePosition.Tag2 = "" + Settings.Instance[key];
                             break;
                         case "FP_WPRad":
-                            if (int.TryParse(Settings.Instance[key], out int rad))
-                                SetWPRadHandle(rad);
+                            {
+                                if (int.TryParse(Settings.Instance[key], out int rad))
+                                    SetWPRadHandle(rad);
+                            }
                             break;
                         case "FP_LoiterRad":
-                            TXT_loiterrad.Text = "" + Settings.Instance[key];
+                            {
+                                if (int.TryParse(Settings.Instance[key], out int rad))
+                                    SetLoiterRad(rad);
+                            }
                             break;
                         case "FP_DefaultAlt":
                             {
@@ -1975,14 +1980,14 @@ namespace VPS.GCSViews
                                     SetDefaultAltHandle(alt);
                             }
                             break;
-                        case "FP_AltMode":
-                            SetAltFrameHandle("" + Settings.Instance[key]);
-                            break;
                         case "FP_AltWarn":
                             {
                                 if (int.TryParse(Settings.Instance[key], out int alt))
                                     SetWarnAltHandle(alt);
                             }
+                            break;
+                        case "FP_AltMode":
+                            SetAltFrameHandle("" + Settings.Instance[key]);
                             break;
                         case "FP_CoordSystem":
                             SetCoordSystemHandle("" + Settings.Instance[key]);
@@ -4478,19 +4483,16 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                 try
                 {
-                    TXT_loiterrad.Enabled = false;
                     if (param.ContainsKey("LOITER_RADIUS"))
                     {
-                        TXT_loiterrad.Text = (((double)param["LOITER_RADIUS"] * CurrentState.multiplierdist)).ToString();
-                        TXT_loiterrad.Enabled = true;
+                        loiterRad = ((int)((double)param["LOITER_RADIUS"] * CurrentState.multiplierdist));
                     }
                     else if (param.ContainsKey("WP_LOITER_RAD"))
                     {
-                        TXT_loiterrad.Text = (((double)param["WP_LOITER_RAD"] * CurrentState.multiplierdist)).ToString();
-                        TXT_loiterrad.Enabled = true;
+                        loiterRad = ((int)((double)param["WP_LOITER_RAD"] * CurrentState.multiplierdist));
                     }
 
-                    log.Info("param LOITER_RADIUS " + TXT_loiterrad.Text);
+                    log.Info("param LOITER_RADIUS " + loiterRad.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -4651,28 +4653,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             catch (Exception ex)
             {
                 log.Error(ex);
-            }
-        }
-
-
-        public void TXT_loiterrad_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            float isNumber = 0;
-            if (e.KeyChar.ToString() == "\b")
-                return;
-
-            if (e.KeyChar == '-')
-                return;
-
-            e.Handled = !float.TryParse(e.KeyChar.ToString(), out isNumber);
-        }
-
-        public void TXT_loiterrad_Leave(object sender, EventArgs e)
-        {
-            float isNumber = 0;
-            if (!float.TryParse(TXT_loiterrad.Text, out isNumber))
-            {
-                TXT_loiterrad.Text = "45";
             }
         }
 
@@ -6464,12 +6444,12 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 try
                 {
                     if (wpRad <= 0) wpRad = 5;
-                    if (TXT_loiterrad.Text == "") TXT_loiterrad.Text = "30";
+                    if (loiterRad <= 0) loiterRad = 30;
 
                     overlay.CreateOverlay(home,
                         commandlist,
                         wpRad / CurrentState.multiplieralt,
-                        double.Parse(TXT_loiterrad.Text) / CurrentState.multiplieralt);
+                        loiterRad / CurrentState.multiplieralt);
                     foreach (var marker in overlay.overlay.Markers)
                     {
                         try
@@ -7978,45 +7958,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
         #endregion
 
-        #region WPRad
-
-        private int wpRad = 20;
-
-        public IntegerChangeHandler wpRadChange;
-
-        #region SetWPRad
-
-        #region WPRad 接口函数
-        private delegate void SetWPRadInThread(int wpRad);
-        public void SetWPRadHandle(int wpRad)
-        {
-            if (this.InvokeRequired)
-            {
-                SetWPRadInThread inThread = new SetWPRadInThread(SetWPRadHandle);
-                this.Invoke(inThread, new object[] { wpRad });
-            }
-            else
-            {
-                BeginQuickChange();
-                SetWPRad(wpRad);
-                EndQuickChange();
-            }
-        }
-        #endregion
-
-        #region WPRad 入口函数
-        private void SetWPRad(int rad)
-        {
-            wpRad = rad;
-            if (!onlyChangeValue)
-                wpRadChange?.Invoke(wpRad);
-        }
-        #endregion
-
-        #endregion
-
-        #endregion
-
         #region DefaultAlt
 
         private int defaultAlt = 200;
@@ -8089,6 +8030,84 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             if (NotQuickChange())
                 warnAltChange?.Invoke(warnAlt);
 
+        }
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region WPRad
+
+        private int wpRad = 5;
+
+        public IntegerChangeHandler wpRadChange;
+
+        #region SetWPRad
+
+        #region WPRad 接口函数
+        private delegate void SetWPRadInThread(int wpRad);
+        public void SetWPRadHandle(int wpRad)
+        {
+            if (this.InvokeRequired)
+            {
+                SetWPRadInThread inThread = new SetWPRadInThread(SetWPRadHandle);
+                this.Invoke(inThread, new object[] { wpRad });
+            }
+            else
+            {
+                BeginQuickChange();
+                SetWPRad(wpRad);
+                EndQuickChange();
+            }
+        }
+        #endregion
+
+        #region WPRad 入口函数
+        private void SetWPRad(int rad)
+        {
+            wpRad = rad;
+            if (!onlyChangeValue)
+                wpRadChange?.Invoke(wpRad);
+        }
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region LoiterRad
+
+        private int loiterRad = 30;
+
+        public IntegerChangeHandler LoiterRadChange;
+
+        #region SetLoiterRad
+
+        #region LoiterRad 接口函数
+        private delegate void SetLoiterRadInThread(int alt);
+        public void SetLoiterRadHandle(int alt)
+        {
+            if (this.InvokeRequired)
+            {
+                SetLoiterRadInThread inThread = new SetLoiterRadInThread(SetLoiterRadHandle);
+                this.Invoke(inThread, new object[] { alt });
+            }
+            else
+            {
+                BeginQuickChange();
+                SetLoiterRad(alt);
+                EndQuickChange();
+            }
+        }
+        #endregion
+
+        #region LoiterRad 入口函数
+        private void SetLoiterRad(int alt)
+        {
+            loiterRad = alt;
+            if (NotQuickChange())
+                LoiterRadChange?.Invoke(loiterRad);
         }
         #endregion
 
