@@ -146,15 +146,6 @@
   <data name="lbl_status.Text" xml:space="preserve">
     <value>状态</value>
   </data>
-  <data name="CHK_splinedefault.Location" type="System.Drawing.Point, System.Drawing">
-    <value>563, 12</value>
-  </data>
-  <data name="CHK_splinedefault.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
-  </data>
-  <data name="CHK_splinedefault.Text" xml:space="preserve">
-    <value>曲线</value>
-  </data>
   <data name="Command.HeaderText" xml:space="preserve">
     <value>命令</value>
   </data>

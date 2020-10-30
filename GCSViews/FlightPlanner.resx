@@ -898,7 +898,7 @@
     <value>83, 12</value>
   </data>
   <data name="&gt;&gt;Commands.Type" xml:space="preserve">
-    <value>VPS.Controls.MyDataGridView, VPS, Version=1.0.7608.17261, Culture=neutral, PublicKeyToken=null</value>
+    <value>VPS.Controls.MyDataGridView, VPS, Version=1.0.7608.20081, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="CMB_altmode.TabIndex" type="System.Int32, mscorlib">
     <value>54</value>
@@ -1117,7 +1117,7 @@
     <value>0</value>
   </data>
   <data name="&gt;&gt;BUT_Add.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="lnk_kml.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1999,7 +1999,7 @@
     <value>154, 20</value>
   </data>
   <data name="&gt;&gt;Commands.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="label17.ToolTip" xml:space="preserve">
     <value />

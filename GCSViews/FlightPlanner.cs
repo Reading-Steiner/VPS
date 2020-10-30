@@ -219,7 +219,7 @@ namespace VPS.GCSViews
         private ComponentResourceManager rm = new ComponentResourceManager(typeof(FlightPlanner));
         private int selectedrow;
         private bool sethome;
-        private bool splinemode;
+        
         private PointLatLng startmeasure;
         public GMapOverlay top;
         public GMapPolygon wppolygon;
@@ -433,12 +433,6 @@ namespace VPS.GCSViews
         public void Activate()
         {
             timer1.Start();
-
-            // hide spline wp options if not arducopter
-            if (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2)
-                CHK_splinedefault.Visible = true;
-            else
-                CHK_splinedefault.Visible = false;
 
             updateHome();
 
@@ -1471,11 +1465,6 @@ namespace VPS.GCSViews
         public void Chk_grid_CheckedChanged(object sender, EventArgs e)
         {
             grid = chk_grid.Checked;
-        }
-
-        public void CHK_splinedefault_CheckedChanged(object sender, EventArgs e)
-        {
-            splinemode = CHK_splinedefault.Checked;
         }
 
         public void ClearMission()
@@ -7756,40 +7745,13 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
         #region 全局参数
         public delegate void PositionChangeHandle(PointLatLngAlt position);
+        public delegate void IntegerChangeHandler(int integer);
         public delegate void StringChangeHandle(string str);
         public delegate void delegateHandler();
-        public delegate void IntegerChangeHandler(int integer);
+        
 
         public IntegerChangeHandler historyChange;
         public PositionChangeHandle CurrentChange;
-
-        #region NoHandle
-
-        private bool onlyChangeValue = false;
-
-        #region 接口函数
-
-        public void BeginQuickChange()
-        {
-            onlyChangeValue = true;
-        }
-
-
-        public void EndQuickChange()
-        {
-            onlyChangeValue = false;
-        }
-
-        #endregion
-
-        #region 判断函数
-        private bool NotQuickChange()
-        {
-            return !onlyChangeValue;
-        }
-        #endregion
-
-        #endregion
 
         #region Home
 
@@ -8119,6 +8081,50 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
         #region GetBaseAlt
 
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region 全局标记
+
+        #region NotTriggerDelegate
+
+        private bool onlyChangeValue = false;
+
+        #region 接口函数
+
+        public void BeginQuickChange()
+        {
+            onlyChangeValue = true;
+        }
+
+
+        public void EndQuickChange()
+        {
+            onlyChangeValue = false;
+        }
+
+        #endregion
+
+        #region 判断函数
+        private bool NotQuickChange()
+        {
+            return !onlyChangeValue;
+        }
+        #endregion
+
+        #endregion
+
+        #region SplineMode
+        private bool splinemode;
+
+        #region SetSplineMode
+        public void SetSplinMode(bool mode)
+        {
+            splinemode = mode;
+        }
         #endregion
 
         #endregion

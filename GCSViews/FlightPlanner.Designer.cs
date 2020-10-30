@@ -59,7 +59,6 @@ namespace VPS.GCSViews
             this.lbl_status = new System.Windows.Forms.Label();
             this.panelWaypoints = new System.Windows.Forms.Panel();
             this.but_mincommands = new VPS.Controls.MyButton();
-            this.CHK_splinedefault = new System.Windows.Forms.CheckBox();
             this.Commands = new VPS.Controls.MyDataGridView();
             this.Command = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Param1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -82,7 +81,6 @@ namespace VPS.GCSViews
             this.Dist = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AZ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TagData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BUT_Add = new VPS.Controls.MyButton();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel3 = new System.Windows.Forms.Panel();
             this.chk_grid = new System.Windows.Forms.CheckBox();
@@ -128,6 +126,7 @@ namespace VPS.GCSViews
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BUT_Add = new VPS.Controls.MyButton();
             this.panelWaypoints.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
             this.panel3.SuspendLayout();
@@ -172,7 +171,6 @@ namespace VPS.GCSViews
             // 
             resources.ApplyResources(this.panelWaypoints, "panelWaypoints");
             this.panelWaypoints.Controls.Add(this.but_mincommands);
-            this.panelWaypoints.Controls.Add(this.CHK_splinedefault);
             this.panelWaypoints.Controls.Add(this.Commands);
             this.panelWaypoints.Controls.Add(this.BUT_Add);
             this.panelWaypoints.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -186,14 +184,6 @@ namespace VPS.GCSViews
             this.toolTip1.SetToolTip(this.but_mincommands, resources.GetString("but_mincommands.ToolTip"));
             this.but_mincommands.UseVisualStyleBackColor = true;
             this.but_mincommands.Click += new System.EventHandler(this.But_mincommands_Click);
-            // 
-            // CHK_splinedefault
-            // 
-            resources.ApplyResources(this.CHK_splinedefault, "CHK_splinedefault");
-            this.CHK_splinedefault.Name = "CHK_splinedefault";
-            this.toolTip1.SetToolTip(this.CHK_splinedefault, resources.GetString("CHK_splinedefault.ToolTip"));
-            this.CHK_splinedefault.UseVisualStyleBackColor = true;
-            this.CHK_splinedefault.CheckedChanged += new System.EventHandler(this.CHK_splinedefault_CheckedChanged);
             // 
             // Commands
             // 
@@ -383,13 +373,6 @@ namespace VPS.GCSViews
             resources.ApplyResources(this.TagData, "TagData");
             this.TagData.Name = "TagData";
             this.TagData.ReadOnly = true;
-            // 
-            // BUT_Add
-            // 
-            resources.ApplyResources(this.BUT_Add, "BUT_Add");
-            this.BUT_Add.Name = "BUT_Add";
-            this.toolTip1.SetToolTip(this.BUT_Add, resources.GetString("BUT_Add.ToolTip"));
-            this.BUT_Add.UseVisualStyleBackColor = true;
             // 
             // splitter1
             // 
@@ -734,6 +717,13 @@ namespace VPS.GCSViews
             resources.ApplyResources(this.testToolStripMenuItem, "testToolStripMenuItem");
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             // 
+            // BUT_Add
+            // 
+            resources.ApplyResources(this.BUT_Add, "BUT_Add");
+            this.BUT_Add.Name = "BUT_Add";
+            this.toolTip1.SetToolTip(this.BUT_Add, resources.GetString("BUT_Add.ToolTip"));
+            this.BUT_Add.UseVisualStyleBackColor = true;
+            // 
             // FlightPlanner
             // 
             resources.ApplyResources(this, "$this");
@@ -746,7 +736,6 @@ namespace VPS.GCSViews
             this.Load += new System.EventHandler(this.FlightPlanner_Load);
             this.Resize += new System.EventHandler(this.Planner_Resize);
             this.panelWaypoints.ResumeLayout(false);
-            this.panelWaypoints.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Commands)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
@@ -764,13 +753,11 @@ namespace VPS.GCSViews
         #endregion
         public Panel panelWaypoints;
         public Controls.myGMAP MainMap;
-        public System.Windows.Forms.CheckBox CHK_splinedefault;
         public DataGridViewImageColumn dataGridViewImageColumn1;
         public DataGridViewImageColumn dataGridViewImageColumn2;
         public Label label6;
         public Label lbl_status;
         public MyDataGridView Commands;
-        public MyButton BUT_Add;
         public Panel panelMap;
         public MyTrackBar trackBar1;
         public Label label11;
@@ -900,5 +887,6 @@ namespace VPS.GCSViews
         private DataGridViewTextBoxColumn AZ;
         private DataGridViewTextBoxColumn TagData;
         private ToolStripMenuItem drawWPToolStripMenuItem;
+        public MyButton BUT_Add;
     }
 }
