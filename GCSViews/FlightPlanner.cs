@@ -59,19 +59,6 @@ namespace VPS.GCSViews
         }
 
 
-        private void But_mincommands_Click(object sender, System.EventArgs e)
-        {
-            if (panelWaypoints.Height <= 30)
-            {
-                panelWaypoints.Height = 166;
-                but_mincommands.Text = @"˅";
-            }
-            else
-            {
-                panelWaypoints.Height = but_mincommands.Height;
-                but_mincommands.Text = @"˄";
-            }
-        }
 
         static public Object thisLock = new Object();
         public bool quickadd;
