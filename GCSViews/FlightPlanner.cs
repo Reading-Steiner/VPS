@@ -1189,7 +1189,6 @@ namespace VPS.GCSViews
             //createCircleSurveyToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayCircleSurveyAutoWp;
             //pOIToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayPoiMenu;
             //trackerHomeToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayTrackerHomeMenu;
-            CHK_verifyheight.Visible = MainV2.DisplayConfiguration.displayCheckHeightBox;
 
             //hide dynamically generated toolstrip items in the auto WP dropdown (these do not have name objects populated)
             foreach (ToolStripItem item in planningWPToolStripMenuItem.DropDownItems)
@@ -1932,7 +1931,7 @@ namespace VPS.GCSViews
 
                 Settings.Instance["FP_AltMode"] = altFrame.ToString();
 
-                Settings.Instance["FP_AltWarn"] = TXT_altwarn.Text;
+                Settings.Instance["FP_AltWarn"] = warnAlt.ToString();
 
                 Settings.Instance["FP_CoordSystem"] = coordSystem.ToString();
             }
@@ -1980,7 +1979,10 @@ namespace VPS.GCSViews
                             SetAltFrameHandle("" + Settings.Instance[key]);
                             break;
                         case "FP_AltWarn":
-                            TXT_altwarn.Text = "" + Settings.Instance["FP_AltWarn"];
+                            {
+                                if (int.TryParse(Settings.Instance[key], out int alt))
+                                    SetWarnAltHandle(alt);
+                            }
                             break;
                         case "FP_CoordSystem":
                             SetCoordSystemHandle("" + Settings.Instance[key]);
@@ -8048,6 +8050,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         #endregion
 
         #region WarnAlt
+        private int warnAlt = 40;
+
+        public IntegerChangeHandler warnAltChange;
         #region WarnAlt 接口函数
         private delegate void SetWarnAltInThread(int warnAlt);
         public void SetWarnAltHandle(int warnAlt)
@@ -8064,9 +8069,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         }
         #endregion
         #region WarnAlt 入口函数
-        private void SetWarnAlt(int warnAlt)
+        private void SetWarnAlt(int alt)
         {
-            TXT_altwarn.Text = warnAlt.ToString();
+            warnAlt = alt;
         }
         #endregion
         #endregion
@@ -8237,31 +8242,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
 
             DataGridViewTextBoxCell cell;
-            if (alt == -2 && Commands.Columns[Alt.Index].HeaderText.Equals("Alt"))
-            {
-                if (CHK_verifyheight.Checked ) //Drag with verifyheight // use srtm data
-                {
-                    cell = Commands.Rows[selectedrow].Cells[Alt.Index] as DataGridViewTextBoxCell;
-                    float ans;
-                    if (float.TryParse(cell.Value.ToString(), out ans))
-                    {
-                        ans = (int)ans;
-
-                        DataGridViewTextBoxCell celllat = Commands.Rows[selectedrow].Cells[Lat.Index] as DataGridViewTextBoxCell;
-                        DataGridViewTextBoxCell celllon = Commands.Rows[selectedrow].Cells[Lon.Index] as DataGridViewTextBoxCell;
-                        int oldsrtm =
-                            (int)
-                            ((srtm.getAltitude(double.Parse(celllat.Value.ToString()),
-                                 double.Parse(celllon.Value.ToString())).alt) * CurrentState.multiplieralt);
-                        int newsrtm = (int)((srtm.getAltitude(lat, lng).alt) * CurrentState.multiplieralt);
-                        int newh = (int)(ans + newsrtm - oldsrtm);
-
-                        cell.Value = newh;
-
-                        cell.DataGridView.EndEdit();
-                    }
-                }
-            }
             if (Commands.Columns[Lat.Index].HeaderText.Equals("Lat"))
             {
                 cell = Commands.Rows[selectedrow].Cells[Lat.Index] as DataGridViewTextBoxCell;
@@ -8332,33 +8312,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     if (ans == 0 && (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2))
                         cell.Value = 15;
 
-                    // not online and verify alt via srtm
-                    if (CHK_verifyheight.Checked) // use srtm data
-                    {
-                        // is absolute but no verify
-                        if (altFrame == AltMode.Absolute)
-                        {
-                            //abs
-                            cell.Value =
-                                ((srtm.getAltitude(lat, lng).alt) * CurrentState.multiplieralt + defaultAlt).ToString();
-                        }
-                        else if (altFrame == AltMode.Terrain)
-                        {
-                            cell.Value = defaultAlt;
-                        }
-                        else
-                        {
-                            //relative and verify
-                            cell.Value =
-                                ((int)(srtm.getAltitude(lat, lng).alt) * CurrentState.multiplieralt +
-                                 defaultAlt -
-                                 (int)
-                                 srtm.getAltitude(MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat,
-                                     MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng).alt * CurrentState.multiplieralt)
-                                .ToString();
-                        }
-                    }
-
                     cell.DataGridView.EndEdit();
                 }
                 else
@@ -8425,5 +8378,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         #endregion
 
         #endregion
+
     }
 }
