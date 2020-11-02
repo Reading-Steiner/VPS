@@ -51,7 +51,6 @@ namespace VPS.GCSViews
             this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.label6 = new System.Windows.Forms.Label();
             this.lbl_status = new System.Windows.Forms.Label();
-            this.panelWaypoints = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel3 = new System.Windows.Forms.Panel();
             this.chk_grid = new System.Windows.Forms.CheckBox();
@@ -133,13 +132,6 @@ namespace VPS.GCSViews
             resources.ApplyResources(this.lbl_status, "lbl_status");
             this.lbl_status.Name = "lbl_status";
             this.toolTip1.SetToolTip(this.lbl_status, resources.GetString("lbl_status.ToolTip"));
-            // 
-            // panelWaypoints
-            // 
-            resources.ApplyResources(this.panelWaypoints, "panelWaypoints");
-            this.panelWaypoints.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.panelWaypoints.Name = "panelWaypoints";
-            this.toolTip1.SetToolTip(this.panelWaypoints, resources.GetString("panelWaypoints.ToolTip"));
             // 
             // splitter1
             // 
@@ -421,7 +413,6 @@ namespace VPS.GCSViews
             this.panelBASE.Controls.Add(this.splitter2);
             this.panelBASE.Controls.Add(this.splitter1);
             this.panelBASE.Controls.Add(this.panelMap);
-            this.panelBASE.Controls.Add(this.panelWaypoints);
             this.panelBASE.Controls.Add(this.label6);
             this.panelBASE.Name = "panelBASE";
             this.toolTip1.SetToolTip(this.panelBASE, resources.GetString("panelBASE.ToolTip"));
@@ -502,7 +493,6 @@ namespace VPS.GCSViews
 
 
         #endregion
-        public Panel panelWaypoints;
         public Controls.myGMAP MainMap;
         public DataGridViewImageColumn dataGridViewImageColumn1;
         public DataGridViewImageColumn dataGridViewImageColumn2;
