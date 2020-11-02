@@ -704,7 +704,7 @@ namespace VPS.Controls.Grid
 
         private void NUM_focallength_ValueChanged(object sender, EventArgs e)
         {
-            domainUpDown2_ValueChanged(sender, e);
+            domainUpDown1_ValueChanged(sender, e);
         }
 
         private void GridConfig_Load(object sender, EventArgs e)
@@ -845,6 +845,10 @@ namespace VPS.Controls.Grid
             
         }
 
+        private void GeneralWP_Click(object sender, EventArgs e)
+        {
+            domainUpDown2_ValueChanged(sender, e);
 
+        }
     }
 }

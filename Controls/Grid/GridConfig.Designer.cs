@@ -93,6 +93,7 @@
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.CameraInfo = new DevComponents.DotNetBar.PanelEx();
+            this.GeneralWP = new DevComponents.DotNetBar.ButtonX();
             this.AddCamera = new DevComponents.DotNetBar.ButtonX();
             this.CHK_camdirection = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.ShowCameraInfo = new DevComponents.DotNetBar.Controls.CheckBoxX();
@@ -1155,6 +1156,7 @@
             this.CameraInfo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CameraInfo.CanvasColor = System.Drawing.SystemColors.Control;
             this.CameraInfo.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.CameraInfo.Controls.Add(this.GeneralWP);
             this.CameraInfo.Controls.Add(this.AddCamera);
             this.CameraInfo.Controls.Add(this.CHK_camdirection);
             this.CameraInfo.Controls.Add(this.ShowCameraInfo);
@@ -1173,13 +1175,26 @@
             this.CameraInfo.Style.GradientAngle = 90;
             this.CameraInfo.TabIndex = 34;
             // 
+            // GeneralWP
+            // 
+            this.GeneralWP.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.GeneralWP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.GeneralWP.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.GeneralWP.Location = new System.Drawing.Point(232, 30);
+            this.GeneralWP.Name = "GeneralWP";
+            this.GeneralWP.Size = new System.Drawing.Size(69, 32);
+            this.GeneralWP.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.GeneralWP.TabIndex = 41;
+            this.GeneralWP.Text = "生成航线";
+            this.GeneralWP.Click += new System.EventHandler(this.GeneralWP_Click);
+            // 
             // AddCamera
             // 
             this.AddCamera.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.AddCamera.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.AddCamera.Location = new System.Drawing.Point(207, 18);
+            this.AddCamera.Location = new System.Drawing.Point(189, 4);
             this.AddCamera.Name = "AddCamera";
-            this.AddCamera.Size = new System.Drawing.Size(58, 23);
+            this.AddCamera.Size = new System.Drawing.Size(29, 19);
             this.AddCamera.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.AddCamera.TabIndex = 40;
             this.AddCamera.Text = "添加";
@@ -1191,7 +1206,7 @@
             // 
             // 
             this.CHK_camdirection.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.CHK_camdirection.Location = new System.Drawing.Point(137, 57);
+            this.CHK_camdirection.Location = new System.Drawing.Point(55, 57);
             this.CHK_camdirection.Name = "CHK_camdirection";
             this.CHK_camdirection.Size = new System.Drawing.Size(51, 23);
             this.CHK_camdirection.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -1205,7 +1220,7 @@
             // 
             // 
             this.ShowCameraInfo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ShowCameraInfo.Location = new System.Drawing.Point(207, 57);
+            this.ShowCameraInfo.Location = new System.Drawing.Point(125, 57);
             this.ShowCameraInfo.Name = "ShowCameraInfo";
             this.ShowCameraInfo.Size = new System.Drawing.Size(100, 23);
             this.ShowCameraInfo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -1262,7 +1277,7 @@
             this.NUM_focallength.BackgroundStyle.Class = "DateTimeInputBackground";
             this.NUM_focallength.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.NUM_focallength.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.NUM_focallength.Increment = 0.01D;
+            this.NUM_focallength.Increment = 1D;
             this.NUM_focallength.Location = new System.Drawing.Point(67, 30);
             this.NUM_focallength.Name = "NUM_focallength";
             this.NUM_focallength.ShowUpDown = true;
@@ -1442,5 +1457,6 @@
         private DevComponents.DotNetBar.Controls.CheckBoxX LockAngle;
         private DevComponents.DotNetBar.SuperTooltip defaultAngleTooltip;
         private DevComponents.DotNetBar.ButtonX AddCamera;
+        private DevComponents.DotNetBar.ButtonX GeneralWP;
     }
 }
