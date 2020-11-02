@@ -3299,7 +3299,7 @@ namespace VPS
             VPS.Controls.Command.CommandsPanel.instance.DefaultAltChange += GCSViews.FlightPlanner.instance.SetDefaultAltHandle;
             VPS.Controls.Command.CommandsPanel.instance.HomeChange += GCSViews.FlightPlanner.instance.SetHomeHandle;
             GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.Command.CommandsPanel.instance.SetHome;
-            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.SetWPList;
+            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
 
             GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetHomePosition;
             GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetWPList;
@@ -4281,6 +4281,8 @@ namespace VPS
                 //GCSViews.FlightPlanner.instance.surveyGrid();
                 VPS.Controls.Grid.GridConfig.instance.WPListChangeHandle -= GCSViews.FlightPlanner.instance.SetWPListHandle;
                 VPS.Controls.Grid.GridConfig.instance.WPListChangeHandle += GCSViews.FlightPlanner.instance.SetWPListHandle;
+                VPS.Controls.Grid.GridConfig.instance.WPListChangeHandle -= VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
+                VPS.Controls.Grid.GridConfig.instance.WPListChangeHandle += VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
                 GCSViews.FlightPlanner.instance.PolygonListChange -= VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
                 GCSViews.FlightPlanner.instance.PolygonListChange += VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
 
@@ -4299,6 +4301,7 @@ namespace VPS
                 AutoWPButton.Checked = false;
                 VPS.Controls.Grid.GridConfig.instance.WPListChangeHandle -= GCSViews.FlightPlanner.instance.SetWPListHandle;
                 GCSViews.FlightPlanner.instance.PolygonListChange -= VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
+                VPS.Controls.Grid.GridConfig.instance.WPListChangeHandle -= VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
 
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
                 VPS.Controls.Grid.GridConfig.instance.SaveSetting();

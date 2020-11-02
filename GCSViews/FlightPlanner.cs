@@ -3546,8 +3546,10 @@ namespace VPS.GCSViews
                             }
                             else if ((CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.Tag.ToString(), @"^\d+$")))
                             {
-                                CallMeDrag(CurentRectMarker.InnerMarker.Tag.ToString(), currentMarker.Position.Lat,
-                                currentMarker.Position.Lng, -2);
+                                CallMeDrag(
+                                    (int.Parse(CurentRectMarker.InnerMarker.Tag.ToString()) - 1).ToString(),
+                                    currentMarker.Position.Lat,
+                                    currentMarker.Position.Lng, -1);
                             }
                             CurentRectMarker = null;
                         }
@@ -6238,8 +6240,7 @@ namespace VPS.GCSViews
                 isWPChange = true;
                 return;
             }
-            List<PointLatLngAlt> wpHistory = new List<PointLatLngAlt>();
-            wpHistory.CopyTo(wpLists.ToArray());
+            List<PointLatLngAlt> wpHistory = new List<PointLatLngAlt>(wpLists.ToArray());
             wpHistory.Insert(0, homePosition);
 
             history.Add(wpHistory);
@@ -6339,8 +6340,7 @@ namespace VPS.GCSViews
         #region GetWPList
         public List<PointLatLngAlt> GetWPList(string altitudeMode = "Relative")
         {
-            List<PointLatLngAlt> wpList = new List<PointLatLngAlt>();
-            wpList.CopyTo(wpLists.ToArray());
+            List<PointLatLngAlt> wpList = new List<PointLatLngAlt>(wpLists.ToArray());
             List<PointLatLngAlt> retWPList = new List<PointLatLngAlt>();
 
             double baseAlt = GetBaseAlt();
@@ -6422,9 +6422,7 @@ namespace VPS.GCSViews
             }
             else
             {
-                InterceptSendListChange();
                 ClearWPList();
-                AllowSendListChange();
             }
         }
 

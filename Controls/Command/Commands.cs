@@ -500,7 +500,50 @@ namespace VPS.Controls.Command
             return wpList;
         }
 
-        public void SetWPList(List<Utilities.PointLatLngAlt> wpList)
+        #region interceptSendChange
+        public bool isSendChange = true;
+
+        #region 接口函数
+
+        public void InterceptSendListChange()
+        {
+            isSendChange = false;
+        }
+
+        public void AllowSendListChange()
+        {
+            isSendChange = true;
+        }
+
+        #endregion
+
+        #region 判断函数
+        private bool IsAllowSendChange()
+        {
+            return isSendChange;
+        }
+        #endregion
+
+        #endregion
+
+        private delegate void SetWPListInThread(List<Utilities.PointLatLngAlt> wpList);
+
+        public void SetWPListHandle(List<Utilities.PointLatLngAlt> wpList)
+        {
+            if (this.InvokeRequired)
+            {
+                SetWPListInThread inThread = new SetWPListInThread(SetWPListHandle);
+                this.Invoke(inThread, new object[] { wpList });
+            }
+            else
+            {
+                InterceptSendListChange();
+                SetWPList(wpList);
+                AllowSendListChange();
+            }
+        }
+
+        private void SetWPList(List<Utilities.PointLatLngAlt> wpList)
         {
             SetBaseAlt(wpList);
             StartEdit();
@@ -521,6 +564,10 @@ namespace VPS.Controls.Command
 
             SetWpListParam(wpList);
 
+            if (IsAllowSendChange())
+            {
+                WPListChange?.Invoke(GetWPList());
+            }
         }
 
         private void CommandDataList_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -566,38 +613,5 @@ namespace VPS.Controls.Command
             }
         }
 
-        private void CommandDataList_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
-        {
-        }
-
-        private void CommandDataList_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-        }
-
-        private void CommandDataList_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            //if (e.RowIndex < CommandDataList.Rows.Count - 1)
-            //{
-            //    DataGridViewRow dgrSingle = CommandDataList.Rows[e.RowIndex];
-            //    if (e.ColumnIndex == RelativeAlt.Index)
-            //    {
-            //        try
-            //        {
-            //            if ((int)dgrSingle.Cells[RelativeAlt.Index].Value < warnAlt)
-            //            {
-            //                dgrSingle.DefaultCellStyle.ForeColor = Color.Red;
-            //            }
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //        }
-            //    }
-            //}
-        }
-
-        private void CommandDataList_GridColorChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

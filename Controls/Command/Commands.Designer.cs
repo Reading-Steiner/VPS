@@ -514,11 +514,7 @@
             this.CommandDataList.RowTemplate.Height = 23;
             this.CommandDataList.Size = new System.Drawing.Size(984, 272);
             this.CommandDataList.TabIndex = 0;
-            this.CommandDataList.GridColorChanged += new System.EventHandler(this.CommandDataList_GridColorChanged);
             this.CommandDataList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CommandDataList_CellContentClick);
-            this.CommandDataList.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.CommandDataList_CellPainting);
-            this.CommandDataList.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.CommandDataList_CellValueChanged);
-            this.CommandDataList.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.CommandDataList_RowPrePaint);
             // 
             // Command
             // 
