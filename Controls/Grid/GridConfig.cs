@@ -371,7 +371,7 @@ namespace VPS.Controls.Grid
                 }
             }
             while (true) {
-                if ((DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000 - alterTime > 500)
+                if ((DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000 - alterTime > 1000)
                 {
                     lock (lockObj2)
                     {
@@ -704,7 +704,7 @@ namespace VPS.Controls.Grid
 
         private void NUM_focallength_ValueChanged(object sender, EventArgs e)
         {
-            domainUpDown1_ValueChanged(sender, e);
+            domainUpDown2_ValueChanged(sender, e);
         }
 
         private void GridConfig_Load(object sender, EventArgs e)

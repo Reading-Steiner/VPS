@@ -215,14 +215,36 @@ namespace VPS.Plugin
         public int AddWPtoList(MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
             double z, object tag = null)
         {
-            return MainV2.instance.FlightPlanner.AddCommand(cmd, p1, p2, p3, p4, x, y, z, tag);
+            var wp = new PointLatLngAlt(x, y, z);
+            wp.Tag = cmd.ToString();
+            if (tag != null)
+                wp.Tag2 = tag.ToString();
+            else
+                wp.Tag2 = "Relative";
+            wp.Param1 = p1;
+            wp.Param2 = p2;
+            wp.Param3 = p3;
+            wp.Param4 = p4;
+
+            return MainV2.instance.FlightPlanner.AddWPPoint(wp);
         }
 
         public void InsertWP(int idx, MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x,
             double y,
             double z, object tag = null)
         {
-            MainV2.instance.FlightPlanner.InsertCommand(idx, cmd, p1, p2, p3, p4, x, y, z);
+            var wp = new PointLatLngAlt(x, y, z);
+            wp.Tag = cmd.ToString();
+            if (tag != null)
+                wp.Tag2 = tag.ToString();
+            else
+                wp.Tag2 = "Relative";
+            wp.Param1 = p1;
+            wp.Param2 = p2;
+            wp.Param3 = p3;
+            wp.Param4 = p4;
+
+            MainV2.instance.FlightPlanner.InsertWPPoint(idx, wp);
         }
 
         public int AddWPtoList(MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
@@ -243,7 +265,7 @@ namespace VPS.Plugin
         /// </summary>
         public void GetWPs()
         {
-            MainV2.instance.FlightPlanner.BUT_read_Click(null, null);
+
         }
     }
 }

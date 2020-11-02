@@ -21,11 +21,16 @@ namespace VPS.Utilities
             InputBox.Show("", "photos", ref photos);
             InputBox.Show("", "start heading", ref startheading);
 
-            MainV2.instance.FlightPlanner.quickadd = true;
+            MainV2.instance.FlightPlanner.EnterQuickADD();
 
             // set roi centerpoint
-            FlightPlanner.instance.AddCommand(MAVLink.MAV_CMD.DO_SET_ROI, 0, 0, 0, 0, centerPoint.Lng, centerPoint.Lat,
-                centerPoint.Alt);
+            var roi = new PointLatLngAlt(centerPoint.Lat, centerPoint.Lng, centerPoint.Alt);
+            roi.Tag = MAVLink.MAV_CMD.DO_SET_ROI.ToString();
+            roi.Param1 = 0;
+            roi.Param2 = 0;
+            roi.Param3 = 0;
+            roi.Param4 = 0;
+            FlightPlanner.instance.AddWPPoint(roi);
 
             // alts
             for (int alt = startalt; alt <= endalt; alt += seperation)
@@ -33,17 +38,28 @@ namespace VPS.Utilities
                 // headings
                 for (int heading = startheading; heading <= startheading + 360; heading += 360 / photos)
                 {
-                    MainV2.instance.FlightPlanner.quickadd = true;
+                    MainV2.instance.FlightPlanner.EnterQuickADD();
                     var newpoint = centerPoint.newpos(heading, radius);
                     // add wp
-                    FlightPlanner.instance.AddCommand(MAVLink.MAV_CMD.WAYPOINT, 2, 0, 0, 0, newpoint.Lng,
-                        newpoint.Lat, alt);
+                    var wp = new PointLatLngAlt(newpoint.Lat, newpoint.Lng, alt);
+                    wp.Tag = MAVLink.MAV_CMD.WAYPOINT.ToString();
+                    wp.Param1 = 2;
+                    wp.Param2 = 0;
+                    wp.Param3 = 0;
+                    wp.Param4 = 0;
+                    FlightPlanner.instance.AddWPPoint(wp);
                     // trigger camera
-                    FlightPlanner.instance.AddCommand(MAVLink.MAV_CMD.DO_DIGICAM_CONTROL, 0, 0, 0, 0, 0, 1, 0);
+                    var trigger = new PointLatLngAlt(1, 0, 0);
+                    trigger.Tag = MAVLink.MAV_CMD.DO_DIGICAM_CONTROL.ToString();
+                    trigger.Param1 = 0;
+                    trigger.Param2 = 0;
+                    trigger.Param3 = 0;
+                    trigger.Param4 = 0;
+                    FlightPlanner.instance.AddWPPoint(trigger);
                 }
             }
 
-            MainV2.instance.FlightPlanner.quickadd = false;
+            MainV2.instance.FlightPlanner.LeaveQuickADD();
 
             MainV2.instance.FlightPlanner.writeKML();
         }

@@ -23,6 +23,10 @@ namespace VPS.Utilities
         public double Alt { get; set; } = 0;
         public string Tag { get; set; } = "";
         public string Tag2 { get; set; } = "";
+        public double Param1 { get; set; } = 0;
+        public double Param2 { get; set; } = 0;
+        public double Param3 { get; set; } = 0;
+        public double Param4 { get; set; } = 0;
         public Color color { get; set; } = Color.White;
 
         static CoordinateTransformationFactory ctfac = new CoordinateTransformationFactory();

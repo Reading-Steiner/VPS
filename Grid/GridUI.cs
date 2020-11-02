@@ -1638,7 +1638,7 @@ namespace VPS.Grid
         {
             if (grid != null && grid.Count > 0)
             {
-                MainV2.instance.FlightPlanner.quickadd = true;
+                MainV2.instance.FlightPlanner.EnterQuickADD();
 
                 if (NUM_split.Value > 1 && CHK_toandland.Checked != true)
                 {
@@ -1914,7 +1914,7 @@ namespace VPS.Grid
 
                 savesettings();
 
-                MainV2.instance.FlightPlanner.quickadd = false;
+                MainV2.instance.FlightPlanner.LeaveQuickADD();
 
                 MainV2.instance.FlightPlanner.writeKML();
 

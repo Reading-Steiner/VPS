@@ -1437,9 +1437,6 @@ namespace VPS.GCSViews
                             wpno++;
                         }
 
-                        MainV2.comPort.setWPACK();
-
-                        FlightPlanner.instance.BUT_read_Click(this, null);
 
                         // set index back to 1
                         MainV2.comPort.setWPCurrent(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid, 1);

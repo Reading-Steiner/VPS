@@ -1416,7 +1416,6 @@ namespace VPS
                     if (comPort.BaseStream.IsOpen)
                     {
                         FlightPlannerShow();
-                        FlightPlanner.BUT_read_Click(null, null);
                     }
                 }
 
@@ -3306,8 +3305,8 @@ namespace VPS
             GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetWPList;
             GCSViews.FlightPlanner.instance.CurrentChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetCurrentPosition;
 
-            GCSViews.FlightPlanner.instance.ToDrawPolygonHandle += ToDrawPolygonState;
-            GCSViews.FlightPlanner.instance.OutDrawPolygonHandle += OutDrawPolygonState;
+            GCSViews.FlightPlanner.instance.EnterDrawPolygonHandle += ToDrawPolygonState;
+            GCSViews.FlightPlanner.instance.LeaveDrawPolygonHandle += OutDrawPolygonState;
 
             GCSViews.FlightPlanner.instance.ToDrawWPHandle += ToDrawWPState;
             GCSViews.FlightPlanner.instance.OutDrawWPHandle += OutDrawWPState;
@@ -4267,7 +4266,7 @@ namespace VPS
         #region ClearWP
         private void ClearWPButton_Click(object sender, EventArgs e)
         {
-            GCSViews.FlightPlanner.instance.ClearMission();
+            GCSViews.FlightPlanner.instance.ClearWPListHandle();
         }
         #endregion
 
