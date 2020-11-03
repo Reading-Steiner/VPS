@@ -1459,7 +1459,6 @@
             this.ConfigPanel.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.ConfigPanel.Style.GradientAngle = 90;
             this.ConfigPanel.TabIndex = 50;
-            this.ConfigPanel.Visible = false;
             // 
             // CHK_AutoGeneralWP
             // 
@@ -1506,7 +1505,6 @@
             this.ConfigTitle.StyleMouseOver.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemHotBorder;
             this.ConfigTitle.StyleMouseOver.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemHotText;
             this.ConfigTitle.TabIndex = 49;
-            this.ConfigTitle.Click += new System.EventHandler(this.ConfigTitle_Click);
             // 
             // label3
             // 

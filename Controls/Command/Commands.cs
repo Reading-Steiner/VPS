@@ -456,28 +456,35 @@ namespace VPS.Controls.Command
 
         private void SetWpListParam(List<Utilities.PointLatLngAlt> wpList)
         {
-            if (wpList.Count > 0)
+            try
             {
-                double height = wpList[0].Alt - homePosition.Alt;
-                double distance = wpList[0].GetDistance(homePosition);
-                double grad = height / distance;
+                if (wpList.Count > 0)
+                {
+                    double height = wpList[0].Alt - homePosition.Alt;
+                    double distance = wpList[0].GetDistance(homePosition);
+                    double grad = height / distance;
 
-                CommandDataList[Grad.Index, 0].Value = (grad * 100);
-                CommandDataList[Angle.Index, 0].Value = ((180.0 / Math.PI) * Math.Atan(grad));
-                CommandDataList[Dist.Index, 0].Value = (Math.Sqrt(Math.Pow(distance, 2) + Math.Pow(height, 2)) * CurrentState.multiplierdist);
-                CommandDataList[AZ.Index, 0].Value = ((wpList[0].GetBearing(homePosition) + 180) % 360);
+                    CommandDataList[Grad.Index, 0].Value = (grad * 100);
+                    CommandDataList[Angle.Index, 0].Value = ((180.0 / Math.PI) * Math.Atan(grad));
+                    CommandDataList[Dist.Index, 0].Value = (Math.Sqrt(Math.Pow(distance, 2) + Math.Pow(height, 2)) * CurrentState.multiplierdist);
+                    CommandDataList[AZ.Index, 0].Value = ((wpList[0].GetBearing(homePosition) + 180) % 360);
+                }
+
+                for (int index = 1; index < wpList.Count; index++)
+                {
+                    double height = wpList[index].Alt - wpList[index - 1].Alt;
+                    double distance = wpList[index].GetDistance(wpList[index - 1]);
+                    double grad = height / distance;
+                    double az = wpList[index].GetBearing(wpList[index - 1]);
+
+                    CommandDataList[Grad.Index, index].Value = (grad * 100);
+                    CommandDataList[Angle.Index, index].Value = ((180.0 / Math.PI) * Math.Atan(grad));
+                    CommandDataList[Dist.Index, index].Value = (Math.Sqrt(Math.Pow(distance, 2) + Math.Pow(height, 2)) * CurrentState.multiplierdist);
+                    CommandDataList[AZ.Index, index].Value = ((az + 180) % 360);
+                }
             }
-
-            for(int index = 1; index < wpList.Count; index++)
+            catch
             {
-                double height = wpList[index].Alt - wpList[index - 1].Alt;
-                double distance = wpList[index].GetDistance(wpList[index - 1]);
-                double grad = height / distance;
-
-                CommandDataList[Grad.Index, index].Value = (grad * 100);
-                CommandDataList[Angle.Index, index].Value = ((180.0 / Math.PI) * Math.Atan(grad));
-                CommandDataList[Dist.Index, index].Value = (Math.Sqrt(Math.Pow(distance, 2) + Math.Pow(height, 2)) * CurrentState.multiplierdist);
-                CommandDataList[AZ.Index, index].Value = ((wpList[index].GetBearing(wpList[index - 1]) + 180) % 360);
             }
         }
 

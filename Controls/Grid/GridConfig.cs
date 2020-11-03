@@ -359,50 +359,7 @@ namespace VPS.Controls.Grid
             
         }
 
-        void doCalc()
-        {
 
-                // entered values
-                float flyalt = (float)CurrentState.fromDistDisplayUnit((float)NUM_altitude.Value);
-                int imagewidth = TXT_ImgWidth.Value;
-                int imageheight = TXT_ImgHeight.Value;
-
-                double overlap = num_overlap.Value;
-                double sidelap = num_sidelap.Value;
-
-                double viewwidth = 0;
-                double viewheight = 0;
-
-                getFOV(flyalt, ref viewwidth, ref viewheight);
-
-                TXT_FovH.Value = viewwidth;
-                TXT_FovV.Value = viewheight;
-                // Imperial
-                //feet_fovH = (viewwidth * 3.2808399f).ToString("#.#");
-                //feet_fovV = (viewheight * 3.2808399f).ToString("#.#");
-
-                //    mm  / pixels * 100
-                TXT_cmPixel.Value = ((viewheight / imageheight) * 100);
-                // Imperial
-                //inchpixel = (((viewheight / imageheight) * 100) * 0.393701).ToString("0.00 inches");
-
-                if (CHK_camdirection.Checked)
-                {
-                    num_spacing.Value = (double)((1 - (overlap / 100.0f)) * viewheight);
-                    Num_Distance.Value = (double)((1 - (sidelap / 100.0f)) * viewwidth);
-                }
-                else
-                {
-                    num_spacing.Value = (double)((1 - (overlap / 100.0f)) * viewwidth);
-                    Num_Distance.Value = (double)((1 - (sidelap / 100.0f)) * viewheight);
-                }
-
-            if (!isLockAngle)
-            {
-                num_angle.Value = getAngleOfLongestSide(list);
-            }
-
-        }
 
         public static GridConfig instance = null;
         public GridConfig()
@@ -488,15 +445,11 @@ namespace VPS.Controls.Grid
         {
             if (IsLoading())
                 return;
+
             if (!IsAllowEdit())
                 return;
 
-            if (CMB_Camera.Text != "")
-            {
-                CloseEditFun();
-                doCalc();
-                OpenEditFun();
-            }
+            EnterCalc();
 
             if (list.Count <= 0)
                 return;
@@ -515,12 +468,7 @@ namespace VPS.Controls.Grid
             if (!IsAllowEdit())
                 return;
 
-            if (CMB_Camera.Text != "")
-            {
-                CloseEditFun();
-                doCalc();
-                OpenEditFun();
-            }
+            EnterCalc();
 
             if (list.Count <= 0)
                 return;
@@ -715,6 +663,72 @@ namespace VPS.Controls.Grid
         }
         #endregion
 
+        #region 参数计算
+
+        #region 入口函数
+        private void EnterCalc()
+        {
+            if (!IsAllowEdit())
+                return;
+
+            if (CMB_Camera.Text != "")
+            {
+                CloseEditFun();
+                doCalc();
+                OpenEditFun();
+            }
+        }
+        #endregion
+
+        #region 实现
+        void doCalc()
+        {
+
+            // entered values
+            float flyalt = (float)CurrentState.fromDistDisplayUnit((float)NUM_altitude.Value);
+            int imagewidth = TXT_ImgWidth.Value;
+            int imageheight = TXT_ImgHeight.Value;
+
+            double overlap = num_overlap.Value;
+            double sidelap = num_sidelap.Value;
+
+            double viewwidth = 0;
+            double viewheight = 0;
+
+            getFOV(flyalt, ref viewwidth, ref viewheight);
+
+            TXT_FovH.Value = viewwidth;
+            TXT_FovV.Value = viewheight;
+            // Imperial
+            //feet_fovH = (viewwidth * 3.2808399f).ToString("#.#");
+            //feet_fovV = (viewheight * 3.2808399f).ToString("#.#");
+
+            //    mm  / pixels * 100
+            TXT_cmPixel.Value = ((viewheight / imageheight) * 100);
+            // Imperial
+            //inchpixel = (((viewheight / imageheight) * 100) * 0.393701).ToString("0.00 inches");
+
+            if (CHK_camdirection.Checked)
+            {
+                num_spacing.Value = (double)((1 - (overlap / 100.0f)) * viewheight);
+                Num_Distance.Value = (double)((1 - (sidelap / 100.0f)) * viewwidth);
+            }
+            else
+            {
+                num_spacing.Value = (double)((1 - (overlap / 100.0f)) * viewwidth);
+                Num_Distance.Value = (double)((1 - (sidelap / 100.0f)) * viewheight);
+            }
+
+            if (!isLockAngle)
+            {
+                num_angle.Value = getAngleOfLongestSide(list);
+            }
+
+        }
+        #endregion
+
+        #endregion
+
         #endregion
 
 
@@ -735,66 +749,89 @@ namespace VPS.Controls.Grid
         {
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void num_overlap_ValueChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void num_sidelap_ValueChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void NUM_spacing_ValueChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void NUM_angle_ValueChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void NUM_overshoot_ValueChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void NUM_Lane_Dist_ValueChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void NUM_overshoot2_ValueChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void CMB_startfrom_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void NUM_leadin_ValueChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void CMB_camera_SelectedIndexChanged(object sender, EventArgs e)
         {
             GetCameraInfo = camerainfo.GetCameraInfos(CMB_Camera.Text);
-            domainUpDown1_ValueChanged();
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void CMB_camera_SelectedValueChanged(object sender, EventArgs e)
@@ -802,12 +839,16 @@ namespace VPS.Controls.Grid
             GetCameraInfo = camerainfo.GetCameraInfos(CMB_Camera.Text);
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void NUM_focallength_ValueChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void GridConfig_Load(object sender, EventArgs e)
@@ -822,6 +863,8 @@ namespace VPS.Controls.Grid
  
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void Accept_Click(object sender, EventArgs e)
@@ -838,6 +881,8 @@ namespace VPS.Controls.Grid
             EndLoading();
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void chk_crossgrid_CheckedChanged(object sender, EventArgs e)
@@ -848,6 +893,8 @@ namespace VPS.Controls.Grid
             }
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void chk_Corridor_CheckedChanged(object sender, EventArgs e)
@@ -859,6 +906,8 @@ namespace VPS.Controls.Grid
             }
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void chk_spiral_CheckedChanged(object sender, EventArgs e)
@@ -869,30 +918,40 @@ namespace VPS.Controls.Grid
             }
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void NUM_altitude_ValueChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void lbl_gndelev_ValueChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void num_corridorwidth_ValueChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void CHK_camdirection_CheckedChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
 
         private void defaultAngle_Click(object sender, EventArgs e)
@@ -902,6 +961,8 @@ namespace VPS.Controls.Grid
                 this.num_angle.Value = getAngleOfLongestSide(list);
                 if (CHK_AutoGeneralWP.Checked)
                     domainUpDown1_ValueChanged();
+                else
+                    EnterCalc();
             }
         }
 
@@ -933,6 +994,8 @@ namespace VPS.Controls.Grid
             {
                 if (CHK_AutoGeneralWP.Checked)
                     domainUpDown1_ValueChanged();
+                else
+                    EnterCalc();
                 num_angle.Enabled = true;
                 DefaultAngle.Enabled = true;
             }
@@ -979,49 +1042,6 @@ namespace VPS.Controls.Grid
         private void GeneralWP_Click(object sender, EventArgs e)
         {
             domainUpDown2_ValueChanged();
-        }
-        static object configTitlelock = new object();
-        long ConfigTitleShowTime;
-        bool isConfigTileShow = false;
-        private void ConfigTitle_Click(object sender, EventArgs e)
-        {
-            ConfigPanel.Visible = true;
-            ConfigTitleShowTime = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000;
-            if (isConfigTileShow)
-                return;
-            else
-            {
-                lock (configTitlelock)
-                {
-                    isConfigTileShow = true;
-                    Task.Run(
-                        () =>
-                        {
-
-                            try
-                            {
-                                lock (configTitlelock)
-                                {
-                                    while (true)
-                                        if ((DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000 - ConfigTitleShowTime > 5000)
-                                        {
-                                            SetVisibleHandle(ConfigPanel, false);
-                                            return;
-                                        }
-                                        else
-                                            Thread.SpinWait(1000);
-                                }
-                            }
-                            catch { }
-                            finally
-                            {
-                                isConfigTileShow = false;
-                            }
-
-                        }
-                    );
-                }
-            }
         }
 
         private void AutoGeneralWP_CheckedChanged(object sender, EventArgs e)
