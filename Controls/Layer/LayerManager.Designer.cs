@@ -65,6 +65,7 @@
             this.LayerDataList.TabIndex = 0;
             this.LayerDataList.CellClick += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridCellClickEventArgs>(this.LayerDataList_CellClick);
             this.LayerDataList.DataBindingComplete += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridDataBindingCompleteEventArgs>(this.LayerDataList_DataBindingComplete);
+            this.LayerDataList.RowSetDefaultValues += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridRowSetDefaultValuesEventArgs>(this.LayerDataList_RowSetDefaultValues);
             // 
             // ImageList
             // 

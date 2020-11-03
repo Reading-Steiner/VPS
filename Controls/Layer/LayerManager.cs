@@ -36,7 +36,7 @@ namespace VPS.Controls.Layer
             for (int index = 0; index < VPS.Layer.MemoryLayerCache.TotalCount; index++)
             {
                 var info = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(index, true);
-                if (info != null) 
+                if (info != null)
                 {
                     dataSource.Add(info);
                 }
@@ -121,6 +121,13 @@ namespace VPS.Controls.Layer
             table.Rows.Add(row);
 
             row.AcceptChanges();
+        }
+        #endregion
+
+        #region 行默认填充单元
+        private void MainLayerPanelDefaultValue(GridPanel panel)
+        {
+
         }
         #endregion
 
@@ -331,6 +338,17 @@ namespace VPS.Controls.Layer
         }
         #endregion
 
+        #region 绑定成功后的响应函数（填充默认单元）
+        private void LayerDataList_RowSetDefaultValues(object sender, GridRowSetDefaultValuesEventArgs e)
+        {
+            GridPanel panel = e.GridPanel;
+            switch (panel.DataMember)
+            {
+                case MainLayerHandle:
+                    MainLayerPanelDefaultValue(panel);
+                    break;
+            }
+        }
         #region 绑定成功后的响应函数（设置表格格式）
         private void LayerDataList_DataBindingComplete(object sender, DevComponents.DotNetBar.SuperGrid.GridDataBindingCompleteEventArgs e)
         {
@@ -426,7 +444,6 @@ namespace VPS.Controls.Layer
         #endregion
 
         #endregion
-
     }
 
     #region ControlItem
