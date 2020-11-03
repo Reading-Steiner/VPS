@@ -22,13 +22,13 @@ namespace VPS.Controls.Layer
             StartEdit();
             InitializeComponent();
             EndEdit();
-            BindingDataSource();
-            VPS.Layer.MemoryLayerCache.LayerInfosChange += BindingDataSource;
+            BindingData();
+            VPS.Layer.MemoryLayerCache.LayerInfosChange += BindingData;
         }
 
         #region LayerManager 数据绑定
 
-        #region 获取LayerInfoList
+        #region 从数据源获取数据
 
         public List<VPS.Layer.LayerInfo> GetDataSource()
         {
@@ -46,6 +46,8 @@ namespace VPS.Controls.Layer
         #endregion
 
         #region 生成表格
+
+        #region Main
 
         #region 生成主表
         const string MainLayerHandle = "MainLayer";
@@ -91,6 +93,77 @@ namespace VPS.Controls.Layer
         }
         #endregion
 
+        #region 生成主表行
+        private void FillMainTable(VPS.Layer.LayerInfo emp)
+        {
+            DataRow row = table.NewRow();
+
+            row[0] = emp.GetOnlyCode();
+            row[1] = emp.Layer;
+            row[3] = emp.ModifyTime;
+            row[4] = emp.CreateTime;
+
+            row[5] = "";
+            if (emp.Layer == Utilities.Settings.Instance["defaultTiffLayer"])
+            {
+                row[6] = "True";
+            }
+            else
+            {
+                row[6] = "false";
+            }
+
+            if (emp is VPS.Layer.TiffLayerInfo)
+            {
+                row[2] = "本地文件";
+            }
+
+            table.Rows.Add(row);
+
+            row.AcceptChanges();
+        }
+        #endregion
+
+        #region 主表显示格式设置
+        private void CustomizeMainLayerPanel(GridPanel panel)
+        {
+            panel.FrozenColumnCount = 1;
+            panel.ColumnHeader.RowHeight = 30;
+            panel.MinRowHeight = 25;
+
+            panel.ColumnAutoSizeMode = ColumnAutoSizeMode.None;
+            panel.Columns[0].MinimumWidth = 80;
+            panel.Columns[0].ReadOnly = true;
+
+            panel.Columns[1].MinimumWidth = 400;
+            panel.Columns[1].ReadOnly = true;
+
+            panel.Columns[2].MinimumWidth = 80;
+            panel.Columns[2].CellStyles.Default.Alignment = DevComponents.DotNetBar.SuperGrid.Style.Alignment.MiddleCenter;
+            panel.Columns[2].ReadOnly = true;
+
+            panel.Columns[3].MinimumWidth = 200;
+            panel.Columns[3].ReadOnly = true;
+
+            panel.Columns[4].MinimumWidth = 200;
+            panel.Columns[4].ReadOnly = true;
+
+            panel.Columns[5].EditorType = typeof(ImageLabel);
+            panel.Columns[5].EditorParams = new object[] { ImageList.Images["Delete.png"] };
+            panel.Columns[5].MinimumWidth = 25;
+            panel.Columns[5].Width = 25;
+
+            panel.Columns[6].EditorType = typeof(ImageCheckBox);
+            panel.Columns[6].EditorParams = new object[] { ImageList.Images["Default.png"] };
+            panel.Columns[6].MinimumWidth = 25;
+            panel.Columns[6].Width = 25;
+        }
+        #endregion
+
+        #endregion
+
+        #region File
+
         #region 生成 文件表
 
         const string FileLayerHandle = "FileLayer";
@@ -128,6 +201,10 @@ namespace VPS.Controls.Layer
             return table;
         }
         #endregion
+
+        #endregion
+
+        #region Tiff
 
         #region 生成Tiff表
 
@@ -167,80 +244,94 @@ namespace VPS.Controls.Layer
         }
         #endregion
 
+        #region 生成Tiff行
+        private void FillLayerTable(VPS.Layer.TiffLayerInfo emp)
+        {
+            DataRow row = table.NewRow();
+
+            DataRow fileRow = layerTable.NewRow();
+            fileRow[0] = emp.GetOnlyCode();
+            fileRow[1] = emp.Origin;
+            fileRow[2] = emp.Origin.Tag2;
+            fileRow[3] = emp.ScaleFormat;
+            fileRow[4] = emp.Transparent;
+
+            layerTable.Rows.Add(fileRow);
+
+            fileRow.AcceptChanges();
+            layerTable.EndLoadData();
+        }
         #endregion
 
-        #region 绑定数据 入口函数
+        #region Tiff表显示格式设置
+        private void CustomizeTiffLayerPanel(GridPanel panel)
+        {
+            panel.FrozenColumnCount = 1;
+            panel.ColumnHeader.RowHeight = 30;
+            panel.ColumnAutoSizeMode = ColumnAutoSizeMode.None;
+
+            panel.Columns[0].MinimumWidth = 80;
+            panel.Columns[0].Visible = false;
+            panel.Columns[0].ReadOnly = true;
+
+            panel.Columns[1].MinimumWidth = 250;
+            panel.Columns[0].ReadOnly = true;
+
+            panel.Columns[2].EditorType = typeof(GridComboBoxExEditControl);
+            panel.Columns[2].EditorParams = new object[] { };
+            panel.Columns[2].MinimumWidth = 80;
+            panel.Columns[2].CellStyles.Default.Alignment = DevComponents.DotNetBar.SuperGrid.Style.Alignment.MiddleCenter;
+
+
+            panel.Columns[3].MinimumWidth = 80;
+            panel.Columns[3].CellStyles.Default.Alignment = DevComponents.DotNetBar.SuperGrid.Style.Alignment.MiddleCenter;
+            panel.Columns[3].Visible = false;
+
+            panel.Columns[4].MinimumWidth = 200;
+        }
+        #endregion
+
+        #endregion
+
+        #region 绑定数据源
+        DataSet set = null;
+        DataTable table = null;
+        DataTable layerTable = null;
 
         public void BindingDataSource()
         {
-            if (isEdit)
-                return;
-            StartEdit();
             DataSet set = new DataSet("LayerManager");
 
-            var table = GetMainTable();
-            var layerTable = GetLayerTable();
+            table = GetMainTable();
+            layerTable = GetLayerTable();
 
             set.Tables.Add(table);
             set.Tables.Add(layerTable);
-            table.BeginLoadData();
-
-            // Add 50 rows to fiddle with
-            var emp = GetDataSource();
-            for (int i = 0; i < emp.Count; i++)
-            {
-                DataRow row = table.NewRow();
-
-                row[0] = emp[i].GetOnlyCode();
-                row[1] = emp[i].Layer;
-                row[3] = emp[i].ModifyTime;
-                row[4] = emp[i].CreateTime;
-
-                row[5] = "";
-                if (emp[i].Layer == Utilities.Settings.Instance["defaultTiffLayer"])
-                {
-                    row[6] = "True";
-                }
-                else
-                {
-                    row[6] = "false";
-                }
-
-
-                if (emp[i] is VPS.Layer.TiffLayerInfo)
-                {
-                    row[2] = "本地文件";
-                    layerTable.BeginLoadData();
-                    DataRow fileRow = layerTable.NewRow();
-                    fileRow[0] = emp[i].GetOnlyCode();
-                    fileRow[1] = emp[i].Origin;
-                    fileRow[2] = emp[i].Origin.Tag2;
-                    fileRow[3] = emp[i].ScaleFormat;
-                    fileRow[4] = ((VPS.Layer.TiffLayerInfo)emp[i]).Transparent;
-
-                    layerTable.Rows.Add(fileRow);
-
-                    fileRow.AcceptChanges();
-                    layerTable.EndLoadData();
-                }
-
-                table.Rows.Add(row);
-
-                row.AcceptChanges();
-            }
-            table.EndLoadData();
 
             set.Relations.Add("1", set.Tables[MainLayerHandle].Columns["Key"],
-                                           set.Tables[TiffLayerHandle].Columns["Key"], false);
+                               set.Tables[TiffLayerHandle].Columns["Key"], false);
             LayerDataList.PrimaryGrid.DataSource = set;
             LayerDataList.PrimaryGrid.DataMember = MainLayerHandle;
-            EndEdit();
+        }
+        #endregion
+
+        #region 绑定数据 BeginLoadData
+        private void BeginLoadData()
+        {
+            table.BeginLoadData();
+            layerTable.BeginLoadData();
+        }
+        #endregion
+
+        #region 绑定数据 EndLoadData
+        private void EndLoadData()
+        {
+            layerTable.EndLoadData();
+            table.EndLoadData();
         }
         #endregion
 
         #region 绑定成功后的响应函数（设置表格格式）
-
-        #region 入口函数
         private void LayerDataList_DataBindingComplete(object sender, DevComponents.DotNetBar.SuperGrid.GridDataBindingCompleteEventArgs e)
         {
             GridPanel panel = e.GridPanel;
@@ -258,91 +349,38 @@ namespace VPS.Controls.Layer
         }
         #endregion
 
-        #region 主表
-
-        private void CustomizeMainLayerPanel(GridPanel panel)
+        #region 绑定数据 入口函数
+        public void BindingData()
         {
-            panel.FrozenColumnCount = 1;
-            panel.ColumnHeader.RowHeight = 30;
-            panel.MinRowHeight = 25;
+            if (isEdit)
+                return;
+            StartEdit();
 
-            panel.ColumnAutoSizeMode = ColumnAutoSizeMode.None;
-            panel.Columns[0].MinimumWidth = 80;
-            panel.Columns[0].ReadOnly = true;
+            if (set == null)
+                BindingDataSource();
 
-            panel.Columns[1].MinimumWidth = 400;
-            panel.Columns[1].ReadOnly = true;
+            BeginLoadData();
 
-            panel.Columns[2].MinimumWidth = 80;
-            panel.Columns[2].CellStyles.Default.Alignment = DevComponents.DotNetBar.SuperGrid.Style.Alignment.MiddleCenter;
-            panel.Columns[2].ReadOnly = true;
+            // Add 50 rows to fiddle with
+            var emp = GetDataSource();
+            for (int i = 0; i < emp.Count; i++)
+            {
+                FillMainTable(emp[i]);
 
-            panel.Columns[3].MinimumWidth = 200;
-            panel.Columns[3].ReadOnly = true;
+                if (emp[i] is VPS.Layer.TiffLayerInfo)
+                {
+                    FillLayerTable(emp[i] as VPS.Layer.TiffLayerInfo);
+                }
 
-            panel.Columns[4].MinimumWidth = 200;
-            panel.Columns[4].ReadOnly = true;
-
-            panel.Columns[5].EditorType = typeof(ImageLabel);
-            panel.Columns[5].EditorParams = new object[] { ImageList.Images["Delete.png"] };
-            panel.Columns[5].MinimumWidth = 25;
-            panel.Columns[5].Width = 25;
-
-            panel.Columns[6].EditorType = typeof(ImageCheckBox);
-            panel.Columns[6].EditorParams = new object[] { ImageList.Images["Default.png"] };
-            panel.Columns[6].MinimumWidth = 25;
-            panel.Columns[6].Width = 25;
-        }
-        #endregion
-
-        #region Tiff表
-
-        private void CustomizeTiffLayerPanel(GridPanel panel)
-        {
-            panel.FrozenColumnCount = 1;
-            panel.ColumnHeader.RowHeight = 30;
-            panel.ColumnAutoSizeMode = ColumnAutoSizeMode.None;
-
-            panel.Columns[0].MinimumWidth = 80;
-            panel.Columns[0].Visible = false;
-            panel.Columns[0].ReadOnly = true;
-
-            panel.Columns[1].MinimumWidth = 250;
-            panel.Columns[0].ReadOnly = true;
-
-            panel.Columns[2].EditorType = typeof(GridComboBoxExEditControl);
-            panel.Columns[2].EditorParams = new object[] {};
-            panel.Columns[2].MinimumWidth = 80;
-            panel.Columns[2].CellStyles.Default.Alignment = DevComponents.DotNetBar.SuperGrid.Style.Alignment.MiddleCenter;
-
-            
-            panel.Columns[3].MinimumWidth = 80;
-            panel.Columns[3].CellStyles.Default.Alignment = DevComponents.DotNetBar.SuperGrid.Style.Alignment.MiddleCenter;
-            panel.Columns[3].Visible = false;
-
-            panel.Columns[4].MinimumWidth = 200;
-        }
-        #endregion
-
-        #endregion
-
-        #endregion
-
-        #region 解析Color StringFromat
-        private Color FromString(string fromat)
-        {
-            List<int> color = new List<int>();
-            foreach(var str in System.Text.RegularExpressions.Regex.Matches(fromat, @"[0-9]+")) {
-
-                color.Add(int.Parse(str.ToString()));
             }
-            return Color.FromArgb(
-                color.Count > 0 ? color[0] : 0,
-                color.Count > 1 ? color[1] : 0,
-                color.Count > 2 ? color[2] : 0,
-                color.Count > 3 ? color[3] : 0
-                );
+            EndLoadData();
+
+            EndEdit();
         }
+        #endregion
+
+        #endregion
+
         #endregion
 
         #region LayerManager Cell点击
