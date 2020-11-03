@@ -1540,10 +1540,6 @@ namespace VPS.GCSViews
             writeKML();
 
             // switch the action and wp table
-            if (Settings.Instance["FP_docking"] == "Bottom")
-            {
-                switchDockingToolStripMenuItem_Click(null, null);
-            }
 
             Visible = true;
 
@@ -2516,24 +2512,6 @@ namespace VPS.GCSViews
             {
                 log.Error(ex);
             }
-        }
-
-        public void switchDockingToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //if (panelAction.Dock == DockStyle.Bottom)
-            //{
-            //    panelAction.Dock = DockStyle.Right;
-            panelWaypoints.Dock = DockStyle.Bottom;
-            //}
-            //else
-            //{
-            //panelAction.Dock = DockStyle.Bottom;
-            //panelAction.Height = 120;
-            panelWaypoints.Dock = DockStyle.Right;
-            panelWaypoints.Width = Width / 2;
-            //}
-
-            //Settings.Instance["FP_docking"] = panelAction.Dock.ToString();
         }
 
         /// <summary>

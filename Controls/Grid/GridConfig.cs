@@ -25,22 +25,22 @@ namespace VPS.Controls.Grid
             {
                 return new camerainfo()
                 {
-                    name = this.CMB_camera.Text,
-                    focallen = (float)this.NUM_focallength.Value,
-                    imageheight = (int)this.TXT_imgheight.Value,
-                    imagewidth = (int)this.TXT_imgwidth.Value,
-                    sensorheight = (float)this.TXT_sensheight.Value,
-                    sensorwidth = (float)this.TXT_senswidth.Value
+                    name = this.CMB_Camera.Text,
+                    focallen = (float)this.NUM_FocalLength.Value,
+                    imageheight = (int)this.TXT_ImgHeight.Value,
+                    imagewidth = (int)this.TXT_ImgWidth.Value,
+                    sensorheight = (float)this.TXT_SensHeight.Value,
+                    sensorwidth = (float)this.TXT_SensWidth.Value
                 };
             }
             set
             {
-                CMB_camera.Text = (value.name);
-                NUM_focallength.Value = value.focallen;
-                TXT_imgheight.Value = value.imageheight;
-                TXT_imgwidth.Value = value.imagewidth;
-                TXT_sensheight.Value = value.sensorheight;
-                TXT_senswidth.Value = value.sensorwidth;
+                CMB_Camera.Text = (value.name);
+                NUM_FocalLength.Value = value.focallen;
+                TXT_ImgHeight.Value = value.imageheight;
+                TXT_ImgWidth.Value = value.imagewidth;
+                TXT_SensHeight.Value = value.sensorheight;
+                TXT_SensWidth.Value = value.sensorwidth;
             }
         }
 
@@ -50,21 +50,21 @@ namespace VPS.Controls.Grid
         {
             if (Settings.Instance.ContainsKey("grid_camera"))
             {
-                loadsetting("grid_camera", CMB_camera);
+                loadsetting("grid_camera", CMB_Camera);
                 loadsetting("grid_camdir", CHK_camdirection);
-                loadsetting("grid_camerainfo", ShowCameraInfo);
+                loadsetting("grid_camerainfo", CHK_ShowCameraInfo);
 
 
                 loadsetting("grid_alt", NUM_altitude);
-                loadsetting("grid_angle", NUM_angle);
+                loadsetting("grid_angle", num_angle);
                 loadsetting("grid_startfrom", CMB_startfrom);
                 //loadsetting("grid_usespeed", CHK_usespeed);
                 //loadsetting("grid_speed", NUM_UpDownFlySpeed);
                 //loadsetting("grid_autotakeoff", CHK_toandland);
                 //loadsetting("grid_autotakeoff_RTL", CHK_toandland_RTL);
 
-                loadsetting("grid_dist", NUM_Distance);
-                loadsetting("grid_spacing", NUM_spacing);
+                loadsetting("grid_dist", Num_Distance);
+                loadsetting("grid_spacing", num_spacing);
                 loadsetting("grid_overlap", num_overlap);
                 loadsetting("grid_sidelap", num_sidelap);
 
@@ -114,21 +114,21 @@ namespace VPS.Controls.Grid
         void savesettings()
         {
             //相机设置
-            Settings.Instance["grid_camera"] = CMB_camera.Text;
+            Settings.Instance["grid_camera"] = CMB_Camera.Text;
             Settings.Instance["grid_camdir"] = CHK_camdirection.Checked.ToString();
-            Settings.Instance["grid_camerainfo"] = ShowCameraInfo.Checked.ToString();
+            Settings.Instance["grid_camerainfo"] = CHK_ShowCameraInfo.Checked.ToString();
 
             //摄影设置
             //航飞设置
             Settings.Instance["grid_alt"] = NUM_altitude.Value.ToString();
             Settings.Instance["grid_startfrom"] = CMB_startfrom.Text;
-            Settings.Instance["grid_angle"] = NUM_angle.Value.ToString();
+            Settings.Instance["grid_angle"] = num_angle.Value.ToString();
 
 
             //Settings.Instance["grid_usespeed"] = CHK_usespeed.Checked.ToString();
             //航信设置
-            Settings.Instance["grid_dist"] = NUM_Distance.Value.ToString();
-            Settings.Instance["grid_spacing"] = NUM_spacing.Value.ToString();
+            Settings.Instance["grid_dist"] = Num_Distance.Value.ToString();
+            Settings.Instance["grid_spacing"] = num_spacing.Value.ToString();
             Settings.Instance["grid_overlap"] = num_overlap.Value.ToString();
             Settings.Instance["grid_sidelap"] = num_sidelap.Value.ToString();
 
@@ -217,21 +217,21 @@ namespace VPS.Controls.Grid
         {
             list = griddata.poly;
 
-            CMB_camera.Text = griddata.camera;
+            CMB_Camera.Text = griddata.camera;
             NUM_altitude.Value = griddata.alt;
-            NUM_angle.Value = griddata.angle;
+            num_angle.Value = griddata.angle;
             LockAngle.Checked = griddata.lockangle;
             CHK_camdirection.Checked = griddata.camdir;
 
 
-            NUM_Distance.Value = griddata.dist;
+            Num_Distance.Value = griddata.dist;
             NUM_overshoot.Value = griddata.overshoot1;
             NUM_overshoot2.Value = griddata.overshoot2;
             NUM_leadin.Value = griddata.leadin;
             CMB_startfrom.Text = griddata.startfrom;
             num_overlap.Value = griddata.overlap;
             num_sidelap.Value = griddata.sidelap;
-            NUM_spacing.Value = griddata.spacing;
+            num_spacing.Value = griddata.spacing;
             NUM_Lane_Dist.Value = griddata.minlaneseparation;
 
 
@@ -250,22 +250,22 @@ namespace VPS.Controls.Grid
 
             griddata.poly = list;
 
-            griddata.camera = CMB_camera.Text;
+            griddata.camera = CMB_Camera.Text;
             griddata.alt = NUM_altitude.Value;
-            griddata.angle = NUM_angle.Value;
+            griddata.angle = num_angle.Value;
             griddata.lockangle = LockAngle.Checked;
             griddata.camdir = CHK_camdirection.Checked;
 
             griddata.advanced = ShowAdvanceOptions.Checked;
 
-            griddata.dist = NUM_Distance.Value;
+            griddata.dist = Num_Distance.Value;
             griddata.overshoot1 = NUM_overshoot.Value;
             griddata.overshoot2 = NUM_overshoot2.Value;
             griddata.leadin = NUM_leadin.Value;
             griddata.startfrom = CMB_startfrom.Text;
             griddata.overlap = num_overlap.Value;
             griddata.sidelap = num_sidelap.Value;
-            griddata.spacing = NUM_spacing.Value;
+            griddata.spacing = num_spacing.Value;
             griddata.minlaneseparation = NUM_Lane_Dist.Value;
 
             griddata.crossgrid = chk_crossgrid.Checked;
@@ -284,7 +284,7 @@ namespace VPS.Controls.Grid
         public void SetPolygonList(List<PointLatLngAlt> polygons)
         {
             list = polygons;
-            domainUpDown2_ValueChanged(null, null);
+            domainUpDown2_ValueChanged();
         }
 
         public List<PointLatLngAlt> GetWPList()
@@ -305,14 +305,14 @@ namespace VPS.Controls.Grid
         }
 
 
-        private void domainUpDown1_ValueChanged(object sender, EventArgs e)
+        private void domainUpDown1_ValueChanged()
         {
             if (loading)
                 return;
             if (!editable)
                 return;
 
-            if (CMB_camera.Text != "")
+            if (CMB_Camera.Text != "")
             {
                 editable = false;
                 doCalc();
@@ -326,14 +326,14 @@ namespace VPS.Controls.Grid
             ThreadPool.QueueUserWorkItem(new WaitCallback(delayGrid), lockObj);
         }
 
-        private void domainUpDown2_ValueChanged(object sender, EventArgs e)
+        private void domainUpDown2_ValueChanged()
         {
             if (loading)
                 return;
             if (!editable)
                 return;
 
-            if (CMB_camera.Text != "")
+            if (CMB_Camera.Text != "")
             {
                 editable = false;
                 doCalc();
@@ -351,6 +351,8 @@ namespace VPS.Controls.Grid
                 gridGrenate = false;
             }
         }
+        static long waitTime = 1000;
+        static string progressBar = null;
 
         static object lockObj = new object();
         static object lockObj2 = new object();
@@ -367,23 +369,50 @@ namespace VPS.Controls.Grid
                 }
                 else
                 {
+                    progressBar = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("准备生成航线", (int)waitTime);
                     gridWait = true;
                 }
             }
             while (true) {
-                if ((DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000 - alterTime > 1000)
+                long time = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000 - alterTime;
+                if (progressBar != null)
+                    VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgress((int)time);
+                if (time > waitTime)
                 {
                     lock (lockObj2)
                     {
-                        gridGrenate = true;
-                        autoGrid();
-                        gridGrenate = false;
-                        gridWait = false;
+                        try
+                        {
+                            if (progressBar != null)
+                                VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressFailure("生成航线");
+                            VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressStageInfo("生成航线", Color.Orange);
+                            gridGrenate = true;
+                            autoGrid();
+                            gridGrenate = false;
+                            gridWait = false;
+                            if (progressBar != null)
+                            {
+                                VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressSuccessful("成功生成成功");
+
+                            }
+                        }
+                        catch
+                        {
+                            VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressFailure("生成航线失败");
+                        }
+                        finally
+                        {
+                            if (progressBar != null)
+                            {
+                                VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(progressBar, 1000);
+                            }
+                        }
                     }
                     return;
                 }
                 else
                 {
+
                     Thread.SpinWait(100);
                 }
             }
@@ -396,9 +425,9 @@ namespace VPS.Controls.Grid
             bool chk_crossgrid = (bool)ReadControlMainThread(instance.chk_crossgrid);
 
             double altitude = (int)ReadControlMainThread(instance.NUM_altitude);
-            double distance = (double)ReadControlMainThread(instance.NUM_Distance);
-            double spacing = (double)ReadControlMainThread(instance.NUM_spacing);
-            double angle = (double)ReadControlMainThread(instance.NUM_angle);
+            double distance = (double)ReadControlMainThread(instance.Num_Distance);
+            double spacing = (double)ReadControlMainThread(instance.num_spacing);
+            double angle = (double)ReadControlMainThread(instance.num_angle);
             double overshoot = (int)ReadControlMainThread(instance.NUM_overshoot);
             double overshoot2 = (int)ReadControlMainThread(instance.NUM_overshoot2);
             string startfrom = (string)ReadControlMainThread(instance.CMB_startfrom);
@@ -528,9 +557,9 @@ namespace VPS.Controls.Grid
 
         void getFOV(double flyalt, ref double fovh, ref double fovv)
         {
-            double focallen = (double)NUM_focallength.Value;
-            double sensorwidth = double.Parse(TXT_senswidth.Text);
-            double sensorheight = double.Parse(TXT_sensheight.Text);
+            double focallen = NUM_FocalLength.Value;
+            double sensorwidth = TXT_SensWidth.Value;
+            double sensorheight = TXT_SensHeight.Value;
 
             // scale      mm / mm
             double flscale = (1000 * flyalt) / focallen;
@@ -552,8 +581,8 @@ namespace VPS.Controls.Grid
 
                 // entered values
                 float flyalt = (float)CurrentState.fromDistDisplayUnit((float)NUM_altitude.Value);
-                int imagewidth = TXT_imgwidth.Value;
-                int imageheight = TXT_imgheight.Value;
+                int imagewidth = TXT_ImgWidth.Value;
+                int imageheight = TXT_ImgHeight.Value;
 
                 double overlap = num_overlap.Value;
                 double sidelap = num_sidelap.Value;
@@ -563,31 +592,31 @@ namespace VPS.Controls.Grid
 
                 getFOV(flyalt, ref viewwidth, ref viewheight);
 
-                TXT_fovH.Value = viewwidth;
-                TXT_fovV.Value = viewheight;
+                TXT_FovH.Value = viewwidth;
+                TXT_FovV.Value = viewheight;
                 // Imperial
                 //feet_fovH = (viewwidth * 3.2808399f).ToString("#.#");
                 //feet_fovV = (viewheight * 3.2808399f).ToString("#.#");
 
                 //    mm  / pixels * 100
-                TXT_cmpixel.Value = ((viewheight / imageheight) * 100);
+                TXT_cmPixel.Value = ((viewheight / imageheight) * 100);
                 // Imperial
                 //inchpixel = (((viewheight / imageheight) * 100) * 0.393701).ToString("0.00 inches");
 
                 if (CHK_camdirection.Checked)
                 {
-                    NUM_spacing.Value = (double)((1 - (overlap / 100.0f)) * viewheight);
-                    NUM_Distance.Value = (double)((1 - (sidelap / 100.0f)) * viewwidth);
+                    num_spacing.Value = (double)((1 - (overlap / 100.0f)) * viewheight);
+                    Num_Distance.Value = (double)((1 - (sidelap / 100.0f)) * viewwidth);
                 }
                 else
                 {
-                    NUM_spacing.Value = (double)((1 - (overlap / 100.0f)) * viewwidth);
-                    NUM_Distance.Value = (double)((1 - (sidelap / 100.0f)) * viewheight);
+                    num_spacing.Value = (double)((1 - (overlap / 100.0f)) * viewwidth);
+                    Num_Distance.Value = (double)((1 - (sidelap / 100.0f)) * viewheight);
                 }
 
             if (!isLockAngle)
             {
-                NUM_angle.Value = getAngleOfLongestSide(list);
+                num_angle.Value = getAngleOfLongestSide(list);
             }
 
         }
@@ -600,8 +629,9 @@ namespace VPS.Controls.Grid
             var cameras = camerainfo.GetCameras();
             for (int i = 0; i < cameras.Count; i++)
             {
-                this.CMB_camera.Items.Add(cameras[i]);
+                this.CMB_Camera.Items.Add(cameras[i]);
             }
+
             CMB_startfrom.DataSource = Enum.GetNames(typeof(Utilities.Grid.StartPosition));
             CMB_startfrom.SelectedIndex = 0;
 
@@ -620,7 +650,7 @@ namespace VPS.Controls.Grid
 
         private void ShowCameraInfo_CheckedChanged(object sender, EventArgs e)
         {
-            this.CameraDetailBox.Visible = this.ShowCameraInfo.Checked;
+            this.CameraDetailBox.Visible = this.CHK_ShowCameraInfo.Checked;
         }
 
         private void ShowAdvanceOptions_CheckedChanged(object sender, EventArgs e)
@@ -631,80 +661,81 @@ namespace VPS.Controls.Grid
         bool editable = false;
         private void NUM_Distance_ValueChanged(object sender, EventArgs e)
         {
-            domainUpDown1_ValueChanged(sender, e);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void num_overlap_ValueChanged(object sender, EventArgs e)
         {
-            domainUpDown1_ValueChanged(sender, e);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void num_sidelap_ValueChanged(object sender, EventArgs e)
         {
-            domainUpDown1_ValueChanged(sender, e);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void NUM_spacing_ValueChanged(object sender, EventArgs e)
         {
-
-            domainUpDown1_ValueChanged(sender, e);
-
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void NUM_angle_ValueChanged(object sender, EventArgs e)
         {
-
-            domainUpDown1_ValueChanged(sender, e);
-
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void NUM_overshoot_ValueChanged(object sender, EventArgs e)
         {
-
-            domainUpDown1_ValueChanged(sender, e);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void NUM_Lane_Dist_ValueChanged(object sender, EventArgs e)
         {
-            domainUpDown1_ValueChanged(sender, e);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void NUM_overshoot2_ValueChanged(object sender, EventArgs e)
         {
-
-            domainUpDown1_ValueChanged(sender, e);
-
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void CMB_startfrom_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            domainUpDown2_ValueChanged(sender, e);
-
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void NUM_leadin_ValueChanged(object sender, EventArgs e)
         {
-
-            domainUpDown1_ValueChanged(sender, e);
-
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void CMB_camera_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GetCameraInfo = camerainfo.GetCameraInfos(CMB_camera.Text);
-            domainUpDown1_ValueChanged(sender, e);
+            GetCameraInfo = camerainfo.GetCameraInfos(CMB_Camera.Text);
+            domainUpDown1_ValueChanged();
         }
 
         private void CMB_camera_SelectedValueChanged(object sender, EventArgs e)
         {
-            GetCameraInfo = camerainfo.GetCameraInfos(CMB_camera.Text);
-            domainUpDown1_ValueChanged(sender, e);
+            GetCameraInfo = camerainfo.GetCameraInfos(CMB_Camera.Text);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void NUM_focallength_ValueChanged(object sender, EventArgs e)
         {
-            domainUpDown1_ValueChanged(sender, e);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void GridConfig_Load(object sender, EventArgs e)
@@ -716,7 +747,8 @@ namespace VPS.Controls.Grid
 
             loading = false;
             editable = true;
-            domainUpDown2_ValueChanged(this, null);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void Accept_Click(object sender, EventArgs e)
@@ -729,7 +761,8 @@ namespace VPS.Controls.Grid
             loading = true;
             loadsettings();
             loading = false;
-            domainUpDown2_ValueChanged(sender, e);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void chk_crossgrid_CheckedChanged(object sender, EventArgs e)
@@ -738,7 +771,8 @@ namespace VPS.Controls.Grid
             {
                 chk_Corridor.Checked = chk_spiral.Checked = false;
             }
-            domainUpDown2_ValueChanged(sender, e);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void chk_Corridor_CheckedChanged(object sender, EventArgs e)
@@ -748,7 +782,8 @@ namespace VPS.Controls.Grid
             {
                 chk_crossgrid.Checked = chk_spiral.Checked = false;
             }
-            domainUpDown2_ValueChanged(sender, e);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void chk_spiral_CheckedChanged(object sender, EventArgs e)
@@ -757,35 +792,41 @@ namespace VPS.Controls.Grid
             {
                 chk_Corridor.Checked = chk_crossgrid.Checked = false;
             }
-            domainUpDown2_ValueChanged(sender, e);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void NUM_altitude_ValueChanged(object sender, EventArgs e)
         {
-            domainUpDown1_ValueChanged(sender, e);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void lbl_gndelev_ValueChanged(object sender, EventArgs e)
         {
-            domainUpDown1_ValueChanged(sender, e);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void num_corridorwidth_ValueChanged(object sender, EventArgs e)
         {
-            domainUpDown1_ValueChanged(sender, e);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void CHK_camdirection_CheckedChanged(object sender, EventArgs e)
         {
-            domainUpDown2_ValueChanged(sender, e);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
         }
 
         private void defaultAngle_Click(object sender, EventArgs e)
         {
             if (!isLockAngle)
             {
-                this.NUM_angle.Value = getAngleOfLongestSide(list);
-                domainUpDown2_ValueChanged(sender, e);
+                this.num_angle.Value = getAngleOfLongestSide(list);
+                if (CHK_AutoGeneralWP.Checked)
+                    domainUpDown1_ValueChanged();
             }
         }
 
@@ -815,13 +856,14 @@ namespace VPS.Controls.Grid
             isLockAngle = LockAngle.Checked;
             if (!isLockAngle)
             {
-                domainUpDown2_ValueChanged(sender, e);
-                NUM_angle.Enabled = true;
+                if (CHK_AutoGeneralWP.Checked)
+                    domainUpDown1_ValueChanged();
+                num_angle.Enabled = true;
                 DefaultAngle.Enabled = true;
             }
             else
             {
-                NUM_angle.Enabled = false;
+                num_angle.Enabled = false;
                 DefaultAngle.Enabled = false;
             }
         }
@@ -836,19 +878,108 @@ namespace VPS.Controls.Grid
                     camerainfo.AddCamera(info);
 
 
-                    if (!CMB_camera.Items.Contains(info.name))
-                        CMB_camera.Items.Add(info.name);
-                    CMB_camera.SelectedIndex = CMB_camera.Items.IndexOf(info.name);
+                    if (!CMB_Camera.Items.Contains(info.name))
+                        CMB_Camera.Items.Add(info.name);
+                    CMB_Camera.SelectedIndex = CMB_Camera.Items.IndexOf(info.name);
                 }
                 
             }
             
         }
 
+        private delegate void SetVisibleInThread(DevComponents.DotNetBar.PanelEx box, bool visble);
+        private void SetVisibleHandle(DevComponents.DotNetBar.PanelEx box, bool visble)
+        {
+            if (this.InvokeRequired)
+            {
+                SetVisibleInThread inThread = new SetVisibleInThread(SetVisibleHandle);
+                this.Invoke(inThread, new object[] { box, visble });
+            }
+            else
+            {
+                box.Visible = visble;
+            }
+        }
+
         private void GeneralWP_Click(object sender, EventArgs e)
         {
-            domainUpDown2_ValueChanged(sender, e);
+            domainUpDown2_ValueChanged();
+        }
+        static object configTitlelock = new object();
+        long ConfigTitleShowTime;
+        bool isConfigTileShow = false;
+        private void ConfigTitle_Click(object sender, EventArgs e)
+        {
+            ConfigPanel.Visible = true;
+            ConfigTitleShowTime = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000;
+            if (isConfigTileShow)
+                return;
+            else
+            {
+                lock (configTitlelock)
+                {
+                    isConfigTileShow = true;
+                    Task.Run(
+                        () =>
+                        {
 
+                            try
+                            {
+                                lock (configTitlelock)
+                                {
+                                    while (true)
+                                        if ((DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000 - ConfigTitleShowTime > 5000)
+                                        {
+                                            SetVisibleHandle(ConfigPanel, false);
+                                            return;
+                                        }
+                                        else
+                                            Thread.SpinWait(1000);
+                                }
+                            }
+                            catch { }
+                            finally
+                            {
+                                isConfigTileShow = false;
+                            }
+
+                        }
+                    );
+                }
+            }
+        }
+
+        private void AutoGeneralWP_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHK_AutoGeneralWP.Checked)
+            {
+                DelayBox.Visible = true;
+                HandBox.Visible = false;
+            }
+            else
+            {
+                DelayBox.Visible = false;
+                HandBox.Visible = true;
+            }
+        }
+
+        private void NUM_WPDelayTime_ValueChanged(object sender, EventArgs e)
+        {
+            waitTime = (long)(NUM_WPDelayTime.Value * 1000);
+        }
+
+        private void GridConfig_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+                if (!CHK_AutoGeneralWP.Checked)
+                    GeneralWP_Click(null, null);
+        }
+
+        private void GridConfig_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+                if (!CHK_AutoGeneralWP.Checked)
+                    GeneralWP_Click(null, null);
         }
     }
 }

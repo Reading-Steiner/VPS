@@ -68,7 +68,7 @@ namespace VPS.Controls.ProgressBar
         }
 
         private delegate void SetTextInThread(string text);
-        public void SetProgressInfo(string text)
+        private void SetProgressInfo(string text)
         {
             if (this.InvokeRequired)
             {
@@ -114,6 +114,13 @@ namespace VPS.Controls.ProgressBar
             this.SetProgressCurrentInfo(int.MaxValue);
             this.SetProgressInfo(text);
             this.SetProgressColor(Color.Green);
+        }
+
+        public void SetProgressStageInfo(string text, Color color, int progress = 0, int total = -1)
+        {
+            this.SetProgress(progress, total);
+            this.SetProgressInfo(text);
+            this.SetProgressColor(color);
         }
     }
 }

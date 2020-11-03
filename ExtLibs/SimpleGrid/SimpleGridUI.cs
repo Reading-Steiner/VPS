@@ -418,7 +418,7 @@ namespace VPS.SimpleGrid
         {
             if (grid != null && grid.Count > 0)
             {
-                MainV2.instance.FlightPlanner.quickadd = true;
+                MainV2.instance.FlightPlanner.EnterQuickADD();
 
                 PointLatLngAlt lastpnt = PointLatLngAlt.Zero;
 
@@ -442,7 +442,7 @@ namespace VPS.SimpleGrid
                     }
                 });
 
-                MainV2.instance.FlightPlanner.quickadd = false;
+                MainV2.instance.FlightPlanner.LeaveQuickADD();
 
                 MainV2.instance.FlightPlanner.writeKML();
 

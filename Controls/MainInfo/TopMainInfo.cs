@@ -166,7 +166,7 @@ namespace VPS.Controls.MainInfo
             }
         }
 
-        public ProgressBar.UserProgressBar CreateProgressBar()
+        private ProgressBar.UserProgressBar CreateProgressBar()
         {
             this.SuspendLayout();
             ProgressBar.UserProgressBar bar = CreateControl("ProgressBar.UserProgressBar") as ProgressBar.UserProgressBar;

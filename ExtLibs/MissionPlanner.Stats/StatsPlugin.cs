@@ -64,10 +64,10 @@ namespace VPS.Stats
                 delegate
                 {
 
-            System.Windows.Forms.ToolStripMenuItem men = new System.Windows.Forms.ToolStripMenuItem() { Text = "Stats" };
-            men.Click += men_Click;
-            Host.FDMenuMap.Items.Add(men);
-            });
+                    System.Windows.Forms.ToolStripMenuItem men = new System.Windows.Forms.ToolStripMenuItem() { Text = "Stats" };
+                    men.Click += men_Click;
+                    Host.FDMenuMap.Items.Add(men);
+                });
 
             statsoverall.appstarts++;
 

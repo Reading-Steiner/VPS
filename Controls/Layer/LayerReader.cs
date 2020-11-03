@@ -447,7 +447,7 @@ namespace VPS.Controls.Layer
                         MainInfo.TopMainInfo.instance.GetProgress(key).SetProgress(i * tileXCount + j);
                     }
                 }
-                MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressInfo("创建VRT文件");
+                MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressStageInfo("创建VRT文件", Color.Orange, 1, 1);
                 GDAL.GDAL.CreateVRT(vrtFileName, tiffFileNames);
                 MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressSuccessful("切片成功");
             }
