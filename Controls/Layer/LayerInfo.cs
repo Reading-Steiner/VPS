@@ -113,6 +113,7 @@
         #endregion
 
         #region LayerInfo 构造函数
+        public LayerInfo() { }
 
         protected LayerInfo(
             LayerTypes layerInfo, string url,

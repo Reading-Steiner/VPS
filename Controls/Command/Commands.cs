@@ -484,7 +484,7 @@ namespace VPS.Controls.Command
         public delegate void WPListChangeHandle(List<Utilities.PointLatLngAlt> wpList);
         public WPListChangeHandle WPListChange;
 
-        private List<Utilities.PointLatLngAlt> GetWPList()
+        public List<Utilities.PointLatLngAlt> GetWPList()
         {
             List<Utilities.PointLatLngAlt> wpList = new List<Utilities.PointLatLngAlt>();
             for (int index  = 0; index < CommandDataList.Rows.Count;index++)

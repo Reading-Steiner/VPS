@@ -15,9 +15,9 @@ namespace VPS.GCSViews
         public GMap.NET.RectLatLng layerRect;
         public PointLatLngAlt layerPosition;
         public PointLatLngAlt homePosition;
-        public VPS.Layer.LayerInfo layerInfo;
         public bool isLayerReaderOpen;
         public bool isLayerManagerOpen;
         public bool isGridConfigOpen;
+
     }
 }

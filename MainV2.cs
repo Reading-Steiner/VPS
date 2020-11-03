@@ -3974,12 +3974,16 @@ namespace VPS
         {
             GCSViews.FlightPlanner.instance.SetPolygonListHandle(data.poly);
             GCSViews.FlightPlanner.instance.SetWPListHandle(data.wp);
-            currentLayerPath = data.layer;
+            VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle(data.wp);
+            if (data.layer != currentLayerPath)
+            {
+                currentLayerPath = data.layer;
+                ShowLayerOverlay(data.layer);
+            }
             displayRect = data.layerRect;
             GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(displayRect);
             defaultHome = data.homePosition;
             SetHome(defaultHome);
-            AddLayerOverlay(selectedLayer);
             if (LoadTiffButton.Checked != data.isLayerReaderOpen)
                 LoadTiffButton_Click(this, null);
             if (TiffManagerButton.Checked != data.isLayerManagerOpen)
@@ -4028,7 +4032,6 @@ namespace VPS
             data.layer = currentLayerPath;
             data.layerRect = displayRect;
             data.homePosition = defaultHome;
-            data.layerInfo = selectedLayer;
             data.isLayerReaderOpen = LoadTiffButton.Checked;
             data.isLayerManagerOpen = TiffManagerButton.Checked;
             data.isGridConfigOpen = AutoWPButton.Checked;
@@ -4556,12 +4559,17 @@ namespace VPS
         public GMap.NET.RectLatLng displayRect = new GMap.NET.RectLatLng();
         public PointLatLngAlt defaultHome = new PointLatLngAlt();
         public GeoBitmap currentLayer;
-        public VPS.Layer.LayerInfo selectedLayer;
         #endregion
 
         #region 工作区
 
         #region AddLayer 入口函数
+        public bool ShowLayerOverlay(string path)
+        {
+            var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(path);
+            return SetLayerOverlay(layerInfo);
+        }
+
         public bool AddLayerOverlay(string path, PointLatLngAlt origin, Color transparent)
         {
             var layerInfo = new VPS.Layer.TiffLayerInfo(path, origin, transparent);
@@ -4601,7 +4609,6 @@ namespace VPS
                     this.currentLayerPath = layerInfo.Layer;
                     this.displayRect = bitmap.Rect;
                     this.defaultHome = layerInfo.Origin;
-                    this.selectedLayer = layerInfo;
                     ZoomTiffButton_Click(this, null);
                     return true;
                 }
