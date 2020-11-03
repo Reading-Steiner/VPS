@@ -168,7 +168,7 @@ namespace VPS.Controls.Grid
 
         }
 
-        bool loading = false;
+        
         public void LoadGrid()
         {
             System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(NewGridData));
@@ -184,9 +184,11 @@ namespace VPS.Controls.Grid
                     {
                         var test = (NewGridData)reader.Deserialize(sr);
 
-                        loading = true;
+                        StartLoading();
+
                         loadgriddata(test);
-                        loading = false;
+
+                        EndLoading();
                     }
                 }
             }
@@ -305,226 +307,7 @@ namespace VPS.Controls.Grid
         }
 
 
-        private void domainUpDown1_ValueChanged()
-        {
-            if (loading)
-                return;
-            if (!editable)
-                return;
 
-            if (CMB_Camera.Text != "")
-            {
-                editable = false;
-                doCalc();
-                editable = true;
-            }
-
-            if (list.Count <= 0)
-                return;
-
-            // new grid system test
-            ThreadPool.QueueUserWorkItem(new WaitCallback(delayGrid), lockObj);
-        }
-
-        private void domainUpDown2_ValueChanged()
-        {
-            if (loading)
-                return;
-            if (!editable)
-                return;
-
-            if (CMB_Camera.Text != "")
-            {
-                editable = false;
-                doCalc();
-                editable = true;
-            }
-
-            if (list.Count <= 0)
-                return;
-
-            // new grid system test
-            lock (lockObj2)
-            {
-                gridGrenate = true;
-                autoGrid();
-                gridGrenate = false;
-            }
-        }
-        static long waitTime = 1000;
-        static string progressBar = null;
-
-        static object lockObj = new object();
-        static object lockObj2 = new object();
-        static long alterTime;
-        static bool gridWait = false;
-        static bool gridGrenate = false;
-        static private void delayGrid(object obj)
-        {
-            alterTime = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000;
-            lock (lockObj) {
-                if (gridWait || gridGrenate)
-                {
-                    return;
-                }
-                else
-                {
-                    progressBar = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("准备生成航线", (int)waitTime);
-                    gridWait = true;
-                }
-            }
-            while (true) {
-                long time = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000 - alterTime;
-                if (progressBar != null)
-                    VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgress((int)time);
-                if (time > waitTime)
-                {
-                    lock (lockObj2)
-                    {
-                        try
-                        {
-                            if (progressBar != null)
-                                VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressFailure("生成航线");
-                            VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressStageInfo("生成航线", Color.Orange);
-                            gridGrenate = true;
-                            autoGrid();
-                            gridGrenate = false;
-                            gridWait = false;
-                            if (progressBar != null)
-                            {
-                                VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressSuccessful("成功生成成功");
-
-                            }
-                        }
-                        catch
-                        {
-                            VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressFailure("生成航线失败");
-                        }
-                        finally
-                        {
-                            if (progressBar != null)
-                            {
-                                VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(progressBar, 1000);
-                            }
-                        }
-                    }
-                    return;
-                }
-                else
-                {
-
-                    Thread.SpinWait(100);
-                }
-            }
-        }
-
-        private static async void autoGrid()
-        {
-            bool ch_Corridor = (bool)ReadControlMainThread(instance.chk_Corridor);
-            bool chk_spiral = (bool)ReadControlMainThread(instance.chk_spiral);
-            bool chk_crossgrid = (bool)ReadControlMainThread(instance.chk_crossgrid);
-
-            double altitude = (int)ReadControlMainThread(instance.NUM_altitude);
-            double distance = (double)ReadControlMainThread(instance.Num_Distance);
-            double spacing = (double)ReadControlMainThread(instance.num_spacing);
-            double angle = (double)ReadControlMainThread(instance.num_angle);
-            double overshoot = (int)ReadControlMainThread(instance.NUM_overshoot);
-            double overshoot2 = (int)ReadControlMainThread(instance.NUM_overshoot2);
-            string startfrom = (string)ReadControlMainThread(instance.CMB_startfrom);
-            float num_lane_dist = (int)ReadControlMainThread(instance.NUM_Lane_Dist);
-            float num_corridorwidth = (int)ReadControlMainThread(instance.num_corridorwidth);
-            float num_landin = (int)ReadControlMainThread(instance.NUM_leadin);
-            List<PointLatLngAlt> wp = new List<PointLatLngAlt>();
-            if (ch_Corridor)
-            {
-                wp = await Utilities.Grid.CreateCorridorAsync(
-                    instance.list, CurrentState.fromDistDisplayUnit(altitude),
-                    distance, spacing, angle,
-                    overshoot, overshoot2,
-                    (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), startfrom), false,
-                    num_lane_dist, num_corridorwidth, num_landin).ConfigureAwait(true);
-            }
-            else if (chk_spiral)
-            {
-                wp = await Utilities.Grid.CreateRotaryAsync(
-                    instance.list, CurrentState.fromDistDisplayUnit(altitude),
-                    distance, spacing, angle,
-                    overshoot, (double)instance.NUM_overshoot2.Value,
-                    (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), startfrom), false,
-                    num_lane_dist, num_landin, MainV2.comPort.MAV.cs.PlannedHomeLocation).ConfigureAwait(true);
-            }
-            else
-            {
-                wp = await Utilities.Grid.CreateGridAsync(
-                    instance.list, CurrentState.fromDistDisplayUnit(altitude),
-                    distance, spacing, angle,
-                    overshoot, overshoot2,
-                    (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), startfrom), false,
-                    num_lane_dist, num_landin, MainV2.comPort.MAV.cs.PlannedHomeLocation).ConfigureAwait(true);
-            }
-
-            if (wp.Count == 0)
-            {
-                instance.grid.Clear();
-                instance.WPListChangeHandle?.Invoke(instance.GetWPList());
-                return;
-            }
-
-            if (chk_crossgrid)
-            {
-                // add crossover
-                Utilities.Grid.StartPointLatLngAlt = instance.grid[instance.grid.Count - 1];
-
-                wp.AddRange(await Utilities.Grid.CreateGridAsync(
-                    instance.list, CurrentState.fromDistDisplayUnit(altitude),
-                    distance, spacing, angle + 90.0,
-                    overshoot, overshoot2,
-                    Utilities.Grid.StartPosition.Point, false,
-                    num_lane_dist, num_landin, MainV2.comPort.MAV.cs.PlannedHomeLocation).ConfigureAwait(true));
-            }
-
-            if (wp.Count == 0)
-            {
-                instance.grid.Clear();
-                instance.WPListChangeHandle?.Invoke(instance.GetWPList());
-                return;
-            }
-
-            int strips = 0;
-            int images = 0;
-            int a = 0;
-
-            instance.grid.Clear();
-            PointLatLngAlt last = null;
-            foreach (var item in wp)
-            {
-                if (item.Tag == "M")
-                {
-                    images++;
-                    a++;
-                }
-                else
-                {
-                    if (item.Tag != "SM" && item.Tag != "ME")
-                        strips++;
-                    if (last != null)
-                    {
-                        if (last.Lat == item.Lat && last.Lng == item.Lng && last.Alt == item.Alt)
-                        {
-                            last = item;
-                            continue;
-                        }
-
-                    }
-                    instance.grid.Add(item);
-                    last = item;
-                    a++;
-                }
-
-
-            }
-            instance.WPListChangeHandle?.Invoke(instance.GetWPList());
-        }
 
         private delegate object ReadControlInMainThreadHandle(Control control);
 
@@ -635,8 +418,6 @@ namespace VPS.Controls.Grid
             CMB_startfrom.DataSource = Enum.GetNames(typeof(Utilities.Grid.StartPosition));
             CMB_startfrom.SelectedIndex = 0;
 
-            editable = true;
-
             //defaultAngleTooltip.SetSuperTooltip(DefaultAngle, defaultAngleTooltip.DefaultTooltipSettings);
             // set and angle that is good
             //NUM_angle.Value = (int)((getAngleOfLongestSide(list) + 360) % 360);
@@ -646,6 +427,293 @@ namespace VPS.Controls.Grid
         {
             savesettings();
         }
+
+        #region 航线生成
+
+        #region 标记
+
+        #region 加载状态符（加载数据过程中的数据变换不引发航线生成函数）
+        bool loading = false;
+
+        #region 接口函数
+        public void StartLoading()
+        {
+            loading = true;
+        }
+
+        public void EndLoading()
+        {
+            loading = false;
+        }
+        #endregion
+
+        #region 判断函数
+        private bool IsLoading()
+        {
+            return loading;
+        }
+        #endregion
+
+        #endregion
+
+        #region 编辑标记符（编辑数据过程中的数据变换不引发航线生成函数）
+        bool editable = true;
+
+        #region 接口函数
+        public void CloseEditFun()
+        {
+            editable = false;
+        }
+
+        public void OpenEditFun()
+        {
+            editable = true;
+        }
+
+        #endregion
+
+        #region 判断函数
+        private bool IsAllowEdit()
+        {
+            return editable;
+        }
+        #endregion
+
+        #endregion
+
+        #region 延迟生成 入口函数
+        private void domainUpDown1_ValueChanged()
+        {
+            if (IsLoading())
+                return;
+            if (!IsAllowEdit())
+                return;
+
+            if (CMB_Camera.Text != "")
+            {
+                CloseEditFun();
+                doCalc();
+                OpenEditFun();
+            }
+
+            if (list.Count <= 0)
+                return;
+
+            // new grid system test
+            ThreadPool.QueueUserWorkItem(new WaitCallback(delayGrid), lockObj);
+        }
+
+        #endregion
+
+        #region 立即生成 入口函数
+        private void domainUpDown2_ValueChanged()
+        {
+            if (IsLoading())
+                return;
+            if (!IsAllowEdit())
+                return;
+
+            if (CMB_Camera.Text != "")
+            {
+                CloseEditFun();
+                doCalc();
+                OpenEditFun();
+            }
+
+            if (list.Count <= 0)
+                return;
+
+            // new grid system test
+            lock (lockObj2)
+            {
+                gridGrenate = true;
+                Task.Run(()=>autoGrid());
+                gridGrenate = false;
+            }
+        }
+        #endregion
+
+        #region 延迟生成
+        static long waitTime = 1000;
+        static string progressBar = null;
+
+        static object lockObj = new object();
+        static object lockObj2 = new object();
+        static long alterTime;
+        static bool gridWait = false;
+        static bool gridGrenate = false;
+        static private void delayGrid(object obj)
+        {
+            alterTime = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000;
+            lock (lockObj)
+            {
+                if (gridWait || gridGrenate)
+                {
+                    return;
+                }
+                else
+                {
+                    progressBar = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("准备生成航线", (int)waitTime);
+                    gridWait = true;
+                }
+            }
+            while (true)
+            {
+                long time = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000 - alterTime;
+                if (progressBar != null)
+                    VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgress((int)time);
+                if (time > waitTime)
+                {
+                    lock (lockObj2)
+                    {
+                        try
+                        {
+                            if (progressBar != null)
+                                VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressFailure("生成航线");
+                            VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressStageInfo("生成航线", Color.Orange);
+                            gridGrenate = true;
+                            autoGrid();
+                            gridGrenate = false;
+                            gridWait = false;
+                            if (progressBar != null)
+                            {
+                                VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressSuccessful("成功生成成功");
+                            }
+                        }
+                        catch
+                        {
+                            VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressFailure("生成航线失败");
+                        }
+                        finally
+                        {
+                            if (progressBar != null)
+                            {
+                                VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(progressBar, 1000);
+                            }
+                        }
+                    }
+                    return;
+                }
+                else
+                {
+
+                    Thread.SpinWait(100);
+                }
+            }
+        }
+        #endregion
+
+        #region 立即生成
+        private static async void autoGrid()
+        {
+            bool ch_Corridor = (bool)ReadControlMainThread(instance.chk_Corridor);
+            bool chk_spiral = (bool)ReadControlMainThread(instance.chk_spiral);
+            bool chk_crossgrid = (bool)ReadControlMainThread(instance.chk_crossgrid);
+
+            double altitude = (int)ReadControlMainThread(instance.NUM_altitude);
+            double distance = (double)ReadControlMainThread(instance.Num_Distance);
+            double spacing = (double)ReadControlMainThread(instance.num_spacing);
+            double angle = (double)ReadControlMainThread(instance.num_angle);
+            double overshoot = (int)ReadControlMainThread(instance.NUM_overshoot);
+            double overshoot2 = (int)ReadControlMainThread(instance.NUM_overshoot2);
+            string startfrom = (string)ReadControlMainThread(instance.CMB_startfrom);
+            float num_lane_dist = (int)ReadControlMainThread(instance.NUM_Lane_Dist);
+            float num_corridorwidth = (int)ReadControlMainThread(instance.num_corridorwidth);
+            float num_landin = (int)ReadControlMainThread(instance.NUM_leadin);
+            List<PointLatLngAlt> wp = new List<PointLatLngAlt>();
+            if (ch_Corridor)
+            {
+                wp = await Utilities.Grid.CreateCorridorAsync(
+                    instance.list, CurrentState.fromDistDisplayUnit(altitude),
+                    distance, spacing, angle,
+                    overshoot, overshoot2,
+                    (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), startfrom), false,
+                    num_lane_dist, num_corridorwidth, num_landin).ConfigureAwait(true);
+            }
+            else if (chk_spiral)
+            {
+                wp = await Utilities.Grid.CreateRotaryAsync(
+                    instance.list, CurrentState.fromDistDisplayUnit(altitude),
+                    distance, spacing, angle,
+                    overshoot, (double)instance.NUM_overshoot2.Value,
+                    (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), startfrom), false,
+                    num_lane_dist, num_landin, MainV2.comPort.MAV.cs.PlannedHomeLocation).ConfigureAwait(true);
+            }
+            else
+            {
+                wp = await Utilities.Grid.CreateGridAsync(
+                    instance.list, CurrentState.fromDistDisplayUnit(altitude),
+                    distance, spacing, angle,
+                    overshoot, overshoot2,
+                    (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), startfrom), false,
+                    num_lane_dist, num_landin, MainV2.comPort.MAV.cs.PlannedHomeLocation).ConfigureAwait(true);
+            }
+
+            if (wp.Count == 0)
+            {
+                instance.grid.Clear();
+                instance.WPListChangeHandle?.Invoke(instance.GetWPList());
+                return;
+            }
+
+            if (chk_crossgrid)
+            {
+                // add crossover
+                Utilities.Grid.StartPointLatLngAlt = instance.grid[instance.grid.Count - 1];
+
+                wp.AddRange(await Utilities.Grid.CreateGridAsync(
+                    instance.list, CurrentState.fromDistDisplayUnit(altitude),
+                    distance, spacing, angle + 90.0,
+                    overshoot, overshoot2,
+                    Utilities.Grid.StartPosition.Point, false,
+                    num_lane_dist, num_landin, MainV2.comPort.MAV.cs.PlannedHomeLocation).ConfigureAwait(true));
+            }
+
+            if (wp.Count == 0)
+            {
+                instance.grid.Clear();
+                instance.WPListChangeHandle?.Invoke(instance.GetWPList());
+                return;
+            }
+
+            int strips = 0;
+            int images = 0;
+            int a = 0;
+
+            instance.grid.Clear();
+            PointLatLngAlt last = null;
+            foreach (var item in wp)
+            {
+                if (item.Tag == "M")
+                {
+                    images++;
+                    a++;
+                }
+                else
+                {
+                    if (item.Tag != "SM" && item.Tag != "ME")
+                        strips++;
+                    if (last != null)
+                    {
+                        if (last.Lat == item.Lat && last.Lng == item.Lng && last.Alt == item.Alt)
+                        {
+                            last = item;
+                            continue;
+                        }
+
+                    }
+                    instance.grid.Add(item);
+                    last = item;
+                    a++;
+                }
+
+
+            }
+            instance.WPListChangeHandle?.Invoke(instance.GetWPList());
+        }
+        #endregion
+
+        #endregion
 
 
         private void ShowCameraInfo_CheckedChanged(object sender, EventArgs e)
@@ -658,7 +726,7 @@ namespace VPS.Controls.Grid
             this.AdvanceAirLineBox.Visible = this.ShowAdvanceOptions.Checked;
         }
 
-        bool editable = false;
+        
         private void NUM_Distance_ValueChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
@@ -740,13 +808,14 @@ namespace VPS.Controls.Grid
 
         private void GridConfig_Load(object sender, EventArgs e)
         {
-            loading = true;
+            StartLoading();
+
             if (!loadedfromfile)
                 loadsettings();
             // setup state before settings load
 
-            loading = false;
-            editable = true;
+            EndLoading();
+ 
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
         }
@@ -758,9 +827,11 @@ namespace VPS.Controls.Grid
 
         private void Default_Click(object sender, EventArgs e)
         {
-            loading = true;
+            StartLoading();
+
             loadsettings();
-            loading = false;
+
+            EndLoading();
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
         }
@@ -968,18 +1039,17 @@ namespace VPS.Controls.Grid
             waitTime = (long)(NUM_WPDelayTime.Value * 1000);
         }
 
-        private void GridConfig_KeyDown(object sender, KeyEventArgs e)
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (e.KeyData == Keys.Enter)
+            if (keyData == Keys.Enter)
+            {
                 if (!CHK_AutoGeneralWP.Checked)
+                {
                     GeneralWP_Click(null, null);
-        }
-
-        private void GridConfig_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-            if (e.KeyData == Keys.Enter)
-                if (!CHK_AutoGeneralWP.Checked)
-                    GeneralWP_Click(null, null);
+                    return true;
+                }
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

@@ -1527,8 +1527,6 @@
             this.Name = "GridConfig";
             this.Size = new System.Drawing.Size(310, 845);
             this.Load += new System.EventHandler(this.GridConfig_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GridConfig_KeyDown);
-            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.GridConfig_PreviewKeyDown);
             this.panelEx1.ResumeLayout(false);
             this.panelEx1.PerformLayout();
             this.AdvanceAirLineBox.ResumeLayout(false);
