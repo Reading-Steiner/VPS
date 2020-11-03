@@ -481,6 +481,8 @@ namespace VPS.Controls.Grid
 
         #endregion
 
+        #endregion
+
         #region 延迟生成 入口函数
         private void domainUpDown1_ValueChanged()
         {
@@ -714,6 +716,8 @@ namespace VPS.Controls.Grid
         #endregion
 
         #endregion
+
+
 
 
         private void ShowCameraInfo_CheckedChanged(object sender, EventArgs e)

@@ -4005,20 +4005,24 @@ namespace VPS.GCSViews
 
             PointLatLngAlt pos1 = new PointLatLngAlt(geoBitmap.Rect.Top, geoBitmap.Rect.Left);
             PointLatLngAlt pos2 = new PointLatLngAlt(geoBitmap.Rect.Bottom, geoBitmap.Rect.Right);
-            List<Bitmap> tiles = new List<Bitmap>();
-            List<RectLatLng> positions = new List<RectLatLng>();
-            for (int i = 0; i < geoBitmap.BitmapTile.Count; i++) {
-                tiles.Add(geoBitmap.BitmapTile[i]._tile);
-                positions.Add(geoBitmap.BitmapTile[i]._position);
-            }
             var mark = new GMapMarkerLayer(
                 pos1, pos2,
-                geoBitmap.DisplayBitmap, tiles, positions);
-
-
+                geoBitmap.DisplayBitmap);
             layerPolygonsOverlay.Polygons.Add(mark);
 
             FlightPlanner.instance.zoomToTiffLayer();
+
+            Task.Run(
+                () =>
+                {
+                    var tile = MainV2.CreateTile(geoBitmap, 400, 400);
+                    for (int i = 0; i < tile.Count; i++)
+                    {
+                        mark.AddTile(tile[i]._tile, tile[i]._rect);
+                    }
+                    
+                }
+            );
         }
 
         public void zoomToTiffLayer()

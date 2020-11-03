@@ -16,7 +16,7 @@ namespace GMap.NET.WindowsForms.Markers
         List<Bitmap> tiles = new List<Bitmap>();
         List<RectLatLng> tilesPosition = new List<RectLatLng>();
         int count = 0;
-        public GMapMarkerLayer(PointLatLng p1, PointLatLng p2, Bitmap display, List<Bitmap> tiles, List<RectLatLng> position)
+        public GMapMarkerLayer(PointLatLng p1, PointLatLng p2, Bitmap display, List<Bitmap> tiles = null, List<RectLatLng> position = null)
          : base(new List<PointLatLng>(), p1.ToString() + p2.ToString())
         {
             double maxLat = p1.Lat > p2.Lat ? p1.Lat : p2.Lat;
@@ -28,8 +28,12 @@ namespace GMap.NET.WindowsForms.Markers
             this.Points.Add(new PointLatLng(minLat, maxLng));
             this.Points.Add(new PointLatLng(minLat, minLng));
             this.displayBitmap = display;
-            for(int i = 0; i< tiles.Count; i++) {
-                AddTile(tiles[i], position[i]);
+            if (tiles != null && position != null)
+            {
+                for (int i = 0; i < tiles.Count; i++)
+                {
+                    AddTile(tiles[i], position[i]);
+                }
             }
         }
 

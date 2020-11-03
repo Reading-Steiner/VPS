@@ -803,31 +803,31 @@ namespace GDAL
         {
             Bitmap _previewBitmap = null;
             Bitmap _displayBitmap = null;
-            List<Tile> _tiles = null;
+            //List<Tile> _tiles = null;
 
-            public struct Tile
-            {
-                public Bitmap _tile;
-                public RectLatLng _position;
-                public Tile(Bitmap tile, RectLatLng position)
-                {
-                    _tile = tile;
-                    _position = position;
-                }
-            } 
+            //public struct Tile
+            //{
+            //    public Bitmap _tile;
+            //    public RectLatLng _position;
+            //    public Tile(Bitmap tile, RectLatLng position)
+            //    {
+            //        _tile = tile;
+            //        _position = position;
+            //    }
+            //} 
 
             // load on demand
-            public List<Tile> BitmapTile
-            {
-                get
-                {
-                    return _tiles;
-                }
-                set
-                {
-                    _tiles = value;
-                }
-            }
+            //public List<Tile> BitmapTile
+            //{
+            //    get
+            //    {
+            //        return _tiles;
+            //    }
+            //    set
+            //    {
+            //        _tiles = value;
+            //    }
+            //}
 
             public Bitmap DisplayBitmap
             {
@@ -858,10 +858,10 @@ namespace GDAL
             {
                 DisplayBitmap.MakeTransparent(color);
                 PreviewBitmap.MakeTransparent(color);
-                for (int i = 0; i <  BitmapTile.Count; i++)
-                {
-                    BitmapTile[i]._tile.MakeTransparent(color);
-                }
+                //for (int i = 0; i <  BitmapTile.Count; i++)
+                //{
+                //    BitmapTile[i]._tile.MakeTransparent(color);
+                //}
             }
 
             public GMap.NET.RectLatLng Rect;

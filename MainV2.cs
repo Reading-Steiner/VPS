@@ -4320,7 +4320,7 @@ namespace VPS
         #endregion
 
         #region SelectedWP
-        
+
         #region SelectedWP 选中首个
         private void FirstWPButton_Click(object sender, EventArgs e)
         {
@@ -4590,7 +4590,6 @@ namespace VPS
                     {
                         Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (_bitmap, _transparent) =>
                         {
-                            _bitmap.BitmapTile = CreateTile(_bitmap, 400, 400);
                             _bitmap.SetTransparent(_transparent);
 
                             return _bitmap;
@@ -4645,9 +4644,20 @@ namespace VPS
         #endregion
 
         #region 图像切片
-        private List<GeoBitmap.Tile> CreateTile(GeoBitmap _bitmap, int _tileXSize, int _tileYSize)
+        public class LayerTile
         {
-            List<GeoBitmap.Tile> _tiles = new List<GeoBitmap.Tile>();
+            public Bitmap _tile;
+            public GMap.NET.RectLatLng _rect;
+            public LayerTile(Bitmap tile, GMap.NET.RectLatLng rect)
+            {
+                _tile = tile;
+                _rect = rect;
+            }
+        }
+
+        static public List<LayerTile> CreateTile(GeoBitmap _bitmap, int _tileXSize, int _tileYSize)
+        {
+            List<LayerTile> _tiles = new List<LayerTile>();
             int TileXLen = 1024, TileYLen = 1024, RasterXSize = _bitmap.RasterXSize, RasterYSize = _bitmap.RasterYSize;
             int TileXSize = RasterXSize / TileXLen + (RasterXSize % TileXLen == 0 ? 0 : 1);
             int TileYSize = RasterYSize / TileYLen + (RasterYSize % TileYLen == 0 ? 0 : 1);
@@ -4669,7 +4679,7 @@ namespace VPS
                         GMap.NET.RectLatLng position = new GMap.NET.RectLatLng(
                             Math.Max(pos1[1], pos2[1]), Math.Min(pos1[0], pos2[0]),
                             Math.Abs(pos1[0] - pos2[0]), Math.Abs(pos1[1] - pos2[1]));
-                        _tiles.Add(new GeoBitmap.Tile(tile, position));
+                        _tiles.Add(new LayerTile(tile, position));
                         VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key).SetProgress(i * TileYSize + j);
                     }
                 }
@@ -4679,7 +4689,7 @@ namespace VPS
             catch
             {
                 VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressFailure("加载失败");
-                return new List<GeoBitmap.Tile>();
+                return new List<LayerTile>();
             }
             finally
             {
