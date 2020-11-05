@@ -517,7 +517,7 @@ namespace VPS.Controls.Command
                         DataRow row = table.NewRow();
 
                         row[CommandColumn] = wp.Tag;
-                        if (wp.Tag.ToUpper() == "WAYPOINT" || wp.Tag.ToUpper() == "SPLINE_WAYPOINT")
+                        if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
                         {
                             row[LngColumn] = wp.Lng;
                             row[LatColumn] = wp.Lat;
@@ -564,7 +564,7 @@ namespace VPS.Controls.Command
                     catch {}
                     finally
                     {
-                        if (wp.Tag.ToUpper() == "WAYPOINT" || wp.Tag.ToUpper() == "SPLINE_WAYPOINT")
+                        if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
                         {
                             wpLast = wp;
                         }

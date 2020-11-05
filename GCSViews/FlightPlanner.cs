@@ -573,16 +573,20 @@ namespace VPS.GCSViews
             }
 
             // dragging a WP
-            if (pointno == "H")
+            if (pointno.ToLower() == "h" || pointno.ToLower() == "home")
             {
                 // auto update home alt
-                SetHomeHere(new PointLatLngAlt(lat, lng, srtm.getAltitude(lat, lng).alt * CurrentState.multiplieralt));
+                var home = new PointLatLngAlt(lat, lng);
+                home.Alt = homePosition.Alt;
+                home.Tag = homePosition.Tag;
+                home.Tag2 = homePosition.Tag2;
+                SetHomeHere(home);
                 return;
             }
 
             if (pointno == "Tracker Home")
             {
-                MainV2.comPort.MAV.cs.TrackerLocation = new PointLatLngAlt(lat, lng, alt, "");
+                MainV2.comPort.MAV.cs.TrackerLocation = new PointLatLngAlt(lat, lng, alt, "Tracker Home");
                 return;
             }
 
@@ -3578,7 +3582,7 @@ namespace VPS.GCSViews
                             OnMidLine_Click();
                             return;
                         }
-                        AddMarkToMap(currentMarker.Position.Lat, currentMarker.Position.Lng, 0);
+                        AddMarkToMap(currentMarker.Position.Lat, currentMarker.Position.Lng, -1);
 
                     }
                     // drag finished, update poi db
@@ -4685,9 +4689,9 @@ namespace VPS.GCSViews
             }
             else
             {
-                InterceptSendDataChange();
+                StopSendDataChange();
                 SetCoordSystem(coord);
-                AllowSendDataChange();
+                StartSendDataChange();
             }
         }
         #endregion
@@ -4710,7 +4714,7 @@ namespace VPS.GCSViews
                     coordSystem = CoordsSystems.WGS84;
                     break;
             }
-            if (!IsQuickChange())
+            if (IsAllowSendDataChange())
                 coordChange?.Invoke(coordSystem.ToString());
         }
         #endregion
@@ -4745,9 +4749,9 @@ namespace VPS.GCSViews
             }
             else
             {
-                InterceptSendDataChange();
+                StopSendDataChange();
                 SetAltFrame(frame);
-                AllowSendDataChange();
+                StartSendDataChange();
             }
         }
         #endregion
@@ -4770,7 +4774,7 @@ namespace VPS.GCSViews
                     altFrame = AltMode.Relative;
                     break;
             }
-            if (!IsQuickChange())
+            if (IsAllowSendDataChange())
                 altFrameChange?.Invoke(altFrame.ToString());
         }
         #endregion
@@ -4817,9 +4821,9 @@ namespace VPS.GCSViews
             }
             else
             {
-                InterceptSendDataChange();
+                StopSendDataChange();
                 SetDefaultAlt(defaultAlt);
-                AllowSendDataChange();
+                StartSendDataChange();
             }
         }
         #endregion
@@ -4828,7 +4832,7 @@ namespace VPS.GCSViews
         private void SetDefaultAlt(int alt)
         {
             defaultAlt = alt;
-            if (!IsQuickChange())
+            if (IsAllowSendDataChange())
                 defaultAltChange?.Invoke(defaultAlt);
         }
         #endregion
@@ -4863,9 +4867,9 @@ namespace VPS.GCSViews
             }
             else
             {
-                InterceptSendDataChange();
+                StopSendDataChange();
                 SetWarnAlt(warnAlt);
-                AllowSendDataChange();
+                StartSendDataChange();
             }
         }
         #endregion
@@ -4874,7 +4878,7 @@ namespace VPS.GCSViews
         private void SetWarnAlt(int alt)
         {
             warnAlt = alt;
-            if (!IsQuickChange())
+            if (IsAllowSendDataChange())
                 warnAltChange?.Invoke(warnAlt);
 
         }
@@ -4905,9 +4909,9 @@ namespace VPS.GCSViews
             }
             else
             {
-                InterceptSendDataChange();
+                StopSendDataChange();
                 SetWPRad(wpRad);
-                AllowSendDataChange();
+                StartSendDataChange();
             }
         }
         #endregion
@@ -4916,7 +4920,7 @@ namespace VPS.GCSViews
         private void SetWPRad(int rad)
         {
             wpRad = rad;
-            if (!onlyChangeValue)
+            if (!isSendDataChange)
                 wpRadChange?.Invoke(wpRad);
         }
         #endregion
@@ -4945,9 +4949,9 @@ namespace VPS.GCSViews
             }
             else
             {
-                InterceptSendDataChange();
+                StopSendDataChange();
                 SetLoiterRad(alt);
-                AllowSendDataChange();
+                StartSendDataChange();
             }
         }
         #endregion
@@ -4957,7 +4961,7 @@ namespace VPS.GCSViews
         private void SetLoiterRad(int alt)
         {
             loiterRad = alt;
-            if (!IsQuickChange())
+            if (IsAllowSendDataChange())
                 LoiterRadChange?.Invoke(loiterRad);
         }
         #endregion
@@ -5054,27 +5058,27 @@ namespace VPS.GCSViews
 
         #region NotTriggerDelegate
 
-        private bool onlyChangeValue = false;
+        private bool isSendDataChange = false;
 
         #region 接口函数
 
-        public void InterceptSendDataChange()
+        public void StopSendDataChange()
         {
-            onlyChangeValue = true;
+            isSendDataChange = false;
         }
 
 
-        public void AllowSendDataChange()
+        public void StartSendDataChange()
         {
-            onlyChangeValue = false;
+            isSendDataChange = true;
         }
 
         #endregion
 
         #region 判断函数
-        private bool IsQuickChange()
+        private bool IsAllowSendDataChange()
         {
-            return onlyChangeValue;
+            return isSendDataChange;
         }
         #endregion
 
@@ -5092,19 +5096,19 @@ namespace VPS.GCSViews
 
         #endregion
 
-        #region interceptSendChange
-        public bool isSendChange = true;
+        #region AllowSendListChange
+        public bool isSendListChange = true;
 
         #region 接口函数
 
-        public void InterceptSendListChange()
+        public void StopSendListChange()
         {
-            isSendChange = false;
+            isSendListChange = false;
         }
 
-        public void AllowSendListChange()
+        public void StartSendListChange()
         {
-            isSendChange = true;
+            isSendListChange = true;
         }
 
         #endregion
@@ -5112,7 +5116,7 @@ namespace VPS.GCSViews
         #region 判断函数
         private bool IsAllowSendChange()
         {
-            return isSendChange;
+            return isSendListChange;
         }
         #endregion
 
@@ -5496,27 +5500,14 @@ namespace VPS.GCSViews
                 #endregion
             }
             List<PointLatLngAlt> wpList = null;
-            switch (altFrame)
-            {
-                case AltMode.Relative:
-                    wpList = GetWPList("Terrain");
-                    break;
-                case AltMode.Absolute:
-                    wpList = GetWPList("Absolute");
-                    break;
-                case AltMode.Terrain:
-                    wpList = GetWPList("Terrain");
-                    break;
-                default:
-                    wpList = GetWPList("Terrain");
-                    break;
-            }
+            wpList = GetWPList();
+
             #region WPPoints
             int index = 0;
             for (int i = 0; i < wpList.Count; i++)
             {
                 bool isVisbility = false;
-                if (wpList[i].Tag == "WAYPOINT")
+                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wpList[i].Tag)) 
                     isVisbility = true;
                 w.WriteStartElement("Placemark");
 
@@ -5596,6 +5587,21 @@ namespace VPS.GCSViews
             w.WriteEndElement();//Folder
             #endregion
             {
+                switch (altFrame)
+                {
+                    case AltMode.Relative:
+                        wpList = GetWPList("Terrain");
+                        break;
+                    case AltMode.Absolute:
+                        wpList = GetWPList("Absolute");
+                        break;
+                    case AltMode.Terrain:
+                        wpList = GetWPList("Terrain");
+                        break;
+                    default:
+                        wpList = GetWPList("Terrain");
+                        break;
+                }
                 #region WPLines
                 //MainData Lines
                 w.WriteStartElement("Placemark");
@@ -5772,7 +5778,7 @@ namespace VPS.GCSViews
                                 {
                                     if (point.Name == "Placemark")
                                     {
-                                        string cmd = "WAYPOINT";
+                                        string cmd = VPS.WP.WPCommands.DefaultWPCommand;
                                         string altitudeMode = AltMode.Terrain.ToString();
                                         double x = 0, y = 0, z = 0;
                                         double p1 = 0, p2 = 0, p3 = 0, p4 = 0;
@@ -6173,9 +6179,9 @@ namespace VPS.GCSViews
             }
             else
             {
-                InterceptSendDataChange();
+                StopSendDataChange();
                 SetHomeHere(home);
-                AllowSendDataChange();
+                StartSendDataChange();
             }
         }
         #endregion
@@ -6185,7 +6191,7 @@ namespace VPS.GCSViews
         {
             homePosition = position;
 
-            if (!IsQuickChange())
+            if (IsAllowSendDataChange())
                 HomeChange?.Invoke(position);
 
             writeKML();
@@ -6263,9 +6269,9 @@ namespace VPS.GCSViews
             }
             else
             {
-                InterceptSendListChange();
+                StopSendListChange();
                 SetWPList(wpList);
-                AllowSendListChange();
+                StartSendListChange();
             }
         }
 
@@ -6290,9 +6296,9 @@ namespace VPS.GCSViews
             }
             else
             {
-                InterceptSendListChange();
+                StopSendListChange();
                 AppendWPList(wpList);
-                AllowSendListChange();
+                StartSendListChange();
             }
         }
 
@@ -6309,7 +6315,7 @@ namespace VPS.GCSViews
         #endregion
 
         #region GetWPList
-        public List<PointLatLngAlt> GetWPList(string altitudeMode = "Relative")
+        public List<PointLatLngAlt> GetWPList(string altitudeMode = "")
         {
             List<PointLatLngAlt> wpList = new List<PointLatLngAlt>(wpLists.ToArray());
             List<PointLatLngAlt> retWPList = new List<PointLatLngAlt>();
@@ -6371,6 +6377,9 @@ namespace VPS.GCSViews
                                 break;
                         }
                         wp.Tag2 = "Terrain";
+                        retWPList.Add(wp);
+                        break;
+                    default:
                         retWPList.Add(wp);
                         break;
                 }
@@ -6512,12 +6521,12 @@ namespace VPS.GCSViews
             PointLatLngAlt wp = new PointLatLngAlt(lat, lng, alt);
             if (splineMode)
             {
-                wp.Tag = "SPLINE_WAYPOINT";
+                wp.Tag = VPS.WP.WPCommands.SplineWPCommand;
                 wp.Tag2 = "Relative";
             }
             else
             {
-                wp.Tag = "WAYPOINT";
+                wp.Tag = VPS.WP.WPCommands.DefaultWPCommand;
                 wp.Tag2 = "Relative";
             }
             return wp;
@@ -6627,11 +6636,13 @@ namespace VPS.GCSViews
             int doubleWP = 0;
             foreach (var wp in wpLists)
             {
-                if (wp.Lat == 0 && wp.Lng == 0)
-                    continue;
-                totalAlt += srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
-                doubleWP++;
-
+                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
+                {
+                    if (wp.Lat == 0 && wp.Lng == 0)
+                        continue;
+                    totalAlt += srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
+                    doubleWP++;
+                }
             }
             return totalAlt / Math.Max(1, doubleWP);
         }

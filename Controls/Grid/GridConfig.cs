@@ -294,7 +294,7 @@ namespace VPS.Controls.Grid
             List<PointLatLngAlt> wpList = grid;
             for(int i = 0;i< wpList.Count; i++)
             {
-                wpList[i].Tag = "WAYPOINT";
+                wpList[i].Tag = VPS.WP.WPCommands.DefaultWPCommand;
                 wpList[i].Tag2 = "Relative";
             }
             return wpList;
