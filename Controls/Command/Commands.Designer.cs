@@ -110,7 +110,7 @@
             this.CommandDataList.Name = "CommandDataList";
             this.CommandDataList.Size = new System.Drawing.Size(940, 272);
             this.CommandDataList.TabIndex = 25;
-            this.CommandDataList.Text = "superGridControl1";
+            this.CommandDataList.CellClick += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridCellClickEventArgs>(this.CommandDataList_CellClick);
             this.CommandDataList.DataBindingComplete += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridDataBindingCompleteEventArgs>(this.CommandDataList_DataBindingComplete);
             this.CommandDataList.RowSetDefaultValues += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridRowSetDefaultValuesEventArgs>(this.CommandDataList_RowSetDefaultValues);
             // 
