@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevComponents.DotNetBar.Controls;
 using GeoUtility.GeoSystem;
+using DevComponents.DotNetBar.SuperGrid;
+using System.Collections;
 
 namespace VPS.Controls.Command
 {
@@ -18,13 +20,20 @@ namespace VPS.Controls.Command
 
         public CommandsPanel()
         {
-            StartEdit();
-            InitializeComponent();
-            InitAltFrame();
-            InitCoordSystem();
-            InitParam();
-            instance = this;
-            EndEdit();
+            
+            try
+            {
+                InitializeComponent();
+                BindingData(new List<Utilities.PointLatLngAlt>());
+
+                StartEdit();
+
+                instance = this;
+            }
+            finally
+            {
+                EndEdit();
+            }
         }
 
         private void InitAltFrame()
@@ -142,31 +151,37 @@ namespace VPS.Controls.Command
             AltFrameChange?.Invoke(currentFrame.ToString());
         }
 
+
         private void SetCurrentFrame(AltFrames frame)
         {
             currentFrame = frame;
-            switch (currentFrame)
+
+            GridPanel panel = CommandDataList.PrimaryGrid;
+            if (panel != null)
             {
-                case AltFrames.Relative:
-                    CommandDataList.Columns[RelativeAlt.Index].Visible = true;
-                    CommandDataList.Columns[AbsoluteAlt.Index].Visible = false;
-                    CommandDataList.Columns[TerrainAlt.Index].Visible = false;
-                    break;
-                case AltFrames.Absolute:
-                    CommandDataList.Columns[RelativeAlt.Index].Visible = false;
-                    CommandDataList.Columns[AbsoluteAlt.Index].Visible = true;
-                    CommandDataList.Columns[TerrainAlt.Index].Visible = false;
-                    break;
-                case AltFrames.Terrain:
-                    CommandDataList.Columns[RelativeAlt.Index].Visible = false;
-                    CommandDataList.Columns[AbsoluteAlt.Index].Visible = false;
-                    CommandDataList.Columns[TerrainAlt.Index].Visible = true;
-                    break;
-                default:
-                    CommandDataList.Columns[RelativeAlt.Index].Visible = true;
-                    CommandDataList.Columns[AbsoluteAlt.Index].Visible = false;
-                    CommandDataList.Columns[TerrainAlt.Index].Visible = false;
-                    break;
+                switch (currentFrame)
+                {
+                    case AltFrames.Relative:
+                        panel.Columns[RelativeAltColumn.ColumnName].Visible = true;
+                        panel.Columns[AbsoluteAltColumn.ColumnName].Visible = false;
+                        panel.Columns[TerrainAltColumn.ColumnName].Visible = false;
+                        break;
+                    case AltFrames.Absolute:
+                        panel.Columns[RelativeAltColumn.ColumnName].Visible = false;
+                        panel.Columns[AbsoluteAltColumn.ColumnName].Visible = true;
+                        panel.Columns[TerrainAltColumn.ColumnName].Visible = false;
+                        break;
+                    case AltFrames.Terrain:
+                        panel.Columns[RelativeAltColumn.ColumnName].Visible = false;
+                        panel.Columns[AbsoluteAltColumn.ColumnName].Visible = false;
+                        panel.Columns[TerrainAltColumn.ColumnName].Visible = true;
+                        break;
+                    default:
+                        panel.Columns[RelativeAltColumn.ColumnName].Visible = true;
+                        panel.Columns[AbsoluteAltColumn.ColumnName].Visible = false;
+                        panel.Columns[TerrainAltColumn.ColumnName].Visible = false;
+                        break;
+                }
             }
         }
 
@@ -229,42 +244,47 @@ namespace VPS.Controls.Command
         }
 
         private void SetCurrentCoord(CoordSystems coord)
-        {
+        { 
             currentCoord = coord;
-            switch (currentCoord)
+
+            GridPanel panel = CommandDataList.PrimaryGrid;
+            if (panel != null)
             {
-                case CoordSystems.WGS84:
-                    CommandDataList.Columns[Lat.Index].Visible = true;
-                    CommandDataList.Columns[Lon.Index].Visible = true;
-                    CommandDataList.Columns[Zone.Index].Visible = false;
-                    CommandDataList.Columns[East.Index].Visible = false;
-                    CommandDataList.Columns[North.Index].Visible = false;
-                    CommandDataList.Columns[MGRS.Index].Visible = false;
-                    break;
-                case CoordSystems.UTM:
-                    CommandDataList.Columns[Lat.Index].Visible = false;
-                    CommandDataList.Columns[Lon.Index].Visible = false;
-                    CommandDataList.Columns[Zone.Index].Visible = true;
-                    CommandDataList.Columns[East.Index].Visible = true;
-                    CommandDataList.Columns[North.Index].Visible = true;
-                    CommandDataList.Columns[MGRS.Index].Visible = false;
-                    break;
-                case CoordSystems.MGRS:
-                    CommandDataList.Columns[Lat.Index].Visible = false;
-                    CommandDataList.Columns[Lon.Index].Visible = false;
-                    CommandDataList.Columns[Zone.Index].Visible = false;
-                    CommandDataList.Columns[East.Index].Visible = false;
-                    CommandDataList.Columns[North.Index].Visible = false;
-                    CommandDataList.Columns[MGRS.Index].Visible = true;
-                    break;
-                default:
-                    CommandDataList.Columns[Lat.Index].Visible = true;
-                    CommandDataList.Columns[Lon.Index].Visible = true;
-                    CommandDataList.Columns[Zone.Index].Visible = false;
-                    CommandDataList.Columns[East.Index].Visible = false;
-                    CommandDataList.Columns[North.Index].Visible = false;
-                    CommandDataList.Columns[MGRS.Index].Visible = false;
-                    break;
+                switch (currentCoord)
+                {
+                    case CoordSystems.WGS84:
+                        panel.Columns[LatColumn.ColumnName].Visible = true;
+                        panel.Columns[LngColumn.ColumnName].Visible = true;
+                        panel.Columns[ZoneColumn.ColumnName].Visible = false;
+                        panel.Columns[EastColumn.ColumnName].Visible = false;
+                        panel.Columns[NorthColumn.ColumnName].Visible = false;
+                        panel.Columns[MGRSColumn.ColumnName].Visible = false;
+                        break;
+                    case CoordSystems.UTM:
+                        panel.Columns[LatColumn.ColumnName].Visible = false;
+                        panel.Columns[LngColumn.ColumnName].Visible = false;
+                        panel.Columns[ZoneColumn.ColumnName].Visible = true;
+                        panel.Columns[EastColumn.ColumnName].Visible = true;
+                        panel.Columns[NorthColumn.ColumnName].Visible = true;
+                        panel.Columns[MGRSColumn.ColumnName].Visible = false;
+                        break;
+                    case CoordSystems.MGRS:
+                        panel.Columns[LatColumn.ColumnName].Visible = false;
+                        panel.Columns[LngColumn.ColumnName].Visible = false;
+                        panel.Columns[ZoneColumn.ColumnName].Visible = false;
+                        panel.Columns[EastColumn.ColumnName].Visible = false;
+                        panel.Columns[NorthColumn.ColumnName].Visible = false;
+                        panel.Columns[MGRSColumn.ColumnName].Visible = true;
+                        break;
+                    default:
+                        panel.Columns[LatColumn.ColumnName].Visible = true;
+                        panel.Columns[LngColumn.ColumnName].Visible = true;
+                        panel.Columns[ZoneColumn.ColumnName].Visible = false;
+                        panel.Columns[EastColumn.ColumnName].Visible = false;
+                        panel.Columns[NorthColumn.ColumnName].Visible = false;
+                        panel.Columns[MGRSColumn.ColumnName].Visible = false;
+                        break;
+                }
             }
         }
 
@@ -282,7 +302,6 @@ namespace VPS.Controls.Command
         public PositionChangeHandle HomeChange;
         private void HomeLat_ValueChanged(object sender, EventArgs e)
         {
-            homePosition.Lat = HomeLat.Value;
             if (isEdit)
                 return;
             HomeChange?.Invoke(homePosition);
@@ -290,7 +309,6 @@ namespace VPS.Controls.Command
 
         private void HomeLng_ValueChanged(object sender, EventArgs e)
         {
-            homePosition.Lng = HomeLng.Value;
             if (isEdit)
                 return;
             HomeChange?.Invoke(homePosition);
@@ -298,7 +316,6 @@ namespace VPS.Controls.Command
 
         private void HomeAlt_ValueChanged(object sender, EventArgs e)
         {
-            homePosition.Alt = HomeAlt.Value;
             if (isEdit)
                 return;
             HomeChange?.Invoke(homePosition);
@@ -307,105 +324,20 @@ namespace VPS.Controls.Command
         public void SetHome(Utilities.PointLatLngAlt home)
         {
             StartEdit();
-            HomeLat.Value = home.Lat;
-            HomeLng.Value = home.Lng;
-            HomeAlt.Value = home.Alt;
-            EndEdit();
-        }
-
-        private void AddWPPoint(int index, Utilities.PointLatLngAlt wp)
-        {
-            if (index < CommandDataList.Rows.Count)
-                FillWPPoint(index, wp);
-            else
+            try
             {
-                index = CommandDataList.Rows.Add();
-                FillWPPoint(index, wp);
+                HomeLat.Value = home.Lat;
+                HomeLng.Value = home.Lng;
+                HomeAlt.Value = home.Alt;
+
+                homePosition = home;
+            }
+            finally
+            {
+                EndEdit();
             }
         }
 
-        private void DeleteWPPoint(int index)
-        {
-            if (index >= 0 && index < CommandDataList.Rows.Count)
-                CommandDataList.Rows.RemoveAt(index);
-        }
-
-        private void FillWPPoint(int index, Utilities.PointLatLngAlt wp)
-        {
-            CommandDataList.Rows[index].Cells[Command.Index].Value = wp.Tag;
-
-            CommandDataList[Command.Index, index].Value = wp.Tag;
-            switch (wp.Tag)
-            {
-                case "WAYPOINT":
-                    {
-                        CommandDataList[Lat.Index, index].Value = wp.Lat;
-                        CommandDataList[Lon.Index, index].Value = wp.Lng;
-                        SetAltitude(index, wp);
-                        int zone = wp.GetUTMZone();
-                        var utm = wp.ToUTM();
-                        CommandDataList[Zone.Index, index].Value = zone;
-                        CommandDataList[East.Index, index].Value = utm[0];
-                        CommandDataList[North.Index, index].Value = utm[1];
-
-                        CommandDataList[MGRS.Index, index].Value = ((MGRS)new Geographic(wp.Lng, wp.Lat));
-                    }
-                    break;
-                default:
-                    {
-                        CommandDataList[Lat.Index, index].Value = wp.Lat;
-                        CommandDataList[Lon.Index, index].Value = wp.Lng;
-                        switch (wp.Tag2.ToLower())
-                        {
-                            case "relative":
-                                CommandDataList[RelativeAlt.Index, index].Value = wp.Alt;
-                                break;
-                            case "absolute":
-                                CommandDataList[AbsoluteAlt.Index, index].Value = wp.Alt;
-                                break;
-                            case "terrain":
-                                CommandDataList[TerrainAlt.Index, index].Value = wp.Alt;
-                                break;
-                            default:
-                                CommandDataList[RelativeAlt.Index, index].Value = wp.Alt;
-                                break;
-                        }
-                        int zone = wp.GetUTMZone();
-                        var utm = wp.ToUTM();
-                        CommandDataList[Zone.Index, index].Value = zone;
-                        CommandDataList[East.Index, index].Value = utm[0];
-                        CommandDataList[North.Index, index].Value = utm[1];
-
-                        CommandDataList[MGRS.Index, index].Value = ((MGRS)new Geographic(wp.Lng, wp.Lat));
-                    }
-                    break;
-            }
-                
-                
-
-                
-            switch (wp.Tag2)
-            {
-                case "Relative":
-                    CommandDataList[RelativeAlt.Index, index].Value = wp.Alt;
-                    CommandDataList[Frame.Index, index].Value = wp.Tag2;
-                    break;
-                case "Absolute":
-                    CommandDataList[AbsoluteAlt.Index, index].Value = wp.Alt;
-                    CommandDataList[Frame.Index, index].Value = wp.Tag2;
-                    break;
-                case "Terrain":
-                    CommandDataList[TerrainAlt.Index, index].Value = wp.Alt;
-                    CommandDataList[Frame.Index, index].Value = wp.Tag2;
-                    break;
-                default:
-                    CommandDataList[RelativeAlt.Index, index].Value = wp.Alt;
-                    CommandDataList[Frame.Index, index].Value = wp.Tag2;
-                    break;
-
-            }
-
-        }
 
         private void SetBaseAlt(List<Utilities.PointLatLngAlt> wpList)
         {
@@ -423,68 +355,117 @@ namespace VPS.Controls.Command
                 WarnAlt.Value = (int)(maxAlt - baseAlt);
         }
 
-        private void SetAltitude(int index, Utilities.PointLatLngAlt wp)
+        private void SetCommandParam(List<Utilities.PointLatLngAlt> wpList)
         {
+            SetBaseAlt(wpList);
 
-            double terrain = Utilities.srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
-            switch (wp.Tag2)
+            GridPanel panel = CommandDataList.PrimaryGrid;
+
+            if (panel != null)
             {
-                case "Relative":
-                    CommandDataList[RelativeAlt.Index, index].Value = wp.Alt;
-                    CommandDataList[AbsoluteAlt.Index, index].Value = wp.Alt + baseAlt;
-                    CommandDataList[TerrainAlt.Index, index].Value = wp.Alt + baseAlt - terrain;
-                    break;
-                case "Absolute":
-                    CommandDataList[RelativeAlt.Index, index].Value = wp.Alt - baseAlt;
-                    CommandDataList[AbsoluteAlt.Index, index].Value = wp.Alt;
-                    CommandDataList[TerrainAlt.Index, index].Value = wp.Alt - terrain;
-                    break;
-                case "Terrain":
-                    CommandDataList[RelativeAlt.Index, index].Value = wp.Alt + terrain - baseAlt;
-                    CommandDataList[AbsoluteAlt.Index, index].Value = wp.Alt + terrain;
-                    CommandDataList[TerrainAlt.Index, index].Value = wp.Alt;
-                    break;
-                default:
-                    CommandDataList[RelativeAlt.Index, index].Value = wp.Alt;
-                    CommandDataList[AbsoluteAlt.Index, index].Value = wp.Alt + baseAlt;
-                    CommandDataList[TerrainAlt.Index, index].Value = wp.Alt + baseAlt - terrain;
-                    break;
-            }
-
-
-        }
-
-        private void SetWpListParam(List<Utilities.PointLatLngAlt> wpList)
-        {
-            try
-            {
-                if (wpList.Count > 0)
+                Utilities.PointLatLngAlt wpLast = homePosition;
+                switch (wpLast.Tag2)
                 {
-                    double height = wpList[0].Alt - homePosition.Alt;
-                    double distance = wpList[0].GetDistance(homePosition);
-                    double grad = height / distance;
-
-                    CommandDataList[Grad.Index, 0].Value = (grad * 100);
-                    CommandDataList[Angle.Index, 0].Value = ((180.0 / Math.PI) * Math.Atan(grad));
-                    CommandDataList[Dist.Index, 0].Value = (Math.Sqrt(Math.Pow(distance, 2) + Math.Pow(height, 2)) * CurrentState.multiplierdist);
-                    CommandDataList[AZ.Index, 0].Value = ((wpList[0].GetBearing(homePosition) + 180) % 360);
+                    case "Relative":
+                        break;
+                    case "Absolute":
+                        wpLast.Alt = wpLast.Alt - baseAlt;
+                        wpLast.Tag2 = "Relative";
+                        break;
+                    case "Terrain":
+                        wpLast.Alt =
+                            wpLast.Alt - baseAlt +
+                            Utilities.srtm.getAltitude(wpLast.Lat, wpLast.Lng).alt * CurrentState.multiplieralt;
+                        wpLast.Tag2 = "Relative";
+                        break;
+                    default:
+                        wpLast.Tag2 = "Relative";
+                        break;
                 }
 
-                for (int index = 1; index < wpList.Count; index++)
+                int index = 0;
+                foreach (var wp in wpList)
                 {
-                    double height = wpList[index].Alt - wpList[index - 1].Alt;
-                    double distance = wpList[index].GetDistance(wpList[index - 1]);
-                    double grad = height / distance;
-                    double az = wpList[index].GetBearing(wpList[index - 1]);
+                    if (wp == null)
+                        continue;
+                    try
+                    {
+                        if (wp.Tag.ToUpper() == "WAYPOINT" || wp.Tag.ToUpper() == "SPLINE_WAYPOINT")
+                        {
+                            int zone = wp.GetUTMZone();
+                            var temp2 = wp.ToUTM();
+                            panel.GetCell(index, panel.Columns[ZoneColumn.ColumnName].ColumnIndex).Value =
+                                zone;
+                            panel.GetCell(index, panel.Columns[EastColumn.ColumnName].ColumnIndex).Value =
+                                temp2[0];
+                            panel.GetCell(index, panel.Columns[NorthColumn.ColumnName].ColumnIndex).Value =
+                                temp2[1];
 
-                    CommandDataList[Grad.Index, index].Value = (grad * 100);
-                    CommandDataList[Angle.Index, index].Value = ((180.0 / Math.PI) * Math.Atan(grad));
-                    CommandDataList[Dist.Index, index].Value = (Math.Sqrt(Math.Pow(distance, 2) + Math.Pow(height, 2)) * CurrentState.multiplierdist);
-                    CommandDataList[AZ.Index, index].Value = ((az + 180) % 360);
+                            panel.GetCell(index, panel.Columns[MGRSColumn.ColumnName].ColumnIndex).Value =
+                                ((MGRS)new Geographic(wp.Lng, wp.Lat));
+
+                            double terrain = Utilities.srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
+                            switch (wp.Tag2)
+                            {
+                                case "Relative":
+                                    panel.GetCell(index, panel.Columns[AbsoluteAltColumn.ColumnName].ColumnIndex).Value =
+                                        (int)(baseAlt + wp.Alt);
+                                    panel.GetCell(index, panel.Columns[TerrainAltColumn.ColumnName].ColumnIndex).Value =
+                                        (int)(baseAlt + wp.Alt - terrain);
+                                    break;
+                                case "Absolute":
+                                    panel.GetCell(index, panel.Columns[RelativeAltColumn.ColumnName].ColumnIndex).Value =
+                                        (int)(wp.Alt - baseAlt);
+                                    panel.GetCell(index, panel.Columns[TerrainAltColumn.ColumnName].ColumnIndex).Value =
+                                        (int)(wp.Alt - terrain);
+                                    wp.Alt = wp.Alt - baseAlt;
+                                    wp.Tag2 = "Relative";
+                                    break;
+                                case "Terrain":
+                                    panel.GetCell(index, panel.Columns[RelativeAltColumn.ColumnName].ColumnIndex).Value =
+                                        (int)(wp.Alt - baseAlt + terrain);
+                                    panel.GetCell(index, panel.Columns[AbsoluteAltColumn.ColumnName].ColumnIndex).Value =
+                                        (int)(wp.Alt + terrain);
+                                    wp.Alt = wp.Alt - baseAlt + terrain;
+                                    wp.Tag2 = "Relative";
+                                    break;
+                                default:
+                                    panel.GetCell(index, panel.Columns[AbsoluteAltColumn.ColumnName].ColumnIndex).Value =
+                                        (int)(baseAlt + wp.Alt);
+                                    panel.GetCell(index, panel.Columns[TerrainAltColumn.ColumnName].ColumnIndex).Value =
+                                        (int)(baseAlt + wp.Alt - terrain);
+                                    wp.Tag2 = "Relative";
+                                    break;
+                            }
+
+
+                            double height = wp.Alt - wpLast.Alt;
+                            double distance = wp.GetDistance(wpLast);
+                            double grad = height / distance;
+
+                            panel.GetCell(index, panel.Columns[GradColumn.ColumnName].ColumnIndex).Value =
+                                (grad * 100);
+
+                            panel.GetCell(index, panel.Columns[AngleColumn.ColumnName].ColumnIndex).Value =
+                                ((180.0 / Math.PI) * Math.Atan(grad));
+
+                            panel.GetCell(index, panel.Columns[DistColumn.ColumnName].ColumnIndex).Value =
+                                (Math.Sqrt(Math.Pow(distance, 2) + Math.Pow(height, 2)) * CurrentState.multiplierdist);
+
+                            panel.GetCell(index, panel.Columns[AZColumn.ColumnName].ColumnIndex).Value =
+                                ((wp.GetBearing(wpLast) + 180) % 360);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                    finally
+                    {
+                        wpLast = wp;
+                        index++;
+                    }
                 }
-            }
-            catch
-            {
             }
         }
 
@@ -493,14 +474,16 @@ namespace VPS.Controls.Command
 
         public List<Utilities.PointLatLngAlt> GetWPList()
         {
+            GridPanel panel = CommandDataList.PrimaryGrid;
+
             List<Utilities.PointLatLngAlt> wpList = new List<Utilities.PointLatLngAlt>();
-            for (int index  = 0; index < CommandDataList.Rows.Count;index++)
+            for (int index = 0; index < panel.Rows.Count; index++) 
             {
                 Utilities.PointLatLngAlt wpPoint = new Utilities.PointLatLngAlt();
-                wpPoint.Lat = (double)CommandDataList[Lat.Index, index].Value;
-                wpPoint.Lng = (double)CommandDataList[Lon.Index, index].Value;
-                wpPoint.Alt = (double)CommandDataList[RelativeAlt.Index, index].Value;
-                wpPoint.Tag = CommandDataList[Command.Index, index].Value.ToString();
+                wpPoint.Lat = (double)panel.GetCell(index, panel.Columns[LatColumn.ColumnName].ColumnIndex).Value;
+                wpPoint.Lng = (double)panel.GetCell(index, panel.Columns[LngColumn.ColumnName].ColumnIndex).Value;
+                wpPoint.Alt = (double)panel.GetCell(index, panel.Columns[RelativeAltColumn.ColumnName].ColumnIndex).Value;
+                wpPoint.Tag = panel.GetCell(index, panel.Columns[CommandColumn.ColumnName].ColumnIndex).Value.ToString();
                 wpPoint.Tag2 = "Relative";
                 wpList.Add(wpPoint);
             }
@@ -552,73 +535,418 @@ namespace VPS.Controls.Command
 
         private void SetWPList(List<Utilities.PointLatLngAlt> wpList)
         {
-            SetBaseAlt(wpList);
-            StartEdit();
-            
-            int count = CommandDataList.Rows.Count;
-            int index = 0;
-            for (; index < wpList.Count; index++)
-            {
-                AddWPPoint(index, wpList[index]);
-            }
-            while (index < count)
-            {
-                DeleteWPPoint(index);
-                count--;
-            }
-            
-            EndEdit();
-
-            SetWpListParam(wpList);
-
-            if (IsAllowSendChange())
-            {
-                WPListChange?.Invoke(GetWPList());
-            }
+            BindingData(wpList);
         }
 
-        private void CommandDataList_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        //#region 单元格点击
+        //private void CommandDataList_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    DataGridViewButtonXCell cell = CommandDataList.CurrentCell as DataGridViewButtonXCell;
+
+        //    if (cell != null)
+        //    {
+        //        DataGridViewButtonXColumn bc =
+        //            CommandDataList.Columns[e.ColumnIndex] as DataGridViewButtonXColumn;
+
+        //        if (bc != null)
+        //        {
+        //            var index = cell.RowIndex;
+        //            var row = cell.OwningRow;
+
+        //            switch (bc.Name)
+        //            {
+        //                case "Up":
+        //                    if (index > 0)
+        //                    {
+        //                        CommandDataList.Rows.RemoveAt(index);
+        //                        CommandDataList.Rows.Insert(index - 1, row);
+
+        //                        WPListChange?.Invoke(GetWPList());
+        //                    }
+        //                    break;
+        //                case "Down":
+        //                    if(index < CommandDataList.Rows.Count - 1)
+        //                    {
+        //                        CommandDataList.Rows.RemoveAt(index);
+        //                        CommandDataList.Rows.Insert(index + 1, row);
+
+        //                        WPListChange?.Invoke(GetWPList());
+        //                    }
+        //                    break;
+        //                case "Delete":
+        //                    CommandDataList.Rows.RemoveAt(index);
+        //                    WPListChange?.Invoke(GetWPList());
+        //                    break;
+        //            }
+        //        }
+        //    }
+        //}
+        //#endregion
+
+        #region 绑定数据
+        private void BindingData(List<Utilities.PointLatLngAlt> wpList)
         {
-            DataGridViewButtonXCell cell = CommandDataList.CurrentCell as DataGridViewButtonXCell;
-
-            if (cell != null)
+            if (isEdit)
+                return;
+            try
             {
-                DataGridViewButtonXColumn bc =
-                    CommandDataList.Columns[e.ColumnIndex] as DataGridViewButtonXColumn;
+                StartEdit();
 
-                if (bc != null)
+                if (set == null)
+                    BindingDataSource();
+
+                if (wpList == null)
+                    return;
+                else if (wpList.Count <= 0)
+                    ;
+                else
                 {
-                    var index = cell.RowIndex;
-                    var row = cell.OwningRow;
-
-                    switch (bc.Name)
+                    if (wpList[0].Tag.ToLower() == "home")
                     {
-                        case "Up":
-                            if (index > 0)
-                            {
-                                CommandDataList.Rows.RemoveAt(index);
-                                CommandDataList.Rows.Insert(index - 1, row);
-
-                                WPListChange?.Invoke(GetWPList());
-                            }
-                            break;
-                        case "Down":
-                            if(index < CommandDataList.Rows.Count - 1)
-                            {
-                                CommandDataList.Rows.RemoveAt(index);
-                                CommandDataList.Rows.Insert(index + 1, row);
-
-                                WPListChange?.Invoke(GetWPList());
-                            }
-                            break;
-                        case "Delete":
-                            CommandDataList.Rows.RemoveAt(index);
-                            WPListChange?.Invoke(GetWPList());
-                            break;
+                        SetHome(wpList[0]);
+                        wpList.RemoveAt(0);
                     }
                 }
+
+                table.BeginLoadData();
+
+                table.Rows.Clear();
+                foreach (var wp in wpList)
+                {
+                    DataRow row = table.NewRow();
+
+                    row[CommandColumn] = wp.Tag;
+                    row[LngColumn] = wp.Lng;
+                    row[LatColumn] = wp.Lat;
+                    switch (wp.Tag2)
+                    {
+                        case "Relative":
+                            row[RelativeAltColumn] = wp.Alt;
+                            break;
+                        case "Absolute":
+                            row[AbsoluteAltColumn] = wp.Alt;
+                            break;
+                        case "Terrain":
+                            row[TerrainAltColumn] = wp.Alt;
+                            break;
+                        default:
+                            row[RelativeAltColumn] = wp.Alt;
+                            break;
+                    }
+
+                    table.Rows.Add(row);
+
+                    row.AcceptChanges();
+                }
+                if (wpList.Count > 0)
+                    SetCommandParam(wpList);
+                
+            }
+            catch(Exception ex)
+            {
+
+            }
+            finally
+            {
+                table.EndLoadData();
+                EndEdit();
+            }
+        }
+        #endregion
+
+        #region 绑定数据源格式
+        DataSet set = null;
+        DataTable table = null;
+
+        const string MainHandle = "Command";
+        private void BindingDataSource()
+        {
+            set = new DataSet(MainHandle);
+
+            table = CreateTable();
+
+            set.Tables.Add(table);
+
+            CommandDataList.PrimaryGrid.DataSource = set;
+            CommandDataList.PrimaryGrid.DataMember = WPHandle;
+        }
+        #endregion
+
+        #region 添加表格格式
+        DataColumn CommandColumn = new DataColumn();
+        DataColumn LngColumn = new DataColumn();
+        DataColumn LatColumn = new DataColumn();
+        DataColumn RelativeAltColumn = new DataColumn();
+        DataColumn AbsoluteAltColumn = new DataColumn();
+        DataColumn TerrainAltColumn = new DataColumn();
+        DataColumn ZoneColumn = new DataColumn();
+        DataColumn EastColumn = new DataColumn();
+        DataColumn NorthColumn = new DataColumn();
+        DataColumn MGRSColumn = new DataColumn();
+        DataColumn GradColumn = new DataColumn();
+        DataColumn AngleColumn = new DataColumn();
+        DataColumn DistColumn = new DataColumn();
+        DataColumn AZColumn = new DataColumn();
+        DataColumn UpColumn = new DataColumn();
+        DataColumn DownColumn = new DataColumn();
+        DataColumn DeleteColumn = new DataColumn();
+
+        const string WPHandle = "WP";
+        private DataTable CreateTable()
+        {
+            DataTable table = new DataTable(WPHandle);
+
+            CommandColumn.ColumnName = "指令";
+            CommandColumn.DataType = typeof(string);
+            table.Columns.Add(CommandColumn);
+
+            LngColumn.ColumnName = "经度";
+            LngColumn.DataType = typeof(double);
+            table.Columns.Add(LngColumn);
+
+            LatColumn.ColumnName = "纬度";
+            LatColumn.DataType = typeof(double);
+            table.Columns.Add(LatColumn);
+
+            ZoneColumn.ColumnName = "区";
+            ZoneColumn.DataType = typeof(int);
+            table.Columns.Add(ZoneColumn);
+
+            EastColumn.ColumnName = "东";
+            EastColumn.DataType = typeof(double);
+            table.Columns.Add(EastColumn);
+
+            NorthColumn.ColumnName = "北";
+            NorthColumn.DataType = typeof(double);
+            table.Columns.Add(NorthColumn);
+
+            MGRSColumn.ColumnName = "MGRS";
+            MGRSColumn.DataType = typeof(string);
+            table.Columns.Add(MGRSColumn);
+
+            RelativeAltColumn.ColumnName = "相对高度";
+            RelativeAltColumn.DataType = typeof(int);
+            table.Columns.Add(RelativeAltColumn);
+
+            AbsoluteAltColumn.ColumnName = "绝对高度";
+            AbsoluteAltColumn.DataType = typeof(int);
+            table.Columns.Add(AbsoluteAltColumn);
+
+            TerrainAltColumn.ColumnName = "地面高度";
+            TerrainAltColumn.DataType = typeof(int);
+            table.Columns.Add(TerrainAltColumn);
+
+            GradColumn.ColumnName = "坡度";
+            GradColumn.DataType = typeof(double);
+            table.Columns.Add(GradColumn);
+
+            AngleColumn.ColumnName = "角度";
+            AngleColumn.DataType = typeof(double);
+            table.Columns.Add(AngleColumn);
+
+            DistColumn.ColumnName = "距离";
+            DistColumn.DataType = typeof(double);
+            table.Columns.Add(DistColumn);
+
+            AZColumn.ColumnName = "方位";
+            AZColumn.DataType = typeof(double);
+            table.Columns.Add(AZColumn);
+
+            UpColumn.ColumnName = "上移";
+            UpColumn.DataType = typeof(GridLabelXEditControl);
+            table.Columns.Add(UpColumn);
+
+            DownColumn.ColumnName = "下移";
+            DownColumn.DataType = typeof(GridLabelXEditControl);
+            table.Columns.Add(DownColumn);
+
+            DeleteColumn.ColumnName = "删除";
+            DeleteColumn.DataType = typeof(GridLabelXEditControl);
+            table.Columns.Add(DeleteColumn);
+
+            return table;
+        }
+        #endregion
+
+        #region 数据绑定完成后的处理函数
+        private void CommandDataList_DataBindingComplete(object sender, GridDataBindingCompleteEventArgs e)
+        {
+            GridPanel panel = e.GridPanel;
+
+            switch (panel.DataMember)
+            {
+                case WPHandle:
+                    CustomizeWPPanel(panel);
+                    break;
+            }
+        }
+        #endregion
+
+        enum commands
+        {
+            WAYPOINT,
+            SPLINE_WAYPOINT
+        }
+
+        private void CustomizeWPPanel(GridPanel panel)
+        {
+            panel.FrozenColumnCount = 1;
+            panel.ColumnHeader.RowHeight = 30;
+            panel.MinRowHeight = 25;
+
+            {
+                panel.Columns[CommandColumn.ColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
+                panel.Columns[CommandColumn.ColumnName].MinimumWidth = 200;
+                panel.Columns[CommandColumn.ColumnName].EditorType = typeof(GridControls.FragrantComboBox);
+                panel.Columns[CommandColumn.ColumnName].EditorParams = new object[] { Enum.GetValues(typeof(commands)) };
+                //panel.Columns[CommandColumn.ColumnName].ReadOnly = true;
+            }
+
+            {
+                panel.Columns[LatColumn.ColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
+                panel.Columns[LatColumn.ColumnName].MinimumWidth = 120;
+                panel.Columns[LatColumn.ColumnName].EditorType = typeof(GridDoubleInputEditControl);
+                //panel.Columns[LatColumn.ColumnName].ReadOnly = true;
+                panel.Columns[LatColumn.ColumnName].Visible = true;
+                GridDoubleInputEditControl LatControl = (GridDoubleInputEditControl)panel.Columns[LatColumn.ColumnName].EditControl;
+                LatControl.DisplayFormat = "0.########";
+                LatControl.MaxValue = 90;
+                LatControl.MinValue = -90;
+
+                panel.Columns[LngColumn.ColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
+                panel.Columns[LngColumn.ColumnName].MinimumWidth = 120;
+                panel.Columns[LngColumn.ColumnName].EditorType = typeof(GridDoubleInputEditControl);
+                //panel.Columns[LngColumn.ColumnName].ReadOnly = true;
+                panel.Columns[LngColumn.ColumnName].Visible = true;
+                GridDoubleInputEditControl LngControl = (GridDoubleInputEditControl)panel.Columns[LngColumn.ColumnName].EditControl;
+                LngControl.DisplayFormat = "0.########";
+                LngControl.MaxValue = 180;
+                LngControl.MinValue = -180;
+            }
+
+            {
+                panel.Columns[ZoneColumn.ColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
+                panel.Columns[ZoneColumn.ColumnName].MinimumWidth = 60;
+                panel.Columns[ZoneColumn.ColumnName].EditorType = typeof(GridIntegerInputEditControl);
+                panel.Columns[ZoneColumn.ColumnName].ReadOnly = true;
+                panel.Columns[ZoneColumn.ColumnName].Visible = false;
+
+                panel.Columns[EastColumn.ColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
+                panel.Columns[EastColumn.ColumnName].MinimumWidth = 90;
+                panel.Columns[EastColumn.ColumnName].EditorType = typeof(GridDoubleInputEditControl);
+                panel.Columns[EastColumn.ColumnName].ReadOnly = true;
+                panel.Columns[EastColumn.ColumnName].Visible = false;
+
+                panel.Columns[NorthColumn.ColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
+                panel.Columns[NorthColumn.ColumnName].MinimumWidth = 90;
+                panel.Columns[NorthColumn.ColumnName].EditorType = typeof(GridDoubleInputEditControl);
+                panel.Columns[NorthColumn.ColumnName].ReadOnly = true;
+                panel.Columns[NorthColumn.ColumnName].Visible = false;
+            }
+
+            {
+                panel.Columns[MGRSColumn.ColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
+                panel.Columns[MGRSColumn.ColumnName].MinimumWidth = 240;
+                panel.Columns[MGRSColumn.ColumnName].EditorType = typeof(GridTextBoxXEditControl);
+                panel.Columns[MGRSColumn.ColumnName].ReadOnly = true;
+                panel.Columns[MGRSColumn.ColumnName].Visible = false;
+            }
+
+            {
+                panel.Columns[RelativeAltColumn.ColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
+                panel.Columns[RelativeAltColumn.ColumnName].MinimumWidth = 80;
+                panel.Columns[RelativeAltColumn.ColumnName].EditorType = typeof(GridIntegerInputEditControl);
+                //panel.Columns[RelativeAltColumn.ColumnName].ReadOnly = true;
+                panel.Columns[RelativeAltColumn.ColumnName].Visible = true;
+
+                panel.Columns[AbsoluteAltColumn.ColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
+                panel.Columns[AbsoluteAltColumn.ColumnName].MinimumWidth = 80;
+                panel.Columns[AbsoluteAltColumn.ColumnName].EditorType = typeof(GridIntegerInputEditControl);
+                //panel.Columns[AbsoluteAltColumn.ColumnName].ReadOnly = true;
+                panel.Columns[AbsoluteAltColumn.ColumnName].Visible = false;
+
+                panel.Columns[TerrainAltColumn.ColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
+                panel.Columns[TerrainAltColumn.ColumnName].MinimumWidth = 80;
+                panel.Columns[TerrainAltColumn.ColumnName].EditorType = typeof(GridIntegerInputEditControl);
+                //panel.Columns[TerrainAltColumn.ColumnName].ReadOnly = true;
+                panel.Columns[TerrainAltColumn.ColumnName].Visible = false;
+            }
+
+            {
+                panel.Columns[GradColumn.ColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
+                panel.Columns[GradColumn.ColumnName].MinimumWidth = 80;
+                panel.Columns[GradColumn.ColumnName].EditorType = typeof(GridDoubleInputEditControl);
+                panel.Columns[GradColumn.ColumnName].ReadOnly = true;
+                panel.Columns[GradColumn.ColumnName].Visible = false;
+
+                panel.Columns[AngleColumn.ColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
+                panel.Columns[AngleColumn.ColumnName].MinimumWidth = 80;
+                panel.Columns[AngleColumn.ColumnName].EditorType = typeof(GridDoubleInputEditControl);
+                panel.Columns[AngleColumn.ColumnName].ReadOnly = true;
+                panel.Columns[AngleColumn.ColumnName].Visible = false;
+
+                panel.Columns[DistColumn.ColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
+                panel.Columns[DistColumn.ColumnName].MinimumWidth = 80;
+                panel.Columns[DistColumn.ColumnName].EditorType = typeof(GridDoubleInputEditControl);
+                panel.Columns[DistColumn.ColumnName].ReadOnly = true;
+                panel.Columns[DistColumn.ColumnName].Visible = false;
+
+                panel.Columns[AZColumn.ColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
+                panel.Columns[AZColumn.ColumnName].MinimumWidth = 80;
+                panel.Columns[AZColumn.ColumnName].EditorType = typeof(GridDoubleInputEditControl);
+                panel.Columns[AZColumn.ColumnName].ReadOnly = true;
+                panel.Columns[AZColumn.ColumnName].Visible = false;
+            }
+
+            {
+                panel.Columns[UpColumn.ColumnName].MinimumWidth = 25;
+                panel.Columns[UpColumn.ColumnName].Width = 25;
+                panel.Columns[UpColumn.ColumnName].EditorType = typeof(GridControls.ImagePanel);
+                panel.Columns[UpColumn.ColumnName].EditorParams = new object[] { ImageList.Images["Up.png"] };
+
+                panel.Columns[DownColumn.ColumnName].MinimumWidth = 25;
+                panel.Columns[DownColumn.ColumnName].Width = 25;
+                panel.Columns[DownColumn.ColumnName].EditorType = typeof(GridControls.ImagePanel);
+                panel.Columns[DownColumn.ColumnName].EditorParams = new object[] { ImageList.Images["Down.png"] };
+
+                panel.Columns[DeleteColumn.ColumnName].MinimumWidth = 25;
+                panel.Columns[DeleteColumn.ColumnName].Width = 25;
+                panel.Columns[DeleteColumn.ColumnName].EditorType = typeof(GridControls.ImagePanel);
+                panel.Columns[DeleteColumn.ColumnName].EditorParams = new object[] { ImageList.Images["Delete.png"] };
             }
         }
 
+        private void WPDefaultValuePanel(GridPanel panel)
+        {
+        }
+
+        private void CommandDataList_RowSetDefaultValues(object sender, GridRowSetDefaultValuesEventArgs e)
+        {
+            GridPanel panel = e.GridPanel;
+            switch (panel.DataMember)
+            {
+                case WPHandle:
+                    WPDefaultValuePanel(panel);
+                    break;
+            }
+
+        }
+
+        private void CommandsPanel_Load(object sender, EventArgs e)
+        {
+            StartEdit();
+            try
+            {
+                InitAltFrame();
+                InitCoordSystem();
+                InitParam();
+            }
+            finally
+            {
+                EndEdit();
+            }
+        }
     }
+
+
 }

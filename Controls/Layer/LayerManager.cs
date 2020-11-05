@@ -127,7 +127,6 @@ namespace VPS.Controls.Layer
         #region 行默认填充单元
         private void MainLayerPanelDefaultValue(GridPanel panel)
         {
-
         }
         #endregion
 
@@ -155,15 +154,15 @@ namespace VPS.Controls.Layer
             panel.Columns[4].MinimumWidth = 200;
             panel.Columns[4].ReadOnly = true;
 
-            panel.Columns[5].EditorType = typeof(ImageLabel);
-            panel.Columns[5].EditorParams = new object[] { ImageList.Images["Delete.png"] };
             panel.Columns[5].MinimumWidth = 25;
             panel.Columns[5].Width = 25;
+            panel.Columns[5].EditorType = typeof(GridControls.ImagePanel);
+            panel.Columns[5].EditorParams = new object[] { ImageList.Images["Delete.png"] };
 
-            panel.Columns[6].EditorType = typeof(ImageCheckBox);
-            panel.Columns[6].EditorParams = new object[] { ImageList.Images["Default.png"] };
             panel.Columns[6].MinimumWidth = 25;
             panel.Columns[6].Width = 25;
+            panel.Columns[6].EditorType = typeof(GridControls.ImageCheckBox);
+            panel.Columns[6].EditorParams = new object[] { ImageList.Images["Default.png"] };
         }
         #endregion
 
@@ -300,14 +299,17 @@ namespace VPS.Controls.Layer
 
         #endregion
 
+        #endregion
+
         #region 绑定数据源
         DataSet set = null;
         DataTable table = null;
         DataTable layerTable = null;
 
+        const string MainHandle = "LayerManager";
         public void BindingDataSource()
         {
-            DataSet set = new DataSet("LayerManager");
+            DataSet set = new DataSet(MainHandle);
 
             table = GetMainTable();
             layerTable = GetLayerTable();
@@ -446,37 +448,4 @@ namespace VPS.Controls.Layer
         #endregion
     }
 
-    #region ControlItem
-    internal class ImageLabel : GridLabelXEditControl
-    {
-        #region Private variables
-
-        #endregion
-
-        public ImageLabel(Image image)
-        {
-            Image = image;
-        }
-
-    }
-
-    internal class ImageCheckBox : GridCheckBoxXEditControl
-    {
-        #region Private variables
-        #endregion
-
-        public ImageCheckBox(Image image)
-        {
-            this.CheckBoxImageChecked = image;
-        }
-    }
-
-    internal class AltitudeFrame : GridComboBoxExEditControl
-    {
-        public AltitudeFrame()
-        {
-            this.DataSource = new List<string> (){ "Relative", "Absolute", "Terrain" };
-        }
-    }
-    #endregion
 }

@@ -28,11 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CommandsPanel));
             this.MainPanel = new DevComponents.DotNetBar.PanelEx();
+            this.CommandDataList = new DevComponents.DotNetBar.SuperGrid.SuperGridControl();
             this.AutoWarnAlt = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.labelX10 = new DevComponents.DotNetBar.LabelX();
             this.BaseAlt = new DevComponents.Editors.IntegerInput();
@@ -53,25 +52,7 @@
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.AltFrame = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.CommandDataList = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.Command = new DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn();
-            this.Lat = new DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn();
-            this.Lon = new DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn();
-            this.Zone = new DevComponents.DotNetBar.Controls.DataGridViewIntegerInputColumn();
-            this.East = new DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn();
-            this.North = new DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn();
-            this.MGRS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RelativeAlt = new DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn();
-            this.AbsoluteAlt = new DevComponents.DotNetBar.Controls.DataGridViewIntegerInputColumn();
-            this.TerrainAlt = new DevComponents.DotNetBar.Controls.DataGridViewIntegerInputColumn();
-            this.Grad = new DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn();
-            this.Angle = new DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn();
-            this.Dist = new DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn();
-            this.AZ = new DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn();
-            this.Up = new DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn();
-            this.Down = new DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn();
-            this.Delete = new DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn();
-            this.Frame = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ImageList = new System.Windows.Forms.ImageList(this.components);
             this.MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BaseAlt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HomeLng)).BeginInit();
@@ -80,13 +61,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.WpRad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WarnAlt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DefaultAlt)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CommandDataList)).BeginInit();
             this.SuspendLayout();
             // 
             // MainPanel
             // 
             this.MainPanel.CanvasColor = System.Drawing.SystemColors.Control;
             this.MainPanel.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.MainPanel.Controls.Add(this.CommandDataList);
             this.MainPanel.Controls.Add(this.AutoWarnAlt);
             this.MainPanel.Controls.Add(this.labelX10);
             this.MainPanel.Controls.Add(this.BaseAlt);
@@ -107,7 +88,6 @@
             this.MainPanel.Controls.Add(this.labelX2);
             this.MainPanel.Controls.Add(this.labelX1);
             this.MainPanel.Controls.Add(this.AltFrame);
-            this.MainPanel.Controls.Add(this.CommandDataList);
             this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainPanel.Location = new System.Drawing.Point(0, 0);
             this.MainPanel.Name = "MainPanel";
@@ -120,6 +100,19 @@
             this.MainPanel.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
             this.MainPanel.Style.GradientAngle = 90;
             this.MainPanel.TabIndex = 1;
+            // 
+            // CommandDataList
+            // 
+            this.CommandDataList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CommandDataList.FilterExprColors.SysFunction = System.Drawing.Color.DarkRed;
+            this.CommandDataList.Location = new System.Drawing.Point(179, 3);
+            this.CommandDataList.Name = "CommandDataList";
+            this.CommandDataList.Size = new System.Drawing.Size(940, 272);
+            this.CommandDataList.TabIndex = 25;
+            this.CommandDataList.Text = "superGridControl1";
+            this.CommandDataList.DataBindingComplete += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridDataBindingCompleteEventArgs>(this.CommandDataList_DataBindingComplete);
+            this.CommandDataList.RowSetDefaultValues += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridRowSetDefaultValuesEventArgs>(this.CommandDataList_RowSetDefaultValues);
             // 
             // AutoWarnAlt
             // 
@@ -451,349 +444,13 @@
             this.AltFrame.TabIndex = 1;
             this.AltFrame.SelectedIndexChanged += new System.EventHandler(this.AltFrame_SelectedIndexChanged);
             // 
-            // CommandDataList
-            // 
-            this.CommandDataList.AllowUserToAddRows = false;
-            this.CommandDataList.AllowUserToDeleteRows = false;
-            this.CommandDataList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CommandDataList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.CommandDataList.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.CommandDataList.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedVertical;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.CommandDataList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.CommandDataList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.CommandDataList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Command,
-            this.Lat,
-            this.Lon,
-            this.Zone,
-            this.East,
-            this.North,
-            this.MGRS,
-            this.RelativeAlt,
-            this.AbsoluteAlt,
-            this.TerrainAlt,
-            this.Grad,
-            this.Angle,
-            this.Dist,
-            this.AZ,
-            this.Up,
-            this.Down,
-            this.Delete,
-            this.Frame});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.CommandDataList.DefaultCellStyle = dataGridViewCellStyle2;
-            this.CommandDataList.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.CommandDataList.EnableHeadersVisualStyles = false;
-            this.CommandDataList.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
-            this.CommandDataList.HighlightSelectedColumnHeaders = false;
-            this.CommandDataList.Location = new System.Drawing.Point(156, 3);
-            this.CommandDataList.Name = "CommandDataList";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.CommandDataList.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.CommandDataList.RowTemplate.Height = 23;
-            this.CommandDataList.Size = new System.Drawing.Size(984, 272);
-            this.CommandDataList.TabIndex = 0;
-            this.CommandDataList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CommandDataList_CellContentClick);
-            // 
-            // Command
-            // 
-            this.Command.DisplayMember = "Text";
-            this.Command.DropDownHeight = 106;
-            this.Command.DropDownWidth = 121;
-            this.Command.FillWeight = 166.0131F;
-            this.Command.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Command.HeaderText = "命令";
-            this.Command.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.Command.IntegralHeight = false;
-            this.Command.ItemHeight = 16;
-            this.Command.Items.AddRange(new object[] {
-            "WayPoint"});
-            this.Command.Name = "Command";
-            this.Command.ReadOnly = true;
-            this.Command.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.Command.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            // 
-            // Lat
-            // 
-            // 
-            // 
-            // 
-            this.Lat.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
-            this.Lat.BackgroundStyle.Class = "DataGridViewNumericBorder";
-            this.Lat.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.Lat.BackgroundStyle.TextColor = System.Drawing.SystemColors.ControlText;
-            this.Lat.DisplayFormat = "0.######";
-            this.Lat.FillWeight = 124.5098F;
-            this.Lat.HeaderText = "纬度";
-            this.Lat.Increment = 1D;
-            this.Lat.InputHorizontalAlignment = DevComponents.Editors.eHorizontalAlignment.Left;
-            this.Lat.MaxValue = 200D;
-            this.Lat.MinValue = -200D;
-            this.Lat.Name = "Lat";
-            this.Lat.ReadOnly = true;
-            // 
-            // Lon
-            // 
-            // 
-            // 
-            // 
-            this.Lon.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
-            this.Lon.BackgroundStyle.Class = "DataGridViewNumericBorder";
-            this.Lon.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.Lon.BackgroundStyle.TextColor = System.Drawing.SystemColors.ControlText;
-            this.Lon.DisplayFormat = "0.######";
-            this.Lon.FillWeight = 124.5098F;
-            this.Lon.HeaderText = "经度";
-            this.Lon.Increment = 1D;
-            this.Lon.InputHorizontalAlignment = DevComponents.Editors.eHorizontalAlignment.Left;
-            this.Lon.MaxValue = 400D;
-            this.Lon.MinValue = -400D;
-            this.Lon.Name = "Lon";
-            this.Lon.ReadOnly = true;
-            // 
-            // Zone
-            // 
-            // 
-            // 
-            // 
-            this.Zone.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
-            this.Zone.BackgroundStyle.Class = "DataGridViewNumericBorder";
-            this.Zone.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.Zone.BackgroundStyle.TextColor = System.Drawing.SystemColors.ControlText;
-            this.Zone.FillWeight = 83.00654F;
-            this.Zone.HeaderText = "区";
-            this.Zone.InputHorizontalAlignment = DevComponents.Editors.eHorizontalAlignment.Left;
-            this.Zone.MaxValue = 100;
-            this.Zone.MinValue = 0;
-            this.Zone.Name = "Zone";
-            this.Zone.ReadOnly = true;
-            this.Zone.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Zone.Visible = false;
-            // 
-            // East
-            // 
-            // 
-            // 
-            // 
-            this.East.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
-            this.East.BackgroundStyle.Class = "DataGridViewNumericBorder";
-            this.East.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.East.BackgroundStyle.TextColor = System.Drawing.SystemColors.ControlText;
-            this.East.DisplayFormat = "0.######";
-            this.East.FillWeight = 124.5098F;
-            this.East.HeaderText = "东";
-            this.East.Increment = 1D;
-            this.East.InputHorizontalAlignment = DevComponents.Editors.eHorizontalAlignment.Left;
-            this.East.MaxValue = 10000000D;
-            this.East.MinValue = -10000000D;
-            this.East.Name = "East";
-            this.East.ReadOnly = true;
-            this.East.Visible = false;
-            // 
-            // North
-            // 
-            // 
-            // 
-            // 
-            this.North.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
-            this.North.BackgroundStyle.Class = "DataGridViewNumericBorder";
-            this.North.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.North.BackgroundStyle.TextColor = System.Drawing.SystemColors.ControlText;
-            this.North.DisplayFormat = "0.######";
-            this.North.FillWeight = 124.5098F;
-            this.North.HeaderText = "北";
-            this.North.Increment = 1D;
-            this.North.InputHorizontalAlignment = DevComponents.Editors.eHorizontalAlignment.Left;
-            this.North.MaxValue = 10000000D;
-            this.North.MinValue = -10000000D;
-            this.North.Name = "North";
-            this.North.ReadOnly = true;
-            this.North.Visible = false;
-            // 
-            // MGRS
-            // 
-            this.MGRS.FillWeight = 166.0131F;
-            this.MGRS.HeaderText = "MGRS";
-            this.MGRS.Name = "MGRS";
-            this.MGRS.ReadOnly = true;
-            this.MGRS.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.MGRS.Visible = false;
-            // 
-            // RelativeAlt
-            // 
-            // 
-            // 
-            // 
-            this.RelativeAlt.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
-            this.RelativeAlt.BackgroundStyle.Class = "DataGridViewNumericBorder";
-            this.RelativeAlt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.RelativeAlt.BackgroundStyle.TextColor = System.Drawing.SystemColors.ControlText;
-            this.RelativeAlt.FillWeight = 83.00654F;
-            this.RelativeAlt.HeaderText = "相对高度";
-            this.RelativeAlt.Increment = 1D;
-            this.RelativeAlt.InputHorizontalAlignment = DevComponents.Editors.eHorizontalAlignment.Left;
-            this.RelativeAlt.MaxValue = 100000000D;
-            this.RelativeAlt.MinValue = -100000000D;
-            this.RelativeAlt.Name = "RelativeAlt";
-            this.RelativeAlt.ReadOnly = true;
-            // 
-            // AbsoluteAlt
-            // 
-            // 
-            // 
-            // 
-            this.AbsoluteAlt.BackgroundStyle.Class = "DataGridViewNumericBorder";
-            this.AbsoluteAlt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.AbsoluteAlt.HeaderText = "绝对高度";
-            this.AbsoluteAlt.Name = "AbsoluteAlt";
-            this.AbsoluteAlt.ReadOnly = true;
-            this.AbsoluteAlt.Visible = false;
-            // 
-            // TerrainAlt
-            // 
-            // 
-            // 
-            // 
-            this.TerrainAlt.BackgroundStyle.Class = "DataGridViewNumericBorder";
-            this.TerrainAlt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.TerrainAlt.HeaderText = "地面高度";
-            this.TerrainAlt.Name = "TerrainAlt";
-            this.TerrainAlt.ReadOnly = true;
-            this.TerrainAlt.Visible = false;
-            // 
-            // Grad
-            // 
-            // 
-            // 
-            // 
-            this.Grad.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
-            this.Grad.BackgroundStyle.Class = "DataGridViewNumericBorder";
-            this.Grad.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.Grad.BackgroundStyle.TextColor = System.Drawing.SystemColors.ControlText;
-            this.Grad.DisplayFormat = "0.######";
-            this.Grad.FillWeight = 83.00654F;
-            this.Grad.HeaderText = "坡度";
-            this.Grad.Increment = 1D;
-            this.Grad.InputHorizontalAlignment = DevComponents.Editors.eHorizontalAlignment.Left;
-            this.Grad.MaxValue = 400D;
-            this.Grad.MinValue = 0D;
-            this.Grad.Name = "Grad";
-            this.Grad.ReadOnly = true;
-            // 
-            // Angle
-            // 
-            // 
-            // 
-            // 
-            this.Angle.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
-            this.Angle.BackgroundStyle.Class = "DataGridViewNumericBorder";
-            this.Angle.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.Angle.BackgroundStyle.TextColor = System.Drawing.SystemColors.ControlText;
-            this.Angle.DisplayFormat = "0.######";
-            this.Angle.FillWeight = 83.00654F;
-            this.Angle.HeaderText = "角度";
-            this.Angle.Increment = 1D;
-            this.Angle.InputHorizontalAlignment = DevComponents.Editors.eHorizontalAlignment.Left;
-            this.Angle.MaxValue = 400D;
-            this.Angle.MinValue = 0D;
-            this.Angle.Name = "Angle";
-            this.Angle.ReadOnly = true;
-            // 
-            // Dist
-            // 
-            // 
-            // 
-            // 
-            this.Dist.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
-            this.Dist.BackgroundStyle.Class = "DataGridViewNumericBorder";
-            this.Dist.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.Dist.BackgroundStyle.TextColor = System.Drawing.SystemColors.ControlText;
-            this.Dist.DisplayFormat = "0.######";
-            this.Dist.FillWeight = 83.00654F;
-            this.Dist.HeaderText = "距离";
-            this.Dist.Increment = 1D;
-            this.Dist.InputHorizontalAlignment = DevComponents.Editors.eHorizontalAlignment.Left;
-            this.Dist.MaxValue = 10000000D;
-            this.Dist.MinValue = 0D;
-            this.Dist.Name = "Dist";
-            this.Dist.ReadOnly = true;
-            // 
-            // AZ
-            // 
-            // 
-            // 
-            // 
-            this.AZ.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
-            this.AZ.BackgroundStyle.Class = "DataGridViewNumericBorder";
-            this.AZ.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.AZ.BackgroundStyle.TextColor = System.Drawing.SystemColors.ControlText;
-            this.AZ.DisplayFormat = "0.######";
-            this.AZ.FillWeight = 83.00654F;
-            this.AZ.HeaderText = "方位";
-            this.AZ.Increment = 1D;
-            this.AZ.InputHorizontalAlignment = DevComponents.Editors.eHorizontalAlignment.Left;
-            this.AZ.MaxValue = 400D;
-            this.AZ.MinValue = -400D;
-            this.AZ.Name = "AZ";
-            this.AZ.ReadOnly = true;
-            // 
-            // Up
-            // 
-            this.Up.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Up.HeaderText = "";
-            this.Up.Image = ((System.Drawing.Image)(resources.GetObject("Up.Image")));
-            this.Up.Name = "Up";
-            this.Up.Text = null;
-            this.Up.Width = 23;
-            // 
-            // Down
-            // 
-            this.Down.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Down.FillWeight = 388.8889F;
-            this.Down.HeaderText = "";
-            this.Down.Image = ((System.Drawing.Image)(resources.GetObject("Down.Image")));
-            this.Down.Name = "Down";
-            this.Down.Text = null;
-            this.Down.Width = 23;
-            // 
-            // Delete
-            // 
-            this.Delete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Delete.FillWeight = 83.00654F;
-            this.Delete.HeaderText = "";
-            this.Delete.Image = ((System.Drawing.Image)(resources.GetObject("Delete.Image")));
-            this.Delete.ImageFixedSize = new System.Drawing.Size(23, 23);
-            this.Delete.Name = "Delete";
-            this.Delete.Text = null;
-            this.Delete.Width = 23;
-            // 
-            // Frame
-            // 
-            this.Frame.HeaderText = "高度框架";
-            this.Frame.Name = "Frame";
-            this.Frame.ReadOnly = true;
-            this.Frame.Visible = false;
+            // ImageList
+            // 
+            this.ImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList.ImageStream")));
+            this.ImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.ImageList.Images.SetKeyName(0, "Up.png");
+            this.ImageList.Images.SetKeyName(1, "Down.png");
+            this.ImageList.Images.SetKeyName(2, "Delete.png");
             // 
             // CommandsPanel
             // 
@@ -802,6 +459,7 @@
             this.Controls.Add(this.MainPanel);
             this.Name = "CommandsPanel";
             this.Size = new System.Drawing.Size(1300, 278);
+            this.Load += new System.EventHandler(this.CommandsPanel_Load);
             this.Leave += new System.EventHandler(this.CommandsPanel_Leave);
             this.MainPanel.ResumeLayout(false);
             this.MainPanel.PerformLayout();
@@ -812,14 +470,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.WpRad)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WarnAlt)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DefaultAlt)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CommandDataList)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private DevComponents.DotNetBar.PanelEx MainPanel;
-        private DevComponents.DotNetBar.Controls.DataGridViewX CommandDataList;
         private DevComponents.DotNetBar.LabelX labelX3;
         private DevComponents.Editors.IntegerInput WarnAlt;
         private DevComponents.Editors.IntegerInput DefaultAlt;
@@ -840,23 +496,7 @@
         private DevComponents.DotNetBar.Controls.CheckBoxX AutoWarnAlt;
         private DevComponents.DotNetBar.LabelX labelX10;
         private DevComponents.Editors.IntegerInput BaseAlt;
-        private DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn Command;
-        private DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn Lat;
-        private DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn Lon;
-        private DevComponents.DotNetBar.Controls.DataGridViewIntegerInputColumn Zone;
-        private DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn East;
-        private DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn North;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MGRS;
-        private DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn RelativeAlt;
-        private DevComponents.DotNetBar.Controls.DataGridViewIntegerInputColumn AbsoluteAlt;
-        private DevComponents.DotNetBar.Controls.DataGridViewIntegerInputColumn TerrainAlt;
-        private DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn Grad;
-        private DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn Angle;
-        private DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn Dist;
-        private DevComponents.DotNetBar.Controls.DataGridViewDoubleInputColumn AZ;
-        private DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn Up;
-        private DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn Down;
-        private DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn Delete;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Frame;
+        private DevComponents.DotNetBar.SuperGrid.SuperGridControl CommandDataList;
+        private System.Windows.Forms.ImageList ImageList;
     }
 }

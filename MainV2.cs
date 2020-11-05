@@ -4282,10 +4282,10 @@ namespace VPS
             {
                 AutoWPButton.Checked = true;
                 //GCSViews.FlightPlanner.instance.surveyGrid();
-                VPS.Controls.Grid.GridConfig.instance.WPListChangeHandle -= GCSViews.FlightPlanner.instance.SetWPListHandle;
-                VPS.Controls.Grid.GridConfig.instance.WPListChangeHandle += GCSViews.FlightPlanner.instance.SetWPListHandle;
-                VPS.Controls.Grid.GridConfig.instance.WPListChangeHandle -= VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
-                VPS.Controls.Grid.GridConfig.instance.WPListChangeHandle += VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
+                VPS.Controls.Grid.GridConfig.instance.WPListChange -= GCSViews.FlightPlanner.instance.SetWPListHandle;
+                VPS.Controls.Grid.GridConfig.instance.WPListChange += GCSViews.FlightPlanner.instance.SetWPListHandle;
+                VPS.Controls.Grid.GridConfig.instance.WPListChange -= VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
+                VPS.Controls.Grid.GridConfig.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
                 GCSViews.FlightPlanner.instance.PolygonListChange -= VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
                 GCSViews.FlightPlanner.instance.PolygonListChange += VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
 
@@ -4302,9 +4302,9 @@ namespace VPS
             else
             {
                 AutoWPButton.Checked = false;
-                VPS.Controls.Grid.GridConfig.instance.WPListChangeHandle -= GCSViews.FlightPlanner.instance.SetWPListHandle;
+                VPS.Controls.Grid.GridConfig.instance.WPListChange -= GCSViews.FlightPlanner.instance.SetWPListHandle;
                 GCSViews.FlightPlanner.instance.PolygonListChange -= VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
-                VPS.Controls.Grid.GridConfig.instance.WPListChangeHandle -= VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
+                VPS.Controls.Grid.GridConfig.instance.WPListChange -= VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
 
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
                 VPS.Controls.Grid.GridConfig.instance.SaveSetting();
@@ -4589,10 +4589,16 @@ namespace VPS
         {
             if (File.Exists(layerInfo.Layer))
             {
-                var bitmap = GDAL.GDAL.LoadImageInfo(layerInfo.Layer);
-                if (bitmap != null && !bitmap.Rect.IsEmpty)
+                var geoBitmap = GDAL.GDAL.LoadImageInfo(layerInfo.Layer);
+                if (geoBitmap != null && !geoBitmap.Rect.IsEmpty)
                 {
-                    SetLoadingLayer(bitmap.File);
+                    SetLoadingLayer(geoBitmap.File);
+
+                    this.currentLayerPath = layerInfo.Layer;
+                    this.displayRect = geoBitmap.Rect;
+                    this.defaultHome = layerInfo.Origin;
+
+                    ZoomTiffButton_Click(this, null);
 
                     if (layerInfo is Layer.TiffLayerInfo)
                     {
@@ -4603,13 +4609,9 @@ namespace VPS
                             return _bitmap;
                         };
 
-                        IAsyncResult iar = GetGeoBitmap.BeginInvoke(bitmap, ((Layer.TiffLayerInfo)layerInfo).Transparent, CallbackWhenDone, this);
+                        IAsyncResult iar = GetGeoBitmap.BeginInvoke(geoBitmap, ((Layer.TiffLayerInfo)layerInfo).Transparent, CallbackWhenDone, this);
                     }
-
-                    this.currentLayerPath = layerInfo.Layer;
-                    this.displayRect = bitmap.Rect;
-                    this.defaultHome = layerInfo.Origin;
-                    ZoomTiffButton_Click(this, null);
+                    
                     return true;
                 }
                 else
@@ -4634,18 +4636,17 @@ namespace VPS
                 {
                     IsLoadLayer = true;
                     currentLayer = geoBitmap;
-                    ShowLayerOverlay(geoBitmap);
+                    ShowLayerOverlay(geoBitmap, defaultHome);
                 }
             }
         }
         #endregion
 
         #region ShowLayer 入口函数
-        private void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
+        private void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap, PointLatLngAlt home)
         {
 
-            GCSViews.FlightData.instance.ShowLayerOverlay(geoBitmap);
-            GCSViews.FlightPlanner.instance.ShowLayerOverlay(geoBitmap);
+            GCSViews.FlightPlanner.instance.ShowLayerOverlay(geoBitmap, home);
 
         }
         #endregion

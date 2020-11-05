@@ -422,6 +422,9 @@
     <Compile Include="Controls\ComboDataList.Designer.cs">
       <DependentUpon>ComboDataList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GridControls\GridControls.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\DevopsUI.cs">
       <SubType>UserControl</SubType>
     </Compile>

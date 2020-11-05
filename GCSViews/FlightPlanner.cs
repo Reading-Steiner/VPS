@@ -3408,7 +3408,7 @@ namespace VPS.GCSViews
                     {
                         if (zoomicon.IsSelected)
                         {
-                            zoomToTiffToolStripMenuItem_Click(this, null);
+                            zoomToTiffLayer();
                         }
                         else
                         {
@@ -3999,7 +3999,7 @@ namespace VPS.GCSViews
         }
 
 
-        public void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
+        public void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap, PointLatLngAlt home)
         {
             layerPolygonsOverlay.Polygons.Clear();
 
@@ -4010,7 +4010,7 @@ namespace VPS.GCSViews
                 geoBitmap.DisplayBitmap);
             layerPolygonsOverlay.Polygons.Add(mark);
 
-            FlightPlanner.instance.zoomToTiffLayer();
+            zoomToTiffLayer();
 
             Task.Run(
                 () =>
@@ -4023,14 +4023,11 @@ namespace VPS.GCSViews
                     
                 }
             );
+
+            SetHomeHere(home);
         }
 
         public void zoomToTiffLayer()
-        {
-            zoomToTiffToolStripMenuItem_Click(this, null);
-        }
-
-        private void zoomToTiffToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //double Lat = (rect.Left + rect.Right) / 2;
             //double Lng = (rect.Top + rect.Bottom) / 2;
@@ -4038,14 +4035,9 @@ namespace VPS.GCSViews
             if (layerInfo == null)
                 return;
 
-            double lng = MainV2.instance.defaultHome.Lng;
-            double lat = MainV2.instance.defaultHome.Lat;
-            double alt = MainV2.instance.defaultHome.Alt;
-
-            SetHomeHere(new PointLatLngAlt(lat, lng, alt));
-
             MainMap.SetZoomToFitRect(MainV2.instance.displayRect);
         }
+
 
         #region 右键菜单项
 
@@ -4494,7 +4486,6 @@ namespace VPS.GCSViews
             {
                 AddPolygonPoint(lat, lng);
 
-                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
                 return;
             }
             else if (IsDrawWPMode)
@@ -4509,8 +4500,6 @@ namespace VPS.GCSViews
                 //creating a WP
 
                 AddWPPoint(lat, lng, alt);
-
-                writeKML();
             }
         }
         #endregion
@@ -4721,9 +4710,8 @@ namespace VPS.GCSViews
                     coordSystem = CoordsSystems.WGS84;
                     break;
             }
-            if (NotQuickChange())
-                return;
-            coordChange?.Invoke(coordSystem.ToString());
+            if (!IsQuickChange())
+                coordChange?.Invoke(coordSystem.ToString());
         }
         #endregion
 
@@ -4782,7 +4770,7 @@ namespace VPS.GCSViews
                     altFrame = AltMode.Relative;
                     break;
             }
-            if (NotQuickChange())
+            if (!IsQuickChange())
                 altFrameChange?.Invoke(altFrame.ToString());
         }
         #endregion
@@ -4840,7 +4828,7 @@ namespace VPS.GCSViews
         private void SetDefaultAlt(int alt)
         {
             defaultAlt = alt;
-            if (NotQuickChange())
+            if (!IsQuickChange())
                 defaultAltChange?.Invoke(defaultAlt);
         }
         #endregion
@@ -4886,7 +4874,7 @@ namespace VPS.GCSViews
         private void SetWarnAlt(int alt)
         {
             warnAlt = alt;
-            if (NotQuickChange())
+            if (!IsQuickChange())
                 warnAltChange?.Invoke(warnAlt);
 
         }
@@ -4969,7 +4957,7 @@ namespace VPS.GCSViews
         private void SetLoiterRad(int alt)
         {
             loiterRad = alt;
-            if (NotQuickChange())
+            if (!IsQuickChange())
                 LoiterRadChange?.Invoke(loiterRad);
         }
         #endregion
@@ -5084,9 +5072,9 @@ namespace VPS.GCSViews
         #endregion
 
         #region 判断函数
-        private bool NotQuickChange()
+        private bool IsQuickChange()
         {
-            return !onlyChangeValue;
+            return onlyChangeValue;
         }
         #endregion
 
@@ -6196,10 +6184,11 @@ namespace VPS.GCSViews
         private void SetHomeHere(PointLatLngAlt position)
         {
             homePosition = position;
+
+            if (!IsQuickChange())
+                HomeChange?.Invoke(position);
+
             writeKML();
-            if (NotQuickChange())
-                return;
-            HomeChange?.Invoke(position);
 
             AddHistory();
         }
