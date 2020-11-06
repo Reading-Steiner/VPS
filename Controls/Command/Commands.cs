@@ -791,8 +791,7 @@ namespace VPS.Controls.Command
             currentCoord = coord;
 
             if (IsAllowSendDataChange())
-                return;
-            CoordSystemChange?.Invoke(currentCoord.ToString());
+                CoordSystemChange?.Invoke(currentCoord.ToString());
 
             if (isEdit)
                 return;
@@ -880,8 +879,7 @@ namespace VPS.Controls.Command
             currentFrame = frame;
 
             if (IsAllowSendDataChange())
-                return;
-            AltFrameChange?.Invoke(currentFrame.ToString());
+                AltFrameChange?.Invoke(currentFrame.ToString());
 
             if (isEdit)
                 return;
@@ -951,8 +949,7 @@ namespace VPS.Controls.Command
         {
             defaultAlt = alt;
             if (IsAllowSendDataChange())
-                return;
-            DefaultAltChange?.Invoke(defaultAlt);
+                DefaultAltChange?.Invoke(defaultAlt);
         }
         #endregion
 
@@ -991,8 +988,7 @@ namespace VPS.Controls.Command
         {
             warnAlt = alt;
             if (IsAllowSendDataChange())
-                return;
-            WarnAltChange?.Invoke(warnAlt);
+                WarnAltChange?.Invoke(warnAlt);
         }
         #endregion
 
