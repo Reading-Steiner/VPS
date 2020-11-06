@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.panelEx9 = new DevComponents.DotNetBar.PanelEx();
+            this.DefaultConfig = new DevComponents.DotNetBar.ButtonX();
+            this.SaveConfig = new DevComponents.DotNetBar.ButtonX();
             this.AdvanceAirLineBox = new DevComponents.DotNetBar.PanelEx();
             this.CorridorInfoBox = new DevComponents.DotNetBar.PanelEx();
             this.labelX18 = new DevComponents.DotNetBar.LabelX();
@@ -99,13 +102,10 @@
             this.NUM_FocalLength = new DevComponents.Editors.DoubleInput();
             this.panelEx6 = new DevComponents.DotNetBar.PanelEx();
             this.label6 = new System.Windows.Forms.Label();
-            this.panelEx9 = new DevComponents.DotNetBar.PanelEx();
-            this.Default = new DevComponents.DotNetBar.ButtonX();
-            this.Accept = new DevComponents.DotNetBar.ButtonX();
             this.HandBox = new DevComponents.DotNetBar.PanelEx();
+            this.CHK_UseGeneralWPKey = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.GeneralWP = new DevComponents.DotNetBar.ButtonX();
             this.DelayBox = new DevComponents.DotNetBar.PanelEx();
-            this.labelX22 = new DevComponents.DotNetBar.LabelX();
             this.labelX21 = new DevComponents.DotNetBar.LabelX();
             this.NUM_WPDelayTime = new DevComponents.Editors.DoubleInput();
             this.ConfigPanel = new DevComponents.DotNetBar.PanelEx();
@@ -114,6 +114,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.defaultAngleTooltip = new DevComponents.DotNetBar.SuperTooltip();
             this.panelEx1.SuspendLayout();
+            this.panelEx9.SuspendLayout();
             this.AdvanceAirLineBox.SuspendLayout();
             this.CorridorInfoBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_corridorwidth)).BeginInit();
@@ -145,7 +146,6 @@
             this.CameraInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_FocalLength)).BeginInit();
             this.panelEx6.SuspendLayout();
-            this.panelEx9.SuspendLayout();
             this.HandBox.SuspendLayout();
             this.DelayBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_WPDelayTime)).BeginInit();
@@ -177,13 +177,57 @@
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx1.Location = new System.Drawing.Point(0, 0);
             this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(310, 845);
+            this.panelEx1.Size = new System.Drawing.Size(310, 873);
             this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelEx1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.panelEx1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 0;
+            // 
+            // panelEx9
+            // 
+            this.panelEx9.AutoSize = true;
+            this.panelEx9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelEx9.CanvasColor = System.Drawing.SystemColors.Control;
+            this.panelEx9.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx9.Controls.Add(this.DefaultConfig);
+            this.panelEx9.Controls.Add(this.SaveConfig);
+            this.panelEx9.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEx9.Location = new System.Drawing.Point(0, 813);
+            this.panelEx9.Name = "panelEx9";
+            this.panelEx9.Size = new System.Drawing.Size(310, 60);
+            this.panelEx9.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelEx9.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
+            this.panelEx9.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.panelEx9.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
+            this.panelEx9.Style.GradientAngle = 90;
+            this.panelEx9.TabIndex = 46;
+            // 
+            // DefaultConfig
+            // 
+            this.DefaultConfig.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.DefaultConfig.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.DefaultConfig.Location = new System.Drawing.Point(37, 34);
+            this.DefaultConfig.Name = "DefaultConfig";
+            this.DefaultConfig.Size = new System.Drawing.Size(75, 23);
+            this.DefaultConfig.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.DefaultConfig.TabIndex = 17;
+            this.DefaultConfig.Text = "默认配置";
+            this.DefaultConfig.Click += new System.EventHandler(this.DefaultConfig_Click);
+            // 
+            // SaveConfig
+            // 
+            this.SaveConfig.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.SaveConfig.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.SaveConfig.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.SaveConfig.Location = new System.Drawing.Point(203, 34);
+            this.SaveConfig.Name = "SaveConfig";
+            this.SaveConfig.Size = new System.Drawing.Size(75, 23);
+            this.SaveConfig.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.SaveConfig.TabIndex = 16;
+            this.SaveConfig.Text = "保存配置";
+            this.SaveConfig.Click += new System.EventHandler(this.SaveConfig_Click);
             // 
             // AdvanceAirLineBox
             // 
@@ -1299,56 +1343,13 @@
             this.label6.TabIndex = 26;
             this.label6.Text = "相机设置";
             // 
-            // panelEx9
-            // 
-            this.panelEx9.AutoSize = true;
-            this.panelEx9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panelEx9.CanvasColor = System.Drawing.SystemColors.Control;
-            this.panelEx9.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.panelEx9.Controls.Add(this.Default);
-            this.panelEx9.Controls.Add(this.Accept);
-            this.panelEx9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx9.Location = new System.Drawing.Point(0, 813);
-            this.panelEx9.Name = "panelEx9";
-            this.panelEx9.Size = new System.Drawing.Size(310, 32);
-            this.panelEx9.Style.Alignment = System.Drawing.StringAlignment.Center;
-            this.panelEx9.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
-            this.panelEx9.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
-            this.panelEx9.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
-            this.panelEx9.Style.GradientAngle = 90;
-            this.panelEx9.TabIndex = 46;
-            // 
-            // Default
-            // 
-            this.Default.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.Default.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Default.Location = new System.Drawing.Point(37, 6);
-            this.Default.Name = "Default";
-            this.Default.Size = new System.Drawing.Size(75, 23);
-            this.Default.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.Default.TabIndex = 17;
-            this.Default.Text = "默认配置";
-            this.Default.Click += new System.EventHandler(this.Default_Click);
-            // 
-            // Accept
-            // 
-            this.Accept.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.Accept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Accept.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.Accept.Location = new System.Drawing.Point(203, 6);
-            this.Accept.Name = "Accept";
-            this.Accept.Size = new System.Drawing.Size(75, 23);
-            this.Accept.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.Accept.TabIndex = 16;
-            this.Accept.Text = "保存配置";
-            this.Accept.Click += new System.EventHandler(this.Accept_Click);
-            // 
             // HandBox
             // 
             this.HandBox.AutoSize = true;
             this.HandBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.HandBox.CanvasColor = System.Drawing.SystemColors.Control;
             this.HandBox.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.HandBox.Controls.Add(this.CHK_UseGeneralWPKey);
             this.HandBox.Controls.Add(this.GeneralWP);
             this.HandBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.HandBox.Location = new System.Drawing.Point(0, 76);
@@ -1361,13 +1362,29 @@
             this.HandBox.Style.GradientAngle = 90;
             this.HandBox.TabIndex = 47;
             // 
+            // CHK_UseGeneralWPKey
+            // 
+            this.CHK_UseGeneralWPKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CHK_UseGeneralWPKey.AutoSize = true;
+            // 
+            // 
+            // 
+            this.CHK_UseGeneralWPKey.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.CHK_UseGeneralWPKey.Location = new System.Drawing.Point(200, 18);
+            this.CHK_UseGeneralWPKey.Name = "CHK_UseGeneralWPKey";
+            this.CHK_UseGeneralWPKey.Size = new System.Drawing.Size(88, 18);
+            this.CHK_UseGeneralWPKey.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.CHK_UseGeneralWPKey.TabIndex = 43;
+            this.CHK_UseGeneralWPKey.Text = "启用快捷键";
+            this.CHK_UseGeneralWPKey.CheckedChanged += new System.EventHandler(this.CHK_UseGeneralWPKey_CheckedChanged);
+            // 
             // GeneralWP
             // 
             this.GeneralWP.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.GeneralWP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GeneralWP.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.GeneralWP.Location = new System.Drawing.Point(123, 3);
+            this.GeneralWP.Location = new System.Drawing.Point(117, 3);
             this.GeneralWP.Name = "GeneralWP";
             this.GeneralWP.Size = new System.Drawing.Size(73, 36);
             this.GeneralWP.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -1381,7 +1398,6 @@
             this.DelayBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.DelayBox.CanvasColor = System.Drawing.SystemColors.Control;
             this.DelayBox.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.DelayBox.Controls.Add(this.labelX22);
             this.DelayBox.Controls.Add(this.labelX21);
             this.DelayBox.Controls.Add(this.NUM_WPDelayTime);
             this.DelayBox.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1395,19 +1411,6 @@
             this.DelayBox.Style.GradientAngle = 90;
             this.DelayBox.TabIndex = 48;
             this.DelayBox.Visible = false;
-            // 
-            // labelX22
-            // 
-            this.labelX22.AutoSize = true;
-            // 
-            // 
-            // 
-            this.labelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX22.Location = new System.Drawing.Point(200, 6);
-            this.labelX22.Name = "labelX22";
-            this.labelX22.Size = new System.Drawing.Size(13, 16);
-            this.labelX22.TabIndex = 44;
-            this.labelX22.Text = "s";
             // 
             // labelX21
             // 
@@ -1430,7 +1433,7 @@
             this.NUM_WPDelayTime.BackgroundStyle.Class = "DateTimeInputBackground";
             this.NUM_WPDelayTime.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.NUM_WPDelayTime.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.NUM_WPDelayTime.DisplayFormat = "0.#";
+            this.NUM_WPDelayTime.DisplayFormat = "0.# s";
             this.NUM_WPDelayTime.Increment = 0.1D;
             this.NUM_WPDelayTime.Location = new System.Drawing.Point(114, 3);
             this.NUM_WPDelayTime.MaxValue = 50D;
@@ -1523,10 +1526,11 @@
             this.AutoSize = true;
             this.Controls.Add(this.panelEx1);
             this.Name = "GridConfig";
-            this.Size = new System.Drawing.Size(310, 845);
+            this.Size = new System.Drawing.Size(310, 873);
             this.Load += new System.EventHandler(this.GridConfig_Load);
             this.panelEx1.ResumeLayout(false);
             this.panelEx1.PerformLayout();
+            this.panelEx9.ResumeLayout(false);
             this.AdvanceAirLineBox.ResumeLayout(false);
             this.AdvanceAirLineBox.PerformLayout();
             this.CorridorInfoBox.ResumeLayout(false);
@@ -1564,8 +1568,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.NUM_FocalLength)).EndInit();
             this.panelEx6.ResumeLayout(false);
             this.panelEx6.PerformLayout();
-            this.panelEx9.ResumeLayout(false);
             this.HandBox.ResumeLayout(false);
+            this.HandBox.PerformLayout();
             this.DelayBox.ResumeLayout(false);
             this.DelayBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_WPDelayTime)).EndInit();
@@ -1643,14 +1647,14 @@
         private DevComponents.DotNetBar.Controls.ComboBoxEx CMB_startfrom;
         private DevComponents.DotNetBar.LabelX labelX14;
         private DevComponents.DotNetBar.PanelEx panelEx9;
-        private DevComponents.DotNetBar.ButtonX Accept;
+        private DevComponents.DotNetBar.ButtonX SaveConfig;
         private DevComponents.Editors.DoubleInput num_angle;
         private DevComponents.DotNetBar.LabelX labelX17;
         private DevComponents.Editors.DoubleInput TXT_FovH;
         private DevComponents.DotNetBar.LabelX labelX20;
         private DevComponents.Editors.DoubleInput TXT_FovV;
         private DevComponents.DotNetBar.LabelX labelX19;
-        private DevComponents.DotNetBar.ButtonX Default;
+        private DevComponents.DotNetBar.ButtonX DefaultConfig;
         private DevComponents.DotNetBar.ButtonX DefaultAngle;
         private DevComponents.DotNetBar.Controls.CheckBoxX LockAngle;
         private DevComponents.DotNetBar.SuperTooltip defaultAngleTooltip;
@@ -1658,12 +1662,12 @@
         private DevComponents.DotNetBar.ButtonX GeneralWP;
         private DevComponents.DotNetBar.PanelEx HandBox;
         private DevComponents.DotNetBar.PanelEx DelayBox;
-        private DevComponents.DotNetBar.LabelX labelX22;
         private DevComponents.DotNetBar.LabelX labelX21;
         private DevComponents.Editors.DoubleInput NUM_WPDelayTime;
         private DevComponents.DotNetBar.PanelEx ConfigPanel;
         private DevComponents.DotNetBar.Controls.CheckBoxX CHK_AutoGeneralWP;
         private DevComponents.DotNetBar.PanelEx ConfigTitle;
         private System.Windows.Forms.Label label3;
+        private DevComponents.DotNetBar.Controls.CheckBoxX CHK_UseGeneralWPKey;
     }
 }

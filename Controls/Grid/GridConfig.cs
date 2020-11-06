@@ -19,33 +19,81 @@ namespace VPS.Controls.Grid
 {
     public partial class GridConfig : UserControl
     {
-        public camerainfo GetCameraInfo
+        public static GridConfig instance = null;
+
+        public GridConfig()
         {
-            get
+            InitializeComponent();
+            instance = this;
+            var cameras = camerainfo.GetCameras();
+            for (int i = 0; i < cameras.Count; i++)
             {
-                return new camerainfo()
-                {
-                    name = this.CMB_Camera.Text,
-                    focallen = (float)this.NUM_FocalLength.Value,
-                    imageheight = (int)this.TXT_ImgHeight.Value,
-                    imagewidth = (int)this.TXT_ImgWidth.Value,
-                    sensorheight = (float)this.TXT_SensHeight.Value,
-                    sensorwidth = (float)this.TXT_SensWidth.Value
-                };
+                this.CMB_Camera.Items.Add(cameras[i]);
             }
-            set
-            {
-                CMB_Camera.Text = (value.name);
-                NUM_FocalLength.Value = value.focallen;
-                TXT_ImgHeight.Value = value.imageheight;
-                TXT_ImgWidth.Value = value.imagewidth;
-                TXT_SensHeight.Value = value.sensorheight;
-                TXT_SensWidth.Value = value.sensorwidth;
-            }
+
+            CMB_startfrom.DataSource = Enum.GetNames(typeof(Utilities.Grid.StartPosition));
+            CMB_startfrom.SelectedIndex = 0;
+
         }
 
-        //private GridPlugin plugin;
+        ~GridConfig()
+        {
+            savesettings();
+        }
 
+        #region Load
+        private void GridConfig_Load(object sender, EventArgs e)
+        {
+            StartLoading();
+
+            if (!loadedfromfile)
+                loadsettings();
+            // setup state before settings load
+
+            EndLoading();
+
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #region Config
+
+        #region LoadConfig
+
+        #region 加载一个配置信息
+        void loadsetting(string key, Control item)
+        {
+            // soft fail on bad param
+            try
+            {
+                if (Settings.Instance.ContainsKey(key))
+                {
+                    if (item is DevComponents.Editors.DoubleInput)
+                    {
+                        ((DevComponents.Editors.DoubleInput)item).Value = double.Parse(Settings.Instance[key].ToString());
+                    }
+                    if (item is DevComponents.Editors.IntegerInput)
+                    {
+                        ((DevComponents.Editors.IntegerInput)item).Value = int.Parse(Settings.Instance[key].ToString());
+                    }
+                    else if (item is DevComponents.DotNetBar.Controls.ComboBoxEx)
+                    {
+                        ((DevComponents.DotNetBar.Controls.ComboBoxEx)item).Text = Settings.Instance[key].ToString();
+                    }
+                    else if (item is DevComponents.DotNetBar.Controls.CheckBoxX)
+                    {
+                        ((DevComponents.DotNetBar.Controls.CheckBoxX)item).Checked = bool.Parse(Settings.Instance[key].ToString());
+                    }
+                }
+            }
+            catch { }
+        }
+        #endregion
+
+        #region 加在整个配置信息
         void loadsettings()
         {
             if (Settings.Instance.ContainsKey("grid_camera"))
@@ -82,35 +130,30 @@ namespace VPS.Controls.Grid
                 loadsetting("grid_corriidorwidth", num_corridorwidth);
             }
         }
+        #endregion
 
-        void loadsetting(string key, Control item)
+        #endregion
+
+        #region SaveConfig
+
+        #region 接口函数
+        private delegate void SaveSettingInThread();
+
+        public void SaveSetting()
         {
-            // soft fail on bad param
-            try
+            if (this.InvokeRequired)
             {
-                if (Settings.Instance.ContainsKey(key))
-                {
-                    if (item is DevComponents.Editors.DoubleInput)
-                    {
-                        ((DevComponents.Editors.DoubleInput)item).Value = double.Parse(Settings.Instance[key].ToString());
-                    }
-                    if (item is DevComponents.Editors.IntegerInput)
-                    {
-                        ((DevComponents.Editors.IntegerInput)item).Value = int.Parse(Settings.Instance[key].ToString());
-                    }
-                    else if (item is DevComponents.DotNetBar.Controls.ComboBoxEx)
-                    {
-                        ((DevComponents.DotNetBar.Controls.ComboBoxEx)item).Text = Settings.Instance[key].ToString();
-                    }
-                    else if (item is DevComponents.DotNetBar.Controls.CheckBoxX)
-                    {
-                        ((DevComponents.DotNetBar.Controls.CheckBoxX)item).Checked = bool.Parse(Settings.Instance[key].ToString());
-                    }
-                }
+                SaveSettingInThread inThread = new SaveSettingInThread(SaveSetting);
+                this.Invoke(inThread);
             }
-            catch { }
+            else
+            {
+                savesettings();
+            }
         }
+        #endregion
 
+        #region 入口函数
         void savesettings()
         {
             //相机设置
@@ -167,8 +210,40 @@ namespace VPS.Controls.Grid
             // Plane Settings
 
         }
+        #endregion
 
-        
+        #endregion
+
+        #region LoadConfig控件响应
+        private void DefaultConfig_Click(object sender, EventArgs e)
+        {
+            StartLoading();
+
+            loadsettings();
+
+            EndLoading();
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #region SaveConfig控件响应
+        private void SaveConfig_Click(object sender, EventArgs e)
+        {
+            savesettings();
+        }
+        #endregion
+
+        #endregion
+
+        #region Gird文件
+        bool loadedfromfile = false;
+
+        #region 加载Grid文件
+
+        #region 入口函数
         public void LoadGrid()
         {
             System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(NewGridData));
@@ -193,31 +268,12 @@ namespace VPS.Controls.Grid
                 }
             }
         }
+        #endregion
 
-        public void SaveGrid()
-        {
-            System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(NewGridData));
-
-            var griddata = savegriddata();
-
-            using (SaveFileDialog sfd = new SaveFileDialog())
-            {
-                sfd.Filter = "*.grid|*.grid";
-                var result = sfd.ShowDialog();
-
-                if (sfd.FileName != "" && result == DialogResult.OK)
-                {
-                    using (StreamWriter sw = new StreamWriter(sfd.FileName))
-                    {
-                        writer.Serialize(sw, griddata);
-                    }
-                }
-            }
-        }
-        bool loadedfromfile = false;
+        #region 解码函数
         void loadgriddata(NewGridData griddata)
         {
-            list = griddata.poly;
+            poly = griddata.poly;
 
             CMB_Camera.Text = griddata.camera;
             NUM_altitude.Value = griddata.alt;
@@ -245,12 +301,41 @@ namespace VPS.Controls.Grid
 
             loadedfromfile = true;
         }
+        #endregion
 
+        #endregion
+
+        #region 保存Grid文件
+
+        #region 入口函数
+        public void SaveGrid()
+        {
+            System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(NewGridData));
+
+            var griddata = savegriddata();
+
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "*.grid|*.grid";
+                var result = sfd.ShowDialog();
+
+                if (sfd.FileName != "" && result == DialogResult.OK)
+                {
+                    using (StreamWriter sw = new StreamWriter(sfd.FileName))
+                    {
+                        writer.Serialize(sw, griddata);
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region 转码函数
         NewGridData savegriddata()
         {
             NewGridData griddata = new NewGridData();
 
-            griddata.poly = list;
+            griddata.poly = poly;
 
             griddata.camera = CMB_Camera.Text;
             griddata.alt = NUM_altitude.Value;
@@ -278,112 +363,50 @@ namespace VPS.Controls.Grid
 
             return griddata;
         }
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region 重要参数
         public delegate void ListChangedHandle(List<PointLatLngAlt> wpList);
         public ListChangedHandle WPListChange;
-        List<PointLatLngAlt> list = new List<PointLatLngAlt>();
+
+        #region 航线
         List<PointLatLngAlt> grid = new List<PointLatLngAlt>();
 
-        public void SetPolygonList(List<PointLatLngAlt> polygons)
-        {
-            list = polygons;
-            domainUpDown2_ValueChanged();
-        }
-
+        #region 获取航线
         public List<PointLatLngAlt> GetWPList()
         {
             List<PointLatLngAlt> wpList = grid;
-            for(int i = 0;i< wpList.Count; i++)
+            for (int i = 0; i < wpList.Count; i++)
             {
                 wpList[i].Tag = VPS.WP.WPCommands.DefaultWPCommand;
                 wpList[i].Tag2 = "Relative";
             }
             return wpList;
         }
+        #endregion
 
+        #endregion
 
-        public void SaveSetting()
+        #region 区域
+        List<PointLatLngAlt> poly = new List<PointLatLngAlt>();
+
+        #region 设置区域
+        public void SetPolygonList(List<PointLatLngAlt> polygons)
         {
-            savesettings();
+            if (gridGrenate)
+                return;
+            poly = polygons;
+            domainUpDown2_ValueChanged();
         }
+        #endregion
 
+        #endregion
 
-
-
-        private delegate object ReadControlInMainThreadHandle(Control control);
-
-        private static object ReadControlMainThread(Control control)
-        {
-            if (control.InvokeRequired)
-            {
-                ReadControlInMainThreadHandle inThread = new ReadControlInMainThreadHandle(ReadControlMainThread);
-                IAsyncResult iar = control.BeginInvoke(inThread, new object[] { control });
-                return (object)control.EndInvoke(iar);
-            }
-            else
-            {
-                if (control is DevComponents.Editors.DoubleInput)
-                    return ((DevComponents.Editors.DoubleInput)control).Value;
-                if (control is DevComponents.Editors.IntegerInput)
-                    return ((DevComponents.Editors.IntegerInput)control).Value;
-                if (control is DevComponents.DotNetBar.Controls.CheckBoxX)
-                    return ((DevComponents.DotNetBar.Controls.CheckBoxX)control).Checked;
-                if (control is DevComponents.DotNetBar.Controls.ComboBoxEx)
-                    return ((DevComponents.DotNetBar.Controls.ComboBoxEx)control).Text;
-                return null;
-            }
-        }
-
-
-        // Variables
-        const double rad2deg = (180 / Math.PI);
-        const double deg2rad = (1.0 / rad2deg);
-
-        void getFOV(double flyalt, ref double fovh, ref double fovv)
-        {
-            double focallen = NUM_FocalLength.Value;
-            double sensorwidth = TXT_SensWidth.Value;
-            double sensorheight = TXT_SensHeight.Value;
-
-            // scale      mm / mm
-            double flscale = (1000 * flyalt) / focallen;
-
-            //   mm * mm / 1000
-            double viewwidth = (sensorwidth * flscale / 1000);
-            double viewheight = (sensorheight * flscale / 1000);
-
-            float fovh1 = (float)(Math.Atan(sensorwidth / (2 * focallen)) * rad2deg * 2);
-            float fovv1 = (float)(Math.Atan(sensorheight / (2 * focallen)) * rad2deg * 2);
-
-            fovh = viewwidth;
-            fovv = viewheight;
-            
-        }
-
-
-
-        public static GridConfig instance = null;
-        public GridConfig()
-        {
-            InitializeComponent();
-            instance = this;
-            var cameras = camerainfo.GetCameras();
-            for (int i = 0; i < cameras.Count; i++)
-            {
-                this.CMB_Camera.Items.Add(cameras[i]);
-            }
-
-            CMB_startfrom.DataSource = Enum.GetNames(typeof(Utilities.Grid.StartPosition));
-            CMB_startfrom.SelectedIndex = 0;
-
-            //defaultAngleTooltip.SetSuperTooltip(DefaultAngle, defaultAngleTooltip.DefaultTooltipSettings);
-            // set and angle that is good
-            //NUM_angle.Value = (int)((getAngleOfLongestSide(list) + 360) % 360);
-        }
-
-        ~GridConfig()
-        {
-            savesettings();
-        }
+        #endregion
 
         #region 航线生成
 
@@ -451,7 +474,7 @@ namespace VPS.Controls.Grid
 
             EnterCalc();
 
-            if (list.Count <= 0)
+            if (poly.Count <= 0)
                 return;
 
             // new grid system test
@@ -470,7 +493,7 @@ namespace VPS.Controls.Grid
 
             EnterCalc();
 
-            if (list.Count <= 0)
+            if (poly.Count <= 0)
                 return;
 
             // new grid system test
@@ -574,7 +597,7 @@ namespace VPS.Controls.Grid
             if (ch_Corridor)
             {
                 wp = await Utilities.Grid.CreateCorridorAsync(
-                    instance.list, CurrentState.fromDistDisplayUnit(altitude),
+                    instance.poly, CurrentState.fromDistDisplayUnit(altitude),
                     distance, spacing, angle,
                     overshoot, overshoot2,
                     (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), startfrom), false,
@@ -583,7 +606,7 @@ namespace VPS.Controls.Grid
             else if (chk_spiral)
             {
                 wp = await Utilities.Grid.CreateRotaryAsync(
-                    instance.list, CurrentState.fromDistDisplayUnit(altitude),
+                    instance.poly, CurrentState.fromDistDisplayUnit(altitude),
                     distance, spacing, angle,
                     overshoot, (double)instance.NUM_overshoot2.Value,
                     (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), startfrom), false,
@@ -592,7 +615,7 @@ namespace VPS.Controls.Grid
             else
             {
                 wp = await Utilities.Grid.CreateGridAsync(
-                    instance.list, CurrentState.fromDistDisplayUnit(altitude),
+                    instance.poly, CurrentState.fromDistDisplayUnit(altitude),
                     distance, spacing, angle,
                     overshoot, overshoot2,
                     (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), startfrom), false,
@@ -612,7 +635,7 @@ namespace VPS.Controls.Grid
                 Utilities.Grid.StartPointLatLngAlt = instance.grid[instance.grid.Count - 1];
 
                 wp.AddRange(await Utilities.Grid.CreateGridAsync(
-                    instance.list, CurrentState.fromDistDisplayUnit(altitude),
+                    instance.poly, CurrentState.fromDistDisplayUnit(altitude),
                     distance, spacing, angle + 90.0,
                     overshoot, overshoot2,
                     Utilities.Grid.StartPosition.Point, false,
@@ -721,7 +744,7 @@ namespace VPS.Controls.Grid
 
             if (!isLockAngle)
             {
-                num_angle.Value = getAngleOfLongestSide(list);
+                num_angle.Value = getAngleOfLongestSide(poly);
             }
 
         }
@@ -731,241 +754,9 @@ namespace VPS.Controls.Grid
 
         #endregion
 
+        #region 参数计算
 
-
-
-        private void ShowCameraInfo_CheckedChanged(object sender, EventArgs e)
-        {
-            this.CameraDetailBox.Visible = this.CHK_ShowCameraInfo.Checked;
-        }
-
-        private void ShowAdvanceOptions_CheckedChanged(object sender, EventArgs e)
-        {
-            this.AdvanceAirLineBox.Visible = this.ShowAdvanceOptions.Checked;
-        }
-
-        
-        private void NUM_Distance_ValueChanged(object sender, EventArgs e)
-        {
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void num_overlap_ValueChanged(object sender, EventArgs e)
-        {
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void num_sidelap_ValueChanged(object sender, EventArgs e)
-        {
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void NUM_spacing_ValueChanged(object sender, EventArgs e)
-        {
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void NUM_angle_ValueChanged(object sender, EventArgs e)
-        {
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void NUM_overshoot_ValueChanged(object sender, EventArgs e)
-        {
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void NUM_Lane_Dist_ValueChanged(object sender, EventArgs e)
-        {
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void NUM_overshoot2_ValueChanged(object sender, EventArgs e)
-        {
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void CMB_startfrom_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void NUM_leadin_ValueChanged(object sender, EventArgs e)
-        {
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void CMB_camera_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GetCameraInfo = camerainfo.GetCameraInfos(CMB_Camera.Text);
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void CMB_camera_SelectedValueChanged(object sender, EventArgs e)
-        {
-            GetCameraInfo = camerainfo.GetCameraInfos(CMB_Camera.Text);
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void NUM_focallength_ValueChanged(object sender, EventArgs e)
-        {
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void GridConfig_Load(object sender, EventArgs e)
-        {
-            StartLoading();
-
-            if (!loadedfromfile)
-                loadsettings();
-            // setup state before settings load
-
-            EndLoading();
- 
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void Accept_Click(object sender, EventArgs e)
-        {
-            savesettings();
-        }
-
-        private void Default_Click(object sender, EventArgs e)
-        {
-            StartLoading();
-
-            loadsettings();
-
-            EndLoading();
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void chk_crossgrid_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chk_crossgrid.Checked)
-            {
-                chk_Corridor.Checked = chk_spiral.Checked = false;
-            }
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void chk_Corridor_CheckedChanged(object sender, EventArgs e)
-        {
-            CorridorInfoBox.Visible = chk_Corridor.Checked;
-            if (chk_Corridor.Checked)
-            {
-                chk_crossgrid.Checked = chk_spiral.Checked = false;
-            }
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void chk_spiral_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chk_spiral.Checked)
-            {
-                chk_Corridor.Checked = chk_crossgrid.Checked = false;
-            }
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void NUM_altitude_ValueChanged(object sender, EventArgs e)
-        {
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void lbl_gndelev_ValueChanged(object sender, EventArgs e)
-        {
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void num_corridorwidth_ValueChanged(object sender, EventArgs e)
-        {
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void CHK_camdirection_CheckedChanged(object sender, EventArgs e)
-        {
-            if (CHK_AutoGeneralWP.Checked)
-                domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
-        }
-
-        private void defaultAngle_Click(object sender, EventArgs e)
-        {
-            if (!isLockAngle)
-            {
-                this.num_angle.Value = getAngleOfLongestSide(list);
-                if (CHK_AutoGeneralWP.Checked)
-                    domainUpDown1_ValueChanged();
-                else
-                    EnterCalc();
-            }
-        }
-
+        #region 获取航飞角度
         private double getAngleOfLongestSide(List<PointLatLngAlt> list)
         {
             if (list.Count == 0)
@@ -985,7 +776,303 @@ namespace VPS.Controls.Grid
 
             return (angle % 360 + 360) % 360;
         }
+        #endregion
 
+        #region 获取相机效果
+        // Variables
+        const double rad2deg = (180 / Math.PI);
+        const double deg2rad = (1.0 / rad2deg);
+
+        void getFOV(double flyalt, ref double fovh, ref double fovv)
+        {
+            double focallen = NUM_FocalLength.Value;
+            double sensorwidth = TXT_SensWidth.Value;
+            double sensorheight = TXT_SensHeight.Value;
+
+            // scale      mm / mm
+            double flscale = (1000 * flyalt) / focallen;
+
+            //   mm * mm / 1000
+            double viewwidth = (sensorwidth * flscale / 1000);
+            double viewheight = (sensorheight * flscale / 1000);
+
+            float fovh1 = (float)(Math.Atan(sensorwidth / (2 * focallen)) * rad2deg * 2);
+            float fovv1 = (float)(Math.Atan(sensorheight / (2 * focallen)) * rad2deg * 2);
+
+            fovh = viewwidth;
+            fovv = viewheight;
+
+        }
+        #endregion
+
+        #endregion
+
+        #region CameraInfos
+
+        #region 获取信息
+        public camerainfo GetCameraInfo
+        {
+            get
+            {
+                return new camerainfo()
+                {
+                    name = this.CMB_Camera.Text,
+                    focallen = (float)this.NUM_FocalLength.Value,
+                    imageheight = (int)this.TXT_ImgHeight.Value,
+                    imagewidth = (int)this.TXT_ImgWidth.Value,
+                    sensorheight = (float)this.TXT_SensHeight.Value,
+                    sensorwidth = (float)this.TXT_SensWidth.Value
+                };
+            }
+            set
+            {
+                CMB_Camera.Text = (value.name);
+                NUM_FocalLength.Value = value.focallen;
+                TXT_ImgHeight.Value = value.imageheight;
+                TXT_ImgWidth.Value = value.imagewidth;
+                TXT_SensHeight.Value = value.sensorheight;
+                TXT_SensWidth.Value = value.sensorwidth;
+            }
+        }
+        #endregion
+
+        #region 添加信息
+        private void AddCamera_Click(object sender, EventArgs e)
+        {
+            using (CustomCamera dlg = new CustomCamera())
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    var info = dlg.GetCamerainfo();
+                    camerainfo.AddCamera(info);
+
+
+                    if (!CMB_Camera.Items.Contains(info.name))
+                        CMB_Camera.Items.Add(info.name);
+                    CMB_Camera.SelectedIndex = CMB_Camera.Items.IndexOf(info.name);
+                }
+                
+            }
+            
+        }
+        #endregion
+
+        #endregion
+
+        #region 获取控件数据
+        private delegate object ReadControlInMainThreadHandle(Control control);
+
+        private static object ReadControlMainThread(Control control)
+        {
+            if (control.InvokeRequired)
+            {
+                ReadControlInMainThreadHandle inThread = new ReadControlInMainThreadHandle(ReadControlMainThread);
+                IAsyncResult iar = control.BeginInvoke(inThread, new object[] { control });
+                return (object)control.EndInvoke(iar);
+            }
+            else
+            {
+                if (control is DevComponents.Editors.DoubleInput)
+                    return ((DevComponents.Editors.DoubleInput)control).Value;
+                if (control is DevComponents.Editors.IntegerInput)
+                    return ((DevComponents.Editors.IntegerInput)control).Value;
+                if (control is DevComponents.DotNetBar.Controls.CheckBoxX)
+                    return ((DevComponents.DotNetBar.Controls.CheckBoxX)control).Checked;
+                if (control is DevComponents.DotNetBar.Controls.ComboBoxEx)
+                    return ((DevComponents.DotNetBar.Controls.ComboBoxEx)control).Text;
+                return null;
+            }
+        }
+        #endregion
+
+        #region 设置板块可见状态
+        private delegate void SetVisibleInThread(DevComponents.DotNetBar.PanelEx box, bool visble);
+        private void SetVisibleHandle(DevComponents.DotNetBar.PanelEx box, bool visble)
+        {
+            if (this.InvokeRequired)
+            {
+                SetVisibleInThread inThread = new SetVisibleInThread(SetVisibleHandle);
+                this.Invoke(inThread, new object[] { box, visble });
+            }
+            else
+            {
+                box.Visible = visble;
+            }
+        }
+        #endregion
+
+        #region 参数变换响应函数
+
+        #region 相机
+
+        #region 相机型号
+        private void CMB_camera_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetCameraInfo = camerainfo.GetCameraInfos(CMB_Camera.Text);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+
+        private void CMB_camera_SelectedValueChanged(object sender, EventArgs e)
+        {
+            GetCameraInfo = camerainfo.GetCameraInfos(CMB_Camera.Text);
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #region 相机姿态
+        private void CHK_camdirection_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #region 相机焦距
+        private void NUM_focallength_ValueChanged(object sender, EventArgs e)
+        {
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #region 显示详细信息
+        private void ShowCameraInfo_CheckedChanged(object sender, EventArgs e)
+        {
+            this.CameraDetailBox.Visible = this.CHK_ShowCameraInfo.Checked;
+        }
+        #endregion
+
+        #endregion
+
+        #region 航线类型
+
+        #region 栅线
+        private void chk_crossgrid_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chk_crossgrid.Checked)
+            {
+                chk_Corridor.Checked = chk_spiral.Checked = false;
+            }
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #region 廊线
+        private void chk_Corridor_CheckedChanged(object sender, EventArgs e)
+        {
+            CorridorInfoBox.Visible = chk_Corridor.Checked;
+            if (chk_Corridor.Checked)
+            {
+                chk_crossgrid.Checked = chk_spiral.Checked = false;
+            }
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+
+        #region 廊线宽
+        private void num_corridorwidth_ValueChanged(object sender, EventArgs e)
+        {
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #endregion
+
+        #region 螺线
+        private void chk_spiral_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chk_spiral.Checked)
+            {
+                chk_Corridor.Checked = chk_crossgrid.Checked = false;
+            }
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #endregion
+
+        #region 高度
+
+        #region 相对高度
+        private void NUM_altitude_ValueChanged(object sender, EventArgs e)
+        {
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #region 航摄基准
+        private void lbl_gndelev_ValueChanged(object sender, EventArgs e)
+        {
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #endregion
+
+        #region 重叠度
+
+        #region 航向重叠度
+        private void num_overlap_ValueChanged(object sender, EventArgs e)
+        {
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #region 旁像重叠度
+        private void num_sidelap_ValueChanged(object sender, EventArgs e)
+        {
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #endregion
+
+        #region 角度
+
+        #region 航飞角度
+        private void NUM_angle_ValueChanged(object sender, EventArgs e)
+        {
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #region 锁定
         bool isLockAngle;
         private void LockAngle_CheckedChanged(object sender, EventArgs e)
         {
@@ -1005,45 +1092,118 @@ namespace VPS.Controls.Grid
                 DefaultAngle.Enabled = false;
             }
         }
+        #endregion
 
-        private void AddCamera_Click(object sender, EventArgs e)
+        #region 默认
+        private void defaultAngle_Click(object sender, EventArgs e)
         {
-            using (CustomCamera dlg = new CustomCamera())
+            if (!isLockAngle)
             {
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    var info = dlg.GetCamerainfo();
-                    camerainfo.AddCamera(info);
-
-
-                    if (!CMB_Camera.Items.Contains(info.name))
-                        CMB_Camera.Items.Add(info.name);
-                    CMB_Camera.SelectedIndex = CMB_Camera.Items.IndexOf(info.name);
-                }
-                
+                this.num_angle.Value = getAngleOfLongestSide(poly);
+                if (CHK_AutoGeneralWP.Checked)
+                    domainUpDown1_ValueChanged();
+                else
+                    EnterCalc();
             }
-            
         }
+        #endregion
 
-        private delegate void SetVisibleInThread(DevComponents.DotNetBar.PanelEx box, bool visble);
-        private void SetVisibleHandle(DevComponents.DotNetBar.PanelEx box, bool visble)
+        #endregion
+
+        #region 起始位置
+        private void CMB_startfrom_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.InvokeRequired)
-            {
-                SetVisibleInThread inThread = new SetVisibleInThread(SetVisibleHandle);
-                this.Invoke(inThread, new object[] { box, visble });
-            }
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
             else
-            {
-                box.Visible = visble;
-            }
+                EnterCalc();
         }
+        #endregion
 
-        private void GeneralWP_Click(object sender, EventArgs e)
+        #region 启用高级选项
+        private void ShowAdvanceOptions_CheckedChanged(object sender, EventArgs e)
         {
-            domainUpDown2_ValueChanged();
+            this.AdvanceAirLineBox.Visible = this.ShowAdvanceOptions.Checked;
         }
+        #endregion
 
+        #region 航线延伸
+
+        #region 前冲量（来）
+        private void NUM_overshoot_ValueChanged(object sender, EventArgs e)
+        {
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #region 前冲量（去）
+        private void NUM_overshoot2_ValueChanged(object sender, EventArgs e)
+        {
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #region 引入线
+        private void NUM_leadin_ValueChanged(object sender, EventArgs e)
+        {
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #endregion
+
+        #region 备用航线
+        private void NUM_Lane_Dist_ValueChanged(object sender, EventArgs e)
+        {
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #region 航线计算参数
+
+        #region 航线间距
+        private void NUM_Distance_ValueChanged(object sender, EventArgs e)
+        {
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #endregion
+
+        #region 航摄基线
+        private void NUM_spacing_ValueChanged(object sender, EventArgs e)
+        {
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
+        }
+        #region
+
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region 航线生成响应函数
+
+        #region 功能切换
         private void AutoGeneralWP_CheckedChanged(object sender, EventArgs e)
         {
             if (CHK_AutoGeneralWP.Checked)
@@ -1057,17 +1217,45 @@ namespace VPS.Controls.Grid
                 HandBox.Visible = true;
             }
         }
+        #endregion
 
+        #region 立即生成
+
+        #region 响应函数
+        private void GeneralWP_Click(object sender, EventArgs e)
+        {
+            domainUpDown2_ValueChanged();
+        }
+        #endregion
+
+        #region 启用快捷键
+        private void CHK_UseGeneralWPKey_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+
+        #endregion
+
+        #region 延迟生成
+
+        #region 设置延迟时间
         private void NUM_WPDelayTime_ValueChanged(object sender, EventArgs e)
         {
             waitTime = (long)(NUM_WPDelayTime.Value * 1000);
         }
+        #endregion
 
+        #endregion
+
+        #endregion
+
+        #region 快捷键
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (keyData == Keys.Enter)
+            if (keyData == (Keys.Control | Keys.F5))
             {
-                if (!CHK_AutoGeneralWP.Checked)
+                if (!(bool)ReadControlMainThread(CHK_AutoGeneralWP) && (bool)ReadControlMainThread(CHK_UseGeneralWPKey))
                 {
                     GeneralWP_Click(null, null);
                     return true;
@@ -1075,5 +1263,6 @@ namespace VPS.Controls.Grid
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
+        #endregion
     }
 }
