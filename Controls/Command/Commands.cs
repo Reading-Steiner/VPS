@@ -25,15 +25,34 @@ namespace VPS.Controls.Command
             {
                 InitializeComponent();
 
-                BindingDataSource(wpLists);
-
                 StartEdit();
+
+                InitAltFrame();
+                InitCoordSystem();
+                InitParam();
                 instance = this;
             }
             finally
             {
                 EndEdit();
             }
+
+            BindingDataSource(wpLists);
+        }
+
+
+        #region Init
+        private void InitParam()
+        {
+            LoadConfig();
+        }
+        private void InitCoordSystem()
+        {
+            CoordSystem.DisplayMember = "Value";
+            CoordSystem.ValueMember = "Key";
+            CoordSystem.DataSource = Utilities.EnumTranslator.EnumToList<CoordSystems>();
+
+            CoordSystem.SelectedItem = CoordSystems.WGS84;
         }
 
         private void InitAltFrame()
@@ -44,17 +63,26 @@ namespace VPS.Controls.Command
 
             AltFrame.SelectedItem = AltFrames.Relative;
         }
+        #endregion
 
-        private void InitCoordSystem()
+        #region Load
+        private void CommandsPanel_Load(object sender, EventArgs e)
         {
-            CoordSystem.DisplayMember = "Value";
-            CoordSystem.ValueMember = "Key";
-            CoordSystem.DataSource = Utilities.EnumTranslator.EnumToList<CoordSystems>();
-
-            CoordSystem.SelectedItem = CoordSystems.WGS84;
+            StartEdit();
+            try
+            {
+            }
+            finally
+            {
+                EndEdit();
+            }
         }
+        #endregion
 
-        private void InitParam()
+        #region Config
+
+        #region LoadConfig
+        private void LoadConfig()
         {
             if (Utilities.Settings.Instance.ContainsKey("Commands_WpRad") && Utilities.Settings.Instance["Commands_WpRad"] != null)
             {
@@ -105,8 +133,10 @@ namespace VPS.Controls.Command
                     HomeAlt.Value = alt;
             }
         }
+        #endregion
 
-        void SaveParam()
+        #region SaveConfig
+        void SaveConfig()
         {
             Utilities.Settings.Instance["Commands_WpRad"] = WpRad.Value.ToString();
             Utilities.Settings.Instance["Commands_DefaultAlt"] = DefaultAlt.Value.ToString();
@@ -115,275 +145,12 @@ namespace VPS.Controls.Command
             Utilities.Settings.Instance["Commands_IsAutoWarn"] = AutoWarnAlt.Checked.ToString();
             Utilities.Settings.Instance["Commands_AltFrame"] = AltFrame.Text;
             Utilities.Settings.Instance["Commands_CoordSystem"] = CoordSystem.Text;
-
-        }
-
-
-        private void CommandsPanel_Leave(object sender, EventArgs e)
-        {
-            SaveParam();
-        }
-
-
-        private bool isEdit = false;
-        private void StartEdit()
-        {
-            isEdit = true;
-        }
-        private void EndEdit()
-        {
-            isEdit = false;
-        }
-
-        private enum AltFrames
-        {
-            Relative,
-            Absolute,
-            Terrain
-        }
-        private AltFrames currentFrame = AltFrames.Relative;
-        public StringChangeHandle AltFrameChange;
-        private void AltFrame_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SetCurrentFrame((AltFrames)AltFrame.SelectedValue);
-            if (isEdit)
-                return;
-            AltFrameChange?.Invoke(currentFrame.ToString());
-        }
-
-
-        private void SetCurrentFrame(AltFrames frame)
-        {
-            currentFrame = frame;
-
-            GridPanel panel = CommandDataList.PrimaryGrid;
-            if (panel != null)
-            {
-                switch (currentFrame)
-                {
-                    case AltFrames.Relative:
-                        panel.Columns[RelativeAltColumnName].Visible = true;
-                        panel.Columns[AbsoluteAltColumnName].Visible = false;
-                        panel.Columns[TerrainAltColumnName].Visible = false;
-                        break;
-                    case AltFrames.Absolute:
-                        panel.Columns[RelativeAltColumnName].Visible = false;
-                        panel.Columns[AbsoluteAltColumnName].Visible = true;
-                        panel.Columns[TerrainAltColumnName].Visible = false;
-                        break;
-                    case AltFrames.Terrain:
-                        panel.Columns[RelativeAltColumnName].Visible = false;
-                        panel.Columns[AbsoluteAltColumnName].Visible = false;
-                        panel.Columns[TerrainAltColumnName].Visible = true;
-                        break;
-                    default:
-                        panel.Columns[RelativeAltColumnName].Visible = true;
-                        panel.Columns[AbsoluteAltColumnName].Visible = false;
-                        panel.Columns[TerrainAltColumnName].Visible = false;
-                        break;
-                }
-            }
-        }
-
-        public delegate void DataChangeHandle(object data);
-        public delegate void IntegerChangeHandle(int data);
-        public delegate void StringChangeHandle(string str);
-        public delegate void PositionChangeHandle(Utilities.PointLatLngAlt point);
-        
-
-        private int defaultAlt = 200;
-        public IntegerChangeHandle DefaultAltChange;
-        private void DefaultAlt_ValueChanged(object sender, EventArgs e)
-        {
-            defaultAlt = DefaultAlt.Value;
-            if (isEdit)
-                return;
-            DefaultAltChange?.Invoke(defaultAlt);
-        }
-
-        private int warnAlt = 0;
-        public IntegerChangeHandle WarnAltChange;
-        private void WarnAlt_ValueChanged(object sender, EventArgs e)
-        {
-            warnAlt = WarnAlt.Value;
-            if (isEdit)
-                return;
-            WarnAltChange?.Invoke(warnAlt);
-        }
-
-        private bool isAutoWarn = true;
-        private void AutoWarnAlt_CheckedChanged(object sender, EventArgs e)
-        {
-            isAutoWarn = AutoWarnAlt.Checked;
-        }
-
-        private int baseAlt = 0;
-        public IntegerChangeHandle BaseAltChange;
-        private void BaseAlt_ValueChanged(object sender, EventArgs e)
-        {
-            baseAlt = BaseAlt.Value;
-            if (isEdit)
-                return;
-            BaseAltChange?.Invoke(baseAlt);
-        }
-
-        private enum CoordSystems
-        {
-            WGS84,
-            UTM,
-            MGRS
-        }
-        private CoordSystems currentCoord = CoordSystems.WGS84;
-        public StringChangeHandle CoordSystemChange;
-        private void CoordSystem_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SetCurrentCoord((CoordSystems)CoordSystem.SelectedValue);
-            if (isEdit)
-                return;
-            CoordSystemChange?.Invoke(currentCoord.ToString());
-        }
-
-        private void SetCurrentCoord(CoordSystems coord)
-        { 
-            currentCoord = coord;
-
-            GridPanel panel = CommandDataList.PrimaryGrid;
-            if (panel != null)
-            {
-                switch (currentCoord)
-                {
-                    case CoordSystems.WGS84:
-                        panel.Columns[LatColumnName].Visible = true;
-                        panel.Columns[LngColumnName].Visible = true;
-                        panel.Columns[ZoneColumnName].Visible = false;
-                        panel.Columns[EastColumnName].Visible = false;
-                        panel.Columns[NorthColumnName].Visible = false;
-                        panel.Columns[MGRSColumnName].Visible = false;
-                        break;
-                    case CoordSystems.UTM:
-                        panel.Columns[LatColumnName].Visible = false;
-                        panel.Columns[LngColumnName].Visible = false;
-                        panel.Columns[ZoneColumnName].Visible = true;
-                        panel.Columns[EastColumnName].Visible = true;
-                        panel.Columns[NorthColumnName].Visible = true;
-                        panel.Columns[MGRSColumnName].Visible = false;
-                        break;
-                    case CoordSystems.MGRS:
-                        panel.Columns[LatColumnName].Visible = false;
-                        panel.Columns[LngColumnName].Visible = false;
-                        panel.Columns[ZoneColumnName].Visible = false;
-                        panel.Columns[EastColumnName].Visible = false;
-                        panel.Columns[NorthColumnName].Visible = false;
-                        panel.Columns[MGRSColumnName].Visible = true;
-                        break;
-                    default:
-                        panel.Columns[LatColumnName].Visible = true;
-                        panel.Columns[LngColumnName].Visible = true;
-                        panel.Columns[ZoneColumnName].Visible = false;
-                        panel.Columns[EastColumnName].Visible = false;
-                        panel.Columns[NorthColumnName].Visible = false;
-                        panel.Columns[MGRSColumnName].Visible = false;
-                        break;
-                }
-            }
-        }
-
-        private int wpRad = 20;
-        public IntegerChangeHandle WPRadChange;
-        private void WpRad_ValueChanged(object sender, EventArgs e)
-        {
-            wpRad = WpRad.Value;
-            if (isEdit)
-                return;
-            WPRadChange?.Invoke(wpRad);
-        }
-
-        private Utilities.PointLatLngAlt homePosition = new Utilities.PointLatLngAlt();
-        public PositionChangeHandle HomeChange;
-        private void HomeLat_ValueChanged(object sender, EventArgs e)
-        {
-            if (isEdit)
-                return;
-            HomeChange?.Invoke(homePosition);
-        }
-
-        private void HomeLng_ValueChanged(object sender, EventArgs e)
-        {
-            if (isEdit)
-                return;
-            HomeChange?.Invoke(homePosition);
-        }
-
-        private void HomeAlt_ValueChanged(object sender, EventArgs e)
-        {
-            if (isEdit)
-                return;
-            HomeChange?.Invoke(homePosition);
-        }
-
-        public void SetHome(Utilities.PointLatLngAlt home)
-        {
-            StartEdit();
-            try
-            {
-                HomeLat.Value = home.Lat;
-                HomeLng.Value = home.Lng;
-                HomeAlt.Value = home.Alt;
-
-                homePosition = home;
-            }
-            finally
-            {
-                EndEdit();
-            }
-        }
-
-
-        private void SetBaseAlt()
-        {
-            double totalAlt = 0.0;
-            double maxAlt = 0.0;
-            for(int index =0; index < wpLists.Count; index++)
-            {
-                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wpLists[index].Tag))
-                {
-                    double terrain = Utilities.srtm.getAltitude(wpLists[index].Lat, wpLists[index].Lng).alt * CurrentState.multiplieralt;
-                    totalAlt += terrain;
-                    if (terrain > maxAlt)
-                        maxAlt = terrain;
-                }
-            }
-            BaseAlt.Value = (int)(totalAlt / Math.Max(1, wpLists.Count));
-            if (isAutoWarn)
-                WarnAlt.Value = (int)(maxAlt - baseAlt);
-        }
-
-
-        enum commands
-        {
-            WAYPOINT,
-            SPLINE_WAYPOINT
-        }
-
-        #region Load
-        private void CommandsPanel_Load(object sender, EventArgs e)
-        {
-            StartEdit();
-            try
-            {
-                InitAltFrame();
-                InitCoordSystem();
-                InitParam();
-            }
-            finally
-            {
-                EndEdit();
-            }
         }
         #endregion
 
+        #endregion
 
-        #region Command
+        #region Command 控件
 
         #region 数据绑定
 
@@ -483,7 +250,7 @@ namespace VPS.Controls.Command
 
         #endregion
 
-        #region WP
+        #region WP 数据表
 
         #region 创建表格
         const string CommandColumnName = "指令";
@@ -836,38 +603,25 @@ namespace VPS.Controls.Command
 
         #endregion
 
+        public delegate void DataChangeHandle(object data);
+        public delegate void IntegerChangeHandle(int data);
+        public delegate void StringChangeHandle(string str);
+        public delegate void PositionChangeHandle(Utilities.PointLatLngAlt point);
+        public delegate void WPListChangeHandle(List<Utilities.PointLatLngAlt> wpList);
+
         #region 重要数据
 
-        #region WPList
-        public delegate void WPListChangeHandle(List<Utilities.PointLatLngAlt> wpList);
+        #region WPList 数据源
+        enum commands
+        {
+            WAYPOINT,
+            SPLINE_WAYPOINT
+        }
+
         public WPListChangeHandle WPListChange;
         List<Utilities.PointLatLngAlt> wpLists = new List<Utilities.PointLatLngAlt>();
 
-        #region SendListChange
-        public bool isSendChange = true;
-
-        #region 接口函数
-        public void StopSendListChange()
-        {
-            isSendChange = false;
-        }
-
-        public void StartSendListChange()
-        {
-            isSendChange = true;
-        }
-        #endregion
-
-        #region 判断函数
-        private bool IsAllowSendListChange()
-        {
-            return isSendChange;
-        }
-        #endregion
-
-        #endregion
-
-        #region SetWPList
+        #region SetWPList 方法
         private delegate void SetWPListInThread(List<Utilities.PointLatLngAlt> wpList);
 
         #region 对外接口
@@ -892,7 +646,7 @@ namespace VPS.Controls.Command
         {
 
                 wpLists = wpList;
-                SetBaseAlt();
+                GeneralBaseAlt();
 
                 Task.Run(() => BindingDataSource(wpList));
 
@@ -904,7 +658,14 @@ namespace VPS.Controls.Command
 
         #endregion
 
-        #region ExchangeWP
+        #region GetWPList 方法
+        public List<Utilities.PointLatLngAlt> GetWPList()
+        {
+            return wpLists;
+        }
+        #endregion
+
+        #region ExchangeWP 方法
         private void ExchangeWP(int index1,int index2)
         {
             Utilities.PointLatLngAlt temp = wpLists[index1];
@@ -917,12 +678,12 @@ namespace VPS.Controls.Command
         }
         #endregion
 
-        #region SetWP
+        #region SetWP 方法
         private void SetWP(int index, Utilities.PointLatLngAlt wp)
         {
             wpLists[index] = wp;
 
-            SetBaseAlt();
+            GeneralBaseAlt();
 
             BindingDataSource(wpLists);
             if (IsAllowSendListChange())
@@ -930,12 +691,12 @@ namespace VPS.Controls.Command
         }
         #endregion
 
-        #region DeleteWP
+        #region DeleteWP 方法
         private void DeleteWP(int index)
         {
             wpLists.RemoveAt(index);
 
-            SetBaseAlt();
+            GeneralBaseAlt();
 
             BindingDataSource(wpLists);
             if (IsAllowSendListChange())
@@ -943,20 +704,547 @@ namespace VPS.Controls.Command
         }
         #endregion
 
-        #region GetWPList
-        public List<Utilities.PointLatLngAlt> GetWPList()
+        #endregion
+
+        #region Home 位置数据
+        private Utilities.PointLatLngAlt homePosition = new Utilities.PointLatLngAlt();
+        public PositionChangeHandle HomeChange;
+
+        #region SetHome
+
+        #region SetHome 接口函数
+        private delegate void SetHomeInThread(Utilities.PointLatLngAlt home);
+
+        public void SetHomeHandle(Utilities.PointLatLngAlt home)
         {
-            return wpLists;
+            if (this.InvokeRequired)
+            {
+                SetHomeInThread inThread = new SetHomeInThread(SetHomeHandle);
+                this.Invoke(inThread, new object[] { home });
+            }
+            else
+            {
+                StopSendPositionChange();
+                SetHome(home);
+                StartSendPositionChange();
+            }
+        }
+        #endregion
+
+        #region SetHome 入口函数
+        private void SetHome(Utilities.PointLatLngAlt home)
+        {
+            HomeLat.Value = home.Lat;
+            HomeLng.Value = home.Lng;
+            HomeAlt.Value = home.Alt;
+
+            homePosition = home;
+
+            if (IsAllowSendPositionChange())
+                HomeChange?.Invoke(homePosition);
         }
         #endregion
 
         #endregion
 
         #endregion
+
+        #endregion
+
         #region 数据
 
+        #region CoordSystem
+        private enum CoordSystems
+        {
+            WGS84,
+            UTM,
+            MGRS
+        }
 
+        private CoordSystems currentCoord = CoordSystems.WGS84;
+        public StringChangeHandle CoordSystemChange;
 
+        #region SetSystemCoord
+
+        #region SetSystemCoord 接口函数
+        private delegate void SetCoordInThread(string coord);
+
+        public void SetCoordHandle(string coord)
+        {
+            if (this.InvokeRequired)
+            {
+                SetCoordInThread inThread = new SetCoordInThread(SetCoordHandle);
+                this.Invoke(inThread, new object[] { coord });
+            }
+            else
+            {
+                StopSendDataChange();
+                SetCurrentCoord((CoordSystems)Enum.Parse(typeof(CoordSystems),coord));
+                StartSendDataChange();
+            }
+        }
+        #endregion
+
+        #region SetSystemCoord 入口函数
+        private void SetCurrentCoord(CoordSystems coord)
+        {
+            currentCoord = coord;
+
+            if (IsAllowSendDataChange())
+                return;
+            CoordSystemChange?.Invoke(currentCoord.ToString());
+
+            if (isEdit)
+                return;
+
+            GridPanel panel = CommandDataList.PrimaryGrid;
+            if (panel != null)
+            {
+                switch (currentCoord)
+                {
+                    case CoordSystems.WGS84:
+                        panel.Columns[LatColumnName].Visible = true;
+                        panel.Columns[LngColumnName].Visible = true;
+                        panel.Columns[ZoneColumnName].Visible = false;
+                        panel.Columns[EastColumnName].Visible = false;
+                        panel.Columns[NorthColumnName].Visible = false;
+                        panel.Columns[MGRSColumnName].Visible = false;
+                        break;
+                    case CoordSystems.UTM:
+                        panel.Columns[LatColumnName].Visible = false;
+                        panel.Columns[LngColumnName].Visible = false;
+                        panel.Columns[ZoneColumnName].Visible = true;
+                        panel.Columns[EastColumnName].Visible = true;
+                        panel.Columns[NorthColumnName].Visible = true;
+                        panel.Columns[MGRSColumnName].Visible = false;
+                        break;
+                    case CoordSystems.MGRS:
+                        panel.Columns[LatColumnName].Visible = false;
+                        panel.Columns[LngColumnName].Visible = false;
+                        panel.Columns[ZoneColumnName].Visible = false;
+                        panel.Columns[EastColumnName].Visible = false;
+                        panel.Columns[NorthColumnName].Visible = false;
+                        panel.Columns[MGRSColumnName].Visible = true;
+                        break;
+                    default:
+                        panel.Columns[LatColumnName].Visible = true;
+                        panel.Columns[LngColumnName].Visible = true;
+                        panel.Columns[ZoneColumnName].Visible = false;
+                        panel.Columns[EastColumnName].Visible = false;
+                        panel.Columns[NorthColumnName].Visible = false;
+                        panel.Columns[MGRSColumnName].Visible = false;
+                        break;
+                }
+            }
+        }
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region  AltFrame
+        private enum AltFrames
+        {
+            Relative,
+            Absolute,
+            Terrain
+        }
+
+        private AltFrames currentFrame = AltFrames.Relative;
+        public StringChangeHandle AltFrameChange;
+
+        #region SetAltFrame
+
+        #region SetAltFrame 接口函数
+        private delegate void SetFrameInThread(string frame);
+        public void SetFrameHandle(string frame)
+        {
+            if (this.InvokeRequired)
+            {
+                SetFrameInThread inThread = new SetFrameInThread(SetFrameHandle);
+                this.Invoke(inThread, new object[] { frame });
+            }
+            else
+            {
+                StopSendDataChange();
+                SetCurrentFrame((AltFrames)Enum.Parse(typeof(AltFrames), frame));
+                StartSendDataChange();
+            }
+        }
+        #endregion
+
+        #region SetAltFrame 入口函数
+        private void SetCurrentFrame(AltFrames frame)
+        {
+            currentFrame = frame;
+
+            if (IsAllowSendDataChange())
+                return;
+            AltFrameChange?.Invoke(currentFrame.ToString());
+
+            if (isEdit)
+                return;
+
+            GridPanel panel = CommandDataList.PrimaryGrid;
+            if (panel != null)
+            {
+                switch (currentFrame)
+                {
+                    case AltFrames.Relative:
+                        panel.Columns[RelativeAltColumnName].Visible = true;
+                        panel.Columns[AbsoluteAltColumnName].Visible = false;
+                        panel.Columns[TerrainAltColumnName].Visible = false;
+                        break;
+                    case AltFrames.Absolute:
+                        panel.Columns[RelativeAltColumnName].Visible = false;
+                        panel.Columns[AbsoluteAltColumnName].Visible = true;
+                        panel.Columns[TerrainAltColumnName].Visible = false;
+                        break;
+                    case AltFrames.Terrain:
+                        panel.Columns[RelativeAltColumnName].Visible = false;
+                        panel.Columns[AbsoluteAltColumnName].Visible = false;
+                        panel.Columns[TerrainAltColumnName].Visible = true;
+                        break;
+                    default:
+                        panel.Columns[RelativeAltColumnName].Visible = true;
+                        panel.Columns[AbsoluteAltColumnName].Visible = false;
+                        panel.Columns[TerrainAltColumnName].Visible = false;
+                        break;
+                }
+            }
+        }
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region DefaultAlt
+        private int defaultAlt = 200;
+        public IntegerChangeHandle DefaultAltChange;
+
+        #region SetDefaultAlt
+
+        #region SetDefaultAlt 接口函数
+        private delegate void SetDefaultAltInThread(int alt);
+
+        public void SetDefaultAltHandle(int alt)
+        {
+            if (this.InvokeRequired)
+            {
+                SetDefaultAltInThread inThread = new SetDefaultAltInThread(SetDefaultAltHandle);
+                this.Invoke(inThread, new object[] { alt });
+            }
+            else
+            {
+                StopSendDataChange();
+                SetDefaultAlt(alt);
+                StartSendDataChange();
+            }
+        }
+
+        #endregion
+
+        #region SetDefaultAlt 入口函数
+        private void SetDefaultAlt(int alt)
+        {
+            defaultAlt = alt;
+            if (IsAllowSendDataChange())
+                return;
+            DefaultAltChange?.Invoke(defaultAlt);
+        }
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region WarnAlt
+        private int warnAlt = 0;
+        public IntegerChangeHandle WarnAltChange;
+
+        #region SetWarnAlt
+
+        #region SetWarnAlt 接口函数
+        private delegate void SetWarnAltInThread(int alt);
+
+        public void SetWarnAltHandle(int alt)
+        {
+            if (this.InvokeRequired)
+            {
+                SetWarnAltInThread inThread = new SetWarnAltInThread(SetWarnAltHandle);
+                this.Invoke(inThread, new object[] { alt });
+            }
+            else
+            {
+                StopSendDataChange();
+                SetWarnAlt(alt);
+                StartSendDataChange();
+            }
+        }
+
+        #endregion
+
+        #region SetWarnAlt 入口函数
+        private void SetWarnAlt(int alt)
+        {
+            warnAlt = alt;
+            if (IsAllowSendDataChange())
+                return;
+            WarnAltChange?.Invoke(warnAlt);
+        }
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region wpRad
+        private int wpRad = 20;
+        public IntegerChangeHandle WPRadChange;
+
+        #region SetWpRad
+
+        #region SetWpRad 接口函数
+        private delegate void SetWpRadInThread(int rad);
+
+        public void SetWpRadHandle(int rad)
+        {
+            if (this.InvokeRequired)
+            {
+                SetWpRadInThread inThread = new SetWpRadInThread(SetWpRadHandle);
+                this.Invoke(inThread, new object[] { rad });
+            }
+            else
+            {
+                StopSendDataChange();
+                SetWpRad(rad);
+                StartSendDataChange();
+            }
+        }
+        #endregion
+
+        #region SetWpRad 入口函数
+        private void SetWpRad(int rad)
+        {
+            wpRad = rad;
+            if (IsAllowSendDataChange())
+                WPRadChange?.Invoke(wpRad);
+        }
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region BaseAlt 计算值
+        private int baseAlt = 0;
+        private void BaseAlt_ValueChanged(object sender, EventArgs e)
+        {
+            baseAlt = BaseAlt.Value;
+        }
+
+        private void GeneralBaseAlt()
+        {
+            double totalAlt = 0.0;
+            double maxAlt = 0.0;
+            for (int index = 0; index < wpLists.Count; index++)
+            {
+                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wpLists[index].Tag))
+                {
+                    double terrain = Utilities.srtm.getAltitude(wpLists[index].Lat, wpLists[index].Lng).alt * CurrentState.multiplieralt;
+                    totalAlt += terrain;
+                    if (terrain > maxAlt)
+                        maxAlt = terrain;
+                }
+            }
+            BaseAlt.Value = (int)(totalAlt / Math.Max(1, wpLists.Count));
+            if (isAutoWarn)
+                WarnAlt.Value = (int)(maxAlt - baseAlt);
+        }
+        #endregion
+
+        #endregion
+
+        #region 标记
+
+        #region Edit
+        private bool isEdit = false;
+
+        #region 接口函数
+        private void StartEdit()
+        {
+            isEdit = true;
+        }
+        private void EndEdit()
+        {
+            isEdit = false;
+        }
+        #endregion
+
+        #region 判断函数
+
+        #endregion
+
+        #endregion
+
+        #region SendListChange 标记
+        public bool isSendListChange = true;
+
+        #region 接口函数
+        public void StopSendListChange()
+        {
+            isSendListChange = false;
+        }
+
+        public void StartSendListChange()
+        {
+            isSendListChange = true;
+        }
+        #endregion
+
+        #region 判断函数
+        private bool IsAllowSendListChange()
+        {
+            return isSendListChange;
+        }
+        #endregion
+
+        #endregion
+
+        #region SendPositionChange 标记
+        public bool isSendPositionChange = true;
+
+        #region 接口函数
+        public void StopSendPositionChange()
+        {
+            isSendPositionChange = false;
+        }
+
+        public void StartSendPositionChange()
+        {
+            isSendPositionChange = true;
+        }
+        #endregion
+
+        #region 判断函数
+        private bool IsAllowSendPositionChange()
+        {
+            return isSendPositionChange;
+        }
+        #endregion
+
+        #endregion
+
+        #region SendDataChange 标记
+        public bool isSendDataChange = true;
+
+        #region 接口函数
+        public void StopSendDataChange()
+        {
+            isSendDataChange = false;
+        }
+
+        public void StartSendDataChange()
+        {
+            isSendDataChange = true;
+        }
+        #endregion
+
+        #region 判断函数
+        private bool IsAllowSendDataChange()
+        {
+            return isSendDataChange;
+        }
+        #endregion
+
+        #endregion
+
+        #region 自动生成警戒高度
+        private bool isAutoWarn = true;
+
+        #endregion
+
+        #endregion
+
+        #region 控件响应函数
+
+        #region coordSystem
+        private void CoordSystem_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetCurrentCoord((CoordSystems)CoordSystem.SelectedValue);
+        }
+        #endregion
+
+        #region AltFrame
+        private void AltFrame_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetCurrentFrame((AltFrames)AltFrame.SelectedValue);
+        }
+        #endregion
+
+        #region defaultAlt
+        private void DefaultAlt_ValueChanged(object sender, EventArgs e)
+        {
+            SetDefaultAlt(DefaultAlt.Value);
+        }
+        #endregion
+
+        #region autoWarnAlt
+        private void AutoWarnAlt_CheckedChanged(object sender, EventArgs e)
+        {
+            isAutoWarn = AutoWarnAlt.Checked;
+        }
+        #endregion
+
+        #region warnAlt
+        private void WarnAlt_ValueChanged(object sender, EventArgs e)
+        {
+            SetWarnAlt(WarnAlt.Value);
+        }
+        #endregion
+
+        #region wpRad
+        private void WpRad_ValueChanged(object sender, EventArgs e)
+        {
+            SetWpRad(WpRad.Value);
+        }
+        #endregion
+
+        #region Home
+        private void HomeLat_ValueChanged(object sender, EventArgs e)
+        {
+            homePosition.Lat = HomeLat.Value;
+            if (isEdit)
+                return;
+            HomeChange?.Invoke(homePosition);
+        }
+
+        private void HomeLng_ValueChanged(object sender, EventArgs e)
+        {
+            homePosition.Lng = HomeLng.Value;
+            if (isEdit)
+                return;
+            HomeChange?.Invoke(homePosition);
+        }
+
+        private void HomeAlt_ValueChanged(object sender, EventArgs e)
+        {
+            homePosition.Alt = HomeAlt.Value;
+            if (isEdit)
+                return;
+            HomeChange?.Invoke(homePosition);
+        }
+        #endregion
+
+        #endregion
+
+        #region CommandPanel 响应函数
+        private void CommandsPanel_Leave(object sender, EventArgs e)
+        {
+            SaveConfig();
+        }
         #endregion
     }
 

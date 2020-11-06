@@ -159,6 +159,7 @@
             this.panelEx1.AutoSize = true;
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx1.Controls.Add(this.panelEx9);
             this.panelEx1.Controls.Add(this.AdvanceAirLineBox);
             this.panelEx1.Controls.Add(this.AirLineBox);
             this.panelEx1.Controls.Add(this.panelEx7);
@@ -169,7 +170,6 @@
             this.panelEx1.Controls.Add(this.CameraDetailBox);
             this.panelEx1.Controls.Add(this.CameraInfo);
             this.panelEx1.Controls.Add(this.panelEx6);
-            this.panelEx1.Controls.Add(this.panelEx9);
             this.panelEx1.Controls.Add(this.HandBox);
             this.panelEx1.Controls.Add(this.DelayBox);
             this.panelEx1.Controls.Add(this.ConfigPanel);
@@ -204,7 +204,7 @@
             this.AdvanceAirLineBox.Controls.Add(this.labelX13);
             this.AdvanceAirLineBox.Controls.Add(this.labelX12);
             this.AdvanceAirLineBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.AdvanceAirLineBox.Location = new System.Drawing.Point(0, 677);
+            this.AdvanceAirLineBox.Location = new System.Drawing.Point(0, 645);
             this.AdvanceAirLineBox.Name = "AdvanceAirLineBox";
             this.AdvanceAirLineBox.Size = new System.Drawing.Size(310, 168);
             this.AdvanceAirLineBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -436,7 +436,7 @@
             this.AirLineBox.Controls.Add(this.labelX8);
             this.AirLineBox.Controls.Add(this.labelX7);
             this.AirLineBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.AirLineBox.Location = new System.Drawing.Point(0, 598);
+            this.AirLineBox.Location = new System.Drawing.Point(0, 566);
             this.AirLineBox.Name = "AirLineBox";
             this.AirLineBox.Size = new System.Drawing.Size(310, 79);
             this.AirLineBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -592,7 +592,7 @@
             this.panelEx7.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelEx7.Controls.Add(this.label2);
             this.panelEx7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx7.Location = new System.Drawing.Point(0, 576);
+            this.panelEx7.Location = new System.Drawing.Point(0, 544);
             this.panelEx7.MinimumSize = new System.Drawing.Size(200, 22);
             this.panelEx7.Name = "panelEx7";
             this.panelEx7.Size = new System.Drawing.Size(310, 22);
@@ -642,7 +642,7 @@
             this.FlightBox.Controls.Add(this.labelX11);
             this.FlightBox.Controls.Add(this.labelX6);
             this.FlightBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.FlightBox.Location = new System.Drawing.Point(0, 469);
+            this.FlightBox.Location = new System.Drawing.Point(0, 437);
             this.FlightBox.Name = "FlightBox";
             this.FlightBox.Size = new System.Drawing.Size(310, 107);
             this.FlightBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -803,7 +803,7 @@
             this.panelEx14.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelEx14.Controls.Add(this.label14);
             this.panelEx14.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx14.Location = new System.Drawing.Point(0, 447);
+            this.panelEx14.Location = new System.Drawing.Point(0, 415);
             this.panelEx14.MinimumSize = new System.Drawing.Size(200, 22);
             this.panelEx14.Name = "panelEx14";
             this.panelEx14.Size = new System.Drawing.Size(310, 22);
@@ -849,7 +849,7 @@
             this.panelEx4.Controls.Add(this.TXT_cmPixel);
             this.panelEx4.Controls.Add(this.labelX2);
             this.panelEx4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx4.Location = new System.Drawing.Point(0, 366);
+            this.panelEx4.Location = new System.Drawing.Point(0, 334);
             this.panelEx4.Name = "panelEx4";
             this.panelEx4.Size = new System.Drawing.Size(310, 81);
             this.panelEx4.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -951,7 +951,7 @@
             this.panelEx5.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelEx5.Controls.Add(this.label1);
             this.panelEx5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx5.Location = new System.Drawing.Point(0, 344);
+            this.panelEx5.Location = new System.Drawing.Point(0, 312);
             this.panelEx5.MinimumSize = new System.Drawing.Size(200, 22);
             this.panelEx5.Name = "panelEx5";
             this.panelEx5.Size = new System.Drawing.Size(310, 22);
@@ -1001,7 +1001,7 @@
             this.CameraDetailBox.Controls.Add(this.labelX5);
             this.CameraDetailBox.Controls.Add(this.labelX4);
             this.CameraDetailBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.CameraDetailBox.Location = new System.Drawing.Point(0, 255);
+            this.CameraDetailBox.Location = new System.Drawing.Point(0, 223);
             this.CameraDetailBox.Name = "CameraDetailBox";
             this.CameraDetailBox.Size = new System.Drawing.Size(310, 89);
             this.CameraDetailBox.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -1150,7 +1150,7 @@
             this.CameraInfo.Controls.Add(this.labelX3);
             this.CameraInfo.Controls.Add(this.NUM_FocalLength);
             this.CameraInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.CameraInfo.Location = new System.Drawing.Point(0, 172);
+            this.CameraInfo.Location = new System.Drawing.Point(0, 140);
             this.CameraInfo.Name = "CameraInfo";
             this.CameraInfo.Size = new System.Drawing.Size(310, 83);
             this.CameraInfo.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -1266,7 +1266,7 @@
             this.panelEx6.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelEx6.Controls.Add(this.label6);
             this.panelEx6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx6.Location = new System.Drawing.Point(0, 150);
+            this.panelEx6.Location = new System.Drawing.Point(0, 118);
             this.panelEx6.MinimumSize = new System.Drawing.Size(200, 22);
             this.panelEx6.Name = "panelEx6";
             this.panelEx6.Size = new System.Drawing.Size(310, 22);
@@ -1308,7 +1308,7 @@
             this.panelEx9.Controls.Add(this.Default);
             this.panelEx9.Controls.Add(this.Accept);
             this.panelEx9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx9.Location = new System.Drawing.Point(0, 118);
+            this.panelEx9.Location = new System.Drawing.Point(0, 813);
             this.panelEx9.Name = "panelEx9";
             this.panelEx9.Size = new System.Drawing.Size(310, 32);
             this.panelEx9.Style.Alignment = System.Drawing.StringAlignment.Center;

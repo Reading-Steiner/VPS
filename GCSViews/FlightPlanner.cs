@@ -5058,7 +5058,7 @@ namespace VPS.GCSViews
 
         #region NotTriggerDelegate
 
-        private bool isSendDataChange = false;
+        private bool isSendDataChange = true;
 
         #region 接口函数
 

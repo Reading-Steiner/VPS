@@ -3298,7 +3298,7 @@ namespace VPS
             VPS.Controls.Command.CommandsPanel.instance.WarnAltChange += GCSViews.FlightPlanner.instance.SetWarnAltHandle;
             VPS.Controls.Command.CommandsPanel.instance.DefaultAltChange += GCSViews.FlightPlanner.instance.SetDefaultAltHandle;
             VPS.Controls.Command.CommandsPanel.instance.HomeChange += GCSViews.FlightPlanner.instance.SetHomeHandle;
-            GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.Command.CommandsPanel.instance.SetHome;
+            GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.Command.CommandsPanel.instance.SetHomeHandle;
             GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
 
             GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetHomePosition;
@@ -4550,7 +4550,7 @@ namespace VPS
         private void SetHome(PointLatLngAlt position)
         {
             GCSViews.FlightPlanner.instance.SetHomeHandle(position);
-            VPS.Controls.Command.CommandsPanel.instance.SetHome(position);
+            VPS.Controls.Command.CommandsPanel.instance.SetHomeHandle(position);
         }
         #endregion
 
