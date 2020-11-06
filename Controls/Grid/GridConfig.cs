@@ -500,7 +500,7 @@ namespace VPS.Controls.Grid
             lock (lockObj2)
             {
                 gridGrenate = true;
-                Task.Run(()=>autoGrid());
+                autoGrid();
                 gridGrenate = false;
             }
         }
@@ -655,33 +655,63 @@ namespace VPS.Controls.Grid
 
             instance.grid.Clear();
             PointLatLngAlt last = null;
-            foreach (var item in wp)
+            for (int index = 0; index < wp.Count; index++)
             {
-                if (item.Tag == "M")
+                if (wp[index].Tag == "S" || wp[index].Tag == "E")
                 {
-                    images++;
+                    PointLatLngAlt point = wp[index];
+                    point.Tag = VPS.WP.WPCommands.DefaultWPCommand;
+                    point.Tag2 = "Relative";
+
+                    instance.grid.Add(point);
                     a++;
                 }
-                else
+                else if(wp[index].Tag == "SM")
                 {
-                    if (item.Tag != "SM" && item.Tag != "ME")
-                        strips++;
-                    if (last != null)
+                    if (wp[index - 1].Lat == wp[index].Lat && wp[index - 1].Lng == wp[index].Lng)
+                        continue;
+                    else
                     {
-                        if (last.Lat == item.Lat && last.Lng == item.Lng && last.Alt == item.Alt)
-                        {
-                            last = item;
-                            continue;
-                        }
+                        PointLatLngAlt point = wp[index];
+                        point.Tag = VPS.WP.WPCommands.DefaultWPCommand;
+                        point.Tag2 = "Relative";
 
+                        instance.grid.Add(point);
+                        a++;
                     }
-                    instance.grid.Add(item);
-                    last = item;
+
+                }
+                else if(wp[index].Tag == "ME")
+                {
+                    if (wp[index + 1].Lat == wp[index].Lat && wp[index + 1].Lng == wp[index].Lng)
+                        continue;
+                    else
+                    {
+                        PointLatLngAlt point = wp[index];
+                        point.Tag = VPS.WP.WPCommands.DefaultWPCommand;
+                        point.Tag2 = "Relative";
+
+                        instance.grid.Add(point);
+                        a++;
+                    }
+                }
+                else if(wp[index].Tag == "M")
+                {
+                    if (false)
+                    {
+                        PointLatLngAlt point = wp[index];
+                        point.Tag = VPS.WP.WPCommands.ClickWPCommand;
+                        point.Tag2 = "Relative";
+
+                        instance.grid.Add(point);
+                    }
+                    images++;
                     a++;
                 }
 
 
             }
+            SetControlMainThread(instance.Num_GndeLev, instance.GetBaseAlt());
             instance.WPListChange?.Invoke(instance.GetWPList());
         }
         #endregion
@@ -805,6 +835,23 @@ namespace VPS.Controls.Grid
         }
         #endregion
 
+        #region 获取航摄基线
+        private int GetBaseAlt()
+        {
+            double totalWP = 0;
+            int totalCount = 0;
+            foreach (var wp in grid)
+            {
+                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
+                {
+                    totalWP += Utilities.srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
+                    totalCount++;
+                }
+            }
+            return (int)(totalWP / Math.Max(1, totalCount));
+        }
+        #endregion
+
         #endregion
 
         #region CameraInfos
@@ -881,6 +928,31 @@ namespace VPS.Controls.Grid
                 if (control is DevComponents.DotNetBar.Controls.ComboBoxEx)
                     return ((DevComponents.DotNetBar.Controls.ComboBoxEx)control).Text;
                 return null;
+            }
+        }
+        #endregion
+
+        #region 设置控件数据
+        private delegate void SetControlInMainThreadHandle(Control control, object data);
+
+        private static void SetControlMainThread(Control control, object data)
+        {
+            if (control.InvokeRequired)
+            {
+                ReadControlInMainThreadHandle inThread = new ReadControlInMainThreadHandle(ReadControlMainThread);
+                control.Invoke(inThread, new object[] { control, data });
+            }
+            else
+            {
+                if (control is DevComponents.Editors.DoubleInput)
+                    ((DevComponents.Editors.DoubleInput)control).Value = (double)data;
+                if (control is DevComponents.Editors.IntegerInput)
+                    ((DevComponents.Editors.IntegerInput)control).Value = (int)data;
+                if (control is DevComponents.DotNetBar.Controls.CheckBoxX)
+                    ((DevComponents.DotNetBar.Controls.CheckBoxX)control).Checked = (bool)data;
+                if (control is DevComponents.DotNetBar.Controls.ComboBoxEx)
+                    ((DevComponents.DotNetBar.Controls.ComboBoxEx)control).Text = (string)data;
+
             }
         }
         #endregion

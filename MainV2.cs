@@ -4314,12 +4314,14 @@ namespace VPS
             }
         }
         #endregion
+
         #region AutoWP 对外接口
         public void AutoWP()
         {
             AutoWPButton_Click(null, null);
         }
         #endregion
+
         #endregion
 
         #region SelectedWP
@@ -4430,9 +4432,11 @@ namespace VPS
             RibbonStateCommand.Checked = !RibbonStateCommand.Checked;
         }
         #endregion
+
         #endregion
 
         #region 快捷键
+
         #region 入口函数
         private void MainV2_KeyDown(object sender, KeyEventArgs e)
         {
@@ -4706,6 +4710,7 @@ namespace VPS
 
         }
         #endregion
+
         #endregion
     }
 }
