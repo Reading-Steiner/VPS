@@ -34,21 +34,21 @@
             this.CommandDataList = new DevComponents.DotNetBar.SuperGrid.SuperGridControl();
             this.AutoWarnAlt = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.labelX10 = new DevComponents.DotNetBar.LabelX();
-            this.BaseAlt = new DevComponents.Editors.IntegerInput();
-            this.HomeLng = new DevComponents.Editors.DoubleInput();
-            this.HomeAlt = new DevComponents.Editors.DoubleInput();
-            this.HomeLat = new DevComponents.Editors.DoubleInput();
+            this.BaseAlt = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.HomeLng = new VPS.Controls.MyControls.MyDoubleInput(this.components);
+            this.HomeAlt = new VPS.Controls.MyControls.MyDoubleInput(this.components);
+            this.HomeLat = new VPS.Controls.MyControls.MyDoubleInput(this.components);
             this.CoordSystem = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.labelX9 = new DevComponents.DotNetBar.LabelX();
             this.labelX8 = new DevComponents.DotNetBar.LabelX();
             this.labelX7 = new DevComponents.DotNetBar.LabelX();
             this.labelX6 = new DevComponents.DotNetBar.LabelX();
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
-            this.WpRad = new DevComponents.Editors.IntegerInput();
+            this.WpRad = new VPS.Controls.MyControls.MyIntegerInput(this.components);
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.labelX3 = new DevComponents.DotNetBar.LabelX();
-            this.WarnAlt = new DevComponents.Editors.IntegerInput();
-            this.DefaultAlt = new DevComponents.Editors.IntegerInput();
+            this.WarnAlt = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.DefaultAlt = new VPS.Controls.MyControls.MyIntegerInput(this.components);
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.AltFrame = new DevComponents.DotNetBar.Controls.ComboBoxEx();
@@ -106,9 +106,9 @@
             this.CommandDataList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CommandDataList.FilterExprColors.SysFunction = System.Drawing.Color.DarkRed;
-            this.CommandDataList.Location = new System.Drawing.Point(179, 3);
+            this.CommandDataList.Location = new System.Drawing.Point(173, 3);
             this.CommandDataList.Name = "CommandDataList";
-            this.CommandDataList.Size = new System.Drawing.Size(940, 272);
+            this.CommandDataList.Size = new System.Drawing.Size(953, 272);
             this.CommandDataList.TabIndex = 25;
             this.CommandDataList.CellClick += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridCellClickEventArgs>(this.CommandDataList_CellClick);
             this.CommandDataList.DataBindingComplete += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridDataBindingCompleteEventArgs>(this.CommandDataList_DataBindingComplete);
@@ -155,6 +155,7 @@
             this.BaseAlt.BackgroundStyle.Class = "DateTimeInputBackground";
             this.BaseAlt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.BaseAlt.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.BaseAlt.DisplayFormat = "0 m";
             this.BaseAlt.Location = new System.Drawing.Point(21, 240);
             this.BaseAlt.MaxValue = 10000000;
             this.BaseAlt.MinValue = -10000000;
@@ -168,13 +169,16 @@
             // 
             this.HomeLng.AllowEmptyState = false;
             this.HomeLng.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.HomeLng.AutoOverwrite = true;
             // 
             // 
             // 
             this.HomeLng.BackgroundStyle.Class = "DateTimeInputBackground";
             this.HomeLng.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.HomeLng.ButtonFreeText.Checked = true;
             this.HomeLng.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.HomeLng.DisplayFormat = "0.######";
+            this.HomeLng.FreeTextEntryMode = true;
             this.HomeLng.Increment = 1D;
             this.HomeLng.IsInputReadOnly = true;
             this.HomeLng.Location = new System.Drawing.Point(1200, 216);
@@ -189,13 +193,16 @@
             // 
             this.HomeAlt.AllowEmptyState = false;
             this.HomeAlt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.HomeAlt.AutoOverwrite = true;
             // 
             // 
             // 
             this.HomeAlt.BackgroundStyle.Class = "DateTimeInputBackground";
             this.HomeAlt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.HomeAlt.ButtonFreeText.Checked = true;
             this.HomeAlt.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.HomeAlt.DisplayFormat = "0.######";
+            this.HomeAlt.FreeTextEntryMode = true;
             this.HomeAlt.Increment = 1D;
             this.HomeAlt.IsInputReadOnly = true;
             this.HomeAlt.Location = new System.Drawing.Point(1200, 244);
@@ -210,13 +217,16 @@
             // 
             this.HomeLat.AllowEmptyState = false;
             this.HomeLat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.HomeLat.AutoOverwrite = true;
             // 
             // 
             // 
             this.HomeLat.BackgroundStyle.Class = "DateTimeInputBackground";
             this.HomeLat.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.HomeLat.ButtonFreeText.Checked = true;
             this.HomeLat.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.HomeLat.DisplayFormat = "0.######";
+            this.HomeLat.FreeTextEntryMode = true;
             this.HomeLat.Increment = 1D;
             this.HomeLat.IsInputReadOnly = true;
             this.HomeLat.Location = new System.Drawing.Point(1200, 188);
@@ -325,7 +335,10 @@
             // 
             this.WpRad.BackgroundStyle.Class = "DateTimeInputBackground";
             this.WpRad.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.WpRad.ButtonFreeText.Checked = true;
             this.WpRad.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.WpRad.DisplayFormat = "0 m";
+            this.WpRad.FreeTextEntryMode = true;
             this.WpRad.Location = new System.Drawing.Point(1164, 103);
             this.WpRad.MaxValue = 1000;
             this.WpRad.MinValue = 0;
@@ -373,7 +386,10 @@
             // 
             this.WarnAlt.BackgroundStyle.Class = "DateTimeInputBackground";
             this.WarnAlt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.WarnAlt.ButtonFreeText.Checked = true;
             this.WarnAlt.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.WarnAlt.DisplayFormat = "0 m";
+            this.WarnAlt.FreeTextEntryMode = true;
             this.WarnAlt.Location = new System.Drawing.Point(21, 164);
             this.WarnAlt.MaxValue = 10000000;
             this.WarnAlt.MinValue = -10000000;
@@ -391,10 +407,17 @@
             // 
             this.DefaultAlt.BackgroundStyle.Class = "DateTimeInputBackground";
             this.DefaultAlt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.DefaultAlt.ButtonFreeText.Checked = true;
             this.DefaultAlt.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.DefaultAlt.DisplayFormat = "0 m";
+            this.DefaultAlt.FreeTextEntryMode = true;
+            this.DefaultAlt.FreeTextEntryToggleKey = System.Windows.Forms.Keys.Space;
+            this.DefaultAlt.InputMouseWheelEnabled = false;
             this.DefaultAlt.Location = new System.Drawing.Point(21, 103);
+            this.DefaultAlt.LockUpdateChecked = false;
             this.DefaultAlt.MaxValue = 10000000;
             this.DefaultAlt.MinValue = -10000000;
+            this.DefaultAlt.MouseWheelValueChangeEnabled = false;
             this.DefaultAlt.Name = "DefaultAlt";
             this.DefaultAlt.ShowUpDown = true;
             this.DefaultAlt.Size = new System.Drawing.Size(80, 21);
@@ -476,25 +499,25 @@
         #endregion
         private DevComponents.DotNetBar.PanelEx MainPanel;
         private DevComponents.DotNetBar.LabelX labelX3;
-        private DevComponents.Editors.IntegerInput WarnAlt;
-        private DevComponents.Editors.IntegerInput DefaultAlt;
+        private VPS.Controls.MyControls.MyIntegerInput WarnAlt;
+        private VPS.Controls.MyControls.MyIntegerInput DefaultAlt;
         private DevComponents.DotNetBar.LabelX labelX2;
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.Controls.ComboBoxEx AltFrame;
-        private DevComponents.Editors.DoubleInput HomeLng;
-        private DevComponents.Editors.DoubleInput HomeAlt;
-        private DevComponents.Editors.DoubleInput HomeLat;
+        private VPS.Controls.MyControls.MyDoubleInput HomeLng;
+        private VPS.Controls.MyControls.MyDoubleInput HomeAlt;
+        private VPS.Controls.MyControls.MyDoubleInput HomeLat;
         private DevComponents.DotNetBar.Controls.ComboBoxEx CoordSystem;
         private DevComponents.DotNetBar.LabelX labelX9;
         private DevComponents.DotNetBar.LabelX labelX8;
         private DevComponents.DotNetBar.LabelX labelX7;
         private DevComponents.DotNetBar.LabelX labelX6;
         private DevComponents.DotNetBar.LabelX labelX5;
-        private DevComponents.Editors.IntegerInput WpRad;
+        private VPS.Controls.MyControls.MyIntegerInput WpRad;
         private DevComponents.DotNetBar.LabelX labelX4;
         private DevComponents.DotNetBar.Controls.CheckBoxX AutoWarnAlt;
         private DevComponents.DotNetBar.LabelX labelX10;
-        private DevComponents.Editors.IntegerInput BaseAlt;
+        private VPS.Controls.MyControls.MyIntegerInput BaseAlt;
         private DevComponents.DotNetBar.SuperGrid.SuperGridControl CommandDataList;
         private System.Windows.Forms.ImageList ImageList;
     }

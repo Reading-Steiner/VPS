@@ -459,7 +459,7 @@ namespace VPS.Controls.Command
             {
                 panel.Columns[CommandColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
                 panel.Columns[CommandColumnName].FillWeight = 150;
-                panel.Columns[CommandColumnName].EditorType = typeof(GridControls.FragrantComboBox);
+                panel.Columns[CommandColumnName].EditorType = typeof(MyControls.FragrantComboBox);
                 panel.Columns[CommandColumnName].EditorParams = new object[] { Enum.GetValues(typeof(commands)) };
                 //panel.Columns[CommandColumn.ColumnName].ReadOnly = true;
             }
@@ -583,19 +583,19 @@ namespace VPS.Controls.Command
                 panel.Columns[UpColumnName].AutoSizeMode = ColumnAutoSizeMode.None;
                 panel.Columns[UpColumnName].MinimumWidth = 25;
                 panel.Columns[UpColumnName].Width = 25;
-                panel.Columns[UpColumnName].EditorType = typeof(GridControls.ImagePanel);
+                panel.Columns[UpColumnName].EditorType = typeof(MyControls.ImagePanel);
                 panel.Columns[UpColumnName].EditorParams = new object[] { ImageList.Images["Up.png"] };
 
                 panel.Columns[DownColumnName].AutoSizeMode = ColumnAutoSizeMode.None;
                 panel.Columns[DownColumnName].MinimumWidth = 25;
                 panel.Columns[DownColumnName].Width = 25;
-                panel.Columns[DownColumnName].EditorType = typeof(GridControls.ImagePanel);
+                panel.Columns[DownColumnName].EditorType = typeof(MyControls.ImagePanel);
                 panel.Columns[DownColumnName].EditorParams = new object[] { ImageList.Images["Down.png"] };
 
                 panel.Columns[DeleteColumnName].AutoSizeMode = ColumnAutoSizeMode.None;
                 panel.Columns[DeleteColumnName].MinimumWidth = 25;
                 panel.Columns[DeleteColumnName].Width = 25;
-                panel.Columns[DeleteColumnName].EditorType = typeof(GridControls.ImagePanel);
+                panel.Columns[DeleteColumnName].EditorType = typeof(MyControls.ImagePanel);
                 panel.Columns[DeleteColumnName].EditorParams = new object[] { ImageList.Images["Delete.png"] };
             }
         }
@@ -1197,7 +1197,7 @@ namespace VPS.Controls.Command
         #region warnAlt
         private void WarnAlt_ValueChanged(object sender, EventArgs e)
         {
-            SetWarnAlt(WarnAlt.Value);
+            SetWarnAlt((int)WarnAlt.Value);
         }
         #endregion
 

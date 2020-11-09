@@ -422,7 +422,7 @@
     <Compile Include="Controls\ComboDataList.Designer.cs">
       <DependentUpon>ComboDataList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\GridControls\GridControls.cs">
+    <Compile Include="Controls\MyControls\MyGridControls.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\DevopsUI.cs">
@@ -493,6 +493,18 @@
     </Compile>
     <Compile Include="Controls\LayerTile.Designer.cs">
       <DependentUpon>LayerTile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyControls\MyDoubleInput.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MyControls\MyDoubleInput.Designer.cs">
+      <DependentUpon>MyDoubleInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyControls\MyIntegerInput.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MyControls\MyIntegerInput.Designer.cs">
+      <DependentUpon>MyIntegerInput.cs</DependentUpon>
     </Compile>
     <Compile Include="VPSData\Layer\LayerInfo.cs" />
     <Compile Include="VPSData\Layer\LayerInfoCache.cs" />
@@ -887,6 +899,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MainInfo\TopMainInfo.resx">
       <DependentUpon>TopMainInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MyControls\MyDoubleInput.resx">
+      <DependentUpon>MyDoubleInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MyControls\MyIntegerInput.resx">
+      <DependentUpon>MyIntegerInput.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressBar\UserProgressBar.resx">
       <DependentUpon>UserProgressBar.cs</DependentUpon>

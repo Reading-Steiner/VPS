@@ -7,7 +7,7 @@ using DevComponents.DotNetBar.SuperGrid;
 using System.Collections;
 using System.Drawing;
 
-namespace VPS.Controls.GridControls
+namespace VPS.Controls.MyControls
 {
     internal class FragrantComboBox : GridComboBoxExEditControl
     {

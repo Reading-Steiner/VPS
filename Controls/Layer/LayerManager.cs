@@ -156,12 +156,12 @@ namespace VPS.Controls.Layer
 
             panel.Columns[5].MinimumWidth = 25;
             panel.Columns[5].Width = 25;
-            panel.Columns[5].EditorType = typeof(GridControls.ImagePanel);
+            panel.Columns[5].EditorType = typeof(MyControls.ImagePanel);
             panel.Columns[5].EditorParams = new object[] { ImageList.Images["Delete.png"] };
 
             panel.Columns[6].MinimumWidth = 25;
             panel.Columns[6].Width = 25;
-            panel.Columns[6].EditorType = typeof(GridControls.ImageCheckBox);
+            panel.Columns[6].EditorType = typeof(MyControls.ImageCheckBox);
             panel.Columns[6].EditorParams = new object[] { ImageList.Images["Default.png"] };
         }
         #endregion
