@@ -28,18 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.Camera = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.FocalLength = new DevComponents.Editors.DoubleInput();
+            this.FocalLength = new VPS.Controls.MyControls.MyDoubleInput(this.components);
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.SensHeight = new DevComponents.Editors.DoubleInput();
-            this.SensWidth = new DevComponents.Editors.DoubleInput();
-            this.ImgHeight = new DevComponents.Editors.IntegerInput();
-            this.ImgWidth = new DevComponents.Editors.IntegerInput();
+            this.SensHeight = new VPS.Controls.MyControls.MyDoubleInput(this.components);
+            this.SensWidth = new VPS.Controls.MyControls.MyDoubleInput(this.components);
+            this.ImgHeight = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.ImgWidth = new VPS.Controls.MyControls.MyIntegerInput(this.components);
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
@@ -93,7 +94,7 @@
             this.Camera.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.Camera.Location = new System.Drawing.Point(111, 16);
             this.Camera.Name = "Camera";
-            this.Camera.Size = new System.Drawing.Size(110, 21);
+            this.Camera.Size = new System.Drawing.Size(150, 21);
             this.Camera.TabIndex = 2;
             // 
             // FocalLength
@@ -104,8 +105,10 @@
             // 
             this.FocalLength.BackgroundStyle.Class = "DateTimeInputBackground";
             this.FocalLength.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.FocalLength.ButtonFreeText.Checked = true;
             this.FocalLength.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.FocalLength.DisplayFormat = "0.##";
+            this.FocalLength.FreeTextEntryMode = true;
             this.FocalLength.Increment = 0.01D;
             this.FocalLength.Location = new System.Drawing.Point(111, 51);
             this.FocalLength.Name = "FocalLength";
@@ -165,8 +168,10 @@
             // 
             this.SensHeight.BackgroundStyle.Class = "DateTimeInputBackground";
             this.SensHeight.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.SensHeight.ButtonFreeText.Checked = true;
             this.SensHeight.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.SensHeight.DisplayFormat = "0.##";
+            this.SensHeight.FreeTextEntryMode = true;
             this.SensHeight.Increment = 0D;
             this.SensHeight.Location = new System.Drawing.Point(181, 208);
             this.SensHeight.MaxValue = 1000000D;
@@ -183,8 +188,10 @@
             // 
             this.SensWidth.BackgroundStyle.Class = "DateTimeInputBackground";
             this.SensWidth.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.SensWidth.ButtonFreeText.Checked = true;
             this.SensWidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.SensWidth.DisplayFormat = "0.##";
+            this.SensWidth.FreeTextEntryMode = true;
             this.SensWidth.Increment = 0D;
             this.SensWidth.Location = new System.Drawing.Point(47, 208);
             this.SensWidth.MaxValue = 1000000D;
@@ -201,7 +208,9 @@
             // 
             this.ImgHeight.BackgroundStyle.Class = "DateTimeInputBackground";
             this.ImgHeight.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.ImgHeight.ButtonFreeText.Checked = true;
             this.ImgHeight.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.ImgHeight.FreeTextEntryMode = true;
             this.ImgHeight.Increment = 0;
             this.ImgHeight.Location = new System.Drawing.Point(181, 130);
             this.ImgHeight.MaxValue = 1000000000;
@@ -218,7 +227,9 @@
             // 
             this.ImgWidth.BackgroundStyle.Class = "DateTimeInputBackground";
             this.ImgWidth.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.ImgWidth.ButtonFreeText.Checked = true;
             this.ImgWidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.ImgWidth.FreeTextEntryMode = true;
             this.ImgWidth.Increment = 0;
             this.ImgWidth.Location = new System.Drawing.Point(47, 130);
             this.ImgWidth.MaxValue = 1000000000;
@@ -346,15 +357,15 @@
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.LabelX labelX2;
         private DevComponents.DotNetBar.Controls.TextBoxX Camera;
-        private DevComponents.Editors.DoubleInput FocalLength;
+        private VPS.Controls.MyControls.MyDoubleInput FocalLength;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label5;
-        private DevComponents.Editors.DoubleInput SensHeight;
-        private DevComponents.Editors.DoubleInput SensWidth;
-        private DevComponents.Editors.IntegerInput ImgHeight;
-        private DevComponents.Editors.IntegerInput ImgWidth;
+        private VPS.Controls.MyControls.MyDoubleInput SensHeight;
+        private VPS.Controls.MyControls.MyDoubleInput SensWidth;
+        private VPS.Controls.MyControls.MyIntegerInput ImgHeight;
+        private VPS.Controls.MyControls.MyIntegerInput ImgWidth;
         private DevComponents.DotNetBar.LabelX labelX5;
         private DevComponents.DotNetBar.LabelX labelX4;
         private DevComponents.DotNetBar.ButtonX buttonX1;
