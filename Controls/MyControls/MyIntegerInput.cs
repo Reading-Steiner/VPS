@@ -17,6 +17,8 @@ namespace VPS.Controls.MyControls
             : base()
         {
             InitializeComponent();
+
+            this.ConvertFreeTextEntry += MyIntegerInput_ConvertFreeTextEntry;
         }
 
         public MyIntegerInput(IContainer container)
@@ -25,6 +27,8 @@ namespace VPS.Controls.MyControls
             container.Add(this);
 
             InitializeComponent();
+
+            this.ConvertFreeTextEntry += MyIntegerInput_ConvertFreeTextEntry;
         }
 
         private void MyIntegerInput_ConvertFreeTextEntry(object sender, FreeTextEntryConversionEventArgs e)

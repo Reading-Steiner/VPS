@@ -17,6 +17,7 @@ namespace VPS.Controls.MyControls
         {
             InitializeComponent();
 
+            this.ConvertFreeTextEntry += MyDoubleInput_ConvertFreeTextEntry;
         }
 
         public MyDoubleInput(IContainer container)
@@ -25,10 +26,12 @@ namespace VPS.Controls.MyControls
             container.Add(this);
 
             InitializeComponent();
+
+            this.ConvertFreeTextEntry += MyDoubleInput_ConvertFreeTextEntry;
         }
 
         private void MyDoubleInput_ConvertFreeTextEntry(object sender, FreeTextEntryConversionEventArgs e)
-        {
+        { 
             if (double.TryParse(e.ValueEntered, out double value))
             {
                 e.IsValueConverted = true;
@@ -41,7 +44,7 @@ namespace VPS.Controls.MyControls
                     e.IsValueConverted = true;
 
                     var match = Regex.Match(e.ValueEntered, "[+-]?([0-9]+)([.][0-9]+)?");
-                    int value1 = int.Parse(match.Value);
+                    double value1 = double.Parse(match.Value);
 
                     e.ControlValue = value1;
                 }

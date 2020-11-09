@@ -154,8 +154,10 @@
             // 
             this.BaseAlt.BackgroundStyle.Class = "DateTimeInputBackground";
             this.BaseAlt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.BaseAlt.ButtonFreeText.Checked = true;
             this.BaseAlt.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.BaseAlt.DisplayFormat = "0 m";
+            this.BaseAlt.FreeTextEntryMode = true;
             this.BaseAlt.Location = new System.Drawing.Point(21, 240);
             this.BaseAlt.MaxValue = 10000000;
             this.BaseAlt.MinValue = -10000000;
@@ -175,10 +177,8 @@
             // 
             this.HomeLng.BackgroundStyle.Class = "DateTimeInputBackground";
             this.HomeLng.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.HomeLng.ButtonFreeText.Checked = true;
             this.HomeLng.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.HomeLng.DisplayFormat = "0.######";
-            this.HomeLng.FreeTextEntryMode = true;
             this.HomeLng.Increment = 1D;
             this.HomeLng.IsInputReadOnly = true;
             this.HomeLng.Location = new System.Drawing.Point(1200, 216);
@@ -199,10 +199,8 @@
             // 
             this.HomeAlt.BackgroundStyle.Class = "DateTimeInputBackground";
             this.HomeAlt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.HomeAlt.ButtonFreeText.Checked = true;
             this.HomeAlt.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.HomeAlt.DisplayFormat = "0.######";
-            this.HomeAlt.FreeTextEntryMode = true;
             this.HomeAlt.Increment = 1D;
             this.HomeAlt.IsInputReadOnly = true;
             this.HomeAlt.Location = new System.Drawing.Point(1200, 244);
@@ -223,10 +221,8 @@
             // 
             this.HomeLat.BackgroundStyle.Class = "DateTimeInputBackground";
             this.HomeLat.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.HomeLat.ButtonFreeText.Checked = true;
             this.HomeLat.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.HomeLat.DisplayFormat = "0.######";
-            this.HomeLat.FreeTextEntryMode = true;
             this.HomeLat.Increment = 1D;
             this.HomeLat.IsInputReadOnly = true;
             this.HomeLat.Location = new System.Drawing.Point(1200, 188);

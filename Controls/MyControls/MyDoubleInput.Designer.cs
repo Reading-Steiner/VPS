@@ -33,18 +33,14 @@
             // 
             // MyDoubleInput
             // 
-            this.AutoOverwrite = true;
             // 
             // 
             // 
             this.BackgroundStyle.Class = "DateTimeInputBackground";
             this.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ButtonFreeText.Checked = true;
-            this.FreeTextEntryMode = true;
             this.ConvertFreeTextEntry += new DevComponents.Editors.FreeTextEntryConversionEventHandler(this.MyDoubleInput_ConvertFreeTextEntry);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
