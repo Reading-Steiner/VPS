@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LayerReader));
             this.textBoxItem1 = new DevComponents.DotNetBar.TextBoxItem();
             this.labelItem1 = new DevComponents.DotNetBar.LabelItem();
@@ -51,8 +52,8 @@
             this.SaveFile = new DevComponents.DotNetBar.ButtonX();
             this.SaveFilePath = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.TileNameBox = new DevComponents.DotNetBar.PanelEx();
-            this.TileYSize = new DevComponents.Editors.IntegerInput();
-            this.TileXSize = new DevComponents.Editors.IntegerInput();
+            this.TileYSize = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.TileXSize = new VPS.Controls.MyControls.MyIntegerInput(this.components);
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX7 = new DevComponents.DotNetBar.LabelX();
@@ -94,11 +95,11 @@
             this.OpenFile = new DevComponents.DotNetBar.ButtonX();
             this.OpenFilePath = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.panelEx15 = new DevComponents.DotNetBar.PanelEx();
+            this.FromTile = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.labelX11 = new DevComponents.DotNetBar.LabelX();
             this.FromFile = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.panelEx6 = new DevComponents.DotNetBar.PanelEx();
             this.label6 = new System.Windows.Forms.Label();
-            this.FromTile = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.panelEx2.SuspendLayout();
             this.panelEx9.SuspendLayout();
             this.panelEx5.SuspendLayout();
@@ -369,7 +370,9 @@
             // 
             this.TileYSize.BackgroundStyle.Class = "DateTimeInputBackground";
             this.TileYSize.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TileYSize.ButtonFreeText.Checked = true;
             this.TileYSize.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TileYSize.FreeTextEntryMode = true;
             this.TileYSize.Increment = 10;
             this.TileYSize.Location = new System.Drawing.Point(205, 36);
             this.TileYSize.MaxValue = 100000000;
@@ -388,7 +391,9 @@
             // 
             this.TileXSize.BackgroundStyle.Class = "DateTimeInputBackground";
             this.TileXSize.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TileXSize.ButtonFreeText.Checked = true;
             this.TileXSize.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TileXSize.FreeTextEntryMode = true;
             this.TileXSize.Increment = 10;
             this.TileXSize.Location = new System.Drawing.Point(72, 36);
             this.TileXSize.MaxValue = 100000000;
@@ -1072,6 +1077,22 @@
             this.panelEx15.Style.GradientAngle = 90;
             this.panelEx15.TabIndex = 33;
             // 
+            // FromTile
+            // 
+            this.FromTile.AutoSize = true;
+            // 
+            // 
+            // 
+            this.FromTile.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.FromTile.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
+            this.FromTile.Location = new System.Drawing.Point(180, 3);
+            this.FromTile.Name = "FromTile";
+            this.FromTile.Size = new System.Drawing.Size(51, 18);
+            this.FromTile.TabIndex = 19;
+            this.FromTile.Text = "切片";
+            this.FromTile.Visible = false;
+            this.FromTile.CheckedChanged += new System.EventHandler(this.FromTile_CheckedChanged);
+            // 
             // labelX11
             // 
             // 
@@ -1142,22 +1163,6 @@
             this.label6.Size = new System.Drawing.Size(63, 14);
             this.label6.TabIndex = 26;
             this.label6.Text = "文件设置";
-            // 
-            // FromTile
-            // 
-            this.FromTile.AutoSize = true;
-            // 
-            // 
-            // 
-            this.FromTile.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.FromTile.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
-            this.FromTile.Location = new System.Drawing.Point(180, 3);
-            this.FromTile.Name = "FromTile";
-            this.FromTile.Size = new System.Drawing.Size(51, 18);
-            this.FromTile.TabIndex = 19;
-            this.FromTile.Text = "切片";
-            this.FromTile.Visible = false;
-            this.FromTile.CheckedChanged += new System.EventHandler(this.FromTile_CheckedChanged);
             // 
             // LayerReader
             // 
@@ -1274,8 +1279,8 @@
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.PanelEx panelEx9;
         private DevComponents.DotNetBar.ButtonX Accept;
-        private DevComponents.Editors.IntegerInput TileYSize;
-        private DevComponents.Editors.IntegerInput TileXSize;
+        private VPS.Controls.MyControls.MyIntegerInput TileYSize;
+        private VPS.Controls.MyControls.MyIntegerInput TileXSize;
         private DevComponents.DotNetBar.Controls.CheckBoxX FromTile;
     }
 }
