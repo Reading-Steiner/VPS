@@ -17,7 +17,23 @@ namespace VPS.Controls.MyControls
             InitializeComponent();
         }
 
+        private string posName = "位置";
+        [Category("Value"),Description("位置名称")]
+        public string PositionName
+        {
+            set
+            {
+                posName = value;
+                DisplayName.Text = posName;
+            }
+            get
+            {
+                return posName;
+            }
+        }
+
         private Utilities.PointLatLngAlt Position = new Utilities.PointLatLngAlt();
+        [Category("Value"), Description("位置")]
         public Utilities.PointLatLngAlt WGS84Position
         {
             set

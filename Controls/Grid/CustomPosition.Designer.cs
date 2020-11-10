@@ -140,6 +140,7 @@
             this.AltInput.Name = "AltInput";
             this.AltInput.Size = new System.Drawing.Size(121, 21);
             this.AltInput.TabIndex = 61;
+            this.AltInput.ValueChanged += new System.EventHandler(this.AltInput_ValueChanged);
             // 
             // AltFrameSelecter
             // 
@@ -152,6 +153,7 @@
             this.AltFrameSelecter.Size = new System.Drawing.Size(123, 21);
             this.AltFrameSelecter.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.AltFrameSelecter.TabIndex = 63;
+            this.AltFrameSelecter.SelectedIndexChanged += new System.EventHandler(this.AltFrameSelecter_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -226,7 +228,7 @@
             this.GeoAltitude.Name = "GeoAltitude";
             this.GeoAltitude.Size = new System.Drawing.Size(185, 23);
             this.GeoAltitude.TabIndex = 67;
-            this.GeoAltitude.Text = "地面海拔  {0}";
+            this.GeoAltitude.Text = "地面海拔";
             // 
             // CustomPosition
             // 

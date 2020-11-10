@@ -45,11 +45,10 @@ namespace VPS.Controls.Grid
                 this.LngInput.Value = value.Lng;
                 this.LatInput.Value = value.Lat;
                 this.AltInput.Value = (int)value.Alt;
-                if(Enum.TryParse(value.Tag2,out AltMode mode))
-                
-                    this.AltFrameSelecter.SelectedValue = mode;
+                if (Enum.TryParse(value.Tag2, out AltMode mode))
+                    this.AltFrameSelecter.SelectedItem = mode;
                 else
-                    this.AltFrameSelecter.SelectedValue = "Relative";
+                    this.AltFrameSelecter.SelectedItem = (AltMode)Enum.Parse(typeof(AltMode), "Relative");
             }
             get
             {
@@ -59,8 +58,9 @@ namespace VPS.Controls.Grid
 
         private void CustomPosition_Load(object sender, EventArgs e)
         {
-            AltFrameSelecter.DataSource = Enum.GetNames(typeof(AltMode));
+            AltFrameSelecter.DataSource = Enum.GetValues(typeof(AltMode));
             AltFrameSelecter.SelectedIndex = 0;
+            AltFrameSelecter.ValueMember = "";
 
             WGS84Position = Position;
         }
@@ -78,6 +78,16 @@ namespace VPS.Controls.Grid
             Position.Lat = LatInput.Value;
             double alt = Utilities.srtm.getAltitude(Position.Lat, Position.Lng).alt * CurrentState.multiplieralt;
             GeoAltitude.Text = string.Format(AltFormat, alt.ToString("0.##"));
+        }
+
+        private void AltFrameSelecter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Position.Tag2 = AltFrameSelecter.SelectedText;
+        }
+
+        private void AltInput_ValueChanged(object sender, EventArgs e)
+        {
+            Position.Alt = AltInput.Value;
         }
     }
 }

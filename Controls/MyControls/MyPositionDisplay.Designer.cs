@@ -30,6 +30,7 @@
         {
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
+            this.DisplayName = new DevComponents.DotNetBar.LabelX();
             this.SuspendLayout();
             // 
             // labelX1
@@ -39,7 +40,7 @@
             // 
             this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelX1.Location = new System.Drawing.Point(0, 0);
+            this.labelX1.Location = new System.Drawing.Point(0, 22);
             this.labelX1.Name = "labelX1";
             this.labelX1.Size = new System.Drawing.Size(209, 23);
             this.labelX1.TabIndex = 0;
@@ -53,12 +54,26 @@
             // 
             this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelX2.Location = new System.Drawing.Point(0, 23);
+            this.labelX2.Location = new System.Drawing.Point(0, 45);
             this.labelX2.Name = "labelX2";
             this.labelX2.Size = new System.Drawing.Size(209, 22);
             this.labelX2.TabIndex = 1;
             this.labelX2.Text = "[\"\" , 0]";
             this.labelX2.DoubleClick += new System.EventHandler(this.Display_DoubleClick);
+            // 
+            // DisplayName
+            // 
+            // 
+            // 
+            // 
+            this.DisplayName.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.DisplayName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.DisplayName.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.DisplayName.Location = new System.Drawing.Point(0, 0);
+            this.DisplayName.Name = "DisplayName";
+            this.DisplayName.Size = new System.Drawing.Size(209, 22);
+            this.DisplayName.TabIndex = 2;
+            this.DisplayName.Text = "位置";
             // 
             // MyPositionDisplay
             // 
@@ -67,8 +82,9 @@
             this.AutoSize = true;
             this.Controls.Add(this.labelX2);
             this.Controls.Add(this.labelX1);
+            this.Controls.Add(this.DisplayName);
             this.Name = "MyPositionDisplay";
-            this.Size = new System.Drawing.Size(209, 45);
+            this.Size = new System.Drawing.Size(209, 67);
             this.ResumeLayout(false);
 
         }
@@ -77,5 +93,6 @@
 
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.LabelX labelX2;
+        private DevComponents.DotNetBar.LabelX DisplayName;
     }
 }

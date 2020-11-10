@@ -39,7 +39,6 @@
             this.BaseAlt = new VPS.Controls.MyControls.MyIntegerInput(this.components);
             this.CoordSystem = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.labelX9 = new DevComponents.DotNetBar.LabelX();
-            this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.WpRad = new VPS.Controls.MyControls.MyIntegerInput(this.components);
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.labelX3 = new DevComponents.DotNetBar.LabelX();
@@ -67,7 +66,6 @@
             this.MainPanel.Controls.Add(this.BaseAlt);
             this.MainPanel.Controls.Add(this.CoordSystem);
             this.MainPanel.Controls.Add(this.labelX9);
-            this.MainPanel.Controls.Add(this.labelX5);
             this.MainPanel.Controls.Add(this.WpRad);
             this.MainPanel.Controls.Add(this.labelX4);
             this.MainPanel.Controls.Add(this.labelX3);
@@ -92,9 +90,10 @@
             // HomePositionDisplay
             // 
             this.HomePositionDisplay.AutoSize = true;
-            this.HomePositionDisplay.Location = new System.Drawing.Point(11, 226);
+            this.HomePositionDisplay.Location = new System.Drawing.Point(11, 201);
             this.HomePositionDisplay.Name = "HomePositionDisplay";
-            this.HomePositionDisplay.Size = new System.Drawing.Size(185, 45);
+            this.HomePositionDisplay.PositionName = "初始位置";
+            this.HomePositionDisplay.Size = new System.Drawing.Size(185, 67);
             this.HomePositionDisplay.TabIndex = 26;
             pointLatLngAlt1.Alt = 0D;
             pointLatLngAlt1.color = System.Drawing.Color.White;
@@ -201,20 +200,6 @@
             this.labelX9.TabIndex = 17;
             this.labelX9.Text = "坐标系统";
             // 
-            // labelX5
-            // 
-            this.labelX5.AutoSize = true;
-            // 
-            // 
-            // 
-            this.labelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX5.Location = new System.Drawing.Point(11, 200);
-            this.labelX5.Name = "labelX5";
-            this.labelX5.Size = new System.Drawing.Size(65, 20);
-            this.labelX5.TabIndex = 9;
-            this.labelX5.Text = "初始位置";
-            // 
             // WpRad
             // 
             this.WpRad.AllowEmptyState = false;
@@ -258,6 +243,7 @@
             // 
             // 
             this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX3.Enabled = false;
             this.labelX3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelX3.Location = new System.Drawing.Point(11, 122);
             this.labelX3.Name = "labelX3";
@@ -276,6 +262,7 @@
             this.WarnAlt.ButtonFreeText.Checked = true;
             this.WarnAlt.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.WarnAlt.DisplayFormat = "0 m";
+            this.WarnAlt.Enabled = false;
             this.WarnAlt.FreeTextEntryMode = true;
             this.WarnAlt.Location = new System.Drawing.Point(82, 121);
             this.WarnAlt.MaxValue = 10000000;
@@ -390,7 +377,6 @@
         private DevComponents.DotNetBar.Controls.ComboBoxEx AltFrame;
         private DevComponents.DotNetBar.Controls.ComboBoxEx CoordSystem;
         private DevComponents.DotNetBar.LabelX labelX9;
-        private DevComponents.DotNetBar.LabelX labelX5;
         private VPS.Controls.MyControls.MyIntegerInput WpRad;
         private DevComponents.DotNetBar.LabelX labelX4;
         private DevComponents.DotNetBar.Controls.CheckBoxX AutoWarnAlt;

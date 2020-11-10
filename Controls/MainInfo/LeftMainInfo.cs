@@ -34,16 +34,29 @@ namespace VPS.Controls.MainInfo
             {
                 home = position;
 
-                HomeLat.Text = home.Lat.ToString("0.######");
-                HomeLng.Text = home.Lng.ToString("0.######");
-                HomeAlt.Text = home.Alt.ToString("0.######");
+                HomePosition.WGS84Position = position;
 
                 DoCalc();
             }
         }
 
         private List<Utilities.PointLatLngAlt> grid = new List<Utilities.PointLatLngAlt>();
-        public void SetWPList(List<Utilities.PointLatLngAlt> wpList)
+
+        private delegate void SetWPListInThread(List<Utilities.PointLatLngAlt> wpList);
+        public void SetWPListHandle(List<Utilities.PointLatLngAlt> wpList)
+        {
+            if (this.InvokeRequired)
+            {
+                SetWPListInThread inThread = new SetWPListInThread(SetWPListHandle);
+                this.Invoke(inThread, new object[] { wpList });
+            }
+            else
+            {
+                SetWPList(wpList);
+            }
+        }
+
+        private void SetWPList(List<Utilities.PointLatLngAlt> wpList)
         {
             CalcBaseAlt(wpList);
             grid.Clear();
@@ -88,11 +101,10 @@ namespace VPS.Controls.MainInfo
             else
             {
                 current = position;
+                current.Tag2 = "Terrain";
                 current.Alt = (Utilities.srtm.getAltitude(current.Lat, current.Lng).alt * CurrentState.multiplieralt);
 
-                CurrentLat.Text = current.Lat.ToString("0.######");
-                CurrentLng.Text = current.Lng.ToString("0.######");
-                CurrentAlt.Text = (Utilities.srtm.getAltitude(current.Lat, current.Lng).alt * CurrentState.multiplieralt).ToString("0.##");
+                CurrentPosition.WGS84Position = current;
 
                 DoCalc();
             }

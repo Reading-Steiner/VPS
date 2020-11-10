@@ -1211,6 +1211,8 @@ namespace VPS.Controls.Command
         private void AutoWarnAlt_CheckedChanged(object sender, EventArgs e)
         {
             isAutoWarn = AutoWarnAlt.Checked;
+            WarnAlt.Enabled = !AutoWarnAlt.Checked;
+            labelX3.Enabled = !AutoWarnAlt.Checked;
         }
         #endregion
 

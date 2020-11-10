@@ -26,6 +26,7 @@ namespace VPS.Controls.Layer
         string FullFileName = "";
         string FileExtend = "";
         Utilities.PointLatLngAlt PointLeftTop;
+        Utilities.PointLatLngAlt PointHome;
         long FileSize = 0;
         long RasterXSize = 0;
         long RasterYSize = 0;
@@ -306,6 +307,11 @@ namespace VPS.Controls.Layer
                             RasterXSize = info.RasterXSize;
                             RasterYSize = info.RasterYSize;
                             PointLeftTop = info.Rect.LocationTopLeft;
+
+                            PointHome = info.Rect.LocationTopLeft;
+                            PointHome.Tag = VPS.WP.WPCommands.HomeCommand;
+                            PointHome.Tag2 = "Terrain";
+                            OriginPosition.WGS84Position = PointHome; 
                         }
                     }
                     catch (Exception ex) {

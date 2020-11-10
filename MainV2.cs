@@ -3285,7 +3285,7 @@ namespace VPS
             GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
 
             GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetHomePosition;
-            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetWPList;
+            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetWPListHandle;
             GCSViews.FlightPlanner.instance.CurrentChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetCurrentPosition;
 
             GCSViews.FlightPlanner.instance.EnterDrawPolygonHandle += ToDrawPolygonState;

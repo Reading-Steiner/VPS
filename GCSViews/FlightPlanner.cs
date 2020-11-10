@@ -6189,6 +6189,9 @@ namespace VPS.GCSViews
         #region SetHome 入口函数
         private void SetHomeHere(PointLatLngAlt position)
         {
+            if (position.Tag != VPS.WP.WPCommands.HomeCommand)
+                position.Tag = VPS.WP.WPCommands.HomeCommand;
+
             homePosition = position;
 
             if (IsAllowSendDataChange())
