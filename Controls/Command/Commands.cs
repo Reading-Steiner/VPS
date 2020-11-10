@@ -620,6 +620,7 @@ namespace VPS.Controls.Command
 
         public WPListChangeHandle WPListChange;
         List<Utilities.PointLatLngAlt> wpLists = new List<Utilities.PointLatLngAlt>();
+        bool settingWP = false;
 
         #region SetWPList 方法
         private delegate void SetWPListInThread(List<Utilities.PointLatLngAlt> wpList);
@@ -634,9 +635,13 @@ namespace VPS.Controls.Command
             }
             else
             {
-                StopSendListChange();
-                SetWPList(wpList);
-                StartSendListChange();
+                Task.Run(() =>
+                {
+                    StopSendListChange();
+                    SetWPList(wpList);
+                    StartSendListChange();
+                });
+
             }
         }
         #endregion
@@ -644,15 +649,24 @@ namespace VPS.Controls.Command
         #region 入口函数
         private void SetWPList(List<Utilities.PointLatLngAlt> wpList)
         {
+            lock (this)
+            {
+                if (settingWP)
+                    return;
+                else
+                    settingWP = true;
+            }
+            wpLists = wpList;
+            GeneralBaseAlt();
 
-                wpLists = wpList;
-                GeneralBaseAlt();
+            BindingDataSource(wpList);
 
-                Task.Run(() => BindingDataSource(wpList));
-
+            lock (this)
+            {
+                settingWP = false;
                 if (IsAllowSendListChange())
                     WPListChange?.Invoke(GetWPList());
-
+            }
         }
         #endregion
 

@@ -6269,9 +6269,12 @@ namespace VPS.GCSViews
             }
             else
             {
-                StopSendListChange();
-                SetWPList(wpList);
-                StartSendListChange();
+                Task.Run(()=> 
+                {
+                    StopSendListChange();
+                    SetWPList(wpList);
+                    StartSendListChange();
+                });
             }
         }
 

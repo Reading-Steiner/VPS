@@ -779,23 +779,6 @@ namespace VPS
 
             MainV2.comPort.MavChanged += comPort_MavChanged;
 
-            // save config to test we have write access
-            SetInitHandler();
-            layerCache = new VPS.Layer.MemoryLayerCache();
-            //var layer = MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
-            //if (layer != null)
-            //{
-            //    GMap.NET.Internals.LayerInfo layerInfo = (GMap.NET.Internals.LayerInfo)layer;
-            //    AddLayerOverlay(layerInfo);
-
-            //}
-            if (!LoadDefaultLayer())
-            {
-                Settings.Instance["defaultTiffLayer"] = "";
-            }
-
-
-
             SaveConfig();
         }
 
@@ -3879,6 +3862,20 @@ namespace VPS
             GMapMarkerBase.DisplayNavBearing = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayNavBearing", true);
             GMapMarkerBase.DisplayRadius = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayRadius", true);
             GMapMarkerBase.DisplayTarget = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayTarget", true);
+
+            SetInitHandler();
+            layerCache = new VPS.Layer.MemoryLayerCache();
+            //var layer = MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
+            //if (layer != null)
+            //{
+            //    GMap.NET.Internals.LayerInfo layerInfo = (GMap.NET.Internals.LayerInfo)layer;
+            //    AddLayerOverlay(layerInfo);
+
+            //}
+            if (!LoadDefaultLayer())
+            {
+                Settings.Instance["defaultTiffLayer"] = "";
+            }
         }
         #endregion
 
