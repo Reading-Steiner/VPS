@@ -82,7 +82,7 @@ namespace VPS.Controls.Grid
 
         private void AltFrameSelecter_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Position.Tag2 = AltFrameSelecter.SelectedText;
+            Position.Tag2 = AltFrameSelecter.SelectedItem.ToString();
         }
 
         private void AltInput_ValueChanged(object sender, EventArgs e)
