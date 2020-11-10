@@ -36,6 +36,11 @@
             this.AdvanceAirLineBox = new DevComponents.DotNetBar.PanelEx();
             this.CorridorInfoBox = new DevComponents.DotNetBar.PanelEx();
             this.labelX18 = new DevComponents.DotNetBar.LabelX();
+            this.num_corridorwidth = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.NUM_Lane_Dist = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.NUM_leadin = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.NUM_overshoot2 = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.NUM_overshoot = new VPS.Controls.MyControls.MyIntegerInput(this.components);
             this.chk_spiral = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.chk_Corridor = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.chk_crossgrid = new DevComponents.DotNetBar.Controls.CheckBoxX();
@@ -44,6 +49,10 @@
             this.labelX13 = new DevComponents.DotNetBar.LabelX();
             this.labelX12 = new DevComponents.DotNetBar.LabelX();
             this.AirLineBox = new DevComponents.DotNetBar.PanelEx();
+            this.num_sidelap = new VPS.Controls.MyControls.MyDoubleInput(this.components);
+            this.num_overlap = new VPS.Controls.MyControls.MyDoubleInput(this.components);
+            this.num_spacing = new VPS.Controls.MyControls.MyDoubleInput(this.components);
+            this.Num_Distance = new VPS.Controls.MyControls.MyDoubleInput(this.components);
             this.ShowAdvanceOptions = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.labelX10 = new DevComponents.DotNetBar.LabelX();
             this.labelX9 = new DevComponents.DotNetBar.LabelX();
@@ -52,16 +61,22 @@
             this.FlightBox = new DevComponents.DotNetBar.PanelEx();
             this.LockAngle = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.DefaultAngle = new DevComponents.DotNetBar.ButtonX();
+            this.num_angle = new VPS.Controls.MyControls.MyDoubleInput(this.components);
             this.labelX17 = new DevComponents.DotNetBar.LabelX();
             this.CMB_startfrom = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.labelX14 = new DevComponents.DotNetBar.LabelX();
+            this.Num_GndeLev = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.NUM_altitude = new VPS.Controls.MyControls.MyIntegerInput(this.components);
             this.labelX11 = new DevComponents.DotNetBar.LabelX();
             this.labelX6 = new DevComponents.DotNetBar.LabelX();
             this.panelEx14 = new DevComponents.DotNetBar.PanelEx();
             this.label14 = new System.Windows.Forms.Label();
             this.panelEx4 = new DevComponents.DotNetBar.PanelEx();
+            this.TXT_FovH = new VPS.Controls.MyControls.MyDoubleInput(this.components);
             this.labelX20 = new DevComponents.DotNetBar.LabelX();
+            this.TXT_FovV = new VPS.Controls.MyControls.MyDoubleInput(this.components);
             this.labelX19 = new DevComponents.DotNetBar.LabelX();
+            this.TXT_cmPixel = new VPS.Controls.MyControls.MyDoubleInput(this.components);
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.panelEx5 = new DevComponents.DotNetBar.PanelEx();
             this.label1 = new System.Windows.Forms.Label();
@@ -70,6 +85,10 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.TXT_SensHeight = new VPS.Controls.MyControls.MyDoubleInput(this.components);
+            this.TXT_SensWidth = new VPS.Controls.MyControls.MyDoubleInput(this.components);
+            this.TXT_ImgHeight = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.TXT_ImgWidth = new VPS.Controls.MyControls.MyIntegerInput(this.components);
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.CameraInfo = new DevComponents.DotNetBar.PanelEx();
@@ -79,6 +98,7 @@
             this.CMB_Camera = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX3 = new DevComponents.DotNetBar.LabelX();
+            this.NUM_FocalLength = new VPS.Controls.MyControls.MyDoubleInput(this.components);
             this.panelEx6 = new DevComponents.DotNetBar.PanelEx();
             this.label6 = new System.Windows.Forms.Label();
             this.HandBox = new DevComponents.DotNetBar.PanelEx();
@@ -86,69 +106,49 @@
             this.GeneralWP = new DevComponents.DotNetBar.ButtonX();
             this.DelayBox = new DevComponents.DotNetBar.PanelEx();
             this.labelX21 = new DevComponents.DotNetBar.LabelX();
+            this.NUM_WPDelayTime = new VPS.Controls.MyControls.MyDoubleInput(this.components);
             this.ConfigPanel = new DevComponents.DotNetBar.PanelEx();
             this.CHK_AutoGeneralWP = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.ConfigTitle = new DevComponents.DotNetBar.PanelEx();
             this.label3 = new System.Windows.Forms.Label();
             this.defaultAngleTooltip = new DevComponents.DotNetBar.SuperTooltip();
-            this.num_corridorwidth = new VPS.Controls.MyControls.MyIntegerInput(this.components);
-            this.NUM_Lane_Dist = new VPS.Controls.MyControls.MyIntegerInput(this.components);
-            this.NUM_leadin = new VPS.Controls.MyControls.MyIntegerInput(this.components);
-            this.NUM_overshoot2 = new VPS.Controls.MyControls.MyIntegerInput(this.components);
-            this.NUM_overshoot = new VPS.Controls.MyControls.MyIntegerInput(this.components);
-            this.num_sidelap = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.num_overlap = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.num_spacing = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.Num_Distance = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.num_angle = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.Num_GndeLev = new VPS.Controls.MyControls.MyIntegerInput(this.components);
-            this.NUM_altitude = new VPS.Controls.MyControls.MyIntegerInput(this.components);
-            this.TXT_FovH = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.TXT_FovV = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.TXT_cmPixel = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.TXT_SensHeight = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.TXT_SensWidth = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.TXT_ImgHeight = new VPS.Controls.MyControls.MyIntegerInput(this.components);
-            this.TXT_ImgWidth = new VPS.Controls.MyControls.MyIntegerInput(this.components);
-            this.NUM_FocalLength = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.NUM_WPDelayTime = new VPS.Controls.MyControls.MyDoubleInput(this.components);
             this.panelEx1.SuspendLayout();
             this.panelEx9.SuspendLayout();
             this.AdvanceAirLineBox.SuspendLayout();
             this.CorridorInfoBox.SuspendLayout();
-            this.AirLineBox.SuspendLayout();
-            this.FlightBox.SuspendLayout();
-            this.panelEx14.SuspendLayout();
-            this.panelEx4.SuspendLayout();
-            this.panelEx5.SuspendLayout();
-            this.CameraDetailBox.SuspendLayout();
-            this.CameraInfo.SuspendLayout();
-            this.panelEx6.SuspendLayout();
-            this.HandBox.SuspendLayout();
-            this.DelayBox.SuspendLayout();
-            this.ConfigPanel.SuspendLayout();
-            this.ConfigTitle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_corridorwidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_Lane_Dist)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_leadin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_overshoot2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_overshoot)).BeginInit();
+            this.AirLineBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_sidelap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_overlap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_spacing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Num_Distance)).BeginInit();
+            this.FlightBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_angle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Num_GndeLev)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_altitude)).BeginInit();
+            this.panelEx14.SuspendLayout();
+            this.panelEx4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TXT_FovH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TXT_FovV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TXT_cmPixel)).BeginInit();
+            this.panelEx5.SuspendLayout();
+            this.CameraDetailBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TXT_SensHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TXT_SensWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TXT_ImgHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TXT_ImgWidth)).BeginInit();
+            this.CameraInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_FocalLength)).BeginInit();
+            this.panelEx6.SuspendLayout();
+            this.HandBox.SuspendLayout();
+            this.DelayBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_WPDelayTime)).BeginInit();
+            this.ConfigPanel.SuspendLayout();
+            this.ConfigTitle.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelEx1
@@ -287,6 +287,109 @@
             this.labelX18.TabIndex = 55;
             this.labelX18.Text = "廊道宽度";
             // 
+            // num_corridorwidth
+            // 
+            this.num_corridorwidth.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.num_corridorwidth.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.num_corridorwidth.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.num_corridorwidth.ButtonFreeText.Checked = true;
+            this.num_corridorwidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.num_corridorwidth.DisplayFormat = "0 m";
+            this.num_corridorwidth.FreeTextEntryMode = true;
+            this.num_corridorwidth.Location = new System.Drawing.Point(72, 2);
+            this.num_corridorwidth.MaxValue = 100000;
+            this.num_corridorwidth.MinValue = 0;
+            this.num_corridorwidth.Name = "num_corridorwidth";
+            this.num_corridorwidth.ShowUpDown = true;
+            this.num_corridorwidth.Size = new System.Drawing.Size(73, 21);
+            this.num_corridorwidth.TabIndex = 60;
+            this.num_corridorwidth.ValueChanged += new System.EventHandler(this.num_corridorwidth_ValueChanged);
+            // 
+            // NUM_Lane_Dist
+            // 
+            this.NUM_Lane_Dist.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.NUM_Lane_Dist.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_Lane_Dist.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_Lane_Dist.ButtonFreeText.Checked = true;
+            this.NUM_Lane_Dist.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_Lane_Dist.DisplayFormat = "0";
+            this.NUM_Lane_Dist.FreeTextEntryMode = true;
+            this.NUM_Lane_Dist.Location = new System.Drawing.Point(237, 5);
+            this.NUM_Lane_Dist.Name = "NUM_Lane_Dist";
+            this.NUM_Lane_Dist.ShowUpDown = true;
+            this.NUM_Lane_Dist.Size = new System.Drawing.Size(73, 21);
+            this.NUM_Lane_Dist.TabIndex = 59;
+            this.NUM_Lane_Dist.ValueChanged += new System.EventHandler(this.NUM_Lane_Dist_ValueChanged);
+            // 
+            // NUM_leadin
+            // 
+            this.NUM_leadin.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.NUM_leadin.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_leadin.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_leadin.ButtonFreeText.Checked = true;
+            this.NUM_leadin.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_leadin.DisplayFormat = "0 m";
+            this.NUM_leadin.FreeTextEntryMode = true;
+            this.NUM_leadin.Location = new System.Drawing.Point(87, 57);
+            this.NUM_leadin.MaxValue = 10000;
+            this.NUM_leadin.MinValue = -10000;
+            this.NUM_leadin.Name = "NUM_leadin";
+            this.NUM_leadin.ShowUpDown = true;
+            this.NUM_leadin.Size = new System.Drawing.Size(73, 21);
+            this.NUM_leadin.TabIndex = 58;
+            this.NUM_leadin.ValueChanged += new System.EventHandler(this.NUM_leadin_ValueChanged);
+            // 
+            // NUM_overshoot2
+            // 
+            this.NUM_overshoot2.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.NUM_overshoot2.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_overshoot2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_overshoot2.ButtonFreeText.Checked = true;
+            this.NUM_overshoot2.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_overshoot2.DisplayFormat = "0 m";
+            this.NUM_overshoot2.FreeTextEntryMode = true;
+            this.NUM_overshoot2.Location = new System.Drawing.Point(87, 31);
+            this.NUM_overshoot2.MaxValue = 10000;
+            this.NUM_overshoot2.MinValue = -10000;
+            this.NUM_overshoot2.Name = "NUM_overshoot2";
+            this.NUM_overshoot2.ShowUpDown = true;
+            this.NUM_overshoot2.Size = new System.Drawing.Size(73, 21);
+            this.NUM_overshoot2.TabIndex = 57;
+            this.NUM_overshoot2.ValueChanged += new System.EventHandler(this.NUM_overshoot2_ValueChanged);
+            // 
+            // NUM_overshoot
+            // 
+            this.NUM_overshoot.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.NUM_overshoot.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_overshoot.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_overshoot.ButtonFreeText.Checked = true;
+            this.NUM_overshoot.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_overshoot.DisplayFormat = "0 m";
+            this.NUM_overshoot.FreeTextEntryMode = true;
+            this.NUM_overshoot.Location = new System.Drawing.Point(87, 5);
+            this.NUM_overshoot.MaxValue = 10000;
+            this.NUM_overshoot.MinValue = -10000;
+            this.NUM_overshoot.Name = "NUM_overshoot";
+            this.NUM_overshoot.ShowUpDown = true;
+            this.NUM_overshoot.Size = new System.Drawing.Size(73, 21);
+            this.NUM_overshoot.TabIndex = 56;
+            this.NUM_overshoot.ValueChanged += new System.EventHandler(this.NUM_overshoot_ValueChanged);
+            // 
             // chk_spiral
             // 
             // 
@@ -402,6 +505,82 @@
             this.AirLineBox.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.AirLineBox.Style.GradientAngle = 90;
             this.AirLineBox.TabIndex = 42;
+            // 
+            // num_sidelap
+            // 
+            this.num_sidelap.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.num_sidelap.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.num_sidelap.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.num_sidelap.ButtonFreeText.Checked = true;
+            this.num_sidelap.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.num_sidelap.DisplayFormat = "0.## \\%";
+            this.num_sidelap.FreeTextEntryMode = true;
+            this.num_sidelap.Increment = 0.01D;
+            this.num_sidelap.Location = new System.Drawing.Point(87, 35);
+            this.num_sidelap.MaxValue = 100D;
+            this.num_sidelap.MinValue = 0D;
+            this.num_sidelap.Name = "num_sidelap";
+            this.num_sidelap.ShowUpDown = true;
+            this.num_sidelap.Size = new System.Drawing.Size(73, 21);
+            this.num_sidelap.TabIndex = 57;
+            this.num_sidelap.ValueChanged += new System.EventHandler(this.num_sidelap_ValueChanged);
+            // 
+            // num_overlap
+            // 
+            this.num_overlap.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.num_overlap.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.num_overlap.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.num_overlap.ButtonFreeText.Checked = true;
+            this.num_overlap.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.num_overlap.DisplayFormat = "0.## \\%";
+            this.num_overlap.FreeTextEntryMode = true;
+            this.num_overlap.Increment = 0.01D;
+            this.num_overlap.Location = new System.Drawing.Point(87, 6);
+            this.num_overlap.MaxValue = 100D;
+            this.num_overlap.MinValue = 0D;
+            this.num_overlap.Name = "num_overlap";
+            this.num_overlap.ShowUpDown = true;
+            this.num_overlap.Size = new System.Drawing.Size(73, 21);
+            this.num_overlap.TabIndex = 56;
+            this.num_overlap.ValueChanged += new System.EventHandler(this.num_overlap_ValueChanged);
+            // 
+            // num_spacing
+            // 
+            // 
+            // 
+            // 
+            this.num_spacing.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.num_spacing.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.num_spacing.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.num_spacing.DisplayFormat = "0.## m";
+            this.num_spacing.Increment = 0.01D;
+            this.num_spacing.Location = new System.Drawing.Point(237, 35);
+            this.num_spacing.Name = "num_spacing";
+            this.num_spacing.Size = new System.Drawing.Size(73, 21);
+            this.num_spacing.TabIndex = 54;
+            this.num_spacing.ValueChanged += new System.EventHandler(this.NUM_spacing_ValueChanged);
+            // 
+            // Num_Distance
+            // 
+            // 
+            // 
+            // 
+            this.Num_Distance.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.Num_Distance.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.Num_Distance.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.Num_Distance.DisplayFormat = "0.## m";
+            this.Num_Distance.Increment = 0.01D;
+            this.Num_Distance.Location = new System.Drawing.Point(237, 6);
+            this.Num_Distance.Name = "Num_Distance";
+            this.Num_Distance.Size = new System.Drawing.Size(73, 21);
+            this.Num_Distance.TabIndex = 51;
+            this.Num_Distance.ValueChanged += new System.EventHandler(this.NUM_Distance_ValueChanged);
             // 
             // ShowAdvanceOptions
             // 
@@ -519,6 +698,28 @@
             this.DefaultAngle.Text = "默认";
             this.DefaultAngle.Click += new System.EventHandler(this.defaultAngle_Click);
             // 
+            // num_angle
+            // 
+            this.num_angle.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.num_angle.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.num_angle.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.num_angle.ButtonFreeText.Checked = true;
+            this.num_angle.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.num_angle.DisplayFormat = "0.## °";
+            this.num_angle.FreeTextEntryMode = true;
+            this.num_angle.Increment = 0.1D;
+            this.num_angle.Location = new System.Drawing.Point(87, 31);
+            this.num_angle.MaxValue = 360D;
+            this.num_angle.MinValue = 0D;
+            this.num_angle.Name = "num_angle";
+            this.num_angle.ShowUpDown = true;
+            this.num_angle.Size = new System.Drawing.Size(73, 21);
+            this.num_angle.TabIndex = 57;
+            this.num_angle.ValueChanged += new System.EventHandler(this.NUM_angle_ValueChanged);
+            // 
             // labelX17
             // 
             // 
@@ -557,6 +758,44 @@
             this.labelX14.Size = new System.Drawing.Size(54, 18);
             this.labelX14.TabIndex = 49;
             this.labelX14.Text = "起始位置";
+            // 
+            // Num_GndeLev
+            // 
+            // 
+            // 
+            // 
+            this.Num_GndeLev.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.Num_GndeLev.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.Num_GndeLev.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.Num_GndeLev.DisplayFormat = "0 m";
+            this.Num_GndeLev.Location = new System.Drawing.Point(237, 3);
+            this.Num_GndeLev.MaxValue = 100000;
+            this.Num_GndeLev.MinValue = -10000;
+            this.Num_GndeLev.Name = "Num_GndeLev";
+            this.Num_GndeLev.Size = new System.Drawing.Size(73, 21);
+            this.Num_GndeLev.TabIndex = 47;
+            this.Num_GndeLev.ValueChanged += new System.EventHandler(this.lbl_gndelev_ValueChanged);
+            // 
+            // NUM_altitude
+            // 
+            this.NUM_altitude.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.NUM_altitude.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_altitude.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_altitude.ButtonFreeText.Checked = true;
+            this.NUM_altitude.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_altitude.DisplayFormat = "0 m";
+            this.NUM_altitude.FreeTextEntryMode = true;
+            this.NUM_altitude.Location = new System.Drawing.Point(87, 4);
+            this.NUM_altitude.MaxValue = 100000;
+            this.NUM_altitude.MinValue = -10000;
+            this.NUM_altitude.Name = "NUM_altitude";
+            this.NUM_altitude.ShowUpDown = true;
+            this.NUM_altitude.Size = new System.Drawing.Size(73, 21);
+            this.NUM_altitude.TabIndex = 46;
+            this.NUM_altitude.ValueChanged += new System.EventHandler(this.NUM_altitude_ValueChanged);
             // 
             // labelX11
             // 
@@ -646,6 +885,23 @@
             this.panelEx4.Style.GradientAngle = 90;
             this.panelEx4.TabIndex = 38;
             // 
+            // TXT_FovH
+            // 
+            // 
+            // 
+            // 
+            this.TXT_FovH.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TXT_FovH.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TXT_FovH.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TXT_FovH.DisplayFormat = "0.## m";
+            this.TXT_FovH.Increment = 0D;
+            this.TXT_FovH.Location = new System.Drawing.Point(114, 30);
+            this.TXT_FovH.MaxValue = 10000000D;
+            this.TXT_FovH.MinValue = 0D;
+            this.TXT_FovH.Name = "TXT_FovH";
+            this.TXT_FovH.Size = new System.Drawing.Size(80, 21);
+            this.TXT_FovH.TabIndex = 59;
+            // 
             // labelX20
             // 
             // 
@@ -658,6 +914,23 @@
             this.labelX20.TabIndex = 58;
             this.labelX20.Text = "水平视野";
             // 
+            // TXT_FovV
+            // 
+            // 
+            // 
+            // 
+            this.TXT_FovV.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TXT_FovV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TXT_FovV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TXT_FovV.DisplayFormat = "0.## m";
+            this.TXT_FovV.Increment = 0D;
+            this.TXT_FovV.Location = new System.Drawing.Point(114, 57);
+            this.TXT_FovV.MaxValue = 10000000D;
+            this.TXT_FovV.MinValue = 0D;
+            this.TXT_FovV.Name = "TXT_FovV";
+            this.TXT_FovV.Size = new System.Drawing.Size(80, 21);
+            this.TXT_FovV.TabIndex = 57;
+            // 
             // labelX19
             // 
             // 
@@ -669,6 +942,23 @@
             this.labelX19.Size = new System.Drawing.Size(82, 20);
             this.labelX19.TabIndex = 56;
             this.labelX19.Text = "垂直视野";
+            // 
+            // TXT_cmPixel
+            // 
+            // 
+            // 
+            // 
+            this.TXT_cmPixel.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TXT_cmPixel.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TXT_cmPixel.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TXT_cmPixel.DisplayFormat = "0.## m";
+            this.TXT_cmPixel.Increment = 0D;
+            this.TXT_cmPixel.Location = new System.Drawing.Point(114, 3);
+            this.TXT_cmPixel.MaxValue = 10000000D;
+            this.TXT_cmPixel.MinValue = 0D;
+            this.TXT_cmPixel.Name = "TXT_cmPixel";
+            this.TXT_cmPixel.Size = new System.Drawing.Size(80, 21);
+            this.TXT_cmPixel.TabIndex = 55;
             // 
             // labelX2
             // 
@@ -786,6 +1076,78 @@
             this.label5.Size = new System.Drawing.Size(17, 12);
             this.label5.TabIndex = 45;
             this.label5.Text = "高";
+            // 
+            // TXT_SensHeight
+            // 
+            this.TXT_SensHeight.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.TXT_SensHeight.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TXT_SensHeight.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TXT_SensHeight.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TXT_SensHeight.DisplayFormat = "0.## mm";
+            this.TXT_SensHeight.Increment = 0D;
+            this.TXT_SensHeight.Location = new System.Drawing.Point(192, 65);
+            this.TXT_SensHeight.MaxValue = 100000D;
+            this.TXT_SensHeight.MinValue = 0D;
+            this.TXT_SensHeight.Name = "TXT_SensHeight";
+            this.TXT_SensHeight.Size = new System.Drawing.Size(81, 21);
+            this.TXT_SensHeight.TabIndex = 44;
+            // 
+            // TXT_SensWidth
+            // 
+            this.TXT_SensWidth.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.TXT_SensWidth.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TXT_SensWidth.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TXT_SensWidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TXT_SensWidth.DisplayFormat = "0.## mm";
+            this.TXT_SensWidth.Increment = 0D;
+            this.TXT_SensWidth.Location = new System.Drawing.Point(67, 65);
+            this.TXT_SensWidth.MaxValue = 100000D;
+            this.TXT_SensWidth.MinValue = 0D;
+            this.TXT_SensWidth.Name = "TXT_SensWidth";
+            this.TXT_SensWidth.Size = new System.Drawing.Size(81, 21);
+            this.TXT_SensWidth.TabIndex = 43;
+            // 
+            // TXT_ImgHeight
+            // 
+            this.TXT_ImgHeight.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.TXT_ImgHeight.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TXT_ImgHeight.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TXT_ImgHeight.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TXT_ImgHeight.DisplayFormat = "0";
+            this.TXT_ImgHeight.Increment = 0;
+            this.TXT_ImgHeight.Location = new System.Drawing.Point(192, 21);
+            this.TXT_ImgHeight.MaxValue = 10000000;
+            this.TXT_ImgHeight.MinValue = 0;
+            this.TXT_ImgHeight.Name = "TXT_ImgHeight";
+            this.TXT_ImgHeight.Size = new System.Drawing.Size(81, 21);
+            this.TXT_ImgHeight.TabIndex = 42;
+            // 
+            // TXT_ImgWidth
+            // 
+            this.TXT_ImgWidth.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.TXT_ImgWidth.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.TXT_ImgWidth.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TXT_ImgWidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.TXT_ImgWidth.DisplayFormat = "0";
+            this.TXT_ImgWidth.Increment = 0;
+            this.TXT_ImgWidth.Location = new System.Drawing.Point(67, 21);
+            this.TXT_ImgWidth.MaxValue = 10000000;
+            this.TXT_ImgWidth.MinValue = 0;
+            this.TXT_ImgWidth.Name = "TXT_ImgWidth";
+            this.TXT_ImgWidth.Size = new System.Drawing.Size(81, 21);
+            this.TXT_ImgWidth.TabIndex = 41;
             // 
             // labelX5
             // 
@@ -916,6 +1278,28 @@
             this.labelX3.TabIndex = 38;
             this.labelX3.Text = "焦距";
             // 
+            // NUM_FocalLength
+            // 
+            this.NUM_FocalLength.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.NUM_FocalLength.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_FocalLength.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_FocalLength.ButtonFreeText.Checked = true;
+            this.NUM_FocalLength.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_FocalLength.DisplayFormat = "0.## mm";
+            this.NUM_FocalLength.FreeTextEntryMode = true;
+            this.NUM_FocalLength.Increment = 1D;
+            this.NUM_FocalLength.Location = new System.Drawing.Point(68, 29);
+            this.NUM_FocalLength.MaxValue = 100000D;
+            this.NUM_FocalLength.MinValue = 0D;
+            this.NUM_FocalLength.Name = "NUM_FocalLength";
+            this.NUM_FocalLength.ShowUpDown = true;
+            this.NUM_FocalLength.Size = new System.Drawing.Size(80, 21);
+            this.NUM_FocalLength.TabIndex = 38;
+            this.NUM_FocalLength.ValueChanged += new System.EventHandler(this.NUM_focallength_ValueChanged);
+            // 
             // panelEx6
             // 
             this.panelEx6.AutoSize = true;
@@ -988,6 +1372,7 @@
             this.CHK_UseGeneralWPKey.Name = "CHK_UseGeneralWPKey";
             this.CHK_UseGeneralWPKey.Size = new System.Drawing.Size(88, 18);
             this.CHK_UseGeneralWPKey.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.defaultAngleTooltip.SetSuperTooltip(this.CHK_UseGeneralWPKey, new DevComponents.DotNetBar.SuperTooltipInfo("Ctrl+ F5", "", "", null, null, DevComponents.DotNetBar.eTooltipColor.System));
             this.CHK_UseGeneralWPKey.TabIndex = 43;
             this.CHK_UseGeneralWPKey.Text = "启用快捷键";
             this.CHK_UseGeneralWPKey.CheckedChanged += new System.EventHandler(this.CHK_UseGeneralWPKey_CheckedChanged);
@@ -1038,6 +1423,29 @@
             this.labelX21.Size = new System.Drawing.Size(81, 18);
             this.labelX21.TabIndex = 43;
             this.labelX21.Text = "航点生成延迟";
+            // 
+            // NUM_WPDelayTime
+            // 
+            this.NUM_WPDelayTime.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.NUM_WPDelayTime.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.NUM_WPDelayTime.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.NUM_WPDelayTime.ButtonFreeText.Checked = true;
+            this.NUM_WPDelayTime.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.NUM_WPDelayTime.DisplayFormat = "0.# s";
+            this.NUM_WPDelayTime.FreeTextEntryMode = true;
+            this.NUM_WPDelayTime.Increment = 0.1D;
+            this.NUM_WPDelayTime.Location = new System.Drawing.Point(114, 3);
+            this.NUM_WPDelayTime.MaxValue = 50D;
+            this.NUM_WPDelayTime.MinValue = 0.2D;
+            this.NUM_WPDelayTime.Name = "NUM_WPDelayTime";
+            this.NUM_WPDelayTime.ShowUpDown = true;
+            this.NUM_WPDelayTime.Size = new System.Drawing.Size(80, 21);
+            this.NUM_WPDelayTime.TabIndex = 42;
+            this.NUM_WPDelayTime.Value = 1D;
+            this.NUM_WPDelayTime.ValueChanged += new System.EventHandler(this.NUM_WPDelayTime_ValueChanged);
             // 
             // ConfigPanel
             // 
@@ -1113,413 +1521,6 @@
             this.label3.TabIndex = 26;
             this.label3.Text = "设置";
             // 
-            // num_corridorwidth
-            // 
-            this.num_corridorwidth.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.num_corridorwidth.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.num_corridorwidth.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.num_corridorwidth.ButtonFreeText.Checked = true;
-            this.num_corridorwidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.num_corridorwidth.DisplayFormat = "0 m";
-            this.num_corridorwidth.FreeTextEntryMode = true;
-            this.num_corridorwidth.Location = new System.Drawing.Point(72, 2);
-            this.num_corridorwidth.MaxValue = 100000;
-            this.num_corridorwidth.MinValue = 0;
-            this.num_corridorwidth.Name = "num_corridorwidth";
-            this.num_corridorwidth.ShowUpDown = true;
-            this.num_corridorwidth.Size = new System.Drawing.Size(73, 21);
-            this.num_corridorwidth.TabIndex = 60;
-            this.num_corridorwidth.ValueChanged += new System.EventHandler(this.num_corridorwidth_ValueChanged);
-            // 
-            // NUM_Lane_Dist
-            // 
-            this.NUM_Lane_Dist.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.NUM_Lane_Dist.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.NUM_Lane_Dist.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.NUM_Lane_Dist.ButtonFreeText.Checked = true;
-            this.NUM_Lane_Dist.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.NUM_Lane_Dist.DisplayFormat = "0";
-            this.NUM_Lane_Dist.FreeTextEntryMode = true;
-            this.NUM_Lane_Dist.Location = new System.Drawing.Point(237, 5);
-            this.NUM_Lane_Dist.Name = "NUM_Lane_Dist";
-            this.NUM_Lane_Dist.ShowUpDown = true;
-            this.NUM_Lane_Dist.Size = new System.Drawing.Size(73, 21);
-            this.NUM_Lane_Dist.TabIndex = 59;
-            this.NUM_Lane_Dist.ValueChanged += new System.EventHandler(this.NUM_Lane_Dist_ValueChanged);
-            // 
-            // NUM_leadin
-            // 
-            this.NUM_leadin.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.NUM_leadin.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.NUM_leadin.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.NUM_leadin.ButtonFreeText.Checked = true;
-            this.NUM_leadin.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.NUM_leadin.DisplayFormat = "0 m";
-            this.NUM_leadin.FreeTextEntryMode = true;
-            this.NUM_leadin.Location = new System.Drawing.Point(87, 57);
-            this.NUM_leadin.MaxValue = 10000;
-            this.NUM_leadin.MinValue = -10000;
-            this.NUM_leadin.Name = "NUM_leadin";
-            this.NUM_leadin.ShowUpDown = true;
-            this.NUM_leadin.Size = new System.Drawing.Size(73, 21);
-            this.NUM_leadin.TabIndex = 58;
-            this.NUM_leadin.ValueChanged += new System.EventHandler(this.NUM_leadin_ValueChanged);
-            // 
-            // NUM_overshoot2
-            // 
-            this.NUM_overshoot2.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.NUM_overshoot2.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.NUM_overshoot2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.NUM_overshoot2.ButtonFreeText.Checked = true;
-            this.NUM_overshoot2.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.NUM_overshoot2.DisplayFormat = "0 m";
-            this.NUM_overshoot2.FreeTextEntryMode = true;
-            this.NUM_overshoot2.Location = new System.Drawing.Point(87, 31);
-            this.NUM_overshoot2.MaxValue = 10000;
-            this.NUM_overshoot2.MinValue = -10000;
-            this.NUM_overshoot2.Name = "NUM_overshoot2";
-            this.NUM_overshoot2.ShowUpDown = true;
-            this.NUM_overshoot2.Size = new System.Drawing.Size(73, 21);
-            this.NUM_overshoot2.TabIndex = 57;
-            this.NUM_overshoot2.ValueChanged += new System.EventHandler(this.NUM_overshoot2_ValueChanged);
-            // 
-            // NUM_overshoot
-            // 
-            this.NUM_overshoot.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.NUM_overshoot.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.NUM_overshoot.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.NUM_overshoot.ButtonFreeText.Checked = true;
-            this.NUM_overshoot.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.NUM_overshoot.DisplayFormat = "0 m";
-            this.NUM_overshoot.FreeTextEntryMode = true;
-            this.NUM_overshoot.Location = new System.Drawing.Point(87, 5);
-            this.NUM_overshoot.MaxValue = 10000;
-            this.NUM_overshoot.MinValue = -10000;
-            this.NUM_overshoot.Name = "NUM_overshoot";
-            this.NUM_overshoot.ShowUpDown = true;
-            this.NUM_overshoot.Size = new System.Drawing.Size(73, 21);
-            this.NUM_overshoot.TabIndex = 56;
-            this.NUM_overshoot.ValueChanged += new System.EventHandler(this.NUM_overshoot_ValueChanged);
-            // 
-            // num_sidelap
-            // 
-            this.num_sidelap.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.num_sidelap.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.num_sidelap.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.num_sidelap.ButtonFreeText.Checked = true;
-            this.num_sidelap.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.num_sidelap.DisplayFormat = "0.## \\%";
-            this.num_sidelap.FreeTextEntryMode = true;
-            this.num_sidelap.Increment = 0.01D;
-            this.num_sidelap.Location = new System.Drawing.Point(87, 35);
-            this.num_sidelap.MaxValue = 100D;
-            this.num_sidelap.MinValue = 0D;
-            this.num_sidelap.Name = "num_sidelap";
-            this.num_sidelap.ShowUpDown = true;
-            this.num_sidelap.Size = new System.Drawing.Size(73, 21);
-            this.num_sidelap.TabIndex = 57;
-            this.num_sidelap.ValueChanged += new System.EventHandler(this.num_sidelap_ValueChanged);
-            // 
-            // num_overlap
-            // 
-            this.num_overlap.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.num_overlap.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.num_overlap.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.num_overlap.ButtonFreeText.Checked = true;
-            this.num_overlap.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.num_overlap.DisplayFormat = "0.## \\%";
-            this.num_overlap.FreeTextEntryMode = true;
-            this.num_overlap.Increment = 0.01D;
-            this.num_overlap.Location = new System.Drawing.Point(87, 6);
-            this.num_overlap.MaxValue = 100D;
-            this.num_overlap.MinValue = 0D;
-            this.num_overlap.Name = "num_overlap";
-            this.num_overlap.ShowUpDown = true;
-            this.num_overlap.Size = new System.Drawing.Size(73, 21);
-            this.num_overlap.TabIndex = 56;
-            this.num_overlap.ValueChanged += new System.EventHandler(this.num_overlap_ValueChanged);
-            // 
-            // num_spacing
-            // 
-            // 
-            // 
-            // 
-            this.num_spacing.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.num_spacing.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.num_spacing.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.num_spacing.DisplayFormat = "0.## m";
-            this.num_spacing.Increment = 0.01D;
-            this.num_spacing.Location = new System.Drawing.Point(237, 35);
-            this.num_spacing.Name = "num_spacing";
-            this.num_spacing.Size = new System.Drawing.Size(73, 21);
-            this.num_spacing.TabIndex = 54;
-            this.num_spacing.ValueChanged += new System.EventHandler(this.NUM_spacing_ValueChanged);
-            // 
-            // Num_Distance
-            // 
-            // 
-            // 
-            // 
-            this.Num_Distance.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.Num_Distance.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.Num_Distance.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.Num_Distance.DisplayFormat = "0.## m";
-            this.Num_Distance.Increment = 0.01D;
-            this.Num_Distance.Location = new System.Drawing.Point(237, 6);
-            this.Num_Distance.Name = "Num_Distance";
-            this.Num_Distance.Size = new System.Drawing.Size(73, 21);
-            this.Num_Distance.TabIndex = 51;
-            this.Num_Distance.ValueChanged += new System.EventHandler(this.NUM_Distance_ValueChanged);
-            // 
-            // num_angle
-            // 
-            this.num_angle.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.num_angle.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.num_angle.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.num_angle.ButtonFreeText.Checked = true;
-            this.num_angle.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.num_angle.DisplayFormat = "0.## °";
-            this.num_angle.FreeTextEntryMode = true;
-            this.num_angle.Increment = 0.1D;
-            this.num_angle.Location = new System.Drawing.Point(87, 31);
-            this.num_angle.MaxValue = 360D;
-            this.num_angle.MinValue = 0D;
-            this.num_angle.Name = "num_angle";
-            this.num_angle.ShowUpDown = true;
-            this.num_angle.Size = new System.Drawing.Size(73, 21);
-            this.num_angle.TabIndex = 57;
-            this.num_angle.ValueChanged += new System.EventHandler(this.NUM_angle_ValueChanged);
-            // 
-            // Num_GndeLev
-            // 
-            // 
-            // 
-            // 
-            this.Num_GndeLev.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.Num_GndeLev.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.Num_GndeLev.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.Num_GndeLev.DisplayFormat = "0 m";
-            this.Num_GndeLev.Location = new System.Drawing.Point(237, 3);
-            this.Num_GndeLev.MaxValue = 100000;
-            this.Num_GndeLev.MinValue = -10000;
-            this.Num_GndeLev.Name = "Num_GndeLev";
-            this.Num_GndeLev.Size = new System.Drawing.Size(73, 21);
-            this.Num_GndeLev.TabIndex = 47;
-            this.Num_GndeLev.ValueChanged += new System.EventHandler(this.lbl_gndelev_ValueChanged);
-            // 
-            // NUM_altitude
-            // 
-            this.NUM_altitude.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.NUM_altitude.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.NUM_altitude.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.NUM_altitude.ButtonFreeText.Checked = true;
-            this.NUM_altitude.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.NUM_altitude.DisplayFormat = "0 m";
-            this.NUM_altitude.FreeTextEntryMode = true;
-            this.NUM_altitude.Location = new System.Drawing.Point(87, 4);
-            this.NUM_altitude.MaxValue = 100000;
-            this.NUM_altitude.MinValue = -10000;
-            this.NUM_altitude.Name = "NUM_altitude";
-            this.NUM_altitude.ShowUpDown = true;
-            this.NUM_altitude.Size = new System.Drawing.Size(73, 21);
-            this.NUM_altitude.TabIndex = 46;
-            this.NUM_altitude.ValueChanged += new System.EventHandler(this.NUM_altitude_ValueChanged);
-            // 
-            // TXT_FovH
-            // 
-            // 
-            // 
-            // 
-            this.TXT_FovH.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.TXT_FovH.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.TXT_FovH.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.TXT_FovH.DisplayFormat = "0.## m";
-            this.TXT_FovH.Increment = 0D;
-            this.TXT_FovH.Location = new System.Drawing.Point(114, 30);
-            this.TXT_FovH.MaxValue = 10000000D;
-            this.TXT_FovH.MinValue = 0D;
-            this.TXT_FovH.Name = "TXT_FovH";
-            this.TXT_FovH.Size = new System.Drawing.Size(80, 21);
-            this.TXT_FovH.TabIndex = 59;
-            // 
-            // TXT_FovV
-            // 
-            // 
-            // 
-            // 
-            this.TXT_FovV.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.TXT_FovV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.TXT_FovV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.TXT_FovV.DisplayFormat = "0.## m";
-            this.TXT_FovV.Increment = 0D;
-            this.TXT_FovV.Location = new System.Drawing.Point(114, 57);
-            this.TXT_FovV.MaxValue = 10000000D;
-            this.TXT_FovV.MinValue = 0D;
-            this.TXT_FovV.Name = "TXT_FovV";
-            this.TXT_FovV.Size = new System.Drawing.Size(80, 21);
-            this.TXT_FovV.TabIndex = 57;
-            // 
-            // TXT_cmPixel
-            // 
-            // 
-            // 
-            // 
-            this.TXT_cmPixel.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.TXT_cmPixel.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.TXT_cmPixel.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.TXT_cmPixel.DisplayFormat = "0.## m";
-            this.TXT_cmPixel.Increment = 0D;
-            this.TXT_cmPixel.Location = new System.Drawing.Point(114, 3);
-            this.TXT_cmPixel.MaxValue = 10000000D;
-            this.TXT_cmPixel.MinValue = 0D;
-            this.TXT_cmPixel.Name = "TXT_cmPixel";
-            this.TXT_cmPixel.Size = new System.Drawing.Size(80, 21);
-            this.TXT_cmPixel.TabIndex = 55;
-            // 
-            // TXT_SensHeight
-            // 
-            this.TXT_SensHeight.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.TXT_SensHeight.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.TXT_SensHeight.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.TXT_SensHeight.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.TXT_SensHeight.DisplayFormat = "0.## mm";
-            this.TXT_SensHeight.Increment = 0D;
-            this.TXT_SensHeight.Location = new System.Drawing.Point(192, 65);
-            this.TXT_SensHeight.MaxValue = 100000D;
-            this.TXT_SensHeight.MinValue = 0D;
-            this.TXT_SensHeight.Name = "TXT_SensHeight";
-            this.TXT_SensHeight.Size = new System.Drawing.Size(81, 21);
-            this.TXT_SensHeight.TabIndex = 44;
-            // 
-            // TXT_SensWidth
-            // 
-            this.TXT_SensWidth.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.TXT_SensWidth.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.TXT_SensWidth.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.TXT_SensWidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.TXT_SensWidth.DisplayFormat = "0.## mm";
-            this.TXT_SensWidth.Increment = 0D;
-            this.TXT_SensWidth.Location = new System.Drawing.Point(67, 65);
-            this.TXT_SensWidth.MaxValue = 100000D;
-            this.TXT_SensWidth.MinValue = 0D;
-            this.TXT_SensWidth.Name = "TXT_SensWidth";
-            this.TXT_SensWidth.Size = new System.Drawing.Size(81, 21);
-            this.TXT_SensWidth.TabIndex = 43;
-            // 
-            // TXT_ImgHeight
-            // 
-            this.TXT_ImgHeight.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.TXT_ImgHeight.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.TXT_ImgHeight.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.TXT_ImgHeight.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.TXT_ImgHeight.DisplayFormat = "0";
-            this.TXT_ImgHeight.Increment = 0;
-            this.TXT_ImgHeight.Location = new System.Drawing.Point(192, 21);
-            this.TXT_ImgHeight.MaxValue = 10000000;
-            this.TXT_ImgHeight.MinValue = 0;
-            this.TXT_ImgHeight.Name = "TXT_ImgHeight";
-            this.TXT_ImgHeight.Size = new System.Drawing.Size(81, 21);
-            this.TXT_ImgHeight.TabIndex = 42;
-            // 
-            // TXT_ImgWidth
-            // 
-            this.TXT_ImgWidth.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.TXT_ImgWidth.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.TXT_ImgWidth.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.TXT_ImgWidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.TXT_ImgWidth.DisplayFormat = "0";
-            this.TXT_ImgWidth.Increment = 0;
-            this.TXT_ImgWidth.Location = new System.Drawing.Point(67, 21);
-            this.TXT_ImgWidth.MaxValue = 10000000;
-            this.TXT_ImgWidth.MinValue = 0;
-            this.TXT_ImgWidth.Name = "TXT_ImgWidth";
-            this.TXT_ImgWidth.Size = new System.Drawing.Size(81, 21);
-            this.TXT_ImgWidth.TabIndex = 41;
-            // 
-            // NUM_FocalLength
-            // 
-            this.NUM_FocalLength.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.NUM_FocalLength.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.NUM_FocalLength.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.NUM_FocalLength.ButtonFreeText.Checked = true;
-            this.NUM_FocalLength.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.NUM_FocalLength.DisplayFormat = "0.## mm";
-            this.NUM_FocalLength.FreeTextEntryMode = true;
-            this.NUM_FocalLength.Increment = 1D;
-            this.NUM_FocalLength.Location = new System.Drawing.Point(68, 29);
-            this.NUM_FocalLength.MaxValue = 100000D;
-            this.NUM_FocalLength.MinValue = 0D;
-            this.NUM_FocalLength.Name = "NUM_FocalLength";
-            this.NUM_FocalLength.ShowUpDown = true;
-            this.NUM_FocalLength.Size = new System.Drawing.Size(80, 21);
-            this.NUM_FocalLength.TabIndex = 38;
-            this.NUM_FocalLength.ValueChanged += new System.EventHandler(this.NUM_focallength_ValueChanged);
-            // 
-            // NUM_WPDelayTime
-            // 
-            this.NUM_WPDelayTime.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.NUM_WPDelayTime.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.NUM_WPDelayTime.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.NUM_WPDelayTime.ButtonFreeText.Checked = true;
-            this.NUM_WPDelayTime.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.NUM_WPDelayTime.DisplayFormat = "0.# s";
-            this.NUM_WPDelayTime.FreeTextEntryMode = true;
-            this.NUM_WPDelayTime.Increment = 0.1D;
-            this.NUM_WPDelayTime.Location = new System.Drawing.Point(114, 3);
-            this.NUM_WPDelayTime.MaxValue = 50D;
-            this.NUM_WPDelayTime.MinValue = 0.2D;
-            this.NUM_WPDelayTime.Name = "NUM_WPDelayTime";
-            this.NUM_WPDelayTime.ShowUpDown = true;
-            this.NUM_WPDelayTime.Size = new System.Drawing.Size(80, 21);
-            this.NUM_WPDelayTime.TabIndex = 42;
-            this.NUM_WPDelayTime.Value = 1D;
-            this.NUM_WPDelayTime.ValueChanged += new System.EventHandler(this.NUM_WPDelayTime_ValueChanged);
-            // 
             // GridConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1535,47 +1536,47 @@
             this.AdvanceAirLineBox.ResumeLayout(false);
             this.AdvanceAirLineBox.PerformLayout();
             this.CorridorInfoBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.num_corridorwidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_Lane_Dist)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_leadin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_overshoot2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_overshoot)).EndInit();
             this.AirLineBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.num_sidelap)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_overlap)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_spacing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Num_Distance)).EndInit();
             this.FlightBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.num_angle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Num_GndeLev)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_altitude)).EndInit();
             this.panelEx14.ResumeLayout(false);
             this.panelEx14.PerformLayout();
             this.panelEx4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_FovH)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_FovV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_cmPixel)).EndInit();
             this.panelEx5.ResumeLayout(false);
             this.panelEx5.PerformLayout();
             this.CameraDetailBox.ResumeLayout(false);
             this.CameraDetailBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_SensHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_SensWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_ImgHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TXT_ImgWidth)).EndInit();
             this.CameraInfo.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_FocalLength)).EndInit();
             this.panelEx6.ResumeLayout(false);
             this.panelEx6.PerformLayout();
             this.HandBox.ResumeLayout(false);
             this.HandBox.PerformLayout();
             this.DelayBox.ResumeLayout(false);
             this.DelayBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_WPDelayTime)).EndInit();
             this.ConfigPanel.ResumeLayout(false);
             this.ConfigPanel.PerformLayout();
             this.ConfigTitle.ResumeLayout(false);
             this.ConfigTitle.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.num_corridorwidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUM_Lane_Dist)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUM_leadin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUM_overshoot2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUM_overshoot)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_sidelap)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_overlap)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_spacing)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Num_Distance)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_angle)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Num_GndeLev)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUM_altitude)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TXT_FovH)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TXT_FovV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TXT_cmPixel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TXT_SensHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TXT_SensWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TXT_ImgHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TXT_ImgWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUM_FocalLength)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUM_WPDelayTime)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
