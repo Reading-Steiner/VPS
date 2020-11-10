@@ -422,6 +422,12 @@
     <Compile Include="Controls\ComboDataList.Designer.cs">
       <DependentUpon>ComboDataList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Grid\CustomPosition.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Grid\CustomPosition.Designer.cs">
+      <DependentUpon>CustomPosition.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MyControls\MyGridControls.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -505,6 +511,12 @@
     </Compile>
     <Compile Include="Controls\MyControls\MyIntegerInput.Designer.cs">
       <DependentUpon>MyIntegerInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MyControls\MyPositionDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MyControls\MyPositionDisplay.Designer.cs">
+      <DependentUpon>MyPositionDisplay.cs</DependentUpon>
     </Compile>
     <Compile Include="VPSData\Layer\LayerInfo.cs" />
     <Compile Include="VPSData\Layer\LayerInfoCache.cs" />
@@ -867,6 +879,9 @@
     <EmbeddedResource Include="Controls\Grid\CustomCamera.resx">
       <DependentUpon>CustomCamera.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Grid\CustomPosition.resx">
+      <DependentUpon>CustomPosition.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Grid\GridConfig.resx">
       <DependentUpon>GridConfig.cs</DependentUpon>
     </EmbeddedResource>
@@ -905,6 +920,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyControls\MyIntegerInput.resx">
       <DependentUpon>MyIntegerInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MyControls\MyPositionDisplay.resx">
+      <DependentUpon>MyPositionDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressBar\UserProgressBar.resx">
       <DependentUpon>UserProgressBar.cs</DependentUpon>

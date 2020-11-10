@@ -29,20 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            VPS.Utilities.PointLatLngAlt pointLatLngAlt1 = new VPS.Utilities.PointLatLngAlt();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CommandsPanel));
             this.MainPanel = new DevComponents.DotNetBar.PanelEx();
+            this.HomePositionDisplay = new VPS.Controls.MyControls.MyPositionDisplay();
             this.CommandDataList = new DevComponents.DotNetBar.SuperGrid.SuperGridControl();
             this.AutoWarnAlt = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.labelX10 = new DevComponents.DotNetBar.LabelX();
             this.BaseAlt = new VPS.Controls.MyControls.MyIntegerInput(this.components);
-            this.HomeLng = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.HomeAlt = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.HomeLat = new VPS.Controls.MyControls.MyDoubleInput(this.components);
             this.CoordSystem = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.labelX9 = new DevComponents.DotNetBar.LabelX();
-            this.labelX8 = new DevComponents.DotNetBar.LabelX();
-            this.labelX7 = new DevComponents.DotNetBar.LabelX();
-            this.labelX6 = new DevComponents.DotNetBar.LabelX();
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.WpRad = new VPS.Controls.MyControls.MyIntegerInput(this.components);
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
@@ -55,9 +51,6 @@
             this.ImageList = new System.Windows.Forms.ImageList(this.components);
             this.MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BaseAlt)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HomeLng)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HomeAlt)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HomeLat)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WpRad)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WarnAlt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DefaultAlt)).BeginInit();
@@ -67,18 +60,13 @@
             // 
             this.MainPanel.CanvasColor = System.Drawing.SystemColors.Control;
             this.MainPanel.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.MainPanel.Controls.Add(this.HomePositionDisplay);
             this.MainPanel.Controls.Add(this.CommandDataList);
             this.MainPanel.Controls.Add(this.AutoWarnAlt);
             this.MainPanel.Controls.Add(this.labelX10);
             this.MainPanel.Controls.Add(this.BaseAlt);
-            this.MainPanel.Controls.Add(this.HomeLng);
-            this.MainPanel.Controls.Add(this.HomeAlt);
-            this.MainPanel.Controls.Add(this.HomeLat);
             this.MainPanel.Controls.Add(this.CoordSystem);
             this.MainPanel.Controls.Add(this.labelX9);
-            this.MainPanel.Controls.Add(this.labelX8);
-            this.MainPanel.Controls.Add(this.labelX7);
-            this.MainPanel.Controls.Add(this.labelX6);
             this.MainPanel.Controls.Add(this.labelX5);
             this.MainPanel.Controls.Add(this.WpRad);
             this.MainPanel.Controls.Add(this.labelX4);
@@ -101,14 +89,33 @@
             this.MainPanel.Style.GradientAngle = 90;
             this.MainPanel.TabIndex = 1;
             // 
+            // HomePositionDisplay
+            // 
+            this.HomePositionDisplay.AutoSize = true;
+            this.HomePositionDisplay.Location = new System.Drawing.Point(11, 226);
+            this.HomePositionDisplay.Name = "HomePositionDisplay";
+            this.HomePositionDisplay.Size = new System.Drawing.Size(185, 45);
+            this.HomePositionDisplay.TabIndex = 26;
+            pointLatLngAlt1.Alt = 0D;
+            pointLatLngAlt1.color = System.Drawing.Color.White;
+            pointLatLngAlt1.Lat = 0D;
+            pointLatLngAlt1.Lng = 0D;
+            pointLatLngAlt1.Param1 = 0D;
+            pointLatLngAlt1.Param2 = 0D;
+            pointLatLngAlt1.Param3 = 0D;
+            pointLatLngAlt1.Param4 = 0D;
+            pointLatLngAlt1.Tag = "";
+            pointLatLngAlt1.Tag2 = "";
+            this.HomePositionDisplay.WGS84Position = pointLatLngAlt1;
+            // 
             // CommandDataList
             // 
             this.CommandDataList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CommandDataList.FilterExprColors.SysFunction = System.Drawing.Color.DarkRed;
-            this.CommandDataList.Location = new System.Drawing.Point(173, 3);
+            this.CommandDataList.Location = new System.Drawing.Point(210, 3);
             this.CommandDataList.Name = "CommandDataList";
-            this.CommandDataList.Size = new System.Drawing.Size(953, 272);
+            this.CommandDataList.Size = new System.Drawing.Size(1087, 272);
             this.CommandDataList.TabIndex = 25;
             this.CommandDataList.CellClick += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridCellClickEventArgs>(this.CommandDataList_CellClick);
             this.CommandDataList.DataBindingComplete += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridDataBindingCompleteEventArgs>(this.CommandDataList_DataBindingComplete);
@@ -124,7 +131,7 @@
             this.AutoWarnAlt.CheckState = System.Windows.Forms.CheckState.Checked;
             this.AutoWarnAlt.CheckValue = "Y";
             this.AutoWarnAlt.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.AutoWarnAlt.Location = new System.Drawing.Point(21, 188);
+            this.AutoWarnAlt.Location = new System.Drawing.Point(68, 148);
             this.AutoWarnAlt.Name = "AutoWarnAlt";
             this.AutoWarnAlt.Size = new System.Drawing.Size(128, 20);
             this.AutoWarnAlt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -140,7 +147,7 @@
             // 
             this.labelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX10.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX10.Location = new System.Drawing.Point(21, 219);
+            this.labelX10.Location = new System.Drawing.Point(11, 90);
             this.labelX10.Name = "labelX10";
             this.labelX10.Size = new System.Drawing.Size(65, 20);
             this.labelX10.TabIndex = 23;
@@ -158,7 +165,7 @@
             this.BaseAlt.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.BaseAlt.DisplayFormat = "0 m";
             this.BaseAlt.FreeTextEntryMode = true;
-            this.BaseAlt.Location = new System.Drawing.Point(21, 240);
+            this.BaseAlt.Location = new System.Drawing.Point(82, 89);
             this.BaseAlt.MaxValue = 10000000;
             this.BaseAlt.MinValue = -10000000;
             this.BaseAlt.Name = "BaseAlt";
@@ -167,80 +174,13 @@
             this.BaseAlt.TabIndex = 22;
             this.BaseAlt.ValueChanged += new System.EventHandler(this.BaseAlt_ValueChanged);
             // 
-            // HomeLng
-            // 
-            this.HomeLng.AllowEmptyState = false;
-            this.HomeLng.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.HomeLng.AutoOverwrite = true;
-            // 
-            // 
-            // 
-            this.HomeLng.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.HomeLng.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.HomeLng.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.HomeLng.DisplayFormat = "0.######";
-            this.HomeLng.Increment = 1D;
-            this.HomeLng.IsInputReadOnly = true;
-            this.HomeLng.Location = new System.Drawing.Point(1200, 216);
-            this.HomeLng.MaxValue = 400D;
-            this.HomeLng.MinValue = -400D;
-            this.HomeLng.Name = "HomeLng";
-            this.HomeLng.Size = new System.Drawing.Size(80, 21);
-            this.HomeLng.TabIndex = 21;
-            this.HomeLng.ValueChanged += new System.EventHandler(this.HomeLng_ValueChanged);
-            // 
-            // HomeAlt
-            // 
-            this.HomeAlt.AllowEmptyState = false;
-            this.HomeAlt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.HomeAlt.AutoOverwrite = true;
-            // 
-            // 
-            // 
-            this.HomeAlt.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.HomeAlt.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.HomeAlt.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.HomeAlt.DisplayFormat = "0.######";
-            this.HomeAlt.Increment = 1D;
-            this.HomeAlt.IsInputReadOnly = true;
-            this.HomeAlt.Location = new System.Drawing.Point(1200, 244);
-            this.HomeAlt.MaxValue = 100000000D;
-            this.HomeAlt.MinValue = -100000000D;
-            this.HomeAlt.Name = "HomeAlt";
-            this.HomeAlt.Size = new System.Drawing.Size(80, 21);
-            this.HomeAlt.TabIndex = 20;
-            this.HomeAlt.ValueChanged += new System.EventHandler(this.HomeAlt_ValueChanged);
-            // 
-            // HomeLat
-            // 
-            this.HomeLat.AllowEmptyState = false;
-            this.HomeLat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.HomeLat.AutoOverwrite = true;
-            // 
-            // 
-            // 
-            this.HomeLat.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.HomeLat.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.HomeLat.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.HomeLat.DisplayFormat = "0.######";
-            this.HomeLat.Increment = 1D;
-            this.HomeLat.IsInputReadOnly = true;
-            this.HomeLat.Location = new System.Drawing.Point(1200, 188);
-            this.HomeLat.MaxValue = 200D;
-            this.HomeLat.MinValue = -200D;
-            this.HomeLat.Name = "HomeLat";
-            this.HomeLat.Size = new System.Drawing.Size(80, 21);
-            this.HomeLat.TabIndex = 19;
-            this.HomeLat.ValueChanged += new System.EventHandler(this.HomeLat_ValueChanged);
-            // 
             // CoordSystem
             // 
-            this.CoordSystem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CoordSystem.DisplayMember = "Text";
             this.CoordSystem.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.CoordSystem.FormattingEnabled = true;
             this.CoordSystem.ItemHeight = 15;
-            this.CoordSystem.Location = new System.Drawing.Point(1164, 37);
+            this.CoordSystem.Location = new System.Drawing.Point(82, 9);
             this.CoordSystem.Name = "CoordSystem";
             this.CoordSystem.Size = new System.Drawing.Size(114, 21);
             this.CoordSystem.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -249,74 +189,27 @@
             // 
             // labelX9
             // 
-            this.labelX9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelX9.AutoSize = true;
             // 
             // 
             // 
             this.labelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX9.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX9.Location = new System.Drawing.Point(1164, 15);
+            this.labelX9.Location = new System.Drawing.Point(11, 10);
             this.labelX9.Name = "labelX9";
             this.labelX9.Size = new System.Drawing.Size(65, 20);
             this.labelX9.TabIndex = 17;
             this.labelX9.Text = "坐标系统";
             // 
-            // labelX8
-            // 
-            this.labelX8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelX8.AutoSize = true;
-            // 
-            // 
-            // 
-            this.labelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX8.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX8.Location = new System.Drawing.Point(1159, 247);
-            this.labelX8.Name = "labelX8";
-            this.labelX8.Size = new System.Drawing.Size(36, 20);
-            this.labelX8.TabIndex = 15;
-            this.labelX8.Text = "高度";
-            // 
-            // labelX7
-            // 
-            this.labelX7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelX7.AutoSize = true;
-            // 
-            // 
-            // 
-            this.labelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX7.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX7.Location = new System.Drawing.Point(1159, 218);
-            this.labelX7.Name = "labelX7";
-            this.labelX7.Size = new System.Drawing.Size(36, 20);
-            this.labelX7.TabIndex = 14;
-            this.labelX7.Text = "经度";
-            // 
-            // labelX6
-            // 
-            this.labelX6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelX6.AutoSize = true;
-            // 
-            // 
-            // 
-            this.labelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX6.Location = new System.Drawing.Point(1159, 191);
-            this.labelX6.Name = "labelX6";
-            this.labelX6.Size = new System.Drawing.Size(36, 20);
-            this.labelX6.TabIndex = 13;
-            this.labelX6.Text = "纬度";
-            // 
             // labelX5
             // 
-            this.labelX5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelX5.AutoSize = true;
             // 
             // 
             // 
             this.labelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX5.Location = new System.Drawing.Point(1164, 164);
+            this.labelX5.Location = new System.Drawing.Point(11, 200);
             this.labelX5.Name = "labelX5";
             this.labelX5.Size = new System.Drawing.Size(65, 20);
             this.labelX5.TabIndex = 9;
@@ -325,7 +218,6 @@
             // WpRad
             // 
             this.WpRad.AllowEmptyState = false;
-            this.WpRad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -335,7 +227,7 @@
             this.WpRad.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.WpRad.DisplayFormat = "0 m";
             this.WpRad.FreeTextEntryMode = true;
-            this.WpRad.Location = new System.Drawing.Point(1164, 103);
+            this.WpRad.Location = new System.Drawing.Point(82, 174);
             this.WpRad.MaxValue = 1000;
             this.WpRad.MinValue = 0;
             this.WpRad.Name = "WpRad";
@@ -347,14 +239,13 @@
             // 
             // labelX4
             // 
-            this.labelX4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelX4.AutoSize = true;
             // 
             // 
             // 
             this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX4.Location = new System.Drawing.Point(1164, 81);
+            this.labelX4.Location = new System.Drawing.Point(11, 174);
             this.labelX4.Name = "labelX4";
             this.labelX4.Size = new System.Drawing.Size(65, 20);
             this.labelX4.TabIndex = 7;
@@ -368,7 +259,7 @@
             // 
             this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX3.Location = new System.Drawing.Point(21, 140);
+            this.labelX3.Location = new System.Drawing.Point(11, 122);
             this.labelX3.Name = "labelX3";
             this.labelX3.Size = new System.Drawing.Size(65, 20);
             this.labelX3.TabIndex = 6;
@@ -386,7 +277,7 @@
             this.WarnAlt.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.WarnAlt.DisplayFormat = "0 m";
             this.WarnAlt.FreeTextEntryMode = true;
-            this.WarnAlt.Location = new System.Drawing.Point(21, 164);
+            this.WarnAlt.Location = new System.Drawing.Point(82, 121);
             this.WarnAlt.MaxValue = 10000000;
             this.WarnAlt.MinValue = -10000000;
             this.WarnAlt.Name = "WarnAlt";
@@ -409,7 +300,7 @@
             this.DefaultAlt.FreeTextEntryMode = true;
             this.DefaultAlt.FreeTextEntryToggleKey = System.Windows.Forms.Keys.Space;
             this.DefaultAlt.InputMouseWheelEnabled = false;
-            this.DefaultAlt.Location = new System.Drawing.Point(21, 103);
+            this.DefaultAlt.Location = new System.Drawing.Point(82, 63);
             this.DefaultAlt.LockUpdateChecked = false;
             this.DefaultAlt.MaxValue = 10000000;
             this.DefaultAlt.MinValue = -10000000;
@@ -429,7 +320,7 @@
             // 
             this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX2.Location = new System.Drawing.Point(21, 81);
+            this.labelX2.Location = new System.Drawing.Point(11, 64);
             this.labelX2.Name = "labelX2";
             this.labelX2.Size = new System.Drawing.Size(65, 20);
             this.labelX2.TabIndex = 3;
@@ -443,7 +334,7 @@
             // 
             this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX1.Location = new System.Drawing.Point(21, 15);
+            this.labelX1.Location = new System.Drawing.Point(11, 38);
             this.labelX1.Name = "labelX1";
             this.labelX1.Size = new System.Drawing.Size(65, 20);
             this.labelX1.TabIndex = 2;
@@ -455,7 +346,7 @@
             this.AltFrame.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.AltFrame.FormattingEnabled = true;
             this.AltFrame.ItemHeight = 15;
-            this.AltFrame.Location = new System.Drawing.Point(21, 37);
+            this.AltFrame.Location = new System.Drawing.Point(82, 36);
             this.AltFrame.Name = "AltFrame";
             this.AltFrame.Size = new System.Drawing.Size(114, 21);
             this.AltFrame.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -482,9 +373,6 @@
             this.MainPanel.ResumeLayout(false);
             this.MainPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BaseAlt)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HomeLng)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HomeAlt)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HomeLat)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WpRad)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WarnAlt)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DefaultAlt)).EndInit();
@@ -500,14 +388,8 @@
         private DevComponents.DotNetBar.LabelX labelX2;
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.Controls.ComboBoxEx AltFrame;
-        private VPS.Controls.MyControls.MyDoubleInput HomeLng;
-        private VPS.Controls.MyControls.MyDoubleInput HomeAlt;
-        private VPS.Controls.MyControls.MyDoubleInput HomeLat;
         private DevComponents.DotNetBar.Controls.ComboBoxEx CoordSystem;
         private DevComponents.DotNetBar.LabelX labelX9;
-        private DevComponents.DotNetBar.LabelX labelX8;
-        private DevComponents.DotNetBar.LabelX labelX7;
-        private DevComponents.DotNetBar.LabelX labelX6;
         private DevComponents.DotNetBar.LabelX labelX5;
         private VPS.Controls.MyControls.MyIntegerInput WpRad;
         private DevComponents.DotNetBar.LabelX labelX4;
@@ -516,5 +398,6 @@
         private VPS.Controls.MyControls.MyIntegerInput BaseAlt;
         private DevComponents.DotNetBar.SuperGrid.SuperGridControl CommandDataList;
         private System.Windows.Forms.ImageList ImageList;
+        private MyControls.MyPositionDisplay HomePositionDisplay;
     }
 }

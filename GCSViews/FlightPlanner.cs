@@ -573,7 +573,7 @@ namespace VPS.GCSViews
             }
 
             // dragging a WP
-            if (pointno.ToLower() == "h" || pointno.ToLower() == "home")
+            if (pointno == VPS.WP.WPCommands.HomeCommand)
             {
                 // auto update home alt
                 var home = new PointLatLngAlt(lat, lng);
@@ -4498,7 +4498,7 @@ namespace VPS.GCSViews
                 if (sethome)
                 {
                     sethome = false;
-                    CallMeDrag("H", lat, lng, alt);
+                    CallMeDrag(VPS.WP.WPCommands.HomeCommand, lat, lng, alt);
                     return;
                 }
                 //creating a WP
@@ -5188,12 +5188,12 @@ namespace VPS.GCSViews
             if (homePosition != null)
             {
                 home = homePosition;
-                home.Tag = "H";
+                home.Tag = VPS.WP.WPCommands.HomeCommand;
             }
             else
             {
                 home = new PointLatLngAlt();
-                home.Tag = "H";
+                home.Tag = VPS.WP.WPCommands.HomeCommand;
                 home.Tag2 = "Terrain";
             }
             #endregion

@@ -117,21 +117,27 @@ namespace VPS.Controls.Command
             {
                 CoordSystem.Text = Utilities.Settings.Instance["Commands_CoordSystem"];
             }
+            Utilities.PointLatLngAlt home = new Utilities.PointLatLngAlt(0, 0, 0, VPS.WP.WPCommands.HomeCommand);
             if (Utilities.Settings.Instance.ContainsKey("Main_HomeLat") && Utilities.Settings.Instance["Main_HomeLat"] != null)
             {
                 if (double.TryParse(Utilities.Settings.Instance["Main_HomeLat"], out double lat))
-                    HomeLat.Value = lat;
+                    home.Lat = lat;
             }
             if (Utilities.Settings.Instance.ContainsKey("Main_HomeLng") && Utilities.Settings.Instance["Main_HomeLng"] != null)
             {
                 if (double.TryParse(Utilities.Settings.Instance["Main_HomeLng"], out double lng))
-                    HomeLng.Value = lng;
+                    home.Lng = lng;
             }
             if (Utilities.Settings.Instance.ContainsKey("Main_HomeAlt") && Utilities.Settings.Instance["Main_HomeAlt"] != null)
             {
                 if (double.TryParse(Utilities.Settings.Instance["Main_HomeAlt"], out double alt))
-                    HomeAlt.Value = alt;
+                    home.Alt = alt;
             }
+            if (Utilities.Settings.Instance.ContainsKey("Main_HomeAlt") && Utilities.Settings.Instance["Main_HomeFrame"] != null)
+            {
+                home.Tag2 = Utilities.Settings.Instance["Main_HomeFrame"];
+            }
+            SetHomeHandle(home);
         }
         #endregion
 
@@ -187,13 +193,13 @@ namespace VPS.Controls.Command
                     return;
                 else if(wpList.Count > 0)
                 {
-                    if (wpList[0].Tag.ToLower() == "home" || wpList[0].Tag.ToLower() == "h")
+                    if (wpList[0].Tag == VPS.WP.WPCommands.HomeCommand)
                     {
                         SetHome(wpList[0]);
                         wpList.RemoveAt(0);
                     }
                 }
-
+            
                 table.BeginLoadData();
                 table.Rows.Clear();
 
@@ -748,11 +754,11 @@ namespace VPS.Controls.Command
         #region SetHome 入口函数
         private void SetHome(Utilities.PointLatLngAlt home)
         {
-            HomeLat.Value = home.Lat;
-            HomeLng.Value = home.Lng;
-            HomeAlt.Value = home.Alt;
+            if (home.Tag != VPS.WP.WPCommands.HomeCommand)
+                home.Tag = VPS.WP.WPCommands.HomeCommand;
 
             homePosition = home;
+            HomePositionDisplay.WGS84Position = home;
 
             if (IsAllowSendPositionChange())
                 HomeChange?.Invoke(homePosition);
@@ -1219,32 +1225,6 @@ namespace VPS.Controls.Command
         private void WpRad_ValueChanged(object sender, EventArgs e)
         {
             SetWpRad(WpRad.Value);
-        }
-        #endregion
-
-        #region Home
-        private void HomeLat_ValueChanged(object sender, EventArgs e)
-        {
-            homePosition.Lat = HomeLat.Value;
-            if (isEdit)
-                return;
-            HomeChange?.Invoke(homePosition);
-        }
-
-        private void HomeLng_ValueChanged(object sender, EventArgs e)
-        {
-            homePosition.Lng = HomeLng.Value;
-            if (isEdit)
-                return;
-            HomeChange?.Invoke(homePosition);
-        }
-
-        private void HomeAlt_ValueChanged(object sender, EventArgs e)
-        {
-            homePosition.Alt = HomeAlt.Value;
-            if (isEdit)
-                return;
-            HomeChange?.Invoke(homePosition);
         }
         #endregion
 
