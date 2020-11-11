@@ -30,7 +30,7 @@
         private double originLng;
         private double originLat;
         private double originAlt;
-        private string frameOfAlt;
+        private string frameOfOriginAlt;
 
         #region 访问器
         public Utilities.PointLatLngAlt Origin
@@ -38,7 +38,7 @@
             get
             {
                 var origin = new Utilities.PointLatLngAlt(originLat, originLng, originAlt);
-                origin.Tag2 = frameOfAlt;
+                origin.Tag2 = frameOfOriginAlt;
                 return origin;
             }
             set
@@ -47,9 +47,38 @@
                 originLat = value.Lat;
                 originAlt = value.Alt;
                 if (value.Tag2 == "Relative" || value.Tag2 == "Absolute" || value.Tag2 == "Terrain")
-                    frameOfAlt = value.Tag2;
+                    frameOfOriginAlt = value.Tag2;
                 else
-                    frameOfAlt = "Relative";
+                    frameOfOriginAlt = "Relative";
+            }
+        }
+        #endregion
+        #endregion
+
+        #region LayerOrigin
+        private double homeLng;
+        private double homeLat;
+        private double homeAlt;
+        private string frameOfHomeAlt;
+
+        #region 访问器
+        public Utilities.PointLatLngAlt Home
+        {
+            get
+            {
+                var origin = new Utilities.PointLatLngAlt(homeLat, homeLng, homeAlt);
+                origin.Tag2 = frameOfHomeAlt;
+                return origin;
+            }
+            set
+            {
+                homeLng = value.Lng;
+                homeLat = value.Lat;
+                homeAlt = value.Alt;
+                if (value.Tag2 == "Relative" || value.Tag2 == "Absolute" || value.Tag2 == "Terrain")
+                    frameOfHomeAlt = value.Tag2;
+                else
+                    frameOfHomeAlt = "Relative";
             }
         }
         #endregion
@@ -117,14 +146,16 @@
 
         protected LayerInfo(
             LayerTypes layerInfo, string url,
-            Utilities.PointLatLngAlt origin, double scale = 1,
-            string create = null, string modify = null)
+            Utilities.PointLatLngAlt origin, Utilities.PointLatLngAlt home,
+            double scale = 1, string create = null, string modify = null)
         {
             this.layerType = layerInfo;
 
             this.url = url;
 
             this.Origin = origin;
+
+            this.Home = home;
 
             this.scale = scale;
 
@@ -237,9 +268,25 @@
                 originZ.InnerText = this.Origin.Alt.ToString();
                 keyIndex.AppendChild(originZ);
 
-                XmlElement frame = xmlDoc.CreateElement("frameOfAlt");
-                frame.InnerText = this.Origin.Tag2;
-                keyIndex.AppendChild(frame);
+                XmlElement originFrame = xmlDoc.CreateElement("frameOfOriginAlt");
+                originFrame.InnerText = this.Origin.Tag2;
+                keyIndex.AppendChild(originFrame);
+
+                XmlElement homeX = xmlDoc.CreateElement("homeLng");
+                homeX.InnerText = this.Home.Lng.ToString();
+                keyIndex.AppendChild(homeX);
+
+                XmlElement homeY = xmlDoc.CreateElement("homeLat");
+                homeY.InnerText = this.Home.Lat.ToString();
+                keyIndex.AppendChild(homeY);
+
+                XmlElement homeZ = xmlDoc.CreateElement("homeAlt");
+                homeZ.InnerText = this.Home.Alt.ToString();
+                keyIndex.AppendChild(homeZ);
+
+                XmlElement homeFrame = xmlDoc.CreateElement("frameOfHomeAlt");
+                homeFrame.InnerText = this.Home.Tag2;
+                keyIndex.AppendChild(homeFrame);
 
                 XmlElement scale = xmlDoc.CreateElement("scale");
                 scale.InnerText = this.Scale.ToString();
@@ -308,6 +355,7 @@
         {
             string path = "";
             Utilities.PointLatLngAlt origin = new Utilities.PointLatLngAlt();
+            Utilities.PointLatLngAlt home = new Utilities.PointLatLngAlt();
             double scale = 1;
             string createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 HH:mm:ss");
             string modifyTime = DateTime.Now.ToString("yyyy年 MM月 dd日 HH:mm:ss");
@@ -328,8 +376,20 @@
                     case "originAlt":
                         origin.Alt = System.Convert.ToDouble(Info.InnerText);
                         break;
-                    case "frameOfAlt":
+                    case "frameOfOriginAlt":
                         origin.Tag2 = Info.InnerText;
+                        break;
+                    case "homeLng":
+                        home.Lng = System.Convert.ToDouble(Info.InnerText);
+                        break;
+                    case "homeLat":
+                        home.Lat = System.Convert.ToDouble(Info.InnerText);
+                        break;
+                    case "homeAlt":
+                        home.Alt = System.Convert.ToDouble(Info.InnerText);
+                        break;
+                    case "frameOfHomeAlt":
+                        home.Tag2 = Info.InnerText;
                         break;
                     case "scale":
                         scale = System.Convert.ToDouble(Info.InnerText);
@@ -344,7 +404,7 @@
             }
             if (path == null)
                 return null;
-            return new LayerInfo(LayerTypes.none, path, origin, scale, createTime, modifyTime);
+            return new LayerInfo(LayerTypes.none, path, origin, home, scale, createTime, modifyTime);
         }
         #endregion
 

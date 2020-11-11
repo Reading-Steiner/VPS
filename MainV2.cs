@@ -1625,12 +1625,19 @@ namespace VPS
         {
             base.OnClosing(e);
 
+            Settings.Instance["Main_HomeLat"] = this.defaultHome.Lat.ToString();
+            Settings.Instance["Main_HomeLng"] = this.defaultHome.Lng.ToString();
+            Settings.Instance["Main_HomeAlt"] = this.defaultHome.Alt.ToString();
+            Settings.Instance["Main_HomeFrame"] = this.defaultHome.Tag2.ToString();
+
             log.Info("MainV2_FormClosing");
 
             log.Info("GMaps write cache");
             // speed up tile saving on exit
             GMap.NET.GMaps.Instance.CacheOnIdleRead = false;
             GMap.NET.GMaps.Instance.BoostCacheEngine = true;
+
+
 
             Settings.Instance["MainHeight"] = this.Height.ToString();
             Settings.Instance["MainWidth"] = this.Width.ToString();
@@ -3304,7 +3311,7 @@ namespace VPS
             var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
             if (layerInfo != null)
             {
-                return AddLayerOverlay(layerInfo);
+                return SetLayerOverlay(layerInfo);
             }
             else
             {
@@ -3863,6 +3870,21 @@ namespace VPS
             GMapMarkerBase.DisplayRadius = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayRadius", true);
             GMapMarkerBase.DisplayTarget = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayTarget", true);
 
+            PointLatLngAlt home = new PointLatLngAlt();
+            home.Tag = VPS.WP.WPCommands.HomeCommand;
+
+            if (Utilities.Settings.Instance["Main_HomeLat"] != null &&
+                double.TryParse(Utilities.Settings.Instance["Main_HomeLat"], out double lat))
+                defaultHome.Lat = lat;
+            if (Utilities.Settings.Instance["Main_HomeLng"] != null &&
+                double.TryParse(Utilities.Settings.Instance["Main_HomeLng"], out double lng))
+                defaultHome.Lng = lng;
+            if (Utilities.Settings.Instance["Main_HomeAlt"] != null &&
+                double.TryParse(Utilities.Settings.Instance["Main_HomeAlt"], out double alt))
+                defaultHome.Alt = alt;
+            if (Utilities.Settings.Instance["Main_HomeFrame"] != null)
+                defaultHome.Tag2 = Utilities.Settings.Instance["Main_HomeFrame"];
+
             SetInitHandler();
             layerCache = new VPS.Layer.MemoryLayerCache();
             //var layer = MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
@@ -3882,6 +3904,7 @@ namespace VPS
         #endregion
 
         #region 主菜单项Checked
+
         #region SetCheckedState
         private delegate void SetMenuItemCheckedCallback(DevComponents.DotNetBar.ButtonItem stripButton, bool value);
         private void SetMenuItemChecked(DevComponents.DotNetBar.ButtonItem stripButton, bool value)
@@ -3897,6 +3920,7 @@ namespace VPS
             }
         }
         #endregion
+
         #region GetCheckedState
         private delegate bool GetMenuItemCheckedCallback(DevComponents.DotNetBar.ButtonItem stripButton);
         private bool GetMenuItemChecked(DevComponents.DotNetBar.ButtonItem stripButton)
@@ -3938,7 +3962,9 @@ namespace VPS
         #region 主菜单项
 
         #region 工程模块
+
         #region LoadProject
+
         #region LoadProject 入口函数
         /// <summary>
         /// 提取工程文件数据
@@ -3963,6 +3989,7 @@ namespace VPS
             }
         }
         #endregion
+
         #region LoadProject 主体函数
         /// <summary>
         /// 使用工程文件提取出的数据，布置界面控件
@@ -3989,9 +4016,11 @@ namespace VPS
                 AutoWPButton_Click(this, null);
         }
         #endregion
+
         #endregion
 
         #region SaveProject
+
         #region LoadProject 入口函数
         /// <summary>
         /// 将提取的数据保存到文件中
@@ -4017,6 +4046,7 @@ namespace VPS
             }
         }
         #endregion
+
         #region SaveProject 主体函数
         /// <summary>
         /// 从控件中提取参数
@@ -4559,6 +4589,7 @@ namespace VPS
         public string currentLayerPath;
         public GMap.NET.RectLatLng displayRect = new GMap.NET.RectLatLng();
         public PointLatLngAlt defaultHome = new PointLatLngAlt();
+        public PointLatLngAlt originPoint = new PointLatLngAlt();
         public GeoBitmap currentLayer;
         #endregion
 
@@ -4571,9 +4602,9 @@ namespace VPS
             return SetLayerOverlay(layerInfo);
         }
 
-        public bool AddLayerOverlay(string path, PointLatLngAlt origin, Color transparent)
+        public bool AddLayerOverlay(string path, PointLatLngAlt origin, PointLatLngAlt home, Color transparent)
         {
-            var layerInfo = new VPS.Layer.TiffLayerInfo(path, origin, transparent);
+            var layerInfo = new VPS.Layer.TiffLayerInfo(path, origin, home, transparent);
             VPS.Layer.MemoryLayerCache.AddLayerToMemoryCache(layerInfo);
             return SetLayerOverlay(layerInfo);
         }
@@ -4597,7 +4628,8 @@ namespace VPS
 
                     this.currentLayerPath = layerInfo.Layer;
                     this.displayRect = geoBitmap.Rect;
-                    this.defaultHome = layerInfo.Origin;
+                    this.defaultHome = layerInfo.Home;
+                    this.originPoint = layerInfo.Origin;
 
                     ZoomTiffButton_Click(this, null);
 

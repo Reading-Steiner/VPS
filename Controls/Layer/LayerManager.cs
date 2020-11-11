@@ -163,6 +163,7 @@ namespace VPS.Controls.Layer
             panel.Columns[6].Width = 25;
             panel.Columns[6].EditorType = typeof(MyControls.ImageCheckBox);
             panel.Columns[6].EditorParams = new object[] { ImageList.Images["Default.png"] };
+            panel.Columns[6].ReadOnly = true;
         }
         #endregion
 
@@ -446,6 +447,11 @@ namespace VPS.Controls.Layer
         #endregion
 
         #endregion
+
+        private void ExchangeInfo(string hash)
+        {
+            VPS.Layer.LayerInfo info = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCacheWithHashCode(hash);
+        }
     }
 
 }

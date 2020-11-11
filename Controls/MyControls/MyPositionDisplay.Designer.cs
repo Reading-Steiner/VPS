@@ -83,6 +83,7 @@
             this.Controls.Add(this.labelX2);
             this.Controls.Add(this.labelX1);
             this.Controls.Add(this.DisplayName);
+            this.MinimumSize = new System.Drawing.Size(100, 60);
             this.Name = "MyPositionDisplay";
             this.Size = new System.Drawing.Size(209, 67);
             this.ResumeLayout(false);

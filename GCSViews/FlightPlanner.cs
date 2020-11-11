@@ -1056,11 +1056,6 @@ namespace VPS.GCSViews
         {
             if (write)
             {
-                Settings.Instance["FP_HomeLat"] = homePosition.Lat.ToString();
-                Settings.Instance["FP_HomeLng"] = homePosition.Lng.ToString();
-                Settings.Instance["FP_HomeAlt"] = homePosition.Alt.ToString();
-                Settings.Instance["FP_HomeFrame"] = homePosition.Tag2.ToString();
-
                 Settings.Instance["FP_WPRad"] = wpRad.ToString();
 
                 Settings.Instance["FP_LoiterRad"] = loiterRad.ToString();
@@ -1079,25 +1074,25 @@ namespace VPS.GCSViews
                 {
                     switch (key)
                     {
-                        case "FP_HomeLat":
+                        case "Main_HomeLat":
                             {
                                 if (double.TryParse(Settings.Instance[key], out double lat))
                                     homePosition.Lat = lat;
                             }
                             break;
-                        case "FP_HomeLng":
+                        case "Main_HomeLng":
                             {
                                 if (double.TryParse(Settings.Instance[key], out double lng))
                                     homePosition.Lng = lng;
                             }
                             break;
-                        case "FP_HomeAlt":
+                        case "Main_HomeAlt":
                             {
                                 if (double.TryParse(Settings.Instance[key], out double alt))
                                     homePosition.Alt = alt;
                             }
                             break;
-                        case "FP_HomeFrame":
+                        case "Main_HomeFrame":
                             homePosition.Tag2 = "" + Settings.Instance[key];
                             break;
                         case "FP_WPRad":

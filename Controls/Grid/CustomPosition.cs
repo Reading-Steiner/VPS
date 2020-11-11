@@ -20,11 +20,20 @@ namespace VPS.Controls.Grid
             Position = new Utilities.PointLatLngAlt();
             Position.Tag = VPS.WP.WPCommands.DefaultWPCommand;
             Position.Tag2 = AltMode.Relative.ToString();
+
+            AltFrameSelecter.DataSource = Enum.GetValues(typeof(AltMode));
+            AltFrameSelecter.SelectedIndex = 0;
         }
 
         public CustomPosition(Utilities.PointLatLngAlt position)
         {
             InitializeComponent();
+
+            AltFrameSelecter.DataSource = Enum.GetValues(typeof(AltMode));
+            if (Enum.TryParse(position.Tag2, out AltMode mode))
+                this.AltFrameSelecter.SelectedItem = mode;
+            else
+                this.AltFrameSelecter.SelectedItem = (AltMode)Enum.Parse(typeof(AltMode), "Relative");
 
             Position = position;
         }
@@ -58,10 +67,6 @@ namespace VPS.Controls.Grid
 
         private void CustomPosition_Load(object sender, EventArgs e)
         {
-            AltFrameSelecter.DataSource = Enum.GetValues(typeof(AltMode));
-            AltFrameSelecter.SelectedIndex = 0;
-            AltFrameSelecter.ValueMember = "";
-
             WGS84Position = Position;
         }
 

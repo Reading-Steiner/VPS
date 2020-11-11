@@ -49,6 +49,18 @@ namespace VPS.Controls.MyControls
         }
 
         private bool isEndable = true;
+        [Category("Value"), Description("可修改的")]
+        public bool IsReadOnly
+        {
+            set
+            {
+                isEndable = value;
+            }
+            get
+            {
+                return isEndable;
+            }
+        }
 
         public void AllowClick()
         {

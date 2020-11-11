@@ -84,60 +84,54 @@ namespace VPS.Controls.Command
         #region LoadConfig
         private void LoadConfig()
         {
-            if (Utilities.Settings.Instance.ContainsKey("Commands_WpRad") && Utilities.Settings.Instance["Commands_WpRad"] != null)
+            foreach (string key in Utilities.Settings.Instance.Keys)
             {
-                if (int.TryParse(Utilities.Settings.Instance["Commands_WpRad"], out int wpRad))
-                    WpRad.Value = wpRad;
+                switch (key)
+                {
+                    case "Commands_WpRad":
+                        if (int.TryParse(Utilities.Settings.Instance[key], out int wpRad))
+                            WpRad.Value = wpRad;
+                        break;
+                    case "Commands_DefaultAlt":
+                        if (int.TryParse(Utilities.Settings.Instance[key], out int defaultAlt))
+                            DefaultAlt.Value = defaultAlt;
+                        break;
+                    case "Commands_WarnAlt":
+                        if (int.TryParse(Utilities.Settings.Instance[key], out int warnAlt))
+                            WarnAlt.Value = warnAlt;
+                        break;
+                    case "Commands_BaseAlt":
+                        if (int.TryParse(Utilities.Settings.Instance[key], out int baseAlt))
+                            BaseAlt.Value = baseAlt;
+                        break;
+                    case "Commands_IsAutoWarn":
+                        if (bool.TryParse(Utilities.Settings.Instance[key], out bool isAutoWarn))
+                            AutoWarnAlt.Checked = isAutoWarn;
+                        break;
+                    case "Commands_AltFrame":
+                        AltFrame.Text = Utilities.Settings.Instance[key];
+                        break;
+                    case "Commands_CoordSystem":
+                        CoordSystem.Text = Utilities.Settings.Instance[key];
+
+                        break;
+                    case "Main_HomeLat":
+                        if (double.TryParse(Utilities.Settings.Instance[key], out double lat))
+                            homePosition.Lat = lat;
+                        break;
+                    case "Main_HomeLng":
+                        if (double.TryParse(Utilities.Settings.Instance[key], out double lng))
+                            homePosition.Lng = lng;
+                        break;
+                    case "Main_HomeAlt":
+                        if (double.TryParse(Utilities.Settings.Instance[key], out double alt))
+                            homePosition.Alt = alt;
+                        break;
+                    case "Main_HomeFrame":
+                        homePosition.Tag2 = Utilities.Settings.Instance[key];
+                        break;
+                }
             }
-            if (Utilities.Settings.Instance.ContainsKey("Commands_DefaultAlt") && Utilities.Settings.Instance["Commands_DefaultAlt"] != null)
-            {
-                if (int.TryParse(Utilities.Settings.Instance["Commands_DefaultAlt"], out int defaultAlt))
-                    DefaultAlt.Value = defaultAlt;
-            }
-            if (Utilities.Settings.Instance.ContainsKey("Commands_WarnAlt") && Utilities.Settings.Instance["Commands_WarnAlt"] != null)
-            {
-                if (int.TryParse(Utilities.Settings.Instance["Commands_WarnAlt"], out int warnAlt))
-                    WarnAlt.Value = warnAlt;
-            }
-            if (Utilities.Settings.Instance.ContainsKey("Commands_BaseAlt") && Utilities.Settings.Instance["Commands_BaseAlt"] != null)
-            {
-                if (int.TryParse(Utilities.Settings.Instance["Commands_BaseAlt"], out int baseAlt))
-                    BaseAlt.Value = baseAlt;
-            }
-            if (Utilities.Settings.Instance.ContainsKey("Commands_IsAutoWarn") && Utilities.Settings.Instance["Commands_IsAutoWarn"] != null)
-            {
-                if (bool.TryParse(Utilities.Settings.Instance["Commands_IsAutoWarn"], out bool isAutoWarn))
-                    AutoWarnAlt.Checked = isAutoWarn;
-            }
-            if (Utilities.Settings.Instance.ContainsKey("Commands_AltFrame") && Utilities.Settings.Instance["Commands_AltFrame"] != null)
-            {
-                AltFrame.Text = Utilities.Settings.Instance["Commands_AltFrame"];
-            }
-            if (Utilities.Settings.Instance.ContainsKey("Commands_CoordSystem") && Utilities.Settings.Instance["Commands_CoordSystem"] != null)
-            {
-                CoordSystem.Text = Utilities.Settings.Instance["Commands_CoordSystem"];
-            }
-            Utilities.PointLatLngAlt home = new Utilities.PointLatLngAlt(0, 0, 0, VPS.WP.WPCommands.HomeCommand);
-            if (Utilities.Settings.Instance.ContainsKey("Main_HomeLat") && Utilities.Settings.Instance["Main_HomeLat"] != null)
-            {
-                if (double.TryParse(Utilities.Settings.Instance["Main_HomeLat"], out double lat))
-                    home.Lat = lat;
-            }
-            if (Utilities.Settings.Instance.ContainsKey("Main_HomeLng") && Utilities.Settings.Instance["Main_HomeLng"] != null)
-            {
-                if (double.TryParse(Utilities.Settings.Instance["Main_HomeLng"], out double lng))
-                    home.Lng = lng;
-            }
-            if (Utilities.Settings.Instance.ContainsKey("Main_HomeAlt") && Utilities.Settings.Instance["Main_HomeAlt"] != null)
-            {
-                if (double.TryParse(Utilities.Settings.Instance["Main_HomeAlt"], out double alt))
-                    home.Alt = alt;
-            }
-            if (Utilities.Settings.Instance.ContainsKey("Main_HomeAlt") && Utilities.Settings.Instance["Main_HomeFrame"] != null)
-            {
-                home.Tag2 = Utilities.Settings.Instance["Main_HomeFrame"];
-            }
-            SetHomeHandle(home);
         }
         #endregion
 

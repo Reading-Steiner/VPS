@@ -86,7 +86,7 @@
             return null;
         }
 
-        static private LayerInfo GetLayerFromMemoryCacheWithHashCode(string key)
+        static public LayerInfo GetLayerFromMemoryCacheWithHashCode(string key)
         {
             try
             {

@@ -32,15 +32,16 @@ namespace VPS.Layer
 
         public TiffLayerInfo(
             string path,
-            Utilities.PointLatLngAlt origin, System.Drawing.Color transparent, double scale = 1,
+            Utilities.PointLatLngAlt origin, Utilities.PointLatLngAlt home,
+            System.Drawing.Color transparent, double scale = 1,
             string create = null, string modify = null)
-            : base(LayerTypes.tiff, path, origin, scale, create, modify)
+            : base(LayerTypes.tiff, path, origin, home, scale, create, modify)
         {
             this.transparent = transparent;
         }
 
         public TiffLayerInfo(TiffLayerInfo info)
-            : base(info.layerType, info.Layer, info.Origin, info.Scale, info.CreateTime, info.ModifyTime)
+            : base(info.layerType, info.Layer, info.Origin, info.Home, info.Scale, info.CreateTime, info.ModifyTime)
         {
             this.transparent = info.transparent;
         }
@@ -77,7 +78,7 @@ namespace VPS.Layer
         }
         #endregion
 
-        #region LayerInfo  函数重载
+        #region LayerInfo 函数重载
 
         #region LayerInfo GetHashCode
 
@@ -139,6 +140,26 @@ namespace VPS.Layer
                 originZ.InnerText = this.Origin.Alt.ToString();
                 keyIndex.AppendChild(originZ);
 
+                XmlElement originFrame = xmlDoc.CreateElement("frameOfOriginAlt");
+                originFrame.InnerText = this.Origin.Tag2;
+                keyIndex.AppendChild(originFrame);
+
+                XmlElement homeX = xmlDoc.CreateElement("homeLng");
+                homeX.InnerText = this.Home.Lng.ToString();
+                keyIndex.AppendChild(homeX);
+
+                XmlElement homeY = xmlDoc.CreateElement("homeLat");
+                homeY.InnerText = this.Home.Lat.ToString();
+                keyIndex.AppendChild(homeY);
+
+                XmlElement homeZ = xmlDoc.CreateElement("homeAlt");
+                homeZ.InnerText = this.Home.Alt.ToString();
+                keyIndex.AppendChild(homeZ);
+
+                XmlElement homeFrame = xmlDoc.CreateElement("frameOfHomeAlt");
+                homeFrame.InnerText = this.Home.Tag2;
+                keyIndex.AppendChild(homeFrame);
+
                 XmlElement frame = xmlDoc.CreateElement("frameOfAlt");
                 frame.InnerText = this.Origin.Tag2;
                 keyIndex.AppendChild(frame);
@@ -183,14 +204,13 @@ namespace VPS.Layer
         #endregion
         #endregion
 
-
-
         #region LayerInfo 解析XML
 
         public static TiffLayerInfo FromXMLToTiff(XmlNode LayerInfoKeys)
         {
             string path = "";
             Utilities.PointLatLngAlt origin = new Utilities.PointLatLngAlt();
+            Utilities.PointLatLngAlt home = new Utilities.PointLatLngAlt();
             double scale = 1;
             string createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");
             string modifyTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");
@@ -211,8 +231,20 @@ namespace VPS.Layer
                     case "originAlt":
                         origin.Alt = System.Convert.ToDouble(Info.InnerText);
                         break;
-                    case "frameOfAlt":
+                    case "frameOfOriginAlt":
                         origin.Tag2 = Info.InnerText;
+                        break;
+                    case "homeLng":
+                        home.Lng = System.Convert.ToDouble(Info.InnerText);
+                        break;
+                    case "homeLat":
+                        home.Lat = System.Convert.ToDouble(Info.InnerText);
+                        break;
+                    case "homeAlt":
+                        home.Alt = System.Convert.ToDouble(Info.InnerText);
+                        break;
+                    case "frameOfHomeAlt":
+                        home.Tag2 = Info.InnerText;
                         break;
                     case "scale":
                         scale = System.Convert.ToDouble(Info.InnerText);
@@ -252,7 +284,7 @@ namespace VPS.Layer
             }
             if (path == null)
                 return null;
-            return new TiffLayerInfo(path, origin, transparent, scale, createTime, modifyTime);
+            return new TiffLayerInfo(path, origin, home, transparent, scale, createTime, modifyTime);
         }
         #endregion
 
