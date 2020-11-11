@@ -11,6 +11,7 @@ using DevComponents.DotNetBar.Controls;
 using GeoUtility.GeoSystem;
 using DevComponents.DotNetBar.SuperGrid;
 using System.Collections;
+using DevComponents.DotNetBar.SuperGrid.Style;
 
 namespace VPS.Controls.Command
 {
@@ -169,6 +170,7 @@ namespace VPS.Controls.Command
 
             CommandDataList.PrimaryGrid.DataSource = set;
             CommandDataList.PrimaryGrid.DataMember = WPHandle;
+            CommandDataList.PrimaryGrid.ShowRowGridIndex = true;
 
             return set;
         }
@@ -455,6 +457,17 @@ namespace VPS.Controls.Command
             panel.ColumnHeader.RowHeight = 30;
             panel.ColumnAutoSizeMode = ColumnAutoSizeMode.Fill;
             panel.MinRowHeight = 25;
+
+            for (int i = 0; i < panel.Rows.Count; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    GridRow row = (GridRow)panel.Rows[i];
+
+                    row.RowStyles.Default.RowHeaderStyle.DirtyMarkerBackground =
+                        new Background(Color.Crimson, Color.Gainsboro, BackFillType.VerticalCenter);
+                }
+            }
 
             {
                 panel.Columns[CommandColumnName].AutoSizeMode = ColumnAutoSizeMode.Fill;
