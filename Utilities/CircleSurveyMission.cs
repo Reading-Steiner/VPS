@@ -60,8 +60,6 @@ namespace VPS.Utilities
             }
 
             MainV2.instance.FlightPlanner.LeaveQuickADD();
-
-            MainV2.instance.FlightPlanner.writeKML();
         }
     }
 }

@@ -535,7 +535,7 @@ namespace VPS.GCSViews
             {
                 //点击到多边形中线
                 var idx = drawnpolygon.Points.IndexOf(midline.now);
-                drawnpolygon.Points.Insert(idx + 1,
+                drawnpolygon.Points.Insert(idx,
                     new PointLatLng(CurrentMidLine.Position.Lat, CurrentMidLine.Position.Lng));
 
                 redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
@@ -545,13 +545,15 @@ namespace VPS.GCSViews
                 if (int.TryParse(midline.next.Tag, out pnt2))
                 {
                     //点击到航点中线
-                    InsertWPPoint(pnt2 - 1, CurrentMidLine.Position.Lng, CurrentMidLine.Position.Lat, -1);
+                    InsertWPPoint(pnt2, CurrentMidLine.Position.Lng, CurrentMidLine.Position.Lat, -1);
                 }
             }
 
             CurrentMidLine = null;
 
             writeKML();
+
+            AddHistory(true);
             return;
         }
 
@@ -792,10 +794,9 @@ namespace VPS.GCSViews
             try
             {
                 PointLatLng point = new PointLatLng(lat, lng);
-                GMapMarkerPolygon m = new GMapMarkerPolygon(point);
+                GMapMarkerPolygon m = new GMapMarkerPolygon(point, tag);
                 m.ToolTipMode = MarkerTooltipMode.Never;
-                m.ToolTipText = "grid" + tag;
-                m.Tag = "grid" + tag;
+                
                 if (polygonMarkersGroup.Contains(System.Convert.ToInt32(tag)))
                 {
                     m.selected = true;
@@ -1272,7 +1273,7 @@ namespace VPS.GCSViews
                 {
                     try
                     {
-                        drawnpolygon.Points.RemoveAt(no - 1);
+                        drawnpolygon.Points.RemoveAt(no);
 
                         redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
                     }
@@ -1302,17 +1303,19 @@ namespace VPS.GCSViews
                 CurentRectMarker = null;
 
             writeKML();
+
+            AddHistory(true);
         }
 
         public void DeleteCurrentWP()
         {
             if (wpMarkersGroup.Count > 0)
             {
-                for (int a = GetWPCount(); a > 0; a--)
+                for (int a = GetWPCount() - 1; a >= 0; a--)
                 {
                     try
                     {
-                        if (wpMarkersGroup.Contains(a)) wpLists.RemoveAt(a - 1); // home is 0
+                        if (wpMarkersGroup.Contains(a)) DeleteWPPoint(a);// home is none
                     }
                     catch (Exception ex)
                     {
@@ -1321,6 +1324,8 @@ namespace VPS.GCSViews
                     }
                 }
                 wpMarkersGroupClear();
+                writeKML();
+                AddHistory(true);
             }
         }
 
@@ -1328,13 +1333,13 @@ namespace VPS.GCSViews
         {
             if (polygonMarkersGroup.Count > 0)
             {
-                for (int a = drawnpolygon.LocalPoints.Count; a > 0; a--)
+                for (int a = drawnpolygon.LocalPoints.Count - 1; a >= 0; a--)
                 {
                     try
                     {
                         if (polygonMarkersGroup.Contains(a))
                         {
-                            drawnpolygon.Points.RemoveAt(a - 1);
+                            drawnpolygon.Points.RemoveAt(a);
                         }
                     }
                     catch (Exception ex)
@@ -1579,186 +1584,6 @@ namespace VPS.GCSViews
             }
         }
 
-        public void GeoFenceuploadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            addPolygonMode = false;
-            //FENCE_ENABLE ON COPTER
-            //FENCE_ACTION ON PLANE
-            if (!MainV2.comPort.MAV.param.ContainsKey("FENCE_ENABLE") && !MainV2.comPort.MAV.param.ContainsKey("FENCE_ACTION"))
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Not Supported");
-                return;
-            }
-
-            if (drawnpolygon == null)
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("No polygon to upload");
-                return;
-            }
-
-            if (geofenceoverlay.Markers.Count == 0)
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("No return location set");
-                return;
-            }
-
-            if (drawnpolygon.Points.Count == 0)
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("No polygon drawn");
-                return;
-            }
-
-            // check if return is inside polygon
-            List<PointLatLng> plll = new List<PointLatLng>(drawnpolygon.Points.ToArray());
-            // close it
-            plll.Add(plll[0]);
-            // check it
-            if (
-                !pnpoly(plll.ToArray(), geofenceoverlay.Markers[0].Position.Lat, geofenceoverlay.Markers[0].Position.Lng))
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Your return location is outside the polygon");
-                return;
-            }
-
-            int minalt = 0;
-            int maxalt = 0;
-
-            if (MainV2.comPort.MAV.param.ContainsKey("FENCE_MINALT"))
-            {
-                string minalts =
-                    (int.Parse(MainV2.comPort.MAV.param["FENCE_MINALT"].ToString()) * CurrentState.multiplieralt)
-                    .ToString(
-                        "0");
-                if (DialogResult.Cancel == InputBox.Show("Min Alt", "Box Minimum Altitude?", ref minalts))
-                    return;
-
-                if (!int.TryParse(minalts, out minalt))
-                {
-                    DevComponents.DotNetBar.MessageBoxEx.Show("Bad Min Alt");
-                    return;
-                }
-            }
-
-            if (MainV2.comPort.MAV.param.ContainsKey("FENCE_MAXALT"))
-            {
-                string maxalts =
-                    (int.Parse(MainV2.comPort.MAV.param["FENCE_MAXALT"].ToString()) * CurrentState.multiplieralt)
-                    .ToString(
-                        "0");
-                if (DialogResult.Cancel == InputBox.Show("Max Alt", "Box Maximum Altitude?", ref maxalts))
-                    return;
-
-                if (!int.TryParse(maxalts, out maxalt))
-                {
-                    DevComponents.DotNetBar.MessageBoxEx.Show("Bad Max Alt");
-                    return;
-                }
-            }
-
-            try
-            {
-                if (MainV2.comPort.MAV.param.ContainsKey("FENCE_MINALT"))
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, "FENCE_MINALT", minalt);
-                if (MainV2.comPort.MAV.param.ContainsKey("FENCE_MAXALT"))
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, "FENCE_MAXALT", maxalt);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-                DevComponents.DotNetBar.MessageBoxEx.Show("Failed to set min/max fence alt");
-                return;
-            }
-
-            float oldaction = (float)MainV2.comPort.MAV.param["FENCE_ACTION"];
-
-            try
-            {
-                MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, "FENCE_ACTION", 0);
-            }
-            catch
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Failed to set FENCE_ACTION");
-                return;
-            }
-
-            // points + return + close
-            byte pointcount = (byte)(drawnpolygon.Points.Count + 2);
-
-
-            try
-            {
-                MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, "FENCE_TOTAL", pointcount);
-            }
-            catch
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Failed to set FENCE_TOTAL");
-                return;
-            }
-
-            try
-            {
-                byte a = 0;
-                // add return loc
-                MainV2.comPort.setFencePoint(a, new PointLatLngAlt(geofenceoverlay.Markers[0].Position), pointcount);
-                a++;
-                // add points
-                foreach (var pll in drawnpolygon.Points)
-                {
-                    MainV2.comPort.setFencePoint(a, new PointLatLngAlt(pll), pointcount);
-                    a++;
-                }
-
-                // add polygon close
-                MainV2.comPort.setFencePoint(a, new PointLatLngAlt(drawnpolygon.Points[0]), pointcount);
-
-                try
-                {
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, "FENCE_ACTION", oldaction);
-                }
-                catch
-                {
-                    DevComponents.DotNetBar.MessageBoxEx.Show("Failed to restore FENCE_ACTION");
-                    return;
-                }
-
-                // clear everything
-                drawnpolygonsoverlay.Polygons.Clear();
-                drawnpolygonsoverlay.Markers.Clear();
-                geofenceoverlay.Polygons.Clear();
-                geofencepolygon.Points.Clear();
-
-                // add polygon
-                geofencepolygon.Points.AddRange(drawnpolygon.Points.ToArray());
-
-                drawnpolygon.Points.Clear();
-
-                geofenceoverlay.Polygons.Add(geofencepolygon);
-
-                // update flightdata
-                FlightData.geofence.Markers.Clear();
-                FlightData.geofence.Polygons.Clear();
-                FlightData.geofence.Polygons.Add(new GMapPolygon(geofencepolygon.Points, "gf fd")
-                {
-                    Stroke = geofencepolygon.Stroke,
-                    Fill = Brushes.Transparent
-                });
-                FlightData.geofence.Markers.Add(new GMarkerGoogle(geofenceoverlay.Markers[0].Position,
-                    GMarkerGoogleType.red)
-                {
-                    ToolTipText = geofenceoverlay.Markers[0].ToolTipText,
-                    ToolTipMode = geofenceoverlay.Markers[0].ToolTipMode
-                });
-
-                MainMap.UpdatePolygonLocalPosition(geofencepolygon);
-                MainMap.UpdateMarkerLocalPosition(geofenceoverlay.Markers[0]);
-
-                MainMap.Invalidate();
-            }
-            catch (Exception ex)
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Failed to send new fence points " + ex, Strings.ERROR);
-            }
-        }
 
 
         /// <summary>
@@ -3060,8 +2885,8 @@ namespace VPS.GCSViews
                         {
                             if (polygonMarkersGroup.Contains(no))
                             {
-                                GPoint point = MainMap.FromLatLngToLocal(drawnpolygon.Points[no - 1]);
-                                drawnpolygon.Points[no - 1] =
+                                GPoint point = MainMap.FromLatLngToLocal(drawnpolygon.Points[no]);
+                                drawnpolygon.Points[no] =
                                     MainMap.FromLocalToLatLng((int)point.X + xMove, (int)point.Y - yMove);
                             }
                         }
@@ -3111,7 +2936,7 @@ namespace VPS.GCSViews
                                 GPoint point = MainMap.FromLatLngToLocal(marker.Position);
                                 marker.Position =
                                     MainMap.FromLocalToLatLng((int)point.X + xMove, (int)point.Y - yMove);
-                                CallMeDrag((no - 1).ToString(), marker.Position.Lat, marker.Position.Lng, (int)wpLists[no - 1].Alt);
+                                CallMeDrag((no).ToString(), marker.Position.Lat, marker.Position.Lng, (int)wpLists[no].Alt);
                             }
                         }
                     }
@@ -3122,6 +2947,8 @@ namespace VPS.GCSViews
                 }
 
                 writeKML();
+
+                AddHistory(true);
             }
         }
 
@@ -3218,7 +3045,7 @@ namespace VPS.GCSViews
                             {
                                 drawnpolygon.Points[
                                     int.Parse(
-                                        CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1
+                                        CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", ""))
                                         ] = new PointLatLng(MouseDownCurrent.Lat, MouseDownCurrent.Lng);
 
                                 redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
@@ -3511,7 +3338,7 @@ namespace VPS.GCSViews
                                 try
                                 {
                                     drawnpolygon.Points[
-                                            int.Parse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1
+                                            int.Parse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", ""))
                                             ] = new PointLatLng(MouseDownEnd.Lat, MouseDownEnd.Lng);
 
                                     redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
@@ -3524,9 +3351,13 @@ namespace VPS.GCSViews
                             else if ((CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.Tag.ToString(), @"^\d+$")))
                             {
                                 CallMeDrag(
-                                    (int.Parse(CurentRectMarker.InnerMarker.Tag.ToString()) - 1).ToString(),
+                                    (int.Parse(CurentRectMarker.InnerMarker.Tag.ToString())).ToString(),
                                     currentMarker.Position.Lat,
                                     currentMarker.Position.Lng, -1);
+
+                                writeKML();
+
+                                AddHistory(true);
                             }
                             CurentRectMarker = null;
                         }
@@ -4024,6 +3855,8 @@ namespace VPS.GCSViews
             );
 
             SetHomeHere(home);
+
+            writeKML();
         }
 
         public void zoomToTiffLayer()
@@ -4049,7 +3882,7 @@ namespace VPS.GCSViews
                 {
                     try
                     {
-                        wpLists.RemoveAt(no - 1); // home is 0
+                        DeleteWPPoint(no); // home is 0
                     }
                     catch (Exception ex)
                     {
@@ -4061,7 +3894,7 @@ namespace VPS.GCSViews
                 {
                     try
                     {
-                        drawnpolygon.Points.RemoveAt(no - 1);
+                        drawnpolygon.Points.RemoveAt(no);
 
                         redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
                     }
@@ -4081,11 +3914,11 @@ namespace VPS.GCSViews
             }
             if (wpMarkersGroup.Count > 0)
             {
-                for (int a = wpLists.Count; a > 0; a--)
+                for (int a = GetWPCount() - 1; a >= 0; a--)
                 {
                     try
                     {
-                        if (wpMarkersGroup.Contains(a)) wpLists.RemoveAt(a - 1); // home is 0
+                        if (wpMarkersGroup.Contains(a)) DeleteWPPoint(a);// home is none
                     }
                     catch (Exception ex)
                     {
@@ -4093,17 +3926,18 @@ namespace VPS.GCSViews
                         DevComponents.DotNetBar.MessageBoxEx.Show("error selecting wp, please try again.");
                     }
                 }
+
                 wpMarkersGroupClear();
             }
             if (polygonMarkersGroup.Count > 0)
             {
-                for (int a = drawnpolygon.LocalPoints.Count; a > 0; a--)
+                for (int a = drawnpolygon.LocalPoints.Count - 1; a >= 0; a--)
                 {
                     try
                     {
                         if (polygonMarkersGroup.Contains(a))
                         {
-                            drawnpolygon.Points.RemoveAt(a - 1);
+                            drawnpolygon.Points.RemoveAt(a);
                         }
                     }
                     catch (Exception ex)
@@ -4120,6 +3954,7 @@ namespace VPS.GCSViews
                 CurentRectMarker = null;
 
             writeKML();
+            AddHistory();
         }
         #endregion
 
@@ -4136,6 +3971,7 @@ namespace VPS.GCSViews
             }
 
             AddWPPoint(MouseDownStart.Lat, MouseDownStart.Lng, defaultAlt);
+            writeKML();
         }
         #endregion
 
@@ -4485,6 +4321,8 @@ namespace VPS.GCSViews
             {
                 AddPolygonPoint(lat, lng);
 
+                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+
                 return;
             }
             else if (IsDrawWPMode)
@@ -4499,6 +4337,10 @@ namespace VPS.GCSViews
                 //creating a WP
 
                 AddWPPoint(lat, lng, alt);
+
+                writeKML();
+
+                AddHistory(true);
             }
         }
         #endregion
@@ -5133,9 +4975,9 @@ namespace VPS.GCSViews
             int tag = 0;
             list.ForEach(x =>
             {
-                tag++;
                 drawnpolygon.Points.Add(x);
                 Addpolygonmarkergrid(tag.ToString(), x.Lng, x.Lat, 0);
+                tag++;
             });
 
             drawnpolygonsoverlay.Polygons.Add(drawnpolygon);
@@ -6192,8 +6034,6 @@ namespace VPS.GCSViews
             if (IsAllowSendDataChange())
                 HomeChange?.Invoke(position);
 
-            writeKML();
-
             AddHistory();
         }
         #endregion
@@ -6208,7 +6048,7 @@ namespace VPS.GCSViews
         public IntegerChangeHandler historyChange;
 
         #region 添加记录
-        private void AddHistory(bool home = true)
+        public void AddHistory(bool home = true)
         {
             if (quickadd)
             {
@@ -6216,7 +6056,8 @@ namespace VPS.GCSViews
                 return;
             }
             List<PointLatLngAlt> wpHistory = new List<PointLatLngAlt>(wpLists.ToArray());
-            wpHistory.Insert(0, homePosition);
+            if (home)
+                wpHistory.Insert(0, homePosition);
 
             history.Add(wpHistory);
 
@@ -6267,12 +6108,11 @@ namespace VPS.GCSViews
             }
             else
             {
-                Task.Run(()=> 
-                {
-                    StopSendListChange();
-                    SetWPList(wpList);
-                    StartSendListChange();
-                });
+
+                StopSendListChange();
+                SetWPList(wpList);
+                StartSendListChange();
+
             }
         }
 
@@ -6547,9 +6387,6 @@ namespace VPS.GCSViews
             int index = wpLists.Count;
             wpLists.Add(wp);
 
-            writeKML();
-
-            AddHistory();
             return index;
         }
         #endregion
@@ -6570,10 +6407,6 @@ namespace VPS.GCSViews
                 wpLists.Add(wp);
             else
                 wpLists.Insert(index, wp);
-
-            writeKML();
-
-            AddHistory();
         }
         #endregion
 
@@ -6594,9 +6427,6 @@ namespace VPS.GCSViews
             else
                 wpLists[index] = wp;
 
-            writeKML();
-
-            AddHistory();
         }
         #endregion
 
@@ -6606,10 +6436,6 @@ namespace VPS.GCSViews
             if (index < 0 || index >= GetWPCount())
                 return;
             wpLists.RemoveAt(index);
-
-            writeKML();
-
-            AddHistory();
         }
         #endregion
 
@@ -6725,8 +6551,6 @@ namespace VPS.GCSViews
                 drawnpolygon.Points.RemoveAt(drawnpolygon.Points.Count - 1); // unmake a full loop
 
             drawnpolygon.Points.Add(new PointLatLng(lat, lng));
-
-            redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
         }
         #endregion
 

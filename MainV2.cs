@@ -4677,10 +4677,8 @@ namespace VPS
 
         #region ShowLayer 入口函数
         private void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap, PointLatLngAlt home)
-        {
-
+        { 
             GCSViews.FlightPlanner.instance.ShowLayerOverlay(geoBitmap, home);
-
         }
         #endregion
 

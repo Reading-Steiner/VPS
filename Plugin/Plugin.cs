@@ -226,7 +226,10 @@ namespace VPS.Plugin
             wp.Param3 = p3;
             wp.Param4 = p4;
 
-            return MainV2.instance.FlightPlanner.AddWPPoint(wp);
+            int index = MainV2.instance.FlightPlanner.AddWPPoint(wp);
+            MainV2.instance.FlightPlanner.writeKML();
+            MainV2.instance.FlightPlanner.AddHistory(true);
+            return index;
         }
 
         public void InsertWP(int idx, MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x,
@@ -245,6 +248,8 @@ namespace VPS.Plugin
             wp.Param4 = p4;
 
             MainV2.instance.FlightPlanner.InsertWPPoint(idx, wp);
+            MainV2.instance.FlightPlanner.writeKML();
+            MainV2.instance.FlightPlanner.AddHistory(true);
         }
 
         public int AddWPtoList(MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,

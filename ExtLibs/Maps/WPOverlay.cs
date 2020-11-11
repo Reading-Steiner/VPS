@@ -75,7 +75,7 @@ namespace VPS.ArduPilot
                     {
                         pointlist.Add(new PointLatLngAlt(item.lat, item.lng,
                                 item.alt + gethomealt((MAVLink.MAV_FRAME)item.frame, item.lat, item.lng),
-                                "ROI" + (a + 1))
+                                "ROI" + (a))
                         { color = Color.Red });
                         // do set roi is not a nav command. so we dont route through it
                         //fullpointlist.Add(pointlist[pointlist.Count - 1]);
@@ -83,8 +83,8 @@ namespace VPS.ArduPilot
                             new GMarkerGoogle(new PointLatLng(item.lat, item.lng),
                                 GMarkerGoogleType.red);
                         m.ToolTipMode = MarkerTooltipMode.Always;
-                        m.ToolTipText = (a + 1).ToString();
-                        m.Tag = (a + 1).ToString();
+                        m.ToolTipText = (a).ToString();
+                        m.Tag = (a).ToString();
 
                         GMapMarkerRect mBorders = new GMapMarkerRect(m.Position);
                         {
@@ -110,14 +110,14 @@ namespace VPS.ArduPilot
                             if (fullpointlist.Count >= 1)
                             {
                                 var lastpnt = fullpointlist[fullpointlist.Count - 1];
-                                //addpolygonmarker((a + 1).ToString(), lastpnt.Lng, lastpnt.Lat,item.alt, Color.LightBlue, loiterradius);
+                                //addpolygonmarker((a).ToString(), lastpnt.Lng, lastpnt.Lat,item.alt, Color.LightBlue, loiterradius);
                             }
                         }
                         else
                         {
                             pointlist.Add(new PointLatLngAlt(item.lat, item.lng,
                                 item.alt + gethomealt((MAVLink.MAV_FRAME)item.frame, item.lat, item.lng),
-                                (a + 1).ToString())
+                                (a).ToString())
                             {
                                 color = Color.LightBlue
                             });
@@ -151,7 +151,7 @@ namespace VPS.ArduPilot
                             else
                                 fullpointlist.Add(pointlist[pointlist.Count - 1]);
 
-                            addpolygonmarker((a + 1).ToString(), item.lng, item.lat,
+                            addpolygonmarker((a).ToString(), item.lng, item.lat,
                                 item.alt, Color.LightBlue, loiterradius);
                         }
                     }
@@ -159,10 +159,10 @@ namespace VPS.ArduPilot
                     {
                         pointlist.Add(new PointLatLngAlt(item.lat, item.lng,
                                 item.alt + gethomealt((MAVLink.MAV_FRAME)item.frame, item.lat, item.lng),
-                                (a + 1).ToString())
+                                (a).ToString())
                         { Tag2 = "spline" });
                         fullpointlist.Add(pointlist[pointlist.Count - 1]);
-                        addpolygonmarker((a + 1).ToString(), item.lng, item.lat,
+                        addpolygonmarker((a).ToString(), item.lng, item.lat,
                             item.alt, Color.Green, wpradius);
                     }
                     else if (command == (ushort)MAVLink.MAV_CMD.WAYPOINT && item.lat == 0 && item.lng == 0)
@@ -173,9 +173,9 @@ namespace VPS.ArduPilot
                     {
                         pointlist.Add(new PointLatLngAlt(item.lat, item.lng,
                             item.alt + gethomealt((MAVLink.MAV_FRAME)item.frame, item.lat, item.lng),
-                            (a + 1).ToString()));
+                            (a).ToString()));
                         fullpointlist.Add(pointlist[pointlist.Count - 1]);
-                        addpolygonmarker((a + 1).ToString(), item.lng, item.lat,
+                        addpolygonmarker((a).ToString(), item.lng, item.lat,
                             item.alt, null, wpradius);
                     }
 
@@ -210,9 +210,9 @@ namespace VPS.ArduPilot
                 {
                     if (fencepoly == null)
                         fencepoly = new GMapPolygon(new List<PointLatLng>(), a.ToString());
-                    pointlist.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a + 1).ToString()));
-                    fencepoly.Points.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a + 1).ToString()));
-                    addpolygonmarker((a + 1).ToString(), item.lng, item.lat,
+                    pointlist.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a).ToString()));
+                    fencepoly.Points.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a).ToString()));
+                    addpolygonmarker((a).ToString(), item.lng, item.lat,
                         null, Color.Blue, 0, MAVLink.MAV_MISSION_TYPE.FENCE);
                     if (fencepoly.Points.Count == item.p1)
                     {
@@ -226,9 +226,9 @@ namespace VPS.ArduPilot
                 {
                     if (fencepoly == null)
                         fencepoly = new GMapPolygon(new List<PointLatLng>(), a.ToString());
-                    pointlist.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a + 1).ToString()));
-                    fencepoly.Points.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a + 1).ToString()));
-                    addpolygonmarker((a + 1).ToString(), item.lng, item.lat, null, Color.Red, 0, MAVLink.MAV_MISSION_TYPE.FENCE);
+                    pointlist.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a).ToString()));
+                    fencepoly.Points.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a).ToString()));
+                    addpolygonmarker((a).ToString(), item.lng, item.lat, null, Color.Red, 0, MAVLink.MAV_MISSION_TYPE.FENCE);
                     if (fencepoly.Points.Count == item.p1)
                     {
                         fencepoly.Fill = new SolidBrush(Color.FromArgb(30, 255, 0, 0));
@@ -239,26 +239,26 @@ namespace VPS.ArduPilot
                 }
                 else if (command == (ushort)MAVLink.MAV_CMD.FENCE_CIRCLE_EXCLUSION) // fence
                 {
-                    pointlist.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a + 1).ToString()));
-                    addpolygonmarker((a + 1).ToString(), item.lng, item.lat,
+                    pointlist.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a).ToString()));
+                    addpolygonmarker((a).ToString(), item.lng, item.lat,
                         null, Color.Red, item.p1, MAVLink.MAV_MISSION_TYPE.FENCE, Color.FromArgb(30, 255, 0, 0));
                 }
                 else if (command == (ushort)MAVLink.MAV_CMD.FENCE_CIRCLE_INCLUSION) // fence
                 {
-                    pointlist.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a + 1).ToString()));
-                    addpolygonmarker((a + 1).ToString(), item.lng, item.lat,
+                    pointlist.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a).ToString()));
+                    addpolygonmarker((a).ToString(), item.lng, item.lat,
                         null, Color.Blue, item.p1, MAVLink.MAV_MISSION_TYPE.FENCE);
                 }
                 else if (command == (ushort)MAVLink.MAV_CMD.FENCE_RETURN_POINT) // fence
                 {
-                    pointlist.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a + 1).ToString()));
-                    addpolygonmarker((a + 1).ToString(), item.lng, item.lat,
+                    pointlist.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a).ToString()));
+                    addpolygonmarker((a).ToString(), item.lng, item.lat,
                         null, Color.Orange, 0, MAVLink.MAV_MISSION_TYPE.FENCE);
                 }
                 else if (command >= (ushort)MAVLink.MAV_CMD.RALLY_POINT) // rally
                 {
-                    pointlist.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a + 1).ToString()));
-                    addpolygonmarker((a + 1).ToString(), item.lng, item.lat,
+                    pointlist.Add(new PointLatLngAlt(item.lat, item.lng, 0, (a).ToString()));
+                    addpolygonmarker((a).ToString(), item.lng, item.lat,
                         null, Color.Orange, 0, MAVLink.MAV_MISSION_TYPE.RALLY);
                 }
                 else
