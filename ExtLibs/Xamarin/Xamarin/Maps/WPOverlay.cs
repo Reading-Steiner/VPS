@@ -294,10 +294,8 @@ namespace VPS.ArduPilot
             try
             {
                 PointLatLng point = new PointLatLng(lat, lng);
-                GMapMarker m = null;                
-                if(type == MAVLink.MAV_MISSION_TYPE.MISSION)
+                GMapMarker m = new GMapMarkerWP(point, tag);
                 {
-                    m = new GMapMarkerWP(point, tag);
                     if (alt.HasValue)
                     {
                         m.ToolTipMode = MarkerTooltipMode.OnMouseOver;
@@ -305,21 +303,7 @@ namespace VPS.ArduPilot
                     }
                     m.Tag = tag;
                 }
-                else if (type == MAVLink.MAV_MISSION_TYPE.FENCE)
-                {
-                    m = new GMarkerGoogle(point, GMarkerGoogleType.blue_dot);
-                    m.Tag = tag;
-                }
-                else if (type == MAVLink.MAV_MISSION_TYPE.RALLY)
-                {
-                    m = new GMapMarkerRallyPt(point);
-                    if (alt.HasValue)
-                    {
-                        m.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-                        m.ToolTipText = "Alt: " + alt.Value.ToString("0");
-                    }
-                    m.Tag = tag;
-                }
+
 
                 //MissionPlanner.GMapMarkerRectWPRad mBorders = new MissionPlanner.GMapMarkerRectWPRad(point, (int)float.Parse(TXT_WPRad.Text), MainMap);
                 GMapMarkerRect mBorders = new GMapMarkerRect(point);

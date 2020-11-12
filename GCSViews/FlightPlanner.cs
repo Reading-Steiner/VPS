@@ -795,7 +795,7 @@ namespace VPS.GCSViews
             {
                 PointLatLng point = new PointLatLng(lat, lng);
                 GMapMarkerPolygon m = new GMapMarkerPolygon(point, tag);
-                m.ToolTipMode = MarkerTooltipMode.Never;
+                //m.ToolTipMode = MarkerTooltipMode.Never;
                 
                 if (polygonMarkersGroup.Contains(System.Convert.ToInt32(tag)))
                 {

@@ -36,8 +36,9 @@ namespace VPS.Maps
                 }
                 fontBitmaps[no] = temp;
             }
-            
-            ToolTipText = "grid" + tag;
+
+            IsVisible = true;
+            ToolTipText = "grid: " + tag;
             Tag = "grid" + tag;
         }
 
