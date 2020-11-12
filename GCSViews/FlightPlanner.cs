@@ -339,41 +339,45 @@ namespace VPS.GCSViews
 
         private void SetInitState()
         {
-            SetNoDrawPolygonState();
-            this.LeaveDrawPolygonHandle += SetNoDrawPolygonState;
-            this.EnterDrawPolygonHandle += SetDrawPolygonState;
+            LeaveDrawPolygonState();
+            this.DrawPolygonHandle += this.DrawPolygonState;
+            this.LeaveDrawPolygonHandle += this.LeaveDrawPolygonState;
+            LeaveDrawWPState();
+            this.DrawWPHandle += this.DrawWPState;
+            this.LeaveDrawWPHandle += this.LeaveDrawWPState;
 
-            SetNoLaodLayerState();
-            MainV2.instance.LoadLayerHandle += SetLaodLayerState;
-            MainV2.instance.NoLoadLayerHandle += SetNoLaodLayerState;
+            SetNoneLayerState();
+            MainV2.instance.LoadLayerHandle += this.SetLaodLayerState;
+            MainV2.instance.NoneLayerHandle += this.SetNoneLayerState;
         }
 
-        private void SetDrawPolygonState()
+        private void DrawPolygonState()
         {
             this.MainMap.Cursor = Cursors.Cross;
             this.polyicon.IsSelected = true;
-            this.addPolygonPointToolStripMenuItem.Checked = true;
+            this.addPolygonToolStripMenuItem.Checked = true;
+            this.addWPToolStripMenuItem.Checked = false;
         }
 
-        private void SetNoDrawPolygonState()
+        private void LeaveDrawPolygonState()
         {
             this.MainMap.Cursor = Cursors.Default;
             this.polyicon.IsSelected = false;
-            this.addPolygonPointToolStripMenuItem.Checked = false;
+            this.addPolygonToolStripMenuItem.Checked = false;
         }
 
-        private void SetDrawWPState()
+        private void DrawWPState()
         {
             this.MainMap.Cursor = Cursors.Cross;
-            //this.polyicon.IsSelected = true;
-            this.drawWPToolStripMenuItem.Checked = true;
+            this.addWPToolStripMenuItem.Checked = true;
+            this.polyicon.IsSelected = false;
+            this.addPolygonToolStripMenuItem.Checked = false;
         }
 
-        private void SetNoDrawWPState()
+        private void LeaveDrawWPState()
         {
             this.MainMap.Cursor = Cursors.Default;
-            //this.polyicon.IsSelected = false;
-            this.drawWPToolStripMenuItem.Checked = false;
+            this.addWPToolStripMenuItem.Checked = false;
         }
 
 
@@ -382,7 +386,7 @@ namespace VPS.GCSViews
             this.zoomicon.IsSelected = true;
         }
 
-        private void SetNoLaodLayerState()
+        private void SetNoneLayerState()
         {
             this.zoomicon.IsSelected = false;
         }
@@ -918,28 +922,6 @@ namespace VPS.GCSViews
             {
                 log.Info(ex.ToString());
             }
-        }
-
-        public void NoAddPolygon()
-        {
-            IsDrawPolygongridMode = false;
-        }
-
-        public void AddPolygon()
-        {
-            IsDrawPolygongridMode = true;
-            IsDrawWPMode = false;
-        }
-
-        public void AddWP()
-        {
-            IsDrawWPMode = true;
-            IsDrawPolygongridMode = false;
-        }
-
-        public void NoAddWP()
-        {
-            IsDrawWPMode = false;
         }
 
         public void areaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2439,6 +2421,8 @@ namespace VPS.GCSViews
                                 MainV2.comPort.MAV.cs.HomeLocation.Lng,
                                 MainV2.comPort.MAV.cs.HomeLocation.Alt));
                 writeKML();
+
+                AddHistory(true);
             }
             else if (MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat != 0 && MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng != 0)
             {
@@ -2447,6 +2431,8 @@ namespace VPS.GCSViews
                                 MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng,
                                 MainV2.comPort.MAV.cs.PlannedHomeLocation.Alt));
                 writeKML();
+
+                AddHistory(true);
             }
         }
 
@@ -3857,6 +3843,8 @@ namespace VPS.GCSViews
             SetHomeHere(home);
 
             writeKML();
+
+            AddHistory(true);
         }
 
         public void zoomToTiffLayer()
@@ -3965,7 +3953,6 @@ namespace VPS.GCSViews
         {
             if (!IsDrawWPMode)
             {
-                IsDrawPolygongridMode = false;
                 IsDrawWPMode = true;
                 return;
             }
@@ -4062,7 +4049,6 @@ namespace VPS.GCSViews
             if (!IsDrawPolygongridMode)
             {
                 IsDrawPolygongridMode = true;
-                IsDrawWPMode = false;
                 return;
             }
             AddPolygonPoint(MouseDownStart.Lat, MouseDownStart.Lng);
@@ -4824,17 +4810,36 @@ namespace VPS.GCSViews
                 lock (polygonLock)
                 {
                     addPolygonMode = value;
-                    if (addPolygonMode)
-                        EnterDrawPolygonHandle?.Invoke();
+                    if (value)
+                    {
+                        addWPMode = false;
+                        addPolygonMode = true;
+                        DrawPolygonHandle?.Invoke();
+                    }
                     else
+                    {
+                        addPolygonMode = false;
                         LeaveDrawPolygonHandle?.Invoke();
+                    }
                 }
             }
         }
         #endregion
 
-        public delegateHandler EnterDrawPolygonHandle;
+        #region 对外接口
+        public void LeavePolygon()
+        {
+            IsDrawPolygongridMode = false;
+        }
+
+        public void DrawPolygon()
+        {
+            IsDrawPolygongridMode = true;
+        }
+        #endregion
+
         public delegateHandler LeaveDrawPolygonHandle;
+        public delegateHandler DrawPolygonHandle;
 
         #endregion
 
@@ -4850,18 +4855,36 @@ namespace VPS.GCSViews
             {
                 lock (wpLock)
                 {
-                    addWPMode = value;
-                    if (addWPMode)
-                        ToDrawWPHandle?.Invoke();
+                    if (value)
+                    {
+                        addWPMode = true;
+                        addPolygonMode = false;
+                        DrawWPHandle?.Invoke();
+                    }
                     else
-                        OutDrawWPHandle?.Invoke();
+                    {
+                        addWPMode = false;
+                        LeaveDrawWPHandle?.Invoke();
+                    }
                 }
             }
         }
         #endregion
 
-        public delegateHandler ToDrawWPHandle;
-        public delegateHandler OutDrawWPHandle;
+        #region 对外接口
+        public void DrawWP()
+        {
+            IsDrawWPMode = true;
+        }
+
+        public void LeaveWP()
+        {
+            IsDrawWPMode = false;
+        }
+        #endregion
+
+        public delegateHandler LeaveDrawWPHandle;
+        public delegateHandler DrawWPHandle;
 
         #endregion
 
@@ -6019,6 +6042,10 @@ namespace VPS.GCSViews
                 StopSendDataChange();
                 SetHomeHere(home);
                 StartSendDataChange();
+
+                writeKML();
+
+                AddHistory(true);
             }
         }
         #endregion
@@ -6034,7 +6061,7 @@ namespace VPS.GCSViews
             if (IsAllowSendDataChange())
                 HomeChange?.Invoke(position);
 
-            AddHistory();
+            AddHistory(true);
         }
         #endregion
 

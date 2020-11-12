@@ -65,7 +65,7 @@ namespace VPS.GCSViews
             this.deleteMarkerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.polygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addPolygonPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.savePolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,7 +73,7 @@ namespace VPS.GCSViews
             this.fromPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fromSHPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.planningWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.surveyGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -272,7 +272,7 @@ namespace VPS.GCSViews
             // 
             resources.ApplyResources(this.polygonToolStripMenuItem, "polygonToolStripMenuItem");
             this.polygonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addPolygonPointToolStripMenuItem,
+            this.addPolygonToolStripMenuItem,
             this.clearPolygonToolStripMenuItem,
             this.toolStripSeparator2,
             this.savePolygonToolStripMenuItem,
@@ -281,9 +281,9 @@ namespace VPS.GCSViews
             // 
             // addPolygonPointToolStripMenuItem
             // 
-            resources.ApplyResources(this.addPolygonPointToolStripMenuItem, "addPolygonPointToolStripMenuItem");
-            this.addPolygonPointToolStripMenuItem.Name = "addPolygonPointToolStripMenuItem";
-            this.addPolygonPointToolStripMenuItem.Click += new System.EventHandler(this.AddPolygonPointToolStripMenuItem_Click);
+            resources.ApplyResources(this.addPolygonToolStripMenuItem, "addPolygonPointToolStripMenuItem");
+            this.addPolygonToolStripMenuItem.Name = "addPolygonPointToolStripMenuItem";
+            this.addPolygonToolStripMenuItem.Click += new System.EventHandler(this.AddPolygonPointToolStripMenuItem_Click);
             // 
             // clearPolygonToolStripMenuItem
             // 
@@ -326,7 +326,7 @@ namespace VPS.GCSViews
             // 
             resources.ApplyResources(this.planningWPToolStripMenuItem, "planningWPToolStripMenuItem");
             this.planningWPToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.drawWPToolStripMenuItem,
+            this.addWPToolStripMenuItem,
             this.surveyGridToolStripMenuItem,
             this.clearMissionToolStripMenuItem,
             this.toolStripSeparator3,
@@ -336,9 +336,9 @@ namespace VPS.GCSViews
             // 
             // drawWPToolStripMenuItem
             // 
-            resources.ApplyResources(this.drawWPToolStripMenuItem, "drawWPToolStripMenuItem");
-            this.drawWPToolStripMenuItem.Name = "drawWPToolStripMenuItem";
-            this.drawWPToolStripMenuItem.Click += new System.EventHandler(this.AddWPToolStripMenuItem_Click);
+            resources.ApplyResources(this.addWPToolStripMenuItem, "drawWPToolStripMenuItem");
+            this.addWPToolStripMenuItem.Name = "drawWPToolStripMenuItem";
+            this.addWPToolStripMenuItem.Click += new System.EventHandler(this.AddWPToolStripMenuItem_Click);
             // 
             // surveyGridToolStripMenuItem
             // 
@@ -515,7 +515,7 @@ namespace VPS.GCSViews
         public ToolStripMenuItem planningWPToolStripMenuItem;
         public ToolStripMenuItem surveyGridToolStripMenuItem;
         private ToolStripMenuItem polygonToolStripMenuItem;
-        public ToolStripMenuItem addPolygonPointToolStripMenuItem;
+        public ToolStripMenuItem addPolygonToolStripMenuItem;
         public ToolStripMenuItem deletePolygonPointToolStripMenuItem;
         public ToolStripMenuItem clearPolygonToolStripMenuItem;
         private ToolStripMenuItem loadPolygonToolStripMenuItem;
@@ -572,6 +572,6 @@ namespace VPS.GCSViews
 
         private ToolStripMenuItem toolStripMenuItem3;
         private ToolStripMenuItem testToolStripMenuItem;
-        private ToolStripMenuItem drawWPToolStripMenuItem;
+        private ToolStripMenuItem addWPToolStripMenuItem;
     }
 }

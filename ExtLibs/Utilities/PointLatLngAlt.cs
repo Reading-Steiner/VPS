@@ -86,6 +86,11 @@ namespace VPS.Utilities
             this.Alt = plla.Alt;
             this.color = plla.color;
             this.Tag = plla.Tag;
+            this.Tag2 = plla.Tag2;
+            this.Param1 = plla.Param1;
+            this.Param2 = plla.Param2;
+            this.Param3 = plla.Param3;
+            this.Param4 = plla.Param4;
         }
 
         public PointLatLng Point()
@@ -134,7 +139,12 @@ namespace VPS.Utilities
             this.Lng == plla.Lng &&
             this.Alt == plla.Alt &&
             this.color == plla.color &&
-            this.Tag == plla.Tag)
+            this.Tag == plla.Tag &&
+            this.Tag2 == plla.Tag2 &&
+            this.Param1 == plla.Param1 &&
+            this.Param2 == plla.Param2 &&
+            this.Param3 == plla.Param3 &&
+            this.Param4 == plla.Param4)
             {
                 return true;
             }

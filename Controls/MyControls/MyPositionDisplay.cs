@@ -17,8 +17,9 @@ namespace VPS.Controls.MyControls
             InitializeComponent();
         }
 
+        #region 标题
         private string posName = "位置";
-        [Category("Value"),Description("位置名称")]
+        [Category("Value"),Description("标题")]
         public string PositionName
         {
             set
@@ -31,9 +32,11 @@ namespace VPS.Controls.MyControls
                 return posName;
             }
         }
+        #endregion
 
+        #region 坐标
         private Utilities.PointLatLngAlt Position = new Utilities.PointLatLngAlt();
-        [Category("Value"), Description("位置")]
+        [Category("Value"), Description("位置信息")]
         public Utilities.PointLatLngAlt WGS84Position
         {
             set
@@ -47,7 +50,9 @@ namespace VPS.Controls.MyControls
                 return Position;
             }
         }
+        #endregion
 
+        #region 是否可修改
         private bool isEndable = true;
         [Category("Value"), Description("可修改的")]
         public bool IsReadOnly
@@ -62,6 +67,7 @@ namespace VPS.Controls.MyControls
             }
         }
 
+        #region 接口函数
         public void AllowClick()
         {
             isEndable = true;
@@ -71,8 +77,10 @@ namespace VPS.Controls.MyControls
         {
             isEndable = false;
         }
+        #endregion
+        #endregion
 
-
+        #region 修改响应函数
         private void Display_DoubleClick(object sender, EventArgs e)
         {
             if (isEndable)
@@ -82,9 +90,16 @@ namespace VPS.Controls.MyControls
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
                         WGS84Position = dlg.WGS84Position;
+                        PositionChange?.Invoke(WGS84Position);
                     }
                 }
             }                                          
         }
+        #endregion
+
+        #region
+        public delegate void PositionChangeHandle(Utilities.PointLatLngAlt position);
+        public PositionChangeHandle PositionChange;
+        #endregion
     }
 }

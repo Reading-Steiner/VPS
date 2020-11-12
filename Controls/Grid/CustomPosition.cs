@@ -21,6 +21,7 @@ namespace VPS.Controls.Grid
             Position.Tag = VPS.WP.WPCommands.DefaultWPCommand;
             Position.Tag2 = AltMode.Relative.ToString();
 
+            defaultPosition = Position;
             AltFrameSelecter.DataSource = Enum.GetValues(typeof(AltMode));
             AltFrameSelecter.SelectedIndex = 0;
         }
@@ -36,6 +37,7 @@ namespace VPS.Controls.Grid
                 this.AltFrameSelecter.SelectedItem = (AltMode)Enum.Parse(typeof(AltMode), "Relative");
 
             Position = position;
+            defaultPosition = new Utilities.PointLatLngAlt(position) ;
         }
 
         public enum AltMode
@@ -45,12 +47,13 @@ namespace VPS.Controls.Grid
             Terrain
         }
 
+        private Utilities.PointLatLngAlt defaultPosition = new Utilities.PointLatLngAlt();
         private Utilities.PointLatLngAlt Position = new Utilities.PointLatLngAlt();
         public Utilities.PointLatLngAlt WGS84Position
         {
             set
             {
-                Position = value;
+                Position = new Utilities.PointLatLngAlt(value);
                 this.LngInput.Value = value.Lng;
                 this.LatInput.Value = value.Lat;
                 this.AltInput.Value = (int)value.Alt;
@@ -70,6 +73,7 @@ namespace VPS.Controls.Grid
             WGS84Position = Position;
         }
 
+        #region 数据变化响应函数
         string AltFormat = "地面海拔  {0} m";
         private void LngInput_ValueChanged(object sender, EventArgs e)
         {
@@ -94,5 +98,13 @@ namespace VPS.Controls.Grid
         {
             Position.Alt = AltInput.Value;
         }
+        #endregion
+
+        #region 数据还原函数
+        private void Default_Click(object sender, EventArgs e)
+        {
+            WGS84Position = defaultPosition;
+        }
+        #endregion
     }
 }

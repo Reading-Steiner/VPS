@@ -23,11 +23,11 @@ namespace VPS.Controls.MainInfo
 
         private delegate void SetPositionInThread(Utilities.PointLatLngAlt position);
         private Utilities.PointLatLngAlt home = null;
-        public void SetHomePosition(Utilities.PointLatLngAlt position)
+        public void SetHomeHandle(Utilities.PointLatLngAlt position)
         {
             if (this.InvokeRequired)
             {
-                SetPositionInThread inThread = new SetPositionInThread(SetHomePosition);
+                SetPositionInThread inThread = new SetPositionInThread(SetHomeHandle);
                 this.Invoke(inThread, new object[] { position });
             }
             else

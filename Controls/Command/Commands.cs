@@ -39,6 +39,8 @@ namespace VPS.Controls.Command
             }
 
             BindingDataSource(wpLists);
+
+            HomePositionDisplay.PositionChange += SetHome;
         }
 
 
@@ -764,11 +766,14 @@ namespace VPS.Controls.Command
             if (home.Tag != VPS.WP.WPCommands.HomeCommand)
                 home.Tag = VPS.WP.WPCommands.HomeCommand;
 
-            homePosition = home;
-            HomePositionDisplay.WGS84Position = home;
+            if (!homePosition.Equals(home))
+            {
+                homePosition = home;
+                HomePositionDisplay.WGS84Position = home;
 
-            if (IsAllowSendPositionChange())
-                HomeChange?.Invoke(homePosition);
+                if (IsAllowSendPositionChange())
+                    HomeChange?.Invoke(homePosition);
+            }
         }
         #endregion
 

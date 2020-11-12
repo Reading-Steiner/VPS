@@ -3279,32 +3279,61 @@ namespace VPS
         #region 自定义初始化
         private void SetInitHandler()
         {
-            OutDrawPolygonState();
+            LeaveDrawPolygonState();
 
+            delegateDataChange();
+            delegateHomeChange();
+            delegateWPListChange();
+            delegateCurrentPosition();
+
+            #region 控件反应链接
+            GCSViews.FlightPlanner.instance.DrawPolygonHandle += VPS.MainV2.instance.DrawPolygonState;
+            GCSViews.FlightPlanner.instance.LeaveDrawPolygonHandle += VPS.MainV2.instance.LeaveDrawPolygonState;
+            GCSViews.FlightPlanner.instance.DrawWPHandle += VPS.MainV2.instance.DrawWPState;
+            GCSViews.FlightPlanner.instance.LeaveDrawWPHandle += VPS.MainV2.instance.LeaveDrawWPState;
+            VPS.MainV2.instance.NoneLayerHandle += VPS.MainV2.instance.SetNoneLayerState;
+            VPS.MainV2.instance.LoadLayerHandle += VPS.MainV2.instance.SetLaodLayerState;
+            #endregion
+
+        }
+
+        #region Home 数据链接
+        private void delegateHomeChange()
+        {
+            GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.Command.CommandsPanel.instance.SetHomeHandle;
+            GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetHomeHandle;
+            VPS.Controls.Command.CommandsPanel.instance.HomeChange += GCSViews.FlightPlanner.instance.SetHomeHandle;
+            VPS.Controls.Command.CommandsPanel.instance.HomeChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetHomeHandle;
+        }
+        #endregion
+
+        #region WPList 数据链接
+        private void delegateWPListChange()
+        {
+            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
+            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetWPListHandle;
             VPS.Controls.Command.CommandsPanel.instance.WPListChange += GCSViews.FlightPlanner.instance.SetWPListHandle;
+            VPS.Controls.Command.CommandsPanel.instance.WPListChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetWPListHandle;
+        }
+        #endregion
+
+        #region CurrentPosition 数据链接
+        private void delegateCurrentPosition()
+        {
+            GCSViews.FlightPlanner.instance.CurrentChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetCurrentPosition;
+        }
+        #endregion
+
+        #region 基础数据 数据链接
+        private void delegateDataChange()
+        {
             VPS.Controls.Command.CommandsPanel.instance.CoordSystemChange += GCSViews.FlightPlanner.instance.SetCoordSystemHandle;
             VPS.Controls.Command.CommandsPanel.instance.WPRadChange += GCSViews.FlightPlanner.instance.SetWPRadHandle;
             VPS.Controls.Command.CommandsPanel.instance.AltFrameChange += GCSViews.FlightPlanner.instance.SetAltFrameHandle;
             VPS.Controls.Command.CommandsPanel.instance.WarnAltChange += GCSViews.FlightPlanner.instance.SetWarnAltHandle;
             VPS.Controls.Command.CommandsPanel.instance.DefaultAltChange += GCSViews.FlightPlanner.instance.SetDefaultAltHandle;
-            VPS.Controls.Command.CommandsPanel.instance.HomeChange += GCSViews.FlightPlanner.instance.SetHomeHandle;
-            GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.Command.CommandsPanel.instance.SetHomeHandle;
-            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
-
-            GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetHomePosition;
-            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetWPListHandle;
-            GCSViews.FlightPlanner.instance.CurrentChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetCurrentPosition;
-
-            GCSViews.FlightPlanner.instance.EnterDrawPolygonHandle += ToDrawPolygonState;
-            GCSViews.FlightPlanner.instance.LeaveDrawPolygonHandle += OutDrawPolygonState;
-
-            GCSViews.FlightPlanner.instance.ToDrawWPHandle += ToDrawWPState;
-            GCSViews.FlightPlanner.instance.OutDrawWPHandle += OutDrawWPState;
-
-            NoLoadLayerHandle += SetNoLaodLayerState;
-            LoadLayerHandle += SetLaodLayerState;
-
         }
+        #endregion
 
         public bool LoadDefaultLayer()
         {
@@ -3938,22 +3967,27 @@ namespace VPS
         }
         #endregion
 
-        private void ToDrawPolygonState()
+        //开启 添加区域点 菜单项
+        private void DrawPolygonState()
         {
             SetMenuItemChecked(this.DrawPolygonButton, true);
+            SetMenuItemChecked(this.DrawWPButton, false);
         }
-
-        private void OutDrawPolygonState()
+        //关闭 添加区域点 菜单项
+        private void LeaveDrawPolygonState()
         {
             SetMenuItemChecked(this.DrawPolygonButton, false);
         }
 
-        private void ToDrawWPState()
+        //开启 添加航点 菜单项
+        private void DrawWPState()
         {
             SetMenuItemChecked(this.DrawWPButton, true);
+            SetMenuItemChecked(this.DrawPolygonButton, false);
         }
 
-        private void OutDrawWPState()
+        //关闭 添加航点 菜单项
+        private void LeaveDrawWPState()
         {
             SetMenuItemChecked(this.DrawWPButton, false);
         }
@@ -4110,14 +4144,14 @@ namespace VPS
         #region LoadTiff 相应函数
         public delegate void delegateHandler();
         public delegateHandler LoadLayerHandle;
-        public delegateHandler NoLoadLayerHandle;
+        public delegateHandler NoneLayerHandle;
         private void SetLaodLayerState()
         {
             this.ZoomTiffButton.Enabled = true;
             this.ZoomToButton.Enabled = true;
         }
 
-        private void SetNoLaodLayerState()
+        private void SetNoneLayerState()
         {
             this.ZoomTiffButton.Enabled = false;
             this.ZoomToButton.Enabled = false;
@@ -4138,7 +4172,7 @@ namespace VPS
                 }
                 else
                 {
-                    NoLoadLayerHandle?.Invoke();
+                    NoneLayerHandle?.Invoke();
                 }
             }
         }
@@ -4218,9 +4252,9 @@ namespace VPS
         private void DrawPolygonButton_Click(object sender, EventArgs e)
         {
             if (!DrawPolygonButton.Checked)
-                GCSViews.FlightPlanner.instance.AddPolygon();
+                GCSViews.FlightPlanner.instance.DrawPolygon();
             else
-                GCSViews.FlightPlanner.instance.NoAddPolygon();
+                GCSViews.FlightPlanner.instance.LeavePolygon();
         }
         #endregion
 
@@ -4287,9 +4321,9 @@ namespace VPS
         private void DrawWPButton_Click(object sender, EventArgs e)
         {
             if (!DrawWPButton.Checked)
-                GCSViews.FlightPlanner.instance.AddWP();
+                GCSViews.FlightPlanner.instance.DrawWP();
             else
-                GCSViews.FlightPlanner.instance.NoAddWP();
+                GCSViews.FlightPlanner.instance.LeaveWP();
         }
         #endregion
 
