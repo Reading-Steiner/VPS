@@ -31,10 +31,10 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LayerManager));
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
-            this.LayerDataList = new DevComponents.DotNetBar.SuperGrid.SuperGridControl();
-            this.ImageList = new System.Windows.Forms.ImageList(this.components);
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
+            this.LayerDataList = new DevComponents.DotNetBar.SuperGrid.SuperGridControl();
             this.panelEx2 = new DevComponents.DotNetBar.PanelEx();
+            this.ImageList = new System.Windows.Forms.ImageList(this.components);
             this.panelEx1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,26 +58,6 @@
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 0;
             // 
-            // LayerDataList
-            // 
-            this.LayerDataList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.LayerDataList.FilterExprColors.SysFunction = System.Drawing.Color.DarkRed;
-            this.LayerDataList.Location = new System.Drawing.Point(3, 3);
-            this.LayerDataList.Name = "LayerDataList";
-            this.LayerDataList.Size = new System.Drawing.Size(988, 272);
-            this.LayerDataList.TabIndex = 0;
-            this.LayerDataList.CellClick += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridCellClickEventArgs>(this.LayerDataList_CellClick);
-            this.LayerDataList.DataBindingComplete += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridDataBindingCompleteEventArgs>(this.LayerDataList_DataBindingComplete);
-            this.LayerDataList.RowSetDefaultValues += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridRowSetDefaultValuesEventArgs>(this.LayerDataList_RowSetDefaultValues);
-            // 
-            // ImageList
-            // 
-            this.ImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList.ImageStream")));
-            this.ImageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.ImageList.Images.SetKeyName(0, "Delete.png");
-            this.ImageList.Images.SetKeyName(1, "Default.png");
-            // 
             // buttonX1
             // 
             this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
@@ -89,6 +69,20 @@
             this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.buttonX1.TabIndex = 1;
             this.buttonX1.Text = "设为默认";
+            // 
+            // LayerDataList
+            // 
+            this.LayerDataList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LayerDataList.FilterExprColors.SysFunction = System.Drawing.Color.DarkRed;
+            this.LayerDataList.Location = new System.Drawing.Point(3, 3);
+            this.LayerDataList.Name = "LayerDataList";
+            this.LayerDataList.Size = new System.Drawing.Size(988, 272);
+            this.LayerDataList.TabIndex = 0;
+            this.LayerDataList.CellClick += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridCellClickEventArgs>(this.LayerDataList_CellClick);
+            this.LayerDataList.DataBindingComplete += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridDataBindingCompleteEventArgs>(this.LayerDataList_DataBindingComplete);
+            this.LayerDataList.RowActivated += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridRowActivatedEventArgs>(this.LayerDataList_RowActivated);
+            this.LayerDataList.RowSetDefaultValues += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridRowSetDefaultValuesEventArgs>(this.LayerDataList_RowSetDefaultValues);
             // 
             // panelEx2
             // 
@@ -106,6 +100,13 @@
             this.panelEx2.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
             this.panelEx2.Style.GradientAngle = 90;
             this.panelEx2.TabIndex = 3;
+            // 
+            // ImageList
+            // 
+            this.ImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList.ImageStream")));
+            this.ImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.ImageList.Images.SetKeyName(0, "Delete.png");
+            this.ImageList.Images.SetKeyName(1, "Default.png");
             // 
             // LayerManager
             // 

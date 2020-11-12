@@ -448,9 +448,24 @@ namespace VPS.Controls.Layer
 
         #endregion
 
+        private void LayerDataList_RowActivated(object sender, GridRowActivatedEventArgs e)
+        {
+            ExchangeInfo(LayerDataList.GetCell(e.NewActiveRow.RowIndex, 0).Value.ToString());
+        }
+
         private void ExchangeInfo(string hash)
         {
             VPS.Layer.LayerInfo info = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCacheWithHashCode(hash);
+            if (info is VPS.Layer.TiffLayerInfo)
+            {
+                TiffLayerDisplay display = new TiffLayerDisplay();
+                display.Dock = DockStyle.Fill;
+
+                display.HomePosition = info.Home;
+
+                panelEx2.Controls.Clear();
+                panelEx2.Controls.Add(display);
+            }
         }
     }
 
