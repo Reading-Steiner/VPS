@@ -3335,6 +3335,7 @@ namespace VPS
         }
         #endregion
 
+        #region 加载默认图层（工作区）
         public bool LoadDefaultLayer()
         {
             var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
@@ -3347,6 +3348,8 @@ namespace VPS
                 return false;
             }
         }
+        #endregion
+
         #endregion
 
         #region OnLoad
@@ -4248,6 +4251,7 @@ namespace VPS
         #endregion
 
         #region 航摄区域模块
+
         #region DrawPolygon
         private void DrawPolygonButton_Click(object sender, EventArgs e)
         {
@@ -4266,42 +4270,49 @@ namespace VPS
         #endregion
 
         #region SelectedPolygon
+
         #region SelectedPolygon 选中首个
         private void FirstPolygonButton_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.polygonMarkersGroupFirst();
         }
         #endregion
+
         #region SelectedPolygon 选中下一个
         private void NextPolygonButton_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.polygonMarkersGroupNext();
         }
         #endregion
+
         #region SelectedPolygon 选中上一个
         private void PrevPolygonButton_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.polygonMarkersGroupPrev();
         }
         #endregion
+
         #region SelectedPolygon 选中全部
         private void AllPolygonButton_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.polygonMarkersGroupAddAll();
         }
         #endregion
+
         #region SelectedPolygon 取消选中
         private void CancelPolygonButton_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.polygonMarkersGroupClear();
         }
         #endregion
+
         #region SelectedPolygon 删除选中
         private void DeleteSelectedPolygonButton_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.DeleteCurrentPolygon();
         }
         #endregion
+
         #endregion
 
         #region PolygonList
@@ -4313,6 +4324,7 @@ namespace VPS
 
         #endregion
         #endregion
+
         #endregion
 
         #region 航点规划模块
@@ -4343,11 +4355,9 @@ namespace VPS
             {
                 AutoWPButton.Checked = true;
                 //GCSViews.FlightPlanner.instance.surveyGrid();
-                VPS.Controls.Grid.GridConfig.instance.WPListChange -= GCSViews.FlightPlanner.instance.SetWPListHandle;
+                VPS.Controls.Grid.GridConfig.instance.WPListQuestChange += VPS.MainV2.instance.AutoGridQuestWPList;
                 VPS.Controls.Grid.GridConfig.instance.WPListChange += GCSViews.FlightPlanner.instance.SetWPListHandle;
-                VPS.Controls.Grid.GridConfig.instance.WPListChange -= VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
                 VPS.Controls.Grid.GridConfig.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
-                GCSViews.FlightPlanner.instance.PolygonListChange -= VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
                 GCSViews.FlightPlanner.instance.PolygonListChange += VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
 
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
@@ -4383,6 +4393,18 @@ namespace VPS
         }
         #endregion
 
+        #region 辅助函数
+        public void AutoGridQuestWPList()
+        {
+            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.Grid.GridConfig.instance.SetWPListHandle;
+
+            GCSViews.FlightPlanner.instance.WPListChange?.
+                Invoke(GCSViews.FlightPlanner.instance.GetWPList());
+
+            GCSViews.FlightPlanner.instance.WPListChange -= VPS.Controls.Grid.GridConfig.instance.SetWPListHandle;
+        }
+        #endregion
+
         #endregion
 
         #region SelectedWP
@@ -4393,36 +4415,42 @@ namespace VPS
             GCSViews.FlightPlanner.instance.wpMarkersGroupFirst();
         }
         #endregion
+
         #region SelectedWP 选中下一个
         private void NextWPButton_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.wpMarkersGroupNext();
         }
         #endregion
+
         #region SelectedWP 选中上一个
         private void PrevWPButton_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.wpMarkersGroupPrev();
         }
         #endregion
+
         #region SelectedWP 选中全部
         private void AllWPButton_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.wpMarkersGroupAddAll();
         }
         #endregion
+
         #region SelectedWP 取消选中
         private void CancelWPButton_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.wpMarkersGroupClear();
         }
         #endregion
+
         #region SelectedWP 删除选中
         private void DeleteSelectedWPButton_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.DeleteCurrentWP();
         }
         #endregion
+
         #endregion
 
         #region SaveWP

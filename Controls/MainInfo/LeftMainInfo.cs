@@ -85,7 +85,7 @@ namespace VPS.Controls.MainInfo
             }
             grid = wpList;
 
-            CalcTotalAlt();
+            CalcTotalDist();
 
             CalcLap();
         }
@@ -136,7 +136,7 @@ namespace VPS.Controls.MainInfo
 
         }
 
-        private void CalcTotalAlt()
+        private void CalcTotalDist()
         {
             double totalDist = 0.0;
             for (int index = 1; index < grid.Count; index++)
@@ -148,6 +148,7 @@ namespace VPS.Controls.MainInfo
             }
             WPTotalDist.Text = totalDist.ToString("0.## m");
         }
+
         private void DoCalc()
         {
             double baseAltCopy = baseAlt;

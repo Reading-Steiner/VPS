@@ -33,7 +33,6 @@ namespace VPS.Controls.Grid
 
             CMB_startfrom.DataSource = Enum.GetNames(typeof(Utilities.Grid.StartPosition));
             CMB_startfrom.SelectedIndex = 0;
-
         }
 
         ~GridConfig()
@@ -56,6 +55,8 @@ namespace VPS.Controls.Grid
                 domainUpDown1_ValueChanged();
             else
                 EnterCalc();
+
+            historyChange += HistoryChangeHandle;
         }
         #endregion
 
@@ -371,15 +372,157 @@ namespace VPS.Controls.Grid
 
         #region 重要参数
         public delegate void ListChangedHandle(List<PointLatLngAlt> wpList);
-        public ListChangedHandle WPListChange;
+        public delegate void IntegerChangeHandler(int integer);
+        public delegate void StateChangeHandler();
+
+        #region 航线记录
+        List<List<PointLatLngAlt>> history = new List<List<PointLatLngAlt>>();
+
+        public IntegerChangeHandler historyChange;
+
+        #region 添加航线记录
+        private void AddHistoryList()
+        {
+            history.Add(wp);
+            historyChange?.Invoke(history.Count);
+        }
+        #endregion
+
+        #region 回退航线记录
+        private void UndoHistoryList()
+        {
+            if (history.Count > 0)
+            {
+                int no = history.Count - 1;
+                var pop = history[no];
+                history.RemoveAt(no);
+
+                SetWPList(pop);
+                historyChange?.Invoke(history.Count);
+            }
+        }
+        #endregion
+
+        #region 航线记录数验证
+        private void HistoryChangeHandle(int count)
+        {
+            if (count > 0)
+                SetControlMainThread(Undo, true);
+            else
+                SetControlMainThread(Undo, false);
+        }
+        #endregion
+
+        #region 添加信息提示
+        private void SetLockWPToolTips()
+        {
+            if (wp.Count > 0)
+            {
+                var tip = new DevComponents.DotNetBar.SuperTooltipInfo();
+                tip.HeaderText = "锁定航线";
+                tip.FooterText = "";
+                tip.BodyText =
+                    "行点数: " + wp.Count + '\n' +
+                    "起始位置: " + "[ " + 
+                    wp[0].Lat.ToString("0.######") + " , " + 
+                    wp[0].Lng.ToString("0.######") + " ]" + '\n' +
+                    "终止位置: " + "[ " + 
+                    wp[wp.Count - 1].Lat.ToString("0.######") + " , " + 
+                    wp[wp.Count - 1].Lng.ToString("0.######") + " ]" + '\n' +
+                    "航线距离: " + CalcTotalDist(wp).ToString("0.##") + " m" + '\n' +
+                    "航摄基线: " + CalcBaseAlt(wp).ToString() + " m";
+                tip.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+                tip.CustomSize = new Size(250, 110);
+
+                this.defaultTooltip.SetSuperTooltip(this.panelEx7, tip);
+            }
+            else
+                this.defaultTooltip.SetSuperTooltip(this.panelEx7, null);
+        }
+
+        #region 参数计算
+        private int CalcBaseAlt(List<Utilities.PointLatLngAlt> wpList)
+        {
+            double totalAlt = 0.0;
+            double maxA = 0.0;
+            double minA = wpList.Count > 0 ?
+                Utilities.srtm.getAltitude(wpList[0].Lat, wpList[0].Lng).alt * CurrentState.multiplieralt : 0.0;
+            for (int index = 0; index < wpList.Count; index++)
+            {
+                double terrain = Utilities.srtm.getAltitude(wpList[index].Lat, wpList[index].Lng).alt * CurrentState.multiplieralt;
+                totalAlt += terrain;
+                if (terrain > maxA)
+                    maxA = terrain;
+                if (terrain < minA)
+                    minA = terrain;
+            }
+            return (int)(totalAlt / Math.Max(1, wpList.Count));
+
+        }
+
+        private double CalcTotalDist(List<Utilities.PointLatLngAlt> wpList)
+        {
+            double totalDist = 0.0;
+            for (int index = 1; index < grid.Count; index++)
+            {
+                totalDist += Math.Sqrt(
+                    Math.Pow(wpList[index].GetDistance(grid[index - 1]), 2) +
+                    Math.Pow(wpList[index].Alt - wpList[index - 1].Alt, 2)) *
+                    CurrentState.multiplierdist;
+            }
+            return totalDist;
+        }
+        #endregion
+
+        #endregion
+
+        #endregion
 
         #region 航线
         List<PointLatLngAlt> grid = new List<PointLatLngAlt>();
+        List<PointLatLngAlt> wp = new List<PointLatLngAlt>();
+
+        public ListChangedHandle WPListChange;
+
+        public StateChangeHandler WPListQuestChange;
+
+        #region 设置航线
+        public void SetWPListHandle(List<PointLatLngAlt> wpList)
+        {
+            AddHistoryList();
+            if (wpList.Count > 0)
+            {
+                if (wpList[0].Tag == VPS.WP.WPCommands.HomeCommand)
+                    wpList.RemoveAt(0);
+            }
+            wp = new List<PointLatLngAlt>(wpList.ToArray());
+            SetLockWPToolTips();
+        }
+
+        private void SetWPList(List<PointLatLngAlt> wpList)
+        {
+            if (wpList.Count > 0)
+            {
+                if (wpList[0].Tag == VPS.WP.WPCommands.HomeCommand)
+                    wpList.RemoveAt(0);
+            }
+            wp = new List<PointLatLngAlt>(wpList.ToArray());
+            SetLockWPToolTips();
+        }
+        #endregion
 
         #region 获取航线
         public List<PointLatLngAlt> GetWPList()
         {
-            List<PointLatLngAlt> wpList = grid;
+            List<PointLatLngAlt> wpList;
+            if ((bool)ReadControlMainThread(CHK_AppendWP))
+            {
+                wpList = new List<PointLatLngAlt>(wp.ToArray());
+                wpList.AddRange(grid);
+            }
+            else
+                wpList = new List<PointLatLngAlt>(grid.ToArray());
+
             for (int i = 0; i < wpList.Count; i++)
             {
                 wpList[i].Tag = VPS.WP.WPCommands.DefaultWPCommand;
@@ -399,7 +542,24 @@ namespace VPS.Controls.Grid
         {
             if (gridGrenate)
                 return;
-            poly = polygons;
+            poly = new List<PointLatLngAlt>(polygons.ToArray());
+
+            DataTable set = new DataTable();
+            set.Columns.Add("key");
+            set.Columns.Add("Value");
+
+            for (int index = 0; index < polygons.Count; index++)
+            {
+                var row = set.NewRow();
+                row["key"] = index;
+                row["Value"] = "grid:" + index.ToString();
+                set.Rows.Add(row);
+            }
+
+            CMB_PolygonBox.DataSource = set;
+            CMB_PolygonBox.ValueMember = "key";
+            CMB_PolygonBox.DisplayMember = "Value";
+
             domainUpDown2_ValueChanged();
         }
         #endregion
@@ -590,9 +750,12 @@ namespace VPS.Controls.Grid
             double overshoot = (int)ReadControlMainThread(instance.NUM_overshoot);
             double overshoot2 = (int)ReadControlMainThread(instance.NUM_overshoot2);
             string startfrom = (string)ReadControlMainThread(instance.CMB_startfrom);
+
             float num_lane_dist = (int)ReadControlMainThread(instance.NUM_Lane_Dist);
             float num_corridorwidth = (int)ReadControlMainThread(instance.num_corridorwidth);
             float num_landin = (int)ReadControlMainThread(instance.NUM_leadin);
+
+            Utilities.Grid.StartPointLatLngAlt = new PointLatLngAlt(instance.GetStartPoint());
             List<PointLatLngAlt> wp = new List<PointLatLngAlt>();
             if (ch_Corridor)
             {
@@ -605,6 +768,7 @@ namespace VPS.Controls.Grid
             }
             else if (chk_spiral)
             {
+                //生成螺旋航线
                 wp = await Utilities.Grid.CreateRotaryAsync(
                     instance.poly, CurrentState.fromDistDisplayUnit(altitude),
                     distance, spacing, angle,
@@ -614,6 +778,7 @@ namespace VPS.Controls.Grid
             }
             else
             {
+
                 wp = await Utilities.Grid.CreateGridAsync(
                     instance.poly, CurrentState.fromDistDisplayUnit(altitude),
                     distance, spacing, angle,
@@ -631,8 +796,8 @@ namespace VPS.Controls.Grid
 
             if (chk_crossgrid)
             {
-                // add crossover
-                Utilities.Grid.StartPointLatLngAlt = instance.grid[instance.grid.Count - 1];
+                //添加栅栏纵航线
+                Utilities.Grid.StartPointLatLngAlt = wp[wp.Count - 1];
 
                 wp.AddRange(await Utilities.Grid.CreateGridAsync(
                     instance.poly, CurrentState.fromDistDisplayUnit(altitude),
@@ -649,12 +814,10 @@ namespace VPS.Controls.Grid
                 return;
             }
 
-            int strips = 0;
             int images = 0;
             int a = 0;
 
             instance.grid.Clear();
-            PointLatLngAlt last = null;
             for (int index = 0; index < wp.Count; index++)
             {
                 if (wp[index].Tag == "S" || wp[index].Tag == "E")
@@ -666,7 +829,7 @@ namespace VPS.Controls.Grid
                     instance.grid.Add(point);
                     a++;
                 }
-                else if(wp[index].Tag == "SM")
+                else if (wp[index].Tag == "SM")
                 {
                     if (wp[index - 1].Lat == wp[index].Lat && wp[index - 1].Lng == wp[index].Lng)
                         continue;
@@ -681,7 +844,7 @@ namespace VPS.Controls.Grid
                     }
 
                 }
-                else if(wp[index].Tag == "ME")
+                else if (wp[index].Tag == "ME")
                 {
                     if (wp[index + 1].Lat == wp[index].Lat && wp[index + 1].Lng == wp[index].Lng)
                         continue;
@@ -695,7 +858,7 @@ namespace VPS.Controls.Grid
                         a++;
                     }
                 }
-                else if(wp[index].Tag == "M")
+                else if (wp[index].Tag == "M")
                 {
                     if (false)
                     {
@@ -898,9 +1061,9 @@ namespace VPS.Controls.Grid
                         CMB_Camera.Items.Add(info.name);
                     CMB_Camera.SelectedIndex = CMB_Camera.Items.IndexOf(info.name);
                 }
-                
+
             }
-            
+
         }
         #endregion
 
@@ -926,7 +1089,7 @@ namespace VPS.Controls.Grid
                 if (control is DevComponents.DotNetBar.Controls.CheckBoxX)
                     return ((DevComponents.DotNetBar.Controls.CheckBoxX)control).Checked;
                 if (control is DevComponents.DotNetBar.Controls.ComboBoxEx)
-                    return ((DevComponents.DotNetBar.Controls.ComboBoxEx)control).Text;
+                    return ((DevComponents.DotNetBar.Controls.ComboBoxEx)control).SelectedItem;
                 return null;
             }
         }
@@ -952,23 +1115,11 @@ namespace VPS.Controls.Grid
                     ((DevComponents.DotNetBar.Controls.CheckBoxX)control).Checked = (bool)data;
                 if (control is DevComponents.DotNetBar.Controls.ComboBoxEx)
                     ((DevComponents.DotNetBar.Controls.ComboBoxEx)control).Text = (string)data;
+                if (control is DevComponents.DotNetBar.ButtonX)
+                    ((DevComponents.DotNetBar.ButtonX)control).Enabled = (bool)data;
+                if (control is DevComponents.DotNetBar.PanelEx)
+                    ((DevComponents.DotNetBar.PanelEx)control).Visible = (bool)data;
 
-            }
-        }
-        #endregion
-
-        #region 设置板块可见状态
-        private delegate void SetVisibleInThread(DevComponents.DotNetBar.PanelEx box, bool visble);
-        private void SetVisibleHandle(DevComponents.DotNetBar.PanelEx box, bool visble)
-        {
-            if (this.InvokeRequired)
-            {
-                SetVisibleInThread inThread = new SetVisibleInThread(SetVisibleHandle);
-                this.Invoke(inThread, new object[] { box, visble });
-            }
-            else
-            {
-                box.Visible = visble;
             }
         }
         #endregion
@@ -1185,10 +1336,16 @@ namespace VPS.Controls.Grid
         #region 起始位置
         private void CMB_startfrom_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (Utilities.Grid.StartPosition.Point.ToString() == CMB_startfrom.SelectedItem.ToString())
+            {
+                this.StartPointBox.Visible = true;
+                return;
+            }
+            else
+                this.StartPointBox.Visible = false;
+
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
-            else
-                EnterCalc();
         }
         #endregion
 
@@ -1336,5 +1493,140 @@ namespace VPS.Controls.Grid
             return base.ProcessCmdKey(ref msg, keyData);
         }
         #endregion
+
+        private void CHK_UsingPolygon_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHK_UsingPolygon.Checked)
+                polygonListBox.Visible = true;
+            else
+                polygonListBox.Visible = false;
+
+        }
+
+        private void CHK_UsingWP_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHK_UsingWP.Checked)
+                WPListBox.Visible = true;
+            else
+                WPListBox.Visible = false;
+        }
+
+        private void CHK_UsingCustom_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CHK_UsingCustom.Checked)
+                CustomPointBox.Visible = true;
+            else
+                CustomPointBox.Visible = false;
+        }
+
+        private void CMB_PolygonBox_ValueMemberChanged(object sender, EventArgs e)
+        {
+            if (CMB_PolygonBox.Items.Count > 0)
+            {
+                TXT_PolygonInfo.Text =
+                    "   经度：" + poly[0].Lng.ToString("0.######") +
+                    "   纬度：" + poly[0].Lat.ToString("0.######");
+                return;
+            }
+
+            TXT_PolygonInfo.Text = "   经度：null   纬度：null";
+        }
+
+        private void CMB_PolygonBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (int.TryParse(CMB_PolygonBox.SelectedValue.ToString(), out int index))
+            {
+
+                if (index >= 0 && index < poly.Count)
+                {
+                    TXT_PolygonInfo.Text =
+                        "   经度：" + poly[index].Lng.ToString("0.######") +
+                        "   纬度：" + poly[index].Lat.ToString("0.######");
+                    return;
+                }
+            }
+            TXT_PolygonInfo.Text = "   经度：null   纬度：null";
+        }
+
+        private delegate PointLatLng GetStartPointInThread();
+        public PointLatLng GetStartPoint()
+        {
+            if (this.InvokeRequired)
+            {
+                GetStartPointInThread inThread = new GetStartPointInThread(GetStartPoint);
+                IAsyncResult iar = this.BeginInvoke(inThread);
+                return (PointLatLng)this.EndInvoke(iar);
+            }
+            else
+            {
+                string startfrom = CMB_startfrom.Text;
+                if (startfrom == "Point")
+                {
+                    if (CHK_UsingPolygon.Checked)
+                    {
+                        if (int.TryParse(CMB_PolygonBox.SelectedValue.ToString(), out int index))
+                        {
+                            return poly[index];
+                        }
+                    }
+                    if (CHK_UsingWP.Checked)
+                    {
+
+                    }
+                    if (CHK_UsingCustom.Checked)
+                    {
+
+                    }
+
+                }
+
+                return new PointLatLng(0, 0);
+            }
+
+        }
+
+        private void CMB_WPBox_ValueMemberChanged(object sender, EventArgs e)
+        {
+            if (CMB_WPBox.Items.Count > 0)
+            {
+                TXT_WPInfo.Text =
+                    "   经度：" + wp[0].Lng.ToString("0.######") +
+                    "   纬度：" + wp[0].Lat.ToString("0.######");
+                return;
+            }
+
+            TXT_WPInfo.Text = "   经度：null   纬度：null";
+        }
+
+        private void CMB_WPBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (int.TryParse(CMB_WPBox.SelectedValue.ToString(), out int index))
+            {
+
+                if (index >= 0 && index < poly.Count)
+                {
+                    TXT_WPInfo.Text =
+                        "   经度：" + wp[index].Lng.ToString("0.######") +
+                        "   纬度：" + wp[index].Lat.ToString("0.######");
+                    return;
+                }
+            }
+            TXT_WPInfo.Text = "   经度：null   纬度：null";
+        }
+
+        private void LockWP_Click(object sender, EventArgs e)
+        {
+            WPListQuestChange?.Invoke();
+        }
+
+        private void Undo_Click(object sender, EventArgs e)
+        {
+            UndoHistoryList();
+        }
+
+        private void CHK_AppendWP_CheckedChanged(object sender, EventArgs e)
+        {
+            panelEx7.Visible = CHK_AppendWP.Checked;
+        }
     }
 }
