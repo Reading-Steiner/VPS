@@ -21,6 +21,7 @@ namespace VPS.Controls.MainInfo
 
         public static LeftMainInfo instance = null;
 
+        #region Home
         private delegate void SetPositionInThread(Utilities.PointLatLngAlt position);
         private Utilities.PointLatLngAlt home = null;
         public void SetHomeHandle(Utilities.PointLatLngAlt position)
@@ -32,14 +33,16 @@ namespace VPS.Controls.MainInfo
             }
             else
             {
-                home = position;
+                home = new Utilities.PointLatLngAlt(position);
 
-                HomePosition.WGS84Position = position;
+                HomePosition.WGS84Position = home;
 
                 DoCalc();
             }
         }
+        #endregion
 
+        #region 航线
         private List<Utilities.PointLatLngAlt> grid = new List<Utilities.PointLatLngAlt>();
 
         private delegate void SetWPListInThread(List<Utilities.PointLatLngAlt> wpList);
@@ -58,11 +61,12 @@ namespace VPS.Controls.MainInfo
 
         private void SetWPList(List<Utilities.PointLatLngAlt> wpList)
         {
-            CalcBaseAlt(wpList);
+            var wpLists = new List<Utilities.PointLatLngAlt>(wpList);
+            CalcBaseAlt(wpLists);
             grid.Clear();
-            for(int index = 0; index < wpList.Count; index++)
+            for(int index = 0; index < wpLists.Count; index++)
             {
-                var point = wpList[index];
+                var point = wpLists[index];
                 double terrainA = Utilities.srtm.getAltitude(point.Lat, point.Lng).alt * CurrentState.multiplieralt;
                 double alt = point.Alt;
                 double baseA = baseAlt;
@@ -83,13 +87,15 @@ namespace VPS.Controls.MainInfo
                 }
                 grid.Add(point);
             }
-            grid = wpList;
+            grid = wpLists;
 
             CalcTotalDist();
 
             CalcLap();
         }
+        #endregion
 
+        #region 当前位置
         private Utilities.PointLatLngAlt current = null;
         public void SetCurrentPosition(Utilities.PointLatLngAlt position)
         {
@@ -100,7 +106,7 @@ namespace VPS.Controls.MainInfo
             }
             else
             {
-                current = position;
+                current = new Utilities.PointLatLngAlt(position);
                 current.Tag2 = "Terrain";
                 current.Alt = (Utilities.srtm.getAltitude(current.Lat, current.Lng).alt * CurrentState.multiplieralt);
 
@@ -109,8 +115,10 @@ namespace VPS.Controls.MainInfo
                 DoCalc();
             }
         }
+        #endregion
 
 
+        #region 计算
         double baseAlt = 0;
         double maxAlt = 0;
         double minAlt = 0;
@@ -210,6 +218,8 @@ namespace VPS.Controls.MainInfo
             LowOverlap.Text = lowOverlap.ToString("0.00 %");
             LowSidelap.Text = lowSidelap.ToString("0.00 %");
         }
+
+        #endregion
 
         private void Overlap_ValueChanged(object sender, EventArgs e)
         {

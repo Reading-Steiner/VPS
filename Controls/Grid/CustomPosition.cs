@@ -13,17 +13,20 @@ namespace VPS.Controls.Grid
 {
     public partial class CustomPosition : Office2007Form
     {
+        #region 构造函数
         public CustomPosition()
         {
             InitializeComponent();
 
-            Position = new Utilities.PointLatLngAlt();
+            var position = new Utilities.PointLatLngAlt();
             Position.Tag = VPS.WP.WPCommands.DefaultWPCommand;
             Position.Tag2 = AltMode.Relative.ToString();
 
-            defaultPosition = Position;
             AltFrameSelecter.DataSource = Enum.GetValues(typeof(AltMode));
-            AltFrameSelecter.SelectedIndex = 0;
+
+            WGS84Position = position;
+            defaultPosition = WGS84Position;
+            
         }
 
         public CustomPosition(Utilities.PointLatLngAlt position)
@@ -31,14 +34,24 @@ namespace VPS.Controls.Grid
             InitializeComponent();
 
             AltFrameSelecter.DataSource = Enum.GetValues(typeof(AltMode));
-            if (Enum.TryParse(position.Tag2, out AltMode mode))
+
+            WGS84Position = position;
+            defaultPosition = WGS84Position;
+        }
+        #endregion
+
+        #region Load
+        private void CustomPosition_Load(object sender, EventArgs e)
+        {
+            this.LngInput.Value = Position.Lng;
+            this.LatInput.Value = Position.Lat;
+            this.AltInput.Value = (int)Position.Alt;
+            if (Enum.TryParse(Position.Tag2, out AltMode mode))
                 this.AltFrameSelecter.SelectedItem = mode;
             else
                 this.AltFrameSelecter.SelectedItem = (AltMode)Enum.Parse(typeof(AltMode), "Relative");
-
-            Position = position;
-            defaultPosition = new Utilities.PointLatLngAlt(position) ;
         }
+        #endregion
 
         public enum AltMode
         {
@@ -47,8 +60,10 @@ namespace VPS.Controls.Grid
             Terrain
         }
 
+        #region 数据
         private Utilities.PointLatLngAlt defaultPosition = new Utilities.PointLatLngAlt();
         private Utilities.PointLatLngAlt Position = new Utilities.PointLatLngAlt();
+
         public Utilities.PointLatLngAlt WGS84Position
         {
             set
@@ -64,14 +79,10 @@ namespace VPS.Controls.Grid
             }
             get
             {
-                return Position;
+                return new Utilities.PointLatLngAlt(Position);
             }
         }
-
-        private void CustomPosition_Load(object sender, EventArgs e)
-        {
-            WGS84Position = Position;
-        }
+        #endregion
 
         #region 数据变化响应函数
         string AltFormat = "地面海拔  {0} m";

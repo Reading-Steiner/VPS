@@ -38,7 +38,7 @@ namespace VPS.Controls.Command
                 EndEdit();
             }
 
-            BindingDataSource(wpLists);
+            BindingDataSource(new List<Utilities.PointLatLngAlt>(wpLists.ToArray()));
 
             HomePositionDisplay.PositionChange += SetHome;
         }
@@ -671,10 +671,10 @@ namespace VPS.Controls.Command
                 else
                     settingWP = true;
             }
-            wpLists = wpList;
+            wpLists = new List<Utilities.PointLatLngAlt>(wpList);
             GeneralBaseAlt();
 
-            BindingDataSource(wpList);
+            BindingDataSource(new List<Utilities.PointLatLngAlt>(wpLists.ToArray()));
 
             lock (this)
             {
@@ -690,7 +690,7 @@ namespace VPS.Controls.Command
         #region GetWPList 方法
         public List<Utilities.PointLatLngAlt> GetWPList()
         {
-            return wpLists;
+            return new List<Utilities.PointLatLngAlt>(wpLists.ToArray());
         }
         #endregion
 
@@ -701,7 +701,7 @@ namespace VPS.Controls.Command
             wpLists[index1] = wpLists[index2];
             wpLists[index2] = temp;
 
-            BindingDataSource(wpLists);
+            BindingDataSource(new List<Utilities.PointLatLngAlt>(wpLists.ToArray()));
             if (IsAllowSendListChange())
                 WPListChange?.Invoke(GetWPList());
         }
@@ -710,11 +710,11 @@ namespace VPS.Controls.Command
         #region SetWP 方法
         private void SetWP(int index, Utilities.PointLatLngAlt wp)
         {
-            wpLists[index] = wp;
+            wpLists[index] = new Utilities.PointLatLngAlt(wp);
 
             GeneralBaseAlt();
 
-            BindingDataSource(wpLists);
+            BindingDataSource(new List<Utilities.PointLatLngAlt>(wpLists.ToArray()));
             if (IsAllowSendListChange())
                 WPListChange?.Invoke(GetWPList());
         }
@@ -727,7 +727,7 @@ namespace VPS.Controls.Command
 
             GeneralBaseAlt();
 
-            BindingDataSource(wpLists);
+            BindingDataSource(new List<Utilities.PointLatLngAlt>(wpLists.ToArray()));
             if (IsAllowSendListChange())
                 WPListChange?.Invoke(GetWPList());
         }
@@ -768,8 +768,8 @@ namespace VPS.Controls.Command
 
             if (!homePosition.Equals(home))
             {
-                homePosition = home;
-                HomePositionDisplay.WGS84Position = home;
+                homePosition = new Utilities.PointLatLngAlt(home);
+                HomePositionDisplay.WGS84Position = new Utilities.PointLatLngAlt(home);
 
                 if (IsAllowSendPositionChange())
                     HomeChange?.Invoke(homePosition);

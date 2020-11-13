@@ -6056,7 +6056,7 @@ namespace VPS.GCSViews
             if (position.Tag != VPS.WP.WPCommands.HomeCommand)
                 position.Tag = VPS.WP.WPCommands.HomeCommand;
 
-            homePosition = position;
+            homePosition = new PointLatLngAlt(position);
 
             if (IsAllowSendDataChange())
                 HomeChange?.Invoke(position);
@@ -6145,8 +6145,7 @@ namespace VPS.GCSViews
 
         private void SetWPList(List<PointLatLngAlt> wpList)
         {
-            wpLists.Clear();
-            wpLists.AddRange(wpList);
+            wpLists = new List<PointLatLngAlt>(wpList);
 
             writeKML();
 
@@ -6412,7 +6411,7 @@ namespace VPS.GCSViews
         public int AddWPPoint(PointLatLngAlt wp)
         {
             int index = wpLists.Count;
-            wpLists.Add(wp);
+            wpLists.Add(new PointLatLngAlt(wp));
 
             return index;
         }
@@ -6429,11 +6428,11 @@ namespace VPS.GCSViews
         public void InsertWPPoint(int index, PointLatLngAlt wp)
         {
             if (index < 0)
-                wpLists.Insert(0, wp);
+                wpLists.Insert(0, new PointLatLngAlt(wp));
             else if (index >= GetWPCount())
-                wpLists.Add(wp);
+                wpLists.Add(new PointLatLngAlt(wp));
             else
-                wpLists.Insert(index, wp);
+                wpLists.Insert(index, new PointLatLngAlt(wp));
         }
         #endregion
 
@@ -6448,11 +6447,11 @@ namespace VPS.GCSViews
         public void SetWPPoint(int index, PointLatLngAlt wp)
         {
             if (index < 0)
-                wpLists[0] = wp;
+                wpLists[0] = new PointLatLngAlt(wp);
             else if (index >= GetWPCount())
-                wpLists.Add(wp);
+                wpLists.Add(new PointLatLngAlt(wp));
             else
-                wpLists[index] = wp;
+                wpLists[index] = new PointLatLngAlt(wp);
 
         }
         #endregion
@@ -6470,10 +6469,10 @@ namespace VPS.GCSViews
         public PointLatLngAlt GetWPPoint(int index)
         {
             if (index < 0)
-                return wpLists[(index % GetWPCount() + GetWPCount()) % GetWPCount()];
+                return new PointLatLngAlt(wpLists[(index % GetWPCount() + GetWPCount()) % GetWPCount()]);
             if (index >= GetWPCount())
-                return wpLists[index % GetWPCount()];
-            return wpLists[index];
+                return new PointLatLngAlt(wpLists[index % GetWPCount()]);
+            return new PointLatLngAlt(wpLists[index]);
         }
         #endregion
 
@@ -6513,7 +6512,7 @@ namespace VPS.GCSViews
         public PlygonListChangeHandle PolygonListChange;
         #region SetPolygonList
 
-        #region SetWPList 对外接口
+        #region SetPolygonList 对外接口
         private delegate void SetPolygonListInThread(List<PointLatLngAlt> polygonList);
         public void SetPolygonListHandle(List<PointLatLngAlt> polygonList)
         {

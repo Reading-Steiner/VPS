@@ -41,13 +41,13 @@ namespace VPS.Controls.MyControls
         {
             set
             {
-                Position = value;
+                Position = new Utilities.PointLatLngAlt(value);
                 labelX1.Text = "[ " + Position.Lng.ToString("0.######") + " , " + Position.Lat.ToString("0.######") + " ]";
                 labelX2.Text = "[ " + Position.Tag2 + " , " + Position.Alt.ToString() + " ]";
             }
             get
             {
-                return Position;
+                return new Utilities.PointLatLngAlt(Position);
             }
         }
         #endregion
