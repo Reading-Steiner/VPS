@@ -398,14 +398,8 @@ namespace VPS.Controls.Grid
                 var pop = history[no];
                 history.RemoveAt(no);
 
-                if (pop.Count > 0)
-                {
-                    if (pop[0].Tag == VPS.WP.WPCommands.HomeCommand)
-                        pop.RemoveAt(0);
-                }
-                wp = new List<PointLatLngAlt>(pop);
+                SetWPListHandle(pop, false);
 
-                SetLockWPToolTips();
                 historyChange?.Invoke(history.Count);
             }
         }
@@ -490,9 +484,10 @@ namespace VPS.Controls.Grid
         List<PointLatLngAlt> wp = new List<PointLatLngAlt>();
 
         #region 设置航线
-        public void SetWPListHandle(List<PointLatLngAlt> wpList)
+        public void SetWPListHandle(List<PointLatLngAlt> wpList, bool history = true)
         {
-            AddHistoryList();
+            if (history)
+                AddHistoryList();
 
             if (wpList.Count > 0)
             {
@@ -511,7 +506,7 @@ namespace VPS.Controls.Grid
             {
                 var row = set.NewRow();
                 row["key"] = index;
-                row["Value"] = "grid:" + index.ToString();
+                row["Value"] = "WP: " + index.ToString();
                 set.Rows.Add(row);
             }
 
@@ -562,7 +557,7 @@ namespace VPS.Controls.Grid
             {
                 var row = set.NewRow();
                 row["key"] = index;
-                row["Value"] = "grid:" + index.ToString();
+                row["Value"] = "Grid: " + index.ToString();
                 set.Rows.Add(row);
             }
 
@@ -762,7 +757,9 @@ namespace VPS.Controls.Grid
             float num_corridorwidth = (int)ReadControlMainThread(instance.num_corridorwidth);
             float num_landin = (int)ReadControlMainThread(instance.NUM_leadin);
 
-            Utilities.Grid.StartPointLatLngAlt = new PointLatLngAlt(instance.GetStartPoint());
+            PointLatLngAlt startPoint = instance.GetStartPoint();
+            if (startPoint != null)
+                Utilities.Grid.StartPointLatLngAlt = startPoint;
             List<PointLatLngAlt> wp = new List<PointLatLngAlt>();
             if (ch_Corridor)
             {
@@ -1555,14 +1552,14 @@ namespace VPS.Controls.Grid
             TXT_PolygonInfo.Text = "   经度：null   纬度：null";
         }
 
-        private delegate PointLatLng GetStartPointInThread();
-        public PointLatLng GetStartPoint()
+        private delegate PointLatLngAlt GetStartPointInThread();
+        public PointLatLngAlt GetStartPoint()
         {
             if (this.InvokeRequired)
             {
                 GetStartPointInThread inThread = new GetStartPointInThread(GetStartPoint);
                 IAsyncResult iar = this.BeginInvoke(inThread);
-                return (PointLatLng)this.EndInvoke(iar);
+                return (PointLatLngAlt)this.EndInvoke(iar);
             }
             else
             {
@@ -1571,6 +1568,8 @@ namespace VPS.Controls.Grid
                 {
                     if (CHK_UsingPolygon.Checked)
                     {
+                        if (CMB_PolygonBox.SelectedValue == null)
+                            return null;
                         if (int.TryParse(CMB_PolygonBox.SelectedValue.ToString(), out int index))
                         {
                             return poly[index];
@@ -1578,7 +1577,12 @@ namespace VPS.Controls.Grid
                     }
                     if (CHK_UsingWP.Checked)
                     {
-
+                        if (CMB_WPBox.SelectedValue == null)
+                            return null;
+                        if (int.TryParse(CMB_WPBox.SelectedValue.ToString(), out int index))
+                        {
+                            return wp[index];
+                        }
                     }
                     if (CHK_UsingCustom.Checked)
                     {

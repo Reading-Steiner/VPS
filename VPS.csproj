@@ -1401,7 +1401,7 @@
     <Compile Include="Utilities\AltitudeAngel\OverlayAdapter.cs" />
     <Compile Include="Utilities\XMLColor.cs" />
     <Compile Include="VPSData\WP\WPCommands.cs" />
-    <Compile Include="VPSData\WP\WPList.cs" />
+    <Compile Include="VPSData\WP\WPGlobalData.cs" />
     <Compile Include="Warnings\WarningControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
