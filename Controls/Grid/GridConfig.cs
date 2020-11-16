@@ -482,10 +482,6 @@ namespace VPS.Controls.Grid
         List<PointLatLngAlt> grid = new List<PointLatLngAlt>();
         List<PointLatLngAlt> wp = new List<PointLatLngAlt>();
 
-        public ListChangedHandle WPListChange;
-
-        public StateChangeHandler WPListQuestChange;
-
         #region 设置航线
         public void SetWPListHandle(List<PointLatLngAlt> wpList)
         {
@@ -790,7 +786,7 @@ namespace VPS.Controls.Grid
             if (wp.Count == 0)
             {
                 instance.grid.Clear();
-                instance.WPListChange?.Invoke(instance.GetWPList());
+                VPS.WP.WPGlobalData.instance.SetWPListHandle(instance.GetWPList());
                 return;
             }
 
@@ -810,7 +806,7 @@ namespace VPS.Controls.Grid
             if (wp.Count == 0)
             {
                 instance.grid.Clear();
-                instance.WPListChange?.Invoke(instance.GetWPList());
+                VPS.WP.WPGlobalData.instance.SetWPListHandle(instance.GetWPList());
                 return;
             }
 
@@ -875,7 +871,7 @@ namespace VPS.Controls.Grid
 
             }
             SetControlMainThread(instance.Num_GndeLev, instance.GetBaseAlt());
-            instance.WPListChange?.Invoke(instance.GetWPList());
+            VPS.WP.WPGlobalData.instance.SetWPListHandle(instance.GetWPList());
         }
         #endregion
 
