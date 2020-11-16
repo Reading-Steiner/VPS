@@ -89,11 +89,14 @@ namespace VPS.WP
         #endregion
 
         #region 修改航点反应函数
+        public void ExecuteStartSetting()
+        {
+            AddHistory();
+        }
+
         public void ExecuteOverSetting()
         {
             WPListChange?.Invoke();
-
-            AddHistory();
         }
         #endregion
 
@@ -122,6 +125,10 @@ namespace VPS.WP
         #region 设置航点
         public void SetWPListHandle(List<PointLatLngAlt> list)
         {
+            if (IsExecuteOverSetting())
+            {
+                AddHistory();
+            }
             wpList = new List<PointLatLngAlt>(list);
             if (wpList.Count > 0)
             {
@@ -137,7 +144,6 @@ namespace VPS.WP
             if (IsExecuteOverSetting())
             {
                 WPListChange?.Invoke();
-                AddHistory();
             }
         }
         #endregion
@@ -145,6 +151,10 @@ namespace VPS.WP
         #region 扩充航点
         public void AppendWPListHandle(List<PointLatLngAlt> list)
         {
+            if (IsExecuteOverSetting())
+            {
+                AddHistory();
+            }
             var apWPList = new List<PointLatLngAlt>(list);
             if (apWPList.Count > 0)
             {
@@ -159,7 +169,6 @@ namespace VPS.WP
             if (IsExecuteOverSetting())
             {
                 WPListChange?.Invoke();
-                AddHistory();
             }
         }
         #endregion
@@ -167,12 +176,16 @@ namespace VPS.WP
         #region 清空航点
         public void ClearWPListHandle()
         {
+            if (IsExecuteOverSetting())
+            {
+                AddHistory();
+            }
+
             wpList.Clear();
 
             if (IsExecuteOverSetting())
             {
                 WPListChange?.Invoke();
-                AddHistory();
             }
         }
         #endregion
@@ -180,13 +193,17 @@ namespace VPS.WP
         #region 添加航点
         public int AddWPHandle(PointLatLngAlt wp)
         {
+            if (IsExecuteOverSetting())
+            {
+                AddHistory();
+            }
+
             int index = wpList.Count;
             wpList.Add(new PointLatLngAlt(wp));
 
             if (IsExecuteOverSetting())
             {
                 WPListChange?.Invoke();
-                AddHistory();
             }
 
             return index;
@@ -196,6 +213,11 @@ namespace VPS.WP
         #region 插入航点
         public void InsertWPHandle(int index, PointLatLngAlt wp)
         {
+            if (IsExecuteOverSetting())
+            {
+                AddHistory();
+            }
+
             if (index < 0)
                 index = 0;
             if (index >= wpList.Count)
@@ -206,7 +228,6 @@ namespace VPS.WP
             if (IsExecuteOverSetting())
             {
                 WPListChange?.Invoke();
-                AddHistory();
             }
         }
         #endregion
@@ -214,6 +235,11 @@ namespace VPS.WP
         #region 修改航点
         public void SetWPHandle(int index, PointLatLngAlt wp)
         {
+            if (IsExecuteOverSetting())
+            {
+                AddHistory();
+            }
+
             if (index < 0)
                 index = 0;
 
@@ -225,7 +251,6 @@ namespace VPS.WP
             if (IsExecuteOverSetting())
             {
                 WPListChange?.Invoke();
-                AddHistory();
             }
         }
         #endregion
@@ -233,6 +258,11 @@ namespace VPS.WP
         #region 删除航点
         public void DeleteWPHandle(int index)
         {
+            if (IsExecuteOverSetting())
+            {
+                AddHistory();
+            }
+
             if (index < 0 || index >= wpList.Count)
                 return;
             wpList.RemoveAt(index);
@@ -240,7 +270,6 @@ namespace VPS.WP
             if (IsExecuteOverSetting())
             {
                 WPListChange?.Invoke();
-                AddHistory();
             }
         }
         #endregion
@@ -335,6 +364,7 @@ namespace VPS.WP
                 SetWPListHandle(pop);
                 EndQuick();
 
+                WPListChange?.Invoke();
                 historyChange?.Invoke(history.Count);
             }
         }

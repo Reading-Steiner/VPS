@@ -970,6 +970,7 @@
             this.CHK_UsingPolygon.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.CHK_UsingPolygon.TabIndex = 61;
             this.CHK_UsingPolygon.Text = "区域点";
+            this.CHK_UsingPolygon.CheckedChanged += new System.EventHandler(this.CHK_UsingPolygon_CheckedChanged);
             // 
             // FlightBox
             // 

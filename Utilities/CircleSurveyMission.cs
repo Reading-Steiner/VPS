@@ -21,6 +21,7 @@ namespace VPS.Utilities
             InputBox.Show("", "photos", ref photos);
             InputBox.Show("", "start heading", ref startheading);
 
+            VPS.WP.WPGlobalData.instance.ExecuteStartSetting();
             VPS.WP.WPGlobalData.instance.BegionQuick();
 
             // set roi centerpoint

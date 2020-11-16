@@ -601,6 +601,7 @@ namespace VPS.Controls.Command
         #region ExchangeWP 方法
         private void ExchangeWP(int index1,int index2)
         {
+            VPS.WP.WPGlobalData.instance.ExecuteStartSetting();
             VPS.WP.WPGlobalData.instance.BegionQuick();
             {
                 var pos1 = VPS.WP.WPGlobalData.instance.GetWPPoint(index1);

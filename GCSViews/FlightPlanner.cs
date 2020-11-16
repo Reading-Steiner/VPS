@@ -6339,12 +6339,6 @@ namespace VPS.GCSViews
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             // undo
-            if (keyData == (Keys.Control | Keys.Z))
-            {
-                VPS.WP.WPGlobalData.instance.UndoHistory();
-                return true;
-            }
-
             if (keyData == (Keys.Delete))
             {
                 DeleteMarkerToolStripMenuItem_Click(null, null);

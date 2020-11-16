@@ -384,6 +384,7 @@ namespace VPS.Controls.Grid
         private void AddHistoryList()
         {
             history.Add(wp);
+
             historyChange?.Invoke(history.Count);
         }
         #endregion
@@ -397,10 +398,19 @@ namespace VPS.Controls.Grid
                 var pop = history[no];
                 history.RemoveAt(no);
 
-                SetWPList(pop);
+                if (pop.Count > 0)
+                {
+                    if (pop[0].Tag == VPS.WP.WPCommands.HomeCommand)
+                        pop.RemoveAt(0);
+                }
+                wp = new List<PointLatLngAlt>(pop);
+
+                SetLockWPToolTips();
                 historyChange?.Invoke(history.Count);
             }
         }
+        #endregion
+
         #endregion
 
         #region 航线记录数验证
@@ -439,6 +449,7 @@ namespace VPS.Controls.Grid
             else
                 this.defaultTooltip.SetSuperTooltip(this.panelEx7, null);
         }
+        #endregion
 
         #region 参数计算
         private int CalcBaseAlt(List<Utilities.PointLatLngAlt> wpList)
@@ -463,19 +474,15 @@ namespace VPS.Controls.Grid
         private double CalcTotalDist(List<Utilities.PointLatLngAlt> wpList)
         {
             double totalDist = 0.0;
-            for (int index = 1; index < grid.Count; index++)
+            for (int index = 1; index < wpList.Count; index++)
             {
                 totalDist += Math.Sqrt(
-                    Math.Pow(wpList[index].GetDistance(grid[index - 1]), 2) +
+                    Math.Pow(wpList[index].GetDistance(wpList[index - 1]), 2) +
                     Math.Pow(wpList[index].Alt - wpList[index - 1].Alt, 2)) *
                     CurrentState.multiplierdist;
             }
             return totalDist;
         }
-        #endregion
-
-        #endregion
-
         #endregion
 
         #region 航线
@@ -486,24 +493,31 @@ namespace VPS.Controls.Grid
         public void SetWPListHandle(List<PointLatLngAlt> wpList)
         {
             AddHistoryList();
-            if (wpList.Count > 0)
-            {
-                if (wpList[0].Tag == VPS.WP.WPCommands.HomeCommand)
-                    wpList.RemoveAt(0);
-            }
-            wp = new List<PointLatLngAlt>(wpList.ToArray());
-            SetLockWPToolTips();
-        }
 
-        private void SetWPList(List<PointLatLngAlt> wpList)
-        {
             if (wpList.Count > 0)
             {
                 if (wpList[0].Tag == VPS.WP.WPCommands.HomeCommand)
                     wpList.RemoveAt(0);
             }
-            wp = new List<PointLatLngAlt>(wpList.ToArray());
+
+            wp = new List<PointLatLngAlt>(wpList);
             SetLockWPToolTips();
+
+            DataTable set = new DataTable();
+            set.Columns.Add("key");
+            set.Columns.Add("Value");
+
+            for (int index = 0; index < wpList.Count; index++)
+            {
+                var row = set.NewRow();
+                row["key"] = index;
+                row["Value"] = "grid:" + index.ToString();
+                set.Rows.Add(row);
+            }
+
+            CMB_WPBox.DataSource = set;
+            CMB_WPBox.ValueMember = "key";
+            CMB_WPBox.DisplayMember = "Value";
         }
         #endregion
 
@@ -513,11 +527,11 @@ namespace VPS.Controls.Grid
             List<PointLatLngAlt> wpList;
             if ((bool)ReadControlMainThread(CHK_AppendWP))
             {
-                wpList = new List<PointLatLngAlt>(wp.ToArray());
+                wpList = new List<PointLatLngAlt>(wp);
                 wpList.AddRange(grid);
             }
             else
-                wpList = new List<PointLatLngAlt>(grid.ToArray());
+                wpList = new List<PointLatLngAlt>(grid);
 
             for (int i = 0; i < wpList.Count; i++)
             {
@@ -648,9 +662,6 @@ namespace VPS.Controls.Grid
                 return;
 
             EnterCalc();
-
-            if (poly.Count <= 0)
-                return;
 
             // new grid system test
             lock (lockObj2)
@@ -870,7 +881,7 @@ namespace VPS.Controls.Grid
 
 
             }
-            SetControlMainThread(instance.Num_GndeLev, instance.GetBaseAlt());
+            SetControlMainThread(instance.Num_GndeLev, instance.GetBaseAlt(instance.GetWPList()));
             VPS.WP.WPGlobalData.instance.SetWPListHandle(instance.GetWPList());
         }
         #endregion
@@ -995,11 +1006,11 @@ namespace VPS.Controls.Grid
         #endregion
 
         #region 获取航摄基线
-        private int GetBaseAlt()
+        private int GetBaseAlt(List<PointLatLngAlt> list)
         {
             double totalWP = 0;
             int totalCount = 0;
-            foreach (var wp in grid)
+            foreach (var wp in list)
             {
                 if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
                 {
@@ -1612,9 +1623,7 @@ namespace VPS.Controls.Grid
 
         private void LockWP_Click(object sender, EventArgs e)
         {
-            wp = VPS.WP.WPGlobalData.instance.GetWPList();
-
-            AddHistoryList();
+            SetWPListHandle(VPS.WP.WPGlobalData.instance.GetWPList());
         }
 
         private void Undo_Click(object sender, EventArgs e)

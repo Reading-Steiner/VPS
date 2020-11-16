@@ -4609,6 +4609,12 @@ namespace VPS
                 return true;
             }
 
+            if (keyData == (Keys.Control | Keys.Z))
+            {
+                VPS.WP.WPGlobalData.instance.UndoHistory();
+                return true;
+            }
+
             if (ProcessCmdKeyCallback != null)
             {
                 return ProcessCmdKeyCallback(ref msg, keyData);
