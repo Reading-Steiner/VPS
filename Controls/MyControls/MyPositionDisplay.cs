@@ -42,8 +42,13 @@ namespace VPS.Controls.MyControls
             set
             {
                 Position = new Utilities.PointLatLngAlt(value);
-                labelX1.Text = "[ " + Position.Lng.ToString("0.######") + " , " + Position.Lat.ToString("0.######") + " ]";
-                labelX2.Text = "[ " + Position.Tag2 + " , " + Position.Alt.ToString() + " ]";
+                SetControlMainThread(
+                    labelX1,
+                    "[ " + Position.Lng.ToString("0.######") + " , " + Position.Lat.ToString("0.######") + " ]");
+                SetControlMainThread(
+                    labelX2,
+                    "[ " + Position.Tag2 + " , " + Position.Alt.ToString() + " ]");
+
             }
             get
             {
@@ -100,6 +105,37 @@ namespace VPS.Controls.MyControls
         #region
         public delegate void PositionChangeHandle(Utilities.PointLatLngAlt position);
         public PositionChangeHandle PositionChange;
+        #endregion
+
+        #region 设置控件数据
+        private delegate void SetControlInMainThreadHandle(Control control, object data);
+
+        private static void SetControlMainThread(Control control, object data)
+        {
+            if (control.InvokeRequired)
+            {
+                SetControlInMainThreadHandle inThread = new SetControlInMainThreadHandle(SetControlMainThread);
+                control.Invoke(inThread, new object[] { control, data });
+            }
+            else
+            {
+                if (control is DevComponents.Editors.DoubleInput)
+                    ((DevComponents.Editors.DoubleInput)control).Value = (double)data;
+                if (control is DevComponents.Editors.IntegerInput)
+                    ((DevComponents.Editors.IntegerInput)control).Value = (int)data;
+                if (control is DevComponents.DotNetBar.Controls.CheckBoxX)
+                    ((DevComponents.DotNetBar.Controls.CheckBoxX)control).Checked = (bool)data;
+                if (control is DevComponents.DotNetBar.Controls.ComboBoxEx)
+                    ((DevComponents.DotNetBar.Controls.ComboBoxEx)control).Text = (string)data;
+                if (control is DevComponents.DotNetBar.LabelX)
+                    ((DevComponents.DotNetBar.LabelX)control).Text = (string)data;
+                if (control is DevComponents.DotNetBar.ButtonX)
+                    ((DevComponents.DotNetBar.ButtonX)control).Enabled = (bool)data;
+                if (control is DevComponents.DotNetBar.PanelEx)
+                    ((DevComponents.DotNetBar.PanelEx)control).Visible = (bool)data;
+
+            }
+        }
         #endregion
     }
 }

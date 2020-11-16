@@ -577,7 +577,7 @@ namespace VPS
                 FlightData.Width = MyView.Width;
                 FlightPlanner.Width = MyView.Width;
 
-                FlightPlanner.historyChange += this.historyChange;
+                VPS.WP.WPGlobalData.instance.historyChange += this.historyChange;
                 //Simulation.Width = MyView.Width;
             }
             catch (ArgumentException e)
@@ -3300,20 +3300,18 @@ namespace VPS
         #region Home 数据链接
         private void delegateHomeChange()
         {
-            GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.Command.CommandsPanel.instance.SetHomeHandle;
-            GCSViews.FlightPlanner.instance.HomeChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetHomeHandle;
-            VPS.Controls.Command.CommandsPanel.instance.HomeChange += GCSViews.FlightPlanner.instance.SetHomeHandle;
-            VPS.Controls.Command.CommandsPanel.instance.HomeChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetHomeHandle;
+            VPS.WP.WPGlobalData.instance.HomeChange += VPS.Controls.Command.CommandsPanel.instance.HomeChangeHandle;
+            VPS.WP.WPGlobalData.instance.HomeChange += VPS.Controls.MainInfo.LeftMainInfo.instance.HomeChangeHandle;
+            VPS.WP.WPGlobalData.instance.HomeChange += VPS.GCSViews.FlightPlanner.instance.HomeChangeHandle;
         }
         #endregion
 
         #region WPList 数据链接
         private void delegateWPListChange()
         {
-            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
-            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetWPListHandle;
-            VPS.Controls.Command.CommandsPanel.instance.WPListChange += GCSViews.FlightPlanner.instance.SetWPListHandle;
-            VPS.Controls.Command.CommandsPanel.instance.WPListChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetWPListHandle;
+            VPS.WP.WPGlobalData.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.WPChangeHandle;
+            VPS.WP.WPGlobalData.instance.WPListChange += VPS.Controls.MainInfo.LeftMainInfo.instance.WPChangeHandle;
+            VPS.WP.WPGlobalData.instance.WPListChange += VPS.GCSViews.FlightPlanner.instance.WPChangeHandle;
         }
         #endregion
 
@@ -4034,8 +4032,7 @@ namespace VPS
         private void loadProjectData(GCSViews.ProjectData data)
         {
             GCSViews.FlightPlanner.instance.SetPolygonListHandle(data.poly);
-            GCSViews.FlightPlanner.instance.SetWPListHandle(data.wp);
-            VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle(data.wp);
+            VPS.WP.WPGlobalData.instance.SetWPListHandle(data.wp);
             if (data.layer != currentLayerPath)
             {
                 currentLayerPath = data.layer;
@@ -4044,7 +4041,7 @@ namespace VPS
             displayRect = data.layerRect;
             GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(displayRect);
             defaultHome = data.homePosition;
-            SetHome(defaultHome);
+            VPS.WP.WPGlobalData.instance.SetHomePosition(defaultHome);
             if (LoadTiffButton.Checked != data.isLayerReaderOpen)
                 LoadTiffButton_Click(this, null);
             if (TiffManagerButton.Checked != data.isLayerManagerOpen)
@@ -4092,7 +4089,7 @@ namespace VPS
         {
             var data = new GCSViews.ProjectData();
             data.poly = GCSViews.FlightPlanner.instance.GetPolygonList();
-            data.wp = GCSViews.FlightPlanner.instance.GetWPList();
+            data.wp = VPS.WP.WPGlobalData.instance.GetWPList();
             data.layer = currentLayerPath;
             data.layerRect = displayRect;
             data.homePosition = defaultHome;
@@ -4342,7 +4339,7 @@ namespace VPS
         #region ClearWP
         private void ClearWPButton_Click(object sender, EventArgs e)
         {
-            GCSViews.FlightPlanner.instance.ClearWPListHandle();
+            VPS.WP.WPGlobalData.instance.ClearWPListHandle();
         }
         #endregion
 
@@ -4354,10 +4351,6 @@ namespace VPS
             if (!AutoWPButton.Checked)
             {
                 AutoWPButton.Checked = true;
-                //GCSViews.FlightPlanner.instance.surveyGrid();
-                VPS.Controls.Grid.GridConfig.instance.WPListQuestChange += VPS.MainV2.instance.AutoGridQuestWPList;
-                VPS.Controls.Grid.GridConfig.instance.WPListChange += GCSViews.FlightPlanner.instance.SetWPListHandle;
-                VPS.Controls.Grid.GridConfig.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
                 GCSViews.FlightPlanner.instance.PolygonListChange += VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
 
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
@@ -4373,9 +4366,7 @@ namespace VPS
             else
             {
                 AutoWPButton.Checked = false;
-                VPS.Controls.Grid.GridConfig.instance.WPListChange -= GCSViews.FlightPlanner.instance.SetWPListHandle;
                 GCSViews.FlightPlanner.instance.PolygonListChange -= VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
-                VPS.Controls.Grid.GridConfig.instance.WPListChange -= VPS.Controls.Command.CommandsPanel.instance.SetWPListHandle;
 
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
                 VPS.Controls.Grid.GridConfig.instance.SaveSetting();
@@ -4396,12 +4387,6 @@ namespace VPS
         #region 辅助函数
         public void AutoGridQuestWPList()
         {
-            GCSViews.FlightPlanner.instance.WPListChange += VPS.Controls.Grid.GridConfig.instance.SetWPListHandle;
-
-            GCSViews.FlightPlanner.instance.WPListChange?.
-                Invoke(GCSViews.FlightPlanner.instance.GetWPList());
-
-            GCSViews.FlightPlanner.instance.WPListChange -= VPS.Controls.Grid.GridConfig.instance.SetWPListHandle;
         }
         #endregion
 
@@ -4473,7 +4458,7 @@ namespace VPS
         #region Undo 入口函数
         private void UndoButton_Click(object sender, EventArgs e)
         {
-            GCSViews.FlightPlanner.instance.Undo();
+            VPS.WP.WPGlobalData.instance.UndoHistory();
         }
         #endregion
 
@@ -4639,14 +4624,6 @@ namespace VPS
 
         #endregion
 
-        #region Home
-        private void SetHome(PointLatLngAlt position)
-        {
-            GCSViews.FlightPlanner.instance.SetHomeHandle(position);
-            VPS.Controls.Command.CommandsPanel.instance.SetHomeHandle(position);
-        }
-        #endregion
-
         #region 图层信息
         public string currentLayerPath;
         public GMap.NET.RectLatLng displayRect = new GMap.NET.RectLatLng();
@@ -4801,5 +4778,7 @@ namespace VPS
         #endregion
 
         #endregion
+
+        private VPS.WP.WPGlobalData WPGlobalData = new VPS.WP.WPGlobalData();
     }
 }

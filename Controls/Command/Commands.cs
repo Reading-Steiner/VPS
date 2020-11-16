@@ -12,6 +12,7 @@ using GeoUtility.GeoSystem;
 using DevComponents.DotNetBar.SuperGrid;
 using System.Collections;
 using DevComponents.DotNetBar.SuperGrid.Style;
+using VPS.Utilities;
 
 namespace VPS.Controls.Command
 {
@@ -38,9 +39,7 @@ namespace VPS.Controls.Command
                 EndEdit();
             }
 
-            BindingDataSource(new List<Utilities.PointLatLngAlt>(wpLists.ToArray()));
-
-            HomePositionDisplay.PositionChange += SetHome;
+            HomePositionDisplay.PositionChange += ChangeHomeHandle;
         }
 
 
@@ -65,20 +64,6 @@ namespace VPS.Controls.Command
             AltFrame.DataSource = Utilities.EnumTranslator.EnumToList<AltFrames>();
 
             AltFrame.SelectedItem = AltFrames.Relative;
-        }
-        #endregion
-
-        #region Load
-        private void CommandsPanel_Load(object sender, EventArgs e)
-        {
-            StartEdit();
-            try
-            {
-            }
-            finally
-            {
-                EndEdit();
-            }
         }
         #endregion
 
@@ -118,21 +103,6 @@ namespace VPS.Controls.Command
                         CoordSystem.Text = Utilities.Settings.Instance[key];
 
                         break;
-                    case "Main_HomeLat":
-                        if (double.TryParse(Utilities.Settings.Instance[key], out double lat))
-                            homePosition.Lat = lat;
-                        break;
-                    case "Main_HomeLng":
-                        if (double.TryParse(Utilities.Settings.Instance[key], out double lng))
-                            homePosition.Lng = lng;
-                        break;
-                    case "Main_HomeAlt":
-                        if (double.TryParse(Utilities.Settings.Instance[key], out double alt))
-                            homePosition.Alt = alt;
-                        break;
-                    case "Main_HomeFrame":
-                        homePosition.Tag2 = Utilities.Settings.Instance[key];
-                        break;
                 }
             }
         }
@@ -160,13 +130,13 @@ namespace VPS.Controls.Command
         #region 绑定数据源格式
 
         const string MainHandle = "Command";
-        private DataSet BindingDataSource(List<Utilities.PointLatLngAlt> wpList)
+        private DataSet BindingDataSource(PointLatLngAlt home, List<PointLatLngAlt> wpList)
         {
             DataSet set = new DataSet(MainHandle);
 
             DataTable table = CreateTable();
 
-            BindingData(table, wpList);
+            BindingData(table, home, wpList);
 
             set.Tables.Add(table);
 
@@ -179,7 +149,7 @@ namespace VPS.Controls.Command
         #endregion
 
         #region 绑定数据
-        private void BindingData(DataTable table, List<Utilities.PointLatLngAlt> wpList)
+        private void BindingData(DataTable table, PointLatLngAlt home, List<PointLatLngAlt> wpList)
         {
             if (isEdit)
                 return;
@@ -193,7 +163,7 @@ namespace VPS.Controls.Command
                 {
                     if (wpList[0].Tag == VPS.WP.WPCommands.HomeCommand)
                     {
-                        SetHome(wpList[0]);
+                        SetHomePosition(wpList[0]);
                         wpList.RemoveAt(0);
                     }
                 }
@@ -201,7 +171,7 @@ namespace VPS.Controls.Command
                 table.BeginLoadData();
                 table.Rows.Clear();
 
-                Utilities.PointLatLngAlt wpLast = homePosition;
+                PointLatLngAlt wpLast = home;
                 foreach (var wp in wpList)
                 {
                     if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
@@ -320,7 +290,7 @@ namespace VPS.Controls.Command
         #endregion
 
         #region 添加数据
-        private void SetCommandParam(Utilities.PointLatLngAlt wp, Utilities.PointLatLngAlt wpLast, ref DataRow row)
+        private void SetCommandParam(PointLatLngAlt wp, PointLatLngAlt wpLast, ref DataRow row)
         {
             if (wp == null || wpLast == null)
                 return;
@@ -331,8 +301,8 @@ namespace VPS.Controls.Command
                 row[LngColumnName] = wp.Lng;
                 row[LatColumnName] = wp.Lat;
 
-                double terrain = Utilities.srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
-                double terrainLast = Utilities.srtm.getAltitude(wpLast.Lat, wpLast.Lng).alt * CurrentState.multiplieralt;
+                double terrain = srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
+                double terrainLast =srtm.getAltitude(wpLast.Lat, wpLast.Lng).alt * CurrentState.multiplieralt;
 
                 switch (wp.Tag2)
                 {
@@ -431,7 +401,6 @@ namespace VPS.Controls.Command
                         {
                             ExchangeWP(rowIndex - 1, rowIndex);
 
-                            //WPListChange?.Invoke(GetWPList());
                         }
                         break;
                     case DownColumnName:
@@ -439,13 +408,11 @@ namespace VPS.Controls.Command
                         {
                             ExchangeWP(rowIndex + 1, rowIndex);
 
-                            //WPListChange?.Invoke(GetWPList());
                         }
                         break;
                     case DeleteColumnName:
                         DeleteWP(rowIndex);
 
-                        //WPListChange?.Invoke(GetWPList());
                         break;
                 }
 
@@ -624,163 +591,103 @@ namespace VPS.Controls.Command
         public delegate void PositionChangeHandle(Utilities.PointLatLngAlt point);
         public delegate void WPListChangeHandle(List<Utilities.PointLatLngAlt> wpList);
 
-        #region 重要数据
-
-        #region WPList 数据源
+        #region WPLIST 航点
         enum commands
         {
             WAYPOINT,
             SPLINE_WAYPOINT
         }
 
-        public WPListChangeHandle WPListChange;
-        List<Utilities.PointLatLngAlt> wpLists = new List<Utilities.PointLatLngAlt>();
-        bool settingWP = false;
-
-        #region SetWPList 方法
-        private delegate void SetWPListInThread(List<Utilities.PointLatLngAlt> wpList);
-
-        #region 对外接口
-        public void SetWPListHandle(List<Utilities.PointLatLngAlt> wpList)
-        {
-            if (this.InvokeRequired)
-            {
-                SetWPListInThread inThread = new SetWPListInThread(SetWPListHandle);
-                this.Invoke(inThread, new object[] { wpList });
-            }
-            else
-            {
-                Task.Run(() =>
-                {
-                    StopSendListChange();
-                    SetWPList(wpList);
-                    StartSendListChange();
-                });
-
-            }
-        }
-        #endregion
-
-        #region 入口函数
-        private void SetWPList(List<Utilities.PointLatLngAlt> wpList)
-        {
-            lock (this)
-            {
-                if (settingWP)
-                    return;
-                else
-                    settingWP = true;
-            }
-            wpLists = new List<Utilities.PointLatLngAlt>(wpList);
-            GeneralBaseAlt();
-
-            BindingDataSource(new List<Utilities.PointLatLngAlt>(wpLists.ToArray()));
-
-            lock (this)
-            {
-                settingWP = false;
-                if (IsAllowSendListChange())
-                    WPListChange?.Invoke(GetWPList());
-            }
-        }
-        #endregion
-
-        #endregion
-
-        #region GetWPList 方法
-        public List<Utilities.PointLatLngAlt> GetWPList()
-        {
-            return new List<Utilities.PointLatLngAlt>(wpLists.ToArray());
-        }
-        #endregion
-
         #region ExchangeWP 方法
         private void ExchangeWP(int index1,int index2)
         {
-            Utilities.PointLatLngAlt temp = wpLists[index1];
-            wpLists[index1] = wpLists[index2];
-            wpLists[index2] = temp;
+            VPS.WP.WPGlobalData.instance.BegionQuick();
+            {
+                var pos1 = VPS.WP.WPGlobalData.instance.GetWPPoint(index1);
+                var pos2 = VPS.WP.WPGlobalData.instance.GetWPPoint(index2);
+                VPS.WP.WPGlobalData.instance.SetWPHandle(index1, pos2);
+                VPS.WP.WPGlobalData.instance.SetWPHandle(index2, pos1);
+            }
+            VPS.WP.WPGlobalData.instance.EndQuick();
 
-            BindingDataSource(new List<Utilities.PointLatLngAlt>(wpLists.ToArray()));
-            if (IsAllowSendListChange())
-                WPListChange?.Invoke(GetWPList());
+            VPS.WP.WPGlobalData.instance.ExecuteOverSetting();
         }
         #endregion
 
         #region SetWP 方法
         private void SetWP(int index, Utilities.PointLatLngAlt wp)
         {
-            wpLists[index] = new Utilities.PointLatLngAlt(wp);
-
-            GeneralBaseAlt();
-
-            BindingDataSource(new List<Utilities.PointLatLngAlt>(wpLists.ToArray()));
-            if (IsAllowSendListChange())
-                WPListChange?.Invoke(GetWPList());
+            VPS.WP.WPGlobalData.instance.SetWPHandle(index, wp);
         }
         #endregion
 
         #region DeleteWP 方法
         private void DeleteWP(int index)
         {
-            wpLists.RemoveAt(index);
-
-            GeneralBaseAlt();
-
-            BindingDataSource(new List<Utilities.PointLatLngAlt>(wpLists.ToArray()));
-            if (IsAllowSendListChange())
-                WPListChange?.Invoke(GetWPList());
+            VPS.WP.WPGlobalData.instance.DeleteWPHandle(index);
         }
         #endregion
 
         #endregion
 
-        #region Home 位置数据
-        private Utilities.PointLatLngAlt homePosition = new Utilities.PointLatLngAlt();
-        public PositionChangeHandle HomeChange;
-
-        #region SetHome
-
-        #region SetHome 接口函数
-        private delegate void SetHomeInThread(Utilities.PointLatLngAlt home);
-
-        public void SetHomeHandle(Utilities.PointLatLngAlt home)
+        #region 航点变化响应函数
+        public void WPChangeHandle()
         {
-            if (this.InvokeRequired)
+            List<PointLatLngAlt> wpLists = VPS.WP.WPGlobalData.instance.GetWPList();
+
+            PointLatLngAlt home = null;
+            if (wpLists[0].Tag == VPS.WP.WPCommands.HomeCommand)
             {
-                SetHomeInThread inThread = new SetHomeInThread(SetHomeHandle);
-                this.Invoke(inThread, new object[] { home });
+                home = wpLists[0];
+                wpLists.RemoveAt(0);
             }
             else
+                home = VPS.WP.WPGlobalData.instance.GetHomePosition();
+
+            GeneralBaseAlt(wpLists);
+
+            BindingDataSource(home, wpLists);
+        }
+        #endregion
+
+        #region 初始位置变化响应函数
+        public void HomeChangeHandle()
+        {
+            PointLatLngAlt home = VPS.WP.WPGlobalData.instance.GetHomePosition();
+            if (home.Tag != VPS.WP.WPCommands.HomeCommand)
+                home.Tag = VPS.WP.WPCommands.HomeCommand;
+
+            if (!HomePositionDisplay.WGS84Position.Equals(home))
             {
-                StopSendPositionChange();
-                SetHome(home);
-                StartSendPositionChange();
+                HomePositionDisplay.WGS84Position = new Utilities.PointLatLngAlt(home);
             }
         }
         #endregion
 
-        #region SetHome 入口函数
-        private void SetHome(Utilities.PointLatLngAlt home)
+        #region 更改初始位置函数
+        private void ChangeHomeHandle(PointLatLngAlt home)
         {
             if (home.Tag != VPS.WP.WPCommands.HomeCommand)
                 home.Tag = VPS.WP.WPCommands.HomeCommand;
 
-            if (!homePosition.Equals(home))
+            if (!VPS.WP.WPGlobalData.instance.GetHomePosition().Equals(home))
             {
-                homePosition = new Utilities.PointLatLngAlt(home);
-                HomePositionDisplay.WGS84Position = new Utilities.PointLatLngAlt(home);
-
-                if (IsAllowSendPositionChange())
-                    HomeChange?.Invoke(homePosition);
+                VPS.WP.WPGlobalData.instance.SetHomePosition(home);
             }
         }
         #endregion
 
-        #endregion
+        #region 设置初始位置
+        public void SetHomePosition(PointLatLngAlt home)
+        {
+            if (home.Tag != VPS.WP.WPCommands.HomeCommand)
+                home.Tag = VPS.WP.WPCommands.HomeCommand;
 
-        #endregion
-
+            if (!HomePositionDisplay.WGS84Position.Equals(home))
+            {
+                HomePositionDisplay.WGS84Position = new Utilities.PointLatLngAlt(home);
+            }
+        }
         #endregion
 
         #region 数据
@@ -1073,7 +980,7 @@ namespace VPS.Controls.Command
             baseAlt = BaseAlt.Value;
         }
 
-        private void GeneralBaseAlt()
+        private void GeneralBaseAlt(List<PointLatLngAlt> wpLists)
         {
             double totalAlt = 0.0;
             double maxAlt = 0.0;
@@ -1081,7 +988,7 @@ namespace VPS.Controls.Command
             {
                 if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wpLists[index].Tag))
                 {
-                    double terrain = Utilities.srtm.getAltitude(wpLists[index].Lat, wpLists[index].Lng).alt * CurrentState.multiplieralt;
+                    double terrain = srtm.getAltitude(wpLists[index].Lat, wpLists[index].Lng).alt * CurrentState.multiplieralt;
                     totalAlt += terrain;
                     if (terrain > maxAlt)
                         maxAlt = terrain;

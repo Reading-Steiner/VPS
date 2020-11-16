@@ -156,7 +156,6 @@
             this.Relative.ShowUpDown = true;
             this.Relative.Size = new System.Drawing.Size(64, 21);
             this.Relative.TabIndex = 63;
-            this.Relative.ValueChanged += new System.EventHandler(this.Relative_ValueChanged);
             // 
             // labelX4
             // 
@@ -188,7 +187,6 @@
             this.Sidelap.ShowUpDown = true;
             this.Sidelap.Size = new System.Drawing.Size(64, 21);
             this.Sidelap.TabIndex = 61;
-            this.Sidelap.ValueChanged += new System.EventHandler(this.Sidelap_ValueChanged);
             // 
             // Overlap
             // 
@@ -208,7 +206,6 @@
             this.Overlap.ShowUpDown = true;
             this.Overlap.Size = new System.Drawing.Size(64, 21);
             this.Overlap.TabIndex = 60;
-            this.Overlap.ValueChanged += new System.EventHandler(this.Overlap_ValueChanged);
             // 
             // labelX28
             // 

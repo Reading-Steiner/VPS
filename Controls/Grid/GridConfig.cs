@@ -1102,7 +1102,7 @@ namespace VPS.Controls.Grid
         {
             if (control.InvokeRequired)
             {
-                ReadControlInMainThreadHandle inThread = new ReadControlInMainThreadHandle(ReadControlMainThread);
+                SetControlInMainThreadHandle inThread = new SetControlInMainThreadHandle(SetControlMainThread);
                 control.Invoke(inThread, new object[] { control, data });
             }
             else
@@ -1616,7 +1616,9 @@ namespace VPS.Controls.Grid
 
         private void LockWP_Click(object sender, EventArgs e)
         {
-            WPListQuestChange?.Invoke();
+            wp = VPS.WP.WPGlobalData.instance.GetWPList();
+
+            AddHistoryList();
         }
 
         private void Undo_Click(object sender, EventArgs e)

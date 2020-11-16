@@ -355,7 +355,6 @@
             this.Controls.Add(this.MainPanel);
             this.Name = "CommandsPanel";
             this.Size = new System.Drawing.Size(1300, 278);
-            this.Load += new System.EventHandler(this.CommandsPanel_Load);
             this.Leave += new System.EventHandler(this.CommandsPanel_Leave);
             this.MainPanel.ResumeLayout(false);
             this.MainPanel.PerformLayout();
