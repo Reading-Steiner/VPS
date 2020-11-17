@@ -4527,9 +4527,6 @@ namespace VPS
                 {
                     SetLoadingLayer(geoBitmap.File);
 
-                    VPS.WP.WPGlobalData.instance.SetLayer(layerInfo.Layer);
-                    VPS.WP.WPGlobalData.instance.SetLayerLimit(geoBitmap.Rect, layerInfo.Home);
-
                     ZoomTiffButton_Click(this, null);
 
                     if (layerInfo is Layer.TiffLayerInfo)

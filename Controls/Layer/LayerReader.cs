@@ -26,7 +26,6 @@ namespace VPS.Controls.Layer
         string FullFileName = "";
         string FileExtend = "";
         GMap.NET.RectLatLng LayerRect;
-        Utilities.PointLatLngAlt PointHome;
         long FileSize = 0;
         long RasterXSize = 0;
         long RasterYSize = 0;
@@ -308,7 +307,7 @@ namespace VPS.Controls.Layer
                             RasterYSize = info.RasterYSize;
                             LayerRect = info.Rect;
 
-                            PointHome = info.Rect.LocationTopLeft;
+                            PointLatLngAlt PointHome = info.Rect.LocationTopLeft;
                             PointHome.Tag = VPS.WP.WPCommands.HomeCommand;
                             PointHome.Tag2 = "Terrain";
                             OriginPosition.WGS84Position = PointHome; 
@@ -514,7 +513,7 @@ namespace VPS.Controls.Layer
             if (SettingDefaultMap.Checked)
             {
                 VPS.WP.WPGlobalData.instance.SetLayer(openPath, SettingDefaultMap.Checked);
-                VPS.WP.WPGlobalData.instance.SetLayerLimit(this.LayerRect, this.PointHome, SettingDefaultMap.Checked);
+                VPS.WP.WPGlobalData.instance.SetLayerLimit(this.LayerRect, OriginPosition.WGS84Position, SettingDefaultMap.Checked);
             }
         }
         #endregion

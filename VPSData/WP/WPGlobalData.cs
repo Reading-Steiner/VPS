@@ -47,7 +47,7 @@ namespace VPS.WP
                     case "Main_DefaultHomeAlt":
                         {
                             if (double.TryParse(Settings.Instance[key], out double alt))
-                                defHome.Alt = alt;
+                               defHome.Alt = alt;
                         }
                         break;
                     case "Main_DefaultHomeFrame":
@@ -421,7 +421,7 @@ namespace VPS.WP
         }
         #endregion
 
-        #region 图层信息
+        #region LAYER 图层信息
         private string currentLayerPath = null;
         private PointLatLngAlt currentHome = new PointLatLngAlt();
         private GMap.NET.RectLatLng currentRect = new GMap.NET.RectLatLng();
@@ -509,6 +509,10 @@ namespace VPS.WP
             defaultLayerPath = null;
         }
         #endregion
+
+        #endregion
+
+        #region POLYGON 区域点
 
         #endregion
     }
