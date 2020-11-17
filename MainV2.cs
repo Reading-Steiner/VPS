@@ -3318,7 +3318,7 @@ namespace VPS
         #region CurrentPosition 数据链接
         private void delegateCurrentPosition()
         {
-            GCSViews.FlightPlanner.instance.CurrentChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetCurrentPosition;
+            VPS.WP.WPGlobalData.instance.CurrentChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetCurrentPosition;
         }
         #endregion
 

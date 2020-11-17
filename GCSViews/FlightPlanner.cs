@@ -192,9 +192,7 @@ namespace VPS.GCSViews
         private string mobileGpsLog = string.Empty;
         
         private WPOverlay overlay;
-        private VPS.Controls.Icon.Polygon polyicon = new VPS.Controls.Icon.Polygon();
-        private VPS.Controls.Icon.WP WPicon = new VPS.Controls.Icon.WP();
-        private VPS.Controls.Icon.Zoom zoomicon = new VPS.Controls.Icon.Zoom();
+
         private ComponentResourceManager rm = new ComponentResourceManager(typeof(FlightPlanner));
         private int selectedrow;
         private bool sethome;
@@ -2926,8 +2924,8 @@ namespace VPS.GCSViews
             try
             {
                 //记录鼠标开始位置
-                MouseDownStart = MainMap.FromLocalToLatLng(e.X, e.Y);
-                MouseDownStartPoint = new GPoint(e.X, e.Y);
+                SetStartPoint(e.X, e.Y);
+
                 if (IsMouseClickOffMenu)
                     return;
 
@@ -2981,8 +2979,7 @@ namespace VPS.GCSViews
             try
             {
                 //记录鼠标位置
-                MouseDownCurrent = MainMap.FromLocalToLatLng(e.X, e.Y);
-                SetCurrentPoint(new GPoint(e.X, e.Y));
+                SetCurrentPoint(e.X, e.Y);
 
                 //鼠标没按下
                 if (!IsMouseDown)
@@ -3172,65 +3169,15 @@ namespace VPS.GCSViews
                 }
 
                 // check if the mouse up happend over our button
-                if (polyicon.Rectangle.Contains(e.Location))
-                {
-                    if (e.Button == MouseButtons.Left)
-                    {
-                        polyicon.IsSelected = !polyicon.IsSelected;
-
-                    }
-                    IsDrawPolygongridMode = polyicon.IsSelected ? true : false;
-
-                    //contextMenuStripPoly.Show(MainMap, e.Location);
+                if (OnIcon_MouseClick(sender, e))
                     return;
-                }
-                if (WPicon.Rectangle.Contains(e.Location))
-                {
-                    if (e.Button == MouseButtons.Left)
-                    {
-                        //surveyGridToolStripMenuItem_Click(this, null);
-                    }
-                    return;
-                }
-                if (zoomicon.Rectangle.Contains(e.Location))
-                {
-                    //contextMenuStripZoom.Show(MainMap, e.Location);
-                    if (layerPolygonsOverlay.Polygons.Count > 0)
-                        zoomicon.IsSelected = true;
-                    else
-                        zoomicon.IsSelected = false;
-                    if (e.Button == MouseButtons.Left)
-                    {
-                        if (zoomicon.IsSelected)
-                        {
-                            zoomToTiffLayer();
-                        }
-                        else
-                        {
-                            contextMenuStripMain.Visible = false;
-                            TiffOverlayToolStripMenuItem_Click(this, null);
-                        }
-                        if (layerPolygonsOverlay.Polygons.Count > 0)
-                            zoomicon.IsSelected = true;
-                        else
-                            zoomicon.IsSelected = false;
-                        return;
 
-                    }
-
-                    return;
-                }
-
-
-                else if (e.Button == MouseButtons.None)
+                if (e.Button == MouseButtons.None)
                 {
                     return;
                 }
 
-                MouseDownEnd = MainMap.FromLocalToLatLng(e.X, e.Y);
-                MouseDownEndPoint = new GPoint(e.X, e.Y);
-
-
+                SetEndPoint(e.X, e.Y);
 
                 if (IsMouseDown) // mouse down on some other object and dragged to here.
                 {
@@ -4414,13 +4361,9 @@ namespace VPS.GCSViews
 
         #endregion
 
-        #region 数据
+        #region 鼠标
 
-        #region CurrentPoint
-
-        public PositionChangeHandle CurrentChange;
-
-        #region 接口函数
+        #region 根据鼠标当前位置触发效果
         /// <summary>
         /// Used for current mouse position
         /// </summary>
@@ -4431,10 +4374,11 @@ namespace VPS.GCSViews
         {
             PointLatLngAlt mouseposdisplay = new PointLatLngAlt(lat, lng, alt);
 
-            CurrentChange?.Invoke(mouseposdisplay);
+            VPS.WP.WPGlobalData.instance.CurrentChange?.Invoke(mouseposdisplay);
         }
         #endregion
 
+        #region 鼠标操作数据
         internal PointLatLng MouseDownStart;
         internal PointLatLng MouseDownCurrent;
         internal PointLatLng MouseDownEnd;
@@ -4444,25 +4388,127 @@ namespace VPS.GCSViews
         private GPoint MouseDownEndPoint = new GPoint();
 
         #region Loc Point 
-
-        #region SetCurrentPoint
-        private void SetStartPoint(GPoint point)
+        private void SetStartPoint(int X, int Y)
         {
-            MouseDownStartPoint = point;
-            MouseDownCurrentPoint = MouseDownStartPoint;
+            MouseDownStartPoint = new GPoint(X, Y);
+            MouseDownCurrentPoint = new GPoint(X, Y);
+            MouseDownStart = MainMap.FromLocalToLatLng(X, Y);
         }
 
-        private void SetCurrentPoint(GPoint point)
+        private void SetCurrentPoint(int X, int Y)
         {
             if (MouseDownCurrentPoint != null)
                 MouseDownPrevPoint = MouseDownCurrentPoint;
-            MouseDownCurrentPoint = point;
+            MouseDownCurrentPoint = new GPoint(X, Y);
+            MouseDownCurrent = MainMap.FromLocalToLatLng(X, Y);
+        }
+
+        private void SetEndPoint(int X, int Y)
+        {
+            MouseDownEndPoint = new GPoint(X, Y);
+            MouseDownEnd = MainMap.FromLocalToLatLng(X, Y);
         }
         #endregion
 
         #endregion
 
         #endregion
+
+        #region 小图标
+
+        #region 入口函数
+        private bool OnIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            // check if the mouse up happend over our button
+
+            bool ret = false;
+
+            ret = OnPolyIcon_MouseClick(sender, e) || ret;
+            ret = OnWPIcon_MouseClick(sender, e) || ret;
+            ret = OnZoomIcon_MouseClick(sender, e) || ret;
+
+            return ret;
+        }
+        #endregion
+
+        #region Polygon
+        private VPS.Controls.Icon.Polygon polyicon = new VPS.Controls.Icon.Polygon();
+
+        private bool OnPolyIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            // check if the mouse up happend over our button
+            if (polyicon.Rectangle.Contains(e.Location))
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    polyicon.IsSelected = !polyicon.IsSelected;
+
+                }
+                IsDrawPolygongridMode = polyicon.IsSelected ? true : false;
+
+                //contextMenuStripPoly.Show(MainMap, e.Location);
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
+        #region WP
+        private VPS.Controls.Icon.WP WPicon = new VPS.Controls.Icon.WP();
+
+        private bool OnWPIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            // check if the mouse up happend over our button
+            if (WPicon.Rectangle.Contains(e.Location))
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    //surveyGridToolStripMenuItem_Click(this, null);
+                }
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
+        #region Zoom
+        private VPS.Controls.Icon.Zoom zoomicon = new VPS.Controls.Icon.Zoom();
+
+        private bool OnZoomIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            // check if the mouse up happend over our button
+            if (zoomicon.Rectangle.Contains(e.Location))
+            {
+                //contextMenuStripZoom.Show(MainMap, e.Location);
+                if (layerPolygonsOverlay.Polygons.Count > 0)
+                    zoomicon.IsSelected = true;
+                else
+                    zoomicon.IsSelected = false;
+                if (e.Button == MouseButtons.Left)
+                {
+                    if (zoomicon.IsSelected)
+                    {
+                        zoomToTiffLayer();
+                    }
+                    else
+                    {
+                        contextMenuStripMain.Visible = false;
+                        TiffOverlayToolStripMenuItem_Click(this, null);
+                    }
+                    if (layerPolygonsOverlay.Polygons.Count > 0)
+                        zoomicon.IsSelected = true;
+                    else
+                        zoomicon.IsSelected = false;
+                }
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
+        #endregion
+
+        #region 数据
 
         #region CoordSystem
 
@@ -4934,7 +4980,6 @@ namespace VPS.GCSViews
 
         #endregion
 
-
         #region 重绘函数
 
         #region 刷新Polygon显示
@@ -5135,8 +5180,6 @@ namespace VPS.GCSViews
         #endregion
 
         #endregion
-
-
 
         #region 主要功能
 
@@ -5961,7 +6004,7 @@ namespace VPS.GCSViews
 
         #region 重要数据
 
-        #region WPList
+        #region 航点
 
         #region 航点变化响应函数
         public void WPChangeHandle()
@@ -6240,9 +6283,10 @@ namespace VPS.GCSViews
 
         #endregion
 
-        #region PolygonList
+        #region 区域点
         public delegate void PlygonListChangeHandle(List<PointLatLngAlt> polygonList);
         public PlygonListChangeHandle PolygonListChange;
+
         #region SetPolygonList
 
         #region SetPolygonList 对外接口
@@ -6289,7 +6333,6 @@ namespace VPS.GCSViews
         }
         #endregion
 
-        #region 辅助参数
         #region PolygonPoint
 
         #region AddPolygonPoint
@@ -6314,15 +6357,18 @@ namespace VPS.GCSViews
         #endregion
 
         #endregion
-        #endregion
 
         #endregion
 
-        #region Home
+        #region 初始位置
+
+        #region 初始位置变化响应函数
         public void HomeChangeHandle()
         {
             writeKML();
         }
+        #endregion
+
         #endregion
 
         #endregion
