@@ -3757,7 +3757,7 @@ namespace VPS.GCSViews
                     geoBitmap.DisplayBitmap);
                 layerPolygonsOverlay.Polygons.Add(mark);
 
-                MainMap.SetZoomToFitRect(VPS.WP.WPGlobalData.instance.GetLayerDefaultRect());
+                MainMap.SetZoomToFitRect(VPS.WP.WPGlobalData.instance.GetLayerRect());
 
                 Task.Run(
                     () =>
@@ -3771,7 +3771,7 @@ namespace VPS.GCSViews
                     }
                 );
 
-                VPS.WP.WPGlobalData.instance.SetHomePosition(VPS.WP.WPGlobalData.instance.GetLayerDefaultHome());
+                VPS.WP.WPGlobalData.instance.SetHomePosition(VPS.WP.WPGlobalData.instance.GetLayerHome());
 
                 writeKML();
             }
@@ -3780,7 +3780,7 @@ namespace VPS.GCSViews
         public void zoomToTiffLayer()
         {
             if (VPS.WP.WPGlobalData.instance.GetLayer() != null)
-                MainMap.SetZoomToFitRect(VPS.WP.WPGlobalData.instance.GetLayerDefaultRect());
+                MainMap.SetZoomToFitRect(VPS.WP.WPGlobalData.instance.GetLayerRect());
         }
 
 
@@ -4262,16 +4262,18 @@ namespace VPS.GCSViews
         /// </summary>
         private void CovertToWorkCoordinate(PointLatLngAlt WGS84Point, out PointLatLngAlt WorkPoint)
         {
-            var layer = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
+            var layer = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(
+                VPS.WP.WPGlobalData.instance.GetLayer()
+                );
             if (layer == null)
             {
             }
             double Scale = layer.Scale;
 
-            PointLatLngAlt Origin = layer.Origin;
+            PointLatLngAlt Home = layer.Home;
 
-            int OriginZone = Origin.GetUTMZone();
-            double[] OriginCoord = Origin.ToUTM(OriginZone);
+            int OriginZone = Home.GetUTMZone();
+            double[] OriginCoord = Home.ToUTM(OriginZone);
 
             int WGS84Zone = WGS84Point.GetUTMZone();
             double[] WGS84Coord = WGS84Point.ToUTM(OriginZone);
@@ -4289,7 +4291,7 @@ namespace VPS.GCSViews
 
             deltaLng = (WGS84UTMEast - OriginUTMEast) / Scale;
             deltaLat = (WGS84UTMNorth - OriginUTMNorth) / Scale;
-            deltaAlt = (WGS84Point.Alt - Origin.Alt) / Scale;
+            deltaAlt = (WGS84Point.Alt - Home.Alt) / Scale;
 
             // m => mm
             WorkPoint = new PointLatLngAlt(deltaLat * 1000, deltaLng * 1000, deltaAlt * 1000);
@@ -4314,16 +4316,18 @@ namespace VPS.GCSViews
         /// </summary>
         private void CovertFromWorkCoordinate(PointLatLngAlt WorkCoordPoint, out PointLatLngAlt WGS84CorrdPoint)
         {
-            var layer = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
+            var layer = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(
+                VPS.WP.WPGlobalData.instance.GetLayer()
+                );
             if (layer == null)
             {
             }
             double Scale = layer.Scale;
 
-            PointLatLngAlt Origin = layer.Origin;
+            PointLatLngAlt Home = layer.Home;
 
-            int OriginZone = Origin.GetUTMZone();
-            double[] OriginCoord = Origin.ToUTM();
+            int OriginZone = Home.GetUTMZone();
+            double[] OriginCoord = Home.ToUTM();
 
             double OriginUTMEast = OriginCoord[0];
             double OriginUTMNorth = OriginCoord[1];
@@ -4337,7 +4341,7 @@ namespace VPS.GCSViews
 
             deltaEast = (WorkCoordPoint.Lng * Scale + OriginUTMEast);
             deltaNorth = (WorkCoordPoint.Lat * Scale + OriginUTMNorth);
-            deltaAlt = (WorkCoordPoint.Alt * Scale + Origin.Alt);
+            deltaAlt = (WorkCoordPoint.Alt * Scale + Home.Alt);
 
             WGS84CorrdPoint = PointLatLngAlt.FromUTM(OriginZone, deltaEast, deltaNorth);
             WGS84CorrdPoint.Alt = deltaAlt;
@@ -5296,7 +5300,9 @@ namespace VPS.GCSViews
                 w.WriteEndElement();//styleUrl
                 w.WriteStartElement("ExtendedData", "www.dji.com");
 
-                var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
+                var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(
+                    VPS.WP.WPGlobalData.instance.GetLayer()
+                    );
                 if (layerInfo != null)
                 {
                     w.WriteStartElement("local");

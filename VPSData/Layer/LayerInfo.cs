@@ -26,36 +26,7 @@
         #endregion
         #endregion
 
-        #region LayerOrigin
-        private double originLng;
-        private double originLat;
-        private double originAlt;
-        private string frameOfOriginAlt;
-
-        #region 访问器
-        public Utilities.PointLatLngAlt Origin
-        {
-            get
-            {
-                var origin = new Utilities.PointLatLngAlt(originLat, originLng, originAlt);
-                origin.Tag2 = frameOfOriginAlt;
-                return origin;
-            }
-            set
-            {
-                originLng = value.Lng;
-                originLat = value.Lat;
-                originAlt = value.Alt;
-                if (value.Tag2 == "Relative" || value.Tag2 == "Absolute" || value.Tag2 == "Terrain")
-                    frameOfOriginAlt = value.Tag2;
-                else
-                    frameOfOriginAlt = "Relative";
-            }
-        }
-        #endregion
-        #endregion
-
-        #region LayerOrigin
+        #region LayerHome
         private double homeLng;
         private double homeLat;
         private double homeAlt;
@@ -146,14 +117,12 @@
 
         protected LayerInfo(
             LayerTypes layerInfo, string url,
-            Utilities.PointLatLngAlt origin, Utilities.PointLatLngAlt home,
+            Utilities.PointLatLngAlt home,
             double scale = 1, string create = null, string modify = null)
         {
             this.layerType = layerInfo;
 
             this.url = url;
-
-            this.Origin = origin;
 
             this.Home = home;
 
@@ -186,7 +155,7 @@
 
         public override string ToString()
         {
-            return GetOnlyCode() + " with origin (" + Origin.ToString() + "), type (" + layerType + ")";
+            return GetOnlyCode() + " with origin (" + Home.ToString() + "), type (" + layerType + ")";
         }
         #endregion
 
@@ -210,7 +179,7 @@
                 this.SetLayerInfo(
                     info.layerType,
                     info.url,
-                    info.Origin,
+                    info.Home,
                     info.scale,
                     this.CreateTime,
                     DateTime.Now.ToString("yyyy年 MM月 dd日 HH:mm:ss"));
@@ -219,14 +188,12 @@
 
         protected virtual void SetLayerInfo(
             LayerTypes layerInfo, string url,
-            Utilities.PointLatLngAlt origin, double scale = 1,
+            Utilities.PointLatLngAlt home, double scale = 1,
             string create = null, string modify = null)
         {
             this.layerType = layerInfo;
 
             this.url = url;
-
-            this.Origin = origin;
 
             this.scale = scale;
 
@@ -255,22 +222,6 @@
                 XmlElement path = xmlDoc.CreateElement("path");
                 path.InnerText = this.Layer;
                 keyIndex.AppendChild(path);
-
-                XmlElement originX = xmlDoc.CreateElement("originLng");
-                originX.InnerText = this.Origin.Lng.ToString();
-                keyIndex.AppendChild(originX);
-
-                XmlElement originY = xmlDoc.CreateElement("originLat");
-                originY.InnerText = this.Origin.Lat.ToString();
-                keyIndex.AppendChild(originY);
-
-                XmlElement originZ = xmlDoc.CreateElement("originAlt");
-                originZ.InnerText = this.Origin.Alt.ToString();
-                keyIndex.AppendChild(originZ);
-
-                XmlElement originFrame = xmlDoc.CreateElement("frameOfOriginAlt");
-                originFrame.InnerText = this.Origin.Tag2;
-                keyIndex.AppendChild(originFrame);
 
                 XmlElement homeX = xmlDoc.CreateElement("homeLng");
                 homeX.InnerText = this.Home.Lng.ToString();
@@ -404,7 +355,7 @@
             }
             if (path == null)
                 return null;
-            return new LayerInfo(LayerTypes.none, path, origin, home, scale, createTime, modifyTime);
+            return new LayerInfo(LayerTypes.none, path, home, scale, createTime, modifyTime);
         }
         #endregion
 

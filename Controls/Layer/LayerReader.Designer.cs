@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LayerReader));
             VPS.Utilities.PointLatLngAlt pointLatLngAlt1 = new VPS.Utilities.PointLatLngAlt();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LayerReader));
             this.textBoxItem1 = new DevComponents.DotNetBar.TextBoxItem();
             this.labelItem1 = new DevComponents.DotNetBar.LabelItem();
             this.labelItem2 = new DevComponents.DotNetBar.LabelItem();
@@ -70,6 +70,8 @@
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
             this.Preview = new DevComponents.DotNetBar.ButtonX();
             this.SettingDefaultMap = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.panelEx16 = new DevComponents.DotNetBar.PanelEx();
+            this.OriginPosition = new VPS.Controls.MyControls.MyPositionDisplay();
             this.TransparentBox = new DevComponents.DotNetBar.PanelEx();
             this.TransparentDisplay = new DevComponents.DotNetBar.ColorPickers.ColorCombControl();
             this.ColorPickerButton = new DevComponents.DotNetBar.ColorPickerButton();
@@ -101,8 +103,6 @@
             this.FromFile = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.panelEx6 = new DevComponents.DotNetBar.PanelEx();
             this.label6 = new System.Windows.Forms.Label();
-            this.panelEx16 = new DevComponents.DotNetBar.PanelEx();
-            this.OriginPosition = new VPS.Controls.MyControls.MyPositionDisplay();
             this.panelEx2.SuspendLayout();
             this.panelEx9.SuspendLayout();
             this.panelEx5.SuspendLayout();
@@ -116,6 +116,7 @@
             this.PreviewBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DisplayImagePanel)).BeginInit();
             this.panelEx1.SuspendLayout();
+            this.panelEx16.SuspendLayout();
             this.TransparentBox.SuspendLayout();
             this.panelEx7.SuspendLayout();
             this.panelEx12.SuspendLayout();
@@ -127,7 +128,6 @@
             this.FileReaderBox.SuspendLayout();
             this.panelEx15.SuspendLayout();
             this.panelEx6.SuspendLayout();
-            this.panelEx16.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxItem1
@@ -665,6 +665,50 @@
             this.SettingDefaultMap.Text = "设为默认地图";
             this.SettingDefaultMap.CheckedChanged += new System.EventHandler(this.SettingDefaultMap_CheckedChanged);
             // 
+            // panelEx16
+            // 
+            this.panelEx16.AutoSize = true;
+            this.panelEx16.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelEx16.CanvasColor = System.Drawing.SystemColors.Control;
+            this.panelEx16.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx16.Controls.Add(this.OriginPosition);
+            this.panelEx16.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEx16.Location = new System.Drawing.Point(0, 79);
+            this.panelEx16.Name = "panelEx16";
+            this.panelEx16.Size = new System.Drawing.Size(310, 74);
+            this.panelEx16.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelEx16.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
+            this.panelEx16.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.panelEx16.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
+            this.panelEx16.Style.GradientAngle = 90;
+            this.panelEx16.TabIndex = 36;
+            // 
+            // OriginPosition
+            // 
+            this.OriginPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.OriginPosition.AutoSize = true;
+            this.OriginPosition.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.OriginPosition.IsReadOnly = true;
+            this.OriginPosition.Location = new System.Drawing.Point(12, 5);
+            this.OriginPosition.Margin = new System.Windows.Forms.Padding(2);
+            this.OriginPosition.MinimumSize = new System.Drawing.Size(100, 60);
+            this.OriginPosition.Name = "OriginPosition";
+            this.OriginPosition.PositionName = "初始位置";
+            this.OriginPosition.Size = new System.Drawing.Size(287, 67);
+            this.OriginPosition.TabIndex = 37;
+            pointLatLngAlt1.Alt = 0D;
+            pointLatLngAlt1.color = System.Drawing.Color.White;
+            pointLatLngAlt1.Lat = 0D;
+            pointLatLngAlt1.Lng = 0D;
+            pointLatLngAlt1.Param1 = 0D;
+            pointLatLngAlt1.Param2 = 0D;
+            pointLatLngAlt1.Param3 = 0D;
+            pointLatLngAlt1.Param4 = 0D;
+            pointLatLngAlt1.Tag = "";
+            pointLatLngAlt1.Tag2 = "";
+            this.OriginPosition.WGS84Position = pointLatLngAlt1;
+            // 
             // TransparentBox
             // 
             this.TransparentBox.AutoSize = true;
@@ -1197,48 +1241,6 @@
             this.label6.TabIndex = 26;
             this.label6.Text = "文件设置";
             // 
-            // panelEx16
-            // 
-            this.panelEx16.AutoSize = true;
-            this.panelEx16.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panelEx16.CanvasColor = System.Drawing.SystemColors.Control;
-            this.panelEx16.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.panelEx16.Controls.Add(this.OriginPosition);
-            this.panelEx16.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx16.Location = new System.Drawing.Point(0, 79);
-            this.panelEx16.Name = "panelEx16";
-            this.panelEx16.Size = new System.Drawing.Size(310, 74);
-            this.panelEx16.Style.Alignment = System.Drawing.StringAlignment.Center;
-            this.panelEx16.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
-            this.panelEx16.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
-            this.panelEx16.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
-            this.panelEx16.Style.GradientAngle = 90;
-            this.panelEx16.TabIndex = 36;
-            // 
-            // OriginPosition
-            // 
-            this.OriginPosition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.OriginPosition.AutoSize = true;
-            this.OriginPosition.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.OriginPosition.Location = new System.Drawing.Point(12, 5);
-            this.OriginPosition.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.OriginPosition.Name = "OriginPosition";
-            this.OriginPosition.PositionName = "初始位置";
-            this.OriginPosition.Size = new System.Drawing.Size(287, 67);
-            this.OriginPosition.TabIndex = 37;
-            pointLatLngAlt1.Alt = 0D;
-            pointLatLngAlt1.color = System.Drawing.Color.White;
-            pointLatLngAlt1.Lat = 0D;
-            pointLatLngAlt1.Lng = 0D;
-            pointLatLngAlt1.Param1 = 0D;
-            pointLatLngAlt1.Param2 = 0D;
-            pointLatLngAlt1.Param3 = 0D;
-            pointLatLngAlt1.Param4 = 0D;
-            pointLatLngAlt1.Tag = "";
-            pointLatLngAlt1.Tag2 = "";
-            this.OriginPosition.WGS84Position = pointLatLngAlt1;
-            // 
             // LayerReader
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1267,6 +1269,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.DisplayImagePanel)).EndInit();
             this.panelEx1.ResumeLayout(false);
             this.panelEx1.PerformLayout();
+            this.panelEx16.ResumeLayout(false);
+            this.panelEx16.PerformLayout();
             this.TransparentBox.ResumeLayout(false);
             this.panelEx7.ResumeLayout(false);
             this.panelEx7.PerformLayout();
@@ -1288,8 +1292,6 @@
             this.panelEx15.PerformLayout();
             this.panelEx6.ResumeLayout(false);
             this.panelEx6.PerformLayout();
-            this.panelEx16.ResumeLayout(false);
-            this.panelEx16.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

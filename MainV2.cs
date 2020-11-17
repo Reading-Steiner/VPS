@@ -1792,6 +1792,7 @@ namespace VPS
             {
             } // i get alot of these errors, the port is still open, but not valid - user has unpluged usb
 
+            VPS.WP.WPGlobalData.instance.SaveConfig();
             // save config
             SaveConfig();
 
@@ -3224,7 +3225,9 @@ namespace VPS
         #region 加载默认图层（工作区）
         public bool LoadDefaultLayer()
         {
-            var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
+            var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(
+                VPS.WP.WPGlobalData.instance.GetDefaultLayer()
+                );
             if (layerInfo != null)
             {
                 return SetLayerOverlay(layerInfo);
@@ -3794,7 +3797,7 @@ namespace VPS
             //}
             if (!LoadDefaultLayer())
             {
-                Settings.Instance["defaultTiffLayer"] = "";
+                VPS.WP.WPGlobalData.instance.DefaultLayerInvalid();
             }
         }
         #endregion
@@ -3906,19 +3909,11 @@ namespace VPS
                 VPS.WP.WPGlobalData.instance.SetLayer(data.layer);
                 ShowLayerOverlay(data.layer);
             }
-            PointLatLngAlt home = data.homePosition;
-            GMap.NET.RectLatLng defaultRect = data.layerRect;
-            PointLatLngAlt defaultHome = data.defHomePosition;
-            VPS.WP.WPGlobalData.instance.SetHomePosition(home);
-            VPS.WP.WPGlobalData.instance.SetLayerLimit(defaultRect, defaultHome);
-            GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(defaultRect);
 
-            if (LoadTiffButton.Checked != data.isLayerReaderOpen)
-                LoadTiffButton_Click(this, null);
-            if (TiffManagerButton.Checked != data.isLayerManagerOpen)
-                ManagerTiffButton_Click(this, null);
-            if (AutoWPButton.Checked != data.isGridConfigOpen)
-                AutoWPButton_Click(this, null);
+            VPS.WP.WPGlobalData.instance.SetLayer(data.layer, data.isDefaultLayer);
+            VPS.WP.WPGlobalData.instance.SetLayerLimit(data.layerRect, data.homePosition, data.isDefaultLayer);
+
+            GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(data.layerRect);
         }
         #endregion
 
@@ -3926,7 +3921,7 @@ namespace VPS
 
         #region SaveProject
 
-        #region LoadProject 入口函数
+        #region SaveProject 入口函数
         /// <summary>
         /// 将提取的数据保存到文件中
         /// </summary>
@@ -3961,14 +3956,10 @@ namespace VPS
             var data = new GCSViews.ProjectData();
             data.poly = GCSViews.FlightPlanner.instance.GetPolygonList();
             data.wp = VPS.WP.WPGlobalData.instance.GetWPList();
+            data.isDefaultLayer = VPS.WP.WPGlobalData.instance.IsDefaultLayer(VPS.WP.WPGlobalData.instance.GetLayer());
             data.layer = VPS.WP.WPGlobalData.instance.GetLayer();
-            data.layerRect = VPS.WP.WPGlobalData.instance.GetLayerDefaultRect();
-            data.homePosition = VPS.WP.WPGlobalData.instance.GetHomePosition();
-            data.homePosition = VPS.WP.WPGlobalData.instance.GetLayerDefaultHome();
-            data.isLayerReaderOpen = LoadTiffButton.Checked;
-            data.isLayerManagerOpen = TiffManagerButton.Checked;
-            data.isGridConfigOpen = AutoWPButton.Checked;
-
+            data.layerRect = VPS.WP.WPGlobalData.instance.GetLayerRect();
+            data.homePosition = VPS.WP.WPGlobalData.instance.GetLayerHome();
 
             return data;
         }
@@ -4512,9 +4503,9 @@ namespace VPS
             return SetLayerOverlay(layerInfo);
         }
 
-        public bool AddLayerOverlay(string path, PointLatLngAlt origin, PointLatLngAlt home, Color transparent)
+        public bool AddLayerOverlay(string path, PointLatLngAlt home, Color transparent)
         {
-            var layerInfo = new VPS.Layer.TiffLayerInfo(path, origin, home, transparent);
+            var layerInfo = new VPS.Layer.TiffLayerInfo(path, home, transparent);
             VPS.Layer.MemoryLayerCache.AddLayerToMemoryCache(layerInfo);
             return SetLayerOverlay(layerInfo);
         }

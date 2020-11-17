@@ -103,10 +103,10 @@ namespace VPS.Controls
                 if (layerInfo == null)
                     continue;
                 item.Text = layerInfo.Layer;
-                item.SubItems.Add(layerInfo.Origin.Lng.ToString());
-                item.SubItems.Add(layerInfo.Origin.Lat.ToString());
-                item.SubItems.Add(layerInfo.Origin.Alt.ToString());
-                if (layerInfo.Layer == Utilities.Settings.Instance["defaultTiffLayer"])
+                item.SubItems.Add(layerInfo.Home.Lng.ToString());
+                item.SubItems.Add(layerInfo.Home.Lat.ToString());
+                item.SubItems.Add(layerInfo.Home.Alt.ToString());
+                if (VPS.WP.WPGlobalData.instance.IsDefaultLayer(layerInfo.Layer))
                     this.SelectedGroup.Items.Add(item);
                 else
                     this.NormalGroup.Items.Add(item);

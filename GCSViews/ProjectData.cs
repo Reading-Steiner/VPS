@@ -11,13 +11,10 @@ namespace VPS.GCSViews
     {
         public List<PointLatLngAlt> poly;
         public List<PointLatLngAlt> wp;
+        public bool isDefaultLayer;
         public string layer;
         public GMap.NET.RectLatLng layerRect;
         public PointLatLngAlt homePosition;
-        public PointLatLngAlt defHomePosition;
-        public bool isLayerReaderOpen;
-        public bool isLayerManagerOpen;
-        public bool isGridConfigOpen;
 
     }
 }

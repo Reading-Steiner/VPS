@@ -5149,7 +5149,7 @@ namespace VPS.GCSViews
 
         private void zoomToTiffToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainMap.SetZoomToFitRect(VPS.WP.WPGlobalData.instance.GetLayerDefaultRect());
+            MainMap.SetZoomToFitRect(VPS.WP.WPGlobalData.instance.GetLayerRect());
         }
     }
 }

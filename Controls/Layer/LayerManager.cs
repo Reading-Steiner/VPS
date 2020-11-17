@@ -104,7 +104,7 @@ namespace VPS.Controls.Layer
             row[4] = emp.CreateTime;
 
             row[5] = "";
-            if (emp.Layer == Utilities.Settings.Instance["defaultTiffLayer"])
+            if (VPS.WP.WPGlobalData.instance.IsDefaultLayer(emp.Layer))
             {
                 row[6] = "True";
             }
@@ -258,8 +258,8 @@ namespace VPS.Controls.Layer
 
             DataRow fileRow = layerTable.NewRow();
             fileRow[0] = emp.GetOnlyCode();
-            fileRow[1] = emp.Origin;
-            fileRow[2] = emp.Origin.Tag2;
+            fileRow[1] = emp.Home;
+            fileRow[2] = emp.Home.Tag2;
             fileRow[3] = emp.ScaleFormat;
             fileRow[4] = emp.Transparent;
 

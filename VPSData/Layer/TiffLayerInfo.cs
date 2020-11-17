@@ -32,16 +32,16 @@ namespace VPS.Layer
 
         public TiffLayerInfo(
             string path,
-            Utilities.PointLatLngAlt origin, Utilities.PointLatLngAlt home,
+            Utilities.PointLatLngAlt home,
             System.Drawing.Color transparent, double scale = 1,
             string create = null, string modify = null)
-            : base(LayerTypes.tiff, path, origin, home, scale, create, modify)
+            : base(LayerTypes.tiff, path, home, scale, create, modify)
         {
             this.transparent = transparent;
         }
 
         public TiffLayerInfo(TiffLayerInfo info)
-            : base(info.layerType, info.Layer, info.Origin, info.Home, info.Scale, info.CreateTime, info.ModifyTime)
+            : base(info.layerType, info.Layer, info.Home, info.Scale, info.CreateTime, info.ModifyTime)
         {
             this.transparent = info.transparent;
         }
@@ -58,7 +58,7 @@ namespace VPS.Layer
                     TiffLayerInfo newLayer = info as TiffLayerInfo;
                     this.SetLayerInfo(
                         newLayer.Layer,
-                        newLayer.Origin,
+                        newLayer.Home,
                         newLayer.Transparent,
                         newLayer.Scale,
                         this.CreateTime,
@@ -92,7 +92,7 @@ namespace VPS.Layer
 
         public override string ToString()
         {
-            return GetHashCode() + " with origin (" + Origin.ToString() + "), type (" + layerType + ")";
+            return GetHashCode() + " with origin (" + Home.ToString() + "), type (" + layerType + ")";
         }
         #endregion
 
@@ -128,22 +128,6 @@ namespace VPS.Layer
                 path.InnerText = this.Layer;
                 keyIndex.AppendChild(path);
 
-                XmlElement originX = xmlDoc.CreateElement("originLng");
-                originX.InnerText = this.Origin.Lng.ToString();
-                keyIndex.AppendChild(originX);
-
-                XmlElement originY = xmlDoc.CreateElement("originLat");
-                originY.InnerText = this.Origin.Lat.ToString();
-                keyIndex.AppendChild(originY);
-
-                XmlElement originZ = xmlDoc.CreateElement("originAlt");
-                originZ.InnerText = this.Origin.Alt.ToString();
-                keyIndex.AppendChild(originZ);
-
-                XmlElement originFrame = xmlDoc.CreateElement("frameOfOriginAlt");
-                originFrame.InnerText = this.Origin.Tag2;
-                keyIndex.AppendChild(originFrame);
-
                 XmlElement homeX = xmlDoc.CreateElement("homeLng");
                 homeX.InnerText = this.Home.Lng.ToString();
                 keyIndex.AppendChild(homeX);
@@ -159,10 +143,6 @@ namespace VPS.Layer
                 XmlElement homeFrame = xmlDoc.CreateElement("frameOfHomeAlt");
                 homeFrame.InnerText = this.Home.Tag2;
                 keyIndex.AppendChild(homeFrame);
-
-                XmlElement frame = xmlDoc.CreateElement("frameOfAlt");
-                frame.InnerText = this.Origin.Tag2;
-                keyIndex.AppendChild(frame);
 
                 XmlElement scale = xmlDoc.CreateElement("scale");
                 scale.InnerText = this.Scale.ToString();
@@ -284,7 +264,7 @@ namespace VPS.Layer
             }
             if (path == null)
                 return null;
-            return new TiffLayerInfo(path, origin, home, transparent, scale, createTime, modifyTime);
+            return new TiffLayerInfo(path, home, transparent, scale, createTime, modifyTime);
         }
         #endregion
 

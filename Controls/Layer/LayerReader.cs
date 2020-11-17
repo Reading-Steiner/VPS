@@ -25,7 +25,7 @@ namespace VPS.Controls.Layer
         string FileName = "";
         string FullFileName = "";
         string FileExtend = "";
-        Utilities.PointLatLngAlt PointLeftTop;
+        GMap.NET.RectLatLng LayerRect;
         Utilities.PointLatLngAlt PointHome;
         long FileSize = 0;
         long RasterXSize = 0;
@@ -211,7 +211,7 @@ namespace VPS.Controls.Layer
             FileName = "";
             FullFileName = "";
             FileExtend = "";
-            PointLeftTop = new PointLatLngAlt();
+            LayerRect = new GMap.NET.RectLatLng();
             FileSize = 0;
             RasterXSize = 0;
             RasterYSize = 0;
@@ -306,7 +306,7 @@ namespace VPS.Controls.Layer
                             this.BoundBottomText.Text = info.Rect.Bottom.ToString("0.000000");
                             RasterXSize = info.RasterXSize;
                             RasterYSize = info.RasterYSize;
-                            PointLeftTop = info.Rect.LocationTopLeft;
+                            LayerRect = info.Rect;
 
                             PointHome = info.Rect.LocationTopLeft;
                             PointHome.Tag = VPS.WP.WPCommands.HomeCommand;
@@ -363,7 +363,7 @@ namespace VPS.Controls.Layer
                             this.BoundBottomText.Text = info.Rect.Bottom.ToString("0.000000");
                             RasterXSize = info.RasterXSize;
                             RasterYSize = info.RasterYSize;
-                            PointLeftTop = info.Rect.LocationTopLeft;
+                            LayerRect = info.Rect;
                         }
                     }
                     catch (Exception ex)
@@ -502,18 +502,19 @@ namespace VPS.Controls.Layer
             if (UsingTransparent.Checked)
             {
                 VPS.Layer.LayerInfo layerInfo =
-                    new VPS.Layer.TiffLayerInfo(openPath, PointLeftTop, OriginPosition.WGS84Position, ColorPickerButton.SelectedColor);
+                    new VPS.Layer.TiffLayerInfo(openPath, OriginPosition.WGS84Position, ColorPickerButton.SelectedColor);
                 MainV2.instance.AddLayerOverlay(layerInfo);
             }
             else
             {
                 VPS.Layer.LayerInfo layerInfo =
-                    new VPS.Layer.TiffLayerInfo(openPath, PointLeftTop, OriginPosition.WGS84Position, Color.FromArgb(0, 255, 255, 255));
+                    new VPS.Layer.TiffLayerInfo(openPath, OriginPosition.WGS84Position, Color.FromArgb(0, 255, 255, 255));
                 MainV2.instance.AddLayerOverlay(layerInfo);
             }
             if (SettingDefaultMap.Checked)
             {
-                Settings.Instance["defaultTiffLayer"] = openPath;
+                VPS.WP.WPGlobalData.instance.SetLayer(openPath, SettingDefaultMap.Checked);
+                VPS.WP.WPGlobalData.instance.SetLayerLimit(this.LayerRect, this.PointHome, SettingDefaultMap.Checked);
             }
         }
         #endregion
@@ -629,10 +630,9 @@ namespace VPS.Controls.Layer
                 return null;
             }
         }
-        #endregion
 
         #endregion
 
-
+        #endregion
     }
 }

@@ -17,40 +17,20 @@ namespace VPS.WP
             LoadConfig();
         }
 
-        ~WPGlobalData()
-        {
-            SaveConfig();
-        }
 
         #region 参数
         private void LoadConfig()
         {
-            PointLatLngAlt home = new PointLatLngAlt();
             PointLatLngAlt defHome = new PointLatLngAlt();
+            double defLeft = 0; double defRight = 0;
+            double defTop = 0; double defBottom = 0;
+
             foreach (string key in Settings.Instance.Keys)
             {
                 switch (key)
                 {
-                    case "Main_HomeLat":
-                        {
-                            if (double.TryParse(Settings.Instance[key], out double lat))
-                                home.Lat = lat;
-                        }
-                        break;
-                    case "Main_HomeLng":
-                        {
-                            if (double.TryParse(Settings.Instance[key], out double lng))
-                                home.Lng = lng;
-                        }
-                        break;
-                    case "Main_HomeAlt":
-                        {
-                            if (double.TryParse(Settings.Instance[key], out double alt))
-                                home.Alt = alt;
-                        }
-                        break;
-                    case "Main_HomeFrame":
-                        home.Tag2 = "" + Settings.Instance[key];
+                    case "Main_DefaultLayer":
+                        SetLayer(Settings.Instance[key], true);
                         break;
                     case "Main_DefaultHomeLat":
                         {
@@ -73,21 +53,57 @@ namespace VPS.WP
                     case "Main_DefaultHomeFrame":
                         defHome.Tag2 = "" + Settings.Instance[key];
                         break;
+                    case "Main_DefaultPointLeft":
+                        {
+                            if (double.TryParse(Settings.Instance[key], out double left))
+                                defLeft = left;
+                        }
+                        break;
+                    case "Main_DefaultPointTop":
+                        {
+                            if (double.TryParse(Settings.Instance[key], out double top))
+                                defTop = top;
+                        }
+                        break;
+                    case "Main_DefaultPointRight":
+                        {
+                            if (double.TryParse(Settings.Instance[key], out double right))
+                                defRight = right;
+                        }
+                        break;
+                    case "Main_DefaultPointBottom":
+                        {
+                            if (double.TryParse(Settings.Instance[key], out double bottom))
+                                defBottom = bottom;
+                        }
+                        break;
                 }
             }
-            SetHomePosition(home);
+            if (!string.IsNullOrEmpty(defaultLayerPath))
+                SetLayerLimit(
+                    GMap.NET.RectLatLng.FromLTRB(defLeft, defTop, defRight, defBottom),
+                    defHome, true);
+
         }
 
-        private void SaveConfig()
+        public void SaveConfig()
         {
-            Settings.Instance["Main_HomeLat"] = homePosition.Lat.ToString();
-            Settings.Instance["Main_HomeLng"] = homePosition.Lng.ToString();
-            Settings.Instance["Main_HomeAlt"] = homePosition.Alt.ToString();
-            Settings.Instance["Main_HomeFrame"] = homePosition.Tag2;
-            Settings.Instance["Main_DefaultHomeLat"] = this.defaultHome.Lat.ToString();
-            Settings.Instance["Main_DefaultHomeLng"] = this.defaultHome.Lng.ToString();
-            Settings.Instance["Main_DefaultHomeAlt"] = this.defaultHome.Alt.ToString();
-            Settings.Instance["Main_DefaultHomeFrame"] = this.defaultHome.Tag2.ToString();
+            if (this.defaultLayerPath != null)
+            {
+                Settings.Instance["Main_DefaultLayer"] = this.defaultLayerPath;
+                if (this.defaultHome != null)
+                {
+                    Settings.Instance["Main_DefaultHomeLat"] = this.defaultHome.Lat.ToString();
+                    Settings.Instance["Main_DefaultHomeLng"] = this.defaultHome.Lng.ToString();
+                    Settings.Instance["Main_DefaultHomeAlt"] = this.defaultHome.Alt.ToString();
+                    Settings.Instance["Main_DefaultHomeFrame"] = this.defaultHome.Tag2.ToString();
+                }
+
+                Settings.Instance["Main_DefaultPointLeft"] = this.defaultRect.Left.ToString();
+                Settings.Instance["Main_DefaultPointTop"] = this.defaultRect.Top.ToString();
+                Settings.Instance["Main_DefaultPointRight"] = this.defaultRect.Right.ToString();
+                Settings.Instance["Main_DefaultPointBottom"] = this.defaultRect.Bottom.ToString();
+            }
         }
         #endregion
 
@@ -360,15 +376,14 @@ namespace VPS.WP
         #endregion
 
         #region HOME 初始位置
-        private PointLatLngAlt homePosition = new PointLatLngAlt();
         public ChangeHandle HomeChange;
 
         #region 获取初始位置
         public PointLatLngAlt GetHomePosition()
         {
-            if (homePosition == null)
+            if (currentHome == null)
                 return null;
-            PointLatLngAlt retHome = new PointLatLngAlt(homePosition);
+            PointLatLngAlt retHome = new PointLatLngAlt(currentHome);
             if (retHome.Tag != WPCommands.HomeCommand)
                 retHome.Tag = WPCommands.HomeCommand;
             return retHome;
@@ -378,7 +393,15 @@ namespace VPS.WP
         #region 设置初始位置
         public void SetHomePosition(PointLatLngAlt position)
         {
-            homePosition = new PointLatLngAlt(position);
+            currentHome = new PointLatLngAlt(position);
+
+            if(!string.IsNullOrEmpty(defaultLayerPath) &&
+                !string.IsNullOrEmpty(currentLayerPath) &&
+                defaultLayerPath == currentLayerPath)
+            {
+                defaultHome = new PointLatLngAlt(position);
+            }
+
 
             if (IsExecuteOverSetting())
             {
@@ -400,22 +423,33 @@ namespace VPS.WP
 
         #region 图层信息
         private string currentLayerPath = null;
-        private GMap.NET.RectLatLng defaultRect = new GMap.NET.RectLatLng();
+        private PointLatLngAlt currentHome = new PointLatLngAlt();
+        private GMap.NET.RectLatLng currentRect = new GMap.NET.RectLatLng();
+        private string defaultLayerPath = null;
         private PointLatLngAlt defaultHome = null;
+        private GMap.NET.RectLatLng defaultRect = new GMap.NET.RectLatLng();
+
         //public GDAL.GDAL.GeoBitmap currentLayer;
 
         #region 设置图层信息
-        public void SetLayer(string path)
+        public void SetLayer(string path, bool isDefault = true)
         {
             currentLayerPath = path;
+            if (isDefault || defaultLayerPath == null)
+                defaultLayerPath = path;
         }
 
-        public void SetLayerLimit(GMap.NET.RectLatLng rect,PointLatLngAlt home)
+        public void SetLayerLimit(GMap.NET.RectLatLng rect,PointLatLngAlt home, bool isDefault = true)
         {
-            defaultRect = rect;
-            defaultHome = new PointLatLngAlt(home);
-            if (defaultHome.Tag != WPCommands.HomeCommand)
-                defaultHome.Tag = WPCommands.HomeCommand;
+            currentRect = rect;
+            SetHomePosition(home);
+            if (isDefault || defaultHome == null)
+            {
+                defaultRect = rect;
+                defaultHome = new PointLatLngAlt(home);
+                if (defaultHome.Tag != WPCommands.HomeCommand)
+                    defaultHome.Tag = WPCommands.HomeCommand;
+            }
         }
         #endregion
 
@@ -427,7 +461,19 @@ namespace VPS.WP
             return currentLayerPath;
         }
 
-        public PointLatLngAlt GetLayerDefaultHome()
+        public string GetDefaultLayer()
+        {
+            if (defaultLayerPath == null)
+                return null;
+            return defaultLayerPath;
+        }
+
+        public PointLatLngAlt GetLayerHome()
+        {
+            return GetHomePosition();
+        }
+
+        public PointLatLngAlt GetDefaultLayerHome()
         {
             if (defaultHome == null)
                 return null;
@@ -437,9 +483,30 @@ namespace VPS.WP
             return retHome;
         }
 
-        public GMap.NET.RectLatLng GetLayerDefaultRect()
+        public GMap.NET.RectLatLng GetLayerRect()
+        {
+            return currentRect;
+        }
+
+        public GMap.NET.RectLatLng GetDefaultLayerRect()
         {
             return defaultRect;
+        }
+        #endregion
+
+        #region 是否为默认图层
+        public bool IsDefaultLayer(string layer)
+        {
+            if (defaultLayerPath == null || layer == null)
+                return false;
+            return defaultLayerPath == layer;
+        }
+        #endregion
+
+        #region 默认图层已失效
+        public void DefaultLayerInvalid()
+        {
+            defaultLayerPath = null;
         }
         #endregion
 
