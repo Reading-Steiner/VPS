@@ -33,6 +33,8 @@ namespace VPS.Controls.Grid
 
             CMB_startfrom.DataSource = Enum.GetNames(typeof(Utilities.Grid.StartPosition));
             CMB_startfrom.SelectedIndex = 0;
+
+            historyChange += HistoryChangeHandle;
         }
 
         ~GridConfig()
@@ -55,8 +57,6 @@ namespace VPS.Controls.Grid
                 domainUpDown1_ValueChanged();
             else
                 EnterCalc();
-
-            historyChange += HistoryChangeHandle;
         }
         #endregion
 
@@ -565,7 +565,10 @@ namespace VPS.Controls.Grid
             CMB_PolygonBox.ValueMember = "key";
             CMB_PolygonBox.DisplayMember = "Value";
 
-            domainUpDown2_ValueChanged();
+            if (CHK_AutoGeneralWP.Checked)
+                domainUpDown1_ValueChanged();
+            else
+                EnterCalc();
         }
         #endregion
 
