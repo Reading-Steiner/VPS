@@ -231,22 +231,6 @@ namespace VPS
             this.MenuHelp.ToolTipText = "Help";
             this.MenuHelp.Click += new System.EventHandler(this.MenuHelp_Click);
             // 
-            // MenuArduPilot
-            // 
-            this.MenuArduPilot.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.MenuArduPilot.AutoSize = false;
-            this.MenuArduPilot.BackColor = System.Drawing.Color.Transparent;
-            this.MenuArduPilot.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.MenuArduPilot.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.MenuArduPilot.ForeColor = System.Drawing.Color.White;
-            this.MenuArduPilot.Image = ((System.Drawing.Image)(resources.GetObject("MenuArduPilot.Image")));
-            this.MenuArduPilot.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.MenuArduPilot.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuArduPilot.Name = "MenuArduPilot";
-            this.MenuArduPilot.Size = new System.Drawing.Size(255, 40);
-            this.MenuArduPilot.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
-            this.MenuArduPilot.Click += new System.EventHandler(this.MenuArduPilot_Click);
-            // 
             // MinMenuBar
             // 
             // 

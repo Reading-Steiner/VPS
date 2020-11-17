@@ -26,6 +26,7 @@ namespace VPS.WP
         private void LoadConfig()
         {
             PointLatLngAlt home = new PointLatLngAlt();
+            PointLatLngAlt defHome = new PointLatLngAlt();
             foreach (string key in Settings.Instance.Keys)
             {
                 switch (key)
@@ -51,6 +52,27 @@ namespace VPS.WP
                     case "Main_HomeFrame":
                         home.Tag2 = "" + Settings.Instance[key];
                         break;
+                    case "Main_DefaultHomeLat":
+                        {
+                            if (double.TryParse(Settings.Instance[key], out double lat))
+                                defHome.Lat = lat;
+                        }
+                        break;
+                    case "Main_DefaultHomeLng":
+                        {
+                            if (double.TryParse(Settings.Instance[key], out double lng))
+                                defHome.Lng = lng;
+                        }
+                        break;
+                    case "Main_DefaultHomeAlt":
+                        {
+                            if (double.TryParse(Settings.Instance[key], out double alt))
+                                defHome.Alt = alt;
+                        }
+                        break;
+                    case "Main_DefaultHomeFrame":
+                        defHome.Tag2 = "" + Settings.Instance[key];
+                        break;
                 }
             }
             SetHomePosition(home);
@@ -62,6 +84,10 @@ namespace VPS.WP
             Settings.Instance["Main_HomeLng"] = homePosition.Lng.ToString();
             Settings.Instance["Main_HomeAlt"] = homePosition.Alt.ToString();
             Settings.Instance["Main_HomeFrame"] = homePosition.Tag2;
+            Settings.Instance["Main_DefaultHomeLat"] = this.defaultHome.Lat.ToString();
+            Settings.Instance["Main_DefaultHomeLng"] = this.defaultHome.Lng.ToString();
+            Settings.Instance["Main_DefaultHomeAlt"] = this.defaultHome.Alt.ToString();
+            Settings.Instance["Main_DefaultHomeFrame"] = this.defaultHome.Tag2.ToString();
         }
         #endregion
 
@@ -294,6 +320,45 @@ namespace VPS.WP
 
         #endregion
 
+        #region WPList 历史记录
+        private List<List<PointLatLngAlt>> history = new List<List<PointLatLngAlt>>();
+        public CountChangeHandle historyChange;
+
+        #region 添加记录
+        public void AddHistory()
+        {
+            List<PointLatLngAlt> wpHistory = new List<PointLatLngAlt>(GetWPList());
+
+            history.Add(wpHistory);
+
+            while (history.Count > 40)
+                history.RemoveAt(0);
+
+            historyChange?.Invoke(history.Count);
+        }
+        #endregion
+
+        #region 撤销记录
+        public void UndoHistory()
+        {
+            if (history.Count > 0)
+            {
+                int no = history.Count - 1;
+                var pop = history[no];
+                history.RemoveAt(no);
+
+                BegionQuick();
+                SetWPListHandle(pop);
+                EndQuick();
+
+                WPListChange?.Invoke();
+                historyChange?.Invoke(history.Count);
+            }
+        }
+        #endregion
+
+        #endregion
+
         #region HOME 初始位置
         private PointLatLngAlt homePosition = new PointLatLngAlt();
         public ChangeHandle HomeChange;
@@ -333,40 +398,48 @@ namespace VPS.WP
         }
         #endregion
 
-        #region WPList 历史记录
-        private List<List<PointLatLngAlt>> history = new List<List<PointLatLngAlt>>();
-        public CountChangeHandle historyChange;
+        #region 图层信息
+        private string currentLayerPath = null;
+        private GMap.NET.RectLatLng defaultRect = new GMap.NET.RectLatLng();
+        private PointLatLngAlt defaultHome = null;
+        //public GDAL.GDAL.GeoBitmap currentLayer;
 
-        #region 添加记录
-        public void AddHistory()
+        #region 设置图层信息
+        public void SetLayer(string path)
         {
-            List<PointLatLngAlt> wpHistory = new List<PointLatLngAlt>(GetWPList());
+            currentLayerPath = path;
+        }
 
-            history.Add(wpHistory);
-
-            while (history.Count > 40)
-                history.RemoveAt(0);
-
-            historyChange?.Invoke(history.Count);
+        public void SetLayerLimit(GMap.NET.RectLatLng rect,PointLatLngAlt home)
+        {
+            defaultRect = rect;
+            defaultHome = new PointLatLngAlt(home);
+            if (defaultHome.Tag != WPCommands.HomeCommand)
+                defaultHome.Tag = WPCommands.HomeCommand;
         }
         #endregion
 
-        #region 撤销记录
-        public void UndoHistory()
+        #region 获取图层信息
+        public string GetLayer()
         {
-            if (history.Count > 0)
-            {
-                int no = history.Count - 1;
-                var pop = history[no];
-                history.RemoveAt(no);
+            if (currentLayerPath == null)
+                return null;
+            return currentLayerPath;
+        }
 
-                BegionQuick();
-                SetWPListHandle(pop);
-                EndQuick();
+        public PointLatLngAlt GetLayerDefaultHome()
+        {
+            if (defaultHome == null)
+                return null;
+            PointLatLngAlt retHome = new PointLatLngAlt(defaultHome);
+            if (retHome.Tag != WPCommands.HomeCommand)
+                retHome.Tag = WPCommands.HomeCommand;
+            return retHome;
+        }
 
-                WPListChange?.Invoke();
-                historyChange?.Invoke(history.Count);
-            }
+        public GMap.NET.RectLatLng GetLayerDefaultRect()
+        {
+            return defaultRect;
         }
         #endregion
 

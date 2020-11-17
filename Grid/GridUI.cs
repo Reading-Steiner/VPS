@@ -77,12 +77,7 @@ namespace VPS.Grid
 
             tiffoverlay = new GMapOverlay("layerpolygons");
             map.Overlays.Add(tiffoverlay);
-            var layer = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
-            if (layer != null)
-            {
-                var layerInfo = (VPS.Layer.LayerInfo)layer;
-                SetLayerOverlay(MainV2.instance.currentLayer, layerInfo.Origin.Lng, layerInfo.Origin.Lat);
-            }
+
             kmlpolygonsoverlay = new GMapOverlay("kmlpolygons");
             map.Overlays.Add(kmlpolygonsoverlay);
 

@@ -46,7 +46,7 @@ namespace VPS
         private static readonly ILog log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        Controls.MainSwitcher MyView;
+        #region DisplayView
 
         private static DisplayView _displayConfiguration = File.Exists(DisplayViewExtensions.custompath)
             ? new DisplayView().Custom()
@@ -65,6 +65,7 @@ namespace VPS
             }
         }
 
+        #endregion
 
         //public static bool ShowAirports { get; set; }
         public static bool ShowTFR { get; set; }
@@ -1625,11 +1626,6 @@ namespace VPS
         {
             base.OnClosing(e);
 
-            Settings.Instance["Main_HomeLat"] = this.defaultHome.Lat.ToString();
-            Settings.Instance["Main_HomeLng"] = this.defaultHome.Lng.ToString();
-            Settings.Instance["Main_HomeAlt"] = this.defaultHome.Alt.ToString();
-            Settings.Instance["Main_HomeFrame"] = this.defaultHome.Tag2.ToString();
-
             log.Info("MainV2_FormClosing");
 
             log.Info("GMaps write cache");
@@ -2828,6 +2824,8 @@ namespace VPS
         }
 
 
+        #region 改变界面语言
+
         public void changelanguage(CultureInfo ci)
         {
             log.Info("change lang to " + ci.ToString() + " current " + Thread.CurrentThread.CurrentUICulture.ToString());
@@ -2858,6 +2856,7 @@ namespace VPS
             }
         }
 
+        #endregion
 
         public void ChangeUnits()
         {
@@ -2971,21 +2970,6 @@ namespace VPS
             }
             catch (Exception)
             {
-            }
-        }
-
-
-
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                System.Diagnostics.Process.Start(
-                    "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mich146%40hotmail%2ecom&lc=AU&item_name=Michael%20Oborne&no_note=0&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest");
-            }
-            catch
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Link open failed. check your default webpage association");
             }
         }
 
@@ -3164,104 +3148,8 @@ namespace VPS
         }
 
 
-
-        private void connectionOptionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new ConnectionOptions().Show(this);
-        }
-
-        private void MenuArduPilot_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                System.Diagnostics.Process.Start("https://ardupilot.org/?utm_source=Menu&utm_campaign=MP");
-            }
-            catch
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show("Failed to open url https://ardupilot.org");
-            }
-        }
-
-        private void connectionListToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.ShowDialog();
-
-            if (File.Exists(openFileDialog.FileName))
-            {
-                var lines = File.ReadAllLines(openFileDialog.FileName);
-                openFileDialog.Dispose();
-
-                Regex tcp = new Regex("tcp://(.*):([0-9]+)");
-                Regex udp = new Regex("udp://(.*):([0-9]+)");
-                Regex udpcl = new Regex("udpcl://(.*):([0-9]+)");
-                Regex serial = new Regex("serial:(.*):([0-9]+)");
-
-                ConcurrentBag<MAVLinkInterface> mavs = new ConcurrentBag<MAVLinkInterface>();
-
-                Parallel.ForEach(lines, line =>
-                //foreach (var line in lines)
-                {
-                    try
-                    {
-                        MAVLinkInterface mav = new MAVLinkInterface();
-
-                        if (tcp.IsMatch(line))
-                        {
-                            var matches = tcp.Match(line);
-                            var tc = new TcpSerial();
-                            tc.client = new TcpClient(matches.Groups[1].Value, int.Parse(matches.Groups[2].Value));
-                            mav.BaseStream = tc;
-                        }
-                        else if (udp.IsMatch(line))
-                        {
-                            var matches = udp.Match(line);
-                            var uc = new UdpSerial(new UdpClient(int.Parse(matches.Groups[2].Value)));
-                            uc.Port = matches.Groups[2].Value;
-                            mav.BaseStream = uc;
-                        }
-                        else if (udpcl.IsMatch(line))
-                        {
-                            var matches = udpcl.Match(line);
-                            var udc = new UdpSerialConnect();
-                            udc.Port = matches.Groups[2].Value;
-                            udc.client = new UdpClient(matches.Groups[1].Value, int.Parse(matches.Groups[2].Value));
-                            mav.BaseStream = udc;
-                        }
-                        else if (serial.IsMatch(line))
-                        {
-                            var matches = serial.Match(line);
-                            var port = new Comms.SerialPort();
-                            port.PortName = matches.Groups[1].Value;
-                            port.BaudRate = int.Parse(matches.Groups[2].Value);
-                            mav.BaseStream = port;
-                            mav.BaseStream.Open();
-                        }
-                        else
-                        {
-                            return;
-                        }
-
-                        mavs.Add(mav);
-                    }
-                    catch
-                    {
-                    }
-                }
-                );
-
-                foreach (var mav in mavs)
-                {
-                    MainV2.instance.BeginInvoke((Action)delegate
-                    {
-                        doConnect(mav, "preset", "0", false);
-                        Comports.Add(mav);
-                    });
-                }
-            }
-        }
-
         #region 更改主窗口
+        Controls.MainSwitcher MyView;
 
         private void FlightPlannerShow()
         {
@@ -3898,30 +3786,10 @@ namespace VPS
             GMapMarkerBase.DisplayHeading = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayHeading", true);
             GMapMarkerBase.DisplayNavBearing = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayNavBearing", true);
             GMapMarkerBase.DisplayRadius = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayRadius", true);
-            GMapMarkerBase.DisplayTarget = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayTarget", true);
-
-            PointLatLngAlt home = new PointLatLngAlt();
-            home.Tag = VPS.WP.WPCommands.HomeCommand;
-
-            if (Utilities.Settings.Instance["Main_HomeLat"] != null &&
-                double.TryParse(Utilities.Settings.Instance["Main_HomeLat"], out double lat))
-                defaultHome.Lat = lat;
-            if (Utilities.Settings.Instance["Main_HomeLng"] != null &&
-                double.TryParse(Utilities.Settings.Instance["Main_HomeLng"], out double lng))
-                defaultHome.Lng = lng;
-            if (Utilities.Settings.Instance["Main_HomeAlt"] != null &&
-                double.TryParse(Utilities.Settings.Instance["Main_HomeAlt"], out double alt))
-                defaultHome.Alt = alt;
-            if (Utilities.Settings.Instance["Main_HomeFrame"] != null)
-                defaultHome.Tag2 = Utilities.Settings.Instance["Main_HomeFrame"];
+            GMapMarkerBase.DisplayTarget = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayTarget", true);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 
             SetInitHandler();
             layerCache = new VPS.Layer.MemoryLayerCache();
-            //var layer = MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
-            //if (layer != null)
-            //{
-            //    GMap.NET.Internals.LayerInfo layerInfo = (GMap.NET.Internals.LayerInfo)layer;
-            //    AddLayerOverlay(layerInfo);
 
             //}
             if (!LoadDefaultLayer())
@@ -4033,15 +3901,18 @@ namespace VPS
         {
             GCSViews.FlightPlanner.instance.SetPolygonListHandle(data.poly);
             VPS.WP.WPGlobalData.instance.SetWPListHandle(data.wp);
-            if (data.layer != currentLayerPath)
+            if (data.layer != VPS.WP.WPGlobalData.instance.GetLayer())
             {
-                currentLayerPath = data.layer;
+                VPS.WP.WPGlobalData.instance.SetLayer(data.layer);
                 ShowLayerOverlay(data.layer);
             }
-            displayRect = data.layerRect;
-            GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(displayRect);
-            defaultHome = data.homePosition;
-            VPS.WP.WPGlobalData.instance.SetHomePosition(defaultHome);
+            PointLatLngAlt home = data.homePosition;
+            GMap.NET.RectLatLng defaultRect = data.layerRect;
+            PointLatLngAlt defaultHome = data.defHomePosition;
+            VPS.WP.WPGlobalData.instance.SetHomePosition(home);
+            VPS.WP.WPGlobalData.instance.SetLayerLimit(defaultRect, defaultHome);
+            GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(defaultRect);
+
             if (LoadTiffButton.Checked != data.isLayerReaderOpen)
                 LoadTiffButton_Click(this, null);
             if (TiffManagerButton.Checked != data.isLayerManagerOpen)
@@ -4090,9 +3961,10 @@ namespace VPS
             var data = new GCSViews.ProjectData();
             data.poly = GCSViews.FlightPlanner.instance.GetPolygonList();
             data.wp = VPS.WP.WPGlobalData.instance.GetWPList();
-            data.layer = currentLayerPath;
-            data.layerRect = displayRect;
-            data.homePosition = defaultHome;
+            data.layer = VPS.WP.WPGlobalData.instance.GetLayer();
+            data.layerRect = VPS.WP.WPGlobalData.instance.GetLayerDefaultRect();
+            data.homePosition = VPS.WP.WPGlobalData.instance.GetHomePosition();
+            data.homePosition = VPS.WP.WPGlobalData.instance.GetLayerDefaultHome();
             data.isLayerReaderOpen = LoadTiffButton.Checked;
             data.isLayerManagerOpen = TiffManagerButton.Checked;
             data.isGridConfigOpen = AutoWPButton.Checked;
@@ -4455,6 +4327,7 @@ namespace VPS
         #endregion
 
         #region 撤销模块
+
         #region Undo 入口函数
         private void UndoButton_Click(object sender, EventArgs e)
         {
@@ -4630,14 +4503,6 @@ namespace VPS
 
         #endregion
 
-        #region 图层信息
-        public string currentLayerPath;
-        public GMap.NET.RectLatLng displayRect = new GMap.NET.RectLatLng();
-        public PointLatLngAlt defaultHome = new PointLatLngAlt();
-        public PointLatLngAlt originPoint = new PointLatLngAlt();
-        public GeoBitmap currentLayer;
-        #endregion
-
         #region 工作区
 
         #region AddLayer 入口函数
@@ -4671,10 +4536,8 @@ namespace VPS
                 {
                     SetLoadingLayer(geoBitmap.File);
 
-                    this.currentLayerPath = layerInfo.Layer;
-                    this.displayRect = geoBitmap.Rect;
-                    this.defaultHome = layerInfo.Home;
-                    this.originPoint = layerInfo.Origin;
+                    VPS.WP.WPGlobalData.instance.SetLayer(layerInfo.Layer);
+                    VPS.WP.WPGlobalData.instance.SetLayerLimit(geoBitmap.Rect, layerInfo.Home);
 
                     ZoomTiffButton_Click(this, null);
 
@@ -4713,17 +4576,16 @@ namespace VPS
                 if (IsLoadingLayer(geoBitmap.File))
                 {
                     IsLoadLayer = true;
-                    currentLayer = geoBitmap;
-                    ShowLayerOverlay(geoBitmap, defaultHome);
+                    ShowLayerOverlay(geoBitmap);
                 }
             }
         }
         #endregion
 
         #region ShowLayer 入口函数
-        private void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap, PointLatLngAlt home)
+        private void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
         { 
-            GCSViews.FlightPlanner.instance.ShowLayerOverlay(geoBitmap, home);
+            GCSViews.FlightPlanner.instance.ShowLayerOverlay(geoBitmap);
         }
         #endregion
 

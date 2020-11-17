@@ -5149,17 +5149,7 @@ namespace VPS.GCSViews
 
         private void zoomToTiffToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //double Lat = (rect.Left + rect.Right) / 2;
-            //double Lng = (rect.Top + rect.Bottom) / 2;
-            var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
-            if (layerInfo == null)
-                return;
-
-            double lng = MainV2.instance.defaultHome.Lng;
-            double lat = MainV2.instance.defaultHome.Lat;
-            double alt = MainV2.instance.defaultHome.Alt;
-
-            MainMap.SetZoomToFitRect(MainV2.instance.displayRect);
+            MainMap.SetZoomToFitRect(VPS.WP.WPGlobalData.instance.GetLayerDefaultRect());
         }
     }
 }

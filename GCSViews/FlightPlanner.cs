@@ -3743,45 +3743,44 @@ namespace VPS.GCSViews
         }
 
 
-        public void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap, PointLatLngAlt home)
+        public void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
         {
-            layerPolygonsOverlay.Polygons.Clear();
+            if (geoBitmap.File == VPS.WP.WPGlobalData.instance.GetLayer())
+            {
+                layerPolygonsOverlay.Polygons.Clear();
 
-            PointLatLngAlt pos1 = new PointLatLngAlt(geoBitmap.Rect.Top, geoBitmap.Rect.Left);
-            PointLatLngAlt pos2 = new PointLatLngAlt(geoBitmap.Rect.Bottom, geoBitmap.Rect.Right);
-            var mark = new GMapMarkerLayer(
-                pos1, pos2,
-                geoBitmap.DisplayBitmap);
-            layerPolygonsOverlay.Polygons.Add(mark);
+                PointLatLngAlt pos1 = new PointLatLngAlt(geoBitmap.Rect.Top, geoBitmap.Rect.Left);
+                PointLatLngAlt pos2 = new PointLatLngAlt(geoBitmap.Rect.Bottom, geoBitmap.Rect.Right);
 
-            zoomToTiffLayer();
+                var mark = new GMapMarkerLayer(
+                    pos1, pos2,
+                    geoBitmap.DisplayBitmap);
+                layerPolygonsOverlay.Polygons.Add(mark);
 
-            Task.Run(
-                () =>
-                {
-                    var tile = MainV2.CreateTile(geoBitmap, 400, 400);
-                    for (int i = 0; i < tile.Count; i++)
+                MainMap.SetZoomToFitRect(VPS.WP.WPGlobalData.instance.GetLayerDefaultRect());
+
+                Task.Run(
+                    () =>
                     {
-                        mark.AddTile(tile[i]._tile, tile[i]._rect);
+                        var tile = MainV2.CreateTile(geoBitmap, 400, 400);
+                        for (int i = 0; i < tile.Count; i++)
+                        {
+                            mark.AddTile(tile[i]._tile, tile[i]._rect);
+                        }
+
                     }
-                    
-                }
-            );
+                );
 
-            VPS.WP.WPGlobalData.instance.SetHomePosition(home);
+                VPS.WP.WPGlobalData.instance.SetHomePosition(VPS.WP.WPGlobalData.instance.GetLayerDefaultHome());
 
-            writeKML();
+                writeKML();
+            }
         }
 
         public void zoomToTiffLayer()
         {
-            //double Lat = (rect.Left + rect.Right) / 2;
-            //double Lng = (rect.Top + rect.Bottom) / 2;
-            var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(Settings.Instance["defaultTiffLayer"]);
-            if (layerInfo == null)
-                return;
-
-            MainMap.SetZoomToFitRect(MainV2.instance.displayRect);
+            if (VPS.WP.WPGlobalData.instance.GetLayer() != null)
+                MainMap.SetZoomToFitRect(VPS.WP.WPGlobalData.instance.GetLayerDefaultRect());
         }
 
 

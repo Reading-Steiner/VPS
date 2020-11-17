@@ -13,8 +13,8 @@ namespace VPS.GCSViews
         public List<PointLatLngAlt> wp;
         public string layer;
         public GMap.NET.RectLatLng layerRect;
-        public PointLatLngAlt layerPosition;
         public PointLatLngAlt homePosition;
+        public PointLatLngAlt defHomePosition;
         public bool isLayerReaderOpen;
         public bool isLayerManagerOpen;
         public bool isGridConfigOpen;
