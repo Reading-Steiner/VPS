@@ -88,7 +88,7 @@ namespace VPS.GCSViews
         public GMapPolygon geofencepolygon;
         private bool grid;
         private List<int> wpMarkersGroup = new List<int>();
-        private List<int> polygonMarkersGroup = new List<int>();
+        private List<int> polyMarkersGroup = new List<int>();
         private bool isMouseClickOffMenu = false;
         private bool IsMouseClickOffMenu;
         private bool IsMouseDown = false;
@@ -537,10 +537,8 @@ namespace VPS.GCSViews
             {
                 //点击到多边形中线
                 var idx = drawnpolygon.Points.IndexOf(midline.now);
-                drawnpolygon.Points.Insert(idx,
-                    new PointLatLng(CurrentMidLine.Position.Lat, CurrentMidLine.Position.Lng));
 
-                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+                InsertPolyPoint(idx, CurrentMidLine.Position.Lat, CurrentMidLine.Position.Lng);
             }
             else
             {
@@ -553,7 +551,6 @@ namespace VPS.GCSViews
 
             CurrentMidLine = null;
 
-            writeKML();
             return;
         }
 
@@ -807,7 +804,7 @@ namespace VPS.GCSViews
                 GMapMarkerPolygon m = new GMapMarkerPolygon(point, tag);
                 //m.ToolTipMode = MarkerTooltipMode.Never;
                 
-                if (polygonMarkersGroup.Contains(System.Convert.ToInt32(tag)))
+                if (polyMarkersGroup.Contains(System.Convert.ToInt32(tag)))
                 {
                     m.selected = true;
                 }
@@ -1144,31 +1141,13 @@ namespace VPS.GCSViews
 
         public void ContextMenuStripMain_Opening(object sender, CancelEventArgs e)
         {
-            if (CurentRectMarker == null && CurrentRallyPt == null && wpMarkersGroup.Count == 0 && polygonMarkersGroup.Count == 0)
+            if (CurentRectMarker == null && CurrentRallyPt == null && wpMarkersGroup.Count == 0 && polyMarkersGroup.Count == 0)
             {
                 deleteMarkerToolStripMenuItem.Enabled = false;
             }
             else
             {
                 deleteMarkerToolStripMenuItem.Enabled = true;
-            }
-
-            if (polygonMarkersGroup.Count > 0 || CurentRectMarker != null && CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
-            {
-                deletePolygonPointToolStripMenuItem.Enabled = true;
-            }
-            else
-            {
-                deletePolygonPointToolStripMenuItem.Enabled = false;
-            }
-
-            if (wpMarkersGroup.Count > 0 || (CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.InnerMarker.Tag.ToString(), @"^\d+$")))
-            {
-                deleteWPToolStripMenuItem.Enabled = true;
-            }
-            else
-            {
-                deleteWPToolStripMenuItem.Enabled = false;
             }
 
             //if (MainV2.comPort != null && MainV2.comPort.MAV != null)
@@ -1228,95 +1207,6 @@ namespace VPS.GCSViews
                 route.Points[i] = llh;
                 //route.Points[i].Lng = llh.Lng;
             }
-        }
-
-
-        public void DeletePolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            if (CurentRectMarker != null)
-            {
-                if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", ""), out int no))
-                {
-                    try
-                    {
-                        drawnpolygon.Points.RemoveAt(no);
-
-                        redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                        //CustomMessageBox.Show("Remove point Failed. Please try again.");
-                    }
-                }
-            }
-            if (currentMarker != null)
-                CurentRectMarker = null;
-            redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
-        }
-
-        public void DeleteWPToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (CurentRectMarker != null)
-            {
-                if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString(), out int no))
-                {
-                    VPS.WP.WPGlobalData.instance.DeleteWPHandle(no);
-                }
-            }
-
-            if (currentMarker != null)
-                CurentRectMarker = null;
-
-            writeKML();
-        }
-
-        public void DeleteCurrentWP()
-        {
-            if (wpMarkersGroup.Count > 0)
-            {
-                for (int a = VPS.WP.WPGlobalData.instance.GetWPCount() - 1; a >= 0; a--)
-                {
-                    try
-                    {
-                        if (wpMarkersGroup.Contains(a))
-                            VPS.WP.WPGlobalData.instance.DeleteWPHandle(a);// home is none
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                        DevComponents.DotNetBar.MessageBoxEx.Show("error selecting wp, please try again.");
-                    }
-                }
-                wpMarkersGroupClear();
-                writeKML();
-            }
-        }
-
-        public void DeleteCurrentPolygon()
-        {
-            if (polygonMarkersGroup.Count > 0)
-            {
-                for (int a = drawnpolygon.LocalPoints.Count - 1; a >= 0; a--)
-                {
-                    try
-                    {
-                        if (polygonMarkersGroup.Contains(a))
-                        {
-                            drawnpolygon.Points.RemoveAt(a);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                        DevComponents.DotNetBar.MessageBoxEx.Show("error selecting polygon, please try again.");
-                    }
-                }
-                polygonMarkersGroupClear();
-            }
-            if (currentMarker != null)
-                CurentRectMarker = null;
         }
 
         private void Dxf_newLine(dxf sender, netDxf.Entities.Line line)
@@ -1805,83 +1695,6 @@ namespace VPS.GCSViews
                 DevComponents.DotNetBar.MessageBoxEx.Show("打开 url http://127.0.0.1:56781/network.kml 失败");
             }
         }
-
-        public void loadFromFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog fd = new OpenFileDialog())
-            {
-                fd.Filter = "Fence (*.fen)|*.fen";
-                fd.ShowDialog();
-                if (File.Exists(fd.FileName))
-                {
-                    StreamReader sr = new StreamReader(fd.OpenFile());
-
-                    drawnpolygonsoverlay.Markers.Clear();
-                    drawnpolygonsoverlay.Polygons.Clear();
-                    drawnpolygon.Points.Clear();
-
-                    int a = 0;
-
-                    while (!sr.EndOfStream)
-                    {
-                        string line = sr.ReadLine();
-                        if (line.StartsWith("#"))
-                        {
-                        }
-                        else
-                        {
-                            string[] items = line.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-
-                            if (a == 0)
-                            {
-                                geofenceoverlay.Markers.Clear();
-                                geofenceoverlay.Markers.Add(
-                                    new GMarkerGoogle(new PointLatLng(double.Parse(items[0], CultureInfo.InvariantCulture), double.Parse(items[1], CultureInfo.InvariantCulture)),
-                                        GMarkerGoogleType.red)
-                                    {
-                                        ToolTipMode = MarkerTooltipMode.OnMouseOver,
-                                        ToolTipText = "GeoFence Return"
-                                    });
-                                MainMap.UpdateMarkerLocalPosition(geofenceoverlay.Markers[0]);
-                            }
-                            else
-                            {
-                                drawnpolygon.Points.Add(new PointLatLng(
-                                    double.Parse(items[0], CultureInfo.InvariantCulture),
-                                    double.Parse(items[1], CultureInfo.InvariantCulture)));
-                                addpolygonmarkergrid(drawnpolygon.Points.Count.ToString(),
-                                    double.Parse(items[1], CultureInfo.InvariantCulture),
-                                    double.Parse(items[0], CultureInfo.InvariantCulture), 0);
-                            }
-                            a++;
-                        }
-                    }
-
-                    // remove loop close
-                    if (drawnpolygon.Points.Count > 1 &&
-                        drawnpolygon.Points[0] == drawnpolygon.Points[drawnpolygon.Points.Count - 1])
-                    {
-                        drawnpolygon.Points.RemoveAt(drawnpolygon.Points.Count - 1);
-                    }
-
-                    drawnpolygonsoverlay.Polygons.Add(drawnpolygon);
-
-                    MainMap.UpdatePolygonLocalPosition(drawnpolygon);
-
-                    MainMap.Invalidate();
-                }
-            }
-        }
-
-
-
-
-
-
-
-
-
-
 
         public void MainMap_Paint(object sender, PaintEventArgs e)
         {
@@ -2570,7 +2383,7 @@ namespace VPS.GCSViews
                 System.Diagnostics.Debug.WriteLine("add marker " + marker.Tag.ToString());
                 if (int.TryParse(marker.Tag.ToString().Replace("grid", ""), out int no))
                 {
-                    polygonMarkersGroup.Add(no);
+                    polyMarkersGroup.Add(no);
                     ((GMapMarkerPolygon)marker).selected = true;
                 }
             }
@@ -2578,7 +2391,7 @@ namespace VPS.GCSViews
             {
                 if (int.TryParse(((GMapMarkerRect)marker).InnerMarker.Tag.ToString().Replace("grid", ""), out int no))
                 {
-                    polygonMarkersGroup.Add(no);
+                    polyMarkersGroup.Add(no);
                     ((GMapMarkerPolygon)((GMapMarkerRect)marker).InnerMarker).selected = true;
                 }
             }
@@ -2620,7 +2433,7 @@ namespace VPS.GCSViews
                     log.Error(ex);
                 }
             }
-            redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+            redrawPolygonSurvey();
         }
 
         public void wpMarkersGroupClear()
@@ -2634,53 +2447,26 @@ namespace VPS.GCSViews
 
         public void polygonMarkersGroupClear()
         {
-            if (polygonMarkersGroup.Count > 0)
+            if (polyMarkersGroup.Count > 0)
             {
-                polygonMarkersGroup.Clear();
-                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+                polyMarkersGroup.Clear();
+
+                redrawPolygonSurvey();
             }
         }
 
         public void wpMarkersGroupFirst()
         {
-            foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
-            {
-                try
-                {
-                    if (marker.Tag != null && int.TryParse(marker.Tag.ToString(), out int no))
-                    {
-                        wpMarkersGroup.Clear();
-                        wpMarkersGroup.Add(no);
-                        writeKML();
-                        return;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
-                }
-            }
+            if (VPS.WP.WPGlobalData.instance.GetWPCount() > 0)
+                wpMarkersGroup.Add(0);
+            writeKML();
         }
 
         public void polygonMarkersGroupFirst()
         {
-            foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
-            {
-                try
-                {
-                    if (marker.Tag != null && int.TryParse(marker.Tag.ToString().Replace("grid", ""), out int no))
-                    {
-                        polygonMarkersGroup.Clear();
-                        polygonMarkersGroup.Add(no);
-                        redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
-                        return;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
-                }
-            }
+            if (VPS.WP.WPGlobalData.instance.GetPolyCount() > 0)
+                polyMarkersGroup.Add(0);
+            redrawPolygonSurvey();
         }
 
         public void wpMarkersGroupNext()
@@ -2688,31 +2474,11 @@ namespace VPS.GCSViews
             if (wpMarkersGroup.Count > 0)
             {
                 int next = (wpMarkersGroup.Max() + 1);
-                bool isEqual = false;
-                foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
-                {
-                    try
-                    {
-                        if (marker.Tag != null && int.TryParse(marker.Tag.ToString(), out int no))
-                        {
-                            if (no == next)
-                            {
-                                isEqual = true;
-                                break;
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                    }
-                }
                 wpMarkersGroup.Clear();
-                if (isEqual)
-                    wpMarkersGroup.Add(next);
+                if (next >= 0)
+                    wpMarkersGroup.Add(next % VPS.WP.WPGlobalData.instance.GetWPCount());
                 else
-                    wpMarkersGroup.Add(1);
-
+                    wpMarkersGroup.Add(next);
                 writeKML();
             }
         }
@@ -2723,99 +2489,40 @@ namespace VPS.GCSViews
             {
                 int prev = (wpMarkersGroup.Min() - 1);
                 wpMarkersGroup.Clear();
-                if (prev > 0)
+                if (prev >= 0)
                     wpMarkersGroup.Add(prev);
                 else
-                {
-                    int maxIndex = 0;
-                    foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
-                    {
-                        try
-                        {
-                            if (marker.Tag != null && int.TryParse(marker.Tag.ToString(), out int no))
-                            {
-                                if (no > maxIndex)
-                                {
-                                    maxIndex = no;
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            log.Error(ex);
-                        }
-                    }
-                    wpMarkersGroup.Add(maxIndex);
-                }
+                    wpMarkersGroup.Add(prev + VPS.WP.WPGlobalData.instance.GetWPCount());
                 writeKML();
             }
         }
 
         public void polygonMarkersGroupNext()
         {
-            if (polygonMarkersGroup.Count > 0)
+            if (polyMarkersGroup.Count > 0)
             {
-                int next = (polygonMarkersGroup.Max() + 1);
-                bool isEqual = false;
-                foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
-                {
-                    try
-                    {
-                        if (marker.Tag != null && int.TryParse(marker.Tag.ToString().Replace("grid", ""), out int no))
-                        {
-                            if (no == next)
-                            {
-                                isEqual = true;
-                                break;
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                    }
-                }
-                polygonMarkersGroup.Clear();
-                if (isEqual)
-                    polygonMarkersGroup.Add(next);
+                int next = (polyMarkersGroup.Max() + 1);
+                polyMarkersGroup.Clear();
+                if (next >= VPS.WP.WPGlobalData.instance.GetPolyCount())
+                    polyMarkersGroup.Add(next % VPS.WP.WPGlobalData.instance.GetPolyCount());
                 else
-                    polygonMarkersGroup.Add(1);
+                    polyMarkersGroup.Add(next);
 
-                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+                redrawPolygonSurvey();
             }
         }
 
         public void polygonMarkersGroupPrev()
         {
-            if (polygonMarkersGroup.Count > 0)
+            if (polyMarkersGroup.Count > 0)
             {
-                int prev = (polygonMarkersGroup.Min() - 1);
-                polygonMarkersGroup.Clear();
-                if (prev > 0)
-                    polygonMarkersGroup.Add(prev);
+                int prev = (polyMarkersGroup.Min() - 1);
+                polyMarkersGroup.Clear();
+                if (prev >= 0)
+                    polyMarkersGroup.Add(prev);
                 else
-                {
-                    int maxIndex = 0;
-                    foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
-                    {
-                        try
-                        {
-                            if (marker.Tag != null && int.TryParse(marker.Tag.ToString().Replace("grid", ""), out int no))
-                            {
-                                if (no > maxIndex)
-                                {
-                                    maxIndex = no;
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            log.Error(ex);
-                        }
-                    }
-                    polygonMarkersGroup.Add(maxIndex);
-                }
-                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+                    polyMarkersGroup.Add(prev + VPS.WP.WPGlobalData.instance.GetPolyCount());
+                redrawPolygonSurvey();
             }
         }
 
@@ -2841,30 +2548,42 @@ namespace VPS.GCSViews
 
         private void polygonMarkersGroupMove(int xMove, int yMove)
         {
-            if (polygonMarkersGroup.Count > 0)
+            VPS.WP.WPGlobalData.instance.BegionQuick();
+
+            for (int index = 0; index < polyMarkersGroup.Count; index++)
             {
-                foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
+                try
                 {
-                    try
+                    int no = polyMarkersGroup[index];
+                    if (no >= 0 && no < VPS.WP.WPGlobalData.instance.GetPolyCount())
                     {
-                        if (marker.Tag != null && int.TryParse(marker.Tag.ToString().Replace("grid", ""), out int no))
+                        PointLatLngAlt poly = VPS.WP.WPGlobalData.instance.GetPolyPoint(no);
+                        GPoint point = MainMap.FromLatLngToLocal(poly);
+                        int idx = 1;
+                        while (true)
                         {
-                            if (polygonMarkersGroup.Contains(no))
+                            PointLatLngAlt position = MainMap.FromLocalToLatLng(
+                                (int)point.X + idx * xMove,
+                                (int)point.Y - idx * yMove);
+                            if (xMove * (position.Lat - poly.Lat) >= 0 && yMove * (position.Lng - poly.Lng) >= 0)
                             {
-                                GPoint point = MainMap.FromLatLngToLocal(drawnpolygon.Points[no]);
-                                drawnpolygon.Points[no] =
-                                    MainMap.FromLocalToLatLng((int)point.X + xMove, (int)point.Y - yMove);
+                                VPS.WP.WPGlobalData.instance.MovePolyHandle(no, position);
+                                break;
                             }
+                            else
+                                idx++;
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                    }
                 }
-
-                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
             }
+
+            VPS.WP.WPGlobalData.instance.EndQuick();
+
+            VPS.WP.WPGlobalData.instance.ExecutePolyOverSetting();
         }
 
         private void wpMarkersGroupMoveUp()
@@ -2889,34 +2608,44 @@ namespace VPS.GCSViews
 
         private void wpMarkersGroupMove(int xMove, int yMove)
         {
-            if (wpMarkersGroup.Count > 0)
+            VPS.WP.WPGlobalData.instance.BegionQuick();
+
+            for (int index = 0; index < wpMarkersGroup.Count; index++)
             {
-                foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
+                try
                 {
-                    try
+                    int no = wpMarkersGroup[index];
+                    if (no >= 0 && no < VPS.WP.WPGlobalData.instance.GetPolyCount())
                     {
-                        if (marker.Tag != null && int.TryParse(marker.Tag.ToString(), out int no))
+                        PointLatLngAlt wp = VPS.WP.WPGlobalData.instance.GetWPPoint(no);
+                        GPoint point = MainMap.FromLatLngToLocal(wp);
+                        int idx = 1;
+                        while (true)
                         {
-                            if (wpMarkersGroup.Contains(no))
+                            PointLatLngAlt position = MainMap.FromLocalToLatLng(
+                                (int)point.X + idx * xMove,
+                                (int)point.Y - idx * yMove);
+                            if (xMove * (position.Lat - wp.Lat) >= 0 && yMove * (position.Lng - wp.Lng) >= 0)
                             {
-                                GPoint point = MainMap.FromLatLngToLocal(marker.Position);
-                                marker.Position =
-                                    MainMap.FromLocalToLatLng((int)point.X + xMove, (int)point.Y - yMove);
-                                CallMeDrag((no).ToString(), 
-                                    marker.Position.Lat, 
-                                    marker.Position.Lng, 
-                                    (int)VPS.WP.WPGlobalData.instance.GetWPPoint(no).Alt);
+                                wp.Lat = position.Lat;
+                                wp.Lng = position.Lng;
+                                VPS.WP.WPGlobalData.instance.SetWPHandle(no, wp);
+                                break;
                             }
+                            else
+                                idx++;
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                    }
                 }
-
-                writeKML();
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
             }
+
+            VPS.WP.WPGlobalData.instance.EndQuick();
+
+            VPS.WP.WPGlobalData.instance.ExecuteWPOverSetting();
         }
 
         private void MainMap_MouseDown(object sender, MouseEventArgs e)
@@ -3009,12 +2738,8 @@ namespace VPS.GCSViews
                             // 检查polygon点
                             if (CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
                             {
-                                drawnpolygon.Points[
-                                    int.Parse(
-                                        CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", ""))
-                                        ] = new PointLatLng(MouseDownCurrent.Lat, MouseDownCurrent.Lng);
-
-                                redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
+                                if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", ""), out int no))
+                                    SetPolyPoint(no, MouseDownCurrent.Lat, MouseDownCurrent.Lng);
                             }
                         }
                         catch (Exception ex)
@@ -3076,7 +2801,7 @@ namespace VPS.GCSViews
                     }
                     else
                     {
-                        if (polygonMarkersGroup.Count >= 0 && IsDrawPolygongridMode)
+                        if (polyMarkersGroup.Count >= 0 && IsDrawPolygongridMode)
                         {
                             polygonMarkersGroupMove(
                                 (int)(MouseDownCurrentPoint.X - MouseDownPrevPoint.X),
@@ -3253,11 +2978,8 @@ namespace VPS.GCSViews
                             {
                                 try
                                 {
-                                    drawnpolygon.Points[
-                                            int.Parse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", ""))
-                                            ] = new PointLatLng(MouseDownEnd.Lat, MouseDownEnd.Lng);
-
-                                    redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
+                                    if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", ""), out int no))
+                                        SetPolyPoint(no, MouseDownEnd.Lat, MouseDownEnd.Lng);
                                 }
                                 catch (Exception ex)
                                 {
@@ -3277,7 +2999,7 @@ namespace VPS.GCSViews
                         }
                         else
                         {
-                            if (polygonMarkersGroup.Count >= 0 && IsDrawPolygongridMode)
+                            if (polyMarkersGroup.Count >= 0 && IsDrawPolygongridMode)
                             {
                                 polygonMarkersGroupMove(
                                     (int)(MouseDownCurrentPoint.X - MouseDownPrevPoint.X),
@@ -3295,14 +3017,14 @@ namespace VPS.GCSViews
                         return;
                     }
 
-                    if (wpMarkersGroup.Count > 0 || polygonMarkersGroup.Count > 0)
+                    if (wpMarkersGroup.Count > 0 || polyMarkersGroup.Count > 0)
                     {
                         if (wpMarkersGroup.Count > 0)
                         {
                             wpMarkersGroupClear();
                             // redraw to remove selection
                         }
-                        if (polygonMarkersGroup.Count > 0)
+                        if (polyMarkersGroup.Count > 0)
                         {
                             polygonMarkersGroupClear();
                             // redraw to remove selection
@@ -3795,7 +3517,7 @@ namespace VPS.GCSViews
                 {
                     try
                     {
-                        VPS.WP.WPGlobalData.instance.DeleteWPHandle(no); // home is 0
+                        DeleteWP(no);
                     }
                     catch (Exception ex)
                     {
@@ -3807,9 +3529,7 @@ namespace VPS.GCSViews
                 {
                     try
                     {
-                        drawnpolygon.Points.RemoveAt(no);
-
-                        redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+                        DeletePolygon(no);
                     }
                     catch (Exception ex)
                     {
@@ -3818,56 +3538,19 @@ namespace VPS.GCSViews
                     }
                 }
             }
-            else if (CurrentRallyPt != null)
-            {
-                rallypointoverlay.Markers.Remove(CurrentRallyPt);
-                MainMap.Invalidate(true);
-
-                CurrentRallyPt = null;
-            }
             if (wpMarkersGroup.Count > 0)
             {
-                for (int a = VPS.WP.WPGlobalData.instance.GetWPCount() - 1; a >= 0; a--)
-                {
-                    try
-                    {
-                        if (wpMarkersGroup.Contains(a))
-                            VPS.WP.WPGlobalData.instance.DeleteWPHandle(a);// home is none
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                        DevComponents.DotNetBar.MessageBoxEx.Show("error selecting wp, please try again.");
-                    }
-                }
-
-                wpMarkersGroupClear();
+                DeleteCurrentWP();
             }
-            if (polygonMarkersGroup.Count > 0)
+            if (polyMarkersGroup.Count > 0)
             {
-                for (int a = drawnpolygon.LocalPoints.Count - 1; a >= 0; a--)
-                {
-                    try
-                    {
-                        if (polygonMarkersGroup.Contains(a))
-                        {
-                            drawnpolygon.Points.RemoveAt(a);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                        DevComponents.DotNetBar.MessageBoxEx.Show("error selecting polygon, please try again.");
-                    }
-                }
-                polygonMarkersGroupClear();
+                DeleteCurrentPolygon();
             }
 
 
             if (currentMarker != null)
                 CurentRectMarker = null;
 
-            writeKML();
         }
         #endregion
 
@@ -3976,9 +3659,7 @@ namespace VPS.GCSViews
                 IsDrawPolygongridMode = true;
                 return;
             }
-            AddPolygonPoint(MouseDownStart.Lat, MouseDownStart.Lng);
-
-            redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+            AddPolyPoint(MouseDownStart.Lat, MouseDownStart.Lng);
         }
         #endregion
 
@@ -3990,25 +3671,17 @@ namespace VPS.GCSViews
 
         private void ClearPolygonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //polygongridmode = false;
-            if (drawnpolygon == null)
-                return;
-            drawnpolygon.Points.Clear();
-            drawnpolygonsoverlay.Markers.Clear();
-            MainMap.Invalidate();
-
-            redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+            VPS.WP.WPGlobalData.instance.ClearPolyHandle();
         }
         #endregion
 
         #region 保存区域
         public void SavePolygonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (drawnpolygon.Points.Count == 0)
+            if (VPS.WP.WPGlobalData.instance.GetPolyCount() <= 0)
             {
                 return;
             }
-
 
             using (SaveFileDialog sf = new SaveFileDialog())
             {
@@ -4022,14 +3695,14 @@ namespace VPS.GCSViews
 
                         sw.WriteLine("#saved by Mission Planner " + Application.ProductVersion);
 
-                        if (drawnpolygon.Points.Count > 0)
+                        if (VPS.WP.WPGlobalData.instance.GetPolyCount() > 0)
                         {
-                            foreach (var pll in drawnpolygon.Points)
+                            foreach (var pll in VPS.WP.WPGlobalData.instance.GetPolygList())
                             {
                                 sw.WriteLine(pll.Lat.ToString(CultureInfo.InvariantCulture) + " " + pll.Lng.ToString(CultureInfo.InvariantCulture));
                             }
 
-                            PointLatLng pll2 = drawnpolygon.Points[0];
+                            PointLatLng pll2 = VPS.WP.WPGlobalData.instance.GetPolyPoint(0);
 
                             sw.WriteLine(pll2.Lat.ToString(CultureInfo.InvariantCulture) + " " + pll2.Lng.ToString(CultureInfo.InvariantCulture));
                         }
@@ -4059,9 +3732,7 @@ namespace VPS.GCSViews
                 {
                     StreamReader sr = new StreamReader(fd.OpenFile());
 
-                    drawnpolygonsoverlay.Markers.Clear();
-                    drawnpolygonsoverlay.Polygons.Clear();
-                    drawnpolygon.Points.Clear();
+                    List<PointLatLngAlt> poly = new List<PointLatLngAlt>();
 
                     int a = 0;
 
@@ -4078,25 +3749,22 @@ namespace VPS.GCSViews
                             if (items.Length < 2)
                                 continue;
 
-                            drawnpolygon.Points.Add(new PointLatLng(
+                            poly.Add(new PointLatLng(
                                 double.Parse(items[0], CultureInfo.InvariantCulture),
                                 double.Parse(items[1], CultureInfo.InvariantCulture)));
-                            addpolygonmarkergrid(drawnpolygon.Points.Count.ToString(),
-                                double.Parse(items[1], CultureInfo.InvariantCulture),
-                                double.Parse(items[0], CultureInfo.InvariantCulture), 0);
 
                             a++;
                         }
                     }
 
                     // remove loop close
-                    if (drawnpolygon.Points.Count > 1 &&
-                        drawnpolygon.Points[0] == drawnpolygon.Points[drawnpolygon.Points.Count - 1])
+                    if (poly.Count > 1 &&
+                        poly[0] == poly[poly.Count - 1])
                     {
-                        drawnpolygon.Points.RemoveAt(drawnpolygon.Points.Count - 1);
+                        poly.RemoveAt(poly.Count - 1);
                     }
 
-                    drawnpolygonsoverlay.Polygons.Add(drawnpolygon);
+                    VPS.WP.WPGlobalData.instance.SetPolyListHandle(poly);
 
                     ZoomToCenterPolygon();
                 }
@@ -4116,9 +3784,8 @@ namespace VPS.GCSViews
                 ProjectionInfo pESRIEnd = KnownCoordinateSystems.Geographic.World.WGS1984;
                 bool reproject = false;
                 // Poly Clear
-                drawnpolygonsoverlay.Markers.Clear();
-                drawnpolygonsoverlay.Polygons.Clear();
-                drawnpolygon.Points.Clear();
+                List<PointLatLngAlt> poly = new List<PointLatLngAlt>();
+
                 if (File.Exists(file))
                 {
                     string prjfile = Path.GetDirectoryName(file) + Path.DirectorySeparatorChar +
@@ -4158,17 +3825,16 @@ namespace VPS.GCSViews
                                     point.Y = xyarray[1];
                                     point.Z = zarray[0];
                                 }
-                                drawnpolygon.Points.Add(new PointLatLng(point.Y, point.X));
-                                addpolygonmarkergrid(drawnpolygon.Points.Count.ToString(), point.X, point.Y, 0);
+                                poly.Add(new PointLatLng(point.Y, point.X));
                             }
                             // remove loop close
-                            if (drawnpolygon.Points.Count > 1 &&
-                                drawnpolygon.Points[0] == drawnpolygon.Points[drawnpolygon.Points.Count - 1])
+                            if (poly.Count > 1 &&
+                                poly[0] == poly[poly.Count - 1])
                             {
-                                drawnpolygon.Points.RemoveAt(drawnpolygon.Points.Count - 1);
+                                poly.RemoveAt(poly.Count - 1);
                             }
-                            drawnpolygonsoverlay.Polygons.Add(drawnpolygon);
 
+                            VPS.WP.WPGlobalData.instance.SetPolyListHandle(poly);
 
                             ZoomToCenterPolygon();
                         }
@@ -4230,10 +3896,7 @@ namespace VPS.GCSViews
         {
             if (IsDrawPolygongridMode)
             {
-                AddPolygonPoint(lat, lng);
-
-                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
-
+                AddPolyPoint(lat, lng);
                 return;
             }
             else if (IsDrawWPMode)
@@ -4248,8 +3911,6 @@ namespace VPS.GCSViews
                 //creating a WP
 
                 AddWPPoint(lat, lng, alt);
-
-                writeKML();
             }
         }
         #endregion
@@ -4934,7 +4595,7 @@ namespace VPS.GCSViews
             }
             if (isPolygonChange)
             {
-                redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+                redrawPolygonSurvey();
             }
         }
 
@@ -4986,8 +4647,9 @@ namespace VPS.GCSViews
         #region 重绘函数
 
         #region 刷新Polygon显示
-        public void redrawPolygonSurvey(List<PointLatLngAlt> list)
+        public void redrawPolygonSurvey()
         {
+            List<PointLatLngAlt> list = VPS.WP.WPGlobalData.instance.GetPolygList();
             if (quickadd)
                 return;
             drawnpolygon.Points.Clear();
@@ -5022,8 +4684,6 @@ namespace VPS.GCSViews
                 }
             }
 
-            MainMap.Invalidate();
-            PolygonListChange?.Invoke(GetPolygonList());
         }
         #endregion
 
@@ -5114,17 +4774,6 @@ namespace VPS.GCSViews
 
                 overlay.overlay.ForceUpdate();
 
-                if (overlay.pointlist.Count <= 1)
-                {
-                    //RectLatLng? rect = MainMap.GetRectOfAllMarkers(overlay.overlay.Id);
-                    //if (rect.HasValue)
-                    //{
-                    //    MainMap.Position = rect.Value.LocationMiddle;
-                    //}
-
-                    //MainMap_OnMapZoomChanged();
-                }
-
                 pointlist = overlay.pointlist;
 
                 {
@@ -5144,28 +4793,6 @@ namespace VPS.GCSViews
                         pnt.Tag = new midline() { now = now, next = next };
                         overlay.overlay.Markers.Add(pnt);
                     }
-                }
-
-                // draw fence
-                {
-                    var fenceoverlay = new WPOverlay();
-                    fenceoverlay.overlay.Id = "fence";
-                    try
-                    {
-                        fenceoverlay.CreateOverlay(PointLatLngAlt.Zero,
-                        MainV2.comPort.MAV.fencepoints.Values.Select(a => (Locationwp)a).ToList(), 0, 0);
-                    }
-                    catch
-                    {
-
-                    }
-                    fenceoverlay.overlay.Markers.Select(a => a.IsHitTestVisible = false).ToArray();
-                    var fence = MainMap.Overlays.Where(a => a.Id == "fence");
-                    if (fence.Count() > 0)
-                        MainMap.Overlays.Remove(fence.First());
-                    MainMap.Overlays.Add(fenceoverlay.overlay);
-
-                    fenceoverlay.overlay.ForceUpdate();
                 }
 
                 MainMap.RefreshInThread();
@@ -5555,7 +5182,7 @@ namespace VPS.GCSViews
                         case 1:
                             try
                             {
-                                loadWaypointsKML(file, false);
+                                LoadWaypointsKML(file, false);
                             }
                             catch
                             {
@@ -5596,12 +5223,11 @@ namespace VPS.GCSViews
         #region LoadWP From
 
         #region LoadWP DefaultWPFile KML
-        private void loadWaypointsKML(string file, bool append)
+        private void LoadWaypointsKML(string file, bool append)
         {
             // Create the file and writer.
             if (!System.IO.File.Exists(file))
                 return;
-            EnterQuickADD();
             try
             {
                 
@@ -5731,7 +5357,6 @@ namespace VPS.GCSViews
             }
             finally
             {
-                LeaveQuickADD();
                 ZoomToCenterWP();
             }
 
@@ -5748,7 +5373,6 @@ namespace VPS.GCSViews
             if (File.Exists(file))
             {
 
-                EnterQuickADD();
                 try
                 {
                     string prjfile = Path.GetDirectoryName(file) + Path.DirectorySeparatorChar +
@@ -5860,22 +5484,20 @@ namespace VPS.GCSViews
                     if (dosort)
                         wplist.Sort();
 
-                    foreach (var item in wplist)
+                    for (int index = 0; index < wplist.Count; index++)
                     {
-                        PointLatLngAlt wp = new PointLatLngAlt(item.Lat, item.Lng, item.Alt);
-                        wp.Tag = MAVLink.MAV_CMD.WAYPOINT.ToString();
-                        wp.Param1 = 0;
-                        wp.Param2 = 0;
-                        wp.Param3 = 0;
-                        wp.Param4 = 0;
-                        VPS.WP.WPGlobalData.instance.AddWPHandle(wp);
+                        wplist[index].Tag = MAVLink.MAV_CMD.WAYPOINT.ToString();
+                        wplist[index].Param1 = 0;
+                        wplist[index].Param2 = 0;
+                        wplist[index].Param3 = 0;
+                        wplist[index].Param4 = 0;
+                        
                     }
+                    VPS.WP.WPGlobalData.instance.SetWPListHandle(wplist);
                 }
                 catch { }
                 finally
                 {
-                    LeaveQuickADD();
-
                     ZoomToCenterWP();
                 }
             }
@@ -5937,7 +5559,8 @@ namespace VPS.GCSViews
 
         private void processKMLMission(object sender, ElementEventArgs e)
         {
-            EnterQuickADD();
+            VPS.WP.WPGlobalData.instance.ExecuteWPStartSetting();
+            VPS.WP.WPGlobalData.instance.BegionQuick();
             try
             {
                 Element element = e.Element;
@@ -5994,8 +5617,8 @@ namespace VPS.GCSViews
             catch { }
             finally
             {
-                LeaveQuickADD();
-
+                VPS.WP.WPGlobalData.instance.EndQuick();
+                VPS.WP.WPGlobalData.instance.ExecuteWPOverSetting();
                 ZoomToCenterWP();
             }
         }
@@ -6193,7 +5816,7 @@ namespace VPS.GCSViews
 
         #endregion
 
-        #region WPPoint
+        #region wpPoint
 
         #region GeneralWPPoint
         private PointLatLngAlt GeneralWPPoint(double lat, double lng, int alt = -1)
@@ -6219,7 +5842,7 @@ namespace VPS.GCSViews
 
         #endregion
 
-        #region AddWPPoint
+        #region 添加航点
         private int AddWPPoint(double lat, double lng, int alt)
         {
             var wp = GeneralWPPoint(lat, lng, alt);
@@ -6228,7 +5851,7 @@ namespace VPS.GCSViews
 
         #endregion
 
-        #region InsertWPPoint
+        #region 插入航点
         private void InsertWPPoint(int index, double lat, double lng, int alt = -1)
         {
             var wp = GeneralWPPoint(lat, lng, alt);
@@ -6238,7 +5861,7 @@ namespace VPS.GCSViews
 
         #endregion
 
-        #region SetWPPoint
+        #region 修改航点
         private void SetWPPoint(int index, double lat, double lng, int alt = -1)
         {
             if (alt == -1)
@@ -6253,6 +5876,16 @@ namespace VPS.GCSViews
             {
                 var wp = GeneralWPPoint(lat, lng, alt);
                 VPS.WP.WPGlobalData.instance.SetWPHandle(index, wp);
+            }
+        }
+        #endregion
+
+        #region 删除航点
+        public void DeleteWP(int index)
+        {
+            if (index >= 0 && index < VPS.WP.WPGlobalData.instance.GetWPCount())
+            {
+                VPS.WP.WPGlobalData.instance.DeleteWPHandle(index);
             }
         }
         #endregion
@@ -6289,78 +5922,120 @@ namespace VPS.GCSViews
         #endregion
 
         #region 区域点
-        public delegate void PlygonListChangeHandle(List<PointLatLngAlt> polygonList);
-        public PlygonListChangeHandle PolygonListChange;
 
-        #region SetPolygonList
-
-        #region SetPolygonList 对外接口
-        private delegate void SetPolygonListInThread(List<PointLatLngAlt> polygonList);
-        public void SetPolygonListHandle(List<PointLatLngAlt> polygonList)
+        #region 区域点变化响应函数
+        public void PolyChangeHandle()
         {
-            if (this.InvokeRequired)
-            {
-                SetPolygonListInThread inThread = new SetPolygonListInThread(SetPolygonListHandle);
-                this.Invoke(inThread, new object[] { polygonList });
-            }
-            else
-            {
-                SetPolygonList(polygonList);
-            }
-        }
-
-        #endregion
-
-        #region SetPolygonList 入口函数
-        private void SetPolygonList(List<PointLatLngAlt> polygonList)
-        {
-            foreach (var mark in polygonList)
-            {
-                AddPolygonPoint(mark.Lat, mark.Lng);
-            }
-
-            redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
-        }
-
-        #endregion
-
-        #endregion
-
-        #region GetPolygonList
-        public List<PointLatLngAlt> GetPolygonList()
-        {
-            List<PointLatLngAlt> polygonList = new List<PointLatLngAlt>();
-            foreach (var mark in drawnpolygon.Points)
-            {
-                polygonList.Add(mark);
-            }
-            return polygonList;
+            redrawPolygonSurvey();
         }
         #endregion
 
-        #region PolygonPoint
+        #region polyPoint
 
-        #region AddPolygonPoint
-        public void AddPolygonPoint(double lat, double lng)
+        #region 添加区域点
+        public void AddPolyPoint(double lat, double lng)
         {
-            List<PointLatLng> polygonPoints = new List<PointLatLng>();
-            if (drawnpolygonsoverlay.Polygons.Count == 0)
-            {
-                drawnpolygon.Points.Clear();
-                drawnpolygonsoverlay.Polygons.Add(drawnpolygon);
-            }
-
-            drawnpolygon.Fill = Brushes.Transparent;
-
-            // remove full loop is exists
-            if (drawnpolygon.Points.Count > 1 &&
-                drawnpolygon.Points[0] == drawnpolygon.Points[drawnpolygon.Points.Count - 1])
-                drawnpolygon.Points.RemoveAt(drawnpolygon.Points.Count - 1); // unmake a full loop
-
-            drawnpolygon.Points.Add(new PointLatLng(lat, lng));
+            PointLatLngAlt point = new PointLatLngAlt(lat, lng);
+            VPS.WP.WPGlobalData.instance.AddPolyHandle(point);
         }
         #endregion
 
+        #region 插入区域点
+        public void InsertPolyPoint(int index,double lat, double lng)
+        {
+            PointLatLngAlt point = new PointLatLngAlt(lat, lng);
+            VPS.WP.WPGlobalData.instance.InsertPolyHandle(index, point);
+        }
+        #endregion
+
+        #region 修改区域点
+        public void SetPolyPoint(int index, double lat, double lng)
+        {
+            PointLatLngAlt point = new PointLatLngAlt(lat, lng);
+            VPS.WP.WPGlobalData.instance.MovePolyHandle(index, point);
+        }
+        #endregion
+
+        #region 删除区域点
+        public void DeletePolygon(int index)
+        {
+            if (CurentRectMarker != null)
+            {
+                if (index >= 0 && index < VPS.WP.WPGlobalData.instance.GetWPCount())
+                {
+                    VPS.WP.WPGlobalData.instance.DeletePolyHandle(index);
+                }
+            }
+        }
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region WP选中组
+
+        #region 删除选中组
+        public void DeleteCurrentWP()
+        {
+            VPS.WP.WPGlobalData.instance.ExecuteWPStartSetting();
+            VPS.WP.WPGlobalData.instance.BegionQuick();
+            if (wpMarkersGroup.Count > 0)
+            {
+                for (int a = VPS.WP.WPGlobalData.instance.GetWPCount() - 1; a >= 0; a--)
+                {
+                    try
+                    {
+                        if (wpMarkersGroup.Contains(a))
+                            VPS.WP.WPGlobalData.instance.DeleteWPHandle(a);// home is none
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        DevComponents.DotNetBar.MessageBoxEx.Show("error selecting wp, please try again.");
+                    }
+                }
+                wpMarkersGroupClear();
+            }
+            VPS.WP.WPGlobalData.instance.EndQuick();
+            if (currentMarker != null)
+                CurentRectMarker = null;
+            VPS.WP.WPGlobalData.instance.ExecuteWPOverSetting();
+        }
+        #endregion
+
+        #endregion
+
+        #region Poly选中组
+
+        #region 删除选中组
+        public void DeleteCurrentPolygon()
+        {
+            VPS.WP.WPGlobalData.instance.BegionQuick();
+            if (polyMarkersGroup.Count > 0)
+            {
+                for (int a = VPS.WP.WPGlobalData.instance.GetPolyCount() - 1; a >= 0; a--)
+                {
+                    try
+                    {
+                        if (polyMarkersGroup.Contains(a))
+                        {
+                            VPS.WP.WPGlobalData.instance.DeletePolyHandle(a);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        DevComponents.DotNetBar.MessageBoxEx.Show("error selecting polygon, please try again.");
+                    }
+                }
+                polygonMarkersGroupClear();
+            }
+            VPS.WP.WPGlobalData.instance.EndQuick();
+            if (currentMarker != null)
+                CurentRectMarker = null;
+            VPS.WP.WPGlobalData.instance.ExecutePolyOverSetting();
+        }
         #endregion
 
         #endregion

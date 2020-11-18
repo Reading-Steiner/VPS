@@ -3201,6 +3201,8 @@ namespace VPS
             VPS.WP.WPGlobalData.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.WPChangeHandle;
             VPS.WP.WPGlobalData.instance.WPListChange += VPS.Controls.MainInfo.LeftMainInfo.instance.WPChangeHandle;
             VPS.WP.WPGlobalData.instance.WPListChange += VPS.GCSViews.FlightPlanner.instance.WPChangeHandle;
+
+            VPS.WP.WPGlobalData.instance.PolygonListChange += VPS.GCSViews.FlightPlanner.instance.PolyChangeHandle;
         }
         #endregion
 
@@ -3902,7 +3904,7 @@ namespace VPS
         /// </summary>
         private void loadProjectData(GCSViews.ProjectData data)
         {
-            GCSViews.FlightPlanner.instance.SetPolygonListHandle(data.poly);
+            VPS.WP.WPGlobalData.instance.SetPolyListHandle(data.poly);
             VPS.WP.WPGlobalData.instance.SetWPListHandle(data.wp);
             if (data.layer != VPS.WP.WPGlobalData.instance.GetLayer())
             {
@@ -3954,7 +3956,7 @@ namespace VPS
         private GCSViews.ProjectData saveProjectData()
         {
             var data = new GCSViews.ProjectData();
-            data.poly = GCSViews.FlightPlanner.instance.GetPolygonList();
+            data.poly = VPS.WP.WPGlobalData.instance.GetPolygList();
             data.wp = VPS.WP.WPGlobalData.instance.GetWPList();
             data.isDefaultLayer = VPS.WP.WPGlobalData.instance.IsDefaultLayer(VPS.WP.WPGlobalData.instance.GetLayer());
             data.layer = VPS.WP.WPGlobalData.instance.GetLayer();
@@ -4214,7 +4216,7 @@ namespace VPS
             if (!AutoWPButton.Checked)
             {
                 AutoWPButton.Checked = true;
-                GCSViews.FlightPlanner.instance.PolygonListChange += VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
+                VPS.WP.WPGlobalData.instance.PolygonListChange += VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
 
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
                 AutoGridDockContainerItem.Visible = true;
@@ -4222,14 +4224,12 @@ namespace VPS
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
                 this.LeftBar.ResumeLayout(false);
 
-                VPS.Controls.Grid.GridConfig.instance.SetPolygonList(
-                    GCSViews.FlightPlanner.instance.GetPolygonList()
-                    );
+                VPS.Controls.Grid.GridConfig.instance.SetPolygonList();
             }
             else
             {
                 AutoWPButton.Checked = false;
-                GCSViews.FlightPlanner.instance.PolygonListChange -= VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
+                VPS.WP.WPGlobalData.instance.PolygonListChange -= VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
 
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
                 VPS.Controls.Grid.GridConfig.instance.SaveSetting();

@@ -182,7 +182,7 @@ namespace VPS.Plugin
 
         public void RedrawFPPolygon(List<PointLatLngAlt> list)
         {
-            MainV2.instance.FlightPlanner.redrawPolygonSurvey(list);
+            VPS.WP.WPGlobalData.instance.SetPolyListHandle(list);
         }
 
         /// <summary>

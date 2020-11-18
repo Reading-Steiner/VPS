@@ -131,14 +131,19 @@ namespace VPS.WP
         #endregion
 
         #region 修改航点反应函数
-        public void ExecuteStartSetting()
+        public void ExecuteWPStartSetting()
         {
             AddHistory();
         }
 
-        public void ExecuteOverSetting()
+        public void ExecuteWPOverSetting()
         {
             WPListChange?.Invoke();
+        }
+
+        public void ExecutePolyOverSetting()
+        {
+            PolygonListChange?.Invoke();
         }
         #endregion
 
@@ -513,6 +518,109 @@ namespace VPS.WP
         #endregion
 
         #region POLYGON 区域点
+        private List<PointLatLngAlt> polyList = new List<PointLatLngAlt>();
+        public ChangeHandle PolygonListChange;
+
+        #region 设置区域点
+        public void SetPolyListHandle(List<PointLatLngAlt> polygonList)
+        {
+            polyList = new List<PointLatLngAlt>(polygonList);
+
+            if (IsExecuteOverSetting())
+            {
+                PolygonListChange?.Invoke();
+            }
+        }
+        #endregion
+
+        #region 获取区域点
+        public List<PointLatLngAlt> GetPolygList()
+        {
+            List<PointLatLngAlt> polygonList = new List<PointLatLngAlt>(polyList);
+            return polygonList;
+        }
+        #endregion
+
+        #region 添加区域点
+        public void AddPolyHandle(PointLatLngAlt poly)
+        {
+            PointLatLngAlt polygon = new PointLatLngAlt(poly);
+            polyList.Add(polygon);
+
+            if (IsExecuteOverSetting())
+            {
+                PolygonListChange?.Invoke();
+            }
+        }
+        #endregion
+
+        #region 插入区域点
+        public void InsertPolyHandle(int index, PointLatLngAlt poly)
+        {
+            PointLatLngAlt polygon = new PointLatLngAlt(poly);
+            polyList.Insert(index, polygon);
+
+            if (IsExecuteOverSetting())
+            {
+                PolygonListChange?.Invoke();
+            }
+        }
+        #endregion
+
+        #region 移动区域点
+        public void MovePolyHandle(int index, PointLatLngAlt poly)
+        {
+            PointLatLngAlt polygon = new PointLatLngAlt(poly);
+            polyList[index] =  polygon;
+
+            if (IsExecuteOverSetting())
+            {
+                PolygonListChange?.Invoke();
+            }
+        }
+        #endregion
+
+        #region 删除区域点
+        public void DeletePolyHandle(int index)
+        {
+            polyList.RemoveAt(index);
+
+            if (IsExecuteOverSetting())
+            {
+                PolygonListChange?.Invoke();
+            }
+        }
+        #endregion
+
+        #region 抽取区域点
+        public PointLatLngAlt GetPolyPoint(int index)
+        {
+            if (index < 0)
+                index = (index % polyList.Count + polyList.Count) % polyList.Count;
+            if (index >= polyList.Count)
+                index = index % polyList.Count;
+            return new PointLatLngAlt(polyList[index]);
+        }
+        #endregion
+
+        #region 清空区域点
+        public void ClearPolyHandle()
+        {
+            polyList.Clear();
+
+            if (IsExecuteOverSetting())
+            {
+                PolygonListChange?.Invoke();
+            }
+        }
+        #endregion
+
+        #region 获取区域点数
+        public int GetPolyCount()
+        {
+            return polyList.Count;
+        }
+        #endregion
 
         #endregion
     }

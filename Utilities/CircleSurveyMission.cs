@@ -21,7 +21,7 @@ namespace VPS.Utilities
             InputBox.Show("", "photos", ref photos);
             InputBox.Show("", "start heading", ref startheading);
 
-            VPS.WP.WPGlobalData.instance.ExecuteStartSetting();
+            VPS.WP.WPGlobalData.instance.ExecuteWPStartSetting();
             VPS.WP.WPGlobalData.instance.BegionQuick();
 
             // set roi centerpoint
@@ -62,7 +62,7 @@ namespace VPS.Utilities
 
             VPS.WP.WPGlobalData.instance.EndQuick();
 
-            VPS.WP.WPGlobalData.instance.ExecuteOverSetting();
+            VPS.WP.WPGlobalData.instance.ExecuteWPOverSetting();
         }
     }
 }

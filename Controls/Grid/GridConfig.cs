@@ -543,10 +543,11 @@ namespace VPS.Controls.Grid
         List<PointLatLngAlt> poly = new List<PointLatLngAlt>();
 
         #region 设置区域
-        public void SetPolygonList(List<PointLatLngAlt> polygons)
+        public void SetPolygonList()
         {
             if (gridGrenate)
                 return;
+            List<PointLatLngAlt> polygons = VPS.WP.WPGlobalData.instance.GetPolygList();
             poly = new List<PointLatLngAlt>(polygons.ToArray());
 
             DataTable set = new DataTable();

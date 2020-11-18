@@ -601,7 +601,7 @@ namespace VPS.Controls.Command
         #region ExchangeWP 方法
         private void ExchangeWP(int index1,int index2)
         {
-            VPS.WP.WPGlobalData.instance.ExecuteStartSetting();
+            VPS.WP.WPGlobalData.instance.ExecuteWPStartSetting();
             VPS.WP.WPGlobalData.instance.BegionQuick();
             {
                 var pos1 = VPS.WP.WPGlobalData.instance.GetWPPoint(index1);
@@ -611,7 +611,7 @@ namespace VPS.Controls.Command
             }
             VPS.WP.WPGlobalData.instance.EndQuick();
 
-            VPS.WP.WPGlobalData.instance.ExecuteOverSetting();
+            VPS.WP.WPGlobalData.instance.ExecuteWPOverSetting();
         }
         #endregion
 
