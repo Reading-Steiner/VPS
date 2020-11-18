@@ -380,6 +380,115 @@ namespace VPS.WP
 
         #endregion
 
+        #region WPLIST 计算数据
+
+        #region 航点列表去Home
+        public static List<PointLatLngAlt> WPListRemoveHome(List<PointLatLngAlt> list)
+        {
+            List<PointLatLngAlt> wpList = new List<PointLatLngAlt>(list);
+            if (wpList.Count > 0 && wpList[0].Tag == VPS.WP.WPCommands.HomeCommand)
+                wpList.RemoveAt(0);
+            return wpList;
+        }
+        #endregion
+
+        #region 航点列表高度框架统一
+        public static List<PointLatLngAlt> WPListChangeAltFrame(List<PointLatLngAlt> list, string altitudeMode = "")
+        {
+            List<PointLatLngAlt> wpList = new List<PointLatLngAlt>(list);
+            List<PointLatLngAlt> retWPList = new List<PointLatLngAlt>();
+
+            double baseAlt = GetBaseAlt(wpList);
+            foreach (var wp in wpList)
+            {
+                double alt = srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
+                switch (altitudeMode)
+                {
+                    case "Relative":
+                        switch (wp.Tag2)
+                        {
+                            case "Relative":
+                                break;
+                            case "Absolute":
+                                wp.Alt = wp.Alt - baseAlt;
+                                break;
+                            case "Terrain":
+                                wp.Alt = wp.Alt + alt - baseAlt;
+                                break;
+                            default:
+                                break;
+                        }
+                        wp.Tag2 = "Relative";
+                        retWPList.Add(wp);
+                        break;
+                    case "Absolute":
+                        switch (wp.Tag2)
+                        {
+                            case "Relative":
+                                wp.Alt = wp.Alt + baseAlt;
+                                break;
+                            case "Absolute":
+                                break;
+                            case "Terrain":
+                                wp.Alt = wp.Alt + alt;
+                                break;
+                            default:
+                                wp.Alt = wp.Alt + baseAlt;
+                                break;
+                        }
+                        wp.Tag2 = "Absolute";
+                        retWPList.Add(wp);
+                        break;
+                    case "Terrain":
+                        switch (wp.Tag2)
+                        {
+                            case "Relative":
+                                wp.Alt = wp.Alt + baseAlt - alt;
+                                break;
+                            case "Absolute":
+                                wp.Alt = wp.Alt - alt;
+                                break;
+                            case "Terrain":
+                                break;
+                            default:
+                                wp.Alt = wp.Alt + baseAlt - alt;
+                                break;
+                        }
+                        wp.Tag2 = "Terrain";
+                        retWPList.Add(wp);
+                        break;
+                    default:
+                        retWPList.Add(wp);
+                        break;
+                }
+            }
+
+            return retWPList;
+        }
+        #endregion
+
+        #region 航点列表求航摄基线
+        public static double GetBaseAlt(List<PointLatLngAlt> wpLists)
+        {
+            var wpList = WPListRemoveHome(wpLists);
+            double totalAlt = 0;
+            int doubleWP = 0;
+            foreach (var wp in wpList)
+            {
+                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
+                {
+                    if (wp.Lat == 0 && wp.Lng == 0)
+                        continue;
+                    totalAlt += srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
+                    doubleWP++;
+                }
+            }
+            return totalAlt / Math.Max(1, doubleWP);
+        }
+        #endregion
+
+        #endregion
+
         #region HOME 初始位置
         public ChangeHandle HomeChange;
 

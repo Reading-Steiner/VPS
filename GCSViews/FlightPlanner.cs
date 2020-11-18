@@ -4713,7 +4713,7 @@ namespace VPS.GCSViews
 
             try
             {
-                var wpList = WPListRemoveHome(VPS.WP.WPGlobalData.instance.GetWPList());
+                var wpList = VPS.WP.WPGlobalData.WPListRemoveHome(VPS.WP.WPGlobalData.instance.GetWPList());
                 
                 var commandlist = GetCommandList(wpList);
 
@@ -4855,7 +4855,8 @@ namespace VPS.GCSViews
         #region SaveWP KML
         private void saveWaypointsKML(string file)
         {
-            List<PointLatLngAlt> wpList = WPListChangeAltFrame(VPS.WP.WPGlobalData.instance.GetWPList(), "terrain");
+            List<PointLatLngAlt> wpList = 
+                VPS.WP.WPGlobalData.WPListChangeAltFrame(VPS.WP.WPGlobalData.instance.GetWPList(), "Terrain");
             PointLatLngAlt home = wpList[0];
             wpList.RemoveAt(0);
 
@@ -5066,16 +5067,16 @@ namespace VPS.GCSViews
                 switch (altFrame)
                 {
                     case AltMode.Relative:
-                        wpList = WPListChangeAltFrame(wpList,"Terrain");
+                        wpList = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpList,"Terrain");
                         break;
                     case AltMode.Absolute:
-                        wpList = WPListChangeAltFrame(wpList,"Absolute");
+                        wpList = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpList,"Absolute");
                         break;
                     case AltMode.Terrain:
-                        wpList = WPListChangeAltFrame(wpList,"Terrain");
+                        wpList = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpList,"Terrain");
                         break;
                     default:
-                        wpList = WPListChangeAltFrame(wpList,"Terrain");
+                        wpList = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpList,"Terrain");
                         break;
                 }
                 #region WPLines
@@ -5476,7 +5477,7 @@ namespace VPS.GCSViews
                             z = zarray[0];
                         }
 
-                        PointLatLngAlt pnt = new PointLatLngAlt(x, y, z, wp.ToString());
+                        PointLatLngAlt pnt = new PointLatLngAlt(y, x, z, wp.ToString());
 
                         wplist.Add(pnt);
                     }
@@ -5638,89 +5639,6 @@ namespace VPS.GCSViews
         public void WPChangeHandle()
         {
             writeKML();
-        }
-        #endregion
-
-        #region WPLIST 规范化航点
-        public List<PointLatLngAlt> WPListChangeAltFrame(List<PointLatLngAlt> list, string altitudeMode = "")
-        {
-            List<PointLatLngAlt> wpList = new List<PointLatLngAlt>(list);
-            List<PointLatLngAlt> retWPList = new List<PointLatLngAlt>();
-
-            double baseAlt = GetBaseAlt(wpList);
-            foreach (var wp in wpList)
-            {
-                double alt = srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
-                switch (altitudeMode.ToLower())
-                {
-                    case "relative":
-                        switch (wp.Tag2.ToLower())
-                        {
-                            case "relative":
-                                break;
-                            case "absolute":
-                                wp.Alt = wp.Alt - baseAlt;
-                                break;
-                            case "terrain":
-                                wp.Alt = wp.Alt + alt - baseAlt;
-                                break;
-                            default:
-                                break;
-                        }
-                        wp.Tag2 = "Relative";
-                        retWPList.Add(wp);
-                        break;
-                    case "absolute":
-                        switch (wp.Tag2.ToLower())
-                        {
-                            case "relative":
-                                wp.Alt = wp.Alt + baseAlt;
-                                break;
-                            case "absolute":
-                                break;
-                            case "terrain":
-                                wp.Alt = wp.Alt + alt;
-                                break;
-                            default:
-                                wp.Alt = wp.Alt + baseAlt;
-                                break;
-                        }
-                        wp.Tag2 = "Absolute";
-                        retWPList.Add(wp);
-                        break;
-                    case "terrain":
-                        switch (wp.Tag2.ToLower())
-                        {
-                            case "relative":
-                                wp.Alt = wp.Alt + baseAlt - alt;
-                                break;
-                            case "absolute":
-                                wp.Alt = wp.Alt - alt;
-                                break;
-                            case "terrain":
-                                break;
-                            default:
-                                wp.Alt = wp.Alt + baseAlt - alt;
-                                break;
-                        }
-                        wp.Tag2 = "Terrain";
-                        retWPList.Add(wp);
-                        break;
-                    default:
-                        retWPList.Add(wp);
-                        break;
-                }
-            }
-
-            return retWPList;
-        }
-
-        public List<PointLatLngAlt> WPListRemoveHome(List<PointLatLngAlt> list)
-        {
-            List<PointLatLngAlt> wpList = new List<PointLatLngAlt>(list);
-            if (wpList.Count > 0 && wpList[0].Tag == VPS.WP.WPCommands.HomeCommand)
-                wpList.RemoveAt(0);
-            return wpList;
         }
         #endregion
 
@@ -5892,31 +5810,6 @@ namespace VPS.GCSViews
 
         #endregion
 
-        #region 计算参数
-
-        #region BaseAlt
-
-        #region GetBaseAlt
-        private double GetBaseAlt(List<PointLatLngAlt> wpLists)
-        {
-            double totalAlt = 0;
-            int doubleWP = 0;
-            foreach (var wp in wpLists)
-            {
-                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
-                {
-                    if (wp.Lat == 0 && wp.Lng == 0)
-                        continue;
-                    totalAlt += srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
-                    doubleWP++;
-                }
-            }
-            return totalAlt / Math.Max(1, doubleWP);
-        }
-        #endregion
-
-        #endregion
-
         #endregion
 
         #endregion
@@ -6047,8 +5940,6 @@ namespace VPS.GCSViews
         {
             writeKML();
         }
-        #endregion
-
         #endregion
 
         #endregion
