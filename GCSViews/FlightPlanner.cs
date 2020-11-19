@@ -2565,9 +2565,13 @@ namespace VPS.GCSViews
                             PointLatLngAlt position = MainMap.FromLocalToLatLng(
                                 (int)point.X + idx * xMove,
                                 (int)point.Y - idx * yMove);
-                            if (xMove * (position.Lat - poly.Lat) >= 0 && yMove * (position.Lng - poly.Lng) >= 0)
+                            if (xMove * (position.Lng - poly.Lng) >= 0 && yMove * (position.Lat - poly.Lat) >= 0)
                             {
-                                VPS.WP.WPGlobalData.instance.MovePolyHandle(no, position);
+                                if (yMove != 0)
+                                    poly.Lat = position.Lat;
+                                if (xMove != 0)
+                                    poly.Lng = position.Lng;
+                                VPS.WP.WPGlobalData.instance.MovePolyHandle(no, poly);
                                 break;
                             }
                             else
@@ -2588,22 +2592,22 @@ namespace VPS.GCSViews
 
         private void wpMarkersGroupMoveUp()
         {
-            wpMarkersGroupMove(0, 1);
+            wpMarkersGroupMove(0, 10);
         }
 
         private void wpMarkersGroupMoveDown()
         {
-            wpMarkersGroupMove(0, -1);
+            wpMarkersGroupMove(0, -10);
         }
 
         private void wpMarkersGroupMoveLeft()
         {
-            wpMarkersGroupMove(-1, 0);
+            wpMarkersGroupMove(-10, 0);
         }
 
         private void wpMarkersGroupMoveRight()
         {
-            wpMarkersGroupMove(1, 0);
+            wpMarkersGroupMove(10, 0);
         }
 
         private void wpMarkersGroupMove(int xMove, int yMove)
@@ -2615,7 +2619,7 @@ namespace VPS.GCSViews
                 try
                 {
                     int no = wpMarkersGroup[index];
-                    if (no >= 0 && no < VPS.WP.WPGlobalData.instance.GetPolyCount())
+                    if (no >= 0 && no < VPS.WP.WPGlobalData.instance.GetWPCount())
                     {
                         PointLatLngAlt wp = VPS.WP.WPGlobalData.instance.GetWPPoint(no);
                         GPoint point = MainMap.FromLatLngToLocal(wp);
@@ -2625,10 +2629,12 @@ namespace VPS.GCSViews
                             PointLatLngAlt position = MainMap.FromLocalToLatLng(
                                 (int)point.X + idx * xMove,
                                 (int)point.Y - idx * yMove);
-                            if (xMove * (position.Lat - wp.Lat) >= 0 && yMove * (position.Lng - wp.Lng) >= 0)
+                            if (xMove * (position.Lng - wp.Lng) >= 0 && yMove * (position.Lat - wp.Lat) >= 0)
                             {
-                                wp.Lat = position.Lat;
-                                wp.Lng = position.Lng;
+                                if (yMove != 0)
+                                    wp.Lat = position.Lat;
+                                if (xMove != 0)
+                                    wp.Lng = position.Lng;
                                 VPS.WP.WPGlobalData.instance.SetWPHandle(no, wp);
                                 break;
                             }
@@ -2714,7 +2720,7 @@ namespace VPS.GCSViews
                 if (!IsMouseDown)
                 {
                     // update mouse pos display
-                    SetMouseDisplay(MouseDownCurrent.Lat, MouseDownCurrent.Lng, 0);
+                    SetMouseDisplay(MouseDownCurrent.Lat, MouseDownCurrent.Lng, -1);
                 }
 
                 //鼠标没移动
@@ -4038,7 +4044,11 @@ namespace VPS.GCSViews
         {
             PointLatLngAlt mouseposdisplay = new PointLatLngAlt(lat, lng, alt);
 
-            VPS.WP.WPGlobalData.instance.CurrentChange?.Invoke(mouseposdisplay);
+
+            PointLatLngAlt current = new PointLatLngAlt(lat, lng);
+            current.Alt = defaultAlt;
+            current.Tag2 = altFrame.ToString();
+            VPS.WP.WPGlobalData.instance.SetCurrentPosition(current);
         }
         #endregion
 

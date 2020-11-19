@@ -30,26 +30,49 @@ namespace VPS.Controls.MainInfo
         {
             homePosition = position;
             HomePosition.WGS84Position = homePosition;
-            CalcPointRelative();
+
+            double grad = VPS.WP.WPGlobalData.GetPointGrad(homePosition, currentPosition, baseAlt);
+            double dist = VPS.WP.WPGlobalData.GetPointDist(homePosition, currentPosition, baseAlt);
+            double az = VPS.WP.WPGlobalData.GetPointAZ(homePosition, currentPosition, baseAlt);
+
+            SetControlMainThread(HomeGrad, (grad).ToString("0.## \\%"));
+            SetControlMainThread(HomeDist, (dist).ToString("0.## m"));
+            SetControlMainThread(HomeAZ, (az).ToString("0.##"));
         }
         #endregion
 
         #region CURRENT 当前位置
-        private PointLatLngAlt current = null;
+        private PointLatLngAlt currentPosition = null;
 
         public void SetCurrentPosition(Utilities.PointLatLngAlt position)
         {
-            current = new PointLatLngAlt(position);
-            current.Tag2 = "Terrain";
-            current.Alt = (srtm.getAltitude(current.Lat, current.Lng).alt * CurrentState.multiplieralt);
+            currentPosition = new PointLatLngAlt(position);
+            if (position.Tag2 != "Relative" && position.Tag2 != "Terrain" && position.Tag2 != "Absolute")
+            {
+                currentPosition.Tag2 = "Absolute";
+                currentPosition.Alt = (srtm.getAltitude(currentPosition.Lat, currentPosition.Lng).alt * CurrentState.multiplieralt);
+            }
 
-            CurrentPosition.WGS84Position = current;
-            CalcPointRelative();
+            CurrentPosition.WGS84Position = currentPosition;
+
+            double grad = VPS.WP.WPGlobalData.GetPointGrad(homePosition, currentPosition, baseAlt);
+            double distance = VPS.WP.WPGlobalData.GetPointDist(homePosition, currentPosition, baseAlt);
+            double az = VPS.WP.WPGlobalData.GetPointAZ(homePosition, currentPosition, baseAlt);
+            SetControlMainThread(HomeGrad, (grad).ToString("0.## \\%"));
+            SetControlMainThread(HomeDist, (distance).ToString("0.## m"));
+            SetControlMainThread(HomeAZ, (az).ToString("0.##"));
+
+            grad = VPS.WP.WPGlobalData.GetPointGrad(lastPosition, currentPosition, baseAlt);
+            distance = VPS.WP.WPGlobalData.GetPointDist(lastPosition, currentPosition, baseAlt);
+            az = VPS.WP.WPGlobalData.GetPointAZ(lastPosition, currentPosition, baseAlt);
+            SetControlMainThread(LastGrad, (grad).ToString("0.## \\%"));
+            SetControlMainThread(LastDist, (distance).ToString("0.## m"));
+            SetControlMainThread(LastAZ, (az).ToString("0.##"));
         }
         #endregion
 
         #region LAST 最后位置
-        private PointLatLngAlt last = null;
+        private PointLatLngAlt lastPosition = null;
         #endregion
 
         #region HOME 初始位置变化响应函数
@@ -71,144 +94,43 @@ namespace VPS.Controls.MainInfo
                 wpLists.RemoveAt(0);
             }
 
-            CalcBaseAlt(wpLists);
+            baseAlt = VPS.WP.WPGlobalData.GetBaseAlt(wpLists);
+            SetControlMainThread(WPBaseAlt, (baseAlt).ToString("0.## m"));
+            maxAlt = VPS.WP.WPGlobalData.GetMaxAlt(wpLists);
+            minAlt = VPS.WP.WPGlobalData.GetMinAlt(wpLists);
+            SetControlMainThread(WPGndeLev, minAlt.ToString("0.##") + " - " + maxAlt.ToString("0.## m"));
 
-            for(int index = 0; index < wpLists.Count; index++)
-            {
-                var point = new PointLatLngAlt(wpLists[index]);
-                double terrainA = srtm.getAltitude(point.Lat, point.Lng).alt * CurrentState.multiplieralt;
-                double alt = point.Alt;
-                double baseA = baseAlt;
-                switch (point.Tag2)
-                {
-                    case "Relative":
-                        break;
-                    case "Absolute":
-                        point.Tag2 = "Relative";
-                        point.Alt = alt - baseA;
-                        break;
-                    case "Terrain":
-                        point.Tag2 = "Relative";
-                        point.Alt = alt + terrainA - baseA;
-                        break;
-                    default:
-                        point.Tag2 = "Relative";
-                        break;
-                }
-                wpLists[index] = point;
-            }
+            wpLists = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpLists, "Relative");
 
             if (wpLists.Count > 0)
-                last = wpLists[wpLists.Count - 1];
+                lastPosition = wpLists[wpLists.Count - 1];
             else
-                last = null;
+                lastPosition = null;
 
-            CalcTotalDist(wpLists);
+            double totalDist = VPS.WP.WPGlobalData.GetTotalDist(wpLists);
+            SetControlMainThread(WPTotalDist, totalDist.ToString("0.## m"));
 
-            CalcPointRelative();
+            double grad = VPS.WP.WPGlobalData.GetPointGrad(homePosition, currentPosition, baseAlt);
+            double distance = VPS.WP.WPGlobalData.GetPointDist(homePosition, currentPosition, baseAlt);
+            double az = VPS.WP.WPGlobalData.GetPointAZ(homePosition, currentPosition, baseAlt);
+            SetControlMainThread(HomeGrad, (grad).ToString("0.## \\%"));
+            SetControlMainThread(HomeDist, (distance).ToString("0.## m"));
+            SetControlMainThread(HomeAZ, (az).ToString("0.##"));
+
+
+            grad = VPS.WP.WPGlobalData.GetPointGrad(lastPosition, currentPosition, baseAlt);
+            distance = VPS.WP.WPGlobalData.GetPointDist(lastPosition, currentPosition, baseAlt);
+            az = VPS.WP.WPGlobalData.GetPointAZ(lastPosition, currentPosition, baseAlt);
+            SetControlMainThread(LastGrad, (grad).ToString("0.## \\%"));
+            SetControlMainThread(LastDist, (distance).ToString("0.## m"));
+            SetControlMainThread(LastAZ, (az).ToString("0.##"));
         }
         #endregion
 
-        #region 计算
+        #region 中间参数
         double baseAlt = 0;
         double maxAlt = 0;
         double minAlt = 0;
-
-        private void CalcBaseAlt(List<PointLatLngAlt> wpList)
-        {
-            double totalAlt = 0.0;
-            double maxA = 0.0;
-            double minA = wpList.Count > 0 ? 
-                srtm.getAltitude(wpList[0].Lat, wpList[0].Lng).alt * CurrentState.multiplieralt : 0.0;
-            for (int index = 0; index < wpList.Count; index++)
-            {
-                double terrain = srtm.getAltitude(wpList[index].Lat, wpList[index].Lng).alt * CurrentState.multiplieralt;
-                totalAlt += terrain;
-                if (terrain > maxA)
-                    maxA = terrain;
-                if (terrain < minA)
-                    minA = terrain;
-            }
-            baseAlt = (int)(totalAlt / Math.Max(1, wpList.Count));
-            SetControlMainThread(WPBaseAlt, baseAlt.ToString("0.## m"));
-            maxAlt = maxA; minAlt = minA;
-            SetControlMainThread(WPGndeLev, minA.ToString("0.##") + "-" + maxA.ToString("0.##") + " m");
-        }
-
-        private void CalcTotalDist(List<PointLatLngAlt> list)
-        {
-            double totalDist = 0.0;
-            for (int index = 1; index < list.Count; index++)
-            {
-                totalDist += Math.Sqrt(
-                    Math.Pow(list[index].GetDistance(list[index - 1]), 2) +
-                    Math.Pow(list[index].Alt - list[index - 1].Alt, 2)) *
-                    CurrentState.multiplierdist;
-            }
-            SetControlMainThread(WPTotalDist, totalDist.ToString("0.## m"));
-        }
-
-        private void CalcPointRelative()
-        {
-            double baseAltCopy = baseAlt;
-            if (baseAltCopy == 0)
-                baseAltCopy = (int)(srtm.getAltitude(homePosition.Lat, homePosition.Lng).alt * CurrentState.multiplieralt);
-            if (current != null)
-            {
-                
-                if (homePosition != null)
-                {
-                    double height = (homePosition.Alt + baseAltCopy) - current.Alt;
-                    double distance = current.GetDistance(homePosition);
-                    double grad = height / distance;
-
-                    SetControlMainThread(HomeGrad, (grad).ToString("0.## %"));
-                    SetControlMainThread(HomeDist, (distance * CurrentState.multiplierdist).ToString("0.## m"));
-                    SetControlMainThread(HomeAZ, ((current.GetBearing(homePosition) + 180) % 360).ToString("0.##"));
-                }
-                else
-                {
-                    SetControlMainThread(HomeGrad, "0");
-                    SetControlMainThread(HomeDist, "0");
-                    SetControlMainThread(HomeAZ, "0");
-                }
-
-                if (last != null)
-                {
-                    double height = (last.Alt + baseAltCopy) - current.Alt;
-                    double distance = current.GetDistance(last);
-                    double grad = height / distance;
-
-                    SetControlMainThread(LastGrad, (grad).ToString("0.## %"));
-                    SetControlMainThread(LastDist, (distance * CurrentState.multiplierdist).ToString("0.## m"));
-                    SetControlMainThread(LastAZ, ((current.GetBearing(last) + 180) % 360).ToString("0.##"));
-                }
-                else
-                {
-                    SetControlMainThread(LastGrad, "0");
-                    SetControlMainThread(LastDist, "0");
-                    SetControlMainThread(LastAZ, "0");
-                }
-            }
-        }
-
-        private void CalcLap()
-        {
-            double overlap = Overlap.Value;
-            double sidelap = Sidelap.Value;
-            double relative = Relative.Value;
-
-            double heightOverlap = overlap + (1 - overlap) * (baseAlt - maxAlt) / relative;
-            double heightSidelap = sidelap + (1 - sidelap) * (baseAlt - maxAlt) / relative;
-            double lowOverlap = overlap + (1 - overlap) * (baseAlt - minAlt) / relative;
-            double lowSidelap = sidelap + (1 - sidelap) * (baseAlt - minAlt) / relative;
-
-            SetControlMainThread(HeightOverlap, heightOverlap.ToString("0.00 %"));
-            SetControlMainThread(HeightSidelap, heightSidelap.ToString("0.00 %"));
-            SetControlMainThread(LowOverlap, lowOverlap.ToString("0.00 %"));
-            SetControlMainThread(LowSidelap, lowSidelap.ToString("0.00 %"));
-        }
-
         #endregion
 
         #region 设置控件数据

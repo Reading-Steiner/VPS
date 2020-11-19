@@ -83,8 +83,6 @@ namespace VPS.GCSViews
             this.loadKMLFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSHPFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadAndAppendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deletePolygonPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelBASE = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.contextMenuStripPoly = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -395,18 +393,6 @@ namespace VPS.GCSViews
             resources.ApplyResources(this.loadAndAppendToolStripMenuItem, "loadAndAppendToolStripMenuItem");
             this.loadAndAppendToolStripMenuItem.Name = "loadAndAppendToolStripMenuItem";
             // 
-            // deletePolygonPointToolStripMenuItem
-            // 
-            resources.ApplyResources(this.deletePolygonPointToolStripMenuItem, "deletePolygonPointToolStripMenuItem");
-            this.deletePolygonPointToolStripMenuItem.Name = "deletePolygonPointToolStripMenuItem";
-            this.deletePolygonPointToolStripMenuItem.Click += new System.EventHandler(this.DeletePolygonPointToolStripMenuItem_Click);
-            // 
-            // deleteWPToolStripMenuItem
-            // 
-            resources.ApplyResources(this.deleteWPToolStripMenuItem, "deleteWPToolStripMenuItem");
-            this.deleteWPToolStripMenuItem.Name = "deleteWPToolStripMenuItem";
-            this.deleteWPToolStripMenuItem.Click += new System.EventHandler(this.DeleteWPToolStripMenuItem_Click);
-            // 
             // panelBASE
             // 
             resources.ApplyResources(this.panelBASE, "panelBASE");
@@ -511,12 +497,10 @@ namespace VPS.GCSViews
         public ToolStripSeparator toolStripSeparator1;
         public ToolStripSeparator toolStripSeparator2;
         public ToolStripSeparator toolStripSeparator3;
-        public ToolStripMenuItem deleteWPToolStripMenuItem;
         public ToolStripMenuItem planningWPToolStripMenuItem;
         public ToolStripMenuItem surveyGridToolStripMenuItem;
         private ToolStripMenuItem polygonToolStripMenuItem;
         public ToolStripMenuItem addPolygonToolStripMenuItem;
-        public ToolStripMenuItem deletePolygonPointToolStripMenuItem;
         public ToolStripMenuItem clearPolygonToolStripMenuItem;
         private ToolStripMenuItem loadPolygonToolStripMenuItem;
         public ToolStripMenuItem fromPolygonToolStripMenuItem;
@@ -528,25 +512,9 @@ namespace VPS.GCSViews
         private ToolStripMenuItem zoomToTiffToolStripTiffMenuItem;
         private ToolStripMenuItem tiffReadToolStripTiffMenuItem;
         private ToolStripMenuItem tiffManagerToolStripTiffMenuItem;
-        //public ToolStripMenuItem loiterToolStripMenuItem;
-        //public ToolStripMenuItem loiterForeverToolStripMenuItem;
-        //public ToolStripMenuItem loitertimeToolStripMenuItem;
-        //public ToolStripMenuItem loitercirclesToolStripMenuItem;
-        //public ToolStripMenuItem jumpToolStripMenuItem;
-        //public ToolStripMenuItem jumpstartToolStripMenuItem;
-        //public ToolStripMenuItem jumpwPToolStripMenuItem;
+
         public Timer timer1;
-        //public ToolStripMenuItem setROIToolStripMenuItem;
-        //public ToolStripMenuItem mapToolToolStripMenuItem;
-        //public ToolStripMenuItem ContextMeasure;
-        //public ToolStripMenuItem rotateMapToolStripMenuItem;
-        //public ToolStripMenuItem zoomToToolStripMenuItem;
-        //public ToolStripMenuItem prefetchToolStripMenuItem;
-        //public ToolStripMenuItem kMLOverlayToolStripMenuItem;
-        //public ToolStripMenuItem elevationGraphToolStripMenuItem;
-        //public ToolStripMenuItem rTLToolStripMenuItem;
-        //public ToolStripMenuItem landToolStripMenuItem;
-        //public ToolStripMenuItem takeoffToolStripMenuItem;
+
         public ComboBox comboBoxMapType;
         public ToolStripMenuItem loadWPToolStripMenuItem;
         public ToolStripMenuItem loadWPFileToolStripMenuItem;

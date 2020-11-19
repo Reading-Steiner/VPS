@@ -3379,54 +3379,54 @@ namespace VPS
                 }
                 catch (Exception ex) { log.Error(ex); }
             };
-            AutoConnect.NewVideoStream += (sender, gststring) =>
-            {
-                try
-                {
-                    log.Info("AutoConnect.NewVideoStream " + gststring);
-                    GStreamer.gstlaunch = GStreamer.LookForGstreamer();
+            //AutoConnect.NewVideoStream += (sender, gststring) =>
+            //{
+            //    try
+            //    {
+            //        log.Info("AutoConnect.NewVideoStream " + gststring);
+            //        GStreamer.gstlaunch = GStreamer.LookForGstreamer();
 
-                    if (!File.Exists(GStreamer.gstlaunch))
-                    {
-                        if (DevComponents.DotNetBar.MessageBoxEx.Show(
-                                "A video stream has been detected, but gstreamer has not been configured/installed.\nDo you want to install/config it now?",
-                                "GStreamer", System.Windows.Forms.MessageBoxButtons.YesNo) ==
-                            System.Windows.Forms.DialogResult.Yes)
-                        {
-                            {
-                                ProgressReporterDialogue prd = new ProgressReporterDialogue();
-                                ThemeManager.ApplyThemeTo(prd);
-                                prd.DoWork += sender2 =>
-                                {
-                                    GStreamer.DownloadGStreamer(((i, s) =>
-                                    {
-                                        prd.UpdateProgressAndStatus(i, s);
-                                        if (prd.doWorkArgs.CancelRequested) throw new Exception("User Request");
-                                    }));
-                                };
-                                prd.RunBackgroundOperationAsync();
+            //        if (!File.Exists(GStreamer.gstlaunch))
+            //        {
+            //            if (DevComponents.DotNetBar.MessageBoxEx.Show(
+            //                    "A video stream has been detected, but gstreamer has not been configured/installed.\nDo you want to install/config it now?",
+            //                    "GStreamer", System.Windows.Forms.MessageBoxButtons.YesNo) ==
+            //                System.Windows.Forms.DialogResult.Yes)
+            //            {
+            //                {
+            //                    ProgressReporterDialogue prd = new ProgressReporterDialogue();
+            //                    ThemeManager.ApplyThemeTo(prd);
+            //                    prd.DoWork += sender2 =>
+            //                    {
+            //                        GStreamer.DownloadGStreamer(((i, s) =>
+            //                        {
+            //                            prd.UpdateProgressAndStatus(i, s);
+            //                            if (prd.doWorkArgs.CancelRequested) throw new Exception("User Request");
+            //                        }));
+            //                    };
+            //                    prd.RunBackgroundOperationAsync();
 
-                                GStreamer.gstlaunch = GStreamer.LookForGstreamer();
-                            }
-                            if (!File.Exists(GStreamer.gstlaunch))
-                            {
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            return;
-                        }
-                    }
+            //                    GStreamer.gstlaunch = GStreamer.LookForGstreamer();
+            //                }
+            //                if (!File.Exists(GStreamer.gstlaunch))
+            //                {
+            //                    return;
+            //                }
+            //            }
+            //            else
+            //            {
+            //                return;
+            //            }
+            //        }
 
-                    GStreamer.StartA(gststring);
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
-                }
-            };
-            AutoConnect.Start();
+            //        GStreamer.StartA(gststring);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        log.Error(ex);
+            //    }
+            //};
+            //AutoConnect.Start();
 
             BinaryLog.onFlightMode += (firmware, modeno) =>
             {
@@ -3717,65 +3717,65 @@ namespace VPS
                     }
                 }
 
-                if (cmds.ContainsKey("gstream"))
-                {
-                    GStreamer.gstlaunch = GStreamer.LookForGstreamer();
+                //if (cmds.ContainsKey("gstream"))
+                //{
+                //    GStreamer.gstlaunch = GStreamer.LookForGstreamer();
 
-                    if (!File.Exists(GStreamer.gstlaunch))
-                    {
-                        if (DevComponents.DotNetBar.MessageBoxEx.Show(
-                                "A video stream has been detected, but gstreamer has not been configured/installed.\nDo you want to install/config it now?",
-                                "GStreamer", System.Windows.Forms.MessageBoxButtons.YesNo) ==
-                            System.Windows.Forms.DialogResult.Yes)
-                        {
-                            GStreamerUI.DownloadGStreamer();
-                        }
-                    }
+                //    if (!File.Exists(GStreamer.gstlaunch))
+                //    {
+                //        if (DevComponents.DotNetBar.MessageBoxEx.Show(
+                //                "A video stream has been detected, but gstreamer has not been configured/installed.\nDo you want to install/config it now?",
+                //                "GStreamer", System.Windows.Forms.MessageBoxButtons.YesNo) ==
+                //            System.Windows.Forms.DialogResult.Yes)
+                //        {
+                //            GStreamerUI.DownloadGStreamer();
+                //        }
+                //    }
 
-                    try
-                    {
-                        new Thread(delegate ()
-                        {
-                            // 36 retrys
-                            for (int i = 0; i < 36; i++)
-                            {
-                                try
-                                {
-                                    var st = GStreamer.StartA(cmds["gstream"]);
-                                    if (st == null)
-                                    {
-                                        // prevent spam
-                                        Thread.Sleep(5000);
-                                    }
-                                    else
-                                    {
-                                        while (st.IsAlive)
-                                        {
-                                            Thread.Sleep(1000);
-                                        }
-                                    }
-                                }
-                                catch (BadImageFormatException ex)
-                                {
-                                    // not running on x64
-                                    log.Error(ex);
-                                    return;
-                                }
-                                catch (DllNotFoundException ex)
-                                {
-                                    // missing or failed download
-                                    log.Error(ex);
-                                    return;
-                                }
-                            }
-                        })
-                        { IsBackground = true, Name = "Gstreamer cli" }.Start();
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                    }
-                }
+                //    try
+                //    {
+                //        new Thread(delegate ()
+                //        {
+                //            // 36 retrys
+                //            for (int i = 0; i < 36; i++)
+                //            {
+                //                try
+                //                {
+                //                    var st = GStreamer.StartA(cmds["gstream"]);
+                //                    if (st == null)
+                //                    {
+                //                        // prevent spam
+                //                        Thread.Sleep(5000);
+                //                    }
+                //                    else
+                //                    {
+                //                        while (st.IsAlive)
+                //                        {
+                //                            Thread.Sleep(1000);
+                //                        }
+                //                    }
+                //                }
+                //                catch (BadImageFormatException ex)
+                //                {
+                //                    // not running on x64
+                //                    log.Error(ex);
+                //                    return;
+                //                }
+                //                catch (DllNotFoundException ex)
+                //                {
+                //                    // missing or failed download
+                //                    log.Error(ex);
+                //                    return;
+                //                }
+                //            }
+                //        })
+                //        { IsBackground = true, Name = "Gstreamer cli" }.Start();
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        log.Error(ex);
+                //    }
+                //}
 
                 if (cmds.ContainsKey("port") && cmds.ContainsKey("baud"))
                 {

@@ -401,66 +401,7 @@ namespace VPS.WP
             double baseAlt = GetBaseAlt(wpList);
             foreach (var wp in wpList)
             {
-                double alt = srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
-                switch (altitudeMode)
-                {
-                    case "Relative":
-                        switch (wp.Tag2)
-                        {
-                            case "Relative":
-                                break;
-                            case "Absolute":
-                                wp.Alt = wp.Alt - baseAlt;
-                                break;
-                            case "Terrain":
-                                wp.Alt = wp.Alt + alt - baseAlt;
-                                break;
-                            default:
-                                break;
-                        }
-                        wp.Tag2 = "Relative";
-                        retWPList.Add(wp);
-                        break;
-                    case "Absolute":
-                        switch (wp.Tag2)
-                        {
-                            case "Relative":
-                                wp.Alt = wp.Alt + baseAlt;
-                                break;
-                            case "Absolute":
-                                break;
-                            case "Terrain":
-                                wp.Alt = wp.Alt + alt;
-                                break;
-                            default:
-                                wp.Alt = wp.Alt + baseAlt;
-                                break;
-                        }
-                        wp.Tag2 = "Absolute";
-                        retWPList.Add(wp);
-                        break;
-                    case "Terrain":
-                        switch (wp.Tag2)
-                        {
-                            case "Relative":
-                                wp.Alt = wp.Alt + baseAlt - alt;
-                                break;
-                            case "Absolute":
-                                wp.Alt = wp.Alt - alt;
-                                break;
-                            case "Terrain":
-                                break;
-                            default:
-                                wp.Alt = wp.Alt + baseAlt - alt;
-                                break;
-                        }
-                        wp.Tag2 = "Terrain";
-                        retWPList.Add(wp);
-                        break;
-                    default:
-                        retWPList.Add(wp);
-                        break;
-                }
+                retWPList.Add(WPListChangeAltFrame(wp, baseAlt, altitudeMode));
             }
 
             return retWPList;
@@ -484,6 +425,210 @@ namespace VPS.WP
                 }
             }
             return totalAlt / Math.Max(1, doubleWP);
+        }
+        #endregion
+
+        #region 航点列表求最大地面高程
+        public static double GetMaxAlt(List<PointLatLngAlt> wpLists)
+        {
+            var wpList = WPListRemoveHome(wpLists);
+            double MaxAlt = double.MinValue;
+            foreach (var wp in wpList)
+            {
+                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
+                {
+                    if (wp.Lat == 0 && wp.Lng == 0)
+                        continue;
+                    double alt = srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
+                    if (alt > MaxAlt)
+                        MaxAlt = alt;
+                }
+            }
+            if (MaxAlt == double.MinValue)
+                return 0;
+            return MaxAlt;
+        }
+        #endregion
+
+        #region 航点列表求最小地面高程
+        public static double GetMinAlt(List<PointLatLngAlt> wpLists)
+        {
+            var wpList = WPListRemoveHome(wpLists);
+            double MinAlt = double.MaxValue;
+            foreach (var wp in wpList)
+            {
+                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
+                {
+                    if (wp.Lat == 0 && wp.Lng == 0)
+                        continue;
+                    double alt = srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
+                    if (alt < MinAlt)
+                        MinAlt = alt;
+                }
+            }
+            if (MinAlt == double.MaxValue)
+                return 0;
+            return MinAlt;
+        }
+        #endregion
+
+        #region 航点列表求航程
+        public static double GetTotalDist(List<PointLatLngAlt> wpLists)
+        {
+            var wpList = WPListRemoveHome(wpLists);
+            wpList = WPListChangeAltFrame(wpLists, "Absolute");
+
+            double totalDist = 0.0;
+            for (int index = 1; index < wpList.Count; index++)
+            {
+                totalDist += Math.Sqrt(
+                    Math.Pow(wpList[index].GetDistance(wpList[index - 1]), 2) +
+                    Math.Pow(wpList[index].Alt - wpList[index - 1].Alt, 2)) *
+                    CurrentState.multiplierdist;
+            }
+            return totalDist;
+        }
+        #endregion
+
+        #region 航点高度框架转换
+        public static PointLatLngAlt WPListChangeAltFrame(PointLatLngAlt cur, double baseAlt, string altitudeMode = "") {
+            PointLatLngAlt point = new PointLatLngAlt(cur);
+            double alt = srtm.getAltitude(point.Lat, point.Lng).alt * CurrentState.multiplieralt;
+            switch (altitudeMode)
+            {
+                case "Relative":
+                    switch (point.Tag2)
+                    {
+                        case "Relative":
+                            break;
+                        case "Absolute":
+                            point.Alt = point.Alt - baseAlt;
+                            break;
+                        case "Terrain":
+                            point.Alt = point.Alt + alt - baseAlt;
+                            break;
+                        default:
+                            break;
+                    }
+                    point.Tag2 = "Relative";
+                    break;
+                case "Absolute":
+                    switch (point.Tag2)
+                    {
+                        case "Relative":
+                            point.Alt = point.Alt + baseAlt;
+                            break;
+                        case "Absolute":
+                            break;
+                        case "Terrain":
+                            point.Alt = point.Alt + alt;
+                            break;
+                        default:
+                            point.Alt = point.Alt + baseAlt;
+                            break;
+                    }
+                    point.Tag2 = "Absolute";
+                    break;
+                case "Terrain":
+                    switch (point.Tag2)
+                    {
+                        case "Relative":
+                            point.Alt = point.Alt + baseAlt - alt;
+                            break;
+                        case "Absolute":
+                            point.Alt = point.Alt - alt;
+                            break;
+                        case "Terrain":
+                            break;
+                        default:
+                            point.Alt = point.Alt + baseAlt - alt;
+                            break;
+                    }
+                    point.Tag2 = "Terrain";
+                    break;
+                default:
+                    break;
+            }
+            return point;
+        }
+        #endregion
+
+        #region 计算航点坡度
+        public static double GetPointGrad(PointLatLngAlt prev, PointLatLngAlt cur, double baseAlt = -1)
+        {
+            if (prev != null && cur != null)
+            {
+                double baseAltCopy = baseAlt;
+                PointLatLngAlt prevPoint = new PointLatLngAlt(prev);
+                PointLatLngAlt curPoint = new PointLatLngAlt(cur);
+                if (baseAltCopy == -1)
+                {
+                    baseAltCopy = 0;
+                    baseAltCopy += (srtm.getAltitude(prev.Lat, prev.Lng).alt * CurrentState.multiplieralt);
+                    baseAltCopy += (srtm.getAltitude(prev.Lat, prev.Lng).alt * CurrentState.multiplieralt);
+                }
+                prevPoint = WPListChangeAltFrame(prevPoint, baseAlt, "Absolute");
+                curPoint = WPListChangeAltFrame(curPoint, baseAlt, "Absolute");
+                return (prevPoint.Alt - curPoint.Alt) /
+                    curPoint.GetDistance(prevPoint);
+            }
+            return 0;
+        }
+        #endregion
+
+        #region 计算航点距离
+        public static double GetPointDist(PointLatLngAlt prev, PointLatLngAlt cur, double baseAlt = -1)
+        {
+            if (prev != null && cur != null)
+            {
+                double baseAltCopy = baseAlt;
+                PointLatLngAlt prevPoint = new PointLatLngAlt(prev);
+                PointLatLngAlt curPoint = new PointLatLngAlt(cur);
+                if (baseAltCopy == -1)
+                {
+                    baseAltCopy = 0;
+                    baseAltCopy += (srtm.getAltitude(prev.Lat, prev.Lng).alt * CurrentState.multiplieralt);
+                    baseAltCopy += (srtm.getAltitude(prev.Lat, prev.Lng).alt * CurrentState.multiplieralt);
+                }
+                prevPoint = WPListChangeAltFrame(prevPoint, baseAlt, "Absolute");
+                curPoint = WPListChangeAltFrame(curPoint, baseAlt, "Absolute");
+
+                return Math.Sqrt(
+                    Math.Pow(curPoint.GetDistance(prevPoint), 2) +
+                    Math.Pow(curPoint.Alt - prevPoint.Alt, 2)) *
+                    CurrentState.multiplierdist;
+            }
+            return 0;
+        }
+        #endregion
+
+        #region 计算航点方位
+        public static double GetPointAZ(PointLatLngAlt prev, PointLatLngAlt cur, double baseAlt = -1)
+        {
+            if (prev != null && cur != null)
+            {
+                double baseAltCopy = baseAlt;
+                PointLatLngAlt prevPoint = new PointLatLngAlt(prev);
+                PointLatLngAlt curPoint = new PointLatLngAlt(cur);
+                if (baseAltCopy == -1)
+                {
+                    baseAltCopy = 0;
+                    baseAltCopy += (srtm.getAltitude(prev.Lat, prev.Lng).alt * CurrentState.multiplieralt);
+                    baseAltCopy += (srtm.getAltitude(prev.Lat, prev.Lng).alt * CurrentState.multiplieralt);
+                }
+                prevPoint = WPListChangeAltFrame(prevPoint, baseAlt, "Absolute");
+                curPoint = WPListChangeAltFrame(curPoint, baseAlt, "Absolute");
+
+                return (curPoint.GetBearing(prevPoint) + 180) % 360;
+            }
+            return 0;
+        }
+        #endregion
+
+        #region 计算重叠度的航线误差
+        public static double GetPointOverlap(double lap, double relative, double baseAlt, double alt)
+        {
+            return lap + (1 - lap) * (baseAlt - alt) / relative;
         }
         #endregion
 
