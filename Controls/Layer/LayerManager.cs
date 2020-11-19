@@ -28,7 +28,7 @@ namespace VPS.Controls.Layer
 
         private void LayerManager_Load(object sender, EventArgs e)
         {
-            //BindingDataSource();
+            BindingDataSource();
         }
 
         #region LayerManager 数据绑定
@@ -108,17 +108,20 @@ namespace VPS.Controls.Layer
         #endregion
 
         #region 生成主表行
-        private void FillMainTable(VPS.Layer.LayerInfo emp)
+        private void FillMainTable(DataTable table, VPS.Layer.LayerInfo emp)
         {
             DataRow row = table.NewRow();
 
-            row [keyColumnName] = emp.GetOnlyCode();
+            row[keyColumnName] = emp.GetOnlyCode();
             row[urlColumnName] = emp.Layer;
             row[alterColumnName] = emp.ModifyTime;
             row[createColumnName] = emp.CreateTime;
 
             row[deleteColumnName] = "";
-            if (VPS.WP.WPGlobalData.instance.IsDefaultLayer(emp.Layer))
+
+
+            if (VPS.WP.WPGlobalData.instance != null && 
+                VPS.WP.WPGlobalData.instance.IsDefaultLayer(emp.Layer))
             {
                 row[defaultColumnName] = "True";
             }
@@ -271,9 +274,9 @@ namespace VPS.Controls.Layer
         #endregion
 
         #region 生成Tiff行
-        private void FillLayerTable(VPS.Layer.TiffLayerInfo emp)
+        private void FillLayerTable(DataTable table, VPS.Layer.TiffLayerInfo emp)
         {
-            DataRow fileRow = layerTable.NewRow();
+            DataRow fileRow = table.NewRow();
 
             fileRow[keyColumnName] = emp.GetOnlyCode();
             fileRow[homeColumnName] = emp.Home;
@@ -281,7 +284,7 @@ namespace VPS.Controls.Layer
             fileRow[scaleColumnName] = emp.ScaleFormat;
             fileRow[transColumnName] = emp.Transparent;
 
-            layerTable.Rows.Add(fileRow);
+            table.Rows.Add(fileRow);
 
             fileRow.AcceptChanges();
         }
@@ -320,9 +323,9 @@ namespace VPS.Controls.Layer
         #endregion
 
         #region 绑定数据源
-        DataSet set = null;
-        DataTable table = null;
-        DataTable layerTable = null;
+        DataSet set = new DataSet(MainHandle);
+        DataTable table = new DataTable(MainLayerHandle);
+        DataTable layerTable = new DataTable(TiffLayerHandle);
 
         const string MainHandle = "LayerManager";
         public void BindingDataSource()
@@ -399,14 +402,14 @@ namespace VPS.Controls.Layer
             BeginLoadData();
 
             // Add 50 rows to fiddle with
-            var emp = GetDataSource();
+            List<VPS.Layer.LayerInfo> emp = GetDataSource();
             for (int i = 0; i < emp.Count; i++)
             {
-                FillMainTable(emp[i]);
+                FillMainTable(table, emp[i]);
 
                 if (emp[i] is VPS.Layer.TiffLayerInfo)
                 {
-                    FillLayerTable(emp[i] as VPS.Layer.TiffLayerInfo);
+                    FillLayerTable(layerTable, emp[i] as VPS.Layer.TiffLayerInfo);
                 }
 
             }
