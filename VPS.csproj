@@ -434,6 +434,12 @@
     <Compile Include="Controls\Layer\TiffLayerDisplay.Designer.cs">
       <DependentUpon>TiffLayerDisplay.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LoadAndSave\LoadWP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\LoadAndSave\LoadWP.Designer.cs">
+      <DependentUpon>LoadWP.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MyControls\MyGridControls.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -917,6 +923,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Layer\TiffLayerDisplay.resx">
       <DependentUpon>TiffLayerDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LoadAndSave\LoadWP.resx">
+      <DependentUpon>LoadWP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MainInfo\LeftMainInfo.resx">
       <DependentUpon>LeftMainInfo.cs</DependentUpon>
