@@ -28,7 +28,7 @@ namespace VPS.Controls.Layer
 
         private void LayerManager_Load(object sender, EventArgs e)
         {
-            BindingDataSource();
+            //BindingDataSource();
         }
 
         #region LayerManager 数据绑定

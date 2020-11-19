@@ -3603,7 +3603,6 @@ namespace VPS.GCSViews
         public void LoadWPFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             loadwaypoints();
-            writeKML();
         }
         #endregion
 
@@ -3614,15 +3613,19 @@ namespace VPS.GCSViews
             {
                 fd.Filter = "Google Earth KML(*kml;*.kmz) |*.kml;*.kmz";
                 DialogResult result = fd.ShowDialog();
+
                 string file = fd.FileName;
-                try
+                if (result == DialogResult.OK && File.Exists(file))
                 {
-                    LoadKMLFile(file);
-                }
-                catch
-                {
-                    DevComponents.DotNetBar.MessageBoxEx.Show("文件打开时出错", Strings.ERROR);
-                    return;
+                    try
+                    {
+                        LoadKMLFile(file);
+                    }
+                    catch
+                    {
+                        DevComponents.DotNetBar.MessageBoxEx.Show("文件打开时出错", Strings.ERROR);
+                        return;
+                    }
                 }
             }
         }
@@ -3635,17 +3638,20 @@ namespace VPS.GCSViews
             {
                 fd.Filter = "Shape file(*.shp)|*.shp";
                 DialogResult result = fd.ShowDialog();
-                string file = fd.FileName;
 
-                try
+                string file = fd.FileName;
+                if (result == DialogResult.OK && File.Exists(file))
                 {
-                    LoadSHPFile(file);
-                    ZoomToCenterWP();
-                }
-                catch
-                {
-                    DevComponents.DotNetBar.MessageBoxEx.Show("文件打开时出错", Strings.ERROR);
-                    return;
+                    try
+                    {
+                        LoadSHPFile(file);
+                        ZoomToCenterWP();
+                    }
+                    catch
+                    {
+                        DevComponents.DotNetBar.MessageBoxEx.Show("文件打开时出错", Strings.ERROR);
+                        return;
+                    }
                 }
             }
         }
@@ -3693,31 +3699,15 @@ namespace VPS.GCSViews
             {
                 sf.Filter = "Polygon (*.poly)|*.poly";
                 var result = sf.ShowDialog();
-                if (sf.FileName != "" && result == DialogResult.OK)
+
+                string file = sf.FileName;
+                if (result == DialogResult.OK && File.Exists(file))
                 {
-                    try
+                    switch (sf.FilterIndex)
                     {
-                        StreamWriter sw = new StreamWriter(sf.OpenFile());
-
-                        sw.WriteLine("#saved by Mission Planner " + Application.ProductVersion);
-
-                        if (VPS.WP.WPGlobalData.instance.GetPolyCount() > 0)
-                        {
-                            foreach (var pll in VPS.WP.WPGlobalData.instance.GetPolygList())
-                            {
-                                sw.WriteLine(pll.Lat.ToString(CultureInfo.InvariantCulture) + " " + pll.Lng.ToString(CultureInfo.InvariantCulture));
-                            }
-
-                            PointLatLng pll2 = VPS.WP.WPGlobalData.instance.GetPolyPoint(0);
-
-                            sw.WriteLine(pll2.Lat.ToString(CultureInfo.InvariantCulture) + " " + pll2.Lng.ToString(CultureInfo.InvariantCulture));
-                        }
-
-                        sw.Close();
-                    }
-                    catch
-                    {
-                        DevComponents.DotNetBar.MessageBoxEx.Show("Failed to write fence file");
+                        case 1:
+                            savePolygons(file);
+                            break;
                     }
                 }
             }
@@ -3727,52 +3717,17 @@ namespace VPS.GCSViews
         #region 加载区域
 
         #region 加载poly文件
-
         private void FromPolygonToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog fd = new OpenFileDialog())
             {
                 fd.Filter = "Polygon (*.poly)|*.poly";
-                fd.ShowDialog();
-                if (File.Exists(fd.FileName))
+                var result = fd.ShowDialog();
+
+                string file = fd.FileName;
+                if (result == DialogResult.OK && File.Exists(file))
                 {
-                    StreamReader sr = new StreamReader(fd.OpenFile());
-
-                    List<PointLatLngAlt> poly = new List<PointLatLngAlt>();
-
-                    int a = 0;
-
-                    while (!sr.EndOfStream)
-                    {
-                        string line = sr.ReadLine();
-                        if (line.StartsWith("#"))
-                        {
-                        }
-                        else
-                        {
-                            string[] items = line.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-
-                            if (items.Length < 2)
-                                continue;
-
-                            poly.Add(new PointLatLng(
-                                double.Parse(items[0], CultureInfo.InvariantCulture),
-                                double.Parse(items[1], CultureInfo.InvariantCulture)));
-
-                            a++;
-                        }
-                    }
-
-                    // remove loop close
-                    if (poly.Count > 1 &&
-                        poly[0] == poly[poly.Count - 1])
-                    {
-                        poly.RemoveAt(poly.Count - 1);
-                    }
-
-                    VPS.WP.WPGlobalData.instance.SetPolyListHandle(poly);
-
-                    ZoomToCenterPolygon();
+                    LoadPolygonsPoly(file);
                 }
             }
         }
@@ -3784,71 +3739,12 @@ namespace VPS.GCSViews
             using (OpenFileDialog fd = new OpenFileDialog())
             {
                 fd.Filter = "Shape file|*.shp";
-                DialogResult result = fd.ShowDialog();
+                var result = fd.ShowDialog();
+
                 string file = fd.FileName;
-                ProjectionInfo pStart = new ProjectionInfo();
-                ProjectionInfo pESRIEnd = KnownCoordinateSystems.Geographic.World.WGS1984;
-                bool reproject = false;
-                // Poly Clear
-                List<PointLatLngAlt> poly = new List<PointLatLngAlt>();
-
-                if (File.Exists(file))
+                if (result == DialogResult.OK && File.Exists(file))
                 {
-                    string prjfile = Path.GetDirectoryName(file) + Path.DirectorySeparatorChar +
-                                     Path.GetFileNameWithoutExtension(file) + ".prj";
-                    if (File.Exists(prjfile))
-                    {
-                        using (
-                            StreamReader re =
-                                File.OpenText(Path.GetDirectoryName(file) + Path.DirectorySeparatorChar +
-                                              Path.GetFileNameWithoutExtension(file) + ".prj"))
-                        {
-                            pStart.ParseEsriString(re.ReadLine());
-                            reproject = true;
-                        }
-                    }
-                    try
-                    {
-                        IFeatureSet fs = FeatureSet.Open(file);
-                        fs.FillAttributes();
-                        int rows = fs.NumRows();
-                        DataTable dtOriginal = fs.DataTable;
-                        for (int row = 0; row < dtOriginal.Rows.Count; row++)
-                        {
-                            object[] original = dtOriginal.Rows[row].ItemArray;
-                        }
-                        string path = Path.GetDirectoryName(file);
-                        foreach (var feature in fs.Features)
-                        {
-                            foreach (var point in feature.Coordinates)
-                            {
-                                if (reproject)
-                                {
-                                    double[] xyarray = { point.X, point.Y };
-                                    double[] zarray = { point.Z };
-                                    Reproject.ReprojectPoints(xyarray, zarray, pStart, pESRIEnd, 0, 1);
-                                    point.X = xyarray[0];
-                                    point.Y = xyarray[1];
-                                    point.Z = zarray[0];
-                                }
-                                poly.Add(new PointLatLng(point.Y, point.X));
-                            }
-                            // remove loop close
-                            if (poly.Count > 1 &&
-                                poly[0] == poly[poly.Count - 1])
-                            {
-                                poly.RemoveAt(poly.Count - 1);
-                            }
-
-                            VPS.WP.WPGlobalData.instance.SetPolyListHandle(poly);
-
-                            ZoomToCenterPolygon();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        DevComponents.DotNetBar.MessageBoxEx.Show(Strings.ERROR + "\n" + ex, Strings.ERROR);
-                    }
+                    LoadPolygonSHP(file);
                 }
             }
         }
@@ -3876,9 +3772,28 @@ namespace VPS.GCSViews
         #region 定位到Polygon
         public void ZoomToCenterPolygon()
         {
-            MainMap.UpdatePolygonLocalPosition(drawnpolygon);
-            MainMap.Invalidate();
-            MainMap.ZoomAndCenterMarkers(drawnpolygonsoverlay.Id);
+            List<PointLatLngAlt> list = VPS.WP.WPGlobalData.instance.GetPolygList();
+            if (list.Count > 0)
+            {
+                double left = list[0].Lng; double right = list[0].Lng;
+                double top = list[0].Lat; double bottom = list[0].Lat;
+                for (int i = 1; i < list.Count; i++)
+                {
+                    if (list[i].Lng > right)
+                        right = list[i].Lng;
+                    if (list[i].Lng < left)
+                        left = list[i].Lng;
+                    if (list[i].Lat > top)
+                        top = list[i].Lat;
+                    if (list[i].Lat < bottom)
+                        bottom = list[i].Lat;
+                }
+                ZoomToRectMap(RectLatLng.FromLTRB(left - 0.01, top + 0.01, right + 0.01, bottom - 0.01));
+            }
+
+            //MainMap.UpdatePolygonLocalPosition(drawnpolygon);
+            //MainMap.Invalidate();
+            //MainMap.ZoomAndCenterMarkers(drawnpolygonsoverlay.Id);
         }
         #endregion
 
@@ -4846,6 +4761,7 @@ namespace VPS.GCSViews
                 fd.InitialDirectory = Settings.Instance["WPFileDirectory"] ?? "";
                 fd.FileName = wpfilename;
                 DialogResult result = fd.ShowDialog();
+
                 string file = fd.FileName;
                 if (file != "" && result == DialogResult.OK)
                 {
@@ -5182,10 +5098,10 @@ namespace VPS.GCSViews
                 fd.Filter = "Default WPFile(*kml)|*.kml|Google Earth KML(*kml;*.kmz) |*.kml;*.kmz|ShapeFile(*.shp)|*.shp";
                 if (Directory.Exists(Settings.Instance["WPFileDirectory"] ?? ""))
                     fd.InitialDirectory = Settings.Instance["WPFileDirectory"];
-                DialogResult result = fd.ShowDialog();
-                string file = fd.FileName;
+                var result = fd.ShowDialog();
 
-                if (File.Exists(file))
+                string file = fd.FileName;
+                if (result == DialogResult.OK && File.Exists(file))
                 {
                     Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
                     switch (fd.FilterIndex)
@@ -5639,6 +5555,255 @@ namespace VPS.GCSViews
 
         #endregion
 
+        #region SavePolygon
+
+        #region SavePolygon 对外接口
+        public void SavePolygonFile()
+        {
+            savepolygons();
+        }
+        #endregion
+
+        #region SavePolygon 入口函数
+        /// <summary>
+        /// Saves a waypoint writer file
+        /// </summary>
+        private void savepolygons()
+        {
+            if (VPS.WP.WPGlobalData.instance.GetPolyCount() <= 0)
+            {
+                return;
+            }
+
+            using (SaveFileDialog sf = new SaveFileDialog())
+            {
+                sf.Filter = "Polygon (*.poly)|*.poly";
+                var result = sf.ShowDialog();
+                if (result == DialogResult.OK && sf.FileName != "")
+                {
+                    switch (sf.FilterIndex)
+                    {
+                        case 1:
+                            savePolygons(sf.FileName);
+                            break;
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region SavePolygon To
+
+        #region SavePolygon Poly
+        private void savePolygons(string file)
+        {
+            try
+            {
+                StreamWriter sw = new StreamWriter(file);
+
+                sw.WriteLine("#saved by Mission Planner " + Application.ProductVersion);
+
+                if (VPS.WP.WPGlobalData.instance.GetPolyCount() > 0)
+                {
+                    foreach (var pll in VPS.WP.WPGlobalData.instance.GetPolygList())
+                    {
+                        sw.WriteLine(pll.Lat.ToString(CultureInfo.InvariantCulture) + " " + pll.Lng.ToString(CultureInfo.InvariantCulture));
+                    }
+
+                    PointLatLng pll2 = VPS.WP.WPGlobalData.instance.GetPolyPoint(0);
+
+                    sw.WriteLine(pll2.Lat.ToString(CultureInfo.InvariantCulture) + " " + pll2.Lng.ToString(CultureInfo.InvariantCulture));
+                }
+
+                sw.Close();
+            }
+            catch
+            {
+                DevComponents.DotNetBar.MessageBoxEx.Show("Failed to write fence file");
+            }
+        }
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region LoadPolygon
+
+        #region LoadPolygon 对外接口
+        public void LoadPolygonFile()
+        {
+            loadpolygons();
+        }
+        #endregion
+
+        #region LoadPolygon 入口函数
+        /// <summary>
+        /// Saves a waypoint writer file
+        /// </summary>
+        private void loadpolygons()
+        {
+            using (OpenFileDialog fd = new OpenFileDialog())
+            {
+                fd.Filter = "Polygon (*.poly)|*.poly|Shape file (*.shp)|*.shp";
+                if (Directory.Exists(Settings.Instance["PolygonFileDirectory"] ?? ""))
+                    fd.InitialDirectory = Settings.Instance["PolygonFileDirectory"];
+                var result = fd.ShowDialog();
+
+                string file = fd.FileName;
+                if (result == DialogResult.OK && File.Exists(file))
+                {
+                    Settings.Instance["PolygonFileDirectory"] = Path.GetDirectoryName(file);
+                    switch (fd.FilterIndex)
+                    {
+                        case 1:
+                            try
+                            {
+                                LoadPolygonsPoly(file);
+                            }
+                            catch
+                            {
+                                DevComponents.DotNetBar.MessageBoxEx.Show("Error opening File", Strings.ERROR);
+                                return;
+                            }
+                            break;
+                        case 2:
+                            try
+                            {
+                                LoadPolygonSHP(file);
+                            }
+                            catch
+                            {
+                                DevComponents.DotNetBar.MessageBoxEx.Show("Error opening File", Strings.ERROR);
+                                return;
+                            }
+                            break;
+                    }
+                }
+
+            }
+        }
+        #endregion
+
+        #region LoadPolygon From
+
+        #region LoadPolygon DefaultPolygonFile Poly
+        private void LoadPolygonsPoly(string file)
+        {
+            StreamReader sr = new StreamReader(file);
+
+            List<PointLatLngAlt> poly = new List<PointLatLngAlt>();
+
+            int a = 0;
+
+            while (!sr.EndOfStream)
+            {
+                string line = sr.ReadLine();
+                if (line.StartsWith("#"))
+                {
+                }
+                else
+                {
+                    string[] items = line.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (items.Length < 2)
+                        continue;
+
+                    poly.Add(new PointLatLng(
+                        double.Parse(items[0], CultureInfo.InvariantCulture),
+                        double.Parse(items[1], CultureInfo.InvariantCulture)));
+
+                    a++;
+                }
+            }
+
+            // remove loop close
+            if (poly.Count > 1 &&
+                poly[0] == poly[poly.Count - 1])
+            {
+                poly.RemoveAt(poly.Count - 1);
+            }
+
+            VPS.WP.WPGlobalData.instance.SetPolyListHandle(poly);
+
+            ZoomToCenterPolygon();
+        }
+        #endregion
+
+        #region LoadPolygon SHP
+        private void LoadPolygonSHP(string file)
+        {
+            ProjectionInfo pStart = new ProjectionInfo();
+            ProjectionInfo pESRIEnd = KnownCoordinateSystems.Geographic.World.WGS1984;
+            bool reproject = false;
+            // Poly Clear
+            List<PointLatLngAlt> poly = new List<PointLatLngAlt>();
+
+            if (File.Exists(file))
+            {
+                string prjfile = Path.GetDirectoryName(file) + Path.DirectorySeparatorChar +
+                                 Path.GetFileNameWithoutExtension(file) + ".prj";
+                if (File.Exists(prjfile))
+                {
+                    using (
+                        StreamReader re =
+                            File.OpenText(Path.GetDirectoryName(file) + Path.DirectorySeparatorChar +
+                                          Path.GetFileNameWithoutExtension(file) + ".prj"))
+                    {
+                        pStart.ParseEsriString(re.ReadLine());
+                        reproject = true;
+                    }
+                }
+                try
+                {
+                    IFeatureSet fs = FeatureSet.Open(file);
+                    fs.FillAttributes();
+                    int rows = fs.NumRows();
+                    DataTable dtOriginal = fs.DataTable;
+                    for (int row = 0; row < dtOriginal.Rows.Count; row++)
+                    {
+                        object[] original = dtOriginal.Rows[row].ItemArray;
+                    }
+                    string path = Path.GetDirectoryName(file);
+                    foreach (var feature in fs.Features)
+                    {
+                        foreach (var point in feature.Coordinates)
+                        {
+                            if (reproject)
+                            {
+                                double[] xyarray = { point.X, point.Y };
+                                double[] zarray = { point.Z };
+                                Reproject.ReprojectPoints(xyarray, zarray, pStart, pESRIEnd, 0, 1);
+                                point.X = xyarray[0];
+                                point.Y = xyarray[1];
+                                point.Z = zarray[0];
+                            }
+                            poly.Add(new PointLatLng(point.Y, point.X));
+                        }
+                        // remove loop close
+                        if (poly.Count > 1 &&
+                            poly[0] == poly[poly.Count - 1])
+                        {
+                            poly.RemoveAt(poly.Count - 1);
+                        }
+
+                        VPS.WP.WPGlobalData.instance.SetPolyListHandle(poly);
+
+                        ZoomToCenterPolygon();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    DevComponents.DotNetBar.MessageBoxEx.Show(Strings.ERROR + "\n" + ex, Strings.ERROR);
+                }
+            }
+        }
+        #endregion
+
+        #endregion
+
+        #endregion
+
         #endregion
 
         #region 重要数据
@@ -5862,12 +6027,9 @@ namespace VPS.GCSViews
         #region 删除区域点
         public void DeletePolygon(int index)
         {
-            if (CurentRectMarker != null)
+            if (index >= 0 && index < VPS.WP.WPGlobalData.instance.GetPolyCount())
             {
-                if (index >= 0 && index < VPS.WP.WPGlobalData.instance.GetWPCount())
-                {
-                    VPS.WP.WPGlobalData.instance.DeletePolyHandle(index);
-                }
+                VPS.WP.WPGlobalData.instance.DeletePolyHandle(index);
             }
         }
         #endregion

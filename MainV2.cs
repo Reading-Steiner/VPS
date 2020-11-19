@@ -4187,6 +4187,20 @@ namespace VPS
         #endregion
         #endregion
 
+        #region SavePolygon
+        private void SavePolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.SavePolygonFile();
+        }
+        #endregion
+
+        #region LoadPolygon
+        private void LoadPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.LoadPolygonFile();
+        }
+        #endregion
+
         #endregion
 
         #region 航点规划模块
