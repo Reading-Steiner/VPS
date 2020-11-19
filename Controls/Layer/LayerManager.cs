@@ -22,8 +22,13 @@ namespace VPS.Controls.Layer
             StartEdit();
             InitializeComponent();
             EndEdit();
-            BindingData();
-            VPS.Layer.MemoryLayerCache.LayerInfosChange += BindingData;
+
+            VPS.Layer.MemoryLayerCache.LayerInfosChange += BindingDataSource;
+        }
+
+        private void LayerManager_Load(object sender, EventArgs e)
+        {
+            BindingDataSource();
         }
 
         #region LayerManager 数据绑定
@@ -51,44 +56,53 @@ namespace VPS.Controls.Layer
 
         #region 生成主表
         const string MainLayerHandle = "MainLayer";
+        readonly string keyColumnName = "Key";
+        readonly string urlColumnName = "数据位置";
+        readonly string typeColumnName = "数据类型";
+        readonly string alterColumnName = "修改时间";
+        readonly string createColumnName = "创建时间";
+        readonly string deleteColumnName = "删除图层";
+        readonly string defaultColumnName = "默认图层";
+
         public DataTable GetMainTable()
         {
             DataTable table = new DataTable(MainLayerHandle);
 
             DataColumn col = new DataColumn();
-            col.ColumnName = "Key";
+            col.ColumnName = keyColumnName;
             col.DataType = Type.GetType("System.String");
             table.Columns.Add(col);
 
             col = new DataColumn();
-            col.ColumnName = "数据位置";
+            col.ColumnName = urlColumnName;
             col.DataType = Type.GetType("System.String");
             table.Columns.Add(col);
 
             col = new DataColumn();
-            col.ColumnName = "数据源类型";
+            col.ColumnName = typeColumnName;
             col.DataType = Type.GetType("System.String");
             table.Columns.Add(col);
 
             col = new DataColumn();
-            col.ColumnName = "修改时间";
+            col.ColumnName = alterColumnName;
             col.DataType = Type.GetType("System.String");
             table.Columns.Add(col);
 
             col = new DataColumn();
-            col.ColumnName = "创建时间";
+            col.ColumnName = createColumnName;
             col.DataType = Type.GetType("System.String");
             table.Columns.Add(col);
 
             col = new DataColumn();
-            col.ColumnName = "删除";
+            col.ColumnName = deleteColumnName;
             col.DataType = Type.GetType("System.String");
             table.Columns.Add(col);
 
             col = new DataColumn();
-            col.ColumnName = "默认";
+            col.ColumnName = defaultColumnName;
             col.DataType = Type.GetType("System.String");
             table.Columns.Add(col);
+
             return table;
         }
         #endregion
@@ -98,24 +112,24 @@ namespace VPS.Controls.Layer
         {
             DataRow row = table.NewRow();
 
-            row[0] = emp.GetOnlyCode();
-            row[1] = emp.Layer;
-            row[3] = emp.ModifyTime;
-            row[4] = emp.CreateTime;
+            row [keyColumnName] = emp.GetOnlyCode();
+            row[urlColumnName] = emp.Layer;
+            row[alterColumnName] = emp.ModifyTime;
+            row[createColumnName] = emp.CreateTime;
 
-            row[5] = "";
+            row[deleteColumnName] = "";
             if (VPS.WP.WPGlobalData.instance.IsDefaultLayer(emp.Layer))
             {
-                row[6] = "True";
+                row[defaultColumnName] = "True";
             }
             else
             {
-                row[6] = "false";
+                row[defaultColumnName] = "false";
             }
 
             if (emp is VPS.Layer.TiffLayerInfo)
             {
-                row[2] = "本地文件";
+                row[typeColumnName] = "本地文件";
             }
 
             table.Rows.Add(row);
@@ -138,32 +152,32 @@ namespace VPS.Controls.Layer
             panel.MinRowHeight = 25;
 
             panel.ColumnAutoSizeMode = ColumnAutoSizeMode.None;
-            panel.Columns[0].MinimumWidth = 80;
-            panel.Columns[0].ReadOnly = true;
+            panel.Columns[keyColumnName].MinimumWidth = 80;
+            panel.Columns[keyColumnName].ReadOnly = true;
 
-            panel.Columns[1].MinimumWidth = 400;
-            panel.Columns[1].ReadOnly = true;
+            panel.Columns[urlColumnName].MinimumWidth = 400;
+            panel.Columns[urlColumnName].ReadOnly = true;
 
-            panel.Columns[2].MinimumWidth = 80;
-            panel.Columns[2].CellStyles.Default.Alignment = DevComponents.DotNetBar.SuperGrid.Style.Alignment.MiddleCenter;
-            panel.Columns[2].ReadOnly = true;
+            panel.Columns[typeColumnName].MinimumWidth = 80;
+            panel.Columns[typeColumnName].CellStyles.Default.Alignment = DevComponents.DotNetBar.SuperGrid.Style.Alignment.MiddleCenter;
+            panel.Columns[typeColumnName].ReadOnly = true;
 
-            panel.Columns[3].MinimumWidth = 200;
-            panel.Columns[3].ReadOnly = true;
+            panel.Columns[alterColumnName].MinimumWidth = 160;
+            panel.Columns[alterColumnName].ReadOnly = true;
 
-            panel.Columns[4].MinimumWidth = 200;
-            panel.Columns[4].ReadOnly = true;
+            panel.Columns[createColumnName].MinimumWidth = 160;
+            panel.Columns[createColumnName].ReadOnly = true;
 
-            panel.Columns[5].MinimumWidth = 25;
-            panel.Columns[5].Width = 25;
-            panel.Columns[5].EditorType = typeof(MyControls.ImagePanel);
-            panel.Columns[5].EditorParams = new object[] { ImageList.Images["Delete.png"] };
+            panel.Columns[deleteColumnName].MinimumWidth = 25;
+            panel.Columns[deleteColumnName].Width = 25;
+            panel.Columns[deleteColumnName].EditorType = typeof(MyControls.ImagePanel);
+            panel.Columns[deleteColumnName].EditorParams = new object[] { ImageList.Images["Delete.png"] };
 
-            panel.Columns[6].MinimumWidth = 25;
-            panel.Columns[6].Width = 25;
-            panel.Columns[6].EditorType = typeof(MyControls.ImageCheckBox);
-            panel.Columns[6].EditorParams = new object[] { ImageList.Images["Default.png"] };
-            panel.Columns[6].ReadOnly = true;
+            panel.Columns[defaultColumnName].MinimumWidth = 25;
+            panel.Columns[defaultColumnName].Width = 25;
+            panel.Columns[defaultColumnName].EditorType = typeof(MyControls.ImageCheckBox);
+            panel.Columns[defaultColumnName].EditorParams = new object[] { ImageList.Images["Default.png"] };
+            panel.Columns[defaultColumnName].ReadOnly = true;
         }
         #endregion
 
@@ -216,33 +230,38 @@ namespace VPS.Controls.Layer
         #region 生成Tiff表
 
         const string TiffLayerHandle = "TiffLayer";
+        readonly string homeColumnName = "初始位置";
+        readonly string frameColumnName = "高度框架";
+        readonly string scaleColumnName = "图层比例尺";
+        readonly string transColumnName = "图层透明色";
+
         public DataTable GetLayerTable()
         {
             DataTable table = new DataTable(TiffLayerHandle);
 
             DataColumn col = new DataColumn();
-            col.ColumnName = "Key";
+            col.ColumnName = keyColumnName;
             col.DataType = Type.GetType("System.String");
             table.Columns.Add(col);
 
 
             col = new DataColumn();
-            col.ColumnName = "图层原点";
+            col.ColumnName = homeColumnName;
             col.DataType = typeof(Utilities.PointLatLngAlt);
             table.Columns.Add(col);
 
             col = new DataColumn();
-            col.ColumnName = "高度框架";
+            col.ColumnName = frameColumnName;
             col.DataType = Type.GetType("System.String");
             table.Columns.Add(col);
 
             col = new DataColumn();
-            col.ColumnName = "图层比例尺";
+            col.ColumnName = scaleColumnName;
             col.DataType = Type.GetType("System.String");
             table.Columns.Add(col);
 
             col = new DataColumn();
-            col.ColumnName = "图层透明色";
+            col.ColumnName = transColumnName;
             col.DataType = typeof(Color);
             table.Columns.Add(col);
 
@@ -254,19 +273,17 @@ namespace VPS.Controls.Layer
         #region 生成Tiff行
         private void FillLayerTable(VPS.Layer.TiffLayerInfo emp)
         {
-            DataRow row = table.NewRow();
-
             DataRow fileRow = layerTable.NewRow();
-            fileRow[0] = emp.GetOnlyCode();
-            fileRow[1] = emp.Home;
-            fileRow[2] = emp.Home.Tag2;
-            fileRow[3] = emp.ScaleFormat;
-            fileRow[4] = emp.Transparent;
+
+            fileRow[keyColumnName] = emp.GetOnlyCode();
+            fileRow[homeColumnName] = emp.Home;
+            fileRow[frameColumnName] = emp.Home.Tag2;
+            fileRow[scaleColumnName] = emp.ScaleFormat;
+            fileRow[transColumnName] = emp.Transparent;
 
             layerTable.Rows.Add(fileRow);
 
             fileRow.AcceptChanges();
-            layerTable.EndLoadData();
         }
         #endregion
 
@@ -310,16 +327,18 @@ namespace VPS.Controls.Layer
         const string MainHandle = "LayerManager";
         public void BindingDataSource()
         {
-            DataSet set = new DataSet(MainHandle);
+            set = new DataSet(MainHandle);
 
             table = GetMainTable();
             layerTable = GetLayerTable();
 
+            BindingData();
+
             set.Tables.Add(table);
             set.Tables.Add(layerTable);
 
-            set.Relations.Add("1", set.Tables[MainLayerHandle].Columns["Key"],
-                               set.Tables[TiffLayerHandle].Columns["Key"], false);
+            set.Relations.Add("1", set.Tables[MainLayerHandle].Columns[keyColumnName],
+                               set.Tables[TiffLayerHandle].Columns[keyColumnName], false);
             LayerDataList.PrimaryGrid.DataSource = set;
             LayerDataList.PrimaryGrid.DataMember = MainLayerHandle;
         }
@@ -376,9 +395,6 @@ namespace VPS.Controls.Layer
             if (isEdit)
                 return;
             StartEdit();
-
-            if (set == null)
-                BindingDataSource();
 
             BeginLoadData();
 

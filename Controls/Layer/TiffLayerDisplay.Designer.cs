@@ -42,7 +42,7 @@
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx1.Location = new System.Drawing.Point(0, 0);
             this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(300, 240);
+            this.panelEx1.Size = new System.Drawing.Size(500, 250);
             this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx1.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -56,7 +56,7 @@
             // 
             this.HomePositionDisplay.AutoSize = true;
             this.HomePositionDisplay.IsReadOnly = false;
-            this.HomePositionDisplay.Location = new System.Drawing.Point(17, 3);
+            this.HomePositionDisplay.Location = new System.Drawing.Point(3, 3);
             this.HomePositionDisplay.MinimumSize = new System.Drawing.Size(100, 60);
             this.HomePositionDisplay.Name = "HomePositionDisplay";
             this.HomePositionDisplay.PositionName = "位置";
@@ -80,7 +80,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panelEx1);
             this.Name = "TiffLayerDisplay";
-            this.Size = new System.Drawing.Size(300, 240);
+            this.Size = new System.Drawing.Size(500, 250);
             this.panelEx1.ResumeLayout(false);
             this.panelEx1.PerformLayout();
             this.ResumeLayout(false);

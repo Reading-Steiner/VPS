@@ -535,7 +535,7 @@ Mission Planner将会在30秒内寻找控制板。</value>
     <value>设置在这</value>
   </data>
   <data name="TrackerHome" xml:space="preserve">
-    <value>追踪器的家</value>
+    <value>追踪初始位置</value>
   </data>
   <data name="velocity_variance" xml:space="preserve">
     <value>velocity variance</value>

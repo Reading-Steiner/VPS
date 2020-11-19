@@ -63,7 +63,7 @@
             this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.buttonX1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX1.Location = new System.Drawing.Point(1014, 249);
+            this.buttonX1.Location = new System.Drawing.Point(797, 252);
             this.buttonX1.Name = "buttonX1";
             this.buttonX1.Size = new System.Drawing.Size(75, 23);
             this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -77,7 +77,7 @@
             this.LayerDataList.FilterExprColors.SysFunction = System.Drawing.Color.DarkRed;
             this.LayerDataList.Location = new System.Drawing.Point(3, 3);
             this.LayerDataList.Name = "LayerDataList";
-            this.LayerDataList.Size = new System.Drawing.Size(988, 272);
+            this.LayerDataList.Size = new System.Drawing.Size(788, 272);
             this.LayerDataList.TabIndex = 0;
             this.LayerDataList.CellClick += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridCellClickEventArgs>(this.LayerDataList_CellClick);
             this.LayerDataList.DataBindingComplete += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridDataBindingCompleteEventArgs>(this.LayerDataList_DataBindingComplete);
@@ -89,9 +89,9 @@
             this.panelEx2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panelEx2.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.panelEx2.Location = new System.Drawing.Point(997, 3);
+            this.panelEx2.Location = new System.Drawing.Point(797, 3);
             this.panelEx2.Name = "panelEx2";
-            this.panelEx2.Size = new System.Drawing.Size(300, 240);
+            this.panelEx2.Size = new System.Drawing.Size(500, 250);
             this.panelEx2.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx2.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx2.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -115,6 +115,7 @@
             this.Controls.Add(this.panelEx1);
             this.Name = "LayerManager";
             this.Size = new System.Drawing.Size(1300, 278);
+            this.Load += new System.EventHandler(this.LayerManager_Load);
             this.panelEx1.ResumeLayout(false);
             this.ResumeLayout(false);
 

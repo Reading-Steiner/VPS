@@ -51,9 +51,9 @@ using TrackerHomeGPS;
                 }
             }
             if (index != col.Count) col.Insert(index, trkrHome);
-            else col.Add(trkrHome);
+        else col.Add(trkrHome);
 
-            if (getDevice() != null) _Available = true;
+        if (getDevice() != null) _Available = true;
             
             return true;
         }
