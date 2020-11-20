@@ -586,7 +586,7 @@ namespace VPS.GCSViews
                     home = new PointLatLngAlt(lat, lng);
                     home.Alt = 0;
                     home.Tag = VPS.WP.WPCommands.HomeCommand;
-                    home.Tag2 = "Terrain";
+                    home.Tag2 = VPS.EnumCollect.AltFrame.Terrain;
                 }
 
                 VPS.WP.WPGlobalData.instance.SetHomePosition(home);
@@ -4160,14 +4160,7 @@ namespace VPS.GCSViews
 
         #region AltFrame
 
-        public enum AltMode
-        {
-            Relative = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT,
-            Absolute = MAVLink.MAV_FRAME.GLOBAL,
-            Terrain = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT
-        }
-
-        private AltMode altFrame = AltMode.Relative;
+        private VPS.EnumCollect.AltFrame.Mode altFrame = VPS.EnumCollect.AltFrame.Mode.Relative;
 
         public StringChangeHandle altFrameChange;
 
@@ -4194,21 +4187,8 @@ namespace VPS.GCSViews
         #region AltFrame 入口函数
         private void SetAltFrame(string frame)
         {
-            switch (frame.ToString())
-            {
-                case "Relative":
-                    altFrame = AltMode.Relative;
-                    break;
-                case "Absolute":
-                    altFrame = AltMode.Absolute;
-                    break;
-                case "Terrain":
-                    altFrame = AltMode.Terrain;
-                    break;
-                default:
-                    altFrame = AltMode.Relative;
-                    break;
-            }
+            altFrame = VPS.EnumCollect.AltFrame.GetAltFrame(frame);
+
             if (IsAllowSendDataChange())
                 altFrameChange?.Invoke(altFrame.ToString());
         }
@@ -4219,17 +4199,7 @@ namespace VPS.GCSViews
         #region GetAltFrame
         public string GetAltFrame()
         {
-            switch (altFrame)
-            {
-                case AltMode.Relative:
-                    return "Relative";
-                case AltMode.Absolute:
-                    return "Absolute";
-                case AltMode.Terrain:
-                    return "Terrain";
-                default:
-                    return "Relative";
-            }
+            return VPS.EnumCollect.AltFrame.GetAltFrame(altFrame);
         }
         #endregion
 
@@ -4632,7 +4602,7 @@ namespace VPS.GCSViews
             {
                 home = new PointLatLngAlt();
                 home.Tag = VPS.WP.WPCommands.HomeCommand;
-                home.Tag2 = "Terrain";
+                home.Tag2 = VPS.EnumCollect.AltFrame.Terrain;
             }
             #endregion
 
@@ -4781,8 +4751,8 @@ namespace VPS.GCSViews
         #region SaveWP KML
         private void saveWaypointsKML(string file)
         {
-            List<PointLatLngAlt> wpList = 
-                VPS.WP.WPGlobalData.WPListChangeAltFrame(VPS.WP.WPGlobalData.instance.GetWPList(), "Terrain");
+            List<PointLatLngAlt> wpList =
+                VPS.WP.WPGlobalData.WPListChangeAltFrame(VPS.WP.WPGlobalData.instance.GetWPList(), VPS.EnumCollect.AltFrame.Terrain);
             PointLatLngAlt home = wpList[0];
             wpList.RemoveAt(0);
 
@@ -4883,21 +4853,17 @@ namespace VPS.GCSViews
                 w.WriteStartElement("Point");
 
                 w.WriteStartElement("altitudeMode");
-                switch (home.Tag2)
-                {
-                    case "Absolute":
-                        w.WriteString("absolute");
-                        break;
-                    case "Terrain":
-                        w.WriteString("relativeToGround");
-                        break;
-                    default:
-                        w.WriteString("relativeToGround");
-                        break;
-                }
+
+                if (home.Tag2 == VPS.EnumCollect.AltFrame.Absolute)
+                    w.WriteString("absolute");
+                else if (home.Tag2 == VPS.EnumCollect.AltFrame.Terrain)
+                    w.WriteString("relativeToGround");
+                else
+                    w.WriteString("relativeToGround");
+
                 w.WriteEndElement();//altitudeMode
                 w.WriteStartElement("coordinates");
-                
+
                 w.WriteString(string.Format("{0},{1},{2}", home.Lng, home.Lat, home.Alt));
                 w.WriteEndElement();//coordinates
                 w.WriteEndElement();//Point
@@ -4910,7 +4876,7 @@ namespace VPS.GCSViews
             for (int i = 0; i < wpList.Count; i++)
             {
                 bool isVisbility = false;
-                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wpList[i].Tag)) 
+                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wpList[i].Tag))
                     isVisbility = true;
                 w.WriteStartElement("Placemark");
 
@@ -4960,18 +4926,13 @@ namespace VPS.GCSViews
                 {
                     w.WriteStartElement("Point");
                     w.WriteStartElement("altitudeMode");
-                    switch (wpList[i].Tag2)
-                    {
-                        case "Absolute":
-                            w.WriteString("absolute");
-                            break;
-                        case "Terrain":
-                            w.WriteString("relativeToGround");
-                            break;
-                        default:
-                            w.WriteString("relativeToGround");
-                            break;
-                    }
+
+                    if (wpList[i].Tag2 == VPS.EnumCollect.AltFrame.Absolute)
+                        w.WriteString("absolute");
+                    else if (wpList[i].Tag2 == VPS.EnumCollect.AltFrame.Terrain)
+                        w.WriteString("relativeToGround");
+                    else
+                        w.WriteString("relativeToGround");
 
                     w.WriteEndElement();//altitudeMode
                     w.WriteStartElement("coordinates");
@@ -4990,21 +4951,13 @@ namespace VPS.GCSViews
             w.WriteEndElement();//Folder
             #endregion
             {
-                switch (altFrame)
-                {
-                    case AltMode.Relative:
-                        wpList = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpList,"Terrain");
-                        break;
-                    case AltMode.Absolute:
-                        wpList = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpList,"Absolute");
-                        break;
-                    case AltMode.Terrain:
-                        wpList = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpList,"Terrain");
-                        break;
-                    default:
-                        wpList = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpList,"Terrain");
-                        break;
-                }
+                if (altFrame.ToString() == VPS.EnumCollect.AltFrame.Absolute)
+                    wpList = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpList, VPS.EnumCollect.AltFrame.Absolute);
+                else if (altFrame.ToString() == VPS.EnumCollect.AltFrame.Terrain)
+                    wpList = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpList, VPS.EnumCollect.AltFrame.Terrain);
+                else
+                    wpList = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpList, VPS.EnumCollect.AltFrame.Terrain);
+
                 #region WPLines
                 //MainData Lines
                 w.WriteStartElement("Placemark");
@@ -5028,21 +4981,14 @@ namespace VPS.GCSViews
                 w.WriteString("1");
                 w.WriteEndElement();//tessellate
                 w.WriteStartElement("altitudeMode");
-                switch (altFrame)
-                {
-                    case AltMode.Relative:
-                        w.WriteString("relativeToGround");
-                        break;
-                    case AltMode.Absolute:
-                        w.WriteString("absolute");
-                        break;
-                    case AltMode.Terrain:
-                        w.WriteString("relativeToGround");
-                        break;
-                    default:
-                        w.WriteString("relativeToGround");
-                        break;
-                }
+
+                if (altFrame.ToString() == VPS.EnumCollect.AltFrame.Absolute)
+                    w.WriteString("absolute");
+                else if (altFrame.ToString() == VPS.EnumCollect.AltFrame.Terrain)
+                    w.WriteString("relativeToGround");
+                else
+                    w.WriteString("relativeToGround");
+
                 w.WriteEndElement();//altitudeMode
                 w.WriteStartElement("coordinates");
 
@@ -5181,7 +5127,7 @@ namespace VPS.GCSViews
                                     if (point.Name == "Placemark")
                                     {
                                         string cmd = VPS.WP.WPCommands.DefaultWPCommand;
-                                        string altitudeMode = AltMode.Terrain.ToString();
+                                        string altitudeMode = VPS.EnumCollect.AltFrame.Terrain;
                                         double x = 0, y = 0, z = 0;
                                         double p1 = 0, p2 = 0, p3 = 0, p4 = 0;
                                         //selectedrow = Commands.Rows.Add();
@@ -5199,17 +5145,17 @@ namespace VPS.GCSViews
                                                     if (smode != null)
                                                     {
                                                         if (smode.InnerText == "relativeToGround")
-                                                            altitudeMode = AltMode.Terrain.ToString();
+                                                            altitudeMode = VPS.EnumCollect.AltFrame.Terrain;
                                                         else if (smode.InnerText == "absolute")
-                                                            altitudeMode = AltMode.Absolute.ToString();
+                                                            altitudeMode = VPS.EnumCollect.AltFrame.Absolute;
                                                         else if (smode.InnerText == "clampedToGround")
-                                                            altitudeMode = AltMode.Terrain.ToString();
+                                                            altitudeMode = VPS.EnumCollect.AltFrame.Terrain;
                                                         else
-                                                            altitudeMode = AltMode.Terrain.ToString();
+                                                            altitudeMode = VPS.EnumCollect.AltFrame.Terrain;
                                                     }
                                                     else
                                                     {
-                                                        altitudeMode = AltMode.Terrain.ToString();
+                                                        altitudeMode = VPS.EnumCollect.AltFrame.Terrain;
                                                     }
                                                     var sWGS84 = info.SelectSingleNode(@"./ns2:coordinates", nsMgr);
                                                     if (sWGS84 != null)
@@ -5843,21 +5789,8 @@ namespace VPS.GCSViews
                 temp.alt = (float)wp.Alt / CurrentState.multiplieralt;
                 temp.lat = wp.Lat;
                 temp.lng = wp.Lng;
-                switch (wp.Tag2)
-                {
-                    case "Relative":
-                        temp.frame = (byte)(short)AltMode.Relative;
-                        break;
-                    case "Absolute":
-                        temp.frame = (byte)(short)AltMode.Absolute;
-                        break;
-                    case "Terrain":
-                        temp.frame = (byte)(short)AltMode.Terrain;
-                        break;
-                    default:
-                        temp.frame = (byte)(short)AltMode.Relative;
-                        break;
-                }
+
+                temp.frame = (byte)(short)VPS.EnumCollect.AltFrame.GetAltFrame(wp.Tag2);
 
                 temp.p1 = (float)wp.Param1;
                 temp.p2 = (float)wp.Param2;
@@ -5880,22 +5813,9 @@ namespace VPS.GCSViews
                 temp.Alt = wp.alt;
                 temp.Lat = wp.lat;
                 temp.Lng = wp.lng;
-                switch (wp.frame)
-                {
-                    case (byte)(short)AltMode.Relative:
-                        temp.Tag2 = AltMode.Relative.ToString();
-                        break;
-                    case (byte)(short)AltMode.Absolute:
-                        temp.Tag2 = AltMode.Absolute.ToString();
-                        break;
-                    case (byte)(short)AltMode.Terrain:
-                        temp.Tag2 = AltMode.Terrain.ToString();
-                        break;
-                    default:
-                        temp.Tag2 = AltMode.Relative.ToString();
-                        break;
-                }
 
+                temp.Tag2 = VPS.EnumCollect.AltFrame.GetAltFrame(
+                    (VPS.EnumCollect.AltFrame.Mode)wp.frame);
 
                 temp.Lat = wp.p1;
                 temp.Lng = wp.p2;

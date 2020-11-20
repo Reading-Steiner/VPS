@@ -530,6 +530,7 @@
     <Compile Include="Controls\MyControls\MyPositionDisplay.Designer.cs">
       <DependentUpon>MyPositionDisplay.cs</DependentUpon>
     </Compile>
+    <Compile Include="VPSData\EnumCollect\AltFrame.cs" />
     <Compile Include="VPSData\Layer\LayerInfo.cs" />
     <Compile Include="VPSData\Layer\LayerInfoCache.cs" />
     <Compile Include="Controls\Layer\LayerManager.cs">
@@ -4908,8 +4909,6 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="VPSData\AltFrame\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -531,7 +531,7 @@ namespace VPS.Controls.Grid
             for (int i = 0; i < wpList.Count; i++)
             {
                 wpList[i].Tag = VPS.WP.WPCommands.DefaultWPCommand;
-                wpList[i].Tag2 = "Relative";
+                wpList[i].Tag2 = VPS.EnumCollect.AltFrame.Relative;
             }
             return wpList;
         }
@@ -832,7 +832,7 @@ namespace VPS.Controls.Grid
                 {
                     PointLatLngAlt point = wp[index];
                     point.Tag = VPS.WP.WPCommands.DefaultWPCommand;
-                    point.Tag2 = "Relative";
+                    point.Tag2 = VPS.EnumCollect.AltFrame.Relative;
 
                     instance.grid.Add(point);
                     a++;
@@ -845,7 +845,7 @@ namespace VPS.Controls.Grid
                     {
                         PointLatLngAlt point = wp[index];
                         point.Tag = VPS.WP.WPCommands.DefaultWPCommand;
-                        point.Tag2 = "Relative";
+                        point.Tag2 = VPS.EnumCollect.AltFrame.Relative;
 
                         instance.grid.Add(point);
                         a++;
@@ -860,7 +860,7 @@ namespace VPS.Controls.Grid
                     {
                         PointLatLngAlt point = wp[index];
                         point.Tag = VPS.WP.WPCommands.DefaultWPCommand;
-                        point.Tag2 = "Relative";
+                        point.Tag2 = VPS.EnumCollect.AltFrame.Relative;
 
                         instance.grid.Add(point);
                         a++;
@@ -872,7 +872,7 @@ namespace VPS.Controls.Grid
                     {
                         PointLatLngAlt point = wp[index];
                         point.Tag = VPS.WP.WPCommands.ClickWPCommand;
-                        point.Tag2 = "Relative";
+                        point.Tag2 = VPS.EnumCollect.AltFrame.Relative;
 
                         instance.grid.Add(point);
                     }

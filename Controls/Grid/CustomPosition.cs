@@ -20,9 +20,9 @@ namespace VPS.Controls.Grid
 
             var position = new Utilities.PointLatLngAlt();
             Position.Tag = VPS.WP.WPCommands.DefaultWPCommand;
-            Position.Tag2 = AltMode.Relative.ToString();
+            Position.Tag2 = VPS.EnumCollect.AltFrame.Relative;
 
-            AltFrameSelecter.DataSource = Enum.GetValues(typeof(AltMode));
+            AltFrameSelecter.DataSource = Enum.GetValues(typeof(VPS.EnumCollect.AltFrame.Mode));
 
             WGS84Position = position;
             defaultPosition = WGS84Position;
@@ -33,7 +33,7 @@ namespace VPS.Controls.Grid
         {
             InitializeComponent();
 
-            AltFrameSelecter.DataSource = Enum.GetValues(typeof(AltMode));
+            AltFrameSelecter.DataSource = Enum.GetValues(typeof(VPS.EnumCollect.AltFrame.Mode));
 
             WGS84Position = position;
             defaultPosition = WGS84Position;
@@ -46,19 +46,9 @@ namespace VPS.Controls.Grid
             this.LngInput.Value = Position.Lng;
             this.LatInput.Value = Position.Lat;
             this.AltInput.Value = (int)Position.Alt;
-            if (Enum.TryParse(Position.Tag2, out AltMode mode))
-                this.AltFrameSelecter.SelectedItem = mode;
-            else
-                this.AltFrameSelecter.SelectedItem = (AltMode)Enum.Parse(typeof(AltMode), "Relative");
+            this.AltFrameSelecter.SelectedItem = VPS.EnumCollect.AltFrame.GetAltFrame(Position.Tag2);
         }
         #endregion
-
-        public enum AltMode
-        {
-            Relative,
-            Absolute,
-            Terrain
-        }
 
         #region 数据
         private Utilities.PointLatLngAlt defaultPosition = new Utilities.PointLatLngAlt();
@@ -72,10 +62,7 @@ namespace VPS.Controls.Grid
                 this.LngInput.Value = value.Lng;
                 this.LatInput.Value = value.Lat;
                 this.AltInput.Value = (int)value.Alt;
-                if (Enum.TryParse(value.Tag2, out AltMode mode))
-                    this.AltFrameSelecter.SelectedItem = mode;
-                else
-                    this.AltFrameSelecter.SelectedItem = (AltMode)Enum.Parse(typeof(AltMode), "Relative");
+                this.AltFrameSelecter.SelectedItem = VPS.EnumCollect.AltFrame.GetAltFrame(Position.Tag2);
             }
             get
             {

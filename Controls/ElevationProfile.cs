@@ -22,9 +22,9 @@ namespace VPS
         PointPairList list4terrain = new PointPairList();
         int distance = 0;
         double homealt = 0;
-        FlightPlanner.AltMode altmode = FlightPlanner.AltMode.Relative;
+        VPS.EnumCollect.AltFrame.Mode altmode = VPS.EnumCollect.AltFrame.Mode.Relative;
 
-        public ElevationProfile(List<PointLatLngAlt> locs, double homealt, FlightPlanner.AltMode altmode)
+        public ElevationProfile(List<PointLatLngAlt> locs, double homealt, VPS.EnumCollect.AltFrame.Mode altmode)
         {
             InitializeComponent();
 
@@ -113,12 +113,12 @@ namespace VPS
                 }
 
                 // deal with at mode
-                if (altmode == FlightPlanner.AltMode.Terrain)
+                if (altmode == VPS.EnumCollect.AltFrame.Mode.Terrain)
                 {
                     list1 = list4terrain;
                     break;
                 }
-                else if (altmode == FlightPlanner.AltMode.Relative)
+                else if (altmode == VPS.EnumCollect.AltFrame.Mode.Relative)
                 {
                     // already includes the home alt
                     list1.Add(a * CurrentState.multiplierdist, (planloc.Alt * CurrentState.multiplieralt), 0, planloc.Tag);
@@ -153,14 +153,14 @@ namespace VPS
                 if (last == null)
                 {
                     last = loc;
-                    if (altmode == FlightPlanner.AltMode.Terrain)
+                    if (altmode == VPS.EnumCollect.AltFrame.Mode.Terrain)
                         loc.Alt -= srtm.getAltitude(loc.Lat, loc.Lng).alt;
                     continue;
                 }
 
                 double dist = last.GetDistance(loc);
 
-                if (altmode == FlightPlanner.AltMode.Terrain)
+                if (altmode == VPS.EnumCollect.AltFrame.Mode.Terrain)
                     loc.Alt -= srtm.getAltitude(loc.Lat, loc.Lng).alt;
 
                 int points = (int)(dist / 10) + 1;

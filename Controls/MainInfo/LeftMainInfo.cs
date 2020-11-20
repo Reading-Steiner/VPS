@@ -47,9 +47,9 @@ namespace VPS.Controls.MainInfo
         public void SetCurrentPosition(Utilities.PointLatLngAlt position)
         {
             currentPosition = new PointLatLngAlt(position);
-            if (position.Tag2 != "Relative" && position.Tag2 != "Terrain" && position.Tag2 != "Absolute")
+            if (!VPS.EnumCollect.AltFrame.Modes.Contains(position.Tag2))
             {
-                currentPosition.Tag2 = "Absolute";
+                currentPosition.Tag2 = VPS.EnumCollect.AltFrame.Absolute;
                 currentPosition.Alt = (srtm.getAltitude(currentPosition.Lat, currentPosition.Lng).alt * CurrentState.multiplieralt);
             }
 
@@ -100,7 +100,7 @@ namespace VPS.Controls.MainInfo
             minAlt = VPS.WP.WPGlobalData.GetMinAlt(wpLists);
             SetControlMainThread(WPGndeLev, minAlt.ToString("0.##") + " - " + maxAlt.ToString("0.## m"));
 
-            wpLists = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpLists, "Relative");
+            wpLists = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpLists, VPS.EnumCollect.AltFrame.Relative);
 
             if (wpLists.Count > 0)
                 lastPosition = wpLists[wpLists.Count - 1];

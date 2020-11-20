@@ -302,30 +302,31 @@ namespace VPS.Controls.Command
                 row[LatColumnName] = wp.Lat;
 
                 double terrain = srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
-                double terrainLast =srtm.getAltitude(wpLast.Lat, wpLast.Lng).alt * CurrentState.multiplieralt;
+                double terrainLast = srtm.getAltitude(wpLast.Lat, wpLast.Lng).alt * CurrentState.multiplieralt;
 
-                switch (wp.Tag2)
+                if (wp.Tag2 == VPS.EnumCollect.AltFrame.Relative)
                 {
-                    case "Relative":
-                        row[RelativeAltColumnName] = (int)wp.Alt;
-                        row[AbsoluteAltColumnName] = (int)(baseAlt + wp.Alt);
-                        row[TerrainAltColumnName] = (int)(baseAlt + wp.Alt - terrain);
-                        break;
-                    case "Absolute":
-                        row[AbsoluteAltColumnName] = (int)wp.Alt;
-                        row[RelativeAltColumnName] = (int)(wp.Alt - baseAlt);
-                        row[TerrainAltColumnName] = (int)(wp.Alt - terrain);
-                        break;
-                    case "Terrain":
-                        row[TerrainAltColumnName] = (int)wp.Alt;
-                        row[RelativeAltColumnName] = (int)(wp.Alt - baseAlt + terrain);
-                        row[AbsoluteAltColumnName] = (int)(wp.Alt + terrain);
-                        break;
-                    default:
-                        row[RelativeAltColumnName] = (int)wp.Alt;
-                        row[AbsoluteAltColumnName] = (int)(baseAlt + wp.Alt);
-                        row[TerrainAltColumnName] = (int)(baseAlt + wp.Alt - terrain);
-                        break;
+                    row[RelativeAltColumnName] = (int)wp.Alt;
+                    row[AbsoluteAltColumnName] = (int)(baseAlt + wp.Alt);
+                    row[TerrainAltColumnName] = (int)(baseAlt + wp.Alt - terrain);
+                }
+                else if (wp.Tag2 == VPS.EnumCollect.AltFrame.Absolute)
+                {
+                    row[AbsoluteAltColumnName] = (int)wp.Alt;
+                    row[RelativeAltColumnName] = (int)(wp.Alt - baseAlt);
+                    row[TerrainAltColumnName] = (int)(wp.Alt - terrain);
+                }
+                else if (wp.Tag2 == VPS.EnumCollect.AltFrame.Terrain)
+                {
+                    row[TerrainAltColumnName] = (int)wp.Alt;
+                    row[RelativeAltColumnName] = (int)(wp.Alt - baseAlt + terrain);
+                    row[AbsoluteAltColumnName] = (int)(wp.Alt + terrain);
+                }
+                else
+                {
+                    row[RelativeAltColumnName] = (int)wp.Alt;
+                    row[AbsoluteAltColumnName] = (int)(baseAlt + wp.Alt);
+                    row[TerrainAltColumnName] = (int)(baseAlt + wp.Alt - terrain);
                 }
 
                 int zone = wp.GetUTMZone();
@@ -335,40 +336,10 @@ namespace VPS.Controls.Command
                 row[NorthColumnName] = (double)temp2[1];
                 row[MGRSColumnName] = ((MGRS)new Geographic(wp.Lng, wp.Lat)).ToString();
 
-                
-                switch (wpLast.Tag2)
-                {
-                    case "Relative":
-                        break;
-                    case "Absolute":
-                        wpLast.Alt = wpLast.Alt - baseAlt;
-                        wpLast.Tag2 = "Relative";
-                        break;
-                    case "Terrain":
-                        wpLast.Alt = wpLast.Alt - baseAlt + terrainLast;
-                        wpLast.Tag2 = "Relative";
-                        break;
-                    default:
-                        wpLast.Tag2 = "Relative";
-                        break;
-                }
-                switch (wp.Tag2)
-                {
-                    case "Relative":
-                        break;
-                    case "Absolute":
-                        wp.Alt = wp.Alt - baseAlt;
-                        wp.Tag2 = "Relative";
-                        break;
-                    case "Terrain":
-                        wp.Alt = wp.Alt - baseAlt + terrain;
-                        wp.Tag2 = "Relative";
-                        break;
-                    default:
-                        wp.Tag2 = "Relative";
-                        break;
-                }
 
+                VPS.WP.WPGlobalData.WPChangeAltFrame(wpLast, baseAlt, VPS.EnumCollect.AltFrame.Absolute);
+
+                VPS.WP.WPGlobalData.WPChangeAltFrame(wp, baseAlt, VPS.EnumCollect.AltFrame.Absolute);
 
                 double height = wp.Alt - wpLast.Alt;
                 double distance = wp.GetDistance(wpLast);
