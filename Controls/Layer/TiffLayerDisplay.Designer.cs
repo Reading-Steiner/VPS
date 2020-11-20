@@ -30,7 +30,7 @@
         {
             VPS.Utilities.PointLatLngAlt pointLatLngAlt1 = new VPS.Utilities.PointLatLngAlt();
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
-            this.HomePositionDisplay = new VPS.Controls.MyControls.MyPositionDisplay();
+            this.HomePositionDisplay = new VPS.Controls.CustomControls.PositionDisplay();
             this.panelEx1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,6 +90,6 @@
         #endregion
 
         private DevComponents.DotNetBar.PanelEx panelEx1;
-        private MyControls.MyPositionDisplay HomePositionDisplay;
+        private CustomControls.PositionDisplay HomePositionDisplay;
     }
 }

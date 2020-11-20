@@ -1,4 +1,4 @@
-﻿namespace VPS.Controls.Grid
+﻿namespace VPS.Controls.CustomForms
 {
     partial class CustomPosition
     {
@@ -39,9 +39,9 @@
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
             this.Default = new DevComponents.DotNetBar.ButtonX();
             this.GeoAltitude = new DevComponents.DotNetBar.LabelX();
-            this.LngInput = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.LatInput = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.AltInput = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.LngInput = new VPS.Controls.CustomControls.CustomDoubleInput(this.components);
+            this.LatInput = new VPS.Controls.CustomControls.CustomDoubleInput(this.components);
+            this.AltInput = new VPS.Controls.CustomControls.CustomIntegerInput(this.components);
             this.panelEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LngInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LatInput)).BeginInit();
@@ -277,11 +277,11 @@
         #endregion
 
         private System.Windows.Forms.Label label7;
-        private MyControls.MyDoubleInput LngInput;
+        private CustomControls.CustomDoubleInput LngInput;
         private System.Windows.Forms.Label label1;
-        private MyControls.MyDoubleInput LatInput;
+        private CustomControls.CustomDoubleInput LatInput;
         private System.Windows.Forms.Label label2;
-        private MyControls.MyIntegerInput AltInput;
+        private CustomControls.CustomIntegerInput AltInput;
         private DevComponents.DotNetBar.Controls.ComboBoxEx AltFrameSelecter;
         private System.Windows.Forms.Label label3;
         private DevComponents.DotNetBar.ButtonX buttonX2;

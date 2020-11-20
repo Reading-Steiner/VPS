@@ -32,18 +32,18 @@
             VPS.Utilities.PointLatLngAlt pointLatLngAlt1 = new VPS.Utilities.PointLatLngAlt();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CommandsPanel));
             this.MainPanel = new DevComponents.DotNetBar.PanelEx();
-            this.HomePositionDisplay = new VPS.Controls.MyControls.MyPositionDisplay();
+            this.HomePositionDisplay = new VPS.Controls.CustomControls.PositionDisplay();
             this.CommandDataList = new DevComponents.DotNetBar.SuperGrid.SuperGridControl();
             this.AutoWarnAlt = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.labelX10 = new DevComponents.DotNetBar.LabelX();
-            this.BaseAlt = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.BaseAlt = new VPS.Controls.CustomControls.CustomIntegerInput(this.components);
             this.CoordSystem = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.labelX9 = new DevComponents.DotNetBar.LabelX();
-            this.WpRad = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.WpRad = new VPS.Controls.CustomControls.CustomIntegerInput(this.components);
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.labelX3 = new DevComponents.DotNetBar.LabelX();
-            this.WarnAlt = new VPS.Controls.MyControls.MyIntegerInput(this.components);
-            this.DefaultAlt = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.WarnAlt = new VPS.Controls.CustomControls.CustomIntegerInput(this.components);
+            this.DefaultAlt = new VPS.Controls.CustomControls.CustomIntegerInput(this.components);
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.AltFrame = new DevComponents.DotNetBar.Controls.ComboBoxEx();
@@ -369,20 +369,20 @@
         #endregion
         private DevComponents.DotNetBar.PanelEx MainPanel;
         private DevComponents.DotNetBar.LabelX labelX3;
-        private VPS.Controls.MyControls.MyIntegerInput WarnAlt;
-        private VPS.Controls.MyControls.MyIntegerInput DefaultAlt;
+        private VPS.Controls.CustomControls.CustomIntegerInput WarnAlt;
+        private VPS.Controls.CustomControls.CustomIntegerInput DefaultAlt;
         private DevComponents.DotNetBar.LabelX labelX2;
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.Controls.ComboBoxEx AltFrame;
         private DevComponents.DotNetBar.Controls.ComboBoxEx CoordSystem;
         private DevComponents.DotNetBar.LabelX labelX9;
-        private VPS.Controls.MyControls.MyIntegerInput WpRad;
+        private VPS.Controls.CustomControls.CustomIntegerInput WpRad;
         private DevComponents.DotNetBar.LabelX labelX4;
         private DevComponents.DotNetBar.Controls.CheckBoxX AutoWarnAlt;
         private DevComponents.DotNetBar.LabelX labelX10;
-        private VPS.Controls.MyControls.MyIntegerInput BaseAlt;
+        private VPS.Controls.CustomControls.CustomIntegerInput BaseAlt;
         private DevComponents.DotNetBar.SuperGrid.SuperGridControl CommandDataList;
         private System.Windows.Forms.ImageList ImageList;
-        private MyControls.MyPositionDisplay HomePositionDisplay;
+        private VPS.Controls.CustomControls.PositionDisplay HomePositionDisplay;
     }
 }

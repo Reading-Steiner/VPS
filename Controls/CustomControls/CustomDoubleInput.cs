@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 using DevComponents.Editors;
 using System.Text.RegularExpressions;
 
-namespace VPS.Controls.MyControls
+namespace VPS.Controls.CustomControls
 {
-    public partial class MyDoubleInput : DoubleInput
+    public partial class CustomDoubleInput : DoubleInput
     {
-        public MyDoubleInput()
+        public CustomDoubleInput()
             : base()
         {
             InitializeComponent();
@@ -20,7 +20,7 @@ namespace VPS.Controls.MyControls
             this.ConvertFreeTextEntry += MyDoubleInput_ConvertFreeTextEntry;
         }
 
-        public MyDoubleInput(IContainer container)
+        public CustomDoubleInput(IContainer container)
             : base()
         {
             container.Add(this);

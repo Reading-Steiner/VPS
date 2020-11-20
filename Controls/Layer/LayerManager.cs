@@ -173,12 +173,12 @@ namespace VPS.Controls.Layer
 
             panel.Columns[deleteColumnName].MinimumWidth = 25;
             panel.Columns[deleteColumnName].Width = 25;
-            panel.Columns[deleteColumnName].EditorType = typeof(MyControls.ImagePanel);
+            panel.Columns[deleteColumnName].EditorType = typeof(CustomControls.ImagePanel);
             panel.Columns[deleteColumnName].EditorParams = new object[] { ImageList.Images["Delete.png"] };
 
             panel.Columns[defaultColumnName].MinimumWidth = 25;
             panel.Columns[defaultColumnName].Width = 25;
-            panel.Columns[defaultColumnName].EditorType = typeof(MyControls.ImageCheckBox);
+            panel.Columns[defaultColumnName].EditorType = typeof(CustomControls.ImageCheckBox);
             panel.Columns[defaultColumnName].EditorParams = new object[] { ImageList.Images["Default.png"] };
             panel.Columns[defaultColumnName].ReadOnly = true;
         }

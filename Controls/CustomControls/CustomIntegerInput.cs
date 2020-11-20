@@ -9,11 +9,11 @@ using DevComponents.Editors;
 using System.Text.RegularExpressions;
 
 
-namespace VPS.Controls.MyControls
+namespace VPS.Controls.CustomControls
 {
-    public partial class MyIntegerInput : IntegerInput
+    public partial class CustomIntegerInput : IntegerInput
     {
-        public MyIntegerInput()
+        public CustomIntegerInput()
             : base()
         {
             InitializeComponent();
@@ -21,7 +21,7 @@ namespace VPS.Controls.MyControls
             this.ConvertFreeTextEntry += MyIntegerInput_ConvertFreeTextEntry;
         }
 
-        public MyIntegerInput(IContainer container)
+        public CustomIntegerInput(IContainer container)
             : base()
         {
             container.Add(this);

@@ -422,10 +422,16 @@
     <Compile Include="Controls\ComboDataList.Designer.cs">
       <DependentUpon>ComboDataList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Grid\CustomPosition.cs">
+    <Compile Include="Controls\CustomForms\CustomCamera.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\Grid\CustomPosition.Designer.cs">
+    <Compile Include="Controls\CustomForms\CustomCamera.Designer.cs">
+      <DependentUpon>CustomCamera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomForms\CustomPosition.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomForms\CustomPosition.Designer.cs">
       <DependentUpon>CustomPosition.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Layer\TiffLayerDisplay.cs">
@@ -440,7 +446,7 @@
     <Compile Include="Controls\LoadAndSave\LoadWP.Designer.cs">
       <DependentUpon>LoadWP.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MyControls\MyGridControls.cs">
+    <Compile Include="Controls\CustomControls\CustomGridControls.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\DevopsUI.cs">
@@ -472,12 +478,6 @@
     </Compile>
     <Compile Include="Controls\GradualButton.Designer.cs">
       <DependentUpon>GradualButton.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Grid\CustomCamera.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\Grid\CustomCamera.Designer.cs">
-      <DependentUpon>CustomCamera.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Grid\GridConfig.cs">
       <SubType>UserControl</SubType>
@@ -512,23 +512,23 @@
     <Compile Include="Controls\LayerTile.Designer.cs">
       <DependentUpon>LayerTile.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MyControls\MyDoubleInput.cs">
+    <Compile Include="Controls\CustomControls\CustomDoubleInput.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MyControls\MyDoubleInput.Designer.cs">
-      <DependentUpon>MyDoubleInput.cs</DependentUpon>
+    <Compile Include="Controls\CustomControls\CustomDoubleInput.Designer.cs">
+      <DependentUpon>CustomDoubleInput.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MyControls\MyIntegerInput.cs">
+    <Compile Include="Controls\CustomControls\CustomIntegerInput.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MyControls\MyIntegerInput.Designer.cs">
-      <DependentUpon>MyIntegerInput.cs</DependentUpon>
+    <Compile Include="Controls\CustomControls\CustomIntegerInput.Designer.cs">
+      <DependentUpon>CustomIntegerInput.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MyControls\MyPositionDisplay.cs">
+    <Compile Include="Controls\CustomControls\PositionDisplay.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\MyControls\MyPositionDisplay.Designer.cs">
-      <DependentUpon>MyPositionDisplay.cs</DependentUpon>
+    <Compile Include="Controls\CustomControls\PositionDisplay.Designer.cs">
+      <DependentUpon>PositionDisplay.cs</DependentUpon>
     </Compile>
     <Compile Include="VPSData\EnumCollect\AltFrame.cs" />
     <Compile Include="VPSData\Layer\LayerInfo.cs" />
@@ -877,6 +877,12 @@
     <EmbeddedResource Include="Controls\ControlSensorsStatus.resx">
       <DependentUpon>ControlSensorsStatus.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CustomForms\CustomCamera.resx">
+      <DependentUpon>CustomCamera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CustomForms\CustomPosition.resx">
+      <DependentUpon>CustomPosition.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\DevopsUI.resx">
       <DependentUpon>DevopsUI.cs</DependentUpon>
     </EmbeddedResource>
@@ -888,12 +894,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\GobalWPConfig.resx">
       <DependentUpon>GobalWPConfig.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Grid\CustomCamera.resx">
-      <DependentUpon>CustomCamera.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Grid\CustomPosition.resx">
-      <DependentUpon>CustomPosition.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Grid\GridConfig.resx">
       <DependentUpon>GridConfig.cs</DependentUpon>
@@ -934,14 +934,14 @@
     <EmbeddedResource Include="Controls\MainInfo\TopMainInfo.resx">
       <DependentUpon>TopMainInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\MyControls\MyDoubleInput.resx">
-      <DependentUpon>MyDoubleInput.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\CustomControls\CustomDoubleInput.resx">
+      <DependentUpon>CustomDoubleInput.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\MyControls\MyIntegerInput.resx">
-      <DependentUpon>MyIntegerInput.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\CustomControls\CustomIntegerInput.resx">
+      <DependentUpon>CustomIntegerInput.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\MyControls\MyPositionDisplay.resx">
-      <DependentUpon>MyPositionDisplay.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\CustomControls\PositionDisplay.resx">
+      <DependentUpon>PositionDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressBar\UserProgressBar.resx">
       <DependentUpon>UserProgressBar.cs</DependentUpon>

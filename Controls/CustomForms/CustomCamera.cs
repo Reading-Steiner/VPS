@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
 
-namespace VPS.Controls.Grid
+namespace VPS.Controls.CustomForms
 {
     public partial class CustomCamera : Office2007Form
     {

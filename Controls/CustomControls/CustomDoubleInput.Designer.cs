@@ -1,6 +1,6 @@
-﻿namespace VPS.Controls.MyControls
+﻿namespace VPS.Controls.CustomControls
 {
-    partial class MyDoubleInput
+    partial class CustomDoubleInput
     {
         /// <summary>
         /// 必需的设计器变量。

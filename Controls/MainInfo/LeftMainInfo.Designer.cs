@@ -72,8 +72,8 @@
             this.BoundBox = new DevComponents.DotNetBar.PanelEx();
             this.panelEx6 = new DevComponents.DotNetBar.PanelEx();
             this.label6 = new System.Windows.Forms.Label();
-            this.CurrentPosition = new VPS.Controls.MyControls.MyPositionDisplay();
-            this.HomePosition = new VPS.Controls.MyControls.MyPositionDisplay();
+            this.CurrentPosition = new VPS.Controls.CustomControls.PositionDisplay();
+            this.HomePosition = new VPS.Controls.CustomControls.PositionDisplay();
             this.panelEx1.SuspendLayout();
             this.panelEx8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Relative)).BeginInit();
@@ -887,7 +887,7 @@
         private DevComponents.DotNetBar.LabelX labelX29;
         private DevComponents.Editors.IntegerInput Relative;
         private DevComponents.DotNetBar.LabelX labelX4;
-        private MyControls.MyPositionDisplay CurrentPosition;
-        private MyControls.MyPositionDisplay HomePosition;
+        private CustomControls.PositionDisplay CurrentPosition;
+        private CustomControls.PositionDisplay HomePosition;
     }
 }

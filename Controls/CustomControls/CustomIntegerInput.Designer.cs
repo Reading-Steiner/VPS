@@ -1,6 +1,6 @@
-﻿namespace VPS.Controls.MyControls
+﻿namespace VPS.Controls.CustomControls
 {
-    partial class MyIntegerInput
+    partial class CustomIntegerInput
     {
         /// <summary>
         /// 必需的设计器变量。

@@ -1057,7 +1057,7 @@ namespace VPS.Controls.Grid
         #region 添加信息
         private void AddCamera_Click(object sender, EventArgs e)
         {
-            using (CustomCamera dlg = new CustomCamera())
+            using (CustomForms.CustomCamera dlg = new CustomForms.CustomCamera())
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

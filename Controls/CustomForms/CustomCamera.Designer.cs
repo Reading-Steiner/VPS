@@ -1,4 +1,4 @@
-﻿namespace VPS.Controls.Grid
+﻿namespace VPS.Controls.CustomForms
 {
     partial class CustomCamera
     {
@@ -32,15 +32,15 @@
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.Camera = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.FocalLength = new VPS.Controls.MyControls.MyDoubleInput(this.components);
+            this.FocalLength = new VPS.Controls.CustomControls.CustomDoubleInput(this.components);
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.SensHeight = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.SensWidth = new VPS.Controls.MyControls.MyDoubleInput(this.components);
-            this.ImgHeight = new VPS.Controls.MyControls.MyIntegerInput(this.components);
-            this.ImgWidth = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.SensHeight = new VPS.Controls.CustomControls.CustomDoubleInput(this.components);
+            this.SensWidth = new VPS.Controls.CustomControls.CustomDoubleInput(this.components);
+            this.ImgHeight = new VPS.Controls.CustomControls.CustomIntegerInput(this.components);
+            this.ImgWidth = new VPS.Controls.CustomControls.CustomIntegerInput(this.components);
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
@@ -357,15 +357,15 @@
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.LabelX labelX2;
         private DevComponents.DotNetBar.Controls.TextBoxX Camera;
-        private VPS.Controls.MyControls.MyDoubleInput FocalLength;
+        private VPS.Controls.CustomControls.CustomDoubleInput FocalLength;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label5;
-        private VPS.Controls.MyControls.MyDoubleInput SensHeight;
-        private VPS.Controls.MyControls.MyDoubleInput SensWidth;
-        private VPS.Controls.MyControls.MyIntegerInput ImgHeight;
-        private VPS.Controls.MyControls.MyIntegerInput ImgWidth;
+        private VPS.Controls.CustomControls.CustomDoubleInput SensHeight;
+        private VPS.Controls.CustomControls.CustomDoubleInput SensWidth;
+        private VPS.Controls.CustomControls.CustomIntegerInput ImgHeight;
+        private VPS.Controls.CustomControls.CustomIntegerInput ImgWidth;
         private DevComponents.DotNetBar.LabelX labelX5;
         private DevComponents.DotNetBar.LabelX labelX4;
         private DevComponents.DotNetBar.ButtonX buttonX1;

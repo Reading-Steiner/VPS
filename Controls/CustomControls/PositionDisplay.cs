@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace VPS.Controls.MyControls
+namespace VPS.Controls.CustomControls
 {
-    public partial class MyPositionDisplay : UserControl
+    public partial class PositionDisplay : UserControl
     {
-        public MyPositionDisplay()
+        public PositionDisplay()
         {
             InitializeComponent();
         }
@@ -90,7 +90,7 @@ namespace VPS.Controls.MyControls
         {
             if (isEndable)
             {
-                using (Grid.CustomPosition dlg = new Grid.CustomPosition(Position))
+                using (CustomForms.CustomPosition dlg = new CustomForms.CustomPosition(Position))
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {

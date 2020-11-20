@@ -53,8 +53,8 @@
             this.SaveFile = new DevComponents.DotNetBar.ButtonX();
             this.SaveFilePath = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.TileNameBox = new DevComponents.DotNetBar.PanelEx();
-            this.TileYSize = new VPS.Controls.MyControls.MyIntegerInput(this.components);
-            this.TileXSize = new VPS.Controls.MyControls.MyIntegerInput(this.components);
+            this.TileYSize = new VPS.Controls.CustomControls.CustomIntegerInput(this.components);
+            this.TileXSize = new VPS.Controls.CustomControls.CustomIntegerInput(this.components);
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX7 = new DevComponents.DotNetBar.LabelX();
@@ -71,7 +71,7 @@
             this.Preview = new DevComponents.DotNetBar.ButtonX();
             this.SettingDefaultMap = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.panelEx16 = new DevComponents.DotNetBar.PanelEx();
-            this.OriginPosition = new VPS.Controls.MyControls.MyPositionDisplay();
+            this.OriginPosition = new VPS.Controls.CustomControls.PositionDisplay();
             this.TransparentBox = new DevComponents.DotNetBar.PanelEx();
             this.TransparentDisplay = new DevComponents.DotNetBar.ColorPickers.ColorCombControl();
             this.ColorPickerButton = new DevComponents.DotNetBar.ColorPickerButton();
@@ -1365,10 +1365,10 @@
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.PanelEx panelEx9;
         private DevComponents.DotNetBar.ButtonX Accept;
-        private VPS.Controls.MyControls.MyIntegerInput TileYSize;
-        private VPS.Controls.MyControls.MyIntegerInput TileXSize;
+        private VPS.Controls.CustomControls.CustomIntegerInput TileYSize;
+        private VPS.Controls.CustomControls.CustomIntegerInput TileXSize;
         private DevComponents.DotNetBar.Controls.CheckBoxX FromTile;
         private DevComponents.DotNetBar.PanelEx panelEx16;
-        private MyControls.MyPositionDisplay OriginPosition;
+        private CustomControls.PositionDisplay OriginPosition;
     }
 }
