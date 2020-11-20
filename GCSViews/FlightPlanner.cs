@@ -572,10 +572,10 @@ namespace VPS.GCSViews
             }
 
             // dragging a WP
-            if (pointno == VPS.WP.WPCommands.HomeCommand)
+            if (pointno == CustomData.WP.WPCommands.HomeCommand)
             {
                 // auto update home alt
-                var home = VPS.WP.WPGlobalData.instance.GetHomePosition();
+                var home = CustomData.WP.WPGlobalData.instance.GetHomePosition();
                 if (home != null)
                 {
                     home.Lat = lat;
@@ -585,11 +585,11 @@ namespace VPS.GCSViews
                 {
                     home = new PointLatLngAlt(lat, lng);
                     home.Alt = 0;
-                    home.Tag = VPS.WP.WPCommands.HomeCommand;
-                    home.Tag2 = VPS.EnumCollect.AltFrame.Terrain;
+                    home.Tag = CustomData.WP.WPCommands.HomeCommand;
+                    home.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
                 }
 
-                VPS.WP.WPGlobalData.instance.SetHomePosition(home);
+                CustomData.WP.WPGlobalData.instance.SetHomePosition(home);
                 return;
             }
 
@@ -862,7 +862,7 @@ namespace VPS.GCSViews
 
         internal IList<Locationwp> GetFlightPlanLocations()
         {
-            return GetCommandList(VPS.WP.WPGlobalData.instance.GetWPList()).AsReadOnly();
+            return GetCommandList(CustomData.WP.WPGlobalData.instance.GetWPList()).AsReadOnly();
         }
 
 
@@ -1381,7 +1381,7 @@ namespace VPS.GCSViews
             //set home
             try
             {
-                PointLatLngAlt home = VPS.WP.WPGlobalData.instance.GetHomePosition();
+                PointLatLngAlt home = CustomData.WP.WPGlobalData.instance.GetHomePosition();
                 if (home != null)
                 {
                     MainMap.Position = new PointLatLng(home.Lat, home.Lng);
@@ -2213,7 +2213,7 @@ namespace VPS.GCSViews
             // set home location
             if (MainV2.comPort.MAV.cs.HomeLocation.Lat != 0 && MainV2.comPort.MAV.cs.HomeLocation.Lng != 0)
             {
-                VPS.WP.WPGlobalData.instance.SetHomePosition(new PointLatLngAlt(
+                CustomData.WP.WPGlobalData.instance.SetHomePosition(new PointLatLngAlt(
                                 MainV2.comPort.MAV.cs.HomeLocation.Lat,
                                 MainV2.comPort.MAV.cs.HomeLocation.Lng,
                                 MainV2.comPort.MAV.cs.HomeLocation.Alt));
@@ -2221,7 +2221,7 @@ namespace VPS.GCSViews
             }
             else if (MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat != 0 && MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng != 0)
             {
-                VPS.WP.WPGlobalData.instance.SetHomePosition(new PointLatLngAlt(
+                CustomData.WP.WPGlobalData.instance.SetHomePosition(new PointLatLngAlt(
                                 MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat,
                                 MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng,
                                 MainV2.comPort.MAV.cs.PlannedHomeLocation.Alt));
@@ -2457,14 +2457,14 @@ namespace VPS.GCSViews
 
         public void wpMarkersGroupFirst()
         {
-            if (VPS.WP.WPGlobalData.instance.GetWPCount() > 0)
+            if (CustomData.WP.WPGlobalData.instance.GetWPCount() > 0)
                 wpMarkersGroup.Add(0);
             writeKML();
         }
 
         public void polygonMarkersGroupFirst()
         {
-            if (VPS.WP.WPGlobalData.instance.GetPolyCount() > 0)
+            if (CustomData.WP.WPGlobalData.instance.GetPolyCount() > 0)
                 polyMarkersGroup.Add(0);
             redrawPolygonSurvey();
         }
@@ -2476,7 +2476,7 @@ namespace VPS.GCSViews
                 int next = (wpMarkersGroup.Max() + 1);
                 wpMarkersGroup.Clear();
                 if (next >= 0)
-                    wpMarkersGroup.Add(next % VPS.WP.WPGlobalData.instance.GetWPCount());
+                    wpMarkersGroup.Add(next % CustomData.WP.WPGlobalData.instance.GetWPCount());
                 else
                     wpMarkersGroup.Add(next);
                 writeKML();
@@ -2492,7 +2492,7 @@ namespace VPS.GCSViews
                 if (prev >= 0)
                     wpMarkersGroup.Add(prev);
                 else
-                    wpMarkersGroup.Add(prev + VPS.WP.WPGlobalData.instance.GetWPCount());
+                    wpMarkersGroup.Add(prev + CustomData.WP.WPGlobalData.instance.GetWPCount());
                 writeKML();
             }
         }
@@ -2503,8 +2503,8 @@ namespace VPS.GCSViews
             {
                 int next = (polyMarkersGroup.Max() + 1);
                 polyMarkersGroup.Clear();
-                if (next >= VPS.WP.WPGlobalData.instance.GetPolyCount())
-                    polyMarkersGroup.Add(next % VPS.WP.WPGlobalData.instance.GetPolyCount());
+                if (next >= CustomData.WP.WPGlobalData.instance.GetPolyCount())
+                    polyMarkersGroup.Add(next % CustomData.WP.WPGlobalData.instance.GetPolyCount());
                 else
                     polyMarkersGroup.Add(next);
 
@@ -2521,7 +2521,7 @@ namespace VPS.GCSViews
                 if (prev >= 0)
                     polyMarkersGroup.Add(prev);
                 else
-                    polyMarkersGroup.Add(prev + VPS.WP.WPGlobalData.instance.GetPolyCount());
+                    polyMarkersGroup.Add(prev + CustomData.WP.WPGlobalData.instance.GetPolyCount());
                 redrawPolygonSurvey();
             }
         }
@@ -2548,16 +2548,16 @@ namespace VPS.GCSViews
 
         private void polygonMarkersGroupMove(int xMove, int yMove)
         {
-            VPS.WP.WPGlobalData.instance.BegionQuick();
+            CustomData.WP.WPGlobalData.instance.BegionQuick();
 
             for (int index = 0; index < polyMarkersGroup.Count; index++)
             {
                 try
                 {
                     int no = polyMarkersGroup[index];
-                    if (no >= 0 && no < VPS.WP.WPGlobalData.instance.GetPolyCount())
+                    if (no >= 0 && no < CustomData.WP.WPGlobalData.instance.GetPolyCount())
                     {
-                        PointLatLngAlt poly = VPS.WP.WPGlobalData.instance.GetPolyPoint(no);
+                        PointLatLngAlt poly = CustomData.WP.WPGlobalData.instance.GetPolyPoint(no);
                         GPoint point = MainMap.FromLatLngToLocal(poly);
                         int idx = 1;
                         while (true)
@@ -2571,7 +2571,7 @@ namespace VPS.GCSViews
                                     poly.Lat = position.Lat;
                                 if (xMove != 0)
                                     poly.Lng = position.Lng;
-                                VPS.WP.WPGlobalData.instance.MovePolyHandle(no, poly);
+                                CustomData.WP.WPGlobalData.instance.MovePolyHandle(no, poly);
                                 break;
                             }
                             else
@@ -2585,9 +2585,9 @@ namespace VPS.GCSViews
                 }
             }
 
-            VPS.WP.WPGlobalData.instance.EndQuick();
+            CustomData.WP.WPGlobalData.instance.EndQuick();
 
-            VPS.WP.WPGlobalData.instance.ExecutePolyOverSetting();
+            CustomData.WP.WPGlobalData.instance.ExecutePolyOverSetting();
         }
 
         private void wpMarkersGroupMoveUp()
@@ -2612,16 +2612,16 @@ namespace VPS.GCSViews
 
         private void wpMarkersGroupMove(int xMove, int yMove)
         {
-            VPS.WP.WPGlobalData.instance.BegionQuick();
+            CustomData.WP.WPGlobalData.instance.BegionQuick();
 
             for (int index = 0; index < wpMarkersGroup.Count; index++)
             {
                 try
                 {
                     int no = wpMarkersGroup[index];
-                    if (no >= 0 && no < VPS.WP.WPGlobalData.instance.GetWPCount())
+                    if (no >= 0 && no < CustomData.WP.WPGlobalData.instance.GetWPCount())
                     {
-                        PointLatLngAlt wp = VPS.WP.WPGlobalData.instance.GetWPPoint(no);
+                        PointLatLngAlt wp = CustomData.WP.WPGlobalData.instance.GetWPPoint(no);
                         GPoint point = MainMap.FromLatLngToLocal(wp);
                         int idx = 1;
                         while (true)
@@ -2635,7 +2635,7 @@ namespace VPS.GCSViews
                                     wp.Lat = position.Lat;
                                 if (xMove != 0)
                                     wp.Lng = position.Lng;
-                                VPS.WP.WPGlobalData.instance.SetWPHandle(no, wp);
+                                CustomData.WP.WPGlobalData.instance.SetWPHandle(no, wp);
                                 break;
                             }
                             else
@@ -2649,9 +2649,9 @@ namespace VPS.GCSViews
                 }
             }
 
-            VPS.WP.WPGlobalData.instance.EndQuick();
+            CustomData.WP.WPGlobalData.instance.EndQuick();
 
-            VPS.WP.WPGlobalData.instance.ExecuteWPOverSetting();
+            CustomData.WP.WPGlobalData.instance.ExecuteWPOverSetting();
         }
 
         private void MainMap_MouseDown(object sender, MouseEventArgs e)
@@ -3473,7 +3473,7 @@ namespace VPS.GCSViews
 
         public void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
         {
-            if (geoBitmap.File == VPS.WP.WPGlobalData.instance.GetLayer())
+            if (geoBitmap.File == CustomData.WP.WPGlobalData.instance.GetLayer())
             {
                 layerPolygonsOverlay.Polygons.Clear();
 
@@ -3485,7 +3485,7 @@ namespace VPS.GCSViews
                     geoBitmap.DisplayBitmap);
                 layerPolygonsOverlay.Polygons.Add(mark);
 
-                MainMap.SetZoomToFitRect(VPS.WP.WPGlobalData.instance.GetLayerRect());
+                MainMap.SetZoomToFitRect(CustomData.WP.WPGlobalData.instance.GetLayerRect());
 
                 Task.Run(
                     () =>
@@ -3499,7 +3499,8 @@ namespace VPS.GCSViews
                     }
                 );
 
-                VPS.WP.WPGlobalData.instance.SetHomePosition(VPS.WP.WPGlobalData.instance.GetLayerHome());
+                CustomData.WP.WPGlobalData.instance.SetHomePosition(
+                    CustomData.WP.WPGlobalData.instance.GetLayerHome());
 
                 writeKML();
             }
@@ -3507,8 +3508,8 @@ namespace VPS.GCSViews
 
         public void zoomToTiffLayer()
         {
-            if (VPS.WP.WPGlobalData.instance.GetLayer() != null)
-                MainMap.SetZoomToFitRect(VPS.WP.WPGlobalData.instance.GetLayerRect());
+            if (CustomData.WP.WPGlobalData.instance.GetLayer() != null)
+                MainMap.SetZoomToFitRect(CustomData.WP.WPGlobalData.instance.GetLayerRect());
         }
 
 
@@ -3579,7 +3580,7 @@ namespace VPS.GCSViews
         #region 清除航点
         private void clearMissionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            VPS.WP.WPGlobalData.instance.ClearWPListHandle();
+            CustomData.WP.WPGlobalData.instance.ClearWPListHandle();
         }
         #endregion
 
@@ -3683,14 +3684,14 @@ namespace VPS.GCSViews
 
         private void ClearPolygonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            VPS.WP.WPGlobalData.instance.ClearPolyHandle();
+            CustomData.WP.WPGlobalData.instance.ClearPolyHandle();
         }
         #endregion
 
         #region 保存区域
         public void SavePolygonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (VPS.WP.WPGlobalData.instance.GetPolyCount() <= 0)
+            if (CustomData.WP.WPGlobalData.instance.GetPolyCount() <= 0)
             {
                 return;
             }
@@ -3772,7 +3773,7 @@ namespace VPS.GCSViews
         #region 定位到Polygon
         public void ZoomToCenterPolygon()
         {
-            List<PointLatLngAlt> list = VPS.WP.WPGlobalData.instance.GetPolygList();
+            List<PointLatLngAlt> list = CustomData.WP.WPGlobalData.instance.GetPolygList();
             if (list.Count > 0)
             {
                 double left = list[0].Lng; double right = list[0].Lng;
@@ -3826,7 +3827,7 @@ namespace VPS.GCSViews
                 if (sethome)
                 {
                     sethome = false;
-                    CallMeDrag(VPS.WP.WPCommands.HomeCommand, lat, lng, alt);
+                    CallMeDrag(CustomData.WP.WPCommands.HomeCommand, lat, lng, alt);
                     return;
                 }
                 //creating a WP
@@ -3844,8 +3845,8 @@ namespace VPS.GCSViews
         /// </summary>
         private void CovertToWorkCoordinate(PointLatLngAlt WGS84Point, out PointLatLngAlt WorkPoint)
         {
-            var layer = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(
-                VPS.WP.WPGlobalData.instance.GetLayer()
+            var layer = CustomData.Layer.MemoryLayerCache.GetLayerFromMemoryCache(
+                CustomData.WP.WPGlobalData.instance.GetLayer()
                 );
             if (layer == null)
             {
@@ -3898,8 +3899,8 @@ namespace VPS.GCSViews
         /// </summary>
         private void CovertFromWorkCoordinate(PointLatLngAlt WorkCoordPoint, out PointLatLngAlt WGS84CorrdPoint)
         {
-            var layer = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(
-                VPS.WP.WPGlobalData.instance.GetLayer()
+            var layer = CustomData.Layer.MemoryLayerCache.GetLayerFromMemoryCache(
+                CustomData.WP.WPGlobalData.instance.GetLayer()
                 );
             if (layer == null)
             {
@@ -3963,7 +3964,7 @@ namespace VPS.GCSViews
             PointLatLngAlt current = new PointLatLngAlt(lat, lng);
             current.Alt = defaultAlt;
             current.Tag2 = altFrame.ToString();
-            VPS.WP.WPGlobalData.instance.SetCurrentPosition(current);
+            CustomData.WP.WPGlobalData.instance.SetCurrentPosition(current);
         }
         #endregion
 
@@ -4160,7 +4161,7 @@ namespace VPS.GCSViews
 
         #region AltFrame
 
-        private VPS.EnumCollect.AltFrame.Mode altFrame = VPS.EnumCollect.AltFrame.Mode.Relative;
+        private CustomData.EnumCollect.AltFrame.Mode altFrame = CustomData.EnumCollect.AltFrame.Mode.Relative;
 
         public StringChangeHandle altFrameChange;
 
@@ -4187,7 +4188,7 @@ namespace VPS.GCSViews
         #region AltFrame 入口函数
         private void SetAltFrame(string frame)
         {
-            altFrame = VPS.EnumCollect.AltFrame.GetAltFrame(frame);
+            altFrame = CustomData.EnumCollect.AltFrame.GetAltFrame(frame);
 
             if (IsAllowSendDataChange())
                 altFrameChange?.Invoke(altFrame.ToString());
@@ -4199,7 +4200,7 @@ namespace VPS.GCSViews
         #region GetAltFrame
         public string GetAltFrame()
         {
-            return VPS.EnumCollect.AltFrame.GetAltFrame(altFrame);
+            return CustomData.EnumCollect.AltFrame.GetAltFrame(altFrame);
         }
         #endregion
 
@@ -4544,7 +4545,7 @@ namespace VPS.GCSViews
         #region 刷新Polygon显示
         public void redrawPolygonSurvey()
         {
-            List<PointLatLngAlt> list = VPS.WP.WPGlobalData.instance.GetPolygList();
+            List<PointLatLngAlt> list = CustomData.WP.WPGlobalData.instance.GetPolygList();
             if (quickadd)
                 return;
             drawnpolygon.Points.Clear();
@@ -4597,18 +4598,19 @@ namespace VPS.GCSViews
 
 
             #region Home
-            PointLatLngAlt home = VPS.WP.WPGlobalData.instance.GetHomePosition();
+            PointLatLngAlt home = CustomData.WP.WPGlobalData.instance.GetHomePosition();
             if (home == null)
             {
                 home = new PointLatLngAlt();
-                home.Tag = VPS.WP.WPCommands.HomeCommand;
-                home.Tag2 = VPS.EnumCollect.AltFrame.Terrain;
+                home.Tag = CustomData.WP.WPCommands.HomeCommand;
+                home.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
             }
             #endregion
 
             try
             {
-                var wpList = VPS.WP.WPGlobalData.WPListRemoveHome(VPS.WP.WPGlobalData.instance.GetWPList());
+                var wpList = CustomData.WP.WPGlobalData.WPListRemoveHome(
+                    CustomData.WP.WPGlobalData.instance.GetWPList());
                 
                 var commandlist = GetCommandList(wpList);
 
@@ -4752,7 +4754,9 @@ namespace VPS.GCSViews
         private void saveWaypointsKML(string file)
         {
             List<PointLatLngAlt> wpList =
-                VPS.WP.WPGlobalData.WPListChangeAltFrame(VPS.WP.WPGlobalData.instance.GetWPList(), VPS.EnumCollect.AltFrame.Terrain);
+                CustomData.WP.WPGlobalData.WPListChangeAltFrame(
+                    CustomData.WP.WPGlobalData.instance.GetWPList(),
+                    CustomData.EnumCollect.AltFrame.Terrain);
             PointLatLngAlt home = wpList[0];
             wpList.RemoveAt(0);
 
@@ -4824,8 +4828,8 @@ namespace VPS.GCSViews
                 w.WriteEndElement();//styleUrl
                 w.WriteStartElement("ExtendedData", "www.dji.com");
 
-                var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(
-                    VPS.WP.WPGlobalData.instance.GetLayer()
+                var layerInfo = CustomData.Layer.MemoryLayerCache.GetLayerFromMemoryCache(
+                    CustomData.WP.WPGlobalData.instance.GetLayer()
                     );
                 if (layerInfo != null)
                 {
@@ -4854,9 +4858,9 @@ namespace VPS.GCSViews
 
                 w.WriteStartElement("altitudeMode");
 
-                if (home.Tag2 == VPS.EnumCollect.AltFrame.Absolute)
+                if (home.Tag2 == CustomData.EnumCollect.AltFrame.Absolute)
                     w.WriteString("absolute");
-                else if (home.Tag2 == VPS.EnumCollect.AltFrame.Terrain)
+                else if (home.Tag2 == CustomData.EnumCollect.AltFrame.Terrain)
                     w.WriteString("relativeToGround");
                 else
                     w.WriteString("relativeToGround");
@@ -4876,7 +4880,7 @@ namespace VPS.GCSViews
             for (int i = 0; i < wpList.Count; i++)
             {
                 bool isVisbility = false;
-                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wpList[i].Tag))
+                if (CustomData.WP.WPCommands.CoordsWPCommands.Contains(wpList[i].Tag))
                     isVisbility = true;
                 w.WriteStartElement("Placemark");
 
@@ -4927,9 +4931,9 @@ namespace VPS.GCSViews
                     w.WriteStartElement("Point");
                     w.WriteStartElement("altitudeMode");
 
-                    if (wpList[i].Tag2 == VPS.EnumCollect.AltFrame.Absolute)
+                    if (wpList[i].Tag2 == CustomData.EnumCollect.AltFrame.Absolute)
                         w.WriteString("absolute");
-                    else if (wpList[i].Tag2 == VPS.EnumCollect.AltFrame.Terrain)
+                    else if (wpList[i].Tag2 == CustomData.EnumCollect.AltFrame.Terrain)
                         w.WriteString("relativeToGround");
                     else
                         w.WriteString("relativeToGround");
@@ -4951,12 +4955,15 @@ namespace VPS.GCSViews
             w.WriteEndElement();//Folder
             #endregion
             {
-                if (altFrame.ToString() == VPS.EnumCollect.AltFrame.Absolute)
-                    wpList = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpList, VPS.EnumCollect.AltFrame.Absolute);
-                else if (altFrame.ToString() == VPS.EnumCollect.AltFrame.Terrain)
-                    wpList = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpList, VPS.EnumCollect.AltFrame.Terrain);
+                if (altFrame.ToString() == CustomData.EnumCollect.AltFrame.Absolute)
+                    wpList = CustomData.WP.WPGlobalData.WPListChangeAltFrame(
+                        wpList, CustomData.EnumCollect.AltFrame.Absolute);
+                else if (altFrame.ToString() == CustomData.EnumCollect.AltFrame.Terrain)
+                    wpList = CustomData.WP.WPGlobalData.WPListChangeAltFrame(
+                        wpList, CustomData.EnumCollect.AltFrame.Terrain);
                 else
-                    wpList = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpList, VPS.EnumCollect.AltFrame.Terrain);
+                    wpList = CustomData.WP.WPGlobalData.WPListChangeAltFrame(
+                        wpList, CustomData.EnumCollect.AltFrame.Terrain);
 
                 #region WPLines
                 //MainData Lines
@@ -4982,9 +4989,9 @@ namespace VPS.GCSViews
                 w.WriteEndElement();//tessellate
                 w.WriteStartElement("altitudeMode");
 
-                if (altFrame.ToString() == VPS.EnumCollect.AltFrame.Absolute)
+                if (altFrame.ToString() == CustomData.EnumCollect.AltFrame.Absolute)
                     w.WriteString("absolute");
-                else if (altFrame.ToString() == VPS.EnumCollect.AltFrame.Terrain)
+                else if (altFrame.ToString() == CustomData.EnumCollect.AltFrame.Terrain)
                     w.WriteString("relativeToGround");
                 else
                     w.WriteString("relativeToGround");
@@ -5126,8 +5133,8 @@ namespace VPS.GCSViews
                                 {
                                     if (point.Name == "Placemark")
                                     {
-                                        string cmd = VPS.WP.WPCommands.DefaultWPCommand;
-                                        string altitudeMode = VPS.EnumCollect.AltFrame.Terrain;
+                                        string cmd = CustomData.WP.WPCommands.DefaultWPCommand;
+                                        string altitudeMode = CustomData.EnumCollect.AltFrame.Terrain;
                                         double x = 0, y = 0, z = 0;
                                         double p1 = 0, p2 = 0, p3 = 0, p4 = 0;
                                         //selectedrow = Commands.Rows.Add();
@@ -5145,17 +5152,17 @@ namespace VPS.GCSViews
                                                     if (smode != null)
                                                     {
                                                         if (smode.InnerText == "relativeToGround")
-                                                            altitudeMode = VPS.EnumCollect.AltFrame.Terrain;
+                                                            altitudeMode = CustomData.EnumCollect.AltFrame.Terrain;
                                                         else if (smode.InnerText == "absolute")
-                                                            altitudeMode = VPS.EnumCollect.AltFrame.Absolute;
+                                                            altitudeMode = CustomData.EnumCollect.AltFrame.Absolute;
                                                         else if (smode.InnerText == "clampedToGround")
-                                                            altitudeMode = VPS.EnumCollect.AltFrame.Terrain;
+                                                            altitudeMode = CustomData.EnumCollect.AltFrame.Terrain;
                                                         else
-                                                            altitudeMode = VPS.EnumCollect.AltFrame.Terrain;
+                                                            altitudeMode = CustomData.EnumCollect.AltFrame.Terrain;
                                                     }
                                                     else
                                                     {
-                                                        altitudeMode = VPS.EnumCollect.AltFrame.Terrain;
+                                                        altitudeMode = CustomData.EnumCollect.AltFrame.Terrain;
                                                     }
                                                     var sWGS84 = info.SelectSingleNode(@"./ns2:coordinates", nsMgr);
                                                     if (sWGS84 != null)
@@ -5216,9 +5223,9 @@ namespace VPS.GCSViews
                                 }
 
                                 if (append)
-                                    VPS.WP.WPGlobalData.instance.AppendWPListHandle(wpList);
+                                    CustomData.WP.WPGlobalData.instance.AppendWPListHandle(wpList);
                                 else
-                                    VPS.WP.WPGlobalData.instance.SetWPListHandle(wpList);
+                                    CustomData.WP.WPGlobalData.instance.SetWPListHandle(wpList);
                             }
                         }
                     }
@@ -5366,7 +5373,7 @@ namespace VPS.GCSViews
                         wplist[index].Param4 = 0;
                         
                     }
-                    VPS.WP.WPGlobalData.instance.SetWPListHandle(wplist);
+                    CustomData.WP.WPGlobalData.instance.SetWPListHandle(wplist);
                 }
                 catch { }
                 finally
@@ -5432,8 +5439,8 @@ namespace VPS.GCSViews
 
         private void processKMLMission(object sender, ElementEventArgs e)
         {
-            VPS.WP.WPGlobalData.instance.ExecuteWPStartSetting();
-            VPS.WP.WPGlobalData.instance.BegionQuick();
+            CustomData.WP.WPGlobalData.instance.ExecuteWPStartSetting();
+            CustomData.WP.WPGlobalData.instance.BegionQuick();
             try
             {
                 Element element = e.Element;
@@ -5490,8 +5497,8 @@ namespace VPS.GCSViews
             catch { }
             finally
             {
-                VPS.WP.WPGlobalData.instance.EndQuick();
-                VPS.WP.WPGlobalData.instance.ExecuteWPOverSetting();
+                CustomData.WP.WPGlobalData.instance.EndQuick();
+                CustomData.WP.WPGlobalData.instance.ExecuteWPOverSetting();
                 ZoomToCenterWP();
             }
         }
@@ -5516,7 +5523,7 @@ namespace VPS.GCSViews
         /// </summary>
         private void savepolygons()
         {
-            if (VPS.WP.WPGlobalData.instance.GetPolyCount() <= 0)
+            if (CustomData.WP.WPGlobalData.instance.GetPolyCount() <= 0)
             {
                 return;
             }
@@ -5549,14 +5556,14 @@ namespace VPS.GCSViews
 
                 sw.WriteLine("#saved by Mission Planner " + Application.ProductVersion);
 
-                if (VPS.WP.WPGlobalData.instance.GetPolyCount() > 0)
+                if (CustomData.WP.WPGlobalData.instance.GetPolyCount() > 0)
                 {
-                    foreach (var pll in VPS.WP.WPGlobalData.instance.GetPolygList())
+                    foreach (var pll in CustomData.WP.WPGlobalData.instance.GetPolygList())
                     {
                         sw.WriteLine(pll.Lat.ToString(CultureInfo.InvariantCulture) + " " + pll.Lng.ToString(CultureInfo.InvariantCulture));
                     }
 
-                    PointLatLng pll2 = VPS.WP.WPGlobalData.instance.GetPolyPoint(0);
+                    PointLatLng pll2 = CustomData.WP.WPGlobalData.instance.GetPolyPoint(0);
 
                     sw.WriteLine(pll2.Lat.ToString(CultureInfo.InvariantCulture) + " " + pll2.Lng.ToString(CultureInfo.InvariantCulture));
                 }
@@ -5670,7 +5677,7 @@ namespace VPS.GCSViews
                 poly.RemoveAt(poly.Count - 1);
             }
 
-            VPS.WP.WPGlobalData.instance.SetPolyListHandle(poly);
+            CustomData.WP.WPGlobalData.instance.SetPolyListHandle(poly);
 
             ZoomToCenterPolygon();
         }
@@ -5733,7 +5740,7 @@ namespace VPS.GCSViews
                             poly.RemoveAt(poly.Count - 1);
                         }
 
-                        VPS.WP.WPGlobalData.instance.SetPolyListHandle(poly);
+                        CustomData.WP.WPGlobalData.instance.SetPolyListHandle(poly);
 
                         ZoomToCenterPolygon();
                     }
@@ -5790,7 +5797,7 @@ namespace VPS.GCSViews
                 temp.lat = wp.Lat;
                 temp.lng = wp.Lng;
 
-                temp.frame = (byte)(short)VPS.EnumCollect.AltFrame.GetAltFrame(wp.Tag2);
+                temp.frame = (byte)(short)CustomData.EnumCollect.AltFrame.GetAltFrame(wp.Tag2);
 
                 temp.p1 = (float)wp.Param1;
                 temp.p2 = (float)wp.Param2;
@@ -5814,8 +5821,8 @@ namespace VPS.GCSViews
                 temp.Lat = wp.lat;
                 temp.Lng = wp.lng;
 
-                temp.Tag2 = VPS.EnumCollect.AltFrame.GetAltFrame(
-                    (VPS.EnumCollect.AltFrame.Mode)wp.frame);
+                temp.Tag2 = CustomData.EnumCollect.AltFrame.GetAltFrame(
+                    (CustomData.EnumCollect.AltFrame.Mode)wp.frame);
 
                 temp.Lat = wp.p1;
                 temp.Lng = wp.p2;
@@ -5842,12 +5849,12 @@ namespace VPS.GCSViews
             PointLatLngAlt wp = new PointLatLngAlt(lat, lng, alt);
             if (splineMode)
             {
-                wp.Tag = VPS.WP.WPCommands.SplineWPCommand;
+                wp.Tag = CustomData.WP.WPCommands.SplineWPCommand;
                 wp.Tag2 = "Relative";
             }
             else
             {
-                wp.Tag = VPS.WP.WPCommands.DefaultWPCommand;
+                wp.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
                 wp.Tag2 = "Relative";
             }
             return wp;
@@ -5859,7 +5866,7 @@ namespace VPS.GCSViews
         private int AddWPPoint(double lat, double lng, int alt)
         {
             var wp = GeneralWPPoint(lat, lng, alt);
-            return VPS.WP.WPGlobalData.instance.AddWPHandle(wp);
+            return CustomData.WP.WPGlobalData.instance.AddWPHandle(wp);
         }
 
         #endregion
@@ -5869,7 +5876,7 @@ namespace VPS.GCSViews
         {
             var wp = GeneralWPPoint(lat, lng, alt);
 
-            VPS.WP.WPGlobalData.instance.InsertWPHandle(index, wp);
+            CustomData.WP.WPGlobalData.instance.InsertWPHandle(index, wp);
         }
 
         #endregion
@@ -5879,16 +5886,16 @@ namespace VPS.GCSViews
         {
             if (alt == -1)
             {
-                var wp = VPS.WP.WPGlobalData.instance.GetWPPoint(index);
+                var wp = CustomData.WP.WPGlobalData.instance.GetWPPoint(index);
                 wp.Lat = lat;
                 wp.Lng = lng;
 
-                VPS.WP.WPGlobalData.instance.SetWPHandle(index, wp);
+                CustomData.WP.WPGlobalData.instance.SetWPHandle(index, wp);
             }
             else
             {
                 var wp = GeneralWPPoint(lat, lng, alt);
-                VPS.WP.WPGlobalData.instance.SetWPHandle(index, wp);
+                CustomData.WP.WPGlobalData.instance.SetWPHandle(index, wp);
             }
         }
         #endregion
@@ -5896,9 +5903,9 @@ namespace VPS.GCSViews
         #region 删除航点
         public void DeleteWP(int index)
         {
-            if (index >= 0 && index < VPS.WP.WPGlobalData.instance.GetWPCount())
+            if (index >= 0 && index < CustomData.WP.WPGlobalData.instance.GetWPCount())
             {
-                VPS.WP.WPGlobalData.instance.DeleteWPHandle(index);
+                CustomData.WP.WPGlobalData.instance.DeleteWPHandle(index);
             }
         }
         #endregion
@@ -5924,7 +5931,7 @@ namespace VPS.GCSViews
         public void AddPolyPoint(double lat, double lng)
         {
             PointLatLngAlt point = new PointLatLngAlt(lat, lng);
-            VPS.WP.WPGlobalData.instance.AddPolyHandle(point);
+            CustomData.WP.WPGlobalData.instance.AddPolyHandle(point);
         }
         #endregion
 
@@ -5932,7 +5939,7 @@ namespace VPS.GCSViews
         public void InsertPolyPoint(int index,double lat, double lng)
         {
             PointLatLngAlt point = new PointLatLngAlt(lat, lng);
-            VPS.WP.WPGlobalData.instance.InsertPolyHandle(index, point);
+            CustomData.WP.WPGlobalData.instance.InsertPolyHandle(index, point);
         }
         #endregion
 
@@ -5940,16 +5947,16 @@ namespace VPS.GCSViews
         public void SetPolyPoint(int index, double lat, double lng)
         {
             PointLatLngAlt point = new PointLatLngAlt(lat, lng);
-            VPS.WP.WPGlobalData.instance.MovePolyHandle(index, point);
+            CustomData.WP.WPGlobalData.instance.MovePolyHandle(index, point);
         }
         #endregion
 
         #region 删除区域点
         public void DeletePolygon(int index)
         {
-            if (index >= 0 && index < VPS.WP.WPGlobalData.instance.GetPolyCount())
+            if (index >= 0 && index < CustomData.WP.WPGlobalData.instance.GetPolyCount())
             {
-                VPS.WP.WPGlobalData.instance.DeletePolyHandle(index);
+                CustomData.WP.WPGlobalData.instance.DeletePolyHandle(index);
             }
         }
         #endregion
@@ -5963,16 +5970,16 @@ namespace VPS.GCSViews
         #region 删除选中组
         public void DeleteCurrentWP()
         {
-            VPS.WP.WPGlobalData.instance.ExecuteWPStartSetting();
-            VPS.WP.WPGlobalData.instance.BegionQuick();
+            CustomData.WP.WPGlobalData.instance.ExecuteWPStartSetting();
+            CustomData.WP.WPGlobalData.instance.BegionQuick();
             if (wpMarkersGroup.Count > 0)
             {
-                for (int a = VPS.WP.WPGlobalData.instance.GetWPCount() - 1; a >= 0; a--)
+                for (int a = CustomData.WP.WPGlobalData.instance.GetWPCount() - 1; a >= 0; a--)
                 {
                     try
                     {
                         if (wpMarkersGroup.Contains(a))
-                            VPS.WP.WPGlobalData.instance.DeleteWPHandle(a);// home is none
+                            CustomData.WP.WPGlobalData.instance.DeleteWPHandle(a);// home is none
                     }
                     catch (Exception ex)
                     {
@@ -5982,10 +5989,10 @@ namespace VPS.GCSViews
                 }
                 wpMarkersGroupClear();
             }
-            VPS.WP.WPGlobalData.instance.EndQuick();
+            CustomData.WP.WPGlobalData.instance.EndQuick();
             if (currentMarker != null)
                 CurentRectMarker = null;
-            VPS.WP.WPGlobalData.instance.ExecuteWPOverSetting();
+            CustomData.WP.WPGlobalData.instance.ExecuteWPOverSetting();
         }
         #endregion
 
@@ -5996,16 +6003,16 @@ namespace VPS.GCSViews
         #region 删除选中组
         public void DeleteCurrentPolygon()
         {
-            VPS.WP.WPGlobalData.instance.BegionQuick();
+            CustomData.WP.WPGlobalData.instance.BegionQuick();
             if (polyMarkersGroup.Count > 0)
             {
-                for (int a = VPS.WP.WPGlobalData.instance.GetPolyCount() - 1; a >= 0; a--)
+                for (int a = CustomData.WP.WPGlobalData.instance.GetPolyCount() - 1; a >= 0; a--)
                 {
                     try
                     {
                         if (polyMarkersGroup.Contains(a))
                         {
-                            VPS.WP.WPGlobalData.instance.DeletePolyHandle(a);
+                            CustomData.WP.WPGlobalData.instance.DeletePolyHandle(a);
                         }
                     }
                     catch (Exception ex)
@@ -6016,10 +6023,10 @@ namespace VPS.GCSViews
                 }
                 polygonMarkersGroupClear();
             }
-            VPS.WP.WPGlobalData.instance.EndQuick();
+            CustomData.WP.WPGlobalData.instance.EndQuick();
             if (currentMarker != null)
                 CurentRectMarker = null;
-            VPS.WP.WPGlobalData.instance.ExecutePolyOverSetting();
+            CustomData.WP.WPGlobalData.instance.ExecutePolyOverSetting();
         }
         #endregion
 
@@ -6243,7 +6250,7 @@ namespace VPS.GCSViews
 
             foreach (var wp in wpLists)
             {
-                if (wp.Tag == VPS.WP.WPCommands.HomeCommand)
+                if (wp.Tag == CustomData.WP.WPCommands.HomeCommand)
                     continue;
                 else /*if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))*/
                     commands.Add(GeneralWP(wp));

@@ -236,7 +236,7 @@ namespace VPS
         /// ie configuration gets reloaded on every click
         /// </summary>
         public GCSViews.FlightData FlightData;
-        VPS.Layer.MemoryLayerCache layerCache;
+        CustomData.Layer.MemoryLayerCache layerCache;
         public GCSViews.FlightPlanner FlightPlanner;
         //GCSViews.SITL Simulation;
 
@@ -578,7 +578,7 @@ namespace VPS
                 FlightData.Width = MyView.Width;
                 FlightPlanner.Width = MyView.Width;
 
-                VPS.WP.WPGlobalData.instance.historyChange += this.historyChange;
+                CustomData.WP.WPGlobalData.instance.historyChange += this.historyChange;
                 //Simulation.Width = MyView.Width;
             }
             catch (ArgumentException e)
@@ -1792,7 +1792,7 @@ namespace VPS
             {
             } // i get alot of these errors, the port is still open, but not valid - user has unpluged usb
 
-            VPS.WP.WPGlobalData.instance.SaveConfig();
+            CustomData.WP.WPGlobalData.instance.SaveConfig();
             // save config
             SaveConfig();
 
@@ -3189,27 +3189,27 @@ namespace VPS
         #region Home 数据链接
         private void delegateHomeChange()
         {
-            VPS.WP.WPGlobalData.instance.HomeChange += VPS.Controls.Command.CommandsPanel.instance.HomeChangeHandle;
-            VPS.WP.WPGlobalData.instance.HomeChange += VPS.Controls.MainInfo.LeftMainInfo.instance.HomeChangeHandle;
-            VPS.WP.WPGlobalData.instance.HomeChange += VPS.GCSViews.FlightPlanner.instance.HomeChangeHandle;
+            CustomData.WP.WPGlobalData.instance.HomeChange += VPS.Controls.Command.CommandsPanel.instance.HomeChangeHandle;
+            CustomData.WP.WPGlobalData.instance.HomeChange += VPS.Controls.MainInfo.LeftMainInfo.instance.HomeChangeHandle;
+            CustomData.WP.WPGlobalData.instance.HomeChange += VPS.GCSViews.FlightPlanner.instance.HomeChangeHandle;
         }
         #endregion
 
         #region WPList 数据链接
         private void delegateWPListChange()
         {
-            VPS.WP.WPGlobalData.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.WPChangeHandle;
-            VPS.WP.WPGlobalData.instance.WPListChange += VPS.Controls.MainInfo.LeftMainInfo.instance.WPChangeHandle;
-            VPS.WP.WPGlobalData.instance.WPListChange += VPS.GCSViews.FlightPlanner.instance.WPChangeHandle;
+            CustomData.WP.WPGlobalData.instance.WPListChange += VPS.Controls.Command.CommandsPanel.instance.WPChangeHandle;
+            CustomData.WP.WPGlobalData.instance.WPListChange += VPS.Controls.MainInfo.LeftMainInfo.instance.WPChangeHandle;
+            CustomData.WP.WPGlobalData.instance.WPListChange += VPS.GCSViews.FlightPlanner.instance.WPChangeHandle;
 
-            VPS.WP.WPGlobalData.instance.PolygonListChange += VPS.GCSViews.FlightPlanner.instance.PolyChangeHandle;
+            CustomData.WP.WPGlobalData.instance.PolygonListChange += VPS.GCSViews.FlightPlanner.instance.PolyChangeHandle;
         }
         #endregion
 
         #region CurrentPosition 数据链接
         private void delegateCurrentPosition()
         {
-            VPS.WP.WPGlobalData.instance.CurrentChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetCurrentPosition;
+            CustomData.WP.WPGlobalData.instance.CurrentChange += VPS.Controls.MainInfo.LeftMainInfo.instance.SetCurrentPosition;
         }
         #endregion
 
@@ -3227,8 +3227,8 @@ namespace VPS
         #region 加载默认图层（工作区）
         public bool LoadDefaultLayer()
         {
-            var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(
-                VPS.WP.WPGlobalData.instance.GetDefaultLayer()
+            var layerInfo = CustomData.Layer.MemoryLayerCache.GetLayerFromMemoryCache(
+                CustomData.WP.WPGlobalData.instance.GetDefaultLayer()
                 );
             if (layerInfo != null)
             {
@@ -3794,12 +3794,12 @@ namespace VPS
             GMapMarkerBase.DisplayTarget = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayTarget", true);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 
             SetInitHandler();
-            layerCache = new VPS.Layer.MemoryLayerCache();
+            layerCache = new CustomData.Layer.MemoryLayerCache();
 
             //}
             if (!LoadDefaultLayer())
             {
-                VPS.WP.WPGlobalData.instance.DefaultLayerInvalid();
+                CustomData.WP.WPGlobalData.instance.DefaultLayerInvalid();
             }
         }
         #endregion
@@ -3904,16 +3904,16 @@ namespace VPS
         /// </summary>
         private void loadProjectData(GCSViews.ProjectData data)
         {
-            VPS.WP.WPGlobalData.instance.SetPolyListHandle(data.poly);
-            VPS.WP.WPGlobalData.instance.SetWPListHandle(data.wp);
-            if (data.layer != VPS.WP.WPGlobalData.instance.GetLayer())
+            CustomData.WP.WPGlobalData.instance.SetPolyListHandle(data.poly);
+            CustomData.WP.WPGlobalData.instance.SetWPListHandle(data.wp);
+            if (data.layer != CustomData.WP.WPGlobalData.instance.GetLayer())
             {
-                VPS.WP.WPGlobalData.instance.SetLayer(data.layer);
+                CustomData.WP.WPGlobalData.instance.SetLayer(data.layer);
                 ShowLayerOverlay(data.layer);
             }
 
-            VPS.WP.WPGlobalData.instance.SetLayer(data.layer, data.isDefaultLayer);
-            VPS.WP.WPGlobalData.instance.SetLayerLimit(data.layerRect, data.homePosition, data.isDefaultLayer);
+            CustomData.WP.WPGlobalData.instance.SetLayer(data.layer, data.isDefaultLayer);
+            CustomData.WP.WPGlobalData.instance.SetLayerLimit(data.layerRect, data.homePosition, data.isDefaultLayer);
 
             GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(data.layerRect);
         }
@@ -3956,12 +3956,13 @@ namespace VPS
         private GCSViews.ProjectData saveProjectData()
         {
             var data = new GCSViews.ProjectData();
-            data.poly = VPS.WP.WPGlobalData.instance.GetPolygList();
-            data.wp = VPS.WP.WPGlobalData.instance.GetWPList();
-            data.isDefaultLayer = VPS.WP.WPGlobalData.instance.IsDefaultLayer(VPS.WP.WPGlobalData.instance.GetLayer());
-            data.layer = VPS.WP.WPGlobalData.instance.GetLayer();
-            data.layerRect = VPS.WP.WPGlobalData.instance.GetLayerRect();
-            data.homePosition = VPS.WP.WPGlobalData.instance.GetLayerHome();
+            data.poly = CustomData.WP.WPGlobalData.instance.GetPolygList();
+            data.wp = CustomData.WP.WPGlobalData.instance.GetWPList();
+            data.isDefaultLayer = CustomData.WP.WPGlobalData.instance.IsDefaultLayer(
+                CustomData.WP.WPGlobalData.instance.GetLayer());
+            data.layer = CustomData.WP.WPGlobalData.instance.GetLayer();
+            data.layerRect = CustomData.WP.WPGlobalData.instance.GetLayerRect();
+            data.homePosition = CustomData.WP.WPGlobalData.instance.GetLayerHome();
 
             return data;
         }
@@ -4218,7 +4219,7 @@ namespace VPS
         #region ClearWP
         private void ClearWPButton_Click(object sender, EventArgs e)
         {
-            VPS.WP.WPGlobalData.instance.ClearWPListHandle();
+            CustomData.WP.WPGlobalData.instance.ClearWPListHandle();
         }
         #endregion
 
@@ -4230,7 +4231,7 @@ namespace VPS
             if (!AutoWPButton.Checked)
             {
                 AutoWPButton.Checked = true;
-                VPS.WP.WPGlobalData.instance.PolygonListChange += VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
+                CustomData.WP.WPGlobalData.instance.PolygonListChange += VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
 
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
                 AutoGridDockContainerItem.Visible = true;
@@ -4243,7 +4244,7 @@ namespace VPS
             else
             {
                 AutoWPButton.Checked = false;
-                VPS.WP.WPGlobalData.instance.PolygonListChange -= VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
+                CustomData.WP.WPGlobalData.instance.PolygonListChange -= VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
 
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
                 VPS.Controls.Grid.GridConfig.instance.SaveSetting();
@@ -4336,7 +4337,7 @@ namespace VPS
         #region Undo 入口函数
         private void UndoButton_Click(object sender, EventArgs e)
         {
-            VPS.WP.WPGlobalData.instance.UndoHistory();
+            CustomData.WP.WPGlobalData.instance.UndoHistory();
         }
         #endregion
 
@@ -4489,7 +4490,7 @@ namespace VPS
 
             if (keyData == (Keys.Control | Keys.Z))
             {
-                VPS.WP.WPGlobalData.instance.UndoHistory();
+                CustomData.WP.WPGlobalData.instance.UndoHistory();
                 return true;
             }
 
@@ -4513,26 +4514,26 @@ namespace VPS
         #region AddLayer 入口函数
         public bool ShowLayerOverlay(string path)
         {
-            var layerInfo = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(path);
+            var layerInfo = CustomData.Layer.MemoryLayerCache.GetLayerFromMemoryCache(path);
             return SetLayerOverlay(layerInfo);
         }
 
         public bool AddLayerOverlay(string path, PointLatLngAlt home, Color transparent)
         {
-            var layerInfo = new VPS.Layer.TiffLayerInfo(path, home, transparent);
-            VPS.Layer.MemoryLayerCache.AddLayerToMemoryCache(layerInfo);
+            var layerInfo = new CustomData.Layer.TiffLayerInfo(path, home, transparent);
+            CustomData.Layer.MemoryLayerCache.AddLayerToMemoryCache(layerInfo);
             return SetLayerOverlay(layerInfo);
         }
 
-        public bool AddLayerOverlay(VPS.Layer.LayerInfo info)
+        public bool AddLayerOverlay(CustomData.Layer.LayerInfo info)
         {
-            VPS.Layer.MemoryLayerCache.AddLayerToMemoryCache(info);
+            CustomData.Layer.MemoryLayerCache.AddLayerToMemoryCache(info);
             return SetLayerOverlay(info);
         }
         #endregion
 
         #region LoadLayer 入口函数
-        private bool SetLayerOverlay(VPS.Layer.LayerInfo layerInfo)
+        private bool SetLayerOverlay(CustomData.Layer.LayerInfo layerInfo)
         {
             if (File.Exists(layerInfo.Layer))
             {
@@ -4543,7 +4544,7 @@ namespace VPS
 
                     ZoomTiffButton_Click(this, null);
 
-                    if (layerInfo is Layer.TiffLayerInfo)
+                    if (layerInfo is CustomData.Layer.TiffLayerInfo)
                     {
                         Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (_bitmap, _transparent) =>
                         {
@@ -4552,7 +4553,9 @@ namespace VPS
                             return _bitmap;
                         };
 
-                        IAsyncResult iar = GetGeoBitmap.BeginInvoke(geoBitmap, ((Layer.TiffLayerInfo)layerInfo).Transparent, CallbackWhenDone, this);
+                        IAsyncResult iar = GetGeoBitmap.BeginInvoke(
+                            geoBitmap, ((CustomData.Layer.TiffLayerInfo)layerInfo).Transparent, 
+                            CallbackWhenDone, this);
                     }
                     
                     return true;
@@ -4610,7 +4613,8 @@ namespace VPS
             int TileXSize = RasterXSize / TileXLen + (RasterXSize % TileXLen == 0 ? 0 : 1);
             int TileYSize = RasterYSize / TileYLen + (RasterYSize % TileYLen == 0 ? 0 : 1);
             //创建进度条
-            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("加载工作区：" + Layer.MemoryLayerCache.GetHashCode(_bitmap.File), TileXSize * TileYSize);
+            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress(
+                "加载工作区：" + CustomData.Layer.MemoryLayerCache.GetHashCode(_bitmap.File), TileXSize * TileYSize);
             try
             {
 
@@ -4649,6 +4653,6 @@ namespace VPS
 
         #endregion
 
-        private VPS.WP.WPGlobalData WPGlobalData = new VPS.WP.WPGlobalData();
+        private VPS.CustomData.WP.WPGlobalData WPGlobalData = new VPS.CustomData.WP.WPGlobalData();
     }
 }

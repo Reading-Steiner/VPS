@@ -1,7 +1,7 @@
 ﻿using VPS.Utilities;
 using System.Collections.Generic;
 
-namespace VPS.Grid
+namespace VPS.CustomData.Grid
 {
     public struct NewGridData
     {

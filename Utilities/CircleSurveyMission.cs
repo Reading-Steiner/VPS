@@ -21,8 +21,8 @@ namespace VPS.Utilities
             InputBox.Show("", "photos", ref photos);
             InputBox.Show("", "start heading", ref startheading);
 
-            VPS.WP.WPGlobalData.instance.ExecuteWPStartSetting();
-            VPS.WP.WPGlobalData.instance.BegionQuick();
+            CustomData.WP.WPGlobalData.instance.ExecuteWPStartSetting();
+            CustomData.WP.WPGlobalData.instance.BegionQuick();
 
             // set roi centerpoint
             var roi = new PointLatLngAlt(centerPoint.Lat, centerPoint.Lng, centerPoint.Alt);
@@ -31,7 +31,7 @@ namespace VPS.Utilities
             roi.Param2 = 0;
             roi.Param3 = 0;
             roi.Param4 = 0;
-            VPS.WP.WPGlobalData.instance.AddWPHandle(roi);
+            CustomData.WP.WPGlobalData.instance.AddWPHandle(roi);
 
             // alts
             for (int alt = startalt; alt <= endalt; alt += seperation)
@@ -48,7 +48,7 @@ namespace VPS.Utilities
                     wp.Param2 = 0;
                     wp.Param3 = 0;
                     wp.Param4 = 0;
-                    VPS.WP.WPGlobalData.instance.AddWPHandle(wp);
+                    CustomData.WP.WPGlobalData.instance.AddWPHandle(wp);
                     // trigger camera
                     var trigger = new PointLatLngAlt(1, 0, 0);
                     trigger.Tag = MAVLink.MAV_CMD.DO_DIGICAM_CONTROL.ToString();
@@ -56,13 +56,13 @@ namespace VPS.Utilities
                     trigger.Param2 = 0;
                     trigger.Param3 = 0;
                     trigger.Param4 = 0;
-                    VPS.WP.WPGlobalData.instance.AddWPHandle(trigger);
+                    CustomData.WP.WPGlobalData.instance.AddWPHandle(trigger);
                 }
             }
 
-            VPS.WP.WPGlobalData.instance.EndQuick();
+            CustomData.WP.WPGlobalData.instance.EndQuick();
 
-            VPS.WP.WPGlobalData.instance.ExecuteWPOverSetting();
+            CustomData.WP.WPGlobalData.instance.ExecuteWPOverSetting();
         }
     }
 }

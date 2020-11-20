@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml;
 using VPS.Utilities;
 
-namespace VPS.Grid
+namespace VPS.CustomData.Grid
 {
     public struct camerainfo
     {

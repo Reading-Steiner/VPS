@@ -3125,7 +3125,8 @@ namespace VPS.GCSViews
                             {
                                 var homeplla = new PointLatLngAlt(MainV2.comPort.MAV.cs.HomeLocation.Lat,
                                     MainV2.comPort.MAV.cs.HomeLocation.Lng,
-                                    MainV2.comPort.MAV.cs.HomeLocation.Alt / CurrentState.multiplieralt, VPS.WP.WPCommands.HomeCommand);
+                                    MainV2.comPort.MAV.cs.HomeLocation.Alt / CurrentState.multiplieralt, 
+                                    CustomData.WP.WPCommands.HomeCommand);
 
                                 var overlay = new WPOverlay();
 
@@ -5149,7 +5150,8 @@ namespace VPS.GCSViews
 
         private void zoomToTiffToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainMap.SetZoomToFitRect(VPS.WP.WPGlobalData.instance.GetLayerRect());
+            MainMap.SetZoomToFitRect(
+                CustomData.WP.WPGlobalData.instance.GetLayerRect());
         }
     }
 }

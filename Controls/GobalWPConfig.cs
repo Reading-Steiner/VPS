@@ -16,11 +16,11 @@ namespace VPS.Controls
 {
     public partial class GobalWPConfig : CCWin.CCSkinMain
     {
-        public camerainfo GetCameraInfo
+        public CustomData.Grid.camerainfo GetCameraInfo
         {
             get
             {
-                return new camerainfo()
+                return new CustomData.Grid.camerainfo()
                 {
                     name = CMB_camera.GetTextContent(),
                     focallen = Convert.ToSingle(CameraFocus.GetTextContent()),
@@ -134,7 +134,8 @@ namespace VPS.Controls
             this.Close();
         }
 
-        Dictionary<string, camerainfo> cameras = new Dictionary<string, camerainfo>();
+        Dictionary<string, CustomData.Grid.camerainfo> cameras = 
+            new Dictionary<string, CustomData.Grid.camerainfo>();
 
         private void CameraChange()
         {
@@ -347,7 +348,7 @@ namespace VPS.Controls
                                 {
                                     case "Camera":
                                         {
-                                            camerainfo camera = new camerainfo();
+                                            var camera = new CustomData.Grid.camerainfo();
 
                                             while (xmlreader.Read())
                                             {

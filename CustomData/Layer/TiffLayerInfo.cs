@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace VPS.Layer
+namespace VPS.CustomData.Layer
 {
     class TiffLayerInfo : LayerInfo
     {

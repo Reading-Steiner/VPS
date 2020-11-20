@@ -31,7 +31,8 @@ namespace VPS.GCSViews
 
         GMapOverlay markeroverlay;
 
-        GMapMarkerWP homemarker = new GMapMarkerWP(new PointLatLng(-34.98106, 117.85201), VPS.WP.WPCommands.HomeCommand);
+        GMapMarkerWP homemarker = new GMapMarkerWP(
+            new PointLatLng(-34.98106, 117.85201), CustomData.WP.WPCommands.HomeCommand);
         bool onmarker = false;
         bool mousedown = false;
         private PointLatLng MouseDownStart;

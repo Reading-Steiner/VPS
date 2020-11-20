@@ -19,10 +19,11 @@ namespace VPS.Controls.CustomForms
             InitializeComponent();
 
             var position = new Utilities.PointLatLngAlt();
-            Position.Tag = VPS.WP.WPCommands.DefaultWPCommand;
-            Position.Tag2 = VPS.EnumCollect.AltFrame.Relative;
+            Position.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
+            Position.Tag2 = CustomData.EnumCollect.AltFrame.Relative;
 
-            AltFrameSelecter.DataSource = Enum.GetValues(typeof(VPS.EnumCollect.AltFrame.Mode));
+            AltFrameSelecter.DataSource = 
+                Enum.GetValues(typeof(CustomData.EnumCollect.AltFrame.Mode));
 
             WGS84Position = position;
             defaultPosition = WGS84Position;
@@ -33,7 +34,8 @@ namespace VPS.Controls.CustomForms
         {
             InitializeComponent();
 
-            AltFrameSelecter.DataSource = Enum.GetValues(typeof(VPS.EnumCollect.AltFrame.Mode));
+            AltFrameSelecter.DataSource = 
+                Enum.GetValues(typeof(CustomData.EnumCollect.AltFrame.Mode));
 
             WGS84Position = position;
             defaultPosition = WGS84Position;
@@ -46,7 +48,8 @@ namespace VPS.Controls.CustomForms
             this.LngInput.Value = Position.Lng;
             this.LatInput.Value = Position.Lat;
             this.AltInput.Value = (int)Position.Alt;
-            this.AltFrameSelecter.SelectedItem = VPS.EnumCollect.AltFrame.GetAltFrame(Position.Tag2);
+            this.AltFrameSelecter.SelectedItem = 
+                CustomData.EnumCollect.AltFrame.GetAltFrame(Position.Tag2);
         }
         #endregion
 
@@ -62,7 +65,8 @@ namespace VPS.Controls.CustomForms
                 this.LngInput.Value = value.Lng;
                 this.LatInput.Value = value.Lat;
                 this.AltInput.Value = (int)value.Alt;
-                this.AltFrameSelecter.SelectedItem = VPS.EnumCollect.AltFrame.GetAltFrame(Position.Tag2);
+                this.AltFrameSelecter.SelectedItem = 
+                    CustomData.EnumCollect.AltFrame.GetAltFrame(Position.Tag2);
             }
             get
             {

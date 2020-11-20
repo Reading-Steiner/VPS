@@ -23,7 +23,7 @@ namespace VPS.Controls.Layer
             InitializeComponent();
             EndEdit();
 
-            VPS.Layer.MemoryLayerCache.LayerInfosChange += BindingDataSource;
+            CustomData.Layer.MemoryLayerCache.LayerInfosChange += BindingDataSource;
         }
 
         private void LayerManager_Load(object sender, EventArgs e)
@@ -35,12 +35,12 @@ namespace VPS.Controls.Layer
 
         #region 从数据源获取数据
 
-        public List<VPS.Layer.LayerInfo> GetDataSource()
+        public List<CustomData.Layer.LayerInfo> GetDataSource()
         {
-            List<VPS.Layer.LayerInfo> dataSource = new List<VPS.Layer.LayerInfo>();
-            for (int index = 0; index < VPS.Layer.MemoryLayerCache.TotalCount; index++)
+            List<CustomData.Layer.LayerInfo> dataSource = new List<CustomData.Layer.LayerInfo>();
+            for (int index = 0; index < CustomData.Layer.MemoryLayerCache.TotalCount; index++)
             {
-                var info = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCache(index, true);
+                var info = CustomData.Layer.MemoryLayerCache.GetLayerFromMemoryCache(index, true);
                 if (info != null)
                 {
                     dataSource.Add(info);
@@ -108,7 +108,7 @@ namespace VPS.Controls.Layer
         #endregion
 
         #region 生成主表行
-        private void FillMainTable(DataTable table, VPS.Layer.LayerInfo emp)
+        private void FillMainTable(DataTable table, CustomData.Layer.LayerInfo emp)
         {
             DataRow row = table.NewRow();
 
@@ -120,8 +120,8 @@ namespace VPS.Controls.Layer
             row[deleteColumnName] = "";
 
 
-            if (VPS.WP.WPGlobalData.instance != null && 
-                VPS.WP.WPGlobalData.instance.IsDefaultLayer(emp.Layer))
+            if (CustomData.WP.WPGlobalData.instance != null &&
+                CustomData.WP.WPGlobalData.instance.IsDefaultLayer(emp.Layer))
             {
                 row[defaultColumnName] = "True";
             }
@@ -130,7 +130,7 @@ namespace VPS.Controls.Layer
                 row[defaultColumnName] = "false";
             }
 
-            if (emp is VPS.Layer.TiffLayerInfo)
+            if (emp is CustomData.Layer.TiffLayerInfo)
             {
                 row[typeColumnName] = "本地文件";
             }
@@ -274,7 +274,7 @@ namespace VPS.Controls.Layer
         #endregion
 
         #region 生成Tiff行
-        private void FillLayerTable(DataTable table, VPS.Layer.TiffLayerInfo emp)
+        private void FillLayerTable(DataTable table, CustomData.Layer.TiffLayerInfo emp)
         {
             DataRow fileRow = table.NewRow();
 
@@ -402,14 +402,14 @@ namespace VPS.Controls.Layer
             BeginLoadData();
 
             // Add 50 rows to fiddle with
-            List<VPS.Layer.LayerInfo> emp = GetDataSource();
+            List<CustomData.Layer.LayerInfo> emp = GetDataSource();
             for (int i = 0; i < emp.Count; i++)
             {
                 FillMainTable(table, emp[i]);
 
-                if (emp[i] is VPS.Layer.TiffLayerInfo)
+                if (emp[i] is CustomData.Layer.TiffLayerInfo)
                 {
-                    FillLayerTable(layerTable, emp[i] as VPS.Layer.TiffLayerInfo);
+                    FillLayerTable(layerTable, emp[i] as CustomData.Layer.TiffLayerInfo);
                 }
 
             }
@@ -452,7 +452,7 @@ namespace VPS.Controls.Layer
         private void DeleteLayer(string key)
         {
             StartEdit();
-            VPS.Layer.MemoryLayerCache.DeleteLayerInMenoryCacheWithHashCode(key);
+            CustomData.Layer.MemoryLayerCache.DeleteLayerInMenoryCacheWithHashCode(key);
             for (int index = 0; index < LayerDataList.PrimaryGrid.Rows.Count; index++)
             {
                 if (LayerDataList.GetCell(index, 0).Value.ToString() == key)
@@ -474,8 +474,8 @@ namespace VPS.Controls.Layer
 
         private void ExchangeInfo(string hash)
         {
-            VPS.Layer.LayerInfo info = VPS.Layer.MemoryLayerCache.GetLayerFromMemoryCacheWithHashCode(hash);
-            if (info is VPS.Layer.TiffLayerInfo)
+            CustomData.Layer.LayerInfo info = CustomData.Layer.MemoryLayerCache.GetLayerFromMemoryCacheWithHashCode(hash);
+            if (info is CustomData.Layer.TiffLayerInfo)
             {
                 TiffLayerDisplay display = new TiffLayerDisplay();
                 display.Dock = DockStyle.Fill;

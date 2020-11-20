@@ -182,7 +182,7 @@ namespace VPS.Plugin
 
         public void RedrawFPPolygon(List<PointLatLngAlt> list)
         {
-            VPS.WP.WPGlobalData.instance.SetPolyListHandle(list);
+            CustomData.WP.WPGlobalData.instance.SetPolyListHandle(list);
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace VPS.Plugin
             wp.Param3 = p3;
             wp.Param4 = p4;
 
-            int index = VPS.WP.WPGlobalData.instance.AddWPHandle(wp);
+            int index = CustomData.WP.WPGlobalData.instance.AddWPHandle(wp);
             return index;
         }
 
@@ -245,7 +245,7 @@ namespace VPS.Plugin
             wp.Param3 = p3;
             wp.Param4 = p4;
 
-            VPS.WP.WPGlobalData.instance.InsertWPHandle(idx, wp);
+            CustomData.WP.WPGlobalData.instance.InsertWPHandle(idx, wp);
         }
 
         public int AddWPtoList(MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,

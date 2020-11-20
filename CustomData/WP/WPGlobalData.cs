@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VPS.Utilities;
 
-namespace VPS.WP
+namespace VPS.CustomData.WP
 {
     class WPGlobalData
     {
@@ -162,7 +162,7 @@ namespace VPS.WP
         {
             List<PointLatLngAlt> retList = new List<PointLatLngAlt>(wpList);
 
-            if ((retList.Count <= 0) || retList[0].Tag != VPS.WP.WPCommands.HomeCommand)
+            if ((retList.Count <= 0) || retList[0].Tag != WP.WPCommands.HomeCommand)
                 retList.Insert(0, GetHomePosition());
 
             return retList;
@@ -386,7 +386,7 @@ namespace VPS.WP
         public static List<PointLatLngAlt> WPListRemoveHome(List<PointLatLngAlt> list)
         {
             List<PointLatLngAlt> wpList = new List<PointLatLngAlt>(list);
-            if (wpList.Count > 0 && wpList[0].Tag == VPS.WP.WPCommands.HomeCommand)
+            if (wpList.Count > 0 && wpList[0].Tag == WP.WPCommands.HomeCommand)
                 wpList.RemoveAt(0);
             return wpList;
         }
@@ -416,7 +416,7 @@ namespace VPS.WP
             int doubleWP = 0;
             foreach (var wp in wpList)
             {
-                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
+                if (WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
                 {
                     if (wp.Lat == 0 && wp.Lng == 0)
                         continue;
@@ -435,7 +435,7 @@ namespace VPS.WP
             double MaxAlt = double.MinValue;
             foreach (var wp in wpList)
             {
-                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
+                if (WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
                 {
                     if (wp.Lat == 0 && wp.Lng == 0)
                         continue;
@@ -457,7 +457,7 @@ namespace VPS.WP
             double MinAlt = double.MaxValue;
             foreach (var wp in wpList)
             {
-                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
+                if (WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
                 {
                     if (wp.Lat == 0 && wp.Lng == 0)
                         continue;
@@ -476,7 +476,7 @@ namespace VPS.WP
         public static double GetTotalDist(List<PointLatLngAlt> wpLists)
         {
             var wpList = WPListRemoveHome(wpLists);
-            wpList = WPListChangeAltFrame(wpLists, VPS.EnumCollect.AltFrame.Absolute);
+            wpList = WPListChangeAltFrame(wpLists, EnumCollect.AltFrame.Absolute);
 
             double totalDist = 0.0;
             for (int index = 1; index < wpList.Count; index++)
@@ -494,41 +494,41 @@ namespace VPS.WP
         public static PointLatLngAlt WPChangeAltFrame(PointLatLngAlt cur, double baseAlt, string altitudeMode = "") {
             PointLatLngAlt point = new PointLatLngAlt(cur);
             double alt = srtm.getAltitude(point.Lat, point.Lng).alt * CurrentState.multiplieralt;
-            if (altitudeMode == VPS.EnumCollect.AltFrame.Relative)
+            if (altitudeMode == EnumCollect.AltFrame.Relative)
             {
-                if (point.Tag2 == VPS.EnumCollect.AltFrame.Relative)
+                if (point.Tag2 == EnumCollect.AltFrame.Relative)
                     ;
-                else if (point.Tag2 == VPS.EnumCollect.AltFrame.Absolute)
+                else if (point.Tag2 == EnumCollect.AltFrame.Absolute)
                     point.Alt = point.Alt - baseAlt;
-                else if (point.Tag2 == VPS.EnumCollect.AltFrame.Terrain)
+                else if (point.Tag2 == EnumCollect.AltFrame.Terrain)
                     point.Alt = point.Alt + alt - baseAlt;
                 else
                     ;
-                point.Tag2 = VPS.EnumCollect.AltFrame.Relative;
+                point.Tag2 = EnumCollect.AltFrame.Relative;
             }
-            else if (altitudeMode == VPS.EnumCollect.AltFrame.Absolute)
+            else if (altitudeMode == EnumCollect.AltFrame.Absolute)
             {
-                if (point.Tag2 == VPS.EnumCollect.AltFrame.Relative)
+                if (point.Tag2 == EnumCollect.AltFrame.Relative)
                     point.Alt = point.Alt + baseAlt;
-                else if (point.Tag2 == VPS.EnumCollect.AltFrame.Absolute)
+                else if (point.Tag2 == EnumCollect.AltFrame.Absolute)
                     ;
-                else if (point.Tag2 == VPS.EnumCollect.AltFrame.Terrain)
+                else if (point.Tag2 == EnumCollect.AltFrame.Terrain)
                     point.Alt = point.Alt + alt;
                 else
                     point.Alt = point.Alt + baseAlt;
-                point.Tag2 = VPS.EnumCollect.AltFrame.Absolute;
+                point.Tag2 = EnumCollect.AltFrame.Absolute;
             }
-            else if (altitudeMode == VPS.EnumCollect.AltFrame.Terrain)
+            else if (altitudeMode == EnumCollect.AltFrame.Terrain)
             {
-                if (point.Tag2 == VPS.EnumCollect.AltFrame.Relative)
+                if (point.Tag2 == EnumCollect.AltFrame.Relative)
                     point.Alt = point.Alt + baseAlt - alt;
-                else if (point.Tag2 == VPS.EnumCollect.AltFrame.Absolute)
+                else if (point.Tag2 == EnumCollect.AltFrame.Absolute)
                     point.Alt = point.Alt - alt;
-                else if (point.Tag2 == VPS.EnumCollect.AltFrame.Terrain)
+                else if (point.Tag2 == EnumCollect.AltFrame.Terrain)
                     ;
                 else
                     point.Alt = point.Alt + baseAlt - alt;
-                point.Tag2 = VPS.EnumCollect.AltFrame.Terrain;
+                point.Tag2 = EnumCollect.AltFrame.Terrain;
             }
             else
                 ;
@@ -550,8 +550,8 @@ namespace VPS.WP
                     baseAltCopy += (srtm.getAltitude(prev.Lat, prev.Lng).alt * CurrentState.multiplieralt);
                     baseAltCopy += (srtm.getAltitude(prev.Lat, prev.Lng).alt * CurrentState.multiplieralt);
                 }
-                prevPoint = WPChangeAltFrame(prevPoint, baseAlt, VPS.EnumCollect.AltFrame.Absolute);
-                curPoint = WPChangeAltFrame(curPoint, baseAlt, VPS.EnumCollect.AltFrame.Absolute);
+                prevPoint = WPChangeAltFrame(prevPoint, baseAlt, EnumCollect.AltFrame.Absolute);
+                curPoint = WPChangeAltFrame(curPoint, baseAlt, EnumCollect.AltFrame.Absolute);
                 return (prevPoint.Alt - curPoint.Alt) /
                     curPoint.GetDistance(prevPoint);
             }
@@ -573,8 +573,8 @@ namespace VPS.WP
                     baseAltCopy += (srtm.getAltitude(prev.Lat, prev.Lng).alt * CurrentState.multiplieralt);
                     baseAltCopy += (srtm.getAltitude(prev.Lat, prev.Lng).alt * CurrentState.multiplieralt);
                 }
-                prevPoint = WPChangeAltFrame(prevPoint, baseAlt, VPS.EnumCollect.AltFrame.Absolute);
-                curPoint = WPChangeAltFrame(curPoint, baseAlt, VPS.EnumCollect.AltFrame.Absolute);
+                prevPoint = WPChangeAltFrame(prevPoint, baseAlt, EnumCollect.AltFrame.Absolute);
+                curPoint = WPChangeAltFrame(curPoint, baseAlt, EnumCollect.AltFrame.Absolute);
 
                 return Math.Sqrt(
                     Math.Pow(curPoint.GetDistance(prevPoint), 2) +
@@ -599,8 +599,8 @@ namespace VPS.WP
                     baseAltCopy += (srtm.getAltitude(prev.Lat, prev.Lng).alt * CurrentState.multiplieralt);
                     baseAltCopy += (srtm.getAltitude(prev.Lat, prev.Lng).alt * CurrentState.multiplieralt);
                 }
-                prevPoint = WPChangeAltFrame(prevPoint, baseAlt, VPS.EnumCollect.AltFrame.Absolute);
-                curPoint = WPChangeAltFrame(curPoint, baseAlt, VPS.EnumCollect.AltFrame.Absolute);
+                prevPoint = WPChangeAltFrame(prevPoint, baseAlt, EnumCollect.AltFrame.Absolute);
+                curPoint = WPChangeAltFrame(curPoint, baseAlt, EnumCollect.AltFrame.Absolute);
 
                 return (curPoint.GetBearing(prevPoint) + 180) % 360;
             }

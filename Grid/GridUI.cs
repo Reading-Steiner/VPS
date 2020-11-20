@@ -44,7 +44,8 @@ namespace VPS.Grid
         bool loadedfromfile = false;
         bool loading = false;
 
-        Dictionary<string, camerainfo> cameras = new Dictionary<string, camerainfo>();
+        Dictionary<string, CustomData.Grid.camerainfo> cameras = 
+            new Dictionary<string, CustomData.Grid.camerainfo>();
 
         public string DistUnits = "";
         public string inchpixel = "";
@@ -161,7 +162,7 @@ namespace VPS.Grid
         private void GridUI_AdjustParam()
         {
             var config = new VPS.Controls.GobalWPConfig();
-            config.GetCameraInfo = new camerainfo()
+            config.GetCameraInfo = new CustomData.Grid.camerainfo()
             {
                 name = CMB_camera.Text,
                 focallen = Convert.ToSingle(NUM_focallength.Value),
@@ -216,7 +217,8 @@ namespace VPS.Grid
         // Load/Save
         public void LoadGrid()
         {
-            System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(GridData));
+            System.Xml.Serialization.XmlSerializer reader = 
+                new System.Xml.Serialization.XmlSerializer(typeof(CustomData.Grid.GridData));
 
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
@@ -227,7 +229,7 @@ namespace VPS.Grid
                 {
                     using (StreamReader sr = new StreamReader(ofd.FileName))
                     {
-                        var test = (GridData)reader.Deserialize(sr);
+                        var test = (CustomData.Grid.GridData)reader.Deserialize(sr);
 
                         loading = true;
                         loadgriddata(test);
@@ -239,7 +241,8 @@ namespace VPS.Grid
 
         public void SaveGrid()
         {
-            System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(GridData));
+            System.Xml.Serialization.XmlSerializer writer = 
+                new System.Xml.Serialization.XmlSerializer(typeof(CustomData.Grid.GridData));
 
             var griddata = savegriddata();
 
@@ -280,7 +283,7 @@ namespace VPS.Grid
             //tiffoverlay.Polygons.Add(mark);
         }
 
-        void loadgriddata(GridData griddata)
+        void loadgriddata(CustomData.Grid.GridData griddata)
         {
             list = griddata.poly;
 
@@ -336,9 +339,9 @@ namespace VPS.Grid
             loadedfromfile = true;
         }
 
-        GridData savegriddata()
+        CustomData.Grid.GridData savegriddata()
         {
-            GridData griddata = new GridData();
+            var griddata = new CustomData.Grid.GridData();
 
             griddata.poly = list;
 
@@ -568,7 +571,7 @@ namespace VPS.Grid
                                 {
                                     case "Camera":
                                         {
-                                            camerainfo camera = new camerainfo();
+                                            var camera = new CustomData.Grid.camerainfo();
 
                                             while (xmlreader.Read())
                                             {
@@ -1383,7 +1386,7 @@ namespace VPS.Grid
         {
             if (cameras.ContainsKey(CMB_camera.Text))
             {
-                camerainfo camera = cameras[CMB_camera.Text];
+                var camera = cameras[CMB_camera.Text];
 
                 NUM_focallength.Value = (decimal)camera.focallen;
                 TXT_imgheight.Text = camera.imageheight.ToString();
@@ -1594,7 +1597,7 @@ namespace VPS.Grid
 
         private void BUT_save_Click(object sender, EventArgs e)
         {
-            camerainfo camera = new camerainfo();
+            var camera = new CustomData.Grid.camerainfo();
 
             string camname = "Default";
 

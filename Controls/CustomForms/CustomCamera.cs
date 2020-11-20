@@ -18,9 +18,9 @@ namespace VPS.Controls.CustomForms
             InitializeComponent();
         }
 
-        public VPS.Grid.camerainfo GetCamerainfo()
+        public CustomData.Grid.camerainfo GetCamerainfo()
         {
-            var camera = new VPS.Grid.camerainfo();
+            var camera = new CustomData.Grid.camerainfo();
 
             camera.name = Camera.Text;
             camera.focallen = (float)FocalLength.Value;

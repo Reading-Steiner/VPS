@@ -31,9 +31,9 @@ namespace VPS.Controls.MainInfo
             homePosition = position;
             HomePosition.WGS84Position = homePosition;
 
-            double grad = VPS.WP.WPGlobalData.GetPointGrad(homePosition, currentPosition, baseAlt);
-            double dist = VPS.WP.WPGlobalData.GetPointDist(homePosition, currentPosition, baseAlt);
-            double az = VPS.WP.WPGlobalData.GetPointAZ(homePosition, currentPosition, baseAlt);
+            double grad = CustomData.WP.WPGlobalData.GetPointGrad(homePosition, currentPosition, baseAlt);
+            double dist = CustomData.WP.WPGlobalData.GetPointDist(homePosition, currentPosition, baseAlt);
+            double az = CustomData.WP.WPGlobalData.GetPointAZ(homePosition, currentPosition, baseAlt);
 
             SetControlMainThread(HomeGrad, (grad).ToString("0.## \\%"));
             SetControlMainThread(HomeDist, (dist).ToString("0.## m"));
@@ -47,24 +47,24 @@ namespace VPS.Controls.MainInfo
         public void SetCurrentPosition(Utilities.PointLatLngAlt position)
         {
             currentPosition = new PointLatLngAlt(position);
-            if (!VPS.EnumCollect.AltFrame.Modes.Contains(position.Tag2))
+            if (!CustomData.EnumCollect.AltFrame.Modes.Contains(position.Tag2))
             {
-                currentPosition.Tag2 = VPS.EnumCollect.AltFrame.Absolute;
+                currentPosition.Tag2 = CustomData.EnumCollect.AltFrame.Absolute;
                 currentPosition.Alt = (srtm.getAltitude(currentPosition.Lat, currentPosition.Lng).alt * CurrentState.multiplieralt);
             }
 
             CurrentPosition.WGS84Position = currentPosition;
 
-            double grad = VPS.WP.WPGlobalData.GetPointGrad(homePosition, currentPosition, baseAlt);
-            double distance = VPS.WP.WPGlobalData.GetPointDist(homePosition, currentPosition, baseAlt);
-            double az = VPS.WP.WPGlobalData.GetPointAZ(homePosition, currentPosition, baseAlt);
+            double grad = CustomData.WP.WPGlobalData.GetPointGrad(homePosition, currentPosition, baseAlt);
+            double distance = CustomData.WP.WPGlobalData.GetPointDist(homePosition, currentPosition, baseAlt);
+            double az = CustomData.WP.WPGlobalData.GetPointAZ(homePosition, currentPosition, baseAlt);
             SetControlMainThread(HomeGrad, (grad).ToString("0.## \\%"));
             SetControlMainThread(HomeDist, (distance).ToString("0.## m"));
             SetControlMainThread(HomeAZ, (az).ToString("0.##"));
 
-            grad = VPS.WP.WPGlobalData.GetPointGrad(lastPosition, currentPosition, baseAlt);
-            distance = VPS.WP.WPGlobalData.GetPointDist(lastPosition, currentPosition, baseAlt);
-            az = VPS.WP.WPGlobalData.GetPointAZ(lastPosition, currentPosition, baseAlt);
+            grad = CustomData.WP.WPGlobalData.GetPointGrad(lastPosition, currentPosition, baseAlt);
+            distance = CustomData.WP.WPGlobalData.GetPointDist(lastPosition, currentPosition, baseAlt);
+            az = CustomData.WP.WPGlobalData.GetPointAZ(lastPosition, currentPosition, baseAlt);
             SetControlMainThread(LastGrad, (grad).ToString("0.## \\%"));
             SetControlMainThread(LastDist, (distance).ToString("0.## m"));
             SetControlMainThread(LastAZ, (az).ToString("0.##"));
@@ -78,7 +78,7 @@ namespace VPS.Controls.MainInfo
         #region HOME 初始位置变化响应函数
         public void HomeChangeHandle()
         {
-            PointLatLngAlt home = VPS.WP.WPGlobalData.instance.GetHomePosition();
+            PointLatLngAlt home = CustomData.WP.WPGlobalData.instance.GetHomePosition();
             SetHomePosition(home);
         }
         #endregion
@@ -86,41 +86,42 @@ namespace VPS.Controls.MainInfo
         #region WPLIST 航线变化响应函数
         public void WPChangeHandle()
         {
-            List<PointLatLngAlt> wpLists = VPS.WP.WPGlobalData.instance.GetWPList();
+            List<PointLatLngAlt> wpLists = CustomData.WP.WPGlobalData.instance.GetWPList();
             //去除Home点
-            if (wpLists.Count > 0 && wpLists[0].Tag == VPS.WP.WPCommands.HomeCommand)
+            if (wpLists.Count > 0 && wpLists[0].Tag == CustomData.WP.WPCommands.HomeCommand)
             {
                 SetHomePosition(wpLists[0]);
                 wpLists.RemoveAt(0);
             }
 
-            baseAlt = VPS.WP.WPGlobalData.GetBaseAlt(wpLists);
+            baseAlt = CustomData.WP.WPGlobalData.GetBaseAlt(wpLists);
             SetControlMainThread(WPBaseAlt, (baseAlt).ToString("0.## m"));
-            maxAlt = VPS.WP.WPGlobalData.GetMaxAlt(wpLists);
-            minAlt = VPS.WP.WPGlobalData.GetMinAlt(wpLists);
+            maxAlt = CustomData.WP.WPGlobalData.GetMaxAlt(wpLists);
+            minAlt = CustomData.WP.WPGlobalData.GetMinAlt(wpLists);
             SetControlMainThread(WPGndeLev, minAlt.ToString("0.##") + " - " + maxAlt.ToString("0.## m"));
 
-            wpLists = VPS.WP.WPGlobalData.WPListChangeAltFrame(wpLists, VPS.EnumCollect.AltFrame.Relative);
+            wpLists = CustomData.WP.WPGlobalData.WPListChangeAltFrame(
+                wpLists, CustomData.EnumCollect.AltFrame.Relative);
 
             if (wpLists.Count > 0)
                 lastPosition = wpLists[wpLists.Count - 1];
             else
                 lastPosition = null;
 
-            double totalDist = VPS.WP.WPGlobalData.GetTotalDist(wpLists);
+            double totalDist = CustomData.WP.WPGlobalData.GetTotalDist(wpLists);
             SetControlMainThread(WPTotalDist, totalDist.ToString("0.## m"));
 
-            double grad = VPS.WP.WPGlobalData.GetPointGrad(homePosition, currentPosition, baseAlt);
-            double distance = VPS.WP.WPGlobalData.GetPointDist(homePosition, currentPosition, baseAlt);
-            double az = VPS.WP.WPGlobalData.GetPointAZ(homePosition, currentPosition, baseAlt);
+            double grad = CustomData.WP.WPGlobalData.GetPointGrad(homePosition, currentPosition, baseAlt);
+            double distance = CustomData.WP.WPGlobalData.GetPointDist(homePosition, currentPosition, baseAlt);
+            double az = CustomData.WP.WPGlobalData.GetPointAZ(homePosition, currentPosition, baseAlt);
             SetControlMainThread(HomeGrad, (grad).ToString("0.## \\%"));
             SetControlMainThread(HomeDist, (distance).ToString("0.## m"));
             SetControlMainThread(HomeAZ, (az).ToString("0.##"));
 
 
-            grad = VPS.WP.WPGlobalData.GetPointGrad(lastPosition, currentPosition, baseAlt);
-            distance = VPS.WP.WPGlobalData.GetPointDist(lastPosition, currentPosition, baseAlt);
-            az = VPS.WP.WPGlobalData.GetPointAZ(lastPosition, currentPosition, baseAlt);
+            grad = CustomData.WP.WPGlobalData.GetPointGrad(lastPosition, currentPosition, baseAlt);
+            distance = CustomData.WP.WPGlobalData.GetPointDist(lastPosition, currentPosition, baseAlt);
+            az = CustomData.WP.WPGlobalData.GetPointAZ(lastPosition, currentPosition, baseAlt);
             SetControlMainThread(LastGrad, (grad).ToString("0.## \\%"));
             SetControlMainThread(LastDist, (distance).ToString("0.## m"));
             SetControlMainThread(LastAZ, (az).ToString("0.##"));

@@ -25,7 +25,7 @@ namespace VPS.Controls.Grid
         {
             InitializeComponent();
             instance = this;
-            var cameras = camerainfo.GetCameras();
+            var cameras = CustomData.Grid.camerainfo.GetCameras();
             for (int i = 0; i < cameras.Count; i++)
             {
                 this.CMB_Camera.Items.Add(cameras[i]);
@@ -247,7 +247,8 @@ namespace VPS.Controls.Grid
         #region 入口函数
         public void LoadGrid()
         {
-            System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(NewGridData));
+            System.Xml.Serialization.XmlSerializer reader = 
+                new System.Xml.Serialization.XmlSerializer(typeof(CustomData.Grid.NewGridData));
 
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
@@ -258,7 +259,7 @@ namespace VPS.Controls.Grid
                 {
                     using (StreamReader sr = new StreamReader(ofd.FileName))
                     {
-                        var test = (NewGridData)reader.Deserialize(sr);
+                        var test = (CustomData.Grid.NewGridData)reader.Deserialize(sr);
 
                         StartLoading();
 
@@ -272,7 +273,7 @@ namespace VPS.Controls.Grid
         #endregion
 
         #region 解码函数
-        void loadgriddata(NewGridData griddata)
+        void loadgriddata(CustomData.Grid.NewGridData griddata)
         {
             poly = griddata.poly;
 
@@ -311,7 +312,8 @@ namespace VPS.Controls.Grid
         #region 入口函数
         public void SaveGrid()
         {
-            System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(NewGridData));
+            System.Xml.Serialization.XmlSerializer writer = 
+                new System.Xml.Serialization.XmlSerializer(typeof(CustomData.Grid.NewGridData));
 
             var griddata = savegriddata();
 
@@ -332,9 +334,9 @@ namespace VPS.Controls.Grid
         #endregion
 
         #region 转码函数
-        NewGridData savegriddata()
+        CustomData.Grid.NewGridData savegriddata()
         {
-            NewGridData griddata = new NewGridData();
+            var griddata = new CustomData.Grid.NewGridData();
 
             griddata.poly = poly;
 
@@ -491,7 +493,7 @@ namespace VPS.Controls.Grid
 
             if (wpList.Count > 0)
             {
-                if (wpList[0].Tag == VPS.WP.WPCommands.HomeCommand)
+                if (wpList[0].Tag == CustomData.WP.WPCommands.HomeCommand)
                     wpList.RemoveAt(0);
             }
 
@@ -530,8 +532,8 @@ namespace VPS.Controls.Grid
 
             for (int i = 0; i < wpList.Count; i++)
             {
-                wpList[i].Tag = VPS.WP.WPCommands.DefaultWPCommand;
-                wpList[i].Tag2 = VPS.EnumCollect.AltFrame.Relative;
+                wpList[i].Tag = CustomData.WP.WPCommands.DefaultWPCommand;
+                wpList[i].Tag2 = CustomData.EnumCollect.AltFrame.Relative;
             }
             return wpList;
         }
@@ -547,7 +549,7 @@ namespace VPS.Controls.Grid
         {
             if (gridGrenate)
                 return;
-            List<PointLatLngAlt> polygons = VPS.WP.WPGlobalData.instance.GetPolygList();
+            List<PointLatLngAlt> polygons = CustomData.WP.WPGlobalData.instance.GetPolygList();
             poly = new List<PointLatLngAlt>(polygons.ToArray());
 
             DataTable set = new DataTable();
@@ -798,7 +800,7 @@ namespace VPS.Controls.Grid
             if (wp.Count == 0)
             {
                 instance.grid.Clear();
-                VPS.WP.WPGlobalData.instance.SetWPListHandle(instance.GetWPList());
+                CustomData.WP.WPGlobalData.instance.SetWPListHandle(instance.GetWPList());
                 return;
             }
 
@@ -818,7 +820,7 @@ namespace VPS.Controls.Grid
             if (wp.Count == 0)
             {
                 instance.grid.Clear();
-                VPS.WP.WPGlobalData.instance.SetWPListHandle(instance.GetWPList());
+                CustomData.WP.WPGlobalData.instance.SetWPListHandle(instance.GetWPList());
                 return;
             }
 
@@ -831,8 +833,8 @@ namespace VPS.Controls.Grid
                 if (wp[index].Tag == "S" || wp[index].Tag == "E")
                 {
                     PointLatLngAlt point = wp[index];
-                    point.Tag = VPS.WP.WPCommands.DefaultWPCommand;
-                    point.Tag2 = VPS.EnumCollect.AltFrame.Relative;
+                    point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
+                    point.Tag2 = CustomData.EnumCollect.AltFrame.Relative;
 
                     instance.grid.Add(point);
                     a++;
@@ -844,8 +846,8 @@ namespace VPS.Controls.Grid
                     else
                     {
                         PointLatLngAlt point = wp[index];
-                        point.Tag = VPS.WP.WPCommands.DefaultWPCommand;
-                        point.Tag2 = VPS.EnumCollect.AltFrame.Relative;
+                        point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
+                        point.Tag2 = CustomData.EnumCollect.AltFrame.Relative;
 
                         instance.grid.Add(point);
                         a++;
@@ -859,8 +861,8 @@ namespace VPS.Controls.Grid
                     else
                     {
                         PointLatLngAlt point = wp[index];
-                        point.Tag = VPS.WP.WPCommands.DefaultWPCommand;
-                        point.Tag2 = VPS.EnumCollect.AltFrame.Relative;
+                        point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
+                        point.Tag2 = CustomData.EnumCollect.AltFrame.Relative;
 
                         instance.grid.Add(point);
                         a++;
@@ -871,8 +873,8 @@ namespace VPS.Controls.Grid
                     if (false)
                     {
                         PointLatLngAlt point = wp[index];
-                        point.Tag = VPS.WP.WPCommands.ClickWPCommand;
-                        point.Tag2 = VPS.EnumCollect.AltFrame.Relative;
+                        point.Tag = CustomData.WP.WPCommands.ClickWPCommand;
+                        point.Tag2 = CustomData.EnumCollect.AltFrame.Relative;
 
                         instance.grid.Add(point);
                     }
@@ -883,7 +885,7 @@ namespace VPS.Controls.Grid
 
             }
             SetControlMainThread(instance.Num_GndeLev, instance.GetBaseAlt(instance.GetWPList()));
-            VPS.WP.WPGlobalData.instance.SetWPListHandle(instance.GetWPList());
+            CustomData.WP.WPGlobalData.instance.SetWPListHandle(instance.GetWPList());
         }
         #endregion
 
@@ -1013,7 +1015,7 @@ namespace VPS.Controls.Grid
             int totalCount = 0;
             foreach (var wp in list)
             {
-                if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
+                if (CustomData.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
                 {
                     totalWP += Utilities.srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
                     totalCount++;
@@ -1028,11 +1030,11 @@ namespace VPS.Controls.Grid
         #region CameraInfos
 
         #region 获取信息
-        public camerainfo GetCameraInfo
+        public CustomData.Grid.camerainfo GetCameraInfo
         {
             get
             {
-                return new camerainfo()
+                return new CustomData.Grid.camerainfo()
                 {
                     name = this.CMB_Camera.Text,
                     focallen = (float)this.NUM_FocalLength.Value,
@@ -1062,7 +1064,7 @@ namespace VPS.Controls.Grid
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     var info = dlg.GetCamerainfo();
-                    camerainfo.AddCamera(info);
+                    CustomData.Grid.camerainfo.AddCamera(info);
 
 
                     if (!CMB_Camera.Items.Contains(info.name))
@@ -1139,7 +1141,7 @@ namespace VPS.Controls.Grid
         #region 相机型号
         private void CMB_camera_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GetCameraInfo = camerainfo.GetCameraInfos(CMB_Camera.Text);
+            GetCameraInfo = CustomData.Grid.camerainfo.GetCameraInfos(CMB_Camera.Text);
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
             else
@@ -1148,7 +1150,7 @@ namespace VPS.Controls.Grid
 
         private void CMB_camera_SelectedValueChanged(object sender, EventArgs e)
         {
-            GetCameraInfo = camerainfo.GetCameraInfos(CMB_Camera.Text);
+            GetCameraInfo = CustomData.Grid.camerainfo.GetCameraInfos(CMB_Camera.Text);
             if (CHK_AutoGeneralWP.Checked)
                 domainUpDown1_ValueChanged();
             else
@@ -1631,7 +1633,7 @@ namespace VPS.Controls.Grid
 
         private void LockWP_Click(object sender, EventArgs e)
         {
-            SetWPListHandle(VPS.WP.WPGlobalData.instance.GetWPList());
+            SetWPListHandle(CustomData.WP.WPGlobalData.instance.GetWPList());
         }
 
         private void Undo_Click(object sender, EventArgs e)

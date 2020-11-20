@@ -308,7 +308,7 @@ namespace VPS.Controls.Layer
                             LayerRect = info.Rect;
 
                             PointLatLngAlt PointHome = info.Rect.LocationTopLeft;
-                            PointHome.Tag = VPS.WP.WPCommands.HomeCommand;
+                            PointHome.Tag = CustomData.WP.WPCommands.HomeCommand;
                             PointHome.Tag2 = "Terrain";
                             OriginPosition.WGS84Position = PointHome; 
                         }
@@ -500,20 +500,20 @@ namespace VPS.Controls.Layer
                 openPath = OpenFilePath.Text;
             if (UsingTransparent.Checked)
             {
-                VPS.Layer.LayerInfo layerInfo =
-                    new VPS.Layer.TiffLayerInfo(openPath, OriginPosition.WGS84Position, ColorPickerButton.SelectedColor);
+                CustomData.Layer.LayerInfo layerInfo =
+                    new CustomData.Layer.TiffLayerInfo(openPath, OriginPosition.WGS84Position, ColorPickerButton.SelectedColor);
                 MainV2.instance.AddLayerOverlay(layerInfo);
             }
             else
             {
-                VPS.Layer.LayerInfo layerInfo =
-                    new VPS.Layer.TiffLayerInfo(openPath, OriginPosition.WGS84Position, Color.FromArgb(0, 255, 255, 255));
+                CustomData.Layer.LayerInfo layerInfo =
+                    new CustomData.Layer.TiffLayerInfo(openPath, OriginPosition.WGS84Position, Color.FromArgb(0, 255, 255, 255));
                 MainV2.instance.AddLayerOverlay(layerInfo);
             }
             if (SettingDefaultMap.Checked)
             {
-                VPS.WP.WPGlobalData.instance.SetLayer(openPath, SettingDefaultMap.Checked);
-                VPS.WP.WPGlobalData.instance.SetLayerLimit(this.LayerRect, OriginPosition.WGS84Position, SettingDefaultMap.Checked);
+                CustomData.WP.WPGlobalData.instance.SetLayer(openPath, SettingDefaultMap.Checked);
+                CustomData.WP.WPGlobalData.instance.SetLayerLimit(this.LayerRect, OriginPosition.WGS84Position, SettingDefaultMap.Checked);
             }
         }
         #endregion

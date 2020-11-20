@@ -1,4 +1,4 @@
-﻿namespace VPS.Layer
+﻿namespace VPS.CustomData.Layer
 {
     using System;
     using System.Drawing;
@@ -37,7 +37,7 @@
         {
             get
             {
-                var origin = new Utilities.PointLatLngAlt(homeLat, homeLng, homeAlt, VPS.WP.WPCommands.HomeCommand);
+                var origin = new Utilities.PointLatLngAlt(homeLat, homeLng, homeAlt, WP.WPCommands.HomeCommand);
                 origin.Tag2 = frameOfHomeAlt;
                 return origin;
             }

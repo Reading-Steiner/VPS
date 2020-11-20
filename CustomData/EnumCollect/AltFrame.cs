@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VPS.EnumCollect
+namespace VPS.CustomData.EnumCollect
 {
     public class AltFrame
     {

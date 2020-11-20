@@ -1,4 +1,4 @@
-﻿namespace VPS.Layer
+﻿namespace VPS.CustomData.Layer
 {
     using System.Diagnostics;
     using GMap.NET.Internals;

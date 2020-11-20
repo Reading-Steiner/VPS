@@ -530,9 +530,9 @@
     <Compile Include="Controls\CustomControls\PositionDisplay.Designer.cs">
       <DependentUpon>PositionDisplay.cs</DependentUpon>
     </Compile>
-    <Compile Include="VPSData\EnumCollect\AltFrame.cs" />
-    <Compile Include="VPSData\Layer\LayerInfo.cs" />
-    <Compile Include="VPSData\Layer\LayerInfoCache.cs" />
+    <Compile Include="CustomData\EnumCollect\AltFrame.cs" />
+    <Compile Include="CustomData\Layer\LayerInfo.cs" />
+    <Compile Include="CustomData\Layer\LayerInfoCache.cs" />
     <Compile Include="Controls\Layer\LayerManager.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -545,8 +545,8 @@
     <Compile Include="Controls\Layer\LayerReader.Designer.cs">
       <DependentUpon>LayerReader.cs</DependentUpon>
     </Compile>
-    <Compile Include="VPSData\Layer\MemoryLayerCache.cs" />
-    <Compile Include="VPSData\Layer\TiffLayerInfo.cs" />
+    <Compile Include="CustomData\Layer\MemoryLayerCache.cs" />
+    <Compile Include="CustomData\Layer\TiffLayerInfo.cs" />
     <Compile Include="Controls\MainInfo\LeftMainInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -763,8 +763,8 @@
     <Compile Include="Utilities\NativeLibrary.cs" />
     <Compile Include="Utilities\Speech.cs" />
     <Compile Include="Utilities\SSHTerminal.cs" />
-    <Compile Include="VPSData\Grid\camerainfo.cs" />
-    <Compile Include="VPSData\Grid\GridData.cs" />
+    <Compile Include="CustomData\Grid\camerainfo.cs" />
+    <Compile Include="CustomData\Grid\GridData.cs" />
     <Compile Include="L10N.cs" />
     <Compile Include="MagCalib.cs" />
     <Compile Include="Controls\MovingBase.cs">
@@ -1410,8 +1410,8 @@
     <Compile Include="Utilities\AltitudeAngel\MissionPlannerAdaptor.cs" />
     <Compile Include="Utilities\AltitudeAngel\OverlayAdapter.cs" />
     <Compile Include="Utilities\XMLColor.cs" />
-    <Compile Include="VPSData\WP\WPCommands.cs" />
-    <Compile Include="VPSData\WP\WPGlobalData.cs" />
+    <Compile Include="CustomData\WP\WPCommands.cs" />
+    <Compile Include="CustomData\WP\WPGlobalData.cs" />
     <Compile Include="Warnings\WarningControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -4909,6 +4909,8 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="CustomFile\Shp\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
