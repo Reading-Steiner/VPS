@@ -527,35 +527,6 @@ namespace VPS.GCSViews
             return ret;
         }
 
-        private void OnMidLine_Click()
-        {
-            int pnt2 = 0;
-            var midline = CurrentMidLine.Tag as midline;
-            // var pnt1 = int.Parse(midline.now.Tag);
-
-            if (IsDrawPolygongridMode && midline.now != null)
-            {
-                //点击到多边形中线
-                var idx = drawnpolygon.Points.IndexOf(midline.now);
-
-                InsertPolyPoint(idx, CurrentMidLine.Position.Lat, CurrentMidLine.Position.Lng);
-            }
-            else
-            {
-                if (int.TryParse(midline.next.Tag, out pnt2))
-                {
-                    //点击到航点中线
-                    InsertWPPoint(pnt2, CurrentMidLine.Position.Lng, CurrentMidLine.Position.Lat, -1);
-                }
-            }
-
-            CurrentMidLine = null;
-
-            return;
-        }
-
-
-
 
         /// <summary>
         /// used to adjust existing point in the datagrid including "H"
@@ -3757,7 +3728,6 @@ namespace VPS.GCSViews
 
         #endregion
 
-
         #region 功能区
 
         #region 定位
@@ -4536,6 +4506,46 @@ namespace VPS.GCSViews
         }
         #endregion
 
+        #endregion
+
+        #endregion
+
+        #region MainMap控件
+
+        #region Marker MidLine
+        private void OnMidLine_Click()
+        {
+            int pnt2 = 0;
+            var midline = CurrentMidLine.Tag as midline;
+            // var pnt1 = int.Parse(midline.now.Tag);
+
+
+            if (IsDrawPolygongridMode)
+            {
+                if (midline.now != null)
+                {
+                    //点击到多边形中线
+                    var idx = drawnpolygon.Points.IndexOf(midline.now);
+
+                    InsertPolyPoint(idx, CurrentMidLine.Position.Lat, CurrentMidLine.Position.Lng);
+                }
+            }
+            else if (IsDrawWPMode)
+            {
+                if (midline.next != null)
+                {
+                    if (int.TryParse(midline.next.Tag, out pnt2))
+                    {
+                        //点击到航点中线
+                        InsertWPPoint(pnt2, CurrentMidLine.Position.Lat, CurrentMidLine.Position.Lng, -1);
+                    }
+                }
+            }
+
+            CurrentMidLine = null;
+
+            return;
+        }
         #endregion
 
         #endregion
@@ -5809,7 +5819,6 @@ namespace VPS.GCSViews
         #endregion
 
         #region GeneralWPPoint
-
         private PointLatLngAlt GeneralWPPoint(Locationwp wp)
         {
             PointLatLngAlt temp = new PointLatLngAlt();
