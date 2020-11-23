@@ -5056,56 +5056,59 @@ namespace VPS.GCSViews
         /// </summary>
         private void loadwaypoints()
         {
-            using (OpenFileDialog fd = new OpenFileDialog())
-            {
-                fd.Filter = "Default WPFile(*kml)|*.kml|Google Earth KML(*kml;*.kmz) |*.kml;*.kmz|ShapeFile(*.shp)|*.shp";
-                if (Directory.Exists(Settings.Instance["WPFileDirectory"] ?? ""))
-                    fd.InitialDirectory = Settings.Instance["WPFileDirectory"];
-                var result = fd.ShowDialog();
+            VPS.Controls.LoadAndSave.LoadWP load = new VPS.Controls.LoadAndSave.LoadWP();
+            var result = load.ShowDialog();
 
-                string file = fd.FileName;
-                if (result == DialogResult.OK && File.Exists(file))
-                {
-                    Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
-                    switch (fd.FilterIndex)
-                    {
-                        case 1:
-                            try
-                            {
-                                LoadWaypointsKML(file, false);
-                            }
-                            catch
-                            {
-                                DevComponents.DotNetBar.MessageBoxEx.Show("Error opening File", Strings.ERROR);
-                                return;
-                            }
-                            break;
-                        case 2:
-                            try
-                            {
-                                LoadKMLFile(file);
-                            }
-                            catch
-                            {
-                                DevComponents.DotNetBar.MessageBoxEx.Show("Error opening File", Strings.ERROR);
-                                return;
-                            }
-                            break;
-                        case 3:
-                            try
-                            {
-                                LoadSHPFile(file);
-                            }
-                            catch
-                            {
-                                DevComponents.DotNetBar.MessageBoxEx.Show("Error opening File", Strings.ERROR);
-                                return;
-                            }
-                            break;
-                    }
-                    //lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
-                }
-            }
+            //using (OpenFileDialog fd = new OpenFileDialog())
+            //{
+            //    fd.Filter = "Default WPFile(*kml)|*.kml|Google Earth KML(*kml;*.kmz) |*.kml;*.kmz|ShapeFile(*.shp)|*.shp";
+            //    if (Directory.Exists(Settings.Instance["WPFileDirectory"] ?? ""))
+            //        fd.InitialDirectory = Settings.Instance["WPFileDirectory"];
+            //    var result = fd.ShowDialog();
+
+            //    string file = fd.FileName;
+            //    if (result == DialogResult.OK && File.Exists(file))
+            //    {
+            //        Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
+            //        switch (fd.FilterIndex)
+            //        {
+            //            case 1:
+            //                try
+            //                {
+            //                    LoadWaypointsKML(file, false);
+            //                }
+            //                catch
+            //                {
+            //                    DevComponents.DotNetBar.MessageBoxEx.Show("Error opening File", Strings.ERROR);
+            //                    return;
+            //                }
+            //                break;
+            //            case 2:
+            //                try
+            //                {
+            //                    LoadKMLFile(file);
+            //                }
+            //                catch
+            //                {
+            //                    DevComponents.DotNetBar.MessageBoxEx.Show("Error opening File", Strings.ERROR);
+            //                    return;
+            //                }
+            //                break;
+            //            case 3:
+            //                try
+            //                {
+            //                    LoadSHPFile(file);
+            //                }
+            //                catch
+            //                {
+            //                    DevComponents.DotNetBar.MessageBoxEx.Show("Error opening File", Strings.ERROR);
+            //                    return;
+            //                }
+            //                break;
+            //        }
+            //        //lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
+            //    }
+            ////}
         }
 
         #endregion

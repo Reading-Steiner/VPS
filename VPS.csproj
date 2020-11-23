@@ -321,9 +321,9 @@
     <PackageReference Include="DotSpatial.Topology" version="1.9" targetFramework="net462" />
     <PackageReference Include="Flurl" version="2.8.0" targetFramework="net462" />
     <PackageReference Include="Flurl.Http" version="2.3.2" targetFramework="net462" />
-    <PackageReference Include="GDAL" Version="2.3.2" />
+    <PackageReference Include="GDAL" Version="2.4.4" />
     <PackageReference Include="GDAL.Native">
-      <Version>2.3.2</Version>
+      <Version>2.4.4</Version>
     </PackageReference>
     <PackageReference Include="GeoidHeightsDotNet">
       <Version>1.0.1</Version>
@@ -422,6 +422,7 @@
     <Compile Include="Controls\ComboDataList.Designer.cs">
       <DependentUpon>ComboDataList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CustomControls\CustomPropertyControls.cs" />
     <Compile Include="Controls\CustomForms\CustomCamera.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -615,6 +616,7 @@
     <Compile Include="Controls\FollowMe.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="CustomFile\Shp\SHP.cs" />
     <Compile Include="GCSViews\ConfigurationView\ConfigADSB.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -4909,8 +4911,6 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CustomFile\Shp\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
