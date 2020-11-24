@@ -1,8 +1,10 @@
-﻿using System;
+﻿using DotSpatial.Projections;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Design;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,6 +17,7 @@ namespace VPS.Controls.LoadAndSave
 {
     public partial class LoadWP : DevComponents.DotNetBar.Office2007Form
     {
+
         public LoadWP()
         {
             InitializeComponent();
@@ -69,41 +72,53 @@ namespace VPS.Controls.LoadAndSave
     {
         [Category("基本信息"), Description("投影信息"), DisplayName("投影")]
         public string coordinates { get; set; }
-        [Category("要素信息"), Description("要素类型"), DisplayName("类型")]
+        [Category("要素信息"), Description("要素类型"), DisplayName("要素类型")]
         public string featureType { get; set; }
-        [Category("要素信息"), Description("要素数量"), DisplayName("数量")]
+        [Category("要素信息"), Description("要素数量"), DisplayName("要素数量")]
         public int featureCount { get; set; }
-        [Category("要素信息"), Description("要素信息"), DisplayName("要素")]
+        [Category("要素信息"), Description("要素信息"), DisplayName("要素集合"),
+            TypeConverter(typeof(ExpandableObjectConverter)),
+            Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
         public FeaturesInfo features { get; set; }
+        [Category("要素信息"), Description("要素信息"), DisplayName("选中的要素")]
+        public FeaturesInfo featuresIndex { get; set; }
 
     }
 
     class FeaturesInfo
     {
-        public List<FeatureInfo> features;
+        public List<List<PointLatLngAlt>> features;
 
         public FeaturesInfo(List<List<PointLatLngAlt>> list)
         {
-            features = new List<FeatureInfo>();
+            features = new List<List<PointLatLngAlt>>();
             for(int i = 0; i < list.Count; i++)
             {
-                FeatureInfo feature = new FeatureInfo(list[i]);
+                List<PointLatLngAlt> feature = new List<PointLatLngAlt>(list[i]);
                 features.Add(feature);
             }
         }
 
-        public FeatureInfo this[int index]
+        [TypeConverter(typeof(ExpandableObjectConverter)), Category("要素集合"), DisplayName("要素数量")]
+        public int Count
+        {
+            set { }
+            get { return features.Count; }  
+        }
+
+        [TypeConverter(typeof(ExpandableObjectConverter)), Category("要素集合"), DisplayName("要素")]
+        public List<PointLatLngAlt> this[int index]
         {
             set
             {
                 if (value == null)
                     return;
                 if (index >= features.Count)
-                    features.Add(new FeatureInfo(value.Value));
+                    features.Add(new List<PointLatLngAlt>(value));
                 else if (index < 0)
-                    features.Insert(0, new FeatureInfo(value.Value));
+                    features.Insert(0, new List<PointLatLngAlt>(value));
                 else
-                    features[index].Value = value.Value;
+                    features[index] = new List<PointLatLngAlt>(value);
             }
             get
             {
@@ -115,40 +130,8 @@ namespace VPS.Controls.LoadAndSave
         {
             string str = features.Count.ToString() + ";";
             for(int i =0; i < features.Count; i++)
-                str += i.ToString() + ":" + features[i].Value.Count.ToString();
+                str += i.ToString() + ":" + features[i].Count.ToString();
             return str;
         }
-    }
-
-    public class FeatureInfo
-    {
-        public FeatureInfo(List<PointLatLngAlt> list)
-        {
-            feature = new List<PointLatLngAlt>(list);
-        }
-
-        public FeatureInfo(FeatureInfo feature)
-        {
-            this.Value = feature.Value;
-        }
-
-        List<PointLatLngAlt> feature = new List<PointLatLngAlt>();
-        public List<PointLatLngAlt> Value
-        {
-            set
-            {
-                feature = new List<PointLatLngAlt>(value);
-            }
-            get
-            {
-                return new List<PointLatLngAlt>(feature);
-            }
-        }
-
-        public override string ToString()
-        {
-            return feature.Count.ToString();
-        }
-
     }
 }

@@ -182,10 +182,10 @@
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 6</value>
   </data>
-  <data name="addPolygonPointToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="addPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 22</value>
   </data>
-  <data name="addPolygonPointToolStripMenuItem.Text" xml:space="preserve">
+  <data name="addPolygonToolStripMenuItem.Text" xml:space="preserve">
     <value>设置区域</value>
   </data>
   <data name="clearPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -227,7 +227,10 @@
   <data name="polygonToolStripMenuItem.Text" xml:space="preserve">
     <value>划定区域</value>
   </data>
-  <data name="drawWPToolStripMenuItem.Text" xml:space="preserve">
+  <data name="addWPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
+  </data>
+  <data name="addWPToolStripMenuItem.Text" xml:space="preserve">
     <value>设置航点</value>
   </data>
   <data name="surveyGridToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -302,15 +305,6 @@
   </data>
   <data name="loadAndAppendToolStripMenuItem.Text" xml:space="preserve">
     <value>加载 WP 文件</value>
-  </data>
-  <data name="deletePolygonPointToolStripMenuItem.Text" xml:space="preserve">
-    <value>删除区域点</value>
-  </data>
-  <data name="deleteWPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 22</value>
-  </data>
-  <data name="deleteWPToolStripMenuItem.Text" xml:space="preserve">
-    <value>删除航点</value>
   </data>
   <data name="tiffReadToolStripTiffMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>136, 22</value>

@@ -3065,8 +3065,6 @@ namespace VPS.GCSViews
                 point.Lng = -180;
             }
             center.Position = point;
-
-
         }
 
         private void MainMap_OnMapTypeChanged(GMapProvider type)

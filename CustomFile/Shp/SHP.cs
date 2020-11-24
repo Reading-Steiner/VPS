@@ -1,4 +1,5 @@
-﻿using OSGeo.OGR;
+﻿using DotSpatial.Projections;
+using OSGeo.OGR;
 using OSGeo.OSR;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace VPS.CustomFile
 {
     class SHP
     {
+
         static SHP()
         {
             GdalConfiguration.ConfigureGdal();
@@ -32,6 +34,9 @@ namespace VPS.CustomFile
 
         public static ShpDataSet ReadSHP(string file)
         {
+            ProjectionInfo pStart = new ProjectionInfo();
+            ProjectionInfo pESRIEnd = KnownCoordinateSystems.Geographic.World.WGS1984;
+
             // 为了支持中文路径
             OSGeo.GDAL.Gdal.SetConfigOption("GDAL_FILENAME_IS_UTF8", "YES");
             // 为了使属性表字段支持中文
@@ -61,9 +66,11 @@ namespace VPS.CustomFile
             SpatialReference coord = oLayer.GetSpatialRef();
             string coordString;
             coord.ExportToWkt(out coordString);
+            pStart.ParseEsriString(coordString);
 
             wkbGeometryType oTempGeometryType = oLayer.GetGeomType();
             string typeString = oTempGeometryType.ToString();
+
 
             FeatureDefn oDefn = oLayer.GetLayerDefn();
             int iFieldCount = oDefn.GetFieldCount();
@@ -82,9 +89,16 @@ namespace VPS.CustomFile
                     case wkbGeometryType.wkbUnknown:
                         break;
                     case wkbGeometryType.wkbPoint:
-                        var pnt = new double[3];
-                        geometry.GetPoint(0, pnt);
-                        data.AddPoint(new PointLatLngAlt(pnt));
+                        {
+                            var pnt = new double[3];
+                            geometry.GetPoint(0, pnt);
+                            double[] arrayXY = new double[] { pnt[0], pnt[1] };
+                            double[] arrayZ = new double[] { pnt[2] };
+                            Reproject.ReprojectPoints(
+                                arrayXY, arrayZ,
+                                pStart, pESRIEnd, 0, 1);
+                            data.AddPoint(new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]));
+                        }
                         //NewPoint?.Invoke(new point(pnt));
                         break;
                     case wkbGeometryType.wkbLineString:
@@ -93,9 +107,14 @@ namespace VPS.CustomFile
                             var pointcount = geometry.GetPointCount();
                             for (int p = 0; p < pointcount; p++)
                             {
-                                double[] pnt2 = new double[3];
-                                geometry.GetPoint(p, pnt2);
-                                ls.Add(pnt2);
+                                double[] pnt = new double[3];
+                                geometry.GetPoint(p, pnt);
+                                double[] arrayXY = new double[] { pnt[0], pnt[1] };
+                                double[] arrayZ = new double[] { pnt[2] };
+                                Reproject.ReprojectPoints(
+                                    arrayXY, arrayZ,
+                                    pStart, pESRIEnd, 0, 1);
+                                ls.Add(new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]));
                             }
                             data.AddPolygon(ls);
                             //NewLineString?.Invoke(ls);
@@ -107,13 +126,18 @@ namespace VPS.CustomFile
                             {
                                 List<PointLatLngAlt> poly = new List<PointLatLngAlt>();
 
-                                var geom2 = geometry.GetGeometryRef(i);
-                                var pointcount1 = geom2.GetPointCount();
-                                for (int p = 0; p < pointcount1; p++)
+                                var geom = geometry.GetGeometryRef(i);
+                                var pointcount = geom.GetPointCount();
+                                for (int p = 0; p < pointcount; p++)
                                 {
-                                    double[] pnt2 = new double[3];
-                                    geom2.GetPoint(p, pnt2);
-                                    poly.Add(pnt2);
+                                    double[] pnt = new double[3];
+                                    geom.GetPoint(p, pnt);
+                                    double[] arrayXY = new double[] { pnt[0], pnt[1] };
+                                    double[] arrayZ = new double[] { pnt[2] };
+                                    Reproject.ReprojectPoints(
+                                        arrayXY, arrayZ,
+                                        pStart, pESRIEnd, 0, 1);
+                                    poly.Add(new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]));
                                 }
 
                                 //NewPolygon?.Invoke(poly);
@@ -138,7 +162,12 @@ namespace VPS.CustomFile
                                 {
                                     double[] pnt2 = new double[3];
                                     geom2.GetPoint(p, pnt2);
-                                    poly.Add(pnt2);
+                                    double[] arrayXY = new double[] { pnt2[0], pnt2[1] };
+                                    double[] arrayZ = new double[] { pnt2[2] };
+                                    Reproject.ReprojectPoints(
+                                        arrayXY, arrayZ,
+                                        pStart, pESRIEnd, 0, 1);
+                                    poly.Add(new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]));
                                 }
                             }
 

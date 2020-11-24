@@ -422,12 +422,24 @@
     <Compile Include="Controls\ComboDataList.Designer.cs">
       <DependentUpon>ComboDataList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CustomControls\CustomMap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomControls\CustomMap.Designer.cs">
+      <DependentUpon>CustomMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CustomControls\CustomPropertyControls.cs" />
     <Compile Include="Controls\CustomForms\CustomCamera.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Controls\CustomForms\CustomCamera.Designer.cs">
       <DependentUpon>CustomCamera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomForms\CustomMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomForms\CustomMap.Designer.cs">
+      <DependentUpon>CustomMap.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\CustomForms\CustomPosition.cs">
       <SubType>Form</SubType>
@@ -616,6 +628,7 @@
     <Compile Include="Controls\FollowMe.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="CustomData\Markers\GMapMarkerCustom.cs" />
     <Compile Include="CustomFile\Shp\SHP.cs" />
     <Compile Include="GCSViews\ConfigurationView\ConfigADSB.cs">
       <SubType>UserControl</SubType>
@@ -879,8 +892,14 @@
     <EmbeddedResource Include="Controls\ControlSensorsStatus.resx">
       <DependentUpon>ControlSensorsStatus.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CustomControls\CustomMap.resx">
+      <DependentUpon>CustomMap.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomForms\CustomCamera.resx">
       <DependentUpon>CustomCamera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CustomForms\CustomMap.resx">
+      <DependentUpon>CustomMap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomForms\CustomPosition.resx">
       <DependentUpon>CustomPosition.cs</DependentUpon>

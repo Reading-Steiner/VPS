@@ -277,10 +277,10 @@ namespace VPS.GCSViews
             this.loadPolygonToolStripMenuItem});
             this.polygonToolStripMenuItem.Name = "polygonToolStripMenuItem";
             // 
-            // addPolygonPointToolStripMenuItem
+            // addPolygonToolStripMenuItem
             // 
-            resources.ApplyResources(this.addPolygonToolStripMenuItem, "addPolygonPointToolStripMenuItem");
-            this.addPolygonToolStripMenuItem.Name = "addPolygonPointToolStripMenuItem";
+            resources.ApplyResources(this.addPolygonToolStripMenuItem, "addPolygonToolStripMenuItem");
+            this.addPolygonToolStripMenuItem.Name = "addPolygonToolStripMenuItem";
             this.addPolygonToolStripMenuItem.Click += new System.EventHandler(this.AddPolygonPointToolStripMenuItem_Click);
             // 
             // clearPolygonToolStripMenuItem
@@ -332,10 +332,10 @@ namespace VPS.GCSViews
             this.loadWPToolStripMenuItem});
             this.planningWPToolStripMenuItem.Name = "planningWPToolStripMenuItem";
             // 
-            // drawWPToolStripMenuItem
+            // addWPToolStripMenuItem
             // 
-            resources.ApplyResources(this.addWPToolStripMenuItem, "drawWPToolStripMenuItem");
-            this.addWPToolStripMenuItem.Name = "drawWPToolStripMenuItem";
+            resources.ApplyResources(this.addWPToolStripMenuItem, "addWPToolStripMenuItem");
+            this.addWPToolStripMenuItem.Name = "addWPToolStripMenuItem";
             this.addWPToolStripMenuItem.Click += new System.EventHandler(this.AddWPToolStripMenuItem_Click);
             // 
             // surveyGridToolStripMenuItem
