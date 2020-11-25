@@ -3568,65 +3568,10 @@ namespace VPS.GCSViews
         #endregion
 
         #region 加载航点
-
-        #region 加载航点文件
-        public void LoadWPFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void loadWPToolStripMenuItem_Click(object sender, EventArgs e)
         {
             loadwaypoints();
         }
-        #endregion
-
-        #region 加载kml文件
-        public void LoadKMLFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog fd = new OpenFileDialog())
-            {
-                fd.Filter = "Google Earth KML(*kml;*.kmz) |*.kml;*.kmz";
-                DialogResult result = fd.ShowDialog();
-
-                string file = fd.FileName;
-                if (result == DialogResult.OK && File.Exists(file))
-                {
-                    try
-                    {
-                        LoadKMLFile(file);
-                    }
-                    catch
-                    {
-                        DevComponents.DotNetBar.MessageBoxEx.Show("文件打开时出错", Strings.ERROR);
-                        return;
-                    }
-                }
-            }
-        }
-        #endregion
-
-        #region 加载shp文件
-        public void LoadSHPFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog fd = new OpenFileDialog())
-            {
-                fd.Filter = "Shape file(*.shp)|*.shp";
-                DialogResult result = fd.ShowDialog();
-
-                string file = fd.FileName;
-                if (result == DialogResult.OK && File.Exists(file))
-                {
-                    try
-                    {
-                        LoadSHPFile(file);
-                        ZoomToCenterWP();
-                    }
-                    catch
-                    {
-                        DevComponents.DotNetBar.MessageBoxEx.Show("文件打开时出错", Strings.ERROR);
-                        return;
-                    }
-                }
-            }
-        }
-        #endregion
-
         #endregion
 
         #endregion
@@ -3685,41 +3630,10 @@ namespace VPS.GCSViews
         #endregion
 
         #region 加载区域
-
-        #region 加载poly文件
-        private void FromPolygonToolStripMenuItem_Click(object sender, EventArgs e)
+        private void loadPolygonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog fd = new OpenFileDialog())
-            {
-                fd.Filter = "Polygon (*.poly)|*.poly";
-                var result = fd.ShowDialog();
-
-                string file = fd.FileName;
-                if (result == DialogResult.OK && File.Exists(file))
-                {
-                    LoadPolygonsPoly(file);
-                }
-            }
+            loadpolygons();
         }
-        #endregion
-
-        #region 加载shp文件
-        private void fromSHPToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog fd = new OpenFileDialog())
-            {
-                fd.Filter = "Shape file|*.shp";
-                var result = fd.ShowDialog();
-
-                string file = fd.FileName;
-                if (result == DialogResult.OK && File.Exists(file))
-                {
-                    LoadPolygonSHP(file);
-                }
-            }
-        }
-        #endregion
-
         #endregion
 
         #endregion
@@ -5061,57 +4975,6 @@ namespace VPS.GCSViews
             {
                 VPS.CustomData.WP.WPGlobalData.instance.SetWPListHandle(load.GetWPList());
             }
-
-            //using (OpenFileDialog fd = new OpenFileDialog())
-            //{
-            //    fd.Filter = "Default WPFile(*kml)|*.kml|Google Earth KML(*kml;*.kmz) |*.kml;*.kmz|ShapeFile(*.shp)|*.shp";
-            //    if (Directory.Exists(Settings.Instance["WPFileDirectory"] ?? ""))
-            //        fd.InitialDirectory = Settings.Instance["WPFileDirectory"];
-            //    var result = fd.ShowDialog();
-
-            //    string file = fd.FileName;
-            //    if (result == DialogResult.OK && File.Exists(file))
-            //    {
-            //        Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
-            //        switch (fd.FilterIndex)
-            //        {
-            //            case 1:
-            //                try
-            //                {
-            //                    LoadWaypointsKML(file, false);
-            //                }
-            //                catch
-            //                {
-            //                    DevComponents.DotNetBar.MessageBoxEx.Show("Error opening File", Strings.ERROR);
-            //                    return;
-            //                }
-            //                break;
-            //            case 2:
-            //                try
-            //                {
-            //                    LoadKMLFile(file);
-            //                }
-            //                catch
-            //                {
-            //                    DevComponents.DotNetBar.MessageBoxEx.Show("Error opening File", Strings.ERROR);
-            //                    return;
-            //                }
-            //                break;
-            //            case 3:
-            //                try
-            //                {
-            //                    LoadSHPFile(file);
-            //                }
-            //                catch
-            //                {
-            //                    DevComponents.DotNetBar.MessageBoxEx.Show("Error opening File", Strings.ERROR);
-            //                    return;
-            //                }
-            //                break;
-            //        }
-            //        //lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
-            //    }
-            ////}
         }
 
         #endregion
@@ -5612,44 +5475,12 @@ namespace VPS.GCSViews
         /// </summary>
         private void loadpolygons()
         {
-            using (OpenFileDialog fd = new OpenFileDialog())
+            VPS.Controls.LoadAndSave.LoadPolygon load = new VPS.Controls.LoadAndSave.LoadPolygon();
+            var result = load.ShowDialog();
+
+            if (result == DialogResult.OK)
             {
-                fd.Filter = "Polygon (*.poly)|*.poly|Shape file (*.shp)|*.shp";
-                if (Directory.Exists(Settings.Instance["PolygonFileDirectory"] ?? ""))
-                    fd.InitialDirectory = Settings.Instance["PolygonFileDirectory"];
-                var result = fd.ShowDialog();
-
-                string file = fd.FileName;
-                if (result == DialogResult.OK && File.Exists(file))
-                {
-                    Settings.Instance["PolygonFileDirectory"] = Path.GetDirectoryName(file);
-                    switch (fd.FilterIndex)
-                    {
-                        case 1:
-                            try
-                            {
-                                LoadPolygonsPoly(file);
-                            }
-                            catch
-                            {
-                                DevComponents.DotNetBar.MessageBoxEx.Show("Error opening File", Strings.ERROR);
-                                return;
-                            }
-                            break;
-                        case 2:
-                            try
-                            {
-                                LoadPolygonSHP(file);
-                            }
-                            catch
-                            {
-                                DevComponents.DotNetBar.MessageBoxEx.Show("Error opening File", Strings.ERROR);
-                                return;
-                            }
-                            break;
-                    }
-                }
-
+                VPS.CustomData.WP.WPGlobalData.instance.SetPolyListHandle(load.GetWPList());
             }
         }
         #endregion

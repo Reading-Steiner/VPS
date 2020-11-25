@@ -44,9 +44,9 @@ namespace VPS.GCSViews
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FlightPlanner));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.label6 = new System.Windows.Forms.Label();
@@ -70,8 +70,6 @@ namespace VPS.GCSViews
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.savePolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fromPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fromSHPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.planningWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.surveyGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,9 +77,6 @@ namespace VPS.GCSViews
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.saveWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadWPFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadKMLFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadSHPFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadAndAppendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelBASE = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -103,8 +98,8 @@ namespace VPS.GCSViews
             // 
             // dataGridViewImageColumn1
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewImageColumn1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewImageColumn1.DefaultCellStyle = dataGridViewCellStyle3;
             resources.ApplyResources(this.dataGridViewImageColumn1, "dataGridViewImageColumn1");
             this.dataGridViewImageColumn1.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn1.Image")));
             this.dataGridViewImageColumn1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
@@ -112,8 +107,8 @@ namespace VPS.GCSViews
             // 
             // dataGridViewImageColumn2
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewImageColumn2.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewImageColumn2.DefaultCellStyle = dataGridViewCellStyle4;
             resources.ApplyResources(this.dataGridViewImageColumn2, "dataGridViewImageColumn2");
             this.dataGridViewImageColumn2.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn2.Image")));
             this.dataGridViewImageColumn2.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
@@ -303,22 +298,8 @@ namespace VPS.GCSViews
             // loadPolygonToolStripMenuItem
             // 
             resources.ApplyResources(this.loadPolygonToolStripMenuItem, "loadPolygonToolStripMenuItem");
-            this.loadPolygonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fromPolygonToolStripMenuItem,
-            this.fromSHPToolStripMenuItem});
             this.loadPolygonToolStripMenuItem.Name = "loadPolygonToolStripMenuItem";
-            // 
-            // fromPolygonToolStripMenuItem
-            // 
-            resources.ApplyResources(this.fromPolygonToolStripMenuItem, "fromPolygonToolStripMenuItem");
-            this.fromPolygonToolStripMenuItem.Name = "fromPolygonToolStripMenuItem";
-            this.fromPolygonToolStripMenuItem.Click += new System.EventHandler(this.FromPolygonToolStripMenuItem_Click);
-            // 
-            // fromSHPToolStripMenuItem
-            // 
-            resources.ApplyResources(this.fromSHPToolStripMenuItem, "fromSHPToolStripMenuItem");
-            this.fromSHPToolStripMenuItem.Name = "fromSHPToolStripMenuItem";
-            this.fromSHPToolStripMenuItem.Click += new System.EventHandler(this.fromSHPToolStripMenuItem_Click);
+            this.loadPolygonToolStripMenuItem.Click += new System.EventHandler(this.loadPolygonToolStripMenuItem_Click);
             // 
             // planningWPToolStripMenuItem
             // 
@@ -364,29 +345,8 @@ namespace VPS.GCSViews
             // loadWPToolStripMenuItem
             // 
             resources.ApplyResources(this.loadWPToolStripMenuItem, "loadWPToolStripMenuItem");
-            this.loadWPToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadWPFileToolStripMenuItem,
-            this.loadKMLFileToolStripMenuItem,
-            this.loadSHPFileToolStripMenuItem});
             this.loadWPToolStripMenuItem.Name = "loadWPToolStripMenuItem";
-            // 
-            // loadWPFileToolStripMenuItem
-            // 
-            resources.ApplyResources(this.loadWPFileToolStripMenuItem, "loadWPFileToolStripMenuItem");
-            this.loadWPFileToolStripMenuItem.Name = "loadWPFileToolStripMenuItem";
-            this.loadWPFileToolStripMenuItem.Click += new System.EventHandler(this.LoadWPFileToolStripMenuItem_Click);
-            // 
-            // loadKMLFileToolStripMenuItem
-            // 
-            resources.ApplyResources(this.loadKMLFileToolStripMenuItem, "loadKMLFileToolStripMenuItem");
-            this.loadKMLFileToolStripMenuItem.Name = "loadKMLFileToolStripMenuItem";
-            this.loadKMLFileToolStripMenuItem.Click += new System.EventHandler(this.LoadKMLFileToolStripMenuItem_Click);
-            // 
-            // loadSHPFileToolStripMenuItem
-            // 
-            resources.ApplyResources(this.loadSHPFileToolStripMenuItem, "loadSHPFileToolStripMenuItem");
-            this.loadSHPFileToolStripMenuItem.Name = "loadSHPFileToolStripMenuItem";
-            this.loadSHPFileToolStripMenuItem.Click += new System.EventHandler(this.LoadSHPFileToolStripMenuItem_Click);
+            this.loadWPToolStripMenuItem.Click += new System.EventHandler(this.loadWPToolStripMenuItem_Click);
             // 
             // loadAndAppendToolStripMenuItem
             // 
@@ -503,8 +463,6 @@ namespace VPS.GCSViews
         public ToolStripMenuItem addPolygonToolStripMenuItem;
         public ToolStripMenuItem clearPolygonToolStripMenuItem;
         private ToolStripMenuItem loadPolygonToolStripMenuItem;
-        public ToolStripMenuItem fromPolygonToolStripMenuItem;
-        public ToolStripMenuItem fromSHPToolStripMenuItem;
 
         public ContextMenuStrip contextMenuStripPoly;
 
@@ -517,7 +475,6 @@ namespace VPS.GCSViews
 
         public ComboBox comboBoxMapType;
         public ToolStripMenuItem loadWPToolStripMenuItem;
-        public ToolStripMenuItem loadWPFileToolStripMenuItem;
         public ToolStripMenuItem saveWPToolStripMenuItem;
         //public ToolStripMenuItem trackerHomeToolStripMenuItem;
         //public ToolStripMenuItem reverseWPsToolStripMenuItem;
@@ -525,15 +482,7 @@ namespace VPS.GCSViews
         public ToolStripMenuItem savePolygonToolStripMenuItem;
 
         public CheckBox chk_grid;
-        //public ToolStripMenuItem insertWpToolStripMenuItem;
-        public ToolStripMenuItem loadKMLFileToolStripMenuItem;
         public LinkLabel lnk_kml;
-        //public ToolStripMenuItem pOIToolStripMenuItem;
-        //public ToolStripMenuItem poiaddToolStripMenuItem;
-        //public ToolStripMenuItem poideleteToolStripMenuItem;
-        //public ToolStripMenuItem poieditToolStripMenuItem;
-        //public ToolStripMenuItem enterUTMCoordToolStripMenuItem;
-        public ToolStripMenuItem loadSHPFileToolStripMenuItem;
         public Panel panel3;
         //public ToolStripMenuItem switchDockingToolStripMenuItem;
         public Splitter splitter2;

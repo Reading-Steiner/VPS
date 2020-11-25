@@ -149,6 +149,9 @@
   <data name="splitter1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 485</value>
   </data>
+  <data name="panel3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>940, 5</value>
+  </data>
   <data name="chk_grid.Text" xml:space="preserve">
     <value>网格</value>
   </data>
@@ -161,9 +164,6 @@
   <data name="lnk_kml.Text" xml:space="preserve">
     <value>查看KML</value>
   </data>
-  <data name="panel3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>940, 5</value>
-  </data>
   <data name="splitter2.Size" type="System.Drawing.Size, System.Drawing">
     <value>3, 485</value>
   </data>
@@ -173,68 +173,17 @@
   <data name="label11.Text" xml:space="preserve">
     <value>放大</value>
   </data>
-  <data name="deleteMarkerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 22</value>
-  </data>
   <data name="deleteMarkerToolStripMenuItem.Text" xml:space="preserve">
     <value>删除标记</value>
-  </data>
-  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>96, 6</value>
-  </data>
-  <data name="addPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
-  </data>
-  <data name="addPolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>设置区域</value>
-  </data>
-  <data name="clearPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
-  </data>
-  <data name="clearPolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>清除区域</value>
-  </data>
-  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 6</value>
-  </data>
-  <data name="savePolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
-  </data>
-  <data name="savePolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>保存区域</value>
-  </data>
-  <data name="fromPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 22</value>
-  </data>
-  <data name="fromPolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>读取ploygon文件</value>
-  </data>
-  <data name="fromSHPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 22</value>
-  </data>
-  <data name="fromSHPToolStripMenuItem.Text" xml:space="preserve">
-    <value>读取shp文件</value>
-  </data>
-  <data name="loadPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
-  </data>
-  <data name="loadPolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>加载区域</value>
-  </data>
-  <data name="polygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 22</value>
   </data>
   <data name="polygonToolStripMenuItem.Text" xml:space="preserve">
     <value>划定区域</value>
   </data>
   <data name="addWPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="addWPToolStripMenuItem.Text" xml:space="preserve">
     <value>设置航点</value>
-  </data>
-  <data name="surveyGridToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
   </data>
   <data name="surveyGridToolStripMenuItem.Text" xml:space="preserve">
     <value>自动航点</value>
@@ -243,53 +192,20 @@
   <data name="surveyGridToolStripMenuItem.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="clearMissionToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
-  </data>
   <data name="clearMissionToolStripMenuItem.Text" xml:space="preserve">
     <value>清除任务</value>
-  </data>
-  <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 6</value>
-  </data>
-  <data name="saveWPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
   </data>
   <data name="saveWPToolStripMenuItem.Text" xml:space="preserve">
     <value>保存航点</value>
   </data>
-  <data name="loadWPFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 22</value>
-  </data>
-  <data name="loadWPFileToolStripMenuItem.Text" xml:space="preserve">
-    <value>加载航点文件</value>
-  </data>
-  <data name="loadKMLFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 22</value>
-  </data>
-  <data name="loadKMLFileToolStripMenuItem.Text" xml:space="preserve">
-    <value>加载 kml 文件</value>
-  </data>
-  <data name="loadSHPFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 22</value>
-  </data>
-  <data name="loadSHPFileToolStripMenuItem.Text" xml:space="preserve">
-    <value>加载 shp 文件</value>
-  </data>
-  <data name="loadWPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
-  </data>
   <data name="loadWPToolStripMenuItem.Text" xml:space="preserve">
     <value>加载航点</value>
-  </data>
-  <data name="planningWPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 22</value>
   </data>
   <data name="planningWPToolStripMenuItem.Text" xml:space="preserve">
     <value>规划航点</value>
   </data>
   <data name="contextMenuStripMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 76</value>
+    <value>156, 98</value>
   </data>
   <data name="MainMap.Size" type="System.Drawing.Size, System.Drawing">
     <value>1066, 481</value>
@@ -300,11 +216,29 @@
   <data name="panelMap.Text" xml:space="preserve">
     <value>面板6</value>
   </data>
+  <data name="addPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="addPolygonToolStripMenuItem.Text" xml:space="preserve">
+    <value>设置区域</value>
+  </data>
+  <data name="clearPolygonToolStripMenuItem.Text" xml:space="preserve">
+    <value>清除区域</value>
+  </data>
+  <data name="savePolygonToolStripMenuItem.Text" xml:space="preserve">
+    <value>保存区域</value>
+  </data>
+  <data name="loadPolygonToolStripMenuItem.Text" xml:space="preserve">
+    <value>加载区域</value>
+  </data>
   <data name="loadAndAppendToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>150, 22</value>
   </data>
   <data name="loadAndAppendToolStripMenuItem.Text" xml:space="preserve">
     <value>加载 WP 文件</value>
+  </data>
+  <data name="contextMenuStripTiff.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 48</value>
   </data>
   <data name="tiffReadToolStripTiffMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>136, 22</value>
@@ -317,8 +251,5 @@
   </data>
   <data name="tiffManagerToolStripTiffMenuItem.Text" xml:space="preserve">
     <value>管理工作区</value>
-  </data>
-  <data name="contextMenuStripTiff.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 48</value>
   </data>
 </root>
