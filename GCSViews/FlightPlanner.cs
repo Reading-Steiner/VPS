@@ -355,6 +355,8 @@ namespace VPS.GCSViews
             this.polyicon.IsSelected = true;
             this.addPolygonToolStripMenuItem.Checked = true;
             this.addWPToolStripMenuItem.Checked = false;
+            writeKML();
+            redrawPolygonSurvey();
         }
 
         private void LeaveDrawPolygonState()
@@ -362,6 +364,7 @@ namespace VPS.GCSViews
             this.MainMap.Cursor = Cursors.Default;
             this.polyicon.IsSelected = false;
             this.addPolygonToolStripMenuItem.Checked = false;
+            redrawPolygonSurvey();
         }
 
         private void DrawWPState()
@@ -370,12 +373,15 @@ namespace VPS.GCSViews
             this.addWPToolStripMenuItem.Checked = true;
             this.polyicon.IsSelected = false;
             this.addPolygonToolStripMenuItem.Checked = false;
+            writeKML();
+            redrawPolygonSurvey();
         }
 
         private void LeaveDrawWPState()
         {
             this.MainMap.Cursor = Cursors.Default;
             this.addWPToolStripMenuItem.Checked = false;
+            writeKML();
         }
 
 
@@ -4434,10 +4440,10 @@ namespace VPS.GCSViews
 
             if (IsDrawPolygongridMode)
             {
-                if (midline.now != null)
+                if (midline.next != null)
                 {
                     //点击到多边形中线
-                    var idx = drawnpolygon.Points.IndexOf(midline.now);
+                    var idx = drawnpolygon.Points.IndexOf(midline.next);
 
                     InsertPolyPoint(idx, CurrentMidLine.Position.Lat, CurrentMidLine.Position.Lng);
                 }
@@ -4484,7 +4490,7 @@ namespace VPS.GCSViews
             drawnpolygonsoverlay.Polygons.Add(drawnpolygon);
             MainMap.UpdatePolygonLocalPosition(drawnpolygon);
 
-            if (drawnpolygon.Points.Count > 0)
+            if (IsDrawPolygongridMode && drawnpolygon.Points.Count > 0)
             {
                 foreach (var pointLatLngAlt in drawnpolygon.Points.CloseLoop().PrevNowNext())
                 {
@@ -4595,6 +4601,7 @@ namespace VPS.GCSViews
 
                 pointlist = overlay.pointlist;
 
+                if (IsDrawWPMode && pointlist.Count > 0) 
                 {
                     foreach (var pointLatLngAlt in pointlist.PrevNowNext())
                     {
