@@ -5057,6 +5057,11 @@ namespace VPS.GCSViews
             VPS.Controls.LoadAndSave.LoadWP load = new VPS.Controls.LoadAndSave.LoadWP();
             var result = load.ShowDialog();
 
+            if(result == DialogResult.OK)
+            {
+                VPS.CustomData.WP.WPGlobalData.instance.SetWPListHandle(load.GetWPList());
+            }
+
             //using (OpenFileDialog fd = new OpenFileDialog())
             //{
             //    fd.Filter = "Default WPFile(*kml)|*.kml|Google Earth KML(*kml;*.kmz) |*.kml;*.kmz|ShapeFile(*.shp)|*.shp";

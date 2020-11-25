@@ -32,7 +32,7 @@ namespace VPS.CustomFile
         //[DllImport("gdal232.dll", CallingConvention = CallingConvention.Cdecl)]
         //public static extern IntPtr OGR_F_GetFieldAsString(HandleRef handle, int fieldIdx);
 
-        public static ShpDataSet ReadSHP(string file)
+        public static SHPDataSet ReadSHP(string file)
         {
             ProjectionInfo pStart = new ProjectionInfo();
             ProjectionInfo pESRIEnd = KnownCoordinateSystems.Geographic.World.WGS1984;
@@ -75,7 +75,7 @@ namespace VPS.CustomFile
             FeatureDefn oDefn = oLayer.GetLayerDefn();
             int iFieldCount = oDefn.GetFieldCount();
 
-            ShpDataSet data = new ShpDataSet(typeString, coordString);
+            SHPDataSet data = new SHPDataSet(typeString, coordString);
             //读取shp文件
             Feature feat;
 
@@ -182,13 +182,13 @@ namespace VPS.CustomFile
         }
 
 
-        public class ShpDataSet
+        public class SHPDataSet
         {
             public string coordinates;
             public string featureType;
             public List<List<PointLatLngAlt>> points;
 
-            public ShpDataSet(string featureType, string coordinates)
+            public SHPDataSet(string featureType, string coordinates)
             {
                 this.coordinates = coordinates;
                 this.featureType = featureType;

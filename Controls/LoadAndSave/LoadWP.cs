@@ -28,7 +28,7 @@ namespace VPS.Controls.LoadAndSave
         {
             using (OpenFileDialog fd = new OpenFileDialog())
             {
-                fd.Filter = "Default WPFile(*kml)|*.kml|Google Earth KML(*kml;*.kmz) |*.kml;*.kmz|ShapeFile(*.shp)|*.shp";
+                fd.Filter = "Google Earth KML(*kml;*.kmz) |*.kml;*.kmz|ShapeFile(*.shp)|*.shp";
                 if (Directory.Exists(Settings.Instance["WPFileDirectory"] ?? ""))
                     fd.InitialDirectory = Settings.Instance["WPFileDirectory"];
                 var result = fd.ShowDialog();
@@ -41,13 +41,20 @@ namespace VPS.Controls.LoadAndSave
                     switch (fd.FilterIndex)
                     {
                         case 1:
+                            {
+                                TXT_FileType.Text = "文件类型：kml";
+                                List<List<PointLatLngAlt>> wpLists = new List<List<PointLatLngAlt>>();
+
+                                var data = VPS.CustomFile.KML.ReadKML(file);
+                                BindingDataSource(data);
+                            }
                             break;
                         case 2:
-                            break;
-                        case 3:
-                            TXT_FileType.Text = "文件类型：shp";
-                            var data = VPS.CustomFile.SHP.ReadSHP(file);
-                            BindingDataSource(data);
+                            {
+                                TXT_FileType.Text = "文件类型：shp";
+                                var data = VPS.CustomFile.SHP.ReadSHP(file);
+                                BindingDataSource(data);
+                            }
                             break;
                     }
                 }
@@ -58,23 +65,72 @@ namespace VPS.Controls.LoadAndSave
 
         #endregion
 
-        private void BindingDataSource(CustomFile.SHP.ShpDataSet data)
+        private void BindingDataSource(CustomFile.SHP.SHPDataSet data)
         {
-            LoadWPInfo info = new LoadWPInfo();
-            info.coordinates = data.coordinates;
-            info.featureType = data.featureType;
-            info.features = new FeaturesInfo(data.points);
+            info = new LoadSHPWPInfo();
+            (info as LoadSHPWPInfo).coordinates = data.coordinates;
+            (info as LoadSHPWPInfo).featureType = data.featureType;
+            (info as LoadSHPWPInfo).features = new FeaturesInfo(data.points);
             advPropertyGrid1.SelectedObject = info;
+        }
+
+        private void BindingDataSource(CustomFile.KML.KMLDataSet data)
+        {
+            info = new LoadKMLWPInfo();
+
+            (info as LoadKMLWPInfo).coordinates = data.coordinates;
+            (info as LoadKMLWPInfo).features = new FeaturesInfo(data.points);
+            advPropertyGrid1.SelectedObject = info;
+        }
+
+        LoadWPInfo info;
+
+        public List<PointLatLngAlt> GetWPList()
+        {
+            if (info is LoadSHPWPInfo) {
+                var data = info as LoadSHPWPInfo;
+                if(data.features.features.Count > 0 && data.features.Current != -1)
+                {
+                    return data.features[data.features.Current];
+                }
+            }
+
+            if (info is LoadKMLWPInfo)
+            {
+                var data = info as LoadKMLWPInfo;
+                if (data.features.features.Count > 0 && data.features.Current != -1)
+                {
+                    return data.features[data.features.Current];
+                }
+            }
+
+            return new List<PointLatLngAlt>();
         }
     }
 
     class LoadWPInfo
+    {
+    }
+
+    class LoadSHPWPInfo : LoadWPInfo
     {
         [Category("基本信息"), DisplayName("投影坐标系"),
             Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
         public string coordinates { get; set; }
         [Category("要素信息"), Description("要素类型"), DisplayName("要素类型"), ReadOnly(true)]
         public string featureType { get; set; }
+        [Category("要素信息"), Description("要素信息"), DisplayName("要素集合"),
+            TypeConverter(typeof(ExpandableObjectConverter)),
+            Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
+        public FeaturesInfo features { get; set; }
+
+    }
+
+    class LoadKMLWPInfo : LoadWPInfo
+    {
+        [Category("基本信息"), DisplayName("投影坐标系"),
+            Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
+        public string coordinates { get; set; }
         [Category("要素信息"), Description("要素信息"), DisplayName("要素集合"),
             TypeConverter(typeof(ExpandableObjectConverter)),
             Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
@@ -89,15 +145,15 @@ namespace VPS.Controls.LoadAndSave
         public FeaturesInfo(List<List<PointLatLngAlt>> list)
         {
             features = new List<List<PointLatLngAlt>>();
-            if (list.Count > 0 && Current == -1)
-                Current = 0;
-            else if (list.Count <= 0)
-                Current = -1;
             for (int i = 0; i < list.Count; i++)
             {
                 List<PointLatLngAlt> feature = new List<PointLatLngAlt>(list[i]);
                 features.Add(feature);
             }
+            if (Count > 0)
+                Current = 0;
+            else
+                Current = -1;
         }
 
         [TypeConverter(typeof(ExpandableObjectConverter)), Category("要素集合"), DisplayName("要素数量")
@@ -108,10 +164,13 @@ namespace VPS.Controls.LoadAndSave
         }
 
         [TypeConverter(typeof(ExpandableObjectConverter)), Category("要素集合"), DisplayName("选中要素"),
-            PropertyIntegerEditor(MinValue = -1, MaxValue = 100)]
+            PropertyIntegerEditor(MinValue = -1, MaxValue = 100),DefaultValue(0)]
         public int Current
         {
-            set { current = Count > 0 ? value % Count : -1; }
+            set
+            {
+                current = Count > 0 ? value % Count : -1;
+            }
             get { return current; }
         }
 
@@ -130,8 +189,6 @@ namespace VPS.Controls.LoadAndSave
                     features[index] = new List<PointLatLngAlt>(value);
                 if (value.Count > 0 && Current == -1)
                     Current = 0;
-                else if (value.Count <= 0)
-                    Current = -1;
 
             }
             get

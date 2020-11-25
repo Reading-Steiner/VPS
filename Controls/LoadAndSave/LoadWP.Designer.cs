@@ -29,10 +29,12 @@
         private void InitializeComponent()
         {
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.advPropertyGrid1 = new DevComponents.DotNetBar.AdvPropertyGrid();
             this.TXT_FileType = new DevComponents.DotNetBar.LabelX();
             this.OpenFile = new DevComponents.DotNetBar.ButtonX();
             this.TXT_FileName = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.advPropertyGrid1 = new DevComponents.DotNetBar.AdvPropertyGrid();
+            this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
             this.panelEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.advPropertyGrid1)).BeginInit();
             this.SuspendLayout();
@@ -41,6 +43,8 @@
             // 
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx1.Controls.Add(this.buttonX2);
+            this.panelEx1.Controls.Add(this.buttonX1);
             this.panelEx1.Controls.Add(this.advPropertyGrid1);
             this.panelEx1.Controls.Add(this.TXT_FileType);
             this.panelEx1.Controls.Add(this.OpenFile);
@@ -57,6 +61,20 @@
             this.panelEx1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 0;
+            // 
+            // advPropertyGrid1
+            // 
+            this.advPropertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.advPropertyGrid1.GridLinesColor = System.Drawing.Color.WhiteSmoke;
+            this.advPropertyGrid1.Location = new System.Drawing.Point(3, 68);
+            this.advPropertyGrid1.Name = "advPropertyGrid1";
+            this.advPropertyGrid1.SearchBoxVisible = false;
+            this.advPropertyGrid1.Size = new System.Drawing.Size(278, 393);
+            this.advPropertyGrid1.TabIndex = 5;
+            this.advPropertyGrid1.Text = "advPropertyGrid1";
+            this.advPropertyGrid1.ToolbarVisible = false;
             // 
             // TXT_FileType
             // 
@@ -94,19 +112,29 @@
             this.TXT_FileName.Size = new System.Drawing.Size(260, 21);
             this.TXT_FileName.TabIndex = 1;
             // 
-            // advPropertyGrid1
+            // buttonX1
             // 
-            this.advPropertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.advPropertyGrid1.GridLinesColor = System.Drawing.Color.WhiteSmoke;
-            this.advPropertyGrid1.Location = new System.Drawing.Point(3, 68);
-            this.advPropertyGrid1.Name = "advPropertyGrid1";
-            this.advPropertyGrid1.SearchBoxVisible = false;
-            this.advPropertyGrid1.Size = new System.Drawing.Size(278, 426);
-            this.advPropertyGrid1.TabIndex = 5;
-            this.advPropertyGrid1.Text = "advPropertyGrid1";
-            this.advPropertyGrid1.ToolbarVisible = false;
+            this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX1.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonX1.Location = new System.Drawing.Point(168, 467);
+            this.buttonX1.Name = "buttonX1";
+            this.buttonX1.Size = new System.Drawing.Size(75, 23);
+            this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.buttonX1.TabIndex = 6;
+            this.buttonX1.Text = "确定";
+            // 
+            // buttonX2
+            // 
+            this.buttonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonX2.Location = new System.Drawing.Point(47, 467);
+            this.buttonX2.Name = "buttonX2";
+            this.buttonX2.Size = new System.Drawing.Size(75, 23);
+            this.buttonX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.buttonX2.TabIndex = 7;
+            this.buttonX2.Text = "取消";
             // 
             // LoadWP
             // 
@@ -130,5 +158,7 @@
         private DevComponents.DotNetBar.LabelX TXT_FileType;
         private DevComponents.DotNetBar.ButtonX OpenFile;
         private DevComponents.DotNetBar.AdvPropertyGrid advPropertyGrid1;
+        private DevComponents.DotNetBar.ButtonX buttonX2;
+        private DevComponents.DotNetBar.ButtonX buttonX1;
     }
 }
