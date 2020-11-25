@@ -1,4 +1,5 @@
-﻿using DotSpatial.Projections;
+﻿using DevComponents.DotNetBar;
+using DotSpatial.Projections;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -62,7 +63,6 @@ namespace VPS.Controls.LoadAndSave
             LoadWPInfo info = new LoadWPInfo();
             info.coordinates = data.coordinates;
             info.featureType = data.featureType;
-            info.featureCount = data.points.Count;
             info.features = new FeaturesInfo(data.points);
             advPropertyGrid1.SelectedObject = info;
         }
@@ -70,40 +70,49 @@ namespace VPS.Controls.LoadAndSave
 
     class LoadWPInfo
     {
-        [Category("基本信息"), Description("投影信息"), DisplayName("投影")]
+        [Category("基本信息"), DisplayName("投影坐标系"),
+            Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
         public string coordinates { get; set; }
-        [Category("要素信息"), Description("要素类型"), DisplayName("要素类型")]
+        [Category("要素信息"), Description("要素类型"), DisplayName("要素类型"), ReadOnly(true)]
         public string featureType { get; set; }
-        [Category("要素信息"), Description("要素数量"), DisplayName("要素数量")]
-        public int featureCount { get; set; }
         [Category("要素信息"), Description("要素信息"), DisplayName("要素集合"),
             TypeConverter(typeof(ExpandableObjectConverter)),
             Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
         public FeaturesInfo features { get; set; }
-        [Category("要素信息"), Description("要素信息"), DisplayName("选中的要素")]
-        public FeaturesInfo featuresIndex { get; set; }
 
     }
 
     class FeaturesInfo
     {
         public List<List<PointLatLngAlt>> features;
-
+        int current = -1;
         public FeaturesInfo(List<List<PointLatLngAlt>> list)
         {
             features = new List<List<PointLatLngAlt>>();
-            for(int i = 0; i < list.Count; i++)
+            if (list.Count > 0 && Current == -1)
+                Current = 0;
+            else if (list.Count <= 0)
+                Current = -1;
+            for (int i = 0; i < list.Count; i++)
             {
                 List<PointLatLngAlt> feature = new List<PointLatLngAlt>(list[i]);
                 features.Add(feature);
             }
         }
 
-        [TypeConverter(typeof(ExpandableObjectConverter)), Category("要素集合"), DisplayName("要素数量")]
+        [TypeConverter(typeof(ExpandableObjectConverter)), Category("要素集合"), DisplayName("要素数量")
+            , ReadOnly(true)]
         public int Count
         {
-            set { }
             get { return features.Count; }  
+        }
+
+        [TypeConverter(typeof(ExpandableObjectConverter)), Category("要素集合"), DisplayName("选中要素"),
+            PropertyIntegerEditor(MinValue = -1, MaxValue = 100)]
+        public int Current
+        {
+            set { current = Count > 0 ? value % Count : -1; }
+            get { return current; }
         }
 
         [TypeConverter(typeof(ExpandableObjectConverter)), Category("要素集合"), DisplayName("要素")]
@@ -119,6 +128,11 @@ namespace VPS.Controls.LoadAndSave
                     features.Insert(0, new List<PointLatLngAlt>(value));
                 else
                     features[index] = new List<PointLatLngAlt>(value);
+                if (value.Count > 0 && Current == -1)
+                    Current = 0;
+                else if (value.Count <= 0)
+                    Current = -1;
+
             }
             get
             {

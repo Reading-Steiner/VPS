@@ -30,4 +30,23 @@ namespace VPS.Controls.CustomControls
             return value;
         }
     }
+
+    class ContentUITypeEditor : UITypeEditor
+    {
+        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
+        {
+            return UITypeEditorEditStyle.Modal;
+        }
+
+
+        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
+        {
+            var service = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+            CustomForms.CustomContent form = new CustomForms.CustomContent() { Text = "编辑", Content = (string)value };
+            service.ShowDialog(form);
+            PropertyNode propertyNode = (PropertyNode)context;
+            propertyNode.UpdateDisplayedValue();
+            return form.Content;
+        }
+    }
 }

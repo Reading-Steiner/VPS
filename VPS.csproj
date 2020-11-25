@@ -435,6 +435,12 @@
     <Compile Include="Controls\CustomForms\CustomCamera.Designer.cs">
       <DependentUpon>CustomCamera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CustomForms\CustomContent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomForms\CustomContent.Designer.cs">
+      <DependentUpon>CustomContent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CustomForms\CustomMap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -897,6 +903,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomForms\CustomCamera.resx">
       <DependentUpon>CustomCamera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CustomForms\CustomContent.resx">
+      <DependentUpon>CustomContent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomForms\CustomMap.resx">
       <DependentUpon>CustomMap.cs</DependentUpon>
