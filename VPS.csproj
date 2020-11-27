@@ -555,6 +555,18 @@
     <Compile Include="Controls\CustomControls\PositionDisplay.Designer.cs">
       <DependentUpon>PositionDisplay.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LoadAndSave\SavePolygon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\LoadAndSave\SavePolygon.Designer.cs">
+      <DependentUpon>SavePolygon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LoadAndSave\SaveWP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\LoadAndSave\SaveWP.Designer.cs">
+      <DependentUpon>SaveWP.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomData\EnumCollect\AltFrame.cs" />
     <Compile Include="CustomData\Layer\LayerInfo.cs" />
     <Compile Include="CustomData\Layer\LayerInfoCache.cs" />
@@ -967,6 +979,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LoadAndSave\LoadWP.resx">
       <DependentUpon>LoadWP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LoadAndSave\SavePolygon.resx">
+      <DependentUpon>SavePolygon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LoadAndSave\SaveWP.resx">
+      <DependentUpon>SaveWP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MainInfo\LeftMainInfo.resx">
       <DependentUpon>LeftMainInfo.cs</DependentUpon>

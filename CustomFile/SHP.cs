@@ -181,7 +181,31 @@ namespace VPS.CustomFile
             return data;
         }
 
+        public static void SaveSHP(string file)
+        {
+            ProjectionInfo pStart = new ProjectionInfo();
+            ProjectionInfo pESRIEnd = KnownCoordinateSystems.Geographic.World.WGS1984;
 
+            // 为了支持中文路径
+            OSGeo.GDAL.Gdal.SetConfigOption("GDAL_FILENAME_IS_UTF8", "YES");
+            // 为了使属性表字段支持中文
+            OSGeo.GDAL.Gdal.SetConfigOption("SHAPE_ENCODING", "CP936");
+
+            Driver dr = Ogr.GetDriverByName("ESRI shapefile");
+
+            if (dr == null)
+            {
+                OnWarnMessage?.Invoke("ESRI shapefile 设备文件出现问题");
+            }
+
+            DataSource ds = dr.Open(file, 0);
+
+            if (ds == null)
+            {
+                OnWarnMessage?.Invoke("shapefile 文件无法打开或为空");
+                ds.Dispose();
+            }
+        }
         public class SHPDataSet
         {
             public string coordinates;

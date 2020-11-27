@@ -96,8 +96,8 @@ namespace VPS.Controls.MainInfo
 
             baseAlt = CustomData.WP.WPGlobalData.GetBaseAlt(wpLists);
             SetControlMainThread(WPBaseAlt, (baseAlt).ToString("0.## m"));
-            maxAlt = CustomData.WP.WPGlobalData.GetMaxAlt(wpLists);
-            minAlt = CustomData.WP.WPGlobalData.GetMinAlt(wpLists);
+            maxAlt = CustomData.WP.WPGlobalData.GetMaxGroundAlt(wpLists);
+            minAlt = CustomData.WP.WPGlobalData.GetMinGroundAlt(wpLists);
             SetControlMainThread(WPGndeLev, minAlt.ToString("0.##") + " - " + maxAlt.ToString("0.## m"));
 
             wpLists = CustomData.WP.WPGlobalData.WPListChangeAltFrame(

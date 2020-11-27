@@ -199,9 +199,9 @@ namespace VPS.Controls.LoadAndSave
 
         public override string ToString()
         {
-            string str = features.Count.ToString() + ";";
-            for(int i =0; i < features.Count; i++)
-                str += i.ToString() + ":" + features[i].Count.ToString();
+            string str = features.Count.ToString() + "; ";
+            if(Current >= 0 & Current < features.Count)
+                str += Current.ToString() + ":" + features[Current].Count.ToString();
             return str;
         }
     }

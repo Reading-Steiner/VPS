@@ -47,7 +47,7 @@ namespace VPS.CustomData.WP
                     case "Main_DefaultHomeAlt":
                         {
                             if (double.TryParse(Settings.Instance[key], out double alt))
-                               defHome.Alt = alt;
+                                defHome.Alt = alt;
                         }
                         break;
                     case "Main_DefaultHomeFrame":
@@ -429,7 +429,7 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 航点列表求最大地面高程
-        public static double GetMaxAlt(List<PointLatLngAlt> wpLists)
+        public static double GetMaxGroundAlt(List<PointLatLngAlt> wpLists)
         {
             var wpList = WPListRemoveHome(wpLists);
             double MaxAlt = double.MinValue;
@@ -451,7 +451,7 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 航点列表求最小地面高程
-        public static double GetMinAlt(List<PointLatLngAlt> wpLists)
+        public static double GetMinGroundAlt(List<PointLatLngAlt> wpLists)
         {
             var wpList = WPListRemoveHome(wpLists);
             double MinAlt = double.MaxValue;
@@ -469,6 +469,45 @@ namespace VPS.CustomData.WP
             if (MinAlt == double.MaxValue)
                 return 0;
             return MinAlt;
+        }
+        #endregion
+
+        #region 获取平均绝对高度
+        public static double GetAverAbsoluteAlt(List<PointLatLngAlt> wpLists)
+        {
+            var wpList = WPListChangeAltFrame(
+                WPListRemoveHome(wpLists), VPS.CustomData.EnumCollect.AltFrame.Absolute);
+            double totalAlt = 0;
+            int counter = 0;
+            foreach (var wp in wpList)
+            {
+                if (WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
+                {
+                    if (wp.Lat == 0 && wp.Lng == 0)
+                        continue;
+                    totalAlt += wp.Alt;
+                    counter++;
+                }
+            }
+            return counter > 0 ? totalAlt / counter : 0;
+        }
+        #endregion
+
+        #region 获取不合格节点
+        public static List<double[]> GetValidPoint(List<PointLatLngAlt> wpLists)
+        {
+            var wpList = WPListChangeAltFrame(
+                WPListRemoveHome(wpLists), VPS.CustomData.EnumCollect.AltFrame.Terrain);
+            List<double[]> valid = new List<double[]>();
+            for (int index = 0; index < wpList.Count; index++) 
+            {
+                if(wpList[index].Alt < 0)
+                {
+                    valid.Add(new double[] { index, wpList[index].Alt });
+                }
+            }
+
+            return valid;
         }
         #endregion
 
@@ -612,6 +651,57 @@ namespace VPS.CustomData.WP
         public static double GetPointOverlap(double lap, double relative, double baseAlt, double alt)
         {
             return lap + (1 - lap) * (baseAlt - alt) / relative;
+        }
+        #endregion
+
+        #region 计算区域面积
+        public double GetPolygonArea(List<PointLatLngAlt> polygon)
+        {
+            // should be a closed polygon
+            // coords are in lat long
+            // need utm to calc area
+
+            if (polygon.Count == 0)
+            {
+                return 0;
+            }
+
+            // close the polygon
+            if (polygon[0] != polygon[polygon.Count - 1])
+                polygon.Add(polygon[0]); // make a full loop
+
+            var ctfac = new ProjNet.CoordinateSystems.Transformations.CoordinateTransformationFactory();
+
+            var wgs84 = ProjNet.CoordinateSystems.GeographicCoordinateSystem.WGS84;
+
+            int utmzone = (int)((polygon[0].Lng - -186.0) / 6.0);
+
+            var utm = ProjNet.CoordinateSystems.ProjectedCoordinateSystem.WGS84_UTM(utmzone,
+                polygon[0].Lat < 0 ? false : true);
+
+            var trans = ctfac.CreateFromCoordinateSystems(wgs84, utm);
+
+            double prod1 = 0;
+            double prod2 = 0;
+
+            for (int a = 0; a < (polygon.Count - 1); a++)
+            {
+                double[] pll1 = { polygon[a].Lng, polygon[a].Lat };
+                double[] pll2 = { polygon[a + 1].Lng, polygon[a + 1].Lat };
+
+                double[] p1 = trans.MathTransform.Transform(pll1);
+                double[] p2 = trans.MathTransform.Transform(pll2);
+
+                prod1 += p1[0] * p2[1];
+                prod2 += p1[1] * p2[0];
+            }
+
+            double answer = (prod1 - prod2) / 2;
+
+            if (polygon[0] == polygon[polygon.Count - 1])
+                polygon.RemoveAt(polygon.Count - 1); // unmake a full loop
+
+            return Math.Abs(answer);
         }
         #endregion
 

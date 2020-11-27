@@ -20,11 +20,14 @@ namespace VPS.Controls.CustomControls
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
             var service = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
-            service.DropDownControl(
-                new CustomControls.CustomMap()
-                {
-                    List = ((LoadAndSave.FeaturesInfo)value).features
-                });
+            var Map = new CustomControls.CustomMap();
+            if (value is LoadAndSave.FeaturesInfo)
+                Map.List = ((LoadAndSave.FeaturesInfo)value).features;
+            if (value is LoadAndSave.FeatureInfo)
+                Map.AddList(((LoadAndSave.FeatureInfo)value).features);
+            if (value is LoadAndSave.PolygonInfo)
+                Map.AddList(((LoadAndSave.PolygonInfo)value).features);
+            service.DropDownControl(Map);
             PropertyNode propertyNode = (PropertyNode)context;
             propertyNode.UpdateDisplayedValue();
             return value;

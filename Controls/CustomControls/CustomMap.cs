@@ -26,13 +26,15 @@ namespace VPS.Controls.CustomControls
             {
                 if (value != null)
                 {
-                    lists = value;
+                    lists = new List<List<PointLatLngAlt>>(value);
                     List<int> indexs = new List<int>();
                     for(int index = 0; index < lists.Count; index++)
-                    {
                         indexs.Add(index);
-                    }
                     ListList.DataSource = indexs;
+                    if (lists.Count > 1)
+                        ListList.Visible = true;
+                    else
+                        ListList.Visible = false;
                 }
             }
         }
@@ -79,7 +81,25 @@ namespace VPS.Controls.CustomControls
             _polygon.Stroke = new Pen(Color.Red, 2);
             _polygon.Fill = Brushes.Transparent;
 
+            ListList.Visible = false;
+
             writeKML();
+        }
+
+        public void AddList(List<PointLatLngAlt> list)
+        {
+            if (list != null)
+            {
+                lists.Add(new List<PointLatLngAlt>(list));
+                List<int> indexs = new List<int>();
+                for (int index = 0; index < lists.Count; index++)
+                    indexs.Add(index);
+                ListList.DataSource = indexs;
+                if(lists.Count > 1)
+                    ListList.Visible = true;
+                else
+                    ListList.Visible = false;
+            }
         }
 
         private void writeKML()

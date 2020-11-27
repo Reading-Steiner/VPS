@@ -62,7 +62,6 @@ namespace VPS.GCSViews
 
         static public Object thisLock = new Object();
         
-        internal string wpfilename;
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private static Propagation prop;
         //public static GMapOverlay airportsoverlay;
@@ -4654,25 +4653,12 @@ namespace VPS.GCSViews
         /// </summary>
         private void savewaypoints()
         {
-            using (SaveFileDialog fd = new SaveFileDialog())
-            {
-                //fd.Filter = "KML|*.kml|WorkCoordinates Mission|*.waypoints|Mission|*.waypoints;*.txt";
-                fd.Filter = "KML|*.kml";
-                fd.DefaultExt = ".kml";
-                fd.InitialDirectory = Settings.Instance["WPFileDirectory"] ?? "";
-                fd.FileName = wpfilename;
-                DialogResult result = fd.ShowDialog();
+            VPS.Controls.LoadAndSave.SaveWP save = new VPS.Controls.LoadAndSave.SaveWP();
+            var result = save.ShowDialog();
 
-                string file = fd.FileName;
-                if (file != "" && result == DialogResult.OK)
-                {
-                    switch (fd.FilterIndex)
-                    {
-                        case 1:
-                            saveWaypointsKML(file);
-                            break;
-                    }
-                }
+            if (result == DialogResult.OK)
+            {
+                save.SaveWaypoint();
             }
         }
         #endregion
@@ -5409,25 +5395,33 @@ namespace VPS.GCSViews
         /// </summary>
         private void savepolygons()
         {
-            if (CustomData.WP.WPGlobalData.instance.GetPolyCount() <= 0)
-            {
-                return;
-            }
+            VPS.Controls.LoadAndSave.SavePolygon save = new VPS.Controls.LoadAndSave.SavePolygon();
+            var result = save.ShowDialog();
 
-            using (SaveFileDialog sf = new SaveFileDialog())
+            if (result == DialogResult.OK)
             {
-                sf.Filter = "Polygon (*.poly)|*.poly";
-                var result = sf.ShowDialog();
-                if (result == DialogResult.OK && sf.FileName != "")
-                {
-                    switch (sf.FilterIndex)
-                    {
-                        case 1:
-                            savePolygons(sf.FileName);
-                            break;
-                    }
-                }
+                save.SavePolygonPoints();
             }
+            
+            //if (CustomData.WP.WPGlobalData.instance.GetPolyCount() <= 0)
+            //{
+            //    return;
+            //}
+
+            //using (SaveFileDialog sf = new SaveFileDialog())
+            //{
+            //    sf.Filter = "Polygon (*.poly)|*.poly";
+            //    var result = sf.ShowDialog();
+            //    if (result == DialogResult.OK && sf.FileName != "")
+            //    {
+            //        switch (sf.FilterIndex)
+            //        {
+            //            case 1:
+            //                savePolygons(sf.FileName);
+            //                break;
+            //        }
+            //    }
+            //}
         }
         #endregion
 
