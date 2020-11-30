@@ -121,7 +121,7 @@
             this.OpenFile.Size = new System.Drawing.Size(75, 23);
             this.OpenFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.OpenFile.TabIndex = 3;
-            this.OpenFile.Text = "打开文件";
+            this.OpenFile.Text = "选择文件";
             this.OpenFile.Click += new System.EventHandler(this.OpenFile_Click);
             // 
             // TXT_FileName

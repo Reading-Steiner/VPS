@@ -19,11 +19,14 @@ namespace VPS.CustomFile
             GdalConfiguration.ConfigureGdal();
         }
 
-        public delegate void Progress(double percent, string message);
+        public delegate void ProgressWithMessage(double percent, string message);
+        public delegate void ProgressMessage(string message);
+        public delegate void Progress(double percent);
         public delegate void Meaasge(string message);
 
+        public static event ProgressWithMessage OnProgressWithMessage;
+        public static event ProgressMessage OnProgressMessage;
         public static event Progress OnProgress;
-        public static event Meaasge OnChangeTarget;
         public static event Meaasge OnSuccess;
         public static event Meaasge OnFailure;
         public static event Meaasge OnInfoMessage;
@@ -46,7 +49,7 @@ namespace VPS.CustomFile
 
             if (dr == null)
             {
-                OnWarnMessage?.Invoke("ESRI shapefile 设备文件出现问题");
+                OnWarnMessage?.Invoke(string.Format("%s 驱动不可用！\n", file));
                 return null;
             }
 
@@ -65,8 +68,17 @@ namespace VPS.CustomFile
             //投影信息
             SpatialReference coord = oLayer.GetSpatialRef();
             string coordString;
-            coord.ExportToWkt(out coordString);
-            pStart.ParseEsriString(coordString);
+            if (coord != null)
+            {
+                
+                coord.ExportToWkt(out coordString);
+                pStart.ParseEsriString(coordString);
+            }
+            else
+            {
+                coordString = KnownCoordinateSystems.Geographic.World.WGS1984.ToEsriString();
+                pStart = KnownCoordinateSystems.Geographic.World.WGS1984;
+            }
 
             wkbGeometryType oTempGeometryType = oLayer.GetGeomType();
             string typeString = oTempGeometryType.ToString();
@@ -97,7 +109,10 @@ namespace VPS.CustomFile
                             Reproject.ReprojectPoints(
                                 arrayXY, arrayZ,
                                 pStart, pESRIEnd, 0, 1);
-                            data.AddPoint(new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]));
+                            var point = new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]);
+                            point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
+                            point.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
+                            data.AddPoint(point);
                         }
                         //NewPoint?.Invoke(new point(pnt));
                         break;
@@ -114,7 +129,10 @@ namespace VPS.CustomFile
                                 Reproject.ReprojectPoints(
                                     arrayXY, arrayZ,
                                     pStart, pESRIEnd, 0, 1);
-                                ls.Add(new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]));
+                                var point = new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]);
+                                point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
+                                point.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
+                                ls.Add(point);
                             }
                             data.AddPolygon(ls);
                             //NewLineString?.Invoke(ls);
@@ -137,9 +155,12 @@ namespace VPS.CustomFile
                                     Reproject.ReprojectPoints(
                                         arrayXY, arrayZ,
                                         pStart, pESRIEnd, 0, 1);
-                                    poly.Add(new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]));
+                                    var point = new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]);
+                                    point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
+                                    point.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
+                                    poly.Add(point);
                                 }
-
+                                data.AddPolygon(poly);
                                 //NewPolygon?.Invoke(poly);
                             }
 
@@ -154,7 +175,7 @@ namespace VPS.CustomFile
                             
                             for (int i = 0; i < geometry.GetGeometryCount(); i++)
                             {
-                                List<PointLatLngAlt> poly = new List<PointLatLngAlt>();
+                                List<PointLatLngAlt> list = new List<PointLatLngAlt>();
 
                                 var geom2 = geometry.GetGeometryRef(i);
                                 var pointcount1 = geom2.GetPointCount();
@@ -167,8 +188,12 @@ namespace VPS.CustomFile
                                     Reproject.ReprojectPoints(
                                         arrayXY, arrayZ,
                                         pStart, pESRIEnd, 0, 1);
-                                    poly.Add(new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]));
+                                    var point = new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]);
+                                    point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
+                                    point.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
+                                    list.Add(point);
                                 }
+                                data.AddPolygon(list);
                             }
 
                             break;
@@ -181,31 +206,78 @@ namespace VPS.CustomFile
             return data;
         }
 
-        public static void SaveSHP(string file)
+        public static void SaveSHP(string file, List<PointLatLngAlt> list)
         {
-            ProjectionInfo pStart = new ProjectionInfo();
-            ProjectionInfo pESRIEnd = KnownCoordinateSystems.Geographic.World.WGS1984;
-
-            // 为了支持中文路径
+            // 为了支持中文路径，请添加下面这句代码
             OSGeo.GDAL.Gdal.SetConfigOption("GDAL_FILENAME_IS_UTF8", "YES");
-            // 为了使属性表字段支持中文
+            // 为了使属性表字段支持中文，请添加下面这句
             OSGeo.GDAL.Gdal.SetConfigOption("SHAPE_ENCODING", "CP936");
 
-            Driver dr = Ogr.GetDriverByName("ESRI shapefile");
+            string strVectorFile = file;
 
-            if (dr == null)
+            OnProgressWithMessage?.Invoke(0, "创建矢量文件");
+
+            //创建数据，这里以创建ESRI的shp文件为例
+            string strDriverName = "ESRI Shapefile";
+            int count = Ogr.GetDriverCount();
+            Driver oDriver = Ogr.GetDriverByName(strDriverName);
+            if (oDriver == null)
             {
-                OnWarnMessage?.Invoke("ESRI shapefile 设备文件出现问题");
+                OnWarnMessage?.Invoke(string.Format("%s 驱动不可用！", oDriver.name));
+                OnFailure?.Invoke(string.Format("创建矢量文件【%s】失败！", strVectorFile));
+                return;
             }
 
-            DataSource ds = dr.Open(file, 0);
-
-            if (ds == null)
+            // 创建数据源
+            DataSource oDS = oDriver.CreateDataSource(strVectorFile, null);
+            if (oDS == null)
             {
-                OnWarnMessage?.Invoke("shapefile 文件无法打开或为空");
-                ds.Dispose();
+                OnFailure?.Invoke(string.Format("创建矢量文件【%s】失败！", strVectorFile));
+                return;
             }
+            // 创建图层，创建一个多边形图层，这里没有指定空间参考，如果需要的话，需要在这里进行指定
+            Layer oLayer = oDS.CreateLayer("TestPolygon", 
+                new SpatialReference(KnownCoordinateSystems.Geographic.World.WGS1984.ToEsriString()), 
+                wkbGeometryType.wkbPolygon25D, null);
+            if (oLayer == null)
+            {
+                OnFailure?.Invoke("图层创建失败！");
+                return;
+            }
+
+            //创建属性列两列
+            //OSGeo.OGR.FieldDefn oField = new OSGeo.OGR.FieldDefn("名称", OSGeo.OGR.FieldType.OFTString);
+            //oField.SetWidth(16);
+            //OSGeo.OGR.FieldDefn oField2 = new OSGeo.OGR.FieldDefn("高度", OSGeo.OGR.FieldType.OFTInteger);
+            //oLayer.CreateField(oField, 1);
+            //oLayer.CreateField(oField2, 0);
+
+            FeatureDefn oDefn = oLayer.GetLayerDefn();
+
+            // 创建岛要素
+            Feature oFeature = new Feature(oDefn);
+            //oFeature.SetField(0, "名称");
+            //oFeature.SetField(1, "高度");
+            //Geometry geomWYX = Geometry.CreateFromWkt("POLYGON ((30 0,60 0,60 30,30 30,30 0))");
+            OSGeo.OGR.Geometry oLineGeo = new OSGeo.OGR.Geometry(OSGeo.OGR.wkbGeometryType.wkbLinearRing);
+            for (int index = 0; index < list.Count; index++)
+            {
+                oLineGeo.AddPoint(list[index].Lng, list[index].Lat, list[index].Alt);
+                OnProgress?.Invoke((index + 1) / list.Count);
+            }
+
+
+            OSGeo.OGR.Geometry oPolygonGeo = new OSGeo.OGR.Geometry(OSGeo.OGR.wkbGeometryType.wkbPolygon);
+            oPolygonGeo.AddGeometryDirectly(oLineGeo);
+            oFeature.SetGeometry(oPolygonGeo);
+            oLayer.CreateFeature(oFeature);
+
+            oFeature.Dispose();
+            oDS.Dispose();
+            
+            OnSuccess?.Invoke("矢量文件创建完成！");
         }
+
         public class SHPDataSet
         {
             public string coordinates;

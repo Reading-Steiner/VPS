@@ -28,7 +28,7 @@ namespace VPS.Controls.LoadAndSave
             using (SaveFileDialog fd = new SaveFileDialog())
             {
                 //fd.Filter = "KML|*.kml|WorkCoordinates Mission|*.waypoints|Mission|*.waypoints;*.txt";
-                fd.Filter = "KML|*.kml";
+                fd.Filter = "Google Earth KML(*kml) |*.kml|ShapeFile(*.shp)|*.shp";
                 fd.DefaultExt = ".kml";
                 fd.InitialDirectory = Settings.Instance["WPFileDirectory"] ?? "";
 
@@ -44,6 +44,11 @@ namespace VPS.Controls.LoadAndSave
                             TXT_FileType.Text = "文件类型：kml";
                             BindingDataSourceKML();
                             break;
+                        case 2:
+                            TXT_FileType.Text = "文件类型：shp";
+                            BindingDataSourceSHP();
+                            break;
+
                     }
                 }
                 else
@@ -79,7 +84,21 @@ namespace VPS.Controls.LoadAndSave
             info.polygon = new PolygonInfo(list);
             info.Area = area.ToString("0.## m^2");
             info.Length = length.ToString("0.## m");
-            (info as SaveKMLPolygonInfo).AltMode = "clampToGround";
+            advPropertyGrid1.SelectedObject = info;
+        }
+
+        private void BindingDataSourceSHP()
+        {
+            info = new SaveSHPPolygonInfo();
+
+            var list = VPS.CustomData.WP.WPGlobalData.instance.GetPolygList();
+            var length = VPS.CustomData.WP.WPGlobalData.GetTotalDist(list);
+            var area = VPS.CustomData.WP.WPGlobalData.instance.GetPolygonArea(list);
+
+            info.polygon = new PolygonInfo(list);
+            info.Area = area.ToString("0.## m^2");
+            info.Length = length.ToString("0.## m");
+
             advPropertyGrid1.SelectedObject = info;
         }
 
@@ -89,9 +108,23 @@ namespace VPS.Controls.LoadAndSave
         {
             if (!string.IsNullOrEmpty(TXT_FileName.Text))
             {
-                string file = TXT_FileName.Text;
-                savePolygonPointsKML(file);
+                if (TXT_FileType.Text.Contains("kml"))
+                {
+                    string file = TXT_FileName.Text;
+                    savePolygonPointsKML(file);
+                }
+                if (TXT_FileType.Text.Contains("shp"))
+                {
+                    string file = TXT_FileName.Text;
+                    savePolygonPointsSHP(file);
+                }
             }
+        }
+
+        private void savePolygonPointsSHP(string file)
+        {
+            List<PointLatLngAlt> polygon = VPS.CustomData.WP.WPGlobalData.instance.GetPolygList();
+            VPS.CustomFile.SHP.SaveSHP(file, polygon);
         }
 
         private void savePolygonPointsKML(string file)
@@ -215,8 +248,22 @@ namespace VPS.Controls.LoadAndSave
 
     class SaveKMLPolygonInfo : SavePolygonInfo
     {
-        [Category("要素信息"), DisplayName("高度框架"), ReadOnly(true)]
-        public string AltMode { set; get; }
+        [Category("保存信息"), DisplayName("文件类型"), ReadOnly(true)]
+        public string FileType { set; get; } = "Google Earth KML";
+
+        [Category("保存信息"), DisplayName("高度框架"), ReadOnly(true)]
+        public string AltMode { set; get; } = "clampToGround";
+    }
+
+    class SaveSHPPolygonInfo : SavePolygonInfo
+    {
+        [Category("保存信息"), DisplayName("文件类型"), ReadOnly(true)]
+        public string FileType { set; get; } = "ShapeFile";
+
+        [Category("保存信息"), DisplayName("空间参考"), ReadOnly(true)]
+        public string FileProference { set; get; } = 
+            DotSpatial.Projections.KnownCoordinateSystems.Geographic.World.WGS1984.ToString();
+
     }
 
     class PolygonInfo
