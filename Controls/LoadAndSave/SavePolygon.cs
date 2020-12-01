@@ -37,32 +37,31 @@ namespace VPS.Controls.LoadAndSave
                 string file = fd.FileName;
                 if (file != "" && result == DialogResult.OK)
                 {
-                    TXT_FileName.Text = file;
                     switch (fd.FilterIndex)
                     {
                         case 1:
-                            TXT_FileType.Text = "文件类型：kml";
-                            BindingDataSourceKML();
+                            BindingDataSourceKML(file);
                             break;
                         case 2:
-                            TXT_FileType.Text = "文件类型：shp";
-                            BindingDataSourceSHP();
+                            BindingDataSourceSHP(file);
                             break;
 
                     }
                 }
                 else
                 {
-                    TXT_FileType.Text = "";
-                    BindingDataSourceBase();
+                    BindingDataSourceBase(file);
                 }
-            }
+            } 
         }
 
-        private void BindingDataSourceBase()
+        private void BindingDataSourceBase(string file = "")
         {
             info = new SavePolygonInfo();
 
+            info.fileName = file;
+            info.fileType = CustomFile.UniversalMethod.GetFileType(file);
+
             var list = VPS.CustomData.WP.WPGlobalData.instance.GetPolygList();
             var length = VPS.CustomData.WP.WPGlobalData.GetTotalDist(list);
             var area = VPS.CustomData.WP.WPGlobalData.instance.GetPolygonArea(list);
@@ -73,10 +72,13 @@ namespace VPS.Controls.LoadAndSave
             advPropertyGrid1.SelectedObject = info;
         }
 
-        private void BindingDataSourceKML()
+        private void BindingDataSourceKML(string file)
         {
             info = new SaveKMLPolygonInfo();
 
+            info.fileName = file;
+            info.fileType = ".kml";
+
             var list = VPS.CustomData.WP.WPGlobalData.instance.GetPolygList();
             var length = VPS.CustomData.WP.WPGlobalData.GetTotalDist(list);
             var area = VPS.CustomData.WP.WPGlobalData.instance.GetPolygonArea(list);
@@ -87,9 +89,12 @@ namespace VPS.Controls.LoadAndSave
             advPropertyGrid1.SelectedObject = info;
         }
 
-        private void BindingDataSourceSHP()
+        private void BindingDataSourceSHP(string file)
         {
             info = new SaveSHPPolygonInfo();
+
+            info.fileName = file;
+            info.fileType = ".shp";
 
             var list = VPS.CustomData.WP.WPGlobalData.instance.GetPolygList();
             var length = VPS.CustomData.WP.WPGlobalData.GetTotalDist(list);
@@ -106,16 +111,16 @@ namespace VPS.Controls.LoadAndSave
 
         public void SavePolygonPoints()
         {
-            if (!string.IsNullOrEmpty(TXT_FileName.Text))
+            if (!string.IsNullOrEmpty(info.fileName))
             {
-                if (TXT_FileType.Text.Contains("kml"))
+                if (info.fileType.Contains("kml"))
                 {
-                    string file = TXT_FileName.Text;
+                    string file = info.fileName;
                     savePolygonPointsKML(file);
                 }
-                if (TXT_FileType.Text.Contains("shp"))
+                if (info.fileType.Contains("shp"))
                 {
-                    string file = TXT_FileName.Text;
+                    string file = info.fileName;
                     savePolygonPointsSHP(file);
                 }
             }
@@ -232,6 +237,11 @@ namespace VPS.Controls.LoadAndSave
 
     class SavePolygonInfo
     {
+        [Category("打开文件"), DisplayName("文件")]
+        public string fileName { get; set; }
+
+        [Category("打开文件"), DisplayName("文件类型"), ReadOnly(false)]
+        public string fileType { get; set; }
         //[Category("基本信息"), Description("要素类型"), DisplayName("航飞最大倾角"), ReadOnly(true)]
         //public string GradOfWPList { get; set; }
         [Category("区域信息"), Description("区域点的集合"), DisplayName("区域"),

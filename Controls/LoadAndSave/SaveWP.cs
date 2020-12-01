@@ -38,31 +38,30 @@ namespace VPS.Controls.LoadAndSave
                 string file = fd.FileName;
                 if (file != "" && result == DialogResult.OK)
                 {
-                    TXT_FileName.Text = file;
                     switch (fd.FilterIndex)
                     {
                         case 1:
-                            TXT_FileType.Text = "文件类型：kml";
-                            BindingDataSourceKML();
+                            BindingDataSourceKML(file);
                             break;
                         case 2:
-                            TXT_FileType.Text = "文件类型：shp";
-                            BindingDataSourceSHP();
+                            BindingDataSourceSHP(file);
                             break;
                     }
                 }
                 else
                 {
-                    TXT_FileType.Text = "";
-                    BindingDataSourceBase();
+                    BindingDataSourceBase(file);
                 }
             }
         }
 
-        private void BindingDataSourceBase()
+        private void BindingDataSourceBase(string file = "")
         {
             info = new SaveWPInfo();
 
+            info.fileName = file;
+            info.fileType = CustomFile.UniversalMethod.GetFileType(file);
+
             var list = VPS.CustomData.WP.WPGlobalData.instance.GetWPList();
             var baseAlt = VPS.CustomData.WP.WPGlobalData.GetBaseAlt(list);
             var totalDist = VPS.CustomData.WP.WPGlobalData.GetTotalDist(list);
@@ -80,10 +79,13 @@ namespace VPS.Controls.LoadAndSave
             advPropertyGrid1.SelectedObject = info;
         }
 
-        private void BindingDataSourceKML()
+        private void BindingDataSourceKML(string file)
         {
             info = new SaveKMLWPInfo();
 
+            info.fileName = file;
+            info.fileType = ".kml";
+
             var list = VPS.CustomData.WP.WPGlobalData.instance.GetWPList();
             var baseAlt = VPS.CustomData.WP.WPGlobalData.GetBaseAlt(list);
             var totalDist = VPS.CustomData.WP.WPGlobalData.GetTotalDist(list);
@@ -101,9 +103,12 @@ namespace VPS.Controls.LoadAndSave
             advPropertyGrid1.SelectedObject = info;
         }
 
-        private void BindingDataSourceSHP()
+        private void BindingDataSourceSHP(string file)
         {
             info = new SaveSHPWPInfo();
+
+            info.fileName = file;
+            info.fileType = ".shp";
 
             var list = VPS.CustomData.WP.WPGlobalData.instance.GetWPList();
             var baseAlt = VPS.CustomData.WP.WPGlobalData.GetBaseAlt(list);
@@ -125,16 +130,16 @@ namespace VPS.Controls.LoadAndSave
 
         public void SaveWaypoint()
         {
-            if (!string.IsNullOrEmpty(TXT_FileName.Text))
+            if (!string.IsNullOrEmpty(info.fileName))
             {
-                if (TXT_FileType.Text.Contains("kml"))
+                if (info.fileType.Contains("kml"))
                 {
-                    string file = TXT_FileName.Text;
+                    string file = info.fileName;
                     saveWaypointsKML(file);
                 }
-                if (TXT_FileType.Text.Contains("shp"))
+                if (info.fileType.Contains("shp"))
                 {
-                    string file = TXT_FileName.Text;
+                    string file = info.fileName;
                     saveWaypointsSHP(file);
                 }
             }
@@ -430,12 +435,21 @@ namespace VPS.Controls.LoadAndSave
 
     class SaveWPInfo
     {
+        [Category("打开文件"), DisplayName("文件")]
+        public string fileName { get; set; }
+
+        [Category("打开文件"), DisplayName("文件类型"), ReadOnly(false)]
+        public string fileType { get; set; }
+
         [Category("航点信息"), DisplayName("航摄基准"), ReadOnly(true)]
         public string BaseOfWPList { get; set; }
+
         [Category("航点信息"), DisplayName("航飞路程"), ReadOnly(true)]
         public string DistanceOfWPList { get; set; }
+
         [Category("航点信息"), DisplayName("高度框架"), ReadOnly(true)]
         public VPS.CustomData.EnumCollect.AltFrame.Mode AltMode { get; set; }
+
         [Category("航点信息"), Description("要素信息"), DisplayName("航线"),
             TypeConverter(typeof(ExpandableObjectConverter)),
             Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]

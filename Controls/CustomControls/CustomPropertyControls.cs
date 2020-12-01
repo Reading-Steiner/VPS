@@ -52,4 +52,23 @@ namespace VPS.Controls.CustomControls
             return form.Content;
         }
     }
+
+    class WPOrPolyFileUITypeEditor : UITypeEditor
+    {
+        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
+        {
+            return UITypeEditorEditStyle.DropDown;
+        }
+
+        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
+        {
+            var service = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+            var openFile = new CustomControls.CustomFileSelecter();
+            openFile.FileFilter = "Google Earth KML(*kml;*.kmz) |*.kml;*.kmz|ShapeFile(*.shp)|*.shp";
+            service.DropDownControl(openFile);
+            PropertyNode propertyNode = (PropertyNode)context;
+            propertyNode.UpdateDisplayedValue();
+            return value;
+        }
+    }
 }

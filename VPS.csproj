@@ -422,6 +422,12 @@
     <Compile Include="Controls\ComboDataList.Designer.cs">
       <DependentUpon>ComboDataList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CustomControls\CustomFileSelecter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomControls\CustomFileSelecter.Designer.cs">
+      <DependentUpon>CustomFileSelecter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CustomControls\CustomMap.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -440,6 +446,12 @@
     </Compile>
     <Compile Include="Controls\CustomForms\CustomContent.Designer.cs">
       <DependentUpon>CustomContent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomForms\CustomFileSelecter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomForms\CustomFileSelecter.Designer.cs">
+      <DependentUpon>CustomFileSelecter.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\CustomForms\CustomMap.cs">
       <SubType>Form</SubType>
@@ -655,6 +667,7 @@
     <Compile Include="CustomData\Markers\GMapMarkerCustom.cs" />
     <Compile Include="CustomFile\KML.cs" />
     <Compile Include="CustomFile\SHP.cs" />
+    <Compile Include="CustomFile\UniversalMethod.cs" />
     <Compile Include="GCSViews\ConfigurationView\ConfigADSB.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -917,6 +930,9 @@
     <EmbeddedResource Include="Controls\ControlSensorsStatus.resx">
       <DependentUpon>ControlSensorsStatus.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CustomControls\CustomFileSelecter.resx">
+      <DependentUpon>CustomFileSelecter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomControls\CustomMap.resx">
       <DependentUpon>CustomMap.cs</DependentUpon>
     </EmbeddedResource>
@@ -925,6 +941,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomForms\CustomContent.resx">
       <DependentUpon>CustomContent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CustomForms\CustomFileSelecter.resx">
+      <DependentUpon>CustomFileSelecter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomForms\CustomMap.resx">
       <DependentUpon>CustomMap.cs</DependentUpon>

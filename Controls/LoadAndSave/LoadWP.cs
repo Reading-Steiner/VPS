@@ -22,6 +22,13 @@ namespace VPS.Controls.LoadAndSave
         public LoadWP()
         {
             InitializeComponent();
+            
+            this.Load += LoadWP_Load;
+        }
+
+        private void LoadWP_Load(object sender, EventArgs e)
+        {
+            BindingDataSource();
         }
 
         private void OpenFile_Click(object sender, EventArgs e)
@@ -37,24 +44,24 @@ namespace VPS.Controls.LoadAndSave
                 if (result == DialogResult.OK && File.Exists(file))
                 {
                     Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
-                    TXT_FileName.Text = file;
                     switch (fd.FilterIndex)
                     {
                         case 1:
                             {
-                                TXT_FileType.Text = "文件类型：kml";
                                 List<List<PointLatLngAlt>> wpLists = new List<List<PointLatLngAlt>>();
 
                                 var data = VPS.CustomFile.KML.ReadKML(file);
-                                BindingDataSource(data);
+                                BindingDataSource(file, data);
                             }
                             break;
                         case 2:
                             {
-                                TXT_FileType.Text = "文件类型：shp";
                                 var data = VPS.CustomFile.SHP.ReadSHP(file);
-                                BindingDataSource(data);
+                                BindingDataSource(file, data);
                             }
+                            break;
+                        default:
+                            BindingDataSource(file);
                             break;
                     }
                 }
@@ -65,21 +72,48 @@ namespace VPS.Controls.LoadAndSave
 
         #endregion
 
-        private void BindingDataSource(CustomFile.SHP.SHPDataSet data)
+        private void BindingDataSource(string file = "")
         {
-            info = new LoadSHPWPInfo();
-            (info as LoadSHPWPInfo).coordinates = data.coordinates;
-            (info as LoadSHPWPInfo).featureType = data.featureType;
-            (info as LoadSHPWPInfo).features = new FeaturesInfo(data.points);
+            info = new LoadWPInfo();
+
+            info.fileName = file;
+            info.fileType = CustomFile.UniversalMethod.GetFileType(file);
+            info.fileSize = CustomFile.UniversalMethod.GetFileSize(file);
+            info.createTime = CustomFile.UniversalMethod.GetFileCreate(file);
+            info.modifyTime = CustomFile.UniversalMethod.GetFileModify(file);
+
+            info.features = new FeaturesInfo(new List<List<PointLatLngAlt>>());
             advPropertyGrid1.SelectedObject = info;
         }
 
-        private void BindingDataSource(CustomFile.KML.KMLDataSet data)
+        private void BindingDataSource(string file, CustomFile.SHP.SHPDataSet data)
+        {
+            info = new LoadSHPWPInfo();
+
+            info.fileName = file;
+            info.fileType = CustomFile.UniversalMethod.GetFileType(file);
+            info.fileSize = CustomFile.UniversalMethod.GetFileSize(file);
+            info.createTime = CustomFile.UniversalMethod.GetFileCreate(file);
+            info.modifyTime = CustomFile.UniversalMethod.GetFileModify(file);
+
+            (info as LoadSHPWPInfo).coordinates = data.coordinates;
+            (info as LoadSHPWPInfo).featureType = data.featureType;
+            info.features = new FeaturesInfo(data.points);
+            advPropertyGrid1.SelectedObject = info;
+        }
+
+        private void BindingDataSource(string file, CustomFile.KML.KMLDataSet data)
         {
             info = new LoadKMLWPInfo();
 
+            info.fileName = file;
+            info.fileType = CustomFile.UniversalMethod.GetFileType(file);
+            info.fileSize = CustomFile.UniversalMethod.GetFileSize(file);
+            info.createTime = CustomFile.UniversalMethod.GetFileCreate(file);
+            info.modifyTime = CustomFile.UniversalMethod.GetFileModify(file);
+
             (info as LoadKMLWPInfo).coordinates = data.coordinates;
-            (info as LoadKMLWPInfo).features = new FeaturesInfo(data.points);
+            info.features = new FeaturesInfo(data.points);
             advPropertyGrid1.SelectedObject = info;
         }
 
@@ -110,6 +144,25 @@ namespace VPS.Controls.LoadAndSave
 
     class LoadWPInfo
     {
+        [Category("打开文件"), DisplayName("文件")]
+        public string fileName { get; set; }
+
+        [Category("打开文件"), DisplayName("文件类型"), ReadOnly(false)]
+        public string fileType { get; set; }
+
+        [Category("打开文件"), DisplayName("文件大小"), ReadOnly(false)]
+        public string fileSize { get; set; }
+
+        [Category("打开文件"), DisplayName("创建时间"), ReadOnly(false)]
+        public string createTime { get; set; }
+
+        [Category("打开文件"), DisplayName("修改时间"), ReadOnly(false)]
+        public string modifyTime { get; set; }
+
+        [Category("要素集合"), DisplayName("要素集合"),
+            TypeConverter(typeof(ExpandableObjectConverter)),
+            Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
+        public FeaturesInfo features { get; set; }
     }
 
     class LoadSHPWPInfo : LoadWPInfo
@@ -119,10 +172,7 @@ namespace VPS.Controls.LoadAndSave
         public string coordinates { get; set; }
         [Category("要素信息"), Description("要素类型"), DisplayName("要素类型"), ReadOnly(true)]
         public string featureType { get; set; }
-        [Category("要素信息"), Description("要素信息"), DisplayName("要素集合"),
-            TypeConverter(typeof(ExpandableObjectConverter)),
-            Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
-        public FeaturesInfo features { get; set; }
+        
 
     }
 
@@ -131,10 +181,6 @@ namespace VPS.Controls.LoadAndSave
         [Category("基本信息"), DisplayName("投影坐标系"),
             Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
         public string coordinates { get; set; }
-        [Category("要素信息"), Description("要素信息"), DisplayName("要素集合"),
-            TypeConverter(typeof(ExpandableObjectConverter)),
-            Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
-        public FeaturesInfo features { get; set; }
 
     }
 
