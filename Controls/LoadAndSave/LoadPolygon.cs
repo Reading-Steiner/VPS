@@ -14,7 +14,7 @@ using VPS.Utilities;
 
 namespace VPS.Controls.LoadAndSave
 {
-    public partial class LoadPolygon : Form
+    public partial class LoadPolygon : DevComponents.DotNetBar.Office2007Form
     {
         public LoadPolygon()
         {
@@ -136,7 +136,8 @@ namespace VPS.Controls.LoadAndSave
 
     class LoadPolygonInfo
     {
-        [Category("打开文件"), DisplayName("文件")]
+        [Category("打开文件"), DisplayName("文件"),
+            Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
         public string fileName { get; set; }
 
         [Category("打开文件"), DisplayName("文件类型"), ReadOnly(false)]

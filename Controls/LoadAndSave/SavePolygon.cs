@@ -14,7 +14,7 @@ using VPS.Utilities;
 
 namespace VPS.Controls.LoadAndSave
 {
-    public partial class SavePolygon : Form
+    public partial class SavePolygon : DevComponents.DotNetBar.Office2007Form
     {
         public SavePolygon()
         {
@@ -62,7 +62,7 @@ namespace VPS.Controls.LoadAndSave
             info.fileName = file;
             info.fileType = CustomFile.UniversalMethod.GetFileType(file);
 
-            var list = VPS.CustomData.WP.WPGlobalData.instance.GetPolygList();
+            var list = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
             var length = VPS.CustomData.WP.WPGlobalData.GetTotalDist(list);
             var area = VPS.CustomData.WP.WPGlobalData.instance.GetPolygonArea(list);
 
@@ -79,7 +79,7 @@ namespace VPS.Controls.LoadAndSave
             info.fileName = file;
             info.fileType = ".kml";
 
-            var list = VPS.CustomData.WP.WPGlobalData.instance.GetPolygList();
+            var list = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
             var length = VPS.CustomData.WP.WPGlobalData.GetTotalDist(list);
             var area = VPS.CustomData.WP.WPGlobalData.instance.GetPolygonArea(list);
 
@@ -96,7 +96,7 @@ namespace VPS.Controls.LoadAndSave
             info.fileName = file;
             info.fileType = ".shp";
 
-            var list = VPS.CustomData.WP.WPGlobalData.instance.GetPolygList();
+            var list = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
             var length = VPS.CustomData.WP.WPGlobalData.GetTotalDist(list);
             var area = VPS.CustomData.WP.WPGlobalData.instance.GetPolygonArea(list);
 
@@ -128,13 +128,13 @@ namespace VPS.Controls.LoadAndSave
 
         private void savePolygonPointsSHP(string file)
         {
-            List<PointLatLngAlt> polygon = VPS.CustomData.WP.WPGlobalData.instance.GetPolygList();
+            List<PointLatLngAlt> polygon = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
             VPS.CustomFile.SHP.SaveSHP(file, polygon);
         }
 
         private void savePolygonPointsKML(string file)
         {
-            List<PointLatLngAlt> polygon = VPS.CustomData.WP.WPGlobalData.instance.GetPolygList();
+            List<PointLatLngAlt> polygon = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
 
             FileStream fs = new FileStream(file, FileMode.Create);
             XmlTextWriter w = new XmlTextWriter(fs, System.Text.Encoding.UTF8);
@@ -237,7 +237,8 @@ namespace VPS.Controls.LoadAndSave
 
     class SavePolygonInfo
     {
-        [Category("打开文件"), DisplayName("文件")]
+        [Category("打开文件"), DisplayName("文件"),
+            Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
         public string fileName { get; set; }
 
         [Category("打开文件"), DisplayName("文件类型"), ReadOnly(false)]
@@ -276,7 +277,7 @@ namespace VPS.Controls.LoadAndSave
 
     }
 
-    class PolygonInfo
+    public class PolygonInfo
     {
         public List<PointLatLngAlt> features;
 
@@ -296,6 +297,11 @@ namespace VPS.Controls.LoadAndSave
         {
             string str = features.Count.ToString();
             return str;
+        }
+
+        public void AddPolygon(List<PointLatLngAlt> list)
+        {
+            features = new List<PointLatLngAlt>(list);
         }
     }
 }

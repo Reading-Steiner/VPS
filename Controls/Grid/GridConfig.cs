@@ -549,7 +549,7 @@ namespace VPS.Controls.Grid
         {
             if (gridGrenate)
                 return;
-            List<PointLatLngAlt> polygons = CustomData.WP.WPGlobalData.instance.GetPolygList();
+            List<PointLatLngAlt> polygons = CustomData.WP.WPGlobalData.instance.GetPolyList();
             poly = new List<PointLatLngAlt>(polygons.ToArray());
 
             DataTable set = new DataTable();

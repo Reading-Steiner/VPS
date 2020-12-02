@@ -144,7 +144,8 @@ namespace VPS.Controls.LoadAndSave
 
     class LoadWPInfo
     {
-        [Category("打开文件"), DisplayName("文件")]
+        [Category("打开文件"), DisplayName("文件"),
+            Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
         public string fileName { get; set; }
 
         [Category("打开文件"), DisplayName("文件类型"), ReadOnly(false)]
@@ -184,7 +185,7 @@ namespace VPS.Controls.LoadAndSave
 
     }
 
-    class FeaturesInfo
+    public class FeaturesInfo
     {
         public List<List<PointLatLngAlt>> features;
         int current = -1;
@@ -202,14 +203,24 @@ namespace VPS.Controls.LoadAndSave
                 Current = -1;
         }
 
-        [TypeConverter(typeof(ExpandableObjectConverter)), Category("要素集合"), DisplayName("要素数量")
-            , ReadOnly(true)]
+        public FeaturesInfo(List<PointLatLngAlt> list)
+        {
+            features = new List<List<PointLatLngAlt>>();
+            List<PointLatLngAlt> feature = new List<PointLatLngAlt>(list);
+            features.Add(feature);
+            if (Count > 0)
+                Current = 0;
+            else
+                Current = -1;
+        }
+
+        [Category("要素集合"), DisplayName("要素数量"), ReadOnly(true)]
         public int Count
         {
             get { return features.Count; }  
         }
 
-        [TypeConverter(typeof(ExpandableObjectConverter)), Category("要素集合"), DisplayName("选中要素"),
+        [ Category("要素集合"), DisplayName("选中要素"),
             PropertyIntegerEditor(MinValue = -1, MaxValue = 100),DefaultValue(0)]
         public int Current
         {
@@ -220,7 +231,7 @@ namespace VPS.Controls.LoadAndSave
             get { return current; }
         }
 
-        [TypeConverter(typeof(ExpandableObjectConverter)), Category("要素集合"), DisplayName("要素")]
+        [Category("要素集合"), DisplayName("要素")]
         public List<PointLatLngAlt> this[int index]
         {
             set
@@ -249,6 +260,16 @@ namespace VPS.Controls.LoadAndSave
             if(Current >= 0 & Current < features.Count)
                 str += Current.ToString() + ":" + features[Current].Count.ToString();
             return str;
+        }
+
+        public void AddFeature(List<PointLatLngAlt> list)
+        {
+            List<PointLatLngAlt> feature = new List<PointLatLngAlt>(list);
+            features.Add(feature);
+            if (Count > 0 && Current == -1)
+                Current = 0;
+            else if(Count <= 0)
+                Current = -1;
         }
     }
 }

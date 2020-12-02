@@ -477,6 +477,12 @@
     <Compile Include="Controls\LoadAndSave\LoadPolygon.Designer.cs">
       <DependentUpon>LoadPolygon.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LoadAndSave\LoadProject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\LoadAndSave\LoadProject.Designer.cs">
+      <DependentUpon>LoadProject.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LoadAndSave\LoadWP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -567,11 +573,18 @@
     <Compile Include="Controls\CustomControls\PositionDisplay.Designer.cs">
       <DependentUpon>PositionDisplay.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LoadAndSave\PropertyGridOrder.cs" />
     <Compile Include="Controls\LoadAndSave\SavePolygon.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Controls\LoadAndSave\SavePolygon.Designer.cs">
       <DependentUpon>SavePolygon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LoadAndSave\SaveProject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\LoadAndSave\SaveProject.Designer.cs">
+      <DependentUpon>SaveProject.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\LoadAndSave\SaveWP.cs">
       <SubType>Form</SubType>
@@ -996,11 +1009,17 @@
     <EmbeddedResource Include="Controls\LoadAndSave\LoadPolygon.resx">
       <DependentUpon>LoadPolygon.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LoadAndSave\LoadProject.resx">
+      <DependentUpon>LoadProject.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\LoadAndSave\LoadWP.resx">
       <DependentUpon>LoadWP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LoadAndSave\SavePolygon.resx">
       <DependentUpon>SavePolygon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LoadAndSave\SaveProject.resx">
+      <DependentUpon>SaveProject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LoadAndSave\SaveWP.resx">
       <DependentUpon>SaveWP.cs</DependentUpon>

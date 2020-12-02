@@ -861,7 +861,7 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 获取区域点
-        public List<PointLatLngAlt> GetPolygList()
+        public List<PointLatLngAlt> GetPolyList()
         {
             List<PointLatLngAlt> polygonList = new List<PointLatLngAlt>(polyList);
             return polygonList;

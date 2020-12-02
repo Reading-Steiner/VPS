@@ -3872,102 +3872,47 @@ namespace VPS
         #region 工程模块
 
         #region LoadProject
-
-        #region LoadProject 入口函数
         /// <summary>
         /// 提取工程文件数据
         /// </summary>
         private void LoadProjectButton_Click(object sender, EventArgs e)
         {
-            System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(GCSViews.ProjectData));
-
-            using (OpenFileDialog ofd = new OpenFileDialog())
+            var load = new Controls.LoadAndSave.LoadProject();
+            var result = load.ShowDialog();
+            if (result == DialogResult.OK)
             {
-                ofd.Filter = "项目工程(*.vps)|*.vps";
-                ofd.ShowDialog();
-
-                if (File.Exists(ofd.FileName))
+                CustomData.WP.WPGlobalData.instance.SetPolyListHandle(load.info.polygon.features);
+                CustomData.WP.WPGlobalData.instance.SetWPListHandle(load.info.wpList.features);
+                if (load.info.layer != CustomData.WP.WPGlobalData.instance.GetLayer())
                 {
-                    using (StreamReader sr = new StreamReader(ofd.FileName))
-                    {
-                        var data = (GCSViews.ProjectData)reader.Deserialize(sr);
-                        loadProjectData(data);
-                    }
+                    CustomData.WP.WPGlobalData.instance.SetLayer(load.info.layer);
+                    ShowLayerOverlay(load.info.layer);
                 }
+
+                CustomData.WP.WPGlobalData.instance.SetLayer(
+                    load.info.layer, load.info.defaultLayer);
+                CustomData.WP.WPGlobalData.instance.SetLayerLimit(
+                    load.info.layerRect, load.info.homePosition.ToLocationPoint(), load.info.defaultLayer);
+
+                GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(load.info.layerRect);
             }
         }
-        #endregion
-
-        #region LoadProject 主体函数
-        /// <summary>
-        /// 使用工程文件提取出的数据，布置界面控件
-        /// </summary>
-        private void loadProjectData(GCSViews.ProjectData data)
-        {
-            CustomData.WP.WPGlobalData.instance.SetPolyListHandle(data.poly);
-            CustomData.WP.WPGlobalData.instance.SetWPListHandle(data.wp);
-            if (data.layer != CustomData.WP.WPGlobalData.instance.GetLayer())
-            {
-                CustomData.WP.WPGlobalData.instance.SetLayer(data.layer);
-                ShowLayerOverlay(data.layer);
-            }
-
-            CustomData.WP.WPGlobalData.instance.SetLayer(data.layer, data.isDefaultLayer);
-            CustomData.WP.WPGlobalData.instance.SetLayerLimit(data.layerRect, data.homePosition, data.isDefaultLayer);
-
-            GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(data.layerRect);
-        }
-        #endregion
 
         #endregion
 
         #region SaveProject
-
-        #region SaveProject 入口函数
         /// <summary>
         /// 将提取的数据保存到文件中
         /// </summary>
         private void SaveProjectButton_Click(object sender, EventArgs e)
         {
-            System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(GCSViews.ProjectData));
-
-            var data = saveProjectData();
-
-            using (SaveFileDialog sfd = new SaveFileDialog())
+            var save = new VPS.Controls.LoadAndSave.SaveProject();
+            var result = save.ShowDialog();
+            if(result == DialogResult.OK)
             {
-                sfd.Filter = "项目工程(*.vps)|*.vps";
-                var result = sfd.ShowDialog();
-
-                if (sfd.FileName != "" && result == DialogResult.OK)
-                {
-                    using (StreamWriter sw = new StreamWriter(sfd.FileName))
-                    {
-                        writer.Serialize(sw, data);
-                    }
-                }
+                save.SaveProjectToFile();
             }
         }
-        #endregion
-
-        #region SaveProject 主体函数
-        /// <summary>
-        /// 从控件中提取参数
-        /// </summary>
-        private GCSViews.ProjectData saveProjectData()
-        {
-            var data = new GCSViews.ProjectData();
-            data.poly = CustomData.WP.WPGlobalData.instance.GetPolygList();
-            data.wp = CustomData.WP.WPGlobalData.instance.GetWPList();
-            data.isDefaultLayer = CustomData.WP.WPGlobalData.instance.IsDefaultLayer(
-                CustomData.WP.WPGlobalData.instance.GetLayer());
-            data.layer = CustomData.WP.WPGlobalData.instance.GetLayer();
-            data.layerRect = CustomData.WP.WPGlobalData.instance.GetLayerRect();
-            data.homePosition = CustomData.WP.WPGlobalData.instance.GetLayerHome();
-
-            return data;
-        }
-        #endregion
-
         #endregion
 
         #endregion
@@ -3986,6 +3931,7 @@ namespace VPS
                 LoadTiffButton.Checked = true;
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
                 LayerReaderDockContainerItem.Visible = true;
+                this.LeftBar.AutoHide = this.LeftBar.AutoHide;
                 LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
                 this.LeftBar.ResumeLayout(false);
@@ -3995,6 +3941,7 @@ namespace VPS
                 LoadTiffButton.Checked = false;
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
                 LayerReaderDockContainerItem.Visible = false;
+                this.LeftBar.AutoHide = this.LeftBar.AutoHide;
                 //LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
                 this.LeftBar.ResumeLayout(false);
@@ -4230,13 +4177,16 @@ namespace VPS
         {
             if (!AutoWPButton.Checked)
             {
+                bool hide = IsLeftBarHide();
                 AutoWPButton.Checked = true;
                 CustomData.WP.WPGlobalData.instance.PolygonListChange += VPS.Controls.Grid.GridConfig.instance.SetPolygonList;
 
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
                 AutoGridDockContainerItem.Visible = true;
                 LeftBar.SelectedDockContainerItem = AutoGridDockContainerItem;
+
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
+                this.LeftBar.AutoHide = hide;
                 this.LeftBar.ResumeLayout(false);
 
                 VPS.Controls.Grid.GridConfig.instance.SetPolygonList();
@@ -4249,6 +4199,7 @@ namespace VPS
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
                 VPS.Controls.Grid.GridConfig.instance.SaveSetting();
                 AutoGridDockContainerItem.Visible = false;
+                this.LeftBar.AutoHide = this.LeftBar.AutoHide;
                 ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
                 this.LeftBar.ResumeLayout(false);
             }
@@ -4383,6 +4334,52 @@ namespace VPS
         {
             MinMenuBar.Expanded = RibbonStateCommand.Checked;
             RibbonStateCommand.Checked = !RibbonStateCommand.Checked;
+        }
+        #endregion
+
+        #endregion
+
+        #region 停靠栏
+
+        #region 左
+        public bool IsLeftBarHide()
+        {
+            return this.LeftBar.AutoHide;
+        }
+
+        public void SetLeftBarHide(bool isHide)
+        {
+            this.LeftBar.AutoHide = isHide;
+        }
+        #endregion
+
+        #region 下
+        public bool IsBottomBarHide()
+        {
+            return this.BottomBar.AutoHide;
+        }
+
+        public void SetBottomBarHide(bool isHide)
+        {
+            this.BottomBar.AutoHide = isHide;
+        }
+        #endregion
+
+        #region 右
+        public bool IsRightBarHide()
+        {
+            return false;
+        }
+
+        public void SetRightBarHide(bool isHide)
+        {
+        }
+        #endregion
+
+        #region ConfigGrid
+        public bool IsConfigGridVisible()
+        {
+            return VPS.Controls.Grid.GridConfig.instance.Visible;
         }
         #endregion
 

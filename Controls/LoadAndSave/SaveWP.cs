@@ -15,7 +15,7 @@ using VPS.Utilities;
 
 namespace VPS.Controls.LoadAndSave
 {
-    public partial class SaveWP : Form
+    public partial class SaveWP : DevComponents.DotNetBar.Office2007Form
     {
         public SaveWP()
         {
@@ -435,7 +435,8 @@ namespace VPS.Controls.LoadAndSave
 
     class SaveWPInfo
     {
-        [Category("打开文件"), DisplayName("文件")]
+        [Category("打开文件"), DisplayName("文件"),
+            Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
         public string fileName { get; set; }
 
         [Category("打开文件"), DisplayName("文件类型"), ReadOnly(false)]

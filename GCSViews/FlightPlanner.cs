@@ -3660,7 +3660,7 @@ namespace VPS.GCSViews
         #region 定位到Polygon
         public void ZoomToCenterPolygon()
         {
-            List<PointLatLngAlt> list = CustomData.WP.WPGlobalData.instance.GetPolygList();
+            List<PointLatLngAlt> list = CustomData.WP.WPGlobalData.instance.GetPolyList();
             if (list.Count > 0)
             {
                 double left = list[0].Lng; double right = list[0].Lng;
@@ -4472,7 +4472,7 @@ namespace VPS.GCSViews
         #region 刷新Polygon显示
         public void redrawPolygonSurvey()
         {
-            List<PointLatLngAlt> list = CustomData.WP.WPGlobalData.instance.GetPolygList();
+            List<PointLatLngAlt> list = CustomData.WP.WPGlobalData.instance.GetPolyList();
             if (quickadd)
                 return;
             drawnpolygon.Points.Clear();
@@ -5438,7 +5438,7 @@ namespace VPS.GCSViews
 
                 if (CustomData.WP.WPGlobalData.instance.GetPolyCount() > 0)
                 {
-                    foreach (var pll in CustomData.WP.WPGlobalData.instance.GetPolygList())
+                    foreach (var pll in CustomData.WP.WPGlobalData.instance.GetPolyList())
                     {
                         sw.WriteLine(pll.Lat.ToString(CultureInfo.InvariantCulture) + " " + pll.Lng.ToString(CultureInfo.InvariantCulture));
                     }
