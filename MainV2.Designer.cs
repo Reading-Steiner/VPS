@@ -990,8 +990,10 @@ namespace VPS
             // 
             // 
             this.itemContainer8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.itemContainer8.HorizontalItemAlignment = DevComponents.DotNetBar.eHorizontalItemsAlignment.Center;
             this.itemContainer8.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical;
             this.itemContainer8.Name = "itemContainer8";
+            this.itemContainer8.ResizeItemsToFit = false;
             this.itemContainer8.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.OpenProjectItem,
             this.SaveProjectItem,
@@ -1021,6 +1023,7 @@ namespace VPS
             // 
             // 
             this.itemContainer9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.itemContainer9.HorizontalItemAlignment = DevComponents.DotNetBar.eHorizontalItemsAlignment.Center;
             this.itemContainer9.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical;
             this.itemContainer9.Name = "itemContainer9";
             this.itemContainer9.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
@@ -1038,6 +1041,7 @@ namespace VPS
             // 
             // 
             this.itemContainer10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.itemContainer10.HorizontalItemAlignment = DevComponents.DotNetBar.eHorizontalItemsAlignment.Center;
             this.itemContainer10.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical;
             this.itemContainer10.Name = "itemContainer10";
             this.itemContainer10.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {

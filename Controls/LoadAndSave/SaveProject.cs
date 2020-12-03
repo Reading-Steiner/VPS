@@ -112,15 +112,15 @@ namespace VPS.Controls.LoadAndSave
         private List<string> categorys = new List<string>()
         { "航点","区域","区域数据源","区域范围","初始位置","左停靠栏","下停靠栏","自动航点"};
 
-        [Category("要素集合"), DisplayName("航点"),
-            TypeConverter(typeof(ExpandableObjectConverter)),
-            Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
+        [Category("要素集合"), DisplayName("航点")]
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        [Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
         public ProjectListInfo wpList { set; get; }
             = new ProjectListInfo(new List<Utilities.PointLatLngAlt>());
 
-        [Category("要素集合"), DisplayName("区域"),
-            TypeConverter(typeof(ExpandableObjectConverter)),
-            Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
+        [Category("要素集合"), DisplayName("区域")]
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        [Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
         public ProjectListInfo polygon { set; get; }
             = new ProjectListInfo(new List<Utilities.PointLatLngAlt>());
 
@@ -130,8 +130,9 @@ namespace VPS.Controls.LoadAndSave
         [Category("工作区"), DisplayName("区域范围")]
         public GMap.NET.RectLatLng layerRect { set; get; } = new GMap.NET.RectLatLng();
 
-        [Category("工作区"), DisplayName("初始位置"),
-            TypeConverter(typeof(ExpandableObjectConverter))]
+        [Category("工作区"), DisplayName("初始位置")]
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        [Editor(typeof(CustomControls.PositionUITypeEditor), typeof(UITypeEditor))]
         public Position homePosition { set; get; } = new Position();
 
         [Category("用户布局"), DisplayName("左停靠栏")]
