@@ -119,7 +119,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 491);
             this.Controls.Add(this.panelEx1);
+            this.DoubleBuffered = true;
             this.Name = "SaveWP";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SaveWP";
             this.panelEx1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.advPropertyGrid1)).EndInit();

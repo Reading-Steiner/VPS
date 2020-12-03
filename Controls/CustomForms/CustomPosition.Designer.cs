@@ -262,7 +262,7 @@
             this.Controls.Add(this.panelEx1);
             this.DoubleBuffered = true;
             this.Name = "CustomPosition";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "坐标";
             this.Load += new System.EventHandler(this.CustomPosition_Load);
             this.panelEx1.ResumeLayout(false);

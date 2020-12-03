@@ -120,6 +120,7 @@
             this.ClientSize = new System.Drawing.Size(334, 491);
             this.Controls.Add(this.panelEx1);
             this.Name = "LoadProject";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "LoadProject";
             this.panelEx1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.advPropertyGrid1)).EndInit();

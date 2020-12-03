@@ -99,11 +99,23 @@ namespace VPS
             this.StartContainer = new DevComponents.DotNetBar.ItemContainer();
             this.itemContainer2 = new DevComponents.DotNetBar.ItemContainer();
             this.StartItemContainer = new DevComponents.DotNetBar.ItemContainer();
+            this.itemContainer8 = new DevComponents.DotNetBar.ItemContainer();
+            this.OpenProjectItem = new DevComponents.DotNetBar.ButtonItem();
+            this.SaveProjectItem = new DevComponents.DotNetBar.ButtonItem();
+            this.CloseProjectItem = new DevComponents.DotNetBar.ButtonItem();
+            this.itemContainer9 = new DevComponents.DotNetBar.ItemContainer();
+            this.WorkSpaceItem = new DevComponents.DotNetBar.ButtonItem();
+            this.itemContainer10 = new DevComponents.DotNetBar.ItemContainer();
             this.buttonItem1 = new DevComponents.DotNetBar.ButtonItem();
+            this.ImportWPItem = new DevComponents.DotNetBar.ButtonItem();
+            this.ImportPolyItem = new DevComponents.DotNetBar.ButtonItem();
             this.buttonItem2 = new DevComponents.DotNetBar.ButtonItem();
+            this.ExportWPItem = new DevComponents.DotNetBar.ButtonItem();
+            this.ExportPolyItem = new DevComponents.DotNetBar.ButtonItem();
             this.StartFileContainer = new DevComponents.DotNetBar.GalleryContainer();
             this.RecentDocumentsLabel = new DevComponents.DotNetBar.LabelItem();
             this.StartBottomContainer = new DevComponents.DotNetBar.ItemContainer();
+            this.CloseVPS = new DevComponents.DotNetBar.ButtonItem();
             this.qatCustomizeItem = new DevComponents.DotNetBar.QatCustomizeItem();
             this.styleManager = new DevComponents.DotNetBar.StyleManager(this.components);
             this.dockContainerItem1 = new DevComponents.DotNetBar.DockContainerItem();
@@ -968,18 +980,109 @@ namespace VPS
             this.StartItemContainer.MinimumSize = new System.Drawing.Size(120, 0);
             this.StartItemContainer.Name = "StartItemContainer";
             this.StartItemContainer.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.itemContainer8,
+            this.itemContainer9,
+            this.itemContainer10});
+            // 
+            // itemContainer8
+            // 
+            // 
+            // 
+            // 
+            this.itemContainer8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.itemContainer8.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical;
+            this.itemContainer8.Name = "itemContainer8";
+            this.itemContainer8.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.OpenProjectItem,
+            this.SaveProjectItem,
+            this.CloseProjectItem});
+            // 
+            // OpenProjectItem
+            // 
+            this.OpenProjectItem.Name = "OpenProjectItem";
+            this.OpenProjectItem.Text = "打开工程";
+            this.OpenProjectItem.Click += new System.EventHandler(this.OpenProjectItem_Click);
+            // 
+            // SaveProjectItem
+            // 
+            this.SaveProjectItem.Name = "SaveProjectItem";
+            this.SaveProjectItem.Text = "保存工程";
+            this.SaveProjectItem.Click += new System.EventHandler(this.SaveProjectItem_Click);
+            // 
+            // CloseProjectItem
+            // 
+            this.CloseProjectItem.Name = "CloseProjectItem";
+            this.CloseProjectItem.Text = "关闭工程";
+            this.CloseProjectItem.Click += new System.EventHandler(this.CloseProjectItem_Click);
+            // 
+            // itemContainer9
+            // 
+            // 
+            // 
+            // 
+            this.itemContainer9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.itemContainer9.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical;
+            this.itemContainer9.Name = "itemContainer9";
+            this.itemContainer9.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.WorkSpaceItem});
+            // 
+            // WorkSpaceItem
+            // 
+            this.WorkSpaceItem.Name = "WorkSpaceItem";
+            this.WorkSpaceItem.Text = "新建工作区";
+            this.WorkSpaceItem.Click += new System.EventHandler(this.WorkSpaceItem_Click);
+            // 
+            // itemContainer10
+            // 
+            // 
+            // 
+            // 
+            this.itemContainer10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.itemContainer10.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical;
+            this.itemContainer10.Name = "itemContainer10";
+            this.itemContainer10.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.buttonItem1,
             this.buttonItem2});
             // 
             // buttonItem1
             // 
             this.buttonItem1.Name = "buttonItem1";
-            this.buttonItem1.Text = "工程";
+            this.buttonItem1.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.ImportWPItem,
+            this.ImportPolyItem});
+            this.buttonItem1.Text = "导入";
+            // 
+            // ImportWPItem
+            // 
+            this.ImportWPItem.Name = "ImportWPItem";
+            this.ImportWPItem.Text = "加载航点";
+            this.ImportWPItem.Click += new System.EventHandler(this.ImportWPItem_Click);
+            // 
+            // ImportPolyItem
+            // 
+            this.ImportPolyItem.Name = "ImportPolyItem";
+            this.ImportPolyItem.Text = "加载区域点";
+            this.ImportPolyItem.Click += new System.EventHandler(this.ImportPolyItem_Click);
             // 
             // buttonItem2
             // 
             this.buttonItem2.Name = "buttonItem2";
-            this.buttonItem2.Text = "buttonItem2";
+            this.buttonItem2.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.ExportWPItem,
+            this.ExportPolyItem});
+            this.buttonItem2.Text = "导出";
+            // 
+            // ExportWPItem
+            // 
+            this.ExportWPItem.Name = "ExportWPItem";
+            this.ExportWPItem.Text = "导出航点";
+            this.ExportWPItem.Click += new System.EventHandler(this.ExportWPItem_Click);
+            // 
+            // ExportPolyItem
+            // 
+            this.ExportPolyItem.Name = "ExportPolyItem";
+            this.ExportPolyItem.Text = "导出区域点";
+            this.ExportPolyItem.Click += new System.EventHandler(this.ExportPolyItem_Click);
             // 
             // StartFileContainer
             // 
@@ -1018,6 +1121,13 @@ namespace VPS
             this.StartBottomContainer.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.StartBottomContainer.HorizontalItemAlignment = DevComponents.DotNetBar.eHorizontalItemsAlignment.Right;
             this.StartBottomContainer.Name = "StartBottomContainer";
+            this.StartBottomContainer.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.CloseVPS});
+            // 
+            // CloseVPS
+            // 
+            this.CloseVPS.Name = "CloseVPS";
+            this.CloseVPS.Text = "关闭";
             // 
             // qatCustomizeItem
             // 
@@ -1042,7 +1152,7 @@ namespace VPS
             this.RibbonClientPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RibbonClientPanel.Location = new System.Drawing.Point(340, 147);
             this.RibbonClientPanel.Name = "RibbonClientPanel";
-            this.RibbonClientPanel.Size = new System.Drawing.Size(988, 431);
+            this.RibbonClientPanel.Size = new System.Drawing.Size(988, 423);
             // 
             // 
             // 
@@ -1098,7 +1208,7 @@ namespace VPS
             this.BottomDockSite.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BottomDockSite.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
             ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.BottomBar, 988, 323)))}, DevComponents.DotNetBar.eOrientation.Vertical);
-            this.BottomDockSite.Location = new System.Drawing.Point(340, 578);
+            this.BottomDockSite.Location = new System.Drawing.Point(340, 570);
             this.BottomDockSite.Name = "BottomDockSite";
             this.BottomDockSite.Size = new System.Drawing.Size(988, 326);
             this.BottomDockSite.TabIndex = 5;
@@ -1221,10 +1331,10 @@ namespace VPS
             this.LeftDockSite.Controls.Add(this.LeftBar);
             this.LeftDockSite.Dock = System.Windows.Forms.DockStyle.Left;
             this.LeftDockSite.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.LeftBar, 332, 759)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.LeftBar, 332, 751)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
             this.LeftDockSite.Location = new System.Drawing.Point(5, 147);
             this.LeftDockSite.Name = "LeftDockSite";
-            this.LeftDockSite.Size = new System.Drawing.Size(335, 757);
+            this.LeftDockSite.Size = new System.Drawing.Size(335, 749);
             this.LeftDockSite.TabIndex = 2;
             this.LeftDockSite.TabStop = false;
             // 
@@ -1258,7 +1368,7 @@ namespace VPS
             this.LeftBar.Location = new System.Drawing.Point(0, 0);
             this.LeftBar.Name = "LeftBar";
             this.LeftBar.SelectedDockTab = 2;
-            this.LeftBar.Size = new System.Drawing.Size(332, 757);
+            this.LeftBar.Size = new System.Drawing.Size(332, 749);
             this.LeftBar.Stretch = true;
             this.LeftBar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.LeftBar.TabIndex = 0;
@@ -1273,7 +1383,7 @@ namespace VPS
             this.MainLeftBarPanel.Controls.Add(this.MainLeftInfo);
             this.MainLeftBarPanel.Location = new System.Drawing.Point(3, 23);
             this.MainLeftBarPanel.Name = "MainLeftBarPanel";
-            this.MainLeftBarPanel.Size = new System.Drawing.Size(326, 708);
+            this.MainLeftBarPanel.Size = new System.Drawing.Size(326, 700);
             this.MainLeftBarPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.MainLeftBarPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.MainLeftBarPanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -1297,7 +1407,7 @@ namespace VPS
             this.AutoGridParamPanel.Controls.Add(this.GridConfig);
             this.AutoGridParamPanel.Location = new System.Drawing.Point(3, 23);
             this.AutoGridParamPanel.Name = "AutoGridParamPanel";
-            this.AutoGridParamPanel.Size = new System.Drawing.Size(326, 708);
+            this.AutoGridParamPanel.Size = new System.Drawing.Size(326, 700);
             this.AutoGridParamPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.AutoGridParamPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.AutoGridParamPanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -1321,7 +1431,7 @@ namespace VPS
             this.LayerReaderPanel.Controls.Add(this.LayerReader);
             this.LayerReaderPanel.Location = new System.Drawing.Point(3, 23);
             this.LayerReaderPanel.Name = "LayerReaderPanel";
-            this.LayerReaderPanel.Size = new System.Drawing.Size(326, 708);
+            this.LayerReaderPanel.Size = new System.Drawing.Size(326, 700);
             this.LayerReaderPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.LayerReaderPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.LayerReaderPanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -1366,7 +1476,7 @@ namespace VPS
             this.RightDockSite.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
             this.RightDockSite.Location = new System.Drawing.Point(1328, 147);
             this.RightDockSite.Name = "RightDockSite";
-            this.RightDockSite.Size = new System.Drawing.Size(0, 757);
+            this.RightDockSite.Size = new System.Drawing.Size(0, 749);
             this.RightDockSite.TabIndex = 3;
             this.RightDockSite.TabStop = false;
             // 
@@ -1374,7 +1484,7 @@ namespace VPS
             // 
             this.ToolbarBottomDockSite.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.ToolbarBottomDockSite.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ToolbarBottomDockSite.Location = new System.Drawing.Point(5, 904);
+            this.ToolbarBottomDockSite.Location = new System.Drawing.Point(5, 896);
             this.ToolbarBottomDockSite.Name = "ToolbarBottomDockSite";
             this.ToolbarBottomDockSite.Size = new System.Drawing.Size(1323, 0);
             this.ToolbarBottomDockSite.TabIndex = 9;
@@ -1386,7 +1496,7 @@ namespace VPS
             this.ToolbarLeftDockSite.Dock = System.Windows.Forms.DockStyle.Left;
             this.ToolbarLeftDockSite.Location = new System.Drawing.Point(5, 147);
             this.ToolbarLeftDockSite.Name = "ToolbarLeftDockSite";
-            this.ToolbarLeftDockSite.Size = new System.Drawing.Size(0, 757);
+            this.ToolbarLeftDockSite.Size = new System.Drawing.Size(0, 749);
             this.ToolbarLeftDockSite.TabIndex = 6;
             this.ToolbarLeftDockSite.TabStop = false;
             // 
@@ -1396,7 +1506,7 @@ namespace VPS
             this.ToolbarRightDockSite.Dock = System.Windows.Forms.DockStyle.Right;
             this.ToolbarRightDockSite.Location = new System.Drawing.Point(1328, 147);
             this.ToolbarRightDockSite.Name = "ToolbarRightDockSite";
-            this.ToolbarRightDockSite.Size = new System.Drawing.Size(0, 757);
+            this.ToolbarRightDockSite.Size = new System.Drawing.Size(0, 749);
             this.ToolbarRightDockSite.TabIndex = 7;
             this.ToolbarRightDockSite.TabStop = false;
             // 
@@ -1450,7 +1560,7 @@ namespace VPS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1333, 906);
+            this.ClientSize = new System.Drawing.Size(1333, 898);
             this.Controls.Add(this.RibbonClientPanel);
             this.Controls.Add(this.TopDockSite);
             this.Controls.Add(this.BottomDockSite);
@@ -1510,7 +1620,6 @@ namespace VPS
         private DevComponents.DotNetBar.RibbonTabItem FileRibbonTabItem;
         private DevComponents.DotNetBar.Office2007StartButton StartButton;
         private DevComponents.DotNetBar.ItemContainer StartContainer;
-        private DevComponents.DotNetBar.ItemContainer StartItemContainer;
         private DevComponents.DotNetBar.QatCustomizeItem qatCustomizeItem;
         private DevComponents.DotNetBar.StyleManager styleManager;
         private DevComponents.DotNetBar.GalleryContainer StartFileContainer;
@@ -1581,8 +1690,6 @@ namespace VPS
         private DevComponents.DotNetBar.DockContainerItem AutoGridDockContainerItem;
         private DevComponents.DotNetBar.PanelDockContainer MainLeftBarPanel;
         private DevComponents.DotNetBar.DockContainerItem MainInfoDockContainerItem;
-        private DevComponents.DotNetBar.ButtonItem buttonItem1;
-        private DevComponents.DotNetBar.ButtonItem buttonItem2;
         private DevComponents.DotNetBar.SuperTooltip SuperTooltip;
         private DevComponents.DotNetBar.ButtonItem AllWPButton;
         private DevComponents.DotNetBar.ButtonItem AllPolygonButton;
@@ -1604,5 +1711,20 @@ namespace VPS
         private DevComponents.DotNetBar.ButtonItem LoadWPButton;
         private DevComponents.DotNetBar.ButtonItem SavePolygonButton;
         private DevComponents.DotNetBar.ButtonItem LoadPolygonButton;
+        private DevComponents.DotNetBar.ItemContainer StartItemContainer;
+        private DevComponents.DotNetBar.ItemContainer itemContainer8;
+        private DevComponents.DotNetBar.ButtonItem OpenProjectItem;
+        private DevComponents.DotNetBar.ButtonItem SaveProjectItem;
+        private DevComponents.DotNetBar.ButtonItem CloseProjectItem;
+        private DevComponents.DotNetBar.ButtonItem WorkSpaceItem;
+        private DevComponents.DotNetBar.ItemContainer itemContainer9;
+        private DevComponents.DotNetBar.ItemContainer itemContainer10;
+        private DevComponents.DotNetBar.ButtonItem buttonItem1;
+        private DevComponents.DotNetBar.ButtonItem ImportWPItem;
+        private DevComponents.DotNetBar.ButtonItem ImportPolyItem;
+        private DevComponents.DotNetBar.ButtonItem buttonItem2;
+        private DevComponents.DotNetBar.ButtonItem ExportWPItem;
+        private DevComponents.DotNetBar.ButtonItem ExportPolyItem;
+        private DevComponents.DotNetBar.ButtonItem CloseVPS;
     }
 }

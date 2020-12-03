@@ -64,6 +64,7 @@
             this.ClientSize = new System.Drawing.Size(362, 361);
             this.Controls.Add(this.gMapControl1);
             this.Name = "CustomMap";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "CustomMap";
             this.ResumeLayout(false);
 

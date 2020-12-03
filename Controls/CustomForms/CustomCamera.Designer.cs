@@ -339,7 +339,7 @@
             this.Controls.Add(this.panelEx1);
             this.DoubleBuffered = true;
             this.Name = "CustomCamera";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "相机参数";
             ((System.ComponentModel.ISupportInitialize)(this.FocalLength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SensHeight)).EndInit();

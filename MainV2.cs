@@ -4651,5 +4651,45 @@ namespace VPS
         #endregion
 
         private VPS.CustomData.WP.WPGlobalData WPGlobalData = new VPS.CustomData.WP.WPGlobalData();
+
+        private void OpenProjectItem_Click(object sender, EventArgs e)
+        {
+            this.LoadProjectButton_Click(sender, e);
+        }
+
+        private void SaveProjectItem_Click(object sender, EventArgs e)
+        {
+            this.SaveProjectButton_Click(sender, e);
+        }
+
+        private void CloseProjectItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ImportWPItem_Click(object sender, EventArgs e)
+        {
+            this.LoadWPButton_Click(sender, e);
+        }
+
+        private void ImportPolyItem_Click(object sender, EventArgs e)
+        {
+            this.LoadPolygonButton_Click(sender, e);
+        }
+
+        private void ExportWPItem_Click(object sender, EventArgs e)
+        {
+            this.SaveWPButton_Click(sender, e);
+        }
+
+        private void ExportPolyItem_Click(object sender, EventArgs e)
+        {
+            this.SavePolygonButton_Click(sender, e);
+        }
+
+        private void WorkSpaceItem_Click(object sender, EventArgs e)
+        {
+            this.LoadTiffButton_Click(sender, e);
+        }
     }
 }

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.advPropertyGrid1 = new DevComponents.DotNetBar.AdvPropertyGrid();
             this.OpenFile = new DevComponents.DotNetBar.ButtonX();
-            this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
             this.panelEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.advPropertyGrid1)).BeginInit();
             this.SuspendLayout();
@@ -57,6 +57,19 @@
             this.panelEx1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 1;
+            // 
+            // buttonX2
+            // 
+            this.buttonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonX2.Location = new System.Drawing.Point(195, 464);
+            this.buttonX2.Name = "buttonX2";
+            this.buttonX2.Size = new System.Drawing.Size(90, 23);
+            this.buttonX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.buttonX2.TabIndex = 9;
+            this.buttonX2.Text = "取消";
             // 
             // buttonX1
             // 
@@ -100,25 +113,13 @@
             this.OpenFile.Text = "打开文件";
             this.OpenFile.Click += new System.EventHandler(this.OpenFile_Click);
             // 
-            // buttonX2
-            // 
-            this.buttonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.buttonX2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonX2.Location = new System.Drawing.Point(195, 464);
-            this.buttonX2.Name = "buttonX2";
-            this.buttonX2.Size = new System.Drawing.Size(90, 23);
-            this.buttonX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.buttonX2.TabIndex = 9;
-            this.buttonX2.Text = "取消";
-            // 
             // LoadPolygon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 491);
             this.Controls.Add(this.panelEx1);
+            this.DoubleBuffered = true;
             this.Name = "LoadPolygon";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "加载区域";

@@ -53,6 +53,7 @@
             this.Controls.Add(this.richTextBoxEx1);
             this.DoubleBuffered = true;
             this.Name = "CustomContent";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "CustomContent";
             this.Load += new System.EventHandler(this.FormAddress_Load);
             this.ResumeLayout(false);

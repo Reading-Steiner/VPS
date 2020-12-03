@@ -105,6 +105,7 @@
             this.Controls.Add(this.panelEx1);
             this.DoubleBuffered = true;
             this.Name = "SaveProject";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "保存项目";
             this.panelEx1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.advPropertyGrid1)).EndInit();
