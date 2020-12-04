@@ -20,7 +20,9 @@ namespace VPS.Controls.LoadAndSave
         {
             InitializeComponent();
             this.Load += LoadPolygon_Load;
-            
+
+            advPropertyGrid1.Tag = advPropertyGrid1.PropertySort;
+            advPropertyGrid1.PropertySort = DevComponents.DotNetBar.ePropertySort.Categorized;
         }
 
         private void LoadPolygon_Load(object sender, EventArgs e)
@@ -72,11 +74,7 @@ namespace VPS.Controls.LoadAndSave
             info = new LoadPolygonInfo();
             info.fileName = file;
             info.fileType = CustomFile.UniversalMethod.GetFileType(file);
-            info.fileSize = CustomFile.UniversalMethod.GetFileSize(file);
-            info.createTime = CustomFile.UniversalMethod.GetFileCreate(file);
-            info.modifyTime = CustomFile.UniversalMethod.GetFileModify(file);
 
-            info.features = new FeaturesInfo(new List<List<PointLatLngAlt>>());
             advPropertyGrid1.SelectedObject = info;
         }
 
@@ -85,12 +83,13 @@ namespace VPS.Controls.LoadAndSave
             info = new LoadSHPPolygonInfo();
             info.fileName = file;
             info.fileType = CustomFile.UniversalMethod.GetFileType(file);
-            info.fileSize = CustomFile.UniversalMethod.GetFileSize(file);
-            info.createTime = CustomFile.UniversalMethod.GetFileCreate(file);
-            info.modifyTime = CustomFile.UniversalMethod.GetFileModify(file);
+            (info as LoadPolygonFileInfo).fileSize = CustomFile.UniversalMethod.GetFileSize(file);
+            (info as LoadPolygonFileInfo).createTime = CustomFile.UniversalMethod.GetFileCreate(file);
+            (info as LoadPolygonFileInfo).modifyTime = CustomFile.UniversalMethod.GetFileModify(file);
+
             (info as LoadSHPPolygonInfo).coordinates = data.coordinates;
             (info as LoadSHPPolygonInfo).featureType = data.featureType;
-            info.features = new FeaturesInfo(data.points);
+            (info as LoadSHPPolygonInfo).features = new FeaturesInfo(data.points);
             advPropertyGrid1.SelectedObject = info;
         }
 
@@ -99,12 +98,12 @@ namespace VPS.Controls.LoadAndSave
             info = new LoadKMLPolygonInfo();
             info.fileName = file;
             info.fileType = CustomFile.UniversalMethod.GetFileType(file);
-            info.fileSize = CustomFile.UniversalMethod.GetFileSize(file);
-            info.createTime = CustomFile.UniversalMethod.GetFileCreate(file);
-            info.modifyTime = CustomFile.UniversalMethod.GetFileModify(file);
+            (info as LoadPolygonFileInfo).fileSize = CustomFile.UniversalMethod.GetFileSize(file);
+            (info as LoadPolygonFileInfo).createTime = CustomFile.UniversalMethod.GetFileCreate(file);
+            (info as LoadPolygonFileInfo).modifyTime = CustomFile.UniversalMethod.GetFileModify(file);
 
             (info as LoadKMLPolygonInfo).coordinates = data.coordinates;
-            info.features = new FeaturesInfo(data.points);
+            (info as LoadKMLPolygonInfo).features = new FeaturesInfo(data.points);
             advPropertyGrid1.SelectedObject = info;
         }
 
@@ -134,46 +133,73 @@ namespace VPS.Controls.LoadAndSave
         }
     }
 
+    [TypeConverter(typeof(PropertySorter))]
     class LoadPolygonInfo
     {
-        [Category("打开文件"), DisplayName("文件"),
-            Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
+        [Category("打开文件"), DisplayName("文件")]
+        [PropertyOrder(0b00000001)]
+        [Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
         public string fileName { get; set; }
 
-        [Category("打开文件"), DisplayName("文件类型"), ReadOnly(false)]
+        [Browsable(false)]
         public string fileType { get; set; }
+    }
 
-        [Category("打开文件"), DisplayName("文件大小"), ReadOnly(false)]
+    [TypeConverter(typeof(PropertySorter))]
+    class LoadPolygonFileInfo : LoadPolygonInfo
+    {
+        [Category("文件信息"), DisplayName("文件大小"), ReadOnly(false)]
+        [PropertyOrder(0b00010001)]
         public string fileSize { get; set; }
 
-        [Category("打开文件"), DisplayName("创建时间"), ReadOnly(false)]
+        [Category("文件信息"), DisplayName("创建时间"), ReadOnly(false)]
+        [PropertyOrder(0b00010010)]
         public string createTime { get; set; }
 
-        [Category("打开文件"), DisplayName("修改时间"), ReadOnly(false)]
+        [Category("文件信息"), DisplayName("修改时间"), ReadOnly(false)]
+        [PropertyOrder(0b00010011)]
         public string modifyTime { get; set; }
-
-        [Category("要素集合"), DisplayName("要素集合"),
-            TypeConverter(typeof(ExpandableObjectConverter)),
-            Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
-        public FeaturesInfo features { get; set; }
     }
 
-    class LoadSHPPolygonInfo : LoadPolygonInfo
+    [TypeConverter(typeof(PropertySorter))]
+    class LoadSHPPolygonInfo : LoadPolygonFileInfo
     {
-        [Category("要素信息"), DisplayName("投影坐标系"),
-            Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
-        public string coordinates { get; set; }
+        [Category("打开文件"), DisplayName("文件类型"), ReadOnly(true)]
+        [PropertyOrder(0b00000010)]
+        public string openFileType { set; get; } = "ShapeFile";
+
+        [Category("要素信息"), DisplayName("要素集合")]
+        [PropertyOrder(0b00100001)]
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        [Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
+        public FeaturesInfo features { get; set; }
 
         [Category("要素信息"), DisplayName("要素类型"), ReadOnly(true)]
+        [PropertyOrder(0b00100010)]
         public string featureType { get; set; } = "";
 
+        [Category("要素信息"), DisplayName("投影坐标系")]
+        [PropertyOrder(0b00100011)]
+        [Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
+        public string coordinates { get; set; }
     }
 
-    class LoadKMLPolygonInfo : LoadPolygonInfo
+    [TypeConverter(typeof(PropertySorter))]
+    class LoadKMLPolygonInfo : LoadPolygonFileInfo
     {
-        [Category("要素信息"), DisplayName("投影坐标系"),
-            Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
-        public string coordinates { get; set; }
+        [Category("打开文件"), DisplayName("文件类型"), ReadOnly(true)]
+        [PropertyOrder(0b00000010)]
+        public string openFileType { set; get; } = "Google Earth KML";
 
+        [Category("要素信息"), DisplayName("要素集合")]
+        [PropertyOrder(0b00100001)]
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        [Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
+        public FeaturesInfo features { get; set; }
+
+        [Category("要素信息"), DisplayName("投影坐标系")]
+        [PropertyOrder(0b00100010)]
+        [Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
+        public string coordinates { get; set; }
     }
 }

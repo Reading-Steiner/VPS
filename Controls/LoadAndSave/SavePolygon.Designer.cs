@@ -122,7 +122,7 @@
             this.DoubleBuffered = true;
             this.Name = "SavePolygon";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "SavePolygon";
+            this.Text = "保存区域";
             this.panelEx1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.advPropertyGrid1)).EndInit();
             this.ResumeLayout(false);

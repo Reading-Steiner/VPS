@@ -3920,6 +3920,7 @@ namespace VPS
         #region 工作区模块
 
         #region LoadTiff
+
         #region LoadTiff 入口函数
         /// <summary>
         /// 显示或隐藏LayerReader停靠栏
@@ -3948,12 +3949,14 @@ namespace VPS
             }
         }
         #endregion
+
         #region LoadTiff 接口函数
         public void LoadTiffLayer()
         {
             LoadTiffButton_Click(this, null);
         }
         #endregion
+
         #region LoadTiff 相应函数
         public delegate void delegateHandler();
         public delegateHandler LoadLayerHandle;
@@ -4690,6 +4693,16 @@ namespace VPS
         private void WorkSpaceItem_Click(object sender, EventArgs e)
         {
             this.LoadTiffButton_Click(sender, e);
+        }
+
+        private void ImportGirdConfig_Click(object sender, EventArgs e)
+        {
+            VPS.Controls.Grid.GridConfig.instance.LoadGrid();
+        }
+
+        private void ExportGirdConfig_Click(object sender, EventArgs e)
+        {
+            VPS.Controls.Grid.GridConfig.instance.SaveGrid();
         }
     }
 }

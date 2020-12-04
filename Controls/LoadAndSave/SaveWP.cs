@@ -21,6 +21,9 @@ namespace VPS.Controls.LoadAndSave
         {
             InitializeComponent();
 
+            advPropertyGrid1.Tag = advPropertyGrid1.PropertySort;
+            advPropertyGrid1.PropertySort = DevComponents.DotNetBar.ePropertySort.Categorized;
+
             BindingDataSourceBase();
         }
 
@@ -66,15 +69,15 @@ namespace VPS.Controls.LoadAndSave
             var baseAlt = VPS.CustomData.WP.WPGlobalData.GetBaseAlt(list);
             var totalDist = VPS.CustomData.WP.WPGlobalData.GetTotalDist(list);
 
-            info.BaseOfWPList = baseAlt.ToString("0.## m");
-            info.DistanceOfWPList = totalDist.ToString("0.## m");
-            info.AltMode = (VPS.CustomData.EnumCollect.AltFrame.Mode)Enum.Parse(
+            info.baseOfWPList = baseAlt.ToString("0.## m");
+            info.distanceOfWPList = totalDist.ToString("0.## m");
+            info.altMode = (VPS.CustomData.EnumCollect.AltFrame.Mode)Enum.Parse(
                 typeof(VPS.CustomData.EnumCollect.AltFrame.Mode),
                 VPS.GCSViews.FlightPlanner.instance.GetAltFrame());
 
             info.feature = new FeatureInfo(list);
 
-            info.AllowHome = true;
+            info.saveAllowHome = true;
 
             advPropertyGrid1.SelectedObject = info;
         }
@@ -83,6 +86,8 @@ namespace VPS.Controls.LoadAndSave
         {
             info = new SaveKMLWPInfo();
 
+            (info as SaveKMLWPInfo).saveFileName = file;
+
             info.fileName = file;
             info.fileType = ".kml";
 
@@ -90,15 +95,15 @@ namespace VPS.Controls.LoadAndSave
             var baseAlt = VPS.CustomData.WP.WPGlobalData.GetBaseAlt(list);
             var totalDist = VPS.CustomData.WP.WPGlobalData.GetTotalDist(list);
 
-            info.BaseOfWPList = baseAlt.ToString("0.## m");
-            info.DistanceOfWPList = totalDist.ToString("0.## m");
-            info.AltMode = (VPS.CustomData.EnumCollect.AltFrame.Mode)Enum.Parse(
+            info.baseOfWPList = baseAlt.ToString("0.## m");
+            info.distanceOfWPList = totalDist.ToString("0.## m");
+            info.altMode = (VPS.CustomData.EnumCollect.AltFrame.Mode)Enum.Parse(
                 typeof(VPS.CustomData.EnumCollect.AltFrame.Mode),
                 VPS.GCSViews.FlightPlanner.instance.GetAltFrame());
 
             info.feature = new FeatureInfo(list);
 
-            info.AllowHome = true;
+            info.saveAllowHome = true;
 
             advPropertyGrid1.SelectedObject = info;
         }
@@ -107,6 +112,8 @@ namespace VPS.Controls.LoadAndSave
         {
             info = new SaveSHPWPInfo();
 
+            (info as SaveSHPWPInfo).saveFileName = file;
+
             info.fileName = file;
             info.fileType = ".shp";
 
@@ -114,14 +121,14 @@ namespace VPS.Controls.LoadAndSave
             var baseAlt = VPS.CustomData.WP.WPGlobalData.GetBaseAlt(list);
             var totalDist = VPS.CustomData.WP.WPGlobalData.GetTotalDist(list);
 
-            info.BaseOfWPList = baseAlt.ToString("0.## m");
-            info.DistanceOfWPList = totalDist.ToString("0.## m");
-            info.AltMode = (VPS.CustomData.EnumCollect.AltFrame.Mode)Enum.Parse(
+            info.baseOfWPList = baseAlt.ToString("0.## m");
+            info.distanceOfWPList = totalDist.ToString("0.## m");
+            info.altMode = (VPS.CustomData.EnumCollect.AltFrame.Mode)Enum.Parse(
                 typeof(VPS.CustomData.EnumCollect.AltFrame.Mode),
                 VPS.GCSViews.FlightPlanner.instance.GetAltFrame());
 
             info.feature = new FeatureInfo(list);
-            info.AllowHome = true;
+            info.saveAllowHome = true;
 
             advPropertyGrid1.SelectedObject = info;
         }
@@ -203,7 +210,7 @@ namespace VPS.Controls.LoadAndSave
             w.WriteStartElement("description");
             w.WriteString("Waypoints in the Mission.");
             w.WriteEndElement();//description
-            if((info as SaveKMLWPInfo).AllowHome)
+            if((info as SaveKMLWPInfo).saveAllowHome)
             {
                 #region HomePoint
                 w.WriteStartElement("Placemark");
@@ -253,9 +260,9 @@ namespace VPS.Controls.LoadAndSave
 
                 w.WriteStartElement("altitudeMode");
 
-                if ((info as SaveKMLWPInfo).SaveAltMode == SaveKMLWPInfo.KMLAltMode.absolute)
+                if ((info as SaveKMLWPInfo).saveAltMode == SaveKMLWPInfo.KMLAltMode.absolute)
                     w.WriteString("absolute");
-                else if ((info as SaveKMLWPInfo).SaveAltMode == SaveKMLWPInfo.KMLAltMode.relativeToGround)
+                else if ((info as SaveKMLWPInfo).saveAltMode == SaveKMLWPInfo.KMLAltMode.relativeToGround)
                     w.WriteString("relativeToGround");
                 else
                     w.WriteString("clampToGround");
@@ -326,9 +333,9 @@ namespace VPS.Controls.LoadAndSave
                     w.WriteStartElement("Point");
                     w.WriteStartElement("altitudeMode");
 
-                    if ((info as SaveKMLWPInfo).SaveAltMode == SaveKMLWPInfo.KMLAltMode.absolute)
+                    if ((info as SaveKMLWPInfo).saveAltMode == SaveKMLWPInfo.KMLAltMode.absolute)
                         w.WriteString("absolute");
-                    else if ((info as SaveKMLWPInfo).SaveAltMode == SaveKMLWPInfo.KMLAltMode.relativeToGround)
+                    else if ((info as SaveKMLWPInfo).saveAltMode == SaveKMLWPInfo.KMLAltMode.relativeToGround)
                         w.WriteString("relativeToGround");
                     else
                         w.WriteString("clampToGround");
@@ -350,10 +357,10 @@ namespace VPS.Controls.LoadAndSave
             w.WriteEndElement();//Folder
             #endregion
             {
-                if (info.AltMode.ToString() == CustomData.EnumCollect.AltFrame.Absolute)
+                if (info.altMode.ToString() == CustomData.EnumCollect.AltFrame.Absolute)
                     wpList = CustomData.WP.WPGlobalData.WPListChangeAltFrame(
                         wpList, CustomData.EnumCollect.AltFrame.Absolute);
-                else if (info.AltMode.ToString() == CustomData.EnumCollect.AltFrame.Terrain)
+                else if (info.altMode.ToString() == CustomData.EnumCollect.AltFrame.Terrain)
                     wpList = CustomData.WP.WPGlobalData.WPListChangeAltFrame(
                         wpList, CustomData.EnumCollect.AltFrame.Terrain);
                 else
@@ -384,9 +391,9 @@ namespace VPS.Controls.LoadAndSave
                 w.WriteEndElement();//tessellate
                 w.WriteStartElement("altitudeMode");
 
-                if ((info as SaveKMLWPInfo).SaveAltMode == SaveKMLWPInfo.KMLAltMode.absolute)
+                if ((info as SaveKMLWPInfo).saveAltMode == SaveKMLWPInfo.KMLAltMode.absolute)
                     w.WriteString("absolute");
-                else if ((info as SaveKMLWPInfo).SaveAltMode == SaveKMLWPInfo.KMLAltMode.relativeToGround)
+                else if ((info as SaveKMLWPInfo).saveAltMode == SaveKMLWPInfo.KMLAltMode.relativeToGround)
                     w.WriteString("relativeToGround");
                 else
                     w.WriteString("clampToGround");
@@ -427,40 +434,46 @@ namespace VPS.Controls.LoadAndSave
                 VPS.CustomData.WP.WPGlobalData.instance.GetWPList();
             wpList = VPS.CustomData.WP.WPGlobalData.WPListChangeAltFrame(
                 wpList, VPS.CustomData.EnumCollect.AltFrame.Terrain);
-            if (!info.AllowHome)
+            if (!info.saveAllowHome)
                 VPS.CustomData.WP.WPGlobalData.WPListRemoveHome(wpList);
             VPS.CustomFile.SHP.SaveSHP(file, wpList);
         }
     }
 
+    [TypeConverter(typeof(PropertySorter))]
     class SaveWPInfo
     {
-        [Category("打开文件"), DisplayName("文件"),
-            Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
-        public string fileName { get; set; }
+        [Browsable(false)]
+        public string fileName = "";
 
-        [Category("打开文件"), DisplayName("文件类型"), ReadOnly(false)]
-        public string fileType { get; set; }
+        [Browsable(false)]
+        public string fileType = "";
 
         [Category("航点信息"), DisplayName("航摄基准"), ReadOnly(true)]
-        public string BaseOfWPList { get; set; }
+        [PropertyOrder(0b00010001)]
+        public string baseOfWPList { get; set; }
 
         [Category("航点信息"), DisplayName("航飞路程"), ReadOnly(true)]
-        public string DistanceOfWPList { get; set; }
+        [PropertyOrder(0b00010010)]
+        public string distanceOfWPList { get; set; }
 
         [Category("航点信息"), DisplayName("高度框架"), ReadOnly(true)]
-        public VPS.CustomData.EnumCollect.AltFrame.Mode AltMode { get; set; }
+        [PropertyOrder(0b00010011)]
+        public VPS.CustomData.EnumCollect.AltFrame.Mode altMode { get; set; }
 
-        [Category("航点信息"), Description("要素信息"), DisplayName("航线"),
-            TypeConverter(typeof(ExpandableObjectConverter)),
-            Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
+        [Category("航点信息"), Description("要素信息"), DisplayName("航线")]
+        [PropertyOrder(0b00010100)]
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        [Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
         public FeatureInfo feature { get; set; }
 
         [Category("保存信息"), DisplayName("初始位置")]
-        public bool AllowHome { get; set; }
+        [PropertyOrder(0b00001000)]
+        public bool saveAllowHome { get; set; }
 
     }
 
+    [TypeConverter(typeof(PropertySorter))]
     class SaveKMLWPInfo : SaveWPInfo
     {
         public enum KMLAltMode
@@ -469,21 +482,36 @@ namespace VPS.Controls.LoadAndSave
             absolute,
             relativeToGround
         }
+        [Category("保存信息"), DisplayName("文件")]
+        [PropertyOrder(0b00000001)]
+        [Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
+        public string saveFileName { get; set; }
+
         [Category("保存信息"), DisplayName("文件类型"), ReadOnly(true)]
-        public string FileType { set; get; } = "Google Earth KML";
+        [PropertyOrder(0b00000010)]
+        public string saveFileType { set; get; } = "Google Earth KML";
 
         [Category("保存信息"), DisplayName("高度框架")]
-        public KMLAltMode SaveAltMode { get; set; }
+        [PropertyOrder(0b00000011)]
+        public KMLAltMode saveAltMode { get; set; }
 
     }
 
+    [TypeConverter(typeof(PropertySorter))]
     class SaveSHPWPInfo : SaveWPInfo
     {
+        [Category("保存信息"), DisplayName("文件")]
+        [PropertyOrder(0b00000001)]
+        [Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
+        public string saveFileName { get; set; }
+
         [Category("保存信息"), DisplayName("文件类型"), ReadOnly(true)]
-        public string FileType { set; get; } = "ShapeFile";
+        [PropertyOrder(0b00000010)]
+        public string saveFileType { set; get; } = "ShapeFile";
 
         [Category("保存信息"), DisplayName("空间参考")]
-        public string FileProference { set; get; } =
+        [PropertyOrder(0b00000011)]
+        public string saveFileProference { set; get; } =
             DotSpatial.Projections.KnownCoordinateSystems.Geographic.World.WGS1984.ToString();
 
     }
@@ -499,20 +527,20 @@ namespace VPS.Controls.LoadAndSave
                 VPS.CustomData.WP.WPGlobalData.GetValidPoint(list));
         }
 
-        [Category("要素集合"), DisplayName("要素数量"), ReadOnly(true)]
+        [Category("要素集合"), DisplayName("\t\t\t要素数量"), ReadOnly(true)]
         public int Count
         {
             get { return features.Count; }
         }
 
         double averAbsolute = 0;
-        [Category("要素集合"), DisplayName("平均飞行高度（绝对）"), ReadOnly(true)]
+        [Category("要素集合"), DisplayName("\t\t平均飞行高度（绝对）"), ReadOnly(true)]
         public double AverAbsolute
         {
             get { return averAbsolute; }
         }
 
-        [Category("要素集合"), DisplayName("飞行高度异常点"), ReadOnly(true)]
+        [Category("要素集合"), DisplayName("\t飞行高度异常点"), ReadOnly(true)]
         public ValidAltPoint ValidTerrain { set; get; }
 
         public override string ToString()

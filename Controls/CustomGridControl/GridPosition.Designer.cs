@@ -261,6 +261,7 @@
             this.ClientSize = new System.Drawing.Size(234, 318);
             this.Controls.Add(this.panelEx1);
             this.Name = "GridPosition";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "坐标";
             this.panelEx1.ResumeLayout(false);
             this.panelEx1.PerformLayout();

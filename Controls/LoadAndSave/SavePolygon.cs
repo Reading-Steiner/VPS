@@ -20,6 +20,9 @@ namespace VPS.Controls.LoadAndSave
         {
             InitializeComponent();
 
+            advPropertyGrid1.Tag = advPropertyGrid1.PropertySort;
+            advPropertyGrid1.PropertySort = DevComponents.DotNetBar.ePropertySort.Categorized;
+
             BindingDataSourceBase();
         }
 
@@ -67,8 +70,8 @@ namespace VPS.Controls.LoadAndSave
             var area = VPS.CustomData.WP.WPGlobalData.instance.GetPolygonArea(list);
 
             info.polygon = new PolygonInfo(list);
-            info.Area = area.ToString("0.## m^2");
-            info.Length = length.ToString("0.## m");
+            info.area = area.ToString("0.## m^2");
+            info.length = length.ToString("0.## m");
             advPropertyGrid1.SelectedObject = info;
         }
 
@@ -76,16 +79,18 @@ namespace VPS.Controls.LoadAndSave
         {
             info = new SaveKMLPolygonInfo();
 
+            (info as SaveKMLPolygonInfo).saveFileName = file;
+
             info.fileName = file;
-            info.fileType = ".kml";
+            info.fileType = "kml";
 
             var list = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
             var length = VPS.CustomData.WP.WPGlobalData.GetTotalDist(list);
             var area = VPS.CustomData.WP.WPGlobalData.instance.GetPolygonArea(list);
 
             info.polygon = new PolygonInfo(list);
-            info.Area = area.ToString("0.## m^2");
-            info.Length = length.ToString("0.## m");
+            info.area = area.ToString("0.## m^2");
+            info.length = length.ToString("0.## m");
             advPropertyGrid1.SelectedObject = info;
         }
 
@@ -93,16 +98,18 @@ namespace VPS.Controls.LoadAndSave
         {
             info = new SaveSHPPolygonInfo();
 
+            (info as SaveSHPPolygonInfo).saveFileName = file;
+
             info.fileName = file;
-            info.fileType = ".shp";
+            info.fileType = "shp";
 
             var list = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
             var length = VPS.CustomData.WP.WPGlobalData.GetTotalDist(list);
             var area = VPS.CustomData.WP.WPGlobalData.instance.GetPolygonArea(list);
 
             info.polygon = new PolygonInfo(list);
-            info.Area = area.ToString("0.## m^2");
-            info.Length = length.ToString("0.## m");
+            info.area = area.ToString("0.## m^2");
+            info.length = length.ToString("0.## m");
 
             advPropertyGrid1.SelectedObject = info;
         }
@@ -235,44 +242,64 @@ namespace VPS.Controls.LoadAndSave
         }
     }
 
+    [TypeConverter(typeof(PropertySorter))]
     class SavePolygonInfo
     {
-        [Category("打开文件"), DisplayName("文件"),
-            Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
-        public string fileName { get; set; }
+        [Browsable(false)]
+        public string fileName = "";
 
-        [Category("打开文件"), DisplayName("文件类型"), ReadOnly(false)]
-        public string fileType { get; set; }
+        [Browsable(false)]
+        public string fileType = "";
+
         //[Category("基本信息"), Description("要素类型"), DisplayName("航飞最大倾角"), ReadOnly(true)]
         //public string GradOfWPList { get; set; }
-        [Category("区域信息"), Description("区域点的集合"), DisplayName("区域"),
-            TypeConverter(typeof(ExpandableObjectConverter)),
-            Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
+        [Category("区域信息"), Description("区域点的集合"), DisplayName("区域")]
+        [PropertyOrder(0b00010001)]
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        [Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
         public PolygonInfo polygon { get; set; }
 
         [Category("区域信息"), DisplayName("面积"), ReadOnly(true)]
-        public string Area { set; get; }
+        [PropertyOrder(0b00010010)]
+        public string area { set; get; }
 
         [Category("区域信息"), DisplayName("周长"), ReadOnly(true)]
-        public string Length { set; get; }
+        [PropertyOrder(0b00010011)]
+        public string length { set; get; }
     }
 
+    [TypeConverter(typeof(PropertySorter))]
     class SaveKMLPolygonInfo : SavePolygonInfo
     {
+        [Category("保存信息"), DisplayName("文件")]
+        [PropertyOrder(0b00000001)]
+        [Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
+        public string saveFileName { get; set; }
+
         [Category("保存信息"), DisplayName("文件类型"), ReadOnly(true)]
-        public string FileType { set; get; } = "Google Earth KML";
+        [PropertyOrder(0b00000010)]
+        public string saveFileType { set; get; } = "Google Earth KML";
 
         [Category("保存信息"), DisplayName("高度框架"), ReadOnly(true)]
-        public string AltMode { set; get; } = "clampToGround";
+        [PropertyOrder(0b00000011)]
+        public string saveAltMode { set; get; } = "clampToGround";
     }
 
+    [TypeConverter(typeof(PropertySorter))]
     class SaveSHPPolygonInfo : SavePolygonInfo
     {
+        [Category("保存信息"), DisplayName("文件")]
+        [PropertyOrder(0b00000001)]
+        [Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
+        public string saveFileName { get; set; }
+
         [Category("保存信息"), DisplayName("文件类型"), ReadOnly(true)]
-        public string FileType { set; get; } = "ShapeFile";
+        [PropertyOrder(0b00000010)]
+        public string saveFileType { set; get; } = "ShapeFile";
 
         [Category("保存信息"), DisplayName("空间参考"), ReadOnly(true)]
-        public string FileProference { set; get; } = 
+        [PropertyOrder(0b00000011)]
+        public string saveFileProference { set; get; } = 
             DotSpatial.Projections.KnownCoordinateSystems.Geographic.World.WGS1984.ToString();
 
     }

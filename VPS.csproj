@@ -489,6 +489,12 @@
     <Compile Include="Controls\LoadAndSave\LoadProject.Designer.cs">
       <DependentUpon>LoadProject.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LoadAndSave\LoadTiff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\LoadAndSave\LoadTiff.Designer.cs">
+      <DependentUpon>LoadTiff.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LoadAndSave\LoadWP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1020,6 +1026,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LoadAndSave\LoadProject.resx">
       <DependentUpon>LoadProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LoadAndSave\LoadTiff.resx">
+      <DependentUpon>LoadTiff.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LoadAndSave\LoadWP.resx">
       <DependentUpon>LoadWP.cs</DependentUpon>

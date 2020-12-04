@@ -23,30 +23,6 @@ namespace VPS.Controls.LoadAndSave
 
             advPropertyGrid1.Tag = advPropertyGrid1.PropertySort;
             advPropertyGrid1.PropertySort = DevComponents.DotNetBar.ePropertySort.Categorized;
-            advPropertyGrid1.Paint += AdvPropertyGrid1_Paint;
-        }
-
-        private void AdvPropertyGrid1_Paint(object sender, PaintEventArgs e)
-        {
-            var categorysinfo = advPropertyGrid1.SelectedObject.GetType().GetField("categorys", BindingFlags.NonPublic | BindingFlags.Instance);
-            if (categorysinfo != null)
-            {
-                var categorys = categorysinfo.GetValue(advPropertyGrid1.SelectedObject) as List<String>;
-                advPropertyGrid1.CollapseAllGridItems();
-
-                var currentPropEntriesInfo = advPropertyGrid1.GetType().GetField("currentPropEntries", BindingFlags.NonPublic | BindingFlags.Instance);
-
-                if (currentPropEntriesInfo != null) {
-                    GridItemCollection currentPropEntries = currentPropEntriesInfo.GetValue(advPropertyGrid1) as GridItemCollection;
-                    var newarray = currentPropEntries.Cast<GridItem>().OrderBy((t) => categorys.IndexOf(t.Label)).ToArray();
-                    currentPropEntries.GetType().GetField("entries", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(currentPropEntries, newarray);
-                }
-                advPropertyGrid1.ExpandAllGridItems();
-                advPropertyGrid1.PropertySort = (DevComponents.DotNetBar.ePropertySort)advPropertyGrid1.Tag;
-            }
-
-            var order = advPropertyGrid1.SelectedObject.GetType().GetField("PropertyOrder", BindingFlags.NonPublic | BindingFlags.Instance);
-
         }
 
         private void SaveProject_Load(object sender, EventArgs e)
@@ -55,7 +31,8 @@ namespace VPS.Controls.LoadAndSave
             info.wpList = new ProjectListInfo(VPS.CustomData.WP.WPGlobalData.instance.GetWPList());
             info.polygon= new ProjectListInfo(VPS.CustomData.WP.WPGlobalData.instance.GetPolyList());
             info.layer = VPS.CustomData.WP.WPGlobalData.instance.GetLayer();
-            info.layerRect = VPS.CustomData.WP.WPGlobalData.instance.GetLayerRect();
+            info.layerRect = new Rect(
+                VPS.CustomData.WP.WPGlobalData.instance.GetLayerRect());
             info.homePosition = new Position(
                 VPS.CustomData.WP.WPGlobalData.instance.GetLayerHome());
 
@@ -63,11 +40,7 @@ namespace VPS.Controls.LoadAndSave
             info.isBottomHide = VPS.MainV2.instance.IsBottomBarHide();
             info.isConfigGrid = VPS.MainV2.instance.IsConfigGridVisible();
 
-
-
             advPropertyGrid1.SelectedObject = info;
-
-            AdvPropertyGrid1_Paint(this, null);
         }
         SaveProjectedInfo info;
 
@@ -83,7 +56,7 @@ namespace VPS.Controls.LoadAndSave
             data.wp = info.wpList.features;
             data.poly = info.polygon.features;
             data.layer = info.layer;
-            data.layerRect = info.layerRect;
+            data.layerRect = info.layerRect.ToLocationRect();
             data.homePosition = info.homePosition.ToLocationPoint();
             data.isLeftHide = info.isLeftHide;
             data.isBottomHide = info.isBottomHide;
@@ -106,50 +79,52 @@ namespace VPS.Controls.LoadAndSave
     }
 
 
-
+    [TypeConverter(typeof(PropertySorter))]
     public class SaveProjectedInfo
     {
-        private List<string> categorys = new List<string>()
-        { "航点","区域","区域数据源","区域范围","初始位置","左停靠栏","下停靠栏","自动航点"};
-
         [Category("要素集合"), DisplayName("航点")]
+        [PropertyOrder(0b00000001)]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         [Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
         public ProjectListInfo wpList { set; get; }
             = new ProjectListInfo(new List<Utilities.PointLatLngAlt>());
 
         [Category("要素集合"), DisplayName("区域")]
+        [PropertyOrder(0b00000010)]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         [Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
         public ProjectListInfo polygon { set; get; }
             = new ProjectListInfo(new List<Utilities.PointLatLngAlt>());
 
         [Category("工作区"), DisplayName("区域数据源")]
+        [PropertyOrder(0b00010001)]
         public string layer { set; get; } = "";
 
         [Category("工作区"), DisplayName("区域范围")]
-        public GMap.NET.RectLatLng layerRect { set; get; } = new GMap.NET.RectLatLng();
+        [PropertyOrder(0b00010010)]
+        public Rect layerRect { set; get; } = new Rect();
 
         [Category("工作区"), DisplayName("初始位置")]
+        [PropertyOrder(0b00010011)]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         [Editor(typeof(CustomControls.PositionUITypeEditor), typeof(UITypeEditor))]
         public Position homePosition { set; get; } = new Position();
 
         [Category("用户布局"), DisplayName("左停靠栏")]
+        [PropertyOrder(0b00100001)]
         public bool isLeftHide { set; get; } = false;
 
-        [Category("用户布局"), DisplayName("自动航点")]
-        public bool isConfigGrid { set; get; } = false;
-
         [Category("用户布局"), DisplayName("下停靠栏")]
+        [PropertyOrder(0b00100010)]
         public bool isBottomHide { set; get; } = false;
+
+        [Category("用户布局"), DisplayName("自动航点")]
+        [PropertyOrder(0b00100011)]
+        public bool isConfigGrid { set; get; } = false;
     }
 
     public class ProjectListInfo
     {
-        private List<string> categorys = new List<string>()
-        { "要素集合" };
-
         public List<Utilities.PointLatLngAlt> features = new List<Utilities.PointLatLngAlt>();
 
 
@@ -178,22 +153,24 @@ namespace VPS.Controls.LoadAndSave
 
     public class Position
     {
-        private List<string> categorys = new List<string>()
-        { "维度", "经度", "高度", "高度模块","类型"};
-
-        [Category("位置"), DisplayName("维度"), PropertyOrder(0)]
+        [Category("位置"), DisplayName("\t\t\t\t\t维度")]
+        [NotifyParentProperty(true)]
         public double Lat { get; set; } = 0;
 
-        [Category("位置"), DisplayName("经度"), PropertyOrder(1)]
+        [Category("位置"), DisplayName("\t\t\t\t经度")]
+        [NotifyParentProperty(true)]
         public double Lng { get; set; } = 0;
 
-        [Category("位置"), DisplayName("高度"), PropertyOrder(2)]
+        [Category("位置"), DisplayName("\t\t\t高度")]
+        [NotifyParentProperty(true)]
         public double Alt { get; set; } = 0;
 
-        [Category("位置"), DisplayName("高度模块"), PropertyOrder(3)]
+        [Category("位置"), DisplayName("\t\t高度模块")]
+        [NotifyParentProperty(true)]
         public string AltMode { get; set; } = "";
 
-        [Category("位置"), DisplayName("类型"), PropertyOrder(4)]
+        [Category("位置"), DisplayName("\t类型")]
+        [NotifyParentProperty(true)]
         public string Command { get; set; } = "";
 
         public Position()
@@ -211,8 +188,8 @@ namespace VPS.Controls.LoadAndSave
 
         public override string ToString()
         {
-            return Math.Abs(Lng).ToString("0.##") + (Lng >= 0 ? " E; " : " W; ") +
-                Math.Abs(Lat).ToString("0.##") + (Lat >= 0 ? " N; " : " S; ") +
+            return Math.Abs(Lng).ToString("0.##") + (Lng >= 0 ? "E; " : "W") + "; " +
+                Math.Abs(Lat).ToString("0.##") + (Lat >= 0 ? "N;" : "S") + "; " +
                 (Alt).ToString("0.##");
         }
 
@@ -238,60 +215,55 @@ namespace VPS.Controls.LoadAndSave
         }
     }
 
-    //public class Rect
-    //{
-    //    [Category("区域"), DisplayName("0-上")]
-    //    double Top { get; set; } = 0;
+    public class Rect
+    {
+        [Category("区域"), DisplayName("\t\t\t\t上")]
+        double Top { get; set; } = 0;
 
-    //    [Category("区域"), DisplayName("1-下")]
-    //    double Bottom { get; set; } = 0;
+        [Category("区域"), DisplayName("\t\t\t下")]
+        double Bottom { get; set; } = 0;
 
-    //    [Category("区域"), DisplayName("2-左")]
-    //    double Left { get; set; } = 0;
+        [Category("区域"), DisplayName("\t\t左")]
+        double Left { get; set; } = 0;
 
-    //    [Category("区域"), DisplayName("3-右")]
-    //    double Right { get; set; } = 0;
+        [Category("区域"), DisplayName("\t右")]
+        double Right { get; set; } = 0;
 
 
-    //    public Rect()
-    //    {
-    //    }
+        public Rect()
+        {
+        }
 
-    //    public Position(PointLatLngAlt point)
-    //    {
-    //        Lng = point.Lng;
-    //        Lat = point.Lat;
-    //        Alt = point.Alt;
-    //        Command = point.Tag;
-    //        AltMode = point.Tag2;
-    //    }
+        public Rect(GMap.NET.RectLatLng rect)
+        {
+            Top = rect.Top;
+            Bottom = rect.Bottom;
+            Left = rect.Left;
+            Right = rect.Right;
+        }
 
-    //    public override string ToString()
-    //    {
-    //        return Math.Abs(Lng).ToString("0.##") + (Lng > 0 ? " E" : " W") +
-    //            Math.Abs(Lat).ToString("0.##") + (Lat > 0 ? " N" : " S") +
-    //            (Alt).ToString("0.##");
-    //    }
+        public override string ToString()
+        {
+            return 
+                Math.Abs(Left).ToString("0.##") + (Left > 0 ? "E" : "W") + "-" +
+                Math.Abs(Right).ToString("0.##") + (Left > 0 ? "E" : "W") + "; " +
+                Math.Abs(Bottom).ToString("0.##") + (Bottom > 0 ? "N" : "S") + "-" +
+                Math.Abs(Top).ToString("0.##") + (Top > 0 ? "N" : "S") + "; ";
+        }
 
-    //    public PointLatLngAlt ToLocationPoint()
-    //    {
-    //        PointLatLngAlt point = new PointLatLngAlt();
-    //        point.Lng = Lng;
-    //        point.Lat = Lat;
-    //        point.Alt = Alt;
-    //        point.Tag = Command;
-    //        point.Tag2 = AltMode;
+        public GMap.NET.RectLatLng ToLocationRect()
+        {
+            GMap.NET.RectLatLng rect = GMap.NET.RectLatLng.FromLTRB(Left, Top, Right, Bottom);
 
-    //        return point;
-    //    }
+            return rect;
+        }
 
-    //    public void FromLocationPoint(PointLatLngAlt point)
-    //    {
-    //        Lng = point.Lng;
-    //        Lat = point.Lat;
-    //        Alt = point.Alt;
-    //        Command = point.Tag;
-    //        AltMode = point.Tag2;
-    //    }
-    //}
+        public void FromLocationRect(GMap.NET.RectLatLng rect)
+        {
+            Top = rect.Top;
+            Bottom = rect.Bottom;
+            Left = rect.Left;
+            Right = rect.Right;
+        }
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using Autofac.Core.Activators.Reflection;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,8 +9,65 @@ using System.Threading.Tasks;
 
 namespace VPS.Controls.LoadAndSave
 {
-#region Helper Class - PropertyOrderAttribute
-[AttributeUsage(AttributeTargets.Property)]
+    public class PropertySorter : ExpandableObjectConverter
+    {
+        #region Methods
+        public override bool GetPropertiesSupported(ITypeDescriptorContext context)
+        {
+            return true;
+        }
+
+        public override PropertyDescriptorCollection GetProperties(ITypeDescriptorContext context, object value, Attribute[] attributes)
+        {
+            //
+            // This override returns a list of properties in order
+            //
+            PropertyDescriptorCollection pdc = TypeDescriptor.GetProperties(value, attributes);
+            ArrayList orderedProperties = new ArrayList();
+            foreach (PropertyDescriptor pd in pdc)
+            {
+                Attribute attribute = pd.Attributes[typeof(PropertyOrderAttribute)];
+                if (attribute != null)
+                {
+                    //
+                    // If the attribute is found, then create an pair object to hold it
+                    //
+                    PropertyOrderAttribute poa = (PropertyOrderAttribute)attribute;
+                    orderedProperties.Add(new PropertyOrderPair(pd.Name, poa.Order));
+                }
+                else
+                {
+                    //
+                    // If no order attribute is specifed then given it an order of 0
+                    //
+                    orderedProperties.Add(new PropertyOrderPair(pd.Name, 0));
+                }
+            }
+            //
+            // Perform the actual order using the value PropertyOrderPair classes
+            // implementation of IComparable to sort
+            //
+            orderedProperties.Sort();
+
+
+            //
+            // Build a string list of the ordered names
+            //
+            ArrayList propertyNames = new ArrayList();
+            foreach (PropertyOrderPair pop in orderedProperties)
+            {
+                propertyNames.Add(pop.Name);
+            }
+            //
+            // Pass in the ordered list for the PropertyDescriptorCollection to sort by
+            //
+            return pdc.Sort((string[])propertyNames.ToArray(typeof(string)));
+        }
+        #endregion
+    }
+
+    #region Helper Class - PropertyOrderAttribute
+    [AttributeUsage(AttributeTargets.Property)]
     public class PropertyOrderAttribute : Attribute
     {
         //
@@ -30,40 +88,6 @@ namespace VPS.Controls.LoadAndSave
         }
     }
     #endregion
-
-    /// <summary>
-    /// 属性信息的顺序分类等信息
-    /// 字段或者属性等 可序列化的信息上
-    /// 现在是一共9位，最后3位用来标识编辑器 最后三位000 默认不会识别编辑器
-    /// 中间三位用来属性排序
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    public class PropertyIndexAttribute : Attribute
-    {
-        private string indexCode;
-        /// <summary>
-        /// 标识
-        /// </summary>
-        public string IndexCode
-        {
-            get
-            {
-                return indexCode;
-            }
-            set
-            {
-                indexCode = value;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="indexCode"></param>
-        public PropertyIndexAttribute(string indexCode)
-        {
-            this.indexCode = indexCode;
-        }
-    }
 
     #region Helper Class - PropertyOrderPair
     public class PropertyOrderPair : IComparable
@@ -106,6 +130,5 @@ namespace VPS.Controls.LoadAndSave
             return 1;
         }
     }
-
     #endregion
 }
