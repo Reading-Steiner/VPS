@@ -27,6 +27,17 @@ namespace VPS.Controls.CustomGridControl
             defaultPosition = LocationPosition;
         }
 
+        public GridPosition(VPS.Controls.LoadAndSave.Position point)
+        {
+            InitializeComponent();
+
+            AltFrameSelecter.DataSource =
+                Enum.GetValues(typeof(CustomData.EnumCollect.AltFrame.Mode));
+
+            LocationPosition = point;
+            defaultPosition = LocationPosition;
+        }
+
         private VPS.Controls.LoadAndSave.Position defaultPosition = new LoadAndSave.Position();
         private VPS.Controls.LoadAndSave.Position position = new LoadAndSave.Position();
 

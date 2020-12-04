@@ -102,6 +102,8 @@ namespace VPS.Controls.LoadAndSave
 
         [Category("工作区"), DisplayName("区域范围")]
         [PropertyOrder(0b00010010)]
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        [Editor(typeof(CustomControls.RectUITypeEditor), typeof(UITypeEditor))]
         public Rect layerRect { set; get; } = new Rect();
 
         [Category("工作区"), DisplayName("初始位置")]
@@ -218,16 +220,16 @@ namespace VPS.Controls.LoadAndSave
     public class Rect
     {
         [Category("区域"), DisplayName("\t\t\t\t上")]
-        double Top { get; set; } = 0;
+        public double Top { get; set; } = 0;
 
         [Category("区域"), DisplayName("\t\t\t下")]
-        double Bottom { get; set; } = 0;
+        public double Bottom { get; set; } = 0;
 
         [Category("区域"), DisplayName("\t\t左")]
-        double Left { get; set; } = 0;
+        public double Left { get; set; } = 0;
 
         [Category("区域"), DisplayName("\t右")]
-        double Right { get; set; } = 0;
+        public double Right { get; set; } = 0;
 
 
         public Rect()

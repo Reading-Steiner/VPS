@@ -44,9 +44,26 @@ namespace VPS.Controls.CustomControls
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
             var service = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
-            var form = new CustomGridControl.GridPosition();
+            var form = new CustomGridControl.GridPosition((VPS.Controls.LoadAndSave.Position)value);
 
-            form.LocationPosition = (VPS.Controls.LoadAndSave.Position)value;
+            service.ShowDialog(form);
+            PropertyNode propertyNode = (PropertyNode)context;
+            propertyNode.UpdateDisplayedValue();
+            return value;
+        }
+    }
+
+    class RectUITypeEditor : UITypeEditor
+    {
+        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
+        {
+            return UITypeEditorEditStyle.Modal;
+        }
+
+        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
+        {
+            var service = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+            var form = new CustomGridControl.GridRect((VPS.Controls.LoadAndSave.Rect)value);
 
             service.ShowDialog(form);
             PropertyNode propertyNode = (PropertyNode)context;

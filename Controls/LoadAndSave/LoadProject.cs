@@ -73,7 +73,7 @@ namespace VPS.Controls.LoadAndSave
                         info.wpList = new ProjectListInfo(data.wp);
                         info.polygon = new ProjectListInfo(data.poly);
                         info.layer = data.layer;
-                        info.layerRect = data.layerRect;
+                        info.layerRect = new Rect(data.layerRect);
                         info.homePosition = new Position(data.homePosition);
                         info.isLeftHide = data.isLeftHide;
                         info.isBottomHide = data.isBottomHide;
@@ -131,7 +131,9 @@ namespace VPS.Controls.LoadAndSave
 
         [Category("工作区"), DisplayName("区域范围")]
         [PropertyOrder(0b00010011)]
-        public GMap.NET.RectLatLng layerRect { set; get; } = new GMap.NET.RectLatLng();
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        [Editor(typeof(CustomControls.RectUITypeEditor), typeof(UITypeEditor))]
+        public Rect layerRect { set; get; } = new Rect();
 
         [Category("工作区"), DisplayName("初始位置")]
         [PropertyOrder(0b00010100)]

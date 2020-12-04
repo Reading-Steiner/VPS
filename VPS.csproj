@@ -471,6 +471,12 @@
     <Compile Include="Controls\CustomGridControl\GridPosition.Designer.cs">
       <DependentUpon>GridPosition.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CustomGridControl\GridRect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomGridControl\GridRect.Designer.cs">
+      <DependentUpon>GridRect.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Layer\TiffLayerDisplay.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -978,6 +984,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomGridControl\GridPosition.resx">
       <DependentUpon>GridPosition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CustomGridControl\GridRect.resx">
+      <DependentUpon>GridRect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DevopsUI.resx">
       <DependentUpon>DevopsUI.cs</DependentUpon>
