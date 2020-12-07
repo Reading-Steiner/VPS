@@ -194,7 +194,7 @@
             this.LngInput.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.LngInput.ButtonFreeText.Checked = true;
             this.LngInput.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.LngInput.DisplayFormat = "0.######";
+            this.LngInput.DisplayFormat = "0.###############";
             this.LngInput.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.LngInput.FreeTextEntryMode = true;
             this.LngInput.Increment = 0D;
@@ -217,7 +217,7 @@
             this.LatInput.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.LatInput.ButtonFreeText.Checked = true;
             this.LatInput.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.LatInput.DisplayFormat = "0.######";
+            this.LatInput.DisplayFormat = "0.###############";
             this.LatInput.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.LatInput.FreeTextEntryMode = true;
             this.LatInput.Increment = 0D;
