@@ -64,7 +64,6 @@
             this.panelEx1.Controls.Add(this.label1);
             this.panelEx1.Controls.Add(this.label2);
             this.panelEx1.Controls.Add(this.AltInput);
-            this.panelEx1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx1.Location = new System.Drawing.Point(0, 0);
             this.panelEx1.Name = "panelEx1";
             this.panelEx1.Size = new System.Drawing.Size(234, 318);
@@ -80,6 +79,7 @@
             // Default
             // 
             this.Default.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.Default.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Default.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.Default.Location = new System.Drawing.Point(168, 191);
             this.Default.Name = "Default";
@@ -91,6 +91,8 @@
             // 
             // GeoAltitude
             // 
+            this.GeoAltitude.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -105,6 +107,7 @@
             // buttonX2
             // 
             this.buttonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonX2.Location = new System.Drawing.Point(128, 273);
@@ -117,6 +120,8 @@
             // LngInput
             // 
             this.LngInput.AllowEmptyState = false;
+            this.LngInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -140,6 +145,7 @@
             // buttonX1
             // 
             this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX1.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonX1.Location = new System.Drawing.Point(26, 273);
@@ -174,6 +180,8 @@
             // LatInput
             // 
             this.LatInput.AllowEmptyState = false;
+            this.LatInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -196,6 +204,8 @@
             // 
             // AltFrameSelecter
             // 
+            this.AltFrameSelecter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.AltFrameSelecter.DisplayMember = "Text";
             this.AltFrameSelecter.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.AltFrameSelecter.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -233,6 +243,8 @@
             // AltInput
             // 
             this.AltInput.AllowEmptyState = false;
+            this.AltInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 

@@ -3172,9 +3172,11 @@ namespace VPS
 
             delegateDataChange();
             delegateHomeChange();
+            delegateWorkspaceChange();
             delegateWPListChange();
             delegateCurrentPosition();
 
+            CustomData.WP.WPGlobalData.instance.HomeChange += VPS.Controls.MainInfo.LeftMainInfo.instance.HomeChangeHandle;
             #region 控件反应链接
             GCSViews.FlightPlanner.instance.DrawPolygonHandle += VPS.MainV2.instance.DrawPolygonState;
             GCSViews.FlightPlanner.instance.LeaveDrawPolygonHandle += VPS.MainV2.instance.LeaveDrawPolygonState;
@@ -3203,6 +3205,13 @@ namespace VPS
             CustomData.WP.WPGlobalData.instance.WPListChange += VPS.GCSViews.FlightPlanner.instance.WPChangeHandle;
 
             CustomData.WP.WPGlobalData.instance.PolygonListChange += VPS.GCSViews.FlightPlanner.instance.PolyChangeHandle;
+        }
+        #endregion
+
+        #region Workspace 工作区
+        private void delegateWorkspaceChange()
+        {
+            CustomData.WP.WPGlobalData.instance.WorkspaceRectChange += VPS.Controls.MainInfo.LeftMainInfo.instance.WorkspaceRectChangeHandle;
         }
         #endregion
 

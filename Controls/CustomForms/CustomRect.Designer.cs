@@ -1,6 +1,6 @@
-﻿namespace VPS.Controls.CustomGridControl
+﻿namespace VPS.Controls.CustomForms
 {
-    partial class GridRect
+    partial class CustomRect
     {
         /// <summary>
         /// Required designer variable.
@@ -66,7 +66,7 @@
             this.panelEx1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
             this.panelEx1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
             this.panelEx1.Style.GradientAngle = 90;
-            this.panelEx1.TabIndex = 69;
+            this.panelEx1.TabIndex = 70;
             // 
             // Default
             // 
@@ -79,7 +79,6 @@
             this.Default.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.Default.TabIndex = 79;
             this.Default.Text = "默认";
-            this.Default.Click += new System.EventHandler(this.Default_Click);
             // 
             // TopLatInput
             // 
@@ -102,7 +101,6 @@
             this.TopLatInput.Name = "TopLatInput";
             this.TopLatInput.Size = new System.Drawing.Size(123, 23);
             this.TopLatInput.TabIndex = 74;
-            this.TopLatInput.ValueChanged += new System.EventHandler(this.TopLatInput_ValueChanged);
             // 
             // BottomLatInput
             // 
@@ -125,7 +123,6 @@
             this.BottomLatInput.Name = "BottomLatInput";
             this.BottomLatInput.Size = new System.Drawing.Size(123, 23);
             this.BottomLatInput.TabIndex = 71;
-            this.BottomLatInput.ValueChanged += new System.EventHandler(this.BottomLatInput_ValueChanged);
             // 
             // LeftLngInput
             // 
@@ -148,7 +145,6 @@
             this.LeftLngInput.Name = "LeftLngInput";
             this.LeftLngInput.Size = new System.Drawing.Size(123, 23);
             this.LeftLngInput.TabIndex = 67;
-            this.LeftLngInput.ValueChanged += new System.EventHandler(this.LeftLngInput_ValueChanged);
             // 
             // RightLngInput
             // 
@@ -171,7 +167,6 @@
             this.RightLngInput.Name = "RightLngInput";
             this.RightLngInput.Size = new System.Drawing.Size(123, 23);
             this.RightLngInput.TabIndex = 69;
-            this.RightLngInput.ValueChanged += new System.EventHandler(this.RightLngInput_ValueChanged);
             // 
             // buttonX2
             // 
@@ -197,14 +192,14 @@
             this.buttonX1.TabIndex = 65;
             this.buttonX1.Text = "确定";
             // 
-            // GridRect
+            // CustomRect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(345, 180);
             this.Controls.Add(this.panelEx1);
-            this.Name = "GridRect";
-            this.Text = "范围";
+            this.Name = "CustomRect";
+            this.Text = "CustomRect";
             this.panelEx1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TopLatInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BottomLatInput)).EndInit();
@@ -217,12 +212,12 @@
         #endregion
 
         private DevComponents.DotNetBar.PanelEx panelEx1;
-        private DevComponents.DotNetBar.ButtonX buttonX2;
-        private DevComponents.DotNetBar.ButtonX buttonX1;
+        private DevComponents.DotNetBar.ButtonX Default;
         private CustomControls.CustomDoubleInput TopLatInput;
         private CustomControls.CustomDoubleInput BottomLatInput;
         private CustomControls.CustomDoubleInput LeftLngInput;
         private CustomControls.CustomDoubleInput RightLngInput;
-        private DevComponents.DotNetBar.ButtonX Default;
+        private DevComponents.DotNetBar.ButtonX buttonX2;
+        private DevComponents.DotNetBar.ButtonX buttonX1;
     }
 }

@@ -151,6 +151,7 @@ namespace VPS.CustomData.WP
 
         public delegate void ChangeHandle();
         public delegate void PositionChangeHandle(PointLatLngAlt position);
+        public delegate void RectChangeHandle(GMap.NET.RectLatLng rect);
         public delegate void CountChangeHandle(int count);
 
         #region WPLIST 航点
@@ -762,8 +763,12 @@ namespace VPS.CustomData.WP
         private GMap.NET.RectLatLng defaultRect = new GMap.NET.RectLatLng();
 
         //public GDAL.GDAL.GeoBitmap currentLayer;
+        public ChangeHandle WorkspaceRectChange;
+        public ChangeHandle DefaultWorkspaceRectChange;
 
         #region 设置图层信息
+
+
         public void SetLayer(string path, bool isDefault = true)
         {
             currentLayerPath = path;
@@ -781,6 +786,16 @@ namespace VPS.CustomData.WP
                 defaultHome = new PointLatLngAlt(home);
                 if (defaultHome.Tag != WPCommands.HomeCommand)
                     defaultHome.Tag = WPCommands.HomeCommand;
+                if (IsExecuteOverSetting())
+                {
+                    DefaultWorkspaceRectChange?.Invoke();
+                    AddHistory();
+                }
+            }
+            if (IsExecuteOverSetting())
+            {
+                WorkspaceRectChange?.Invoke();
+                AddHistory();
             }
         }
         #endregion

@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace VPS.Controls.CustomControls
 {
-    public partial class PositionDisplay : UserControl
+    public partial class  RectDisplay : UserControl
     {
-        public PositionDisplay()
+        public RectDisplay()
         {
             InitializeComponent();
         }
 
         #region 标题
-        private string posName = "位置";
-        [Category("Value"),Description("标题")]
+        private string posName = "区域";
+        [Category("Value"), Description("标题")]
         public string PositionName
         {
             set
@@ -35,25 +35,27 @@ namespace VPS.Controls.CustomControls
         #endregion
 
         #region 坐标
-        private Utilities.PointLatLngAlt Position = new Utilities.PointLatLngAlt();
-        [Category("Value"), Description("位置信息")]
-        public Utilities.PointLatLngAlt WGS84Position
+        private GMap.NET.RectLatLng Rect = new GMap.NET.RectLatLng();
+        [Category("Value"), Description("区域信息")]
+        public GMap.NET.RectLatLng WGS84Rect
         {
             set
             {
-                Position = new Utilities.PointLatLngAlt(value);
+                Rect = new GMap.NET.RectLatLng(value.Lat, value.Lng, value.WidthLng, value.HeightLat);
                 SetControlMainThread(
                     labelX1,
-                    "[ " + Position.Lng.ToString("0.######") + (Position.Lng > 0 ? "E" : "W") + " , " +
-                    Position.Lat.ToString("0.######") + (Position.Lat >= 0 ? "N" : "S") + " ]");
+                    "[ " + Rect.Top.ToString("0.######") + (Rect.Top >= 0 ? "N" : "S") + " ]");
                 SetControlMainThread(
                     labelX2,
-                    "[ " + Position.Tag2 + " , " + Position.Alt.ToString() + " ]");
-
+                    "[ " + Rect.Left.ToString("0.######") + (Rect.Left > 0 ? "E" : "W") + " , " +
+                    Rect.Left.ToString("0.######") + (Rect.Left >= 0 ? "E" : "W") + " ]");
+                SetControlMainThread(
+                    labelX3,
+                    "[ " + Rect.Bottom.ToString("0.######") + (Rect.Bottom > 0 ? "N" : "S") + " ]");
             }
             get
             {
-                return new Utilities.PointLatLngAlt(Position);
+                return new GMap.NET.RectLatLng(Rect.Lat, Rect.Lng, Rect.WidthLng, Rect.HeightLat);
             }
         }
         #endregion
@@ -91,21 +93,21 @@ namespace VPS.Controls.CustomControls
         {
             if (isEndable)
             {
-                using (CustomForms.CustomPosition dlg = new CustomForms.CustomPosition(Position))
+                using (CustomForms.CustomRect dlg = new CustomForms.CustomRect(Rect))
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        WGS84Position = dlg.WGS84Position;
-                        PositionChange?.Invoke(WGS84Position);
+                        Rect = dlg.LocationRect;
+                        RectChange?.Invoke(Rect);
                     }
                 }
-            }                                          
+            }
         }
         #endregion
 
         #region
-        public delegate void PositionChangeHandle(Utilities.PointLatLngAlt position);
-        public PositionChangeHandle PositionChange;
+        public delegate void RectChangeHandle(GMap.NET.RectLatLng rect);
+        public RectChangeHandle RectChange;
         #endregion
 
         #region 设置控件数据

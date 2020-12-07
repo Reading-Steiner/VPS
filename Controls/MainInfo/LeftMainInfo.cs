@@ -20,6 +20,13 @@ namespace VPS.Controls.MainInfo
             InitializeComponent();
 
             instance = this;
+            this.Load += LeftMainInfo_Load;
+        }
+
+        private void LeftMainInfo_Load(object sender, EventArgs e)
+        {
+            HomeChangeHandle();
+            WorkspaceRectChangeHandle();
         }
 
         #region HOME 初始位置
@@ -75,6 +82,17 @@ namespace VPS.Controls.MainInfo
         private PointLatLngAlt lastPosition = null;
         #endregion
 
+        #region RECT 图层区域
+        private delegate void SetRectInThread(GMap.NET.RectLatLng rect);
+        private GMap.NET.RectLatLng workspace = new GMap.NET.RectLatLng();
+
+        private void SetWorkspace(GMap.NET.RectLatLng rect)
+        {
+            workspace = rect;
+            LayerRect.WGS84Rect = workspace;
+        }
+        #endregion
+
         #region HOME 初始位置变化响应函数
         public void HomeChangeHandle()
         {
@@ -125,6 +143,17 @@ namespace VPS.Controls.MainInfo
             SetControlMainThread(LastGrad, (grad).ToString("0.## \\%"));
             SetControlMainThread(LastDist, (distance).ToString("0.## m"));
             SetControlMainThread(LastAZ, (az).ToString("0.##"));
+        }
+        #endregion
+
+        #region WPLIST 航线变化响应函数
+        public void WorkspaceRectChangeHandle()
+        {
+            GMap.NET.RectLatLng workspace = CustomData.WP.WPGlobalData.instance.GetLayerRect();
+
+            SetWorkspace(
+                new GMap.NET.RectLatLng(workspace.Lat, workspace.Lng, workspace.WidthLng, workspace.HeightLat));
+
         }
         #endregion
 
