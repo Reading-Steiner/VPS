@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LeftMainInfo));
             VPS.Utilities.PointLatLngAlt pointLatLngAlt1 = new VPS.Utilities.PointLatLngAlt();
             VPS.Utilities.PointLatLngAlt pointLatLngAlt2 = new VPS.Utilities.PointLatLngAlt();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LeftMainInfo));
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.panelEx10 = new DevComponents.DotNetBar.PanelEx();
             this.panelEx9 = new DevComponents.DotNetBar.PanelEx();
             this.LayerRect = new VPS.Controls.CustomControls.RectDisplay();
             this.panelEx2 = new DevComponents.DotNetBar.PanelEx();
@@ -79,9 +80,10 @@
             this.HomePosition = new VPS.Controls.CustomControls.PositionDisplay();
             this.panelEx6 = new DevComponents.DotNetBar.PanelEx();
             this.label6 = new System.Windows.Forms.Label();
-            this.panelEx10 = new DevComponents.DotNetBar.PanelEx();
-            this.rectDisplay1 = new VPS.Controls.CustomControls.RectDisplay();
+            this.labelX2 = new DevComponents.DotNetBar.LabelX();
+            this.LayerArea = new DevComponents.DotNetBar.LabelX();
             this.panelEx1.SuspendLayout();
+            this.panelEx10.SuspendLayout();
             this.panelEx9.SuspendLayout();
             this.panelEx2.SuspendLayout();
             this.panelEx8.SuspendLayout();
@@ -94,7 +96,6 @@
             this.panelEx3.SuspendLayout();
             this.BoundBox.SuspendLayout();
             this.panelEx6.SuspendLayout();
-            this.panelEx10.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelEx1
@@ -122,6 +123,25 @@
             this.panelEx1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 0;
+            // 
+            // panelEx10
+            // 
+            this.panelEx10.AutoSize = true;
+            this.panelEx10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelEx10.CanvasColor = System.Drawing.SystemColors.Control;
+            this.panelEx10.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx10.Controls.Add(this.LayerArea);
+            this.panelEx10.Controls.Add(this.labelX2);
+            this.panelEx10.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEx10.Location = new System.Drawing.Point(0, 635);
+            this.panelEx10.Name = "panelEx10";
+            this.panelEx10.Size = new System.Drawing.Size(310, 27);
+            this.panelEx10.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelEx10.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
+            this.panelEx10.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.panelEx10.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
+            this.panelEx10.Style.GradientAngle = 90;
+            this.panelEx10.TabIndex = 43;
             // 
             // panelEx9
             // 
@@ -297,7 +317,7 @@
             // 
             // 
             this.labelX28.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX28.Location = new System.Drawing.Point(23, 34);
+            this.labelX28.Location = new System.Drawing.Point(24, 34);
             this.labelX28.Name = "labelX28";
             this.labelX28.Size = new System.Drawing.Size(67, 20);
             this.labelX28.TabIndex = 59;
@@ -309,7 +329,7 @@
             // 
             // 
             this.labelX29.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX29.Location = new System.Drawing.Point(23, 7);
+            this.labelX29.Location = new System.Drawing.Point(24, 7);
             this.labelX29.Name = "labelX29";
             this.labelX29.Size = new System.Drawing.Size(66, 20);
             this.labelX29.TabIndex = 58;
@@ -896,35 +916,31 @@
             this.label6.TabIndex = 26;
             this.label6.Text = "航点信息";
             // 
-            // panelEx10
+            // labelX2
             // 
-            this.panelEx10.AutoSize = true;
-            this.panelEx10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panelEx10.CanvasColor = System.Drawing.SystemColors.Control;
-            this.panelEx10.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.panelEx10.Controls.Add(this.rectDisplay1);
-            this.panelEx10.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx10.Location = new System.Drawing.Point(0, 635);
-            this.panelEx10.Name = "panelEx10";
-            this.panelEx10.Size = new System.Drawing.Size(310, 95);
-            this.panelEx10.Style.Alignment = System.Drawing.StringAlignment.Center;
-            this.panelEx10.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
-            this.panelEx10.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
-            this.panelEx10.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
-            this.panelEx10.Style.GradientAngle = 90;
-            this.panelEx10.TabIndex = 43;
+            this.labelX2.AutoSize = true;
             // 
-            // rectDisplay1
             // 
-            this.rectDisplay1.AutoSize = true;
-            this.rectDisplay1.IsReadOnly = false;
-            this.rectDisplay1.Location = new System.Drawing.Point(18, 3);
-            this.rectDisplay1.MinimumSize = new System.Drawing.Size(209, 23);
-            this.rectDisplay1.Name = "rectDisplay1";
-            this.rectDisplay1.PositionName = "工作区";
-            this.rectDisplay1.Size = new System.Drawing.Size(269, 89);
-            this.rectDisplay1.TabIndex = 0;
-            this.rectDisplay1.WGS84Rect = ((GMap.NET.RectLatLng)(resources.GetObject("rectDisplay1.WGS84Rect")));
+            // 
+            this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX2.Location = new System.Drawing.Point(24, 6);
+            this.labelX2.Name = "labelX2";
+            this.labelX2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.labelX2.Size = new System.Drawing.Size(68, 18);
+            this.labelX2.TabIndex = 37;
+            this.labelX2.Text = "工作区面积";
+            // 
+            // LayerArea
+            // 
+            // 
+            // 
+            // 
+            this.LayerArea.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.LayerArea.Location = new System.Drawing.Point(104, 7);
+            this.LayerArea.Name = "LayerArea";
+            this.LayerArea.Size = new System.Drawing.Size(177, 17);
+            this.LayerArea.TabIndex = 39;
+            this.LayerArea.Text = "0";
             // 
             // LeftMainInfo
             // 
@@ -935,6 +951,8 @@
             this.Size = new System.Drawing.Size(310, 814);
             this.panelEx1.ResumeLayout(false);
             this.panelEx1.PerformLayout();
+            this.panelEx10.ResumeLayout(false);
+            this.panelEx10.PerformLayout();
             this.panelEx9.ResumeLayout(false);
             this.panelEx9.PerformLayout();
             this.panelEx2.ResumeLayout(false);
@@ -956,8 +974,6 @@
             this.BoundBox.PerformLayout();
             this.panelEx6.ResumeLayout(false);
             this.panelEx6.PerformLayout();
-            this.panelEx10.ResumeLayout(false);
-            this.panelEx10.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1014,6 +1030,7 @@
         private System.Windows.Forms.Label label1;
         private CustomControls.RectDisplay LayerRect;
         private DevComponents.DotNetBar.PanelEx panelEx10;
-        private CustomControls.RectDisplay rectDisplay1;
+        private DevComponents.DotNetBar.LabelX LayerArea;
+        private DevComponents.DotNetBar.LabelX labelX2;
     }
 }

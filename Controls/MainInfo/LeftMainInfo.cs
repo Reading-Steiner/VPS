@@ -90,6 +90,15 @@ namespace VPS.Controls.MainInfo
         {
             workspace = rect;
             LayerRect.WGS84Rect = workspace;
+
+            List<PointLatLngAlt> rectList = new List<PointLatLngAlt>() {
+                new PointLatLngAlt(rect.Left, rect.Top),
+                new PointLatLngAlt(rect.Right, rect.Top),
+                new PointLatLngAlt(rect.Right, rect.Bottom),
+                new PointLatLngAlt(rect.Left, rect.Bottom)
+            };
+            SetControlMainThread(LayerArea, 
+                (VPS.CustomData.WP.WPGlobalData.instance.GetPolygonArea(rectList)).ToString("0.##"));
         }
         #endregion
 
