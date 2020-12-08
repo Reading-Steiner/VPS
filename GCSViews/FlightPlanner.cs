@@ -4653,12 +4653,14 @@ namespace VPS.GCSViews
         /// </summary>
         private void savewaypoints()
         {
-            VPS.Controls.LoadAndSave.SaveWP save = new VPS.Controls.LoadAndSave.SaveWP();
-            var result = save.ShowDialog();
-
-            if (result == DialogResult.OK)
+            using (VPS.Controls.LoadAndSave.SaveWP save = new VPS.Controls.LoadAndSave.SaveWP())
             {
-                save.SaveWaypoint();
+                var result = save.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    save.SaveWaypoint();
+                }
             }
         }
         #endregion
@@ -4961,12 +4963,14 @@ namespace VPS.GCSViews
         /// </summary>
         private void loadwaypoints()
         {
-            VPS.Controls.LoadAndSave.LoadWP load = new VPS.Controls.LoadAndSave.LoadWP();
-            var result = load.ShowDialog();
-
-            if(result == DialogResult.OK)
+            using (VPS.Controls.LoadAndSave.LoadWP load = new VPS.Controls.LoadAndSave.LoadWP())
             {
-                VPS.CustomData.WP.WPGlobalData.instance.SetWPListHandle(load.GetWPList());
+                var result = load.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    VPS.CustomData.WP.WPGlobalData.instance.SetWPListHandle(load.GetWPList());
+                }
             }
         }
 
@@ -5395,12 +5399,14 @@ namespace VPS.GCSViews
         /// </summary>
         private void savepolygons()
         {
-            VPS.Controls.LoadAndSave.SavePolygon save = new VPS.Controls.LoadAndSave.SavePolygon();
-            var result = save.ShowDialog();
-
-            if (result == DialogResult.OK)
+            using (VPS.Controls.LoadAndSave.SavePolygon save = new VPS.Controls.LoadAndSave.SavePolygon())
             {
-                save.SavePolygonPoints();
+                var result = save.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    save.SavePolygonPoints();
+                }
             }
             
             //if (CustomData.WP.WPGlobalData.instance.GetPolyCount() <= 0)
@@ -5476,12 +5482,14 @@ namespace VPS.GCSViews
         /// </summary>
         private void loadpolygons()
         {
-            VPS.Controls.LoadAndSave.LoadPolygon load = new VPS.Controls.LoadAndSave.LoadPolygon();
-            var result = load.ShowDialog();
-
-            if (result == DialogResult.OK)
+            using (VPS.Controls.LoadAndSave.LoadPolygon load = new VPS.Controls.LoadAndSave.LoadPolygon())
             {
-                VPS.CustomData.WP.WPGlobalData.instance.SetPolyListHandle(load.GetWPList());
+                var result = load.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    VPS.CustomData.WP.WPGlobalData.instance.SetPolyListHandle(load.GetWPList());
+                }
             }
         }
         #endregion

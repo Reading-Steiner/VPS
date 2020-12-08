@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
-            this.IsLocalFile = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.LocalFile = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.advPropertyGrid1 = new DevComponents.DotNetBar.AdvPropertyGrid();
@@ -42,7 +42,7 @@
             // 
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.panelEx1.Controls.Add(this.IsLocalFile);
+            this.panelEx1.Controls.Add(this.LocalFile);
             this.panelEx1.Controls.Add(this.buttonX2);
             this.panelEx1.Controls.Add(this.buttonX1);
             this.panelEx1.Controls.Add(this.advPropertyGrid1);
@@ -62,21 +62,21 @@
             // 
             // IsLocalFile
             // 
-            this.IsLocalFile.AutoSize = true;
+            this.LocalFile.AutoSize = true;
             // 
             // 
             // 
-            this.IsLocalFile.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.IsLocalFile.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
-            this.IsLocalFile.Checked = true;
-            this.IsLocalFile.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.IsLocalFile.CheckValue = "Y";
-            this.IsLocalFile.Location = new System.Drawing.Point(3, 3);
-            this.IsLocalFile.Name = "IsLocalFile";
-            this.IsLocalFile.Size = new System.Drawing.Size(76, 18);
-            this.IsLocalFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.IsLocalFile.TabIndex = 10;
-            this.IsLocalFile.Text = "本地文件";
+            this.LocalFile.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.LocalFile.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
+            this.LocalFile.Checked = true;
+            this.LocalFile.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.LocalFile.CheckValue = "Y";
+            this.LocalFile.Location = new System.Drawing.Point(3, 3);
+            this.LocalFile.Name = "IsLocalFile";
+            this.LocalFile.Size = new System.Drawing.Size(76, 18);
+            this.LocalFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.LocalFile.TabIndex = 10;
+            this.LocalFile.Text = "本地文件";
             // 
             // buttonX2
             // 
@@ -156,6 +156,6 @@
         private DevComponents.DotNetBar.ButtonX buttonX1;
         private DevComponents.DotNetBar.AdvPropertyGrid advPropertyGrid1;
         private DevComponents.DotNetBar.ButtonX OpenFile;
-        private DevComponents.DotNetBar.Controls.CheckBoxX IsLocalFile;
+        private DevComponents.DotNetBar.Controls.CheckBoxX LocalFile;
     }
 }

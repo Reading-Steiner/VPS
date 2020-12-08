@@ -9,6 +9,25 @@ namespace VPS.CustomFile
 {
     class UniversalMethod
     {
+        public static string GetFileName(string file)
+        {
+            if (File.Exists(file) && !string.IsNullOrEmpty(file))
+            {
+                FileInfo info = new FileInfo(file);
+                return info.Name;
+            }
+            return "";
+        }
+
+        public static string GetFilePath(string file)
+        {
+            if (File.Exists(file) && !string.IsNullOrEmpty(file))
+            {
+                FileInfo info = new FileInfo(file);
+                return info.FullName;
+            }
+            return "";
+        }
 
         public static string GetFileType(string file)
         {

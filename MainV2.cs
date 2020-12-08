@@ -3936,11 +3936,12 @@ namespace VPS
         /// </summary>
         private void LoadTiffButton_Click(object sender, EventArgs e)
         {
-            VPS.Controls.LoadAndSave.LoadLayer load = new Controls.LoadAndSave.LoadLayer();
-            var result = load.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-
+            using (VPS.Controls.LoadAndSave.LoadLayer load = new Controls.LoadAndSave.LoadLayer()) { 
+                var result = load.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    load.LoadLayerInfo();
+                }
             }
             //if (!LoadTiffButton.Checked)
             //{

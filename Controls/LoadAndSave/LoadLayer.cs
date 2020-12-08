@@ -63,10 +63,12 @@ namespace VPS.Controls.LoadAndSave
 
         private void BindingDataSource(string file = "")
         {
-            if (IsLocalFile.Checked)
+            if (LocalFile.Checked)
             {
                 info = new LoadLayerInfo();
-                info.fileName = file;
+
+                info.fileName = CustomFile.UniversalMethod.GetFileName(file);
+                info.filePath = CustomFile.UniversalMethod.GetFilePath(file);
                 info.fileType = CustomFile.UniversalMethod.GetFileType(file);
 
                 advPropertyGrid1.SelectedObject = info;
@@ -75,22 +77,21 @@ namespace VPS.Controls.LoadAndSave
 
         private void BindingTiffFileDataSource(string file)
         {
-            if (IsLocalFile.Checked)
+            if (LocalFile.Checked)
             {
                 info = new LoadTiffLayerInfo();
-                if (File.Exists(file)) {
-                    info.fileName = file;
+                if (File.Exists(file))
+                {
+
+                    info.fileName = CustomFile.UniversalMethod.GetFileName(file);
+                    info.filePath = CustomFile.UniversalMethod.GetFilePath(file);
                     info.fileType = CustomFile.UniversalMethod.GetFileType(file);
                     (info as LoadTiffLayerInfo).fileSize = CustomFile.UniversalMethod.GetFileSize(file);
                     (info as LoadTiffLayerInfo).createTime = CustomFile.UniversalMethod.GetFileCreate(file);
                     (info as LoadTiffLayerInfo).modifyTime = CustomFile.UniversalMethod.GetFileModify(file);
-                } else
-                    return;
-
-                using (var ds = OSGeo.GDAL.Gdal.Open(file, OSGeo.GDAL.Access.GA_ReadOnly))
-                {
-                    (info as LoadTiffLayerInfo).coordinates = ds.GetProjectionRef();
                 }
+                else
+                    return;
 
                 var imageInfo = GDAL.GDAL.LoadImageInfo(file);
                 {
@@ -109,52 +110,265 @@ namespace VPS.Controls.LoadAndSave
 
                     (info as LoadTiffLayerInfo).rasterSize = new Size(imageInfo.RasterXSize, imageInfo.RasterYSize);
                     (info as LoadTiffLayerInfo).tileSize = new Size(400, 400);
-    }
-                
+                }
+
+                using (var ds = OSGeo.GDAL.Gdal.Open(file, OSGeo.GDAL.Access.GA_ReadOnly))
+                {
+                    (info as LoadTiffLayerInfo).coordinates = ds.GetProjectionRef();
+                }
+ 
                 advPropertyGrid1.SelectedObject = info;
             }
         }
 
-        LoadLayerInfo info;
+        public LoadLayerInfo info;
 
-        //public List<PointLatLngAlt> GetWPList()
-        //{
-        //    if (info is LoadSHPPolygonInfo)
-        //    {
-        //        var data = info as LoadSHPPolygonInfo;
-        //        if (data.features.features.Count > 0 && data.features.Current != -1)
-        //        {
-        //            return data.features[data.features.Current];
-        //        }
-        //    }
+        #region 获取转存地址
+        public static string GetSaveFilePath(string fileName)
+        {
+            string saveFilePath = Utilities.Settings.GetUserDataDirectory() +
+                          ((UInt64)(fileName.GetHashCode() + DateTime.Now.ToString().GetHashCode())).
+                          GetHashCode().ToString("X") +
+                          System.IO.Path.DirectorySeparatorChar;
+            if (!string.IsNullOrEmpty(saveFilePath))
+            {
+                if (File.Exists(saveFilePath))
+                    return saveFilePath;
+                else
+                {
+                    string savePath = "";
+                    string saveFile = "";
+                    if (saveFilePath.EndsWith(".tif"))
+                    {
+                        savePath = saveFilePath.Substring(0, saveFilePath.LastIndexOf('\\') + 1);
+                        saveFile = saveFilePath;
+                    }
+                    else
+                    {
+                        if (saveFilePath.EndsWith("\\"))
+                            savePath = saveFilePath;
+                        else
+                            savePath = saveFilePath + "\\";
+                        saveFile = savePath + fileName;
+                    }
+                    if (Directory.Exists(savePath))
+                        return saveFile;
+                    else
+                    {
+                        try
+                        {
+                            Directory.CreateDirectory(savePath);
+                            return saveFile;
+                        }
+                        catch
+                        {
+                            return ".\\" + saveFile;
+                        }
+                    }
+                }
+            }
+            else
+                return "";
+        }
 
-        //    if (info is LoadKMLPolygonInfo)
-        //    {
-        //        var data = info as LoadKMLPolygonInfo;
-        //        if (data.features.features.Count > 0 && data.features.Current != -1)
-        //        {
-        //            return data.features[data.features.Current];
-        //        }
-        //    }
+        public static string GetTileFilePath(string fileName)
+        {
+            string saveFilePath = Utilities.Settings.GetUserDataDirectory() +
+                ((UInt64)(fileName.GetHashCode() + DateTime.Now.ToString().GetHashCode())).
+                GetHashCode().ToString("X") +
+                System.IO.Path.DirectorySeparatorChar;
+            if (!string.IsNullOrEmpty(saveFilePath))
+            {
+                string savePath = "";
+                if (saveFilePath.EndsWith("\\"))
+                    savePath = saveFilePath;
+                else
+                    savePath = saveFilePath + "\\";
 
-        //    return new List<PointLatLngAlt>();
-        //}
+                if (Directory.Exists(savePath))
+                    return savePath;
+                try
+                {
+                    Directory.CreateDirectory(savePath);
+                    return savePath;
+                }
+                catch
+                {
+                    return "";
+                }
+            }
+            else
+                return "";
+        }
+        #endregion
+
+        public void LoadLayerInfo()
+        {
+            if (LocalFile.Checked)
+            {
+                if (info.fileType.Contains("tif"))
+                {
+                    if (info.isFileTile)
+                    {
+                        TileAndLoadTiff(
+                            info.filePath,
+                            VPS.Controls.LoadAndSave.LoadLayer.GetTileFilePath(info.fileName),
+                            info as VPS.Controls.LoadAndSave.LoadTiffLayerInfo
+                            );
+                    }
+                    else if (info.isFileSave)
+                    {
+                        SaveAndLoadTiff(
+                            info.filePath,
+                            VPS.Controls.LoadAndSave.LoadLayer.GetSaveFilePath(info.fileName),
+                            info as VPS.Controls.LoadAndSave.LoadTiffLayerInfo
+                            );
+                    }
+                    else
+                    {
+                        LoadTiff(
+                            info.filePath,
+                            info as VPS.Controls.LoadAndSave.LoadTiffLayerInfo
+                            );
+                    }
+                }
+            }
+        }
+
+        #region 本地文件 Tiff
+
+        #region Tiff 切片
+        private void TileAndLoadTiff(string openPath, string savePath, LoadTiffLayerInfo info)
+        {
+            int rasterXSize = info.rasterSize.Width;
+            int rasterYSize = info.rasterSize.Height;
+            int tileXSize = info.tileSize.Width;
+            int tileYSize = info.tileSize.Height;
+            int tileXCount = (int)(rasterXSize / tileXSize) + (rasterXSize % tileXSize == 0 ? 0 : 1);
+            int tileYCount = (int)(rasterYSize / tileYSize) + (rasterYSize % tileYSize == 0 ? 0 : 1);
+            string vrtFileName = savePath + info.fileName + ".tif.vrt";
+            List<string> tiffFileNames = new List<string>();
+
+            string key = MainInfo.TopMainInfo.instance.CreateProgress("影像切片：" + info.fileName, tileXCount * tileYCount + 1);
+            try
+            {
+
+                for (int i = 0; i < tileYCount; i++)
+                {
+                    for (int j = 0; j < tileXCount; j++)
+                    {
+                        string saveFullName = savePath + info.fileName + "_" + i + "_" + j + ".tif";
+                        tiffFileNames.Add(saveFullName);
+                        GDAL.GDAL.SaveTiffTile(openPath, saveFullName,
+                            j * tileXSize, i * tileYSize, tileXSize, tileYSize);
+
+                        MainInfo.TopMainInfo.instance.GetProgress(key).SetProgress(i * tileXCount + j);
+                    }
+                }
+                MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressStageInfo("创建VRT文件", Color.Orange, 1, 1);
+                GDAL.GDAL.CreateVRT(vrtFileName, tiffFileNames);
+                MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressSuccessful("切片成功");
+            }
+            catch
+            {
+                MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressFailure("切片失败");
+            }
+            finally
+            {
+                VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+            }
+            //LoadTile();
+        }
+        #endregion
+
+        #region Tiff 转存
+        private void SaveAndLoadTiff(string openPath, string savePath, LoadTiffLayerInfo info)
+        {
+            try
+            {
+                int rasterXSize = info.rasterSize.Width;
+                int rasterYSize = info.rasterSize.Height;
+                GDAL.GDAL.SaveTiffTile(openPath, savePath, 0, 0, (int)rasterXSize, (int)rasterYSize);
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                LoadTiff(savePath, info);
+            }
+        }
+        #endregion
+
+        #region Tiff 加载
+        private void LoadTiff(string openPath, LoadTiffLayerInfo info)
+        {
+            if ((info as LoadTiffLayerInfo).isUseTransparent)
+            {
+                CustomData.Layer.LayerInfo layerInfo =
+                    new CustomData.Layer.TiffLayerInfo(
+                        openPath, 
+                        info.home.ToLocationPoint(), 
+                        info.transparent);
+                MainV2.instance.AddLayerOverlay(layerInfo);
+            }
+            else
+            {
+                CustomData.Layer.LayerInfo layerInfo =
+                    new CustomData.Layer.TiffLayerInfo(
+                        openPath, 
+                        info.home.ToLocationPoint(), 
+                        Color.FromArgb(0, 255, 255, 255));
+                MainV2.instance.AddLayerOverlay(layerInfo);
+            }
+            if (info.isDefaultFile)
+            {
+                CustomData.WP.WPGlobalData.instance.SetLayer(
+                    openPath,
+                    info.isDefaultFile);
+                CustomData.WP.WPGlobalData.instance.SetLayerLimit(
+                    info.rect.ToLocationRect(),
+                    info.home.ToLocationPoint(),
+                    info.isDefaultFile);
+            }
+        }
+        #endregion
+
+        #endregion
     }
 
     [TypeConverter(typeof(PropertySorter))]
-    class LoadLayerInfo
+    public class LoadLayerInfo
     {
-        [Category("打开文件"), DisplayName("文件")]
+        [Category("打开文件"), DisplayName("文件名")]
         [PropertyOrder(0b00000001)]
         [Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
         public string fileName { get; set; } = "";
 
-        [Browsable(false)]
+        [Category("打开文件"), DisplayName("文件路径")]
+        [PropertyOrder(0b00000001)]
+        [Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
+        public string filePath { get; set; } = "";
+
+        //[Browsable(false)]
         public string fileType { get; set; } = "";
+
+        [Category("文件存储"), DisplayName("默认文件")]
+        [PropertyOrder(0b01000000)]
+        public bool isDefaultFile{ get; set; } = true;
+
+        [Category("文件存储"), DisplayName("文件转存")]
+        [PropertyOrder(0b01000001)]
+        public bool isFileSave { get; set; } = false;
+
+        [Category("文件存储"), DisplayName("文件切片")]
+        [PropertyOrder(0b01000010)]
+        public bool isFileTile { get; set; } = false;
     }
 
     [TypeConverter(typeof(PropertySorter))]
-    class LoadLayerFileInfo : LoadLayerInfo
+    public class LoadLayerFileInfo : LoadLayerInfo
     {
         [Category("文件信息"), DisplayName("文件大小"), ReadOnly(false)]
         [PropertyOrder(0b00010001)]
@@ -170,7 +384,7 @@ namespace VPS.Controls.LoadAndSave
     }
 
     [TypeConverter(typeof(PropertySorter))]
-    class LoadTiffLayerInfo : LoadLayerFileInfo
+    public class LoadTiffLayerInfo : LoadLayerFileInfo
     {
         [Category("打开文件"), DisplayName("文件类型"), ReadOnly(true)]
         [PropertyOrder(0b00000010)]
@@ -196,20 +410,24 @@ namespace VPS.Controls.LoadAndSave
         [Editor(typeof(CustomControls.PositionUITypeEditor), typeof(UITypeEditor))]
         public Position home { get; set; } = new Position();
 
-        [Category("图像显示"), DisplayName("规模")]
+        [Category("图像显示"), DisplayName("图像大小")]
         [PropertyOrder(0b00110001)]
         public Size rasterSize { get; set; } = new Size();
 
-        [Category("图像显示"), DisplayName("切片")]
+        [Category("图像显示"), Description("可以显示更真实的图像，但是需要更多的时间加载"), DisplayName("图像切片展示")]
         [PropertyOrder(0b00110010)]
+        public bool IsTile { get; set; } = false;
+
+        [Category("图像显示"), DisplayName("切片大小")]
+        [PropertyOrder(0b00110011)]
         public Size tileSize { get; set; } = new Size();
 
-        [Category("图像显示"), DisplayName("使用透明色")]
-        [PropertyOrder(0b00110011)]
-        public bool IsUseTransparent { get; set; } = false;
+        [Category("图像显示"), Description("去除图像格式转换所带来的黑边等无关效果"), DisplayName("使用透明色")]
+        [PropertyOrder(0b00110100)]
+        public bool isUseTransparent { get; set; } = false;
 
         [Category("图像显示"), DisplayName("透明色")]
-        [PropertyOrder(0b00110100)]
-        public Color Transparent { get; set; } = new Color();
+        [PropertyOrder(0b00110101)]
+        public Color transparent { get; set; } = new Color();
     }
 }
