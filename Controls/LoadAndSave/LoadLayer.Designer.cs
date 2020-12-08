@@ -1,6 +1,6 @@
 ﻿namespace VPS.Controls.LoadAndSave
 {
-    partial class SavePolygon
+    partial class LoadLayer
     {
         /// <summary>
         /// Required designer variable.
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.IsLocalFile = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.advPropertyGrid1 = new DevComponents.DotNetBar.AdvPropertyGrid();
@@ -41,6 +42,7 @@
             // 
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx1.Controls.Add(this.IsLocalFile);
             this.panelEx1.Controls.Add(this.buttonX2);
             this.panelEx1.Controls.Add(this.buttonX1);
             this.panelEx1.Controls.Add(this.advPropertyGrid1);
@@ -58,17 +60,35 @@
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 2;
             // 
+            // IsLocalFile
+            // 
+            this.IsLocalFile.AutoSize = true;
+            // 
+            // 
+            // 
+            this.IsLocalFile.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.IsLocalFile.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
+            this.IsLocalFile.Checked = true;
+            this.IsLocalFile.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.IsLocalFile.CheckValue = "Y";
+            this.IsLocalFile.Location = new System.Drawing.Point(3, 3);
+            this.IsLocalFile.Name = "IsLocalFile";
+            this.IsLocalFile.Size = new System.Drawing.Size(76, 18);
+            this.IsLocalFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.IsLocalFile.TabIndex = 10;
+            this.IsLocalFile.Text = "本地文件";
+            // 
             // buttonX2
             // 
             this.buttonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.buttonX2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonX2.Location = new System.Drawing.Point(265, 575);
+            this.buttonX2.Location = new System.Drawing.Point(265, 574);
             this.buttonX2.Name = "buttonX2";
             this.buttonX2.Size = new System.Drawing.Size(90, 23);
             this.buttonX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.buttonX2.TabIndex = 7;
+            this.buttonX2.TabIndex = 9;
             this.buttonX2.Text = "取消";
             // 
             // buttonX1
@@ -77,11 +97,11 @@
             this.buttonX1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonX1.Location = new System.Drawing.Point(49, 575);
+            this.buttonX1.Location = new System.Drawing.Point(50, 574);
             this.buttonX1.Name = "buttonX1";
             this.buttonX1.Size = new System.Drawing.Size(90, 23);
             this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.buttonX1.TabIndex = 6;
+            this.buttonX1.TabIndex = 8;
             this.buttonX1.Text = "确定";
             // 
             // advPropertyGrid1
@@ -91,10 +111,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.advPropertyGrid1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.advPropertyGrid1.GridLinesColor = System.Drawing.Color.WhiteSmoke;
-            this.advPropertyGrid1.Location = new System.Drawing.Point(3, 32);
+            this.advPropertyGrid1.Location = new System.Drawing.Point(3, 56);
             this.advPropertyGrid1.Name = "advPropertyGrid1";
             this.advPropertyGrid1.SearchBoxVisible = false;
-            this.advPropertyGrid1.Size = new System.Drawing.Size(398, 536);
+            this.advPropertyGrid1.Size = new System.Drawing.Size(398, 512);
             this.advPropertyGrid1.TabIndex = 5;
             this.advPropertyGrid1.Text = "advPropertyGrid1";
             this.advPropertyGrid1.ToolbarVisible = false;
@@ -105,25 +125,25 @@
             this.OpenFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.OpenFile.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.OpenFile.Location = new System.Drawing.Point(3, 3);
+            this.OpenFile.Location = new System.Drawing.Point(3, 27);
             this.OpenFile.Name = "OpenFile";
             this.OpenFile.Size = new System.Drawing.Size(398, 23);
             this.OpenFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.OpenFile.TabIndex = 3;
-            this.OpenFile.Text = "选择文件";
+            this.OpenFile.Text = "打开文件";
             this.OpenFile.Click += new System.EventHandler(this.OpenFile_Click);
             // 
-            // SavePolygon
+            // LoadLayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(404, 601);
             this.Controls.Add(this.panelEx1);
-            this.DoubleBuffered = true;
-            this.Name = "SavePolygon";
+            this.Name = "LoadLayer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "保存区域";
+            this.Text = "LoadLayer";
             this.panelEx1.ResumeLayout(false);
+            this.panelEx1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.advPropertyGrid1)).EndInit();
             this.ResumeLayout(false);
 
@@ -136,5 +156,6 @@
         private DevComponents.DotNetBar.ButtonX buttonX1;
         private DevComponents.DotNetBar.AdvPropertyGrid advPropertyGrid1;
         private DevComponents.DotNetBar.ButtonX OpenFile;
+        private DevComponents.DotNetBar.Controls.CheckBoxX IsLocalFile;
     }
 }

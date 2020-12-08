@@ -204,6 +204,7 @@
             this.ClientSize = new System.Drawing.Size(345, 180);
             this.Controls.Add(this.panelEx1);
             this.Name = "GridRect";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "范围";
             this.panelEx1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TopLatInput)).EndInit();

@@ -3936,26 +3936,32 @@ namespace VPS
         /// </summary>
         private void LoadTiffButton_Click(object sender, EventArgs e)
         {
-            if (!LoadTiffButton.Checked)
+            VPS.Controls.LoadAndSave.LoadLayer load = new Controls.LoadAndSave.LoadLayer();
+            var result = load.ShowDialog();
+            if (result == DialogResult.OK)
             {
-                LoadTiffButton.Checked = true;
-                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
-                LayerReaderDockContainerItem.Visible = true;
-                this.LeftBar.AutoHide = this.LeftBar.AutoHide;
-                LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;
-                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
-                this.LeftBar.ResumeLayout(false);
+
             }
-            else
-            {
-                LoadTiffButton.Checked = false;
-                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
-                LayerReaderDockContainerItem.Visible = false;
-                this.LeftBar.AutoHide = this.LeftBar.AutoHide;
-                //LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;
-                ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
-                this.LeftBar.ResumeLayout(false);
-            }
+            //if (!LoadTiffButton.Checked)
+            //{
+            //    LoadTiffButton.Checked = true;
+            //    ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
+            //    LayerReaderDockContainerItem.Visible = true;
+            //    this.LeftBar.AutoHide = this.LeftBar.AutoHide;
+            //    LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;
+            //    ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
+            //    this.LeftBar.ResumeLayout(false);
+            //}
+            //else
+            //{
+            //    LoadTiffButton.Checked = false;
+            //    ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
+            //    LayerReaderDockContainerItem.Visible = false;
+            //    this.LeftBar.AutoHide = this.LeftBar.AutoHide;
+            //    //LeftBar.SelectedDockContainerItem = LayerReaderDockContainerItem;
+            //    ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
+            //    this.LeftBar.ResumeLayout(false);
+            //}
         }
         #endregion
 

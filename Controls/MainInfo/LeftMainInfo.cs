@@ -25,8 +25,11 @@ namespace VPS.Controls.MainInfo
 
         private void LeftMainInfo_Load(object sender, EventArgs e)
         {
-            HomeChangeHandle();
-            WorkspaceRectChangeHandle();
+            if (CustomData.WP.WPGlobalData.instance != null)
+            {
+                HomeChangeHandle();
+                WorkspaceRectChangeHandle();
+            }
         }
 
         #region HOME 初始位置

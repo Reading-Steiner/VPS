@@ -40,6 +40,18 @@ namespace VPS.Controls.Command
             }
 
             HomePositionDisplay.PositionChange += ChangeHomeHandle;
+            this.Load += CommandsPanel_Load;
+        }
+
+        private void CommandsPanel_Load(object sender, EventArgs e)
+        {
+            if (VPS.CustomData.WP.WPGlobalData.instance != null)
+            {
+                BindingDataSource(
+                    VPS.CustomData.WP.WPGlobalData.instance.GetHomePosition(),
+                    VPS.CustomData.WP.WPGlobalData.instance.GetWPList()
+                    );
+            }
         }
 
 

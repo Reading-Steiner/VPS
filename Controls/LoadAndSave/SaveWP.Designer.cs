@@ -48,7 +48,7 @@
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx1.Location = new System.Drawing.Point(0, 0);
             this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(334, 491);
+            this.panelEx1.Size = new System.Drawing.Size(404, 601);
             this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx1.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -64,7 +64,7 @@
             this.buttonX2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonX2.Location = new System.Drawing.Point(196, 464);
+            this.buttonX2.Location = new System.Drawing.Point(266, 574);
             this.buttonX2.Name = "buttonX2";
             this.buttonX2.Size = new System.Drawing.Size(90, 23);
             this.buttonX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -77,7 +77,7 @@
             this.buttonX1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonX1.Location = new System.Drawing.Point(49, 464);
+            this.buttonX1.Location = new System.Drawing.Point(49, 574);
             this.buttonX1.Name = "buttonX1";
             this.buttonX1.Size = new System.Drawing.Size(90, 23);
             this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -94,7 +94,7 @@
             this.advPropertyGrid1.Location = new System.Drawing.Point(3, 32);
             this.advPropertyGrid1.Name = "advPropertyGrid1";
             this.advPropertyGrid1.SearchBoxVisible = false;
-            this.advPropertyGrid1.Size = new System.Drawing.Size(328, 426);
+            this.advPropertyGrid1.Size = new System.Drawing.Size(398, 536);
             this.advPropertyGrid1.TabIndex = 5;
             this.advPropertyGrid1.Text = "advPropertyGrid1";
             this.advPropertyGrid1.ToolbarVisible = false;
@@ -107,7 +107,7 @@
             this.OpenFile.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.OpenFile.Location = new System.Drawing.Point(3, 3);
             this.OpenFile.Name = "OpenFile";
-            this.OpenFile.Size = new System.Drawing.Size(328, 23);
+            this.OpenFile.Size = new System.Drawing.Size(398, 23);
             this.OpenFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.OpenFile.TabIndex = 3;
             this.OpenFile.Text = "选择文件";
@@ -117,7 +117,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(334, 491);
+            this.ClientSize = new System.Drawing.Size(404, 601);
             this.Controls.Add(this.panelEx1);
             this.DoubleBuffered = true;
             this.Name = "SaveWP";
