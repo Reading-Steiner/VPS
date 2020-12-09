@@ -44,11 +44,13 @@
             this.ProgressBox.ChunkColor2 = System.Drawing.Color.DarkRed;
             this.ProgressBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.ProgressBox.Location = new System.Drawing.Point(0, 0);
+            this.ProgressBox.MarqueeAnimationSpeed = 1000;
+            this.ProgressBox.Maximum = 10000;
             this.ProgressBox.Name = "ProgressBox";
             this.ProgressBox.Size = new System.Drawing.Size(110, 20);
             this.ProgressBox.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.ProgressBox.TabIndex = 0;
-            this.ProgressBox.Value = 50;
+            this.ProgressBox.Value = 5000;
             // 
             // Label
             // 

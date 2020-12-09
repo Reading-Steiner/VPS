@@ -17,48 +17,17 @@ namespace VPS.Controls.ProgressBar
             InitializeComponent();
         }
 
-        private delegate void SetDataInThread(int data);
-        private void SetProgressMaxInfo(int data)
-        {
-            if (this.InvokeRequired)
-            {
-                SetDataInThread inThread = new SetDataInThread(SetProgressMaxInfo);
-                this.Invoke(inThread, new object[] { data });
-            }
-            else
-            {
-                this.ProgressBox.Maximum = (int)data;
-            }
-        }
+        private delegate void SetDataInThread(double data);
 
-        private void SetProgressCurrentInfo(int data)
-        {
-            if (this.InvokeRequired)
-            {
-                SetDataInThread inThread = new SetDataInThread(SetProgressCurrentInfo);
-                this.Invoke(inThread, new object[] { data });
-            }
-            else
-            {
-                if ((int)data <= this.ProgressBox.Maximum && (int)data >= this.ProgressBox.Minimum)
-                {
-                    this.ProgressBox.Value = (int)data;
-                    this.Progress.Text = ((float)this.ProgressBox.Value / (float)this.ProgressBox.Maximum).ToString("0.## %");
-                }
-                else
-                {
-                    if((int)data > this.ProgressBox.Maximum)
-                        this.ProgressBox.Value = (int)this.ProgressBox.Maximum;
-                }
-            }
-        }
+        #region 修改颜色
 
+        #region 进度
         private delegate void SetColorInThread(Color color);
-        private void SetProgressColor(Color color)
+        private void SetProgressInfoColor(Color color)
         {
             if (this.InvokeRequired)
             {
-                SetColorInThread inThread = new SetColorInThread(SetProgressColor);
+                SetColorInThread inThread = new SetColorInThread(SetProgressInfoColor);
                 this.Invoke(inThread, new object[] { color });
             }
             else
@@ -66,7 +35,28 @@ namespace VPS.Controls.ProgressBar
                 this.Progress.ForeColor = color;
             }
         }
+        #endregion
 
+        #region 提示
+        private void SetProgressTextColor(Color color)
+        {
+            if (this.InvokeRequired)
+            {
+                SetColorInThread inThread = new SetColorInThread(SetProgressTextColor);
+                this.Invoke(inThread, new object[] { color });
+            }
+            else
+            {
+                this.Progress.ForeColor = color;
+            }
+        }
+        #endregion
+
+        #endregion
+
+        #region 修改文本
+
+        #region 进度
         private delegate void SetTextInThread(string text);
         private void SetProgressInfo(string text)
         {
@@ -80,47 +70,71 @@ namespace VPS.Controls.ProgressBar
                 this.Progress.Text = text;
             }
         }
+        #endregion
 
-        public void SetLabelInfo(string text)
+        #region 提示
+        public void SetProgressText(string text)
         {
             if (this.InvokeRequired)
             {
-                SetTextInThread inThread = new SetTextInThread(SetLabelInfo);
+                SetTextInThread inThread = new SetTextInThread(SetProgressText);
                 this.Invoke(inThread, new object[] { text });
             }
             else
             {
                 this.Label.Text = text;
+                Random rd = new Random();
+                this.SetProgressInfoColor(
+                    Color.FromArgb(255, rd.Next(0, 256), rd.Next(0, 256), rd.Next(0, 256)));
             }
         }
-        public void SetProgress(int progress, int total = -1)
+        #endregion
+
+        #endregion
+
+        #region 修改进度
+        public void SetProgress(double progress)
         {
-            if(total >= 0)
-            {
-                SetProgressMaxInfo(total);
-            }
             SetProgressCurrentInfo(progress);
         }
+
+        private void SetProgressCurrentInfo(double data)
+        {
+            if (this.InvokeRequired)
+            {
+                SetDataInThread inThread = new SetDataInThread(SetProgressCurrentInfo);
+                this.Invoke(inThread, new object[] { data });
+            }
+            else
+            {
+                if (this.ProgressBox.Maximum != 10000)
+                    this.ProgressBox.Maximum = 10000;
+                this.ProgressBox.Value = (int)(data * 10000);
+                this.Progress.Text = (data.ToString("0.## %"));
+            }
+        }
+        #endregion
 
         public void SetProgressFailure(string text)
         {
             
             this.SetProgressInfo(text);
-            this.SetProgressColor(Color.Red);
+            this.SetProgressInfoColor(Color.Red);
         }
 
-        public void SetProgressSuccessful(string text)
+        public void SetProgressSuccess(string text)
         {
-            this.SetProgressCurrentInfo(int.MaxValue);
+            this.SetProgressCurrentInfo(1);
             this.SetProgressInfo(text);
-            this.SetProgressColor(Color.Green);
+            this.SetProgressInfoColor(Color.Green);
         }
 
-        public void SetProgressStageInfo(string text, Color color, int progress = 0, int total = -1)
+        public void SetProgressStageInfo(string text, Color color, double progress = -1)
         {
-            this.SetProgress(progress, total);
+            if (progress >= 0)
+                this.SetProgress(progress);
             this.SetProgressInfo(text);
-            this.SetProgressColor(color);
+            this.SetProgressInfoColor(color);
         }
     }
 }

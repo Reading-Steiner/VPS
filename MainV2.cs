@@ -4630,7 +4630,7 @@ namespace VPS
             int TileYSize = RasterYSize / TileYLen + (RasterYSize % TileYLen == 0 ? 0 : 1);
             //创建进度条
             string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress(
-                "加载工作区：" + CustomData.Layer.MemoryLayerCache.GetHashCode(_bitmap.File), TileXSize * TileYSize);
+                "加载工作区：" + CustomData.Layer.MemoryLayerCache.GetHashCode(_bitmap.File));
             try
             {
 
@@ -4648,10 +4648,10 @@ namespace VPS
                             Math.Max(pos1[1], pos2[1]), Math.Min(pos1[0], pos2[0]),
                             Math.Abs(pos1[0] - pos2[0]), Math.Abs(pos1[1] - pos2[1]));
                         _tiles.Add(new LayerTile(tile, position));
-                        VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key).SetProgress(i * TileYSize + j);
+                        VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key).SetProgress((double)(i * TileYSize + j)/(TileXSize * TileYSize));
                     }
                 }
-                VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressSuccessful("加载完成");
+                VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressSuccess("加载完成");
                 return _tiles;
             }
             catch

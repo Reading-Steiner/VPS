@@ -860,11 +860,6 @@ namespace VPS
             new Swarm.WaypointLeader.WPControl().Show();
         }
 
-        private void myButton3_Click(object sender, EventArgs e)
-        {
-            but_GDAL_Click(sender, e);
-        }
-
         protected override void WndProc(ref Message m)
         {
             switch (m.Msg)
@@ -892,7 +887,6 @@ namespace VPS
                 if (Directory.Exists(fbd.SelectedPath))
                 {
                     Settings.Instance["GDALImageDir"] = fbd.SelectedPath;
-                    GDAL.GDAL.OnProgress += GDAL_OnProgress;
                     GDAL.GDAL.ScanDirectory(fbd.SelectedPath);
                     DTED.OnProgress += GDAL_OnProgress;
                     DTED.AddCustomDirectory(fbd.SelectedPath);

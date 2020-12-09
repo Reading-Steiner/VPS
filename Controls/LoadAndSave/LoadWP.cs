@@ -59,7 +59,19 @@ namespace VPS.Controls.LoadAndSave
                             break;
                         case 2:
                             {
-                                var data = VPS.CustomFile.SHP.ReadSHP(file);
+                                string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("加载ShapeFile");
+                                var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key);
+
+                                var shp = new VPS.CustomFile.SHP();
+                                shp.OnProgressStart += bar.SetProgressText;
+                                shp.OnProgressInfo += bar.SetProgressText;
+                                shp.OnProgressFailure += bar.SetProgressFailure;
+                                shp.OnProgressSuccess += bar.SetProgressSuccess;
+                                shp.OnProgress += bar.SetProgress;
+
+                                var data = shp.ReadSHP(file);
+
+                                VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
                                 BindingDataSource(file, data);
                             }
                             break;

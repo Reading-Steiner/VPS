@@ -25,9 +25,19 @@ namespace GDAL
             GdalConfiguration.ConfigureGdal();
         }
 
-        public delegate void Progress(double percent, string message);
+        public delegate void ProgressMessageOutTime(string message, int time);
+        public delegate void ProgressMessage(string message);
+        public delegate void Progress(double percent);
+        public delegate void Meaasge(string message);
 
+        public static event ProgressMessage OnProgressStart;
+        public static event ProgressMessage OnProgressInfo;
+        public static event ProgressMessageOutTime OnProgressEnd;
+        public static event ProgressMessage OnProgressSuccess;
+        public static event ProgressMessage OnProgressFailure;
         public static event Progress OnProgress;
+        public static event Meaasge OnInfoMessage;
+        public static event Meaasge OnWarnMessage;
 
         public static void ScanDirectory(string path)
         {
@@ -46,8 +56,8 @@ namespace GDAL
                     if (new FileInfo(file).Length < 1024 * 1)
                         continue;
 
-                    if (OnProgress != null)
-                        OnProgress((i - 1) / (double)files.Length, file);
+                    OnProgressInfo?.Invoke(file);
+                    OnProgress?.Invoke((i - 1) / (double)files.Length);
 
                     var info = GDAL.LoadImageInfo(file);
 

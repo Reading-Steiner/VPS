@@ -136,7 +136,20 @@ namespace VPS.Controls.LoadAndSave
         private void savePolygonPointsSHP(string file)
         {
             List<PointLatLngAlt> polygon = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
-            VPS.CustomFile.SHP.SaveSHP(file, polygon);
+            
+            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("保存为ShapeFile");
+            var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key);
+
+            var shp = new VPS.CustomFile.SHP();
+            shp.OnProgressStart += bar.SetProgressText;
+            shp.OnProgressInfo += bar.SetProgressText;
+            shp.OnProgressFailure += bar.SetProgressFailure;
+            shp.OnProgressSuccess += bar.SetProgressSuccess;
+            shp.OnProgress += bar.SetProgress;
+
+            shp.SaveSHP(file, polygon);
+
+            VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
         }
 
         private void savePolygonPointsKML(string file)

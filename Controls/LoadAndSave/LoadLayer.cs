@@ -29,6 +29,20 @@ namespace VPS.Controls.LoadAndSave
             BindingDataSource();
         }
 
+        public delegate void ProgressMessageOutTime(string message, int time);
+        public delegate void ProgressMessage(string message);
+        public delegate void Progress(double percent);
+        public delegate void Meaasge(string message);
+
+        public static event ProgressMessage OnProgressStart;
+        public static event ProgressMessage OnProgressInfo;
+        public static event ProgressMessageOutTime OnProgressEnd;
+        public static event ProgressMessage OnProgressSuccess;
+        public static event ProgressMessage OnProgressFailure;
+        public static event Progress OnProgress;
+        public static event Meaasge OnInfoMessage;
+        public static event Meaasge OnWarnMessage;
+
         private void OpenFile_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog fd = new OpenFileDialog())
@@ -124,7 +138,7 @@ namespace VPS.Controls.LoadAndSave
         public LoadLayerInfo info;
 
         #region 获取转存地址
-        public static string GetSaveFilePath(string fileName)
+        private string GetSaveFilePath(string fileName)
         {
             string saveFilePath = Utilities.Settings.GetUserDataDirectory() +
                           ((UInt64)(fileName.GetHashCode() + DateTime.Now.ToString().GetHashCode())).
@@ -171,7 +185,7 @@ namespace VPS.Controls.LoadAndSave
                 return "";
         }
 
-        public static string GetTileFilePath(string fileName)
+        private string GetTileFilePath(string fileName)
         {
             string saveFilePath = Utilities.Settings.GetUserDataDirectory() +
                 ((UInt64)(fileName.GetHashCode() + DateTime.Now.ToString().GetHashCode())).
@@ -212,23 +226,23 @@ namespace VPS.Controls.LoadAndSave
                     {
                         TileAndLoadTiff(
                             info.filePath,
-                            VPS.Controls.LoadAndSave.LoadLayer.GetTileFilePath(info.fileName),
-                            info as VPS.Controls.LoadAndSave.LoadTiffLayerInfo
+                            GetTileFilePath(info.fileName),
+                            info as LoadTiffLayerInfo
                             );
                     }
                     else if (info.isFileSave)
                     {
                         SaveAndLoadTiff(
                             info.filePath,
-                            VPS.Controls.LoadAndSave.LoadLayer.GetSaveFilePath(info.fileName),
-                            info as VPS.Controls.LoadAndSave.LoadTiffLayerInfo
+                            GetSaveFilePath(info.fileName),
+                            info as LoadTiffLayerInfo
                             );
                     }
                     else
                     {
                         LoadTiff(
                             info.filePath,
-                            info as VPS.Controls.LoadAndSave.LoadTiffLayerInfo
+                            info as LoadTiffLayerInfo
                             );
                     }
                 }
@@ -249,7 +263,8 @@ namespace VPS.Controls.LoadAndSave
             string vrtFileName = savePath + info.fileName + ".tif.vrt";
             List<string> tiffFileNames = new List<string>();
 
-            string key = MainInfo.TopMainInfo.instance.CreateProgress("影像切片：" + info.fileName, tileXCount * tileYCount + 1);
+            OnProgressStart?.Invoke("影像切片：" + info.fileName);
+            OnProgress?.Invoke(0);
             try
             {
 
@@ -262,22 +277,23 @@ namespace VPS.Controls.LoadAndSave
                         GDAL.GDAL.SaveTiffTile(openPath, saveFullName,
                             j * tileXSize, i * tileYSize, tileXSize, tileYSize);
 
-                        MainInfo.TopMainInfo.instance.GetProgress(key).SetProgress(i * tileXCount + j);
+                        OnProgress?.Invoke((i * tileXCount + j) / (tileYCount * tileXCount));
                     }
                 }
-                MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressStageInfo("创建VRT文件", Color.Orange, 1, 1);
+                OnProgressInfo?.Invoke("创建VRT文件");
+
                 GDAL.GDAL.CreateVRT(vrtFileName, tiffFileNames);
-                MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressSuccessful("切片成功");
+
+                OnProgressSuccess?.Invoke("切片成功");
             }
             catch
             {
-                MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressFailure("切片失败");
+                OnProgressFailure?.Invoke("切片失败");
             }
             finally
             {
-                VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
             }
-            //LoadTile();
+            LoadTiff(openPath, info);
         }
         #endregion
 

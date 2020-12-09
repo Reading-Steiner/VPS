@@ -19,23 +19,24 @@ namespace VPS.CustomFile
             GdalConfiguration.ConfigureGdal();
         }
 
-        public delegate void ProgressWithMessage(double percent, string message);
+        public delegate void ProgressMessageOutTime(string message, int time);
         public delegate void ProgressMessage(string message);
         public delegate void Progress(double percent);
         public delegate void Meaasge(string message);
 
-        public static event ProgressWithMessage OnProgressWithMessage;
-        public static event ProgressMessage OnProgressMessage;
-        public static event Progress OnProgress;
-        public static event Meaasge OnSuccess;
-        public static event Meaasge OnFailure;
-        public static event Meaasge OnInfoMessage;
-        public static event Meaasge OnWarnMessage;
+        public event ProgressMessage OnProgressStart;
+        public event ProgressMessage OnProgressInfo;
+        public event ProgressMessageOutTime OnProgressEnd;
+        public event ProgressMessage OnProgressSuccess;
+        public event ProgressMessage OnProgressFailure;
+        public event Progress OnProgress;
+        public event Meaasge OnInfoMessage;
+        public event Meaasge OnWarnMessage;
 
         //[DllImport("gdal232.dll", CallingConvention = CallingConvention.Cdecl)]
         //public static extern IntPtr OGR_F_GetFieldAsString(HandleRef handle, int fieldIdx);
 
-        public static SHPDataSet ReadSHP(string file)
+        public SHPDataSet ReadSHP(string file)
         {
             ProjectionInfo pStart = new ProjectionInfo();
             ProjectionInfo pESRIEnd = KnownCoordinateSystems.Geographic.World.WGS1984;
@@ -45,25 +46,33 @@ namespace VPS.CustomFile
             // 为了使属性表字段支持中文
             OSGeo.GDAL.Gdal.SetConfigOption("SHAPE_ENCODING", "CP936");
 
-            Driver dr = Ogr.GetDriverByName("ESRI shapefile");
+            string strVectorFile = file;
 
-            if (dr == null)
+            OnProgressStart?.Invoke("打开 Shapefile");
+
+            Driver oDriver = Ogr.GetDriverByName("ESRI shapefile");
+
+            if (oDriver == null)
             {
-                OnWarnMessage?.Invoke(string.Format("%s 驱动不可用！\n", file));
+                OnWarnMessage?.Invoke(string.Format("%s 驱动不可用！", oDriver.name));
+
+                OnProgressFailure?.Invoke(string.Format("Shapefile 【%s】打开失败！", strVectorFile));
                 return null;
             }
 
-            DataSource ds = dr.Open(file, 0);
+            DataSource oDS = oDriver.Open(strVectorFile, 0);
 
-            if (ds == null)
+            if (oDS == null)
             {
-                OnWarnMessage?.Invoke("shapefile 文件无法打开或为空");
-                ds.Dispose();
+                OnInfoMessage?.Invoke(string.Format("Shapefile 【%s】无法打开或为空", strVectorFile));
+
+                OnProgressFailure?.Invoke(string.Format("Shapefile 【%s】打开失败！", strVectorFile));
+                oDS.Dispose();
                 return null;
             }
 
-            int layerCount = ds.GetLayerCount();
-            Layer oLayer = ds.GetLayerByIndex(0);
+            int layerCount = oDS.GetLayerCount();
+            Layer oLayer = oDS.GetLayerByIndex(0);
 
             //投影信息
             SpatialReference coord = oLayer.GetSpatialRef();
@@ -89,11 +98,12 @@ namespace VPS.CustomFile
 
             SHPDataSet data = new SHPDataSet(typeString, coordString);
             //读取shp文件
-            Feature feat;
-
-            while ((feat = oLayer.GetNextFeature()) != null)
+            Feature oFeature;
+            long FeatrueCount = oLayer.GetFeatureCount(0);
+            long CurrentFeatureIndex = 0;
+            while ((oFeature = oLayer.GetNextFeature()) != null)
             {
-                Geometry geometry = feat.GetGeometryRef();
+                Geometry geometry = oFeature.GetGeometryRef();
                 wkbGeometryType goetype = geometry.GetGeometryType();
 
                 switch ((wkbGeometryType)((int)goetype & 0xffff))
@@ -113,6 +123,8 @@ namespace VPS.CustomFile
                             point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
                             point.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
                             data.AddPoint(point);
+                            OnProgress?.Invoke(
+                                (double)(CurrentFeatureIndex + 1) / FeatrueCount);
                         }
                         //NewPoint?.Invoke(new point(pnt));
                         break;
@@ -133,6 +145,9 @@ namespace VPS.CustomFile
                                 point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
                                 point.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
                                 ls.Add(point);
+                                OnProgress?.Invoke(
+                                    (double)(CurrentFeatureIndex) / FeatrueCount + 
+                                    (double)(p + 1) / pointcount / FeatrueCount);
                             }
                             data.AddPolygon(ls);
                             //NewLineString?.Invoke(ls);
@@ -159,6 +174,9 @@ namespace VPS.CustomFile
                                     point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
                                     point.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
                                     poly.Add(point);
+                                    OnProgress?.Invoke(
+                                        (double)(CurrentFeatureIndex) / FeatrueCount + 
+                                        (double)(p + 1) / pointcount / FeatrueCount);
                                 }
                                 data.AddPolygon(poly);
                                 //NewPolygon?.Invoke(poly);
@@ -172,14 +190,15 @@ namespace VPS.CustomFile
                     case wkbGeometryType.wkbGeometryCollection:
                     case wkbGeometryType.wkbLinearRing:
                         {
-                            
-                            for (int i = 0; i < geometry.GetGeometryCount(); i++)
+
+                            int lineCount = geometry.GetGeometryCount();
+                            for (int i = 0; i < lineCount; i++)
                             {
                                 List<PointLatLngAlt> list = new List<PointLatLngAlt>();
 
                                 var geom2 = geometry.GetGeometryRef(i);
-                                var pointcount1 = geom2.GetPointCount();
-                                for (int p = 0; p < pointcount1; p++)
+                                var pointcount = geom2.GetPointCount();
+                                for (int p = 0; p < pointcount; p++)
                                 {
                                     double[] pnt2 = new double[3];
                                     geom2.GetPoint(p, pnt2);
@@ -192,6 +211,10 @@ namespace VPS.CustomFile
                                     point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
                                     point.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
                                     list.Add(point);
+                                    OnProgress?.Invoke(
+                                        (double)(CurrentFeatureIndex) / FeatrueCount +
+                                        (double)i / lineCount / FeatrueCount +
+                                        (double)(p + 1) / pointcount / lineCount / FeatrueCount);
                                 }
                                 data.AddPolygon(list);
                             }
@@ -199,14 +222,18 @@ namespace VPS.CustomFile
                             break;
                         }
                     case wkbGeometryType.wkbNone:
-
+                        OnProgress?.Invoke(
+                            (double)(CurrentFeatureIndex + 1) / FeatrueCount);
                         break;
                 }
+                CurrentFeatureIndex++;
             }
+
+            OnProgressSuccess?.Invoke("矢量文件加载完成！");
             return data;
         }
 
-        public static void SaveSHP(string file, List<PointLatLngAlt> list)
+        public void SaveSHP(string file, List<PointLatLngAlt> list)
         {
             // 为了支持中文路径，请添加下面这句代码
             OSGeo.GDAL.Gdal.SetConfigOption("GDAL_FILENAME_IS_UTF8", "YES");
@@ -215,7 +242,7 @@ namespace VPS.CustomFile
 
             string strVectorFile = file;
 
-            OnProgressWithMessage?.Invoke(0, "创建矢量文件");
+            OnProgressStart?.Invoke("创建 Shapefile");
 
             //创建数据，这里以创建ESRI的shp文件为例
             string strDriverName = "ESRI Shapefile";
@@ -224,7 +251,8 @@ namespace VPS.CustomFile
             if (oDriver == null)
             {
                 OnWarnMessage?.Invoke(string.Format("%s 驱动不可用！", oDriver.name));
-                OnFailure?.Invoke(string.Format("创建矢量文件【%s】失败！", strVectorFile));
+
+                OnProgressFailure?.Invoke(string.Format("Shapefile 【%s】创建失败！", strVectorFile));
                 return;
             }
 
@@ -232,16 +260,18 @@ namespace VPS.CustomFile
             DataSource oDS = oDriver.CreateDataSource(strVectorFile, null);
             if (oDS == null)
             {
-                OnFailure?.Invoke(string.Format("创建矢量文件【%s】失败！", strVectorFile));
+                OnInfoMessage?.Invoke(string.Format("Shapefile 【%s】创建失败！", strVectorFile));
+
+                OnProgressFailure?.Invoke(string.Format("Shapefile 【%s】创建失败！", strVectorFile));
                 return;
             }
             // 创建图层，创建一个多边形图层，这里没有指定空间参考，如果需要的话，需要在这里进行指定
-            Layer oLayer = oDS.CreateLayer("TestPolygon", 
+            Layer oLayer = oDS.CreateLayer("ShapefileLayer", 
                 new SpatialReference(KnownCoordinateSystems.Geographic.World.WGS1984.ToEsriString()), 
                 wkbGeometryType.wkbPolygon25D, null);
             if (oLayer == null)
             {
-                OnFailure?.Invoke("图层创建失败！");
+                OnProgressFailure?.Invoke("图层创建失败！");
                 return;
             }
 
@@ -263,7 +293,7 @@ namespace VPS.CustomFile
             for (int index = 0; index < list.Count; index++)
             {
                 oLineGeo.AddPoint(list[index].Lng, list[index].Lat, list[index].Alt);
-                OnProgress?.Invoke((index + 1) / list.Count);
+                OnProgress?.Invoke((double)(index + 1) / list.Count);
             }
 
 
@@ -275,7 +305,7 @@ namespace VPS.CustomFile
             oFeature.Dispose();
             oDS.Dispose();
             
-            OnSuccess?.Invoke("矢量文件创建完成！");
+            OnProgressSuccess?.Invoke("矢量文件创建完成！");
         }
 
         public class SHPDataSet

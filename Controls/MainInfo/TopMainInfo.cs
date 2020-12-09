@@ -62,7 +62,21 @@ namespace VPS.Controls.MainInfo
 
         private delegate bool DisposeControlInThread(string key);
 
+
+
         #region DisposeControl
+
+        public void DisposeControlEnter(string key, int time = 0)
+        {
+            if (time <= 0)
+            {
+                DisposeControl(key);
+                return;
+            }
+            ThreadPool.QueueUserWorkItem(new WaitCallback(DisposeControlWait), new WaitTime(key, time));
+        }
+
+        #region 立即销毁
         private bool DisposeControl(string key)
         {
             if (this.InvokeRequired)
@@ -92,7 +106,9 @@ namespace VPS.Controls.MainInfo
                     return false;
             }
         }
+        #endregion
 
+        #region 延时销毁
         static private void DisposeControlWait(object key)
         {
             var data = key as WaitTime;
@@ -110,32 +126,28 @@ namespace VPS.Controls.MainInfo
                 }
             }
         }
-
-
-
-        public void DisposeControlEnter(string key, int time = 0)
-        {
-            ThreadPool.QueueUserWorkItem(new WaitCallback(DisposeControlWait), new WaitTime(key, time));
-        }
         #endregion
 
-        private delegate void SetVisibleInThread(string key, bool visable);
-        public void SetVisible(string key, bool visable)
+        #endregion
+
+        #region 设置可见性
+        private delegate void SetVisibleInThread(string key, bool visible);
+        public void SetVisible(string key, bool visible)
         {
             if (this.InvokeRequired)
             {
                 SetVisibleInThread inThread = new SetVisibleInThread(SetVisible);
-                this.Invoke(inThread, new object[] { key, visable });
+                this.Invoke(inThread, new object[] { key, visible });
             }
             else
             {
                 if (messageBarList.ContainsKey(key))
                 {
                     Control control = messageBarList[key];
-                    if (control != null && control.Visible != visable)
+                    if (control != null && control.Visible != visible)
                     {
-                        control.Visible = visable;
-                        if (visable)
+                        control.Visible = visible;
+                        if (visible)
                             Count++;
                         else
                             Count--;
@@ -143,22 +155,23 @@ namespace VPS.Controls.MainInfo
                 }
             }
         }
+        #endregion
 
-        #region ProgressBar
-        private delegate string CreateProgressInThread(string info, int maxData);
-        public string CreateProgress(string info, int maxData)
+        #region 创建进度条控件 ProgressBar
+        private delegate string CreateProgressInThread(string info);
+        public string CreateProgress(string info)
         {
             if (this.InvokeRequired)
             {
                 CreateProgressInThread inThread = new CreateProgressInThread(CreateProgress);
-                IAsyncResult iar = this.BeginInvoke(inThread, new object[] { info, maxData });
+                IAsyncResult iar = this.BeginInvoke(inThread, new object[] { info });
                 return (string)this.EndInvoke(iar);
             }
             else
             {
                 var bar = CreateProgressBar();
-                bar.SetLabelInfo(info);
-                bar.SetProgress(0, maxData);
+                bar.SetProgressText(info);
+                bar.SetProgress(0);
                 string key = bar.GetHashCode().ToString();
                 messageBarList.Add(key, bar);
 

@@ -692,17 +692,17 @@ namespace VPS.Controls.Grid
                 {
                     return;
                 }
-                else
-                {
-                    progressBar = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("准备生成航线", (int)waitTime);
-                    gridWait = true;
-                }
+
+                progressBar = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("准备生成航线");
+                gridWait = true;
+
             }
+            var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar);
             while (true)
             {
                 long time = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000 - alterTime;
                 if (progressBar != null)
-                    VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgress((int)time);
+                    bar.SetProgress((double)time / waitTime);
                 if (time > waitTime)
                 {
                     lock (lockObj2)
@@ -710,20 +710,20 @@ namespace VPS.Controls.Grid
                         try
                         {
                             if (progressBar != null)
-                                VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressFailure("生成航线");
-                            VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressStageInfo("生成航线", Color.Orange);
+                                bar.SetProgressFailure("生成航线");
+                            bar.SetProgressStageInfo("生成航线", Color.Orange);
                             gridGrenate = true;
                             autoGrid();
                             gridGrenate = false;
                             gridWait = false;
                             if (progressBar != null)
                             {
-                                VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressSuccessful("成功生成成功");
+                                bar.SetProgressSuccess("成功生成成功");
                             }
                         }
                         catch
                         {
-                            VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(progressBar).SetProgressFailure("生成航线失败");
+                            bar.SetProgressFailure("生成航线失败");
                         }
                         finally
                         {

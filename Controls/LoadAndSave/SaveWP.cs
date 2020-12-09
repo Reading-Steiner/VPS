@@ -436,7 +436,20 @@ namespace VPS.Controls.LoadAndSave
                 wpList, VPS.CustomData.EnumCollect.AltFrame.Terrain);
             if (!info.saveAllowHome)
                 VPS.CustomData.WP.WPGlobalData.WPListRemoveHome(wpList);
-            VPS.CustomFile.SHP.SaveSHP(file, wpList);
+
+            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("保存为ShapeFile");
+            var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key);
+
+            var shp = new VPS.CustomFile.SHP();
+            shp.OnProgressStart += bar.SetProgressText;
+            shp.OnProgressInfo += bar.SetProgressText;
+            shp.OnProgressFailure += bar.SetProgressFailure;
+            shp.OnProgressSuccess += bar.SetProgressSuccess;
+            shp.OnProgress += bar.SetProgress;
+
+            shp.SaveSHP(file, wpList);
+
+            VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
         }
     }
 

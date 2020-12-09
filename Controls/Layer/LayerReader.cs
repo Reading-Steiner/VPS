@@ -436,7 +436,9 @@ namespace VPS.Controls.Layer
             string vrtFileName = savePath + FileName + ".tif.vrt";
             List<string> tiffFileNames = new List<string>();
 
-            string key = MainInfo.TopMainInfo.instance.CreateProgress("影像切片：" + FileName, tileXCount * tileYCount + 1);
+            string key = MainInfo.TopMainInfo.instance.CreateProgress("影像切片：" + FileName);
+
+            var bar = MainInfo.TopMainInfo.instance.GetProgress(key);
             try
             {
 
@@ -449,16 +451,16 @@ namespace VPS.Controls.Layer
                         GDAL.GDAL.SaveTiffTile(openPath, saveFullName,
                             j * tileXSize, i * tileYSize, tileXSize, tileYSize);
 
-                        MainInfo.TopMainInfo.instance.GetProgress(key).SetProgress(i * tileXCount + j);
+                        bar.SetProgress((double)(i * tileXCount + j) / (tileXCount * tileYCount + 1) * 0.8);
                     }
                 }
-                MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressStageInfo("创建VRT文件", Color.Orange, 1, 1);
+                bar.SetProgressStageInfo("创建VRT文件", Color.Orange, 0.9);
                 GDAL.GDAL.CreateVRT(vrtFileName, tiffFileNames);
-                MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressSuccessful("切片成功");
+                bar.SetProgressSuccess("切片成功");
             }
             catch
             {
-                MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressFailure("切片失败");
+                bar.SetProgressFailure("切片失败");
             }
             finally
             {
