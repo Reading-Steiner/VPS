@@ -35,14 +35,14 @@ namespace VPS.Controls.LoadAndSave
             using (OpenFileDialog fd = new OpenFileDialog())
             {
                 fd.Filter = "Google Earth KML(*kml;*.kmz) |*.kml;*.kmz|ShapeFile(*.shp)|*.shp";
-                if (Directory.Exists(Settings.Instance["WPFileDirectory"] ?? ""))
-                    fd.InitialDirectory = Settings.Instance["WPFileDirectory"];
+                if (Directory.Exists(Settings.Instance["PolygonFileDirectory"] ?? ""))
+                    fd.InitialDirectory = Settings.Instance["PolygonFileDirectory"];
                 var result = fd.ShowDialog();
 
                 string file = fd.FileName;
                 if (result == DialogResult.OK && File.Exists(file))
                 {
-                    Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
+                    Settings.Instance["PolygonFileDirectory"] = Path.GetDirectoryName(file);
                     switch (fd.FilterIndex)
                     {
                         case 1:

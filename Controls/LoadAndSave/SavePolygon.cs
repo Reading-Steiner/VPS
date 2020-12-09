@@ -33,7 +33,7 @@ namespace VPS.Controls.LoadAndSave
                 //fd.Filter = "KML|*.kml|WorkCoordinates Mission|*.waypoints|Mission|*.waypoints;*.txt";
                 fd.Filter = "Google Earth KML(*kml) |*.kml|ShapeFile(*.shp)|*.shp";
                 fd.DefaultExt = ".kml";
-                fd.InitialDirectory = Settings.Instance["WPFileDirectory"] ?? "";
+                fd.InitialDirectory = Settings.Instance["PolygonFileDirectory"];
 
                 DialogResult result = fd.ShowDialog();
 
