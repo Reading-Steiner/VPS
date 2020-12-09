@@ -18,15 +18,19 @@ namespace VPS.CustomFile
         {
         }
 
-        public delegate void Progress(double percent, string message);
+        public delegate void ProgressMessageOutTime(string message, int time);
+        public delegate void ProgressMessage(string message);
+        public delegate void Progress(double percent);
         public delegate void Meaasge(string message);
 
-        public static event Progress OnProgress;
-        public static event Meaasge OnChangeTarget;
-        public static event Meaasge OnSuccess;
-        public static event Meaasge OnFailure;
-        public static event Meaasge OnInfoMessage;
-        public static event Meaasge OnWarnMessage;
+        public event ProgressMessage OnProgressStart;
+        public event ProgressMessage OnProgressInfo;
+        public event ProgressMessageOutTime OnProgressEnd;
+        public event ProgressMessage OnProgressSuccess;
+        public event ProgressMessage OnProgressFailure;
+        public event Progress OnProgress;
+        public event Meaasge OnInfoMessage;
+        public event Meaasge OnWarnMessage;
 
 
         public delegate void ListChange(List<PointLatLngAlt> list);
@@ -34,16 +38,19 @@ namespace VPS.CustomFile
 
         //[DllImport("gdal232.dll", CallingConvention = CallingConvention.Cdecl)]
         //public static extern IntPtr OGR_F_GetFieldAsString(HandleRef handle, int fieldIdx);
-
-        public static KMLDataSet ReadKML(string file)
+        int progress = 0;
+        public KMLDataSet ReadKML(string file)
         {
             string kml = "";
             string tempdir = "";
+
+            OnProgressStart?.Invoke("加载 KML");
 
             KMLDataSet dataSet = new KMLDataSet();
 
             if (file.ToLower().EndsWith("kmz"))
             {
+                OnProgressInfo?.Invoke("解析 KMZ");
                 ZipFile input = new ZipFile(file);
 
                 tempdir = Path.GetTempPath() + Path.DirectorySeparatorChar + Path.GetRandomFileName();
@@ -60,8 +67,12 @@ namespace VPS.CustomFile
                 else
                 {
                     input.Dispose();
+
+                    OnProgressFailure?.Invoke("KMZ 为空或不包含 KML");
                     return dataSet;
                 }
+
+                OnProgressStart?.Invoke("加载 KML");
             }
 
             var sr = new StreamReader(File.OpenRead(file));
@@ -75,14 +86,19 @@ namespace VPS.CustomFile
             kml = kml.Replace("<Snippet/>", "");
 
             var parser = new Parser();
+
             parser.ElementAdded += OnElementAdded;
             OnAddList += dataSet.AddPolygon;
+
+            progress = 0;
+
             parser.ParseString(kml, false);
 
+            OnProgressSuccess?.Invoke("KML 加载完成");
             return dataSet;
         }
 
-        static private void OnElementAdded(object sender, ElementEventArgs e)
+        private void OnElementAdded(object sender, ElementEventArgs e)
         {
             try
             {
@@ -148,12 +164,19 @@ namespace VPS.CustomFile
                         list.Add(point);
                     }
                     OnAddList?.Invoke(list);
+                    OnProgress?.Invoke((double)(progress + 1) / (progress + 2));
+                    progress++;
                 }
             }
             catch { }
             finally
             {
             }
+        }
+
+        public void SaveKML(string file)
+        {
+
         }
 
 

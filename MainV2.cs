@@ -4648,7 +4648,7 @@ namespace VPS
                             Math.Max(pos1[1], pos2[1]), Math.Min(pos1[0], pos2[0]),
                             Math.Abs(pos1[0] - pos2[0]), Math.Abs(pos1[1] - pos2[1]));
                         _tiles.Add(new LayerTile(tile, position));
-                        VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key).SetProgress((double)(i * TileYSize + j)/(TileXSize * TileYSize));
+                        VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key).SetProgress((double)(i * TileYSize + j) / (TileXSize * TileYSize));
                     }
                 }
                 VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressSuccess("加载完成");
@@ -4661,7 +4661,8 @@ namespace VPS
             }
             finally
             {
-                VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 5000);
+                if (key != null)
+                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 5000);
             }
 
         }

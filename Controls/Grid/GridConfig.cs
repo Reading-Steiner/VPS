@@ -728,9 +728,7 @@ namespace VPS.Controls.Grid
                         finally
                         {
                             if (progressBar != null)
-                            {
                                 VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(progressBar, 1000);
-                            }
                         }
                     }
                     return;

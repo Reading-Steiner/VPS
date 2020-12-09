@@ -32,7 +32,7 @@ namespace VPS.Controls.LoadAndSave
             using (SaveFileDialog fd = new SaveFileDialog())
             {
                 //fd.Filter = "KML|*.kml|WorkCoordinates Mission|*.waypoints|Mission|*.waypoints;*.txt";
-                fd.Filter = "Google Earth KML(*kml;*.kmz) |*.kml;*.kmz|ShapeFile(*.shp)|*.shp";
+                fd.Filter = "Google Earth KML(*kml) |*.kml|ShapeFile(*.shp)|*.shp";
                 fd.DefaultExt = ".kml";
                 fd.InitialDirectory = Settings.Instance["WPFileDirectory"] ?? "";
 
@@ -154,6 +154,9 @@ namespace VPS.Controls.LoadAndSave
 
         private void saveWaypointsKML(string file)
         {
+            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("保存为 KML");
+            var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key);
+
             List<PointLatLngAlt> wpList =
                 CustomData.WP.WPGlobalData.WPListChangeAltFrame(
                     CustomData.WP.WPGlobalData.instance.GetWPList(),
@@ -161,176 +164,209 @@ namespace VPS.Controls.LoadAndSave
             PointLatLngAlt home = wpList[0];
             wpList.RemoveAt(0);
 
-            FileStream fs = new FileStream(file, FileMode.Create);
-            XmlTextWriter w = new XmlTextWriter(fs, System.Text.Encoding.UTF8);
-            w.IndentChar = System.Convert.ToChar(" ");
-            w.Indentation = 4;
-            w.Formatting = System.Xml.Formatting.Indented;
-
-            // Start the document.
-            w.WriteStartDocument();
-            w.WriteStartElement("kml", "http://www.opengis.net/kml/2.2");
-            w.WriteStartElement("Document", "");
-            w.WriteStartElement("name");
-            w.WriteString(file);
-            w.WriteEndElement();//name
-            w.WriteStartElement("open");
-            w.WriteString("1");
-            w.WriteEndElement();//open
-
-            //style
-            w.WriteStartElement("Style");
-            w.WriteAttributeString("id", "waylineGreenPoly");
-            w.WriteStartElement("LineStyle");
-            w.WriteStartElement("color");
-            w.WriteString("FF0AEE8B");
-            w.WriteEndElement();//color
-            w.WriteStartElement("width");
-            w.WriteString("6");
-            w.WriteEndElement();//width
-            w.WriteEndElement();//LineStyle
-            w.WriteEndElement();//Style
-
-            w.WriteStartElement("Style");
-            w.WriteAttributeString("id", "waypointStyle");
-            w.WriteStartElement("IconStyle");
-            w.WriteStartElement("Icon");
-            w.WriteStartElement("href");
-            w.WriteString("https://cdnen.dji-flighthub.com/static/app/images/point.png");
-            w.WriteEndElement();//href
-            w.WriteEndElement();//Icon
-            w.WriteEndElement();//IconStyle
-            w.WriteEndElement();//Style
-
-            //MainData Points
-            w.WriteStartElement("Folder");
-            w.WriteStartElement("name");
-            w.WriteString("Waypoints");
-            w.WriteEndElement();//name
-            w.WriteStartElement("description");
-            w.WriteString("Waypoints in the Mission.");
-            w.WriteEndElement();//description
-            if((info as SaveKMLWPInfo).saveAllowHome)
+            try
             {
-                #region HomePoint
-                w.WriteStartElement("Placemark");
+                FileStream fs = new FileStream(file, FileMode.Create);
+                XmlTextWriter w = new XmlTextWriter(fs, System.Text.Encoding.UTF8);
+                w.IndentChar = System.Convert.ToChar(" ");
+                w.Indentation = 4;
+                w.Formatting = System.Xml.Formatting.Indented;
 
-                // Write Point element
+                // Start the document.
+                w.WriteStartDocument();
+                w.WriteStartElement("kml", "http://www.opengis.net/kml/2.2");
+                w.WriteStartElement("Document", "");
                 w.WriteStartElement("name");
-                w.WriteString(string.Format("Home"));
+                w.WriteString(file);
                 w.WriteEndElement();//name
-                w.WriteStartElement("visibility");
-                w.WriteString("false");
-                w.WriteEndElement();//visibility
-                w.WriteStartElement("description");
-                w.WriteString("HOME");
-                w.WriteEndElement();//description
-                w.WriteStartElement("styleUrl");
-                w.WriteString("#waypointStyle");
-                w.WriteEndElement();//styleUrl
-                w.WriteStartElement("ExtendedData", "www.dji.com");
+                w.WriteStartElement("open");
+                w.WriteString("1");
+                w.WriteEndElement();//open
 
-                var layerInfo = CustomData.Layer.MemoryLayerCache.GetLayerFromMemoryCache(
-                    CustomData.WP.WPGlobalData.instance.GetLayer()
-                    );
-                if (layerInfo != null)
-                {
-                    w.WriteStartElement("local");
-                    w.WriteStartElement("scale");
-                    w.WriteString(layerInfo.Scale.ToString());
-                    w.WriteEndElement();//scale
+                //style
+                w.WriteStartElement("Style");
+                w.WriteAttributeString("id", "waylineGreenPoly");
+                w.WriteStartElement("LineStyle");
+                w.WriteStartElement("color");
+                w.WriteString("FF0AEE8B");
+                w.WriteEndElement();//color
+                w.WriteStartElement("width");
+                w.WriteString("6");
+                w.WriteEndElement();//width
+                w.WriteEndElement();//LineStyle
+                w.WriteEndElement();//Style
 
-                    w.WriteEndElement();//local
-                }
-                w.WriteStartElement("param1");
-                w.WriteString("0");
-                w.WriteEndElement();//param1
-                w.WriteStartElement("param2");
-                w.WriteString("0");
-                w.WriteEndElement();//param2
-                w.WriteStartElement("param3");
-                w.WriteString("0");
-                w.WriteEndElement();//param3
-                w.WriteStartElement("param4");
-                w.WriteString("0");
-                w.WriteEndElement();//param4
-                w.WriteEndElement();//ExtendedData
+                w.WriteStartElement("Style");
+                w.WriteAttributeString("id", "waypointStyle");
+                w.WriteStartElement("IconStyle");
+                w.WriteStartElement("Icon");
+                w.WriteStartElement("href");
+                w.WriteString("https://cdnen.dji-flighthub.com/static/app/images/point.png");
+                w.WriteEndElement();//href
+                w.WriteEndElement();//Icon
+                w.WriteEndElement();//IconStyle
+                w.WriteEndElement();//Style
 
-                w.WriteStartElement("Point");
-
-                w.WriteStartElement("altitudeMode");
-
-                if ((info as SaveKMLWPInfo).saveAltMode == SaveKMLWPInfo.KMLAltMode.absolute)
-                    w.WriteString("absolute");
-                else if ((info as SaveKMLWPInfo).saveAltMode == SaveKMLWPInfo.KMLAltMode.relativeToGround)
-                    w.WriteString("relativeToGround");
-                else
-                    w.WriteString("clampToGround");
-
-                w.WriteEndElement();//altitudeMode
-                w.WriteStartElement("coordinates");
-
-                w.WriteString(string.Format("{0},{1},{2}", home.Lng, home.Lat, home.Alt));
-                w.WriteEndElement();//coordinates
-                w.WriteEndElement();//Point
-                w.WriteEndElement();//Placemark
-                #endregion
-            }
-
-            #region WPPoints
-            int index = 0;
-            for (int i = 0; i < wpList.Count; i++)
-            {
-                bool isVisbility = false;
-                if (CustomData.WP.WPCommands.CoordsWPCommands.Contains(wpList[i].Tag))
-                    isVisbility = true;
-                w.WriteStartElement("Placemark");
-
-                // Write Point element
+                //MainData Points
+                w.WriteStartElement("Folder");
                 w.WriteStartElement("name");
-                if (isVisbility)
-                    w.WriteString(wpList[index].Tag + " " + (index).ToString());
-                else
-                    w.WriteString(wpList[index].Tag);
+                w.WriteString("Waypoints");
                 w.WriteEndElement();//name
-
-                w.WriteStartElement("visibility");
-                w.WriteString(isVisbility.ToString());
-                //if (isVisbility)
-                //    w.WriteString("true");
-                //else
-                //    w.WriteString("false");
-                w.WriteEndElement();//visibility
-
                 w.WriteStartElement("description");
-                w.WriteString(wpList[index].Tag);
+                w.WriteString("Waypoints in the Mission.");
                 w.WriteEndElement();//description
-
-                if (isVisbility)
+                if ((info as SaveKMLWPInfo).saveAllowHome)
                 {
+                    #region HomePoint
+                    w.WriteStartElement("Placemark");
+
+                    // Write Point element
+                    w.WriteStartElement("name");
+                    w.WriteString(string.Format("Home"));
+                    w.WriteEndElement();//name
+                    w.WriteStartElement("visibility");
+                    w.WriteString("false");
+                    w.WriteEndElement();//visibility
+                    w.WriteStartElement("description");
+                    w.WriteString("HOME");
+                    w.WriteEndElement();//description
                     w.WriteStartElement("styleUrl");
                     w.WriteString("#waypointStyle");
                     w.WriteEndElement();//styleUrl
+
+                    // Write Point Loc
+                    w.WriteStartElement("Point");
+
+                    w.WriteStartElement("altitudeMode");
+                    if ((info as SaveKMLWPInfo).saveAltMode == SaveKMLWPInfo.KMLAltMode.absolute)
+                        w.WriteString("absolute");
+                    else if ((info as SaveKMLWPInfo).saveAltMode == SaveKMLWPInfo.KMLAltMode.relativeToGround)
+                        w.WriteString("relativeToGround");
+                    else
+                        w.WriteString("clampToGround");
+                    w.WriteEndElement();//altitudeMode
+
+                    w.WriteStartElement("coordinates");
+                    w.WriteString(string.Format("{0},{1},{2}", home.Lng, home.Lat, home.Alt));
+                    w.WriteEndElement();//coordinates
+
+                    w.WriteEndElement();//Point
+                    w.WriteEndElement();//Placemark
+                    #endregion
                 }
 
-                w.WriteStartElement("ExtendedData", "www.dji.com");
-                w.WriteStartElement("param1");
-                w.WriteString(wpList[i].Param1.ToString());
-                w.WriteEndElement();//param1
-                w.WriteStartElement("param2");
-                w.WriteString(wpList[i].Param2.ToString());
-                w.WriteEndElement();//param2
-                w.WriteStartElement("param3");
-                w.WriteString(wpList[i].Param3.ToString());
-                w.WriteEndElement();//param3
-                w.WriteStartElement("param4");
-                w.WriteString(wpList[i].Param4.ToString());
-                w.WriteEndElement();//param4
-                w.WriteEndElement();//ExtendedData
-
-                if (isVisbility)
+                #region WPPoints
+                int pointVisibleIndex = 0; int Counter = 0;
+                for (int pointIndex = 0; pointIndex < wpList.Count; pointIndex++)
                 {
-                    w.WriteStartElement("Point");
+                    var marker = wpList[pointIndex];
+
+                    bool isVisbility = false;
+                    if (CustomData.WP.WPCommands.CoordsWPCommands.Contains(marker.Tag))
+                        isVisbility = true;
+                    w.WriteStartElement("Placemark");
+
+                    // Write Point element
+                    w.WriteStartElement("name");
+                    if (isVisbility)
+                        w.WriteString(marker.Tag + " " + (pointVisibleIndex).ToString());
+                    else
+                        w.WriteString(marker.Tag);
+                    w.WriteEndElement();//name
+
+                    w.WriteStartElement("visibility");
+                    w.WriteString(isVisbility.ToString());
+                    w.WriteEndElement();//visibility
+
+                    w.WriteStartElement("description");
+                    w.WriteString(marker.Tag);
+                    w.WriteEndElement();//description
+
+                    if (isVisbility)
+                    {
+                        w.WriteStartElement("styleUrl");
+                        w.WriteString("#waypointStyle");
+                        w.WriteEndElement();//styleUrl
+                    }
+
+                    w.WriteStartElement("ExtendedData", "www.dji.com");
+                    w.WriteStartElement("param1");
+                    w.WriteString(wpList[pointIndex].Param1.ToString());
+                    w.WriteEndElement();//param1
+                    w.WriteStartElement("param2");
+                    w.WriteString(wpList[pointIndex].Param2.ToString());
+                    w.WriteEndElement();//param2
+                    w.WriteStartElement("param3");
+                    w.WriteString(wpList[pointIndex].Param3.ToString());
+                    w.WriteEndElement();//param3
+                    w.WriteStartElement("param4");
+                    w.WriteString(wpList[pointIndex].Param4.ToString());
+                    w.WriteEndElement();//param4
+                    w.WriteEndElement();//ExtendedData
+
+                    if (isVisbility)
+                    {
+                        w.WriteStartElement("Point");
+                        w.WriteStartElement("altitudeMode");
+
+                        if ((info as SaveKMLWPInfo).saveAltMode == SaveKMLWPInfo.KMLAltMode.absolute)
+                            w.WriteString("absolute");
+                        else if ((info as SaveKMLWPInfo).saveAltMode == SaveKMLWPInfo.KMLAltMode.relativeToGround)
+                            w.WriteString("relativeToGround");
+                        else
+                            w.WriteString("clampToGround");
+
+                        w.WriteEndElement();//altitudeMode
+                        w.WriteStartElement("coordinates");
+                        w.WriteString(string.Format("{0},{1},{2}",
+                            wpList[pointVisibleIndex].Lng,
+                            wpList[pointVisibleIndex].Lat,
+                            wpList[pointVisibleIndex].Alt));
+                        w.WriteEndElement();//coordinates
+                        w.WriteEndElement();//Point
+                    }
+                    w.WriteEndElement();//Placemark
+
+                    if (isVisbility)
+                        pointVisibleIndex++;
+
+                    bar.SetProgress((double)(++Counter) / wpList.Count * 0.5);
+                }
+                w.WriteEndElement();//Folder
+                #endregion
+                {
+                    if (info.altMode.ToString() == CustomData.EnumCollect.AltFrame.Absolute)
+                        wpList = CustomData.WP.WPGlobalData.WPListChangeAltFrame(
+                            wpList, CustomData.EnumCollect.AltFrame.Absolute);
+                    else if (info.altMode.ToString() == CustomData.EnumCollect.AltFrame.Terrain)
+                        wpList = CustomData.WP.WPGlobalData.WPListChangeAltFrame(
+                            wpList, CustomData.EnumCollect.AltFrame.Terrain);
+                    else
+                        wpList = CustomData.WP.WPGlobalData.WPListChangeAltFrame(
+                            wpList, CustomData.EnumCollect.AltFrame.Terrain);
+
+                    #region WPLines
+                    //MainData Lines
+                    w.WriteStartElement("Placemark");
+                    // Write Lines element
+                    w.WriteStartElement("name");
+                    w.WriteString(string.Format("Wayline"));
+                    w.WriteEndElement();//name
+                    w.WriteStartElement("visibility");
+                    w.WriteString("true");
+                    w.WriteEndElement();//visibility
+                    w.WriteStartElement("description");
+                    w.WriteString("Wayline");
+                    w.WriteEndElement();//description
+                    w.WriteStartElement("styleUrl");
+                    w.WriteString("#waylineGreenPoly");
+                    w.WriteEndElement();//styleUrl
+
+
+                    w.WriteStartElement("LineString");
+                    w.WriteStartElement("tessellate");
+                    w.WriteString("1");
+                    w.WriteEndElement();//tessellate
                     w.WriteStartElement("altitudeMode");
 
                     if ((info as SaveKMLWPInfo).saveAltMode == SaveKMLWPInfo.KMLAltMode.absolute)
@@ -342,90 +378,49 @@ namespace VPS.Controls.LoadAndSave
 
                     w.WriteEndElement();//altitudeMode
                     w.WriteStartElement("coordinates");
-                    w.WriteString(string.Format("{0},{1},{2}",
-                        wpList[index].Lng,
-                        wpList[index].Lat,
-                        wpList[index].Alt));
-                    w.WriteEndElement();//coordinates
-                    w.WriteEndElement();//Point
-                }
-                w.WriteEndElement();//Placemark
 
-                if (isVisbility)
-                    index++;
-            }
-            w.WriteEndElement();//Folder
-            #endregion
-            {
-                if (info.altMode.ToString() == CustomData.EnumCollect.AltFrame.Absolute)
-                    wpList = CustomData.WP.WPGlobalData.WPListChangeAltFrame(
-                        wpList, CustomData.EnumCollect.AltFrame.Absolute);
-                else if (info.altMode.ToString() == CustomData.EnumCollect.AltFrame.Terrain)
-                    wpList = CustomData.WP.WPGlobalData.WPListChangeAltFrame(
-                        wpList, CustomData.EnumCollect.AltFrame.Terrain);
-                else
-                    wpList = CustomData.WP.WPGlobalData.WPListChangeAltFrame(
-                        wpList, CustomData.EnumCollect.AltFrame.Terrain);
-
-                #region WPLines
-                //MainData Lines
-                w.WriteStartElement("Placemark");
-                // Write Lines element
-                w.WriteStartElement("name");
-                w.WriteString(string.Format("Wayline"));
-                w.WriteEndElement();//name
-                w.WriteStartElement("visibility");
-                w.WriteString("true");
-                w.WriteEndElement();//visibility
-                w.WriteStartElement("description");
-                w.WriteString("Wayline");
-                w.WriteEndElement();//description
-                w.WriteStartElement("styleUrl");
-                w.WriteString("#waylineGreenPoly");
-                w.WriteEndElement();//styleUrl
+                    string pointList = "";
 
 
-                w.WriteStartElement("LineString");
-                w.WriteStartElement("tessellate");
-                w.WriteString("1");
-                w.WriteEndElement();//tessellate
-                w.WriteStartElement("altitudeMode");
-
-                if ((info as SaveKMLWPInfo).saveAltMode == SaveKMLWPInfo.KMLAltMode.absolute)
-                    w.WriteString("absolute");
-                else if ((info as SaveKMLWPInfo).saveAltMode == SaveKMLWPInfo.KMLAltMode.relativeToGround)
-                    w.WriteString("relativeToGround");
-                else
-                    w.WriteString("clampToGround");
-
-                w.WriteEndElement();//altitudeMode
-                w.WriteStartElement("coordinates");
-
-                string pointList = "";
-
-                foreach (var marker in wpList)
-                {
-                    if (marker != null)
+                    for (int pointLineIndex = 0; pointLineIndex < wpList.Count; pointLineIndex++)
                     {
-                        pointList += string.Format("{0},{1},{2} ", marker.Lng, marker.Lat, marker.Alt);
+                        var marker = wpList[pointLineIndex];
+                        if (marker != null)
+                        {
+                            if (CustomData.WP.WPCommands.CoordsWPCommands.Contains(marker.Tag))
+                            {
+                                pointList += string.Format("{0},{1},{2} ", marker.Lng, marker.Lat, marker.Alt);
+                            }
+                        }
+                        bar.SetProgress((double)(++Counter) / wpList.Count * 0.5);
                     }
+
+                    w.WriteString(pointList);
+                    w.WriteEndElement();//coordinates
+                    w.WriteEndElement();//LineString
+
+                    w.WriteEndElement();//Placemark
+                    #endregion
                 }
+                w.WriteEndElement();//document
+                w.WriteEndElement();//kml
 
-                w.WriteString(pointList);
-                w.WriteEndElement();//coordinates
-                w.WriteEndElement();//LineString
+                // Ends the document.
+                w.WriteEndDocument();
 
-                w.WriteEndElement();//Placemark
-                #endregion
+                // close writer
+                w.Close();
+                bar.SetProgressSuccess("KML 创建成功");
             }
-            w.WriteEndElement();//document
-            w.WriteEndElement();//kml
-
-            // Ends the document.
-            w.WriteEndDocument();
-
-            // close writer
-            w.Close();
+            catch (Exception ex)
+            {
+                bar.SetProgressFailure("KML 创建失败");
+            }
+            finally
+            {
+                if (key != null)
+                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+            }
         }
 
         private void saveWaypointsSHP(string file)
@@ -447,9 +442,16 @@ namespace VPS.Controls.LoadAndSave
             shp.OnProgressSuccess += bar.SetProgressSuccess;
             shp.OnProgress += bar.SetProgress;
 
-            shp.SaveSHP(file, wpList);
-
-            VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+            try
+            {
+                shp.SaveSHP(file, wpList);
+            }
+            catch (Exception ex) { }
+            finally
+            {
+                if (key != null)
+                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+            }
         }
     }
 

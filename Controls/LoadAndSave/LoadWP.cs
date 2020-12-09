@@ -51,10 +51,27 @@ namespace VPS.Controls.LoadAndSave
                     {
                         case 1:
                             {
-                                List<List<PointLatLngAlt>> wpLists = new List<List<PointLatLngAlt>>();
+                                string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("加载 KML");
+                                var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key);
 
-                                var data = VPS.CustomFile.KML.ReadKML(file);
-                                BindingDataSource(file, data);
+                                var kml = new VPS.CustomFile.KML();
+                                kml.OnProgressStart += bar.SetProgressText;
+                                kml.OnProgressInfo += bar.SetProgressText;
+                                kml.OnProgressFailure += bar.SetProgressFailure;
+                                kml.OnProgressSuccess += bar.SetProgressSuccess;
+                                kml.OnProgress += bar.SetProgress;
+                                try
+                                {
+                                    var data = kml.ReadKML(file);
+                                    BindingDataSource(file, data);
+                                }
+                                catch (Exception ex) { }
+                                finally
+                                {
+                                    if (key != null)
+                                        VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+                                }
+                                
                             }
                             break;
                         case 2:
@@ -69,10 +86,17 @@ namespace VPS.Controls.LoadAndSave
                                 shp.OnProgressSuccess += bar.SetProgressSuccess;
                                 shp.OnProgress += bar.SetProgress;
 
-                                var data = shp.ReadSHP(file);
-
-                                VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
-                                BindingDataSource(file, data);
+                                try
+                                {
+                                    var data = shp.ReadSHP(file);
+                                    BindingDataSource(file, data);
+                                }
+                                catch (Exception ex) { }
+                                finally
+                                {
+                                    if (key != null)
+                                        VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+                                }
                             }
                             break;
                         default:

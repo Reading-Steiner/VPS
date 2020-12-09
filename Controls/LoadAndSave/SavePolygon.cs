@@ -137,7 +137,7 @@ namespace VPS.Controls.LoadAndSave
         {
             List<PointLatLngAlt> polygon = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
             
-            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("保存为ShapeFile");
+            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("保存为 ShapeFile");
             var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key);
 
             var shp = new VPS.CustomFile.SHP();
@@ -147,111 +147,138 @@ namespace VPS.Controls.LoadAndSave
             shp.OnProgressSuccess += bar.SetProgressSuccess;
             shp.OnProgress += bar.SetProgress;
 
-            shp.SaveSHP(file, polygon);
-
-            VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+            try
+            {
+                shp.SaveSHP(file, polygon);
+            }
+            catch (Exception ex) { }
+            finally
+            {
+                if (key != null)
+                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+            }
         }
 
         private void savePolygonPointsKML(string file)
         {
+            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("保存为 KML");
+            var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key);
+
             List<PointLatLngAlt> polygon = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
 
-            FileStream fs = new FileStream(file, FileMode.Create);
-            XmlTextWriter w = new XmlTextWriter(fs, System.Text.Encoding.UTF8);
-            w.IndentChar = System.Convert.ToChar(" ");
-            w.Indentation = 4;
-            w.Formatting = System.Xml.Formatting.Indented;
-
-            // Start the document.
-            w.WriteStartDocument();
-            w.WriteStartElement("kml", "http://www.opengis.net/kml/2.2");
-            w.WriteStartElement("Document", "");
-            w.WriteStartElement("name");
-            w.WriteString(file);
-            w.WriteEndElement();//name
-            w.WriteStartElement("open");
-            w.WriteString("1");
-            w.WriteEndElement();//open
-
-            //style
-            w.WriteStartElement("Style");
-            w.WriteAttributeString("id", "waylineGreenPoly");
-            w.WriteStartElement("LineStyle");
-            w.WriteStartElement("color");
-            w.WriteString("FF0AEE8B");
-            w.WriteEndElement();//color
-            w.WriteStartElement("width");
-            w.WriteString("6");
-            w.WriteEndElement();//width
-            w.WriteEndElement();//LineStyle
-            w.WriteEndElement();//Style
-
-            w.WriteStartElement("Style");
-            w.WriteAttributeString("id", "waypointStyle");
-            w.WriteStartElement("IconStyle");
-            w.WriteStartElement("Icon");
-            w.WriteStartElement("href");
-            w.WriteString("https://cdnen.dji-flighthub.com/static/app/images/point.png");
-            w.WriteEndElement();//href
-            w.WriteEndElement();//Icon
-            w.WriteEndElement();//IconStyle
-            w.WriteEndElement();//Style
-
+            try
             {
-                #region WPLines
-                //MainData Lines
-                w.WriteStartElement("Placemark");
-                // Write Lines element
+                FileStream fs = new FileStream(file, FileMode.Create);
+                XmlTextWriter w = new XmlTextWriter(fs, System.Text.Encoding.UTF8);
+                w.IndentChar = System.Convert.ToChar(" ");
+                w.Indentation = 4;
+                w.Formatting = System.Xml.Formatting.Indented;
+
+                // Start the document.
+                w.WriteStartDocument();
+                w.WriteStartElement("kml", "http://www.opengis.net/kml/2.2");
+                w.WriteStartElement("Document", "");
                 w.WriteStartElement("name");
-                w.WriteString(string.Format("Wayline"));
+                w.WriteString(file);
                 w.WriteEndElement();//name
-                w.WriteStartElement("visibility");
-                w.WriteString("true");
-                w.WriteEndElement();//visibility
-                w.WriteStartElement("description");
-                w.WriteString("Wayline");
-                w.WriteEndElement();//description
-                w.WriteStartElement("styleUrl");
-                w.WriteString("#waylineGreenPoly");
-                w.WriteEndElement();//styleUrl
-
-
-                w.WriteStartElement("LineString");
-                w.WriteStartElement("tessellate");
+                w.WriteStartElement("open");
                 w.WriteString("1");
-                w.WriteEndElement();//tessellate
-                w.WriteStartElement("altitudeMode");
+                w.WriteEndElement();//open
 
-                w.WriteString("clampToGround");
+                //style
+                w.WriteStartElement("Style");
+                w.WriteAttributeString("id", "waylineGreenPoly");
+                w.WriteStartElement("LineStyle");
+                w.WriteStartElement("color");
+                w.WriteString("FF0AEE8B");
+                w.WriteEndElement();//color
+                w.WriteStartElement("width");
+                w.WriteString("6");
+                w.WriteEndElement();//width
+                w.WriteEndElement();//LineStyle
+                w.WriteEndElement();//Style
 
-                w.WriteEndElement();//altitudeMode
-                w.WriteStartElement("coordinates");
+                w.WriteStartElement("Style");
+                w.WriteAttributeString("id", "waypointStyle");
+                w.WriteStartElement("IconStyle");
+                w.WriteStartElement("Icon");
+                w.WriteStartElement("href");
+                w.WriteString("https://cdnen.dji-flighthub.com/static/app/images/point.png");
+                w.WriteEndElement();//href
+                w.WriteEndElement();//Icon
+                w.WriteEndElement();//IconStyle
+                w.WriteEndElement();//Style
 
-                string pointList = "";
-
-                foreach (var marker in polygon)
                 {
-                    if (marker != null)
+                    #region WPLines
+                    //MainData Lines
+                    w.WriteStartElement("Placemark");
+                    // Write Lines element
+                    w.WriteStartElement("name");
+                    w.WriteString(string.Format("Wayline"));
+                    w.WriteEndElement();//name
+                    w.WriteStartElement("visibility");
+                    w.WriteString("true");
+                    w.WriteEndElement();//visibility
+                    w.WriteStartElement("description");
+                    w.WriteString("Wayline");
+                    w.WriteEndElement();//description
+                    w.WriteStartElement("styleUrl");
+                    w.WriteString("#waylineGreenPoly");
+                    w.WriteEndElement();//styleUrl
+
+
+                    w.WriteStartElement("LineString");
+                    w.WriteStartElement("tessellate");
+                    w.WriteString("1");
+                    w.WriteEndElement();//tessellate
+                    w.WriteStartElement("altitudeMode");
+
+                    w.WriteString("clampToGround");
+
+                    w.WriteEndElement();//altitudeMode
+                    w.WriteStartElement("coordinates");
+
+                    string pointList = "";
+
+                    for (int index = 0; index < polygon.Count; index++)
                     {
-                        pointList += string.Format("{0},{1},{2} ", marker.Lng, marker.Lat, marker.Alt);
+                        if (polygon[index] != null)
+                        {
+                            var marker = polygon[index];
+                            pointList += string.Format("{0},{1},{2} ", marker.Lng, marker.Lat, marker.Alt);
+                        }
+                        bar.SetProgress((double)(index + 1) / polygon.Count);
                     }
+
+                    w.WriteString(pointList);
+                    w.WriteEndElement();//coordinates
+                    w.WriteEndElement();//LineString
+
+                    w.WriteEndElement();//Placemark
+                    #endregion
                 }
+                w.WriteEndElement();//document
+                w.WriteEndElement();//kml
 
-                w.WriteString(pointList);
-                w.WriteEndElement();//coordinates
-                w.WriteEndElement();//LineString
+                // Ends the document.
+                w.WriteEndDocument();
 
-                w.WriteEndElement();//Placemark
-                #endregion
+                // close writer
+                w.Close();
+                bar.SetProgressSuccess("KML 创建成功");
             }
-            w.WriteEndElement();//document
-            w.WriteEndElement();//kml
+            catch (Exception ex)
+            {
 
-            // Ends the document.
-            w.WriteEndDocument();
+                bar.SetProgressFailure("KML 创建失败");
+            }
+            finally
+            {
+                if (key != null)
+                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+            }
 
-            // close writer
-            w.Close();
         }
     }
 

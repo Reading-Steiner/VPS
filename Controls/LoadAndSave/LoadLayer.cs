@@ -367,7 +367,7 @@ namespace VPS.Controls.LoadAndSave
         [Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
         public string filePath { get; set; } = "";
 
-        //[Browsable(false)]
+        [Browsable(false)]
         public string fileType { get; set; } = "";
 
         [Category("文件存储"), DisplayName("默认文件")]

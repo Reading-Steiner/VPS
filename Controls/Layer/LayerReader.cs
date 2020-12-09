@@ -464,7 +464,8 @@ namespace VPS.Controls.Layer
             }
             finally
             {
-                VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+                if (key != null)
+                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
             }
             //LoadTile();
         }
