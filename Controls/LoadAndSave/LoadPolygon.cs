@@ -47,8 +47,10 @@ namespace VPS.Controls.LoadAndSave
                     {
                         case 1:
                             {
-                                string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("加载 KML");
-                                var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key);
+                                string porgressKey = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgressEnter("加载 KML");
+                                string messageKey = VPS.Controls.MainInfo.TopMainInfo.instance.CreateMessageBoxEnter();
+                                var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(porgressKey);
+                                var box = VPS.Controls.MainInfo.TopMainInfo.instance.GetMessageBox(messageKey);
 
                                 var kml = new VPS.CustomFile.KML();
                                 kml.OnProgressStart += bar.SetProgressText;
@@ -56,6 +58,9 @@ namespace VPS.Controls.LoadAndSave
                                 kml.OnProgressFailure += bar.SetProgressFailure;
                                 kml.OnProgressSuccess += bar.SetProgressSuccess;
                                 kml.OnProgress += bar.SetProgress;
+                                kml.OnWarnMessage += box.SetWarnMessage;
+                                kml.OnInfoMessage += box.SetInfoMessage;
+
                                 try
                                 {
                                     var data = kml.ReadKML(file);
@@ -64,16 +69,20 @@ namespace VPS.Controls.LoadAndSave
                                 catch (Exception ex){}
                                 finally
                                 {
-                                    if (key != null)
-                                        VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+                                    if (porgressKey != null)
+                                        VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(porgressKey, 2000);
+                                    if (messageKey != null)
+                                        VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(messageKey, 5000);
                                 }
 
                             }
                             break;
                         case 2:
                             {
-                                string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("加载ShapeFilee");
-                                var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key);
+                                string porgressKey = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgressEnter("加载 ShapeFile");
+                                string messageKey = VPS.Controls.MainInfo.TopMainInfo.instance.CreateMessageBoxEnter();
+                                var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(porgressKey);
+                                var box = VPS.Controls.MainInfo.TopMainInfo.instance.GetMessageBox(messageKey);
 
                                 var shp = new VPS.CustomFile.SHP();
                                 shp.OnProgressStart += bar.SetProgressText;
@@ -81,6 +90,9 @@ namespace VPS.Controls.LoadAndSave
                                 shp.OnProgressFailure += bar.SetProgressFailure;
                                 shp.OnProgressSuccess += bar.SetProgressSuccess;
                                 shp.OnProgress += bar.SetProgress;
+                                shp.OnWarnMessage += box.SetWarnMessage;
+                                shp.OnInfoMessage += box.SetInfoMessage;
+
                                 try
                                 {
                                     var data = shp.ReadSHP(file);
@@ -89,8 +101,10 @@ namespace VPS.Controls.LoadAndSave
                                 catch (Exception ex){}
                                 finally
                                 {
-                                    if (key != null)
-                                        VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+                                    if (porgressKey != null)
+                                        VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(porgressKey, 2000);
+                                    if (messageKey != null)
+                                        VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(messageKey, 5000);
                                 }
                             }
                             break;

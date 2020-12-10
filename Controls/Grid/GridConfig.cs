@@ -693,7 +693,7 @@ namespace VPS.Controls.Grid
                     return;
                 }
 
-                progressBar = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("准备生成航线");
+                progressBar = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgressEnter("准备生成航线");
                 gridWait = true;
 
             }

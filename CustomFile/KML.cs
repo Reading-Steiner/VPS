@@ -68,7 +68,8 @@ namespace VPS.CustomFile
                 {
                     input.Dispose();
 
-                    OnProgressFailure?.Invoke("KMZ 为空或不包含 KML");
+                    OnInfoMessage?.Invoke(string.Format("【{0}】为空或不包含 KML！", file));
+                    OnProgressFailure?.Invoke("KML 加载失败");
                     return dataSet;
                 }
 
@@ -94,6 +95,7 @@ namespace VPS.CustomFile
 
             parser.ParseString(kml, false);
 
+            OnInfoMessage?.Invoke(string.Format("【{0}】 加载成功！", file));
             OnProgressSuccess?.Invoke("KML 加载完成");
             return dataSet;
         }

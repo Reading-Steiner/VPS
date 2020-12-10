@@ -11,16 +11,6 @@ using System.Threading;
 
 namespace VPS.Controls.MainInfo
 {
-    class WaitTime
-    {
-        public string key;
-        public int time;
-        public WaitTime(string _key, int _time = 0)
-        {
-            key = _key; time = _time;
-        }
-    }
-
     public partial class TopMainInfo : UserControl
     {
         public TopMainInfo()
@@ -50,12 +40,19 @@ namespace VPS.Controls.MainInfo
         {
             switch (type)
             {
-                case "ProgressBar.UserProgressBar":
-                    var bar = new ProgressBar.UserProgressBar();
+                case "TopMainInfoControls.UserProgressBar":
+                    var bar = new TopMainInfoControls.UserProgressBar();
                     bar.Dock = DockStyle.Left;
                     this.Controls.Add(bar);
                     Count++;
                     return bar;
+                case "TopMainInfoControls.UserMessageBox":
+                    var box = new TopMainInfoControls.UserMessageBox();
+                    box.Dock = DockStyle.Right;
+                    this.Controls.Add(box);
+                    Count++;
+                    return box;
+
             }
             return null;
         }
@@ -159,11 +156,11 @@ namespace VPS.Controls.MainInfo
 
         #region 创建进度条控件 ProgressBar
         private delegate string CreateProgressInThread(string info);
-        public string CreateProgress(string info)
+        public string CreateProgressEnter(string info)
         {
             if (this.InvokeRequired)
             {
-                CreateProgressInThread inThread = new CreateProgressInThread(CreateProgress);
+                CreateProgressInThread inThread = new CreateProgressInThread(CreateProgressEnter);
                 IAsyncResult iar = this.BeginInvoke(inThread, new object[] { info });
                 return (string)this.EndInvoke(iar);
             }
@@ -179,22 +176,72 @@ namespace VPS.Controls.MainInfo
             }
         }
 
-        private ProgressBar.UserProgressBar CreateProgressBar()
+        private TopMainInfoControls.UserProgressBar CreateProgressBar()
         {
             this.SuspendLayout();
-            ProgressBar.UserProgressBar bar = CreateControl("ProgressBar.UserProgressBar") as ProgressBar.UserProgressBar;
+            TopMainInfoControls.UserProgressBar bar = CreateControl("TopMainInfoControls.UserProgressBar") as TopMainInfoControls.UserProgressBar;
             this.ResumeLayout(false);
             return bar;
         }
+        #endregion
 
-        public ProgressBar.UserProgressBar GetProgress(string key)
+        #region 获取ProgressBar
+        public TopMainInfoControls.UserProgressBar GetProgress(string key)
         {
-            if (messageBarList[key] is ProgressBar.UserProgressBar)
-                return messageBarList[key] as ProgressBar.UserProgressBar;
+            if (messageBarList[key] is TopMainInfoControls.UserProgressBar)
+                return messageBarList[key] as TopMainInfoControls.UserProgressBar;
             else
                 return null;
         }
-
         #endregion
+
+        #region 创建消息控件 ProgressBar
+        private delegate string CreateMessageBoxInThread();
+        public string CreateMessageBoxEnter()
+        {
+            if (this.InvokeRequired)
+            {
+                CreateMessageBoxInThread inThread = new CreateMessageBoxInThread(CreateMessageBoxEnter);
+                IAsyncResult iar = this.BeginInvoke(inThread);
+                return (string)this.EndInvoke(iar);
+            }
+            else
+            {
+                var box = CreateMessageBox();
+                string key = box.GetHashCode().ToString();
+                messageBarList.Add(key, box);
+
+                return key;
+            }
+        }
+
+        private TopMainInfoControls.UserMessageBox CreateMessageBox()
+        {
+            this.SuspendLayout();
+            TopMainInfoControls.UserMessageBox bar = CreateControl("TopMainInfoControls.UserMessageBox") as TopMainInfoControls.UserMessageBox;
+            this.ResumeLayout(false);
+            return bar;
+        }
+        #endregion
+
+        #region 获取MessageBox
+        public TopMainInfoControls.UserMessageBox GetMessageBox(string key)
+        {
+            if (messageBarList[key] is TopMainInfoControls.UserMessageBox)
+                return messageBarList[key] as TopMainInfoControls.UserMessageBox;
+            else
+                return null;
+        }
+        #endregion
+
+        class WaitTime
+        {
+            public string key;
+            public int time;
+            public WaitTime(string _key, int _time = 0)
+            {
+                key = _key; time = _time;
+            }
+        }
     }
 }

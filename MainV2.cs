@@ -4629,7 +4629,7 @@ namespace VPS
             int TileXSize = RasterXSize / TileXLen + (RasterXSize % TileXLen == 0 ? 0 : 1);
             int TileYSize = RasterYSize / TileYLen + (RasterYSize % TileYLen == 0 ? 0 : 1);
             //创建进度条
-            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress(
+            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgressEnter(
                 "加载工作区：" + CustomData.Layer.MemoryLayerCache.GetHashCode(_bitmap.File));
             try
             {

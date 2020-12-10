@@ -54,9 +54,8 @@ namespace VPS.CustomFile
 
             if (oDriver == null)
             {
-                OnWarnMessage?.Invoke(string.Format("%s 驱动不可用！", oDriver.name));
-
-                OnProgressFailure?.Invoke("Shapefile 打开失败！");
+                OnWarnMessage?.Invoke(string.Format("{0} 驱动不可用！", oDriver.name));
+                OnProgressFailure?.Invoke("Shapefile 打开失败");
                 return null;
             }
 
@@ -64,9 +63,8 @@ namespace VPS.CustomFile
 
             if (oDS == null)
             {
-                OnInfoMessage?.Invoke(string.Format("Shapefile 【%s】无法打开或为空", strVectorFile));
-
-                OnProgressFailure?.Invoke("Shapefile 打开失败！");
+                OnInfoMessage?.Invoke(string.Format("Shapefile 【{0}】无法打开或为空！", strVectorFile));
+                OnProgressFailure?.Invoke("Shapefile 打开失败");
                 oDS.Dispose();
                 return null;
             }
@@ -229,7 +227,8 @@ namespace VPS.CustomFile
                 CurrentFeatureIndex++;
             }
 
-            OnProgressSuccess?.Invoke("Shapefile 加载完成！");
+            OnInfoMessage?.Invoke(string.Format("【{0}】加载成功！", strVectorFile));
+            OnProgressSuccess?.Invoke("Shapefile 加载完成");
             return data;
         }
 
@@ -250,9 +249,8 @@ namespace VPS.CustomFile
             Driver oDriver = Ogr.GetDriverByName(strDriverName);
             if (oDriver == null)
             {
-                OnWarnMessage?.Invoke(string.Format("%s 驱动不可用！", oDriver.name));
-
-                OnProgressFailure?.Invoke(string.Format("Shapefile 创建失败！", strVectorFile));
+                OnWarnMessage?.Invoke(string.Format("{0} 驱动不可用！", oDriver.name));
+                OnProgressFailure?.Invoke("Shapefile 创建失败");
                 return;
             }
 
@@ -260,9 +258,8 @@ namespace VPS.CustomFile
             DataSource oDS = oDriver.CreateDataSource(strVectorFile, null);
             if (oDS == null)
             {
-                OnInfoMessage?.Invoke(string.Format("Shapefile 【%s】创建失败！", strVectorFile));
-
-                OnProgressFailure?.Invoke(string.Format("Shapefile 创建失败！", strVectorFile));
+                OnInfoMessage?.Invoke(string.Format("【{0}】创建失败！", strVectorFile));
+                OnProgressFailure?.Invoke("Shapefile 创建失败");
                 return;
             }
             // 创建图层，创建一个多边形图层，这里没有指定空间参考，如果需要的话，需要在这里进行指定
@@ -271,7 +268,8 @@ namespace VPS.CustomFile
                 wkbGeometryType.wkbPolygon25D, null);
             if (oLayer == null)
             {
-                OnProgressFailure?.Invoke("Shapefile 图层创建失败！");
+                OnInfoMessage?.Invoke(string.Format("【{0}】创建失败！", strVectorFile));
+                OnProgressFailure?.Invoke("Shapefile 图层创建失败");
                 return;
             }
 
@@ -304,8 +302,9 @@ namespace VPS.CustomFile
 
             oFeature.Dispose();
             oDS.Dispose();
-            
-            OnProgressSuccess?.Invoke("Shapefile 创建完成！");
+
+            OnInfoMessage?.Invoke(string.Format("【{0}】创建成功！", strVectorFile));
+            OnProgressSuccess?.Invoke("Shapefile 创建完成");
         }
 
         public class SHPDataSet

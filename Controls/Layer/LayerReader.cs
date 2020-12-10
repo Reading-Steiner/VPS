@@ -436,7 +436,7 @@ namespace VPS.Controls.Layer
             string vrtFileName = savePath + FileName + ".tif.vrt";
             List<string> tiffFileNames = new List<string>();
 
-            string key = MainInfo.TopMainInfo.instance.CreateProgress("影像切片：" + FileName);
+            string key = MainInfo.TopMainInfo.instance.CreateProgressEnter("影像切片：" + FileName);
 
             var bar = MainInfo.TopMainInfo.instance.GetProgress(key);
             try

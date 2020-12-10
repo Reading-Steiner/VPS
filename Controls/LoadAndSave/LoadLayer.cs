@@ -284,10 +284,12 @@ namespace VPS.Controls.LoadAndSave
 
                 GDAL.GDAL.CreateVRT(vrtFileName, tiffFileNames);
 
+                OnInfoMessage?.Invoke(string.Format("【{0}】切片失败", openPath));
                 OnProgressSuccess?.Invoke("切片成功");
             }
             catch
             {
+                OnInfoMessage?.Invoke(string.Format("【{0}】切片失败", openPath));
                 OnProgressFailure?.Invoke("切片失败");
             }
             finally
@@ -363,14 +365,14 @@ namespace VPS.Controls.LoadAndSave
         public string fileName { get; set; } = "";
 
         [Category("打开文件"), DisplayName("文件路径")]
-        [PropertyOrder(0b00000001)]
+        [PropertyOrder(0b00000010)]
         [Editor(typeof(CustomControls.ContentUITypeEditor), typeof(UITypeEditor))]
         public string filePath { get; set; } = "";
 
         [Browsable(false)]
         public string fileType { get; set; } = "";
 
-        [Category("文件存储"), DisplayName("默认文件")]
+        [Category("文件存储"), Description("运行软件时，默认加载"), DisplayName("默认文件")]
         [PropertyOrder(0b01000000)]
         public bool isDefaultFile{ get; set; } = true;
 
@@ -378,6 +380,7 @@ namespace VPS.Controls.LoadAndSave
         [PropertyOrder(0b01000001)]
         public bool isFileSave { get; set; } = false;
 
+        [Browsable(false)]
         [Category("文件存储"), DisplayName("文件切片")]
         [PropertyOrder(0b01000010)]
         public bool isFileTile { get; set; } = false;
@@ -403,7 +406,7 @@ namespace VPS.Controls.LoadAndSave
     public class LoadTiffLayerInfo : LoadLayerFileInfo
     {
         [Category("打开文件"), DisplayName("文件类型"), ReadOnly(true)]
-        [PropertyOrder(0b00000010)]
+        [PropertyOrder(0b00001000)]
         public string openFileType { set; get; } = "Tag Image File Format";
 
         [Category("图层信息"), DisplayName("投影坐标系")]
@@ -422,7 +425,7 @@ namespace VPS.Controls.LoadAndSave
         public Position origin { get; set; } = new Position();
 
         [Category("图层信息"), DisplayName("初始位置")]
-        [PropertyOrder(0b00100011)]
+        [PropertyOrder(0b00100100)]
         [Editor(typeof(CustomControls.PositionUITypeEditor), typeof(UITypeEditor))]
         public Position home { get; set; } = new Position();
 

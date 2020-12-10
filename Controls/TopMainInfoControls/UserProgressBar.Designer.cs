@@ -1,4 +1,4 @@
-﻿namespace VPS.Controls.ProgressBar
+﻿namespace VPS.Controls.TopMainInfoControls
 {
     partial class UserProgressBar
     {

@@ -137,8 +137,10 @@ namespace VPS.Controls.LoadAndSave
         {
             List<PointLatLngAlt> polygon = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
             
-            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("保存为 ShapeFile");
-            var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key);
+            string porgressKey = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgressEnter("保存为 ShapeFile");
+            string messageKey = VPS.Controls.MainInfo.TopMainInfo.instance.CreateMessageBoxEnter();
+            var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(porgressKey);
+            var box = VPS.Controls.MainInfo.TopMainInfo.instance.GetMessageBox(messageKey);
 
             var shp = new VPS.CustomFile.SHP();
             shp.OnProgressStart += bar.SetProgressText;
@@ -146,6 +148,8 @@ namespace VPS.Controls.LoadAndSave
             shp.OnProgressFailure += bar.SetProgressFailure;
             shp.OnProgressSuccess += bar.SetProgressSuccess;
             shp.OnProgress += bar.SetProgress;
+            shp.OnWarnMessage += box.SetWarnMessage;
+            shp.OnInfoMessage += box.SetInfoMessage;
 
             try
             {
@@ -154,14 +158,16 @@ namespace VPS.Controls.LoadAndSave
             catch (Exception ex) { }
             finally
             {
-                if (key != null)
-                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+                if (porgressKey != null)
+                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(porgressKey, 2000);
+                if (messageKey != null)
+                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(messageKey, 5000);
             }
         }
 
         private void savePolygonPointsKML(string file)
         {
-            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgress("保存为 KML");
+            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgressEnter("保存为 KML");
             var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key);
 
             List<PointLatLngAlt> polygon = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();

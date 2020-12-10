@@ -628,6 +628,12 @@
     <Compile Include="Controls\LoadAndSave\SaveWP.Designer.cs">
       <DependentUpon>SaveWP.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TopMainInfoControls\UserMessageBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TopMainInfoControls\UserMessageBox.Designer.cs">
+      <DependentUpon>UserMessageBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomData\EnumCollect\AltFrame.cs" />
     <Compile Include="CustomData\Layer\LayerInfo.cs" />
     <Compile Include="CustomData\Layer\LayerInfoCache.cs" />
@@ -651,14 +657,16 @@
     <Compile Include="Controls\MainInfo\LeftMainInfo.Designer.cs">
       <DependentUpon>LeftMainInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MainInfo\TopMainInfo.cs" />
+    <Compile Include="Controls\MainInfo\TopMainInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\MainInfo\TopMainInfo.Designer.cs">
       <DependentUpon>TopMainInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ProgressBar\UserProgressBar.cs">
+    <Compile Include="Controls\TopMainInfoControls\UserProgressBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ProgressBar\UserProgressBar.Designer.cs">
+    <Compile Include="Controls\TopMainInfoControls\UserProgressBar.Designer.cs">
       <DependentUpon>UserProgressBar.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ReturnButton.cs">
@@ -1093,7 +1101,10 @@
     <EmbeddedResource Include="Controls\CustomControls\PositionDisplay.resx">
       <DependentUpon>PositionDisplay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ProgressBar\UserProgressBar.resx">
+    <EmbeddedResource Include="Controls\TopMainInfoControls\UserMessageBox.resx">
+      <DependentUpon>UserMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TopMainInfoControls\UserProgressBar.resx">
       <DependentUpon>UserProgressBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ReturnButton.resx">

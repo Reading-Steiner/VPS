@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace VPS.Controls.ProgressBar
+namespace VPS.Controls.TopMainInfoControls
 {
     public partial class UserProgressBar : UserControl
     {
@@ -84,7 +84,7 @@ namespace VPS.Controls.ProgressBar
             {
                 this.Label.Text = text;
                 Random rd = new Random();
-                this.SetProgressInfoColor(
+                this.SetProgressTextColor(
                     Color.FromArgb(255, rd.Next(0, 256), rd.Next(0, 256), rd.Next(0, 256)));
             }
         }
