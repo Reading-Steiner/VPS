@@ -735,7 +735,6 @@ namespace VPS.Controls.Grid
                 }
                 else
                 {
-
                     Thread.SpinWait(100);
                 }
             }
