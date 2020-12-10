@@ -436,9 +436,11 @@ namespace VPS.Controls.Layer
             string vrtFileName = savePath + FileName + ".tif.vrt";
             List<string> tiffFileNames = new List<string>();
 
-            string key = MainInfo.TopMainInfo.instance.CreateProgressEnter("影像切片：" + FileName);
+            string porgressKey = MainInfo.TopMainInfo.instance.CreateProgressEnter("影像切片：" + FileName);
+            string messageKey = MainInfo.TopMainInfo.instance.CreateMessageBoxEnter();
+            var bar = MainInfo.TopMainInfo.instance.GetProgress(porgressKey);
+            var box = MainInfo.TopMainInfo.instance.GetMessageBox(messageKey);
 
-            var bar = MainInfo.TopMainInfo.instance.GetProgress(key);
             try
             {
 
@@ -456,16 +458,19 @@ namespace VPS.Controls.Layer
                 }
                 bar.SetProgressStageInfo("创建VRT文件", Color.Orange, 0.9);
                 GDAL.GDAL.CreateVRT(vrtFileName, tiffFileNames);
+
+                box.SetInfoMessage(string.Format("【{0}】切片成功！", openPath));
                 bar.SetProgressSuccess("切片成功");
             }
             catch
             {
+                box.SetInfoMessage(string.Format("【{0}】切片失败！", openPath));
                 bar.SetProgressFailure("切片失败");
             }
             finally
             {
-                if (key != null)
-                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+                if (porgressKey != null)
+                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(porgressKey, 2000);
             }
             //LoadTile();
         }

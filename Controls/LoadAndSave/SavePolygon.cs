@@ -167,8 +167,10 @@ namespace VPS.Controls.LoadAndSave
 
         private void savePolygonPointsKML(string file)
         {
-            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgressEnter("保存为 KML");
-            var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key);
+            string porgressKey = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgressEnter("保存为 KML");
+            string messageKey = VPS.Controls.MainInfo.TopMainInfo.instance.CreateMessageBoxEnter();
+            var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(porgressKey);
+            var box = VPS.Controls.MainInfo.TopMainInfo.instance.GetMessageBox(messageKey);
 
             List<PointLatLngAlt> polygon = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
 
@@ -272,17 +274,20 @@ namespace VPS.Controls.LoadAndSave
 
                 // close writer
                 w.Close();
+                box.SetInfoMessage(string.Format("【{0}】创建成功", file));
                 bar.SetProgressSuccess("KML 创建成功");
             }
             catch (Exception ex)
             {
-
+                box.SetInfoMessage(string.Format("【{0}】创建失败", file));
                 bar.SetProgressFailure("KML 创建失败");
             }
             finally
             {
-                if (key != null)
-                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 2000);
+                if (porgressKey != null)
+                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(porgressKey, 2000);
+                if (messageKey != null) 
+                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(messageKey, 5000);
             }
 
         }

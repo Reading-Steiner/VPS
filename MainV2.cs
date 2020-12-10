@@ -4629,8 +4629,12 @@ namespace VPS
             int TileXSize = RasterXSize / TileXLen + (RasterXSize % TileXLen == 0 ? 0 : 1);
             int TileYSize = RasterYSize / TileYLen + (RasterYSize % TileYLen == 0 ? 0 : 1);
             //创建进度条
-            string key = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgressEnter(
+            string porgressKey = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgressEnter(
                 "加载工作区：" + CustomData.Layer.MemoryLayerCache.GetHashCode(_bitmap.File));
+            string messageKey = VPS.Controls.MainInfo.TopMainInfo.instance.CreateMessageBoxEnter();
+
+            var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(porgressKey);
+            var box = VPS.Controls.MainInfo.TopMainInfo.instance.GetMessageBox(messageKey);
             try
             {
 
@@ -4648,21 +4652,25 @@ namespace VPS
                             Math.Max(pos1[1], pos2[1]), Math.Min(pos1[0], pos2[0]),
                             Math.Abs(pos1[0] - pos2[0]), Math.Abs(pos1[1] - pos2[1]));
                         _tiles.Add(new LayerTile(tile, position));
-                        VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key).SetProgress((double)(i * TileYSize + j) / (TileXSize * TileYSize));
+                        bar.SetProgress((double)(i * TileYSize + j) / (TileXSize * TileYSize));
                     }
                 }
-                VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressSuccess("加载完成");
+                box.SetInfoMessage(string.Format("【{0}】加载完成！", _bitmap.File));
+                bar.SetProgressSuccess("加载完成");
                 return _tiles;
             }
             catch
             {
-                VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(key).SetProgressFailure("加载失败");
+                box.SetInfoMessage(string.Format("【{0}】加载失败！", _bitmap.File));
+                bar.SetProgressFailure("加载失败");
                 return new List<LayerTile>();
             }
             finally
             {
-                if (key != null)
-                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(key, 5000);
+                if (porgressKey != null)
+                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(porgressKey, 5000);
+                if (messageKey !=null)
+                    VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(messageKey, 5000);
             }
 
         }
