@@ -635,6 +635,7 @@ namespace VPS
             {
                 log.Error(ex);
             }
+
 #if !NETSTANDARD2_0
 #if !NETCOREAPP2_0
             Microsoft.Win32.SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
@@ -656,13 +657,9 @@ namespace VPS
 
                 if (Framework < 4.0)
                 {
-                    DevComponents.DotNetBar.MessageBoxEx.Show("This program requires .NET Framework 4.0. You currently have " + Framework);
+                    DevComponents.DotNetBar.MessageBoxEx.Show("项目需要 .NET Framework 4.0. 你当前版本为 " + Framework);
                 }
             }
-
-            MenuArduPilot.Image = new Bitmap(Properties.Resources._0d92fed790a3a70170e61a86db103f399a595c70, (int)(200), 31);
-            MenuArduPilot.Width = MenuArduPilot.Image.Width;
-
 
 
             Application.DoEvents();
@@ -675,9 +672,11 @@ namespace VPS
             SaveConfig();
         }
 
+
         #region 加载参数
         void LoadPlannedHomeLocation()
         {
+            log.Info("加载PlannedHomeLocation");
             try
             {
                 PointLatLngAlt home = new PointLatLngAlt();
@@ -702,7 +701,7 @@ namespace VPS
             }
             catch(Exception ex)
             {
-                log.Info("加载PlannedHomeLocation失败");
+                
                 log.Error(ex.Message);
             }
             finally
@@ -711,6 +710,7 @@ namespace VPS
 
         void LoadMainFormSize()
         {
+            log.Info("加载MainFormSize");
             try
             {
                 if (Settings.Instance["MainLocX"] != null && Settings.Instance["MainLocY"] != null)
@@ -753,7 +753,6 @@ namespace VPS
             }
             catch (Exception ex)
             {
-                log.Info("加载MainFormSize失败");
                 log.Error(ex);
             }
             finally { }
@@ -761,6 +760,7 @@ namespace VPS
 
         void LoadCurrentState()
         {
+            log.Info("加载CurrentState");
             try
             {
                 // set presaved default telem rates
