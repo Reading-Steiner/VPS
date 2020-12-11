@@ -521,8 +521,6 @@ namespace Xamarin
         {
             //POI.POIModified += POI_POIModified;
 
-            tfr.GotTFRs += tfr_GotTFRs;
-
             //if (!Settings.Instance.ContainsKey("ShowNoFly") || Settings.Instance.GetBoolean("ShowNoFly"))
             //NoFly.NoFly.NoFlyEvent += NoFly_NoFlyEvent;
 

@@ -627,7 +627,6 @@
             this.chk_tfr.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chk_tfr.Name = "chk_tfr";
             this.chk_tfr.UseVisualStyleBackColor = true;
-            this.chk_tfr.CheckedChanged += new System.EventHandler(this.chk_tfr_CheckedChanged);
             // 
             // chk_temp
             // 

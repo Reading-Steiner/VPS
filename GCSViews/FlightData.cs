@@ -47,7 +47,6 @@ namespace VPS.GCSViews
         internal static GMapOverlay photosoverlay;
         internal static GMapOverlay poioverlay = new GMapOverlay("POI");
         internal static GMapOverlay rallypointoverlay;
-        internal static GMapOverlay tfrpolygons;
         internal static GMapOverlay layerPolygonsOverlay;
         internal GMapMarker CurrentGMapMarker;
 
@@ -296,9 +295,6 @@ namespace VPS.GCSViews
 
             MainMap.RoutesEnabled = true;
             MainMap.PolygonsEnabled = true;
-
-            tfrpolygons = new GMapOverlay("tfrpolygons");
-            MainMap.Overlays.Add(tfrpolygons);
 
             layerPolygonsOverlay = new GMapOverlay("layerpolygons");
             MainMap.Overlays.Add(layerPolygonsOverlay);
@@ -2137,8 +2133,6 @@ namespace VPS.GCSViews
         private void FlightData_Load(object sender, EventArgs e)
         {
             POI.POIModified += POI_POIModified;
-
-            tfr.GotTFRs += tfr_GotTFRs;
 
             if (!Settings.Instance.ContainsKey("ShowNoFly") || Settings.Instance.GetBoolean("ShowNoFly"))
                 NoFly.NoFly.NoFlyEvent += NoFly_NoFlyEvent;
@@ -4453,28 +4447,6 @@ namespace VPS.GCSViews
                     CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
                 }
             }
-        }
-
-        void tfr_GotTFRs(object sender, EventArgs e)
-        {
-            BeginInvoke((Action) delegate
-            {
-                foreach (var item in tfr.tfrs)
-                {
-                    List<List<PointLatLng>> points = item.GetPaths();
-
-                    foreach (var list in points)
-                    {
-                        GMapPolygon poly = new GMapPolygon(list, item.NAME);
-
-                        poly.Fill = new SolidBrush(Color.FromArgb(30, Color.Blue));
-
-                        tfrpolygons.Polygons.Add(poly);
-                    }
-                }
-
-                tfrpolygons.IsVisibile = MainV2.ShowTFR;
-            });
         }
 
         private void timer1_Tick(object sender, EventArgs e)

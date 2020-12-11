@@ -86,34 +86,31 @@ namespace VPS.GCSViews
         public GMapOverlay geofenceoverlay;
         public GMapPolygon geofencepolygon;
         private bool grid;
+
+        #region 选中列表
         private List<int> wpMarkersGroup = new List<int>();
         private List<int> polyMarkersGroup = new List<int>();
-        private bool isMouseClickOffMenu = false;
-        private bool IsMouseClickOffMenu;
+        #endregion
+
+        #region 鼠标事件响应
+
+        #region 右键菜单消失标记
+        private bool IsMouseClickOffMenu = false;
+        #endregion
+
+        #region 鼠标按下标记
         private bool IsMouseDown = false;
-        private bool isMarkerDroping = false;
-        private bool IsMarkerDroping
-        {
-            get { return isMarkerDroping; }
-            set
-            {
-                isMarkerDroping = value;
-                if (isMarkerDroping)
-                {
-                    this.MainMap.Cursor = Cursors.Hand;
-                }
-                else
-                {
-                    if (IsDrawPolygongridMode || IsDrawWPMode)
-                        this.MainMap.Cursor = Cursors.Cross;
-                    else
-                        this.MainMap.Cursor = Cursors.Default;
-                }
-            }
-        }
+        #endregion
+
+        #region 标记可被添加
         private bool IsMarkerAddable = false;
-        private bool IsMarkerDroppable = false;
-        private bool IsWndDroppable;
+        #endregion
+
+        #region 地图可被拖动
+        private bool IsWndDroppable = false;
+        #endregion
+
+        #region 地图被拖动
         private bool isWndDroping = false;
         private bool IsWndDroping
         {
@@ -179,7 +176,40 @@ namespace VPS.GCSViews
                 }
             }
         }
+        #endregion
+
+        #region 标记可被拖动
+        private bool IsMarkerDroppable = false;
+        #endregion
+
+        #region 标记被拖动
+        private bool isMarkerDroping = false;
+        private bool IsMarkerDroping
+        {
+            get { return isMarkerDroping; }
+            set
+            {
+                isMarkerDroping = value;
+                if (isMarkerDroping)
+                {
+                    this.MainMap.Cursor = Cursors.Hand;
+                }
+                else
+                {
+                    if (IsDrawPolygongridMode || IsDrawWPMode)
+                        this.MainMap.Cursor = Cursors.Cross;
+                    else
+                        this.MainMap.Cursor = Cursors.Default;
+                }
+            }
+        }
+        #endregion
+
+        #region 标记可被选择
         private bool IsMarkerPickable;
+        #endregion
+
+        #endregion
         public GMapOverlay kmlpolygonsoverlay;
 
         /// <summary>
@@ -796,7 +826,7 @@ namespace VPS.GCSViews
             }
             catch (Exception ex)
             {
-                log.Info(ex.ToString());
+                log.Error(ex);
             }
         }
 
@@ -3072,6 +3102,7 @@ namespace VPS.GCSViews
             center.Position = point;
         }
 
+        #region 
         private void MainMap_OnMapTypeChanged(GMapProvider type)
         {
             comboBoxMapType.SelectedItem = MainMap.MapProvider;
@@ -3111,7 +3142,9 @@ namespace VPS.GCSViews
                 center.Position = MainMap.Position;
             }
         }
+        #endregion
 
+        #region
         private void MainMap_OnMarkerClick(GMapMarker item, object ei)
         {
             var e = ei as MouseEventArgs;
@@ -3251,6 +3284,7 @@ namespace VPS.GCSViews
                 }
             }
         }
+        #endregion
 
         private void MainMap_OnTileLoadComplete(long ElapsedMilliseconds)
         {

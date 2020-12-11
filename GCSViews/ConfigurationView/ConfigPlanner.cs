@@ -871,12 +871,6 @@ namespace VPS.GCSViews.ConfigurationView
             MainV2.instance.EnableADSB = chk_ADSB.Checked;
         }
 
-        private void chk_tfr_CheckedChanged(object sender, EventArgs e)
-        {
-            Settings.Instance["showtfr"] = chk_tfr.Checked.ToString();
-            MainV2.ShowTFR = chk_tfr.Checked;
-        }
-
         public class GCSBitmapInfo
         {
             public GCSBitmapInfo(int width, int height, long fps, string standard, AMMediaType media)

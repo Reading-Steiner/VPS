@@ -68,7 +68,6 @@ namespace VPS
         #endregion
 
         //public static bool ShowAirports { get; set; }
-        public static bool ShowTFR { get; set; }
 
         private Utilities.adsb _adsb;
 
@@ -537,19 +536,6 @@ namespace VPS
 
             ChangeUnits();
 
-            //if (Settings.Instance["showairports"] != null)
-            //{
-            //    MainV2.ShowAirports = bool.Parse(Settings.Instance["showairports"]);
-            //}
-
-            // set default
-            ShowTFR = true;
-            // load saved
-            if (Settings.Instance["showtfr"] != null)
-            {
-                MainV2.ShowTFR = Settings.Instance.GetBoolean("showtfr", ShowTFR);
-            }
-
             if (Settings.Instance["enableadsb"] != null)
             {
                 MainV2.instance.EnableADSB = Settings.Instance.GetBoolean("enableadsb");
@@ -557,38 +543,26 @@ namespace VPS
 
             try
             {
-                log.Debug(Process.GetCurrentProcess().Modules.ToJSON());
-            }
-            catch
-            {
-            }
-
-            try
-            {
-                log.Info("Create FD");
+                log.Info("Create FlightData");
                 FlightData = new GCSViews.FlightData();
-                log.Info("Create FP");
+                FlightData.Width = MyView.Width;
+
+                log.Info("Create FlightPlanner");
                 FlightPlanner = new GCSViews.FlightPlanner();
+                FlightPlanner.Width = MyView.Width;
+
                 //Configuration = new GCSViews.ConfigurationView.Setup();
                 //log.Info("Create SIM");
                 //Simulation = new GCSViews.SITL();
                 //Firmware = new GCSViews.Firmware();
                 //Terminal = new GCSViews.Terminal();
-
-                FlightData.Width = MyView.Width;
-                FlightPlanner.Width = MyView.Width;
-
-                CustomData.WP.WPGlobalData.instance.historyChange += this.historyChange;
-                //Simulation.Width = MyView.Width;
             }
             catch (ArgumentException e)
             {
                 //http://www.microsoft.com/en-us/download/details.aspx?id=16083
                 //System.ArgumentException: Font 'Arial' does not support style 'Regular'.
-
                 log.Fatal(e);
-                DevComponents.DotNetBar.MessageBoxEx.Show(e.ToString() +
-                                      "\n\n Font Issues? Please install this http://www.microsoft.com/en-us/download/details.aspx?id=16083");
+
                 //splash.Close();
                 //this.Close();
                 Application.Exit();
@@ -596,7 +570,7 @@ namespace VPS
             catch (Exception e)
             {
                 log.Fatal(e);
-                DevComponents.DotNetBar.MessageBoxEx.Show("A Major error has occured : " + e.ToString());
+
                 Application.Exit();
             }
 
@@ -629,14 +603,114 @@ namespace VPS
             }
 
             LayoutChanged += updateLayout;
-            LayoutChanged(null, EventArgs.Empty);
+            LayoutChanged?.Invoke(null, EventArgs.Empty);
 
-            if (Settings.Instance["CHK_GDIPlus"] != null)
-                GCSViews.FlightData.myhud.opengl = !bool.Parse(Settings.Instance["CHK_GDIPlus"].ToString());
+            LoadMainFormSize();
 
-            if (Settings.Instance["CHK_hudshow"] != null)
-                GCSViews.FlightData.myhud.hudon = bool.Parse(Settings.Instance["CHK_hudshow"].ToString());
+            LoadCurrentState();
+            try
+            {
+                // make sure rates propogate
+                MainV2.comPort.MAV.cs.ResetInternals();
 
+                if (Settings.Instance["speechenable"] != null)
+                    MainV2.speechEnable = Settings.Instance.GetBoolean("speechenable");
+
+                if (Settings.Instance["analyticsoptout"] != null)
+                    VPS.Utilities.Tracking.OptOut = Settings.Instance.GetBoolean("analyticsoptout");
+            }
+            catch
+            {
+            }
+
+            LoadPlannedHomeLocation();
+
+            // create log dir if it doesnt exist
+            try
+            {
+                if (!Directory.Exists(Settings.Instance.LogDir))
+                    Directory.CreateDirectory(Settings.Instance.LogDir);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+#if !NETSTANDARD2_0
+#if !NETCOREAPP2_0
+            Microsoft.Win32.SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
+#endif
+#endif
+
+            // make sure new enough .net framework is installed
+            if (!MONO)
+            {
+                Microsoft.Win32.RegistryKey installed_versions =
+                    Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP");
+                string[] version_names = installed_versions.GetSubKeyNames();
+                //version names start with 'v', eg, 'v3.5' which needs to be trimmed off before conversion
+                double Framework = Convert.ToDouble(version_names[version_names.Length - 1].Remove(0, 1),
+                    CultureInfo.InvariantCulture);
+                int SP =
+                    Convert.ToInt32(installed_versions.OpenSubKey(version_names[version_names.Length - 1])
+                        .GetValue("SP", 0));
+
+                if (Framework < 4.0)
+                {
+                    DevComponents.DotNetBar.MessageBoxEx.Show("This program requires .NET Framework 4.0. You currently have " + Framework);
+                }
+            }
+
+            MenuArduPilot.Image = new Bitmap(Properties.Resources._0d92fed790a3a70170e61a86db103f399a595c70, (int)(200), 31);
+            MenuArduPilot.Width = MenuArduPilot.Image.Width;
+
+
+
+            Application.DoEvents();
+
+            Comports.Add(comPort);
+
+            MainV2.comPort.MavChanged += comPort_MavChanged;
+
+            CustomData.WP.WPGlobalData.instance.historyChange += this.historyChange;
+            SaveConfig();
+        }
+
+        #region 加载参数
+        void LoadPlannedHomeLocation()
+        {
+            try
+            {
+                PointLatLngAlt home = new PointLatLngAlt();
+                home.Tag = VPS.CustomData.WP.WPCommands.HomeCommand;
+                if (Settings.Instance["Main_DefaultHomeLat"] != null)
+                    home.Lat = Settings.Instance.GetDouble("Main_DefaultHomeLat");
+
+                if (Settings.Instance["Main_DefaultHomeLng"] != null)
+                    home.Lng = Settings.Instance.GetDouble("Main_DefaultHomeLng");
+
+                if (Settings.Instance["Main_DefaultHomeAlt"] != null)
+                    home.Alt = Settings.Instance.GetDouble("Main_DefaultHomeAlt");
+
+                if (Settings.Instance["Main_DefaultHomeAlt"] != null)
+                    home.Tag2 = Settings.Instance["TXT_homealt"].ToString();
+
+                // remove invalid entrys
+                if (Math.Abs(home.Lat) > 90 || Math.Abs(home.Lng) > 180)
+                    MainV2.comPort.MAV.cs.PlannedHomeLocation = new PointLatLngAlt();
+                else
+                    MainV2.comPort.MAV.cs.PlannedHomeLocation = home;
+            }
+            catch(Exception ex)
+            {
+                log.Info("加载PlannedHomeLocation失败");
+                log.Error(ex.Message);
+            }
+            finally
+            {}
+        }
+
+        void LoadMainFormSize()
+        {
             try
             {
                 if (Settings.Instance["MainLocX"] != null && Settings.Instance["MainLocY"] != null)
@@ -676,7 +750,19 @@ namespace VPS
                     this.Height = Settings.Instance.GetInt32("MainHeight");
                 if (Settings.Instance["MainWidth"] != null)
                     this.Width = Settings.Instance.GetInt32("MainWidth");
+            }
+            catch (Exception ex)
+            {
+                log.Info("加载MainFormSize失败");
+                log.Error(ex);
+            }
+            finally { }
+        }
 
+        void LoadCurrentState()
+        {
+            try
+            {
                 // set presaved default telem rates
                 if (Settings.Instance["CMB_rateattitude"] != null)
                     CurrentState.rateattitudebackup = Settings.Instance.GetInt32("CMB_rateattitude");
@@ -689,99 +775,27 @@ namespace VPS
                 if (Settings.Instance["CMB_ratesensors"] != null)
                     CurrentState.ratesensorsbackup = Settings.Instance.GetInt32("CMB_ratesensors");
 
+                if (CurrentState.rateattitudebackup == 0) // initilised to 10, configured above from save
+                {
+                    log.Error("NOTE: your attitude rate is 0, the hud will not work\nChange in Configuration > Planner > Telemetry Rates");
+                    DevComponents.DotNetBar.MessageBoxEx.Show(
+                        "NOTE: your attitude rate is 0, the hud will not work\nChange in Configuration > Planner > Telemetry Rates");
+                }
                 //Load customfield names from config
-
                 for (short i = 0; i < 10; i++)
                 {
                     var fieldname = "customfield" + i.ToString();
                     if (Settings.Instance.ContainsKey(fieldname))
                         CurrentState.custom_field_names.Add(fieldname, Settings.Instance[fieldname].ToUpper());
                 }
-
-                // make sure rates propogate
-                MainV2.comPort.MAV.cs.ResetInternals();
-
-                if (Settings.Instance["speechenable"] != null)
-                    MainV2.speechEnable = Settings.Instance.GetBoolean("speechenable");
-
-                if (Settings.Instance["analyticsoptout"] != null)
-                    VPS.Utilities.Tracking.OptOut = Settings.Instance.GetBoolean("analyticsoptout");
-
-                try
-                {
-                    if (Settings.Instance["TXT_homelat"] != null)
-                        MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat = Settings.Instance.GetDouble("TXT_homelat");
-
-                    if (Settings.Instance["TXT_homelng"] != null)
-                        MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng = Settings.Instance.GetDouble("TXT_homelng");
-
-                    if (Settings.Instance["TXT_homealt"] != null)
-                        MainV2.comPort.MAV.cs.PlannedHomeLocation.Alt = Settings.Instance.GetDouble("TXT_homealt");
-
-                    // remove invalid entrys
-                    if (Math.Abs(MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat) > 90 ||
-                        Math.Abs(MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng) > 180)
-                        MainV2.comPort.MAV.cs.PlannedHomeLocation = new PointLatLngAlt();
-                }
-                catch
-                {
-                }
             }
-            catch
+            catch (Exception ex)
             {
+                log.Error(ex);
             }
-
-            if (CurrentState.rateattitudebackup == 0) // initilised to 10, configured above from save
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show(
-                    "NOTE: your attitude rate is 0, the hud will not work\nChange in Configuration > Planner > Telemetry Rates");
-            }
-
-            // create log dir if it doesnt exist
-            try
-            {
-                if (!Directory.Exists(Settings.Instance.LogDir))
-                    Directory.CreateDirectory(Settings.Instance.LogDir);
-            }
-            catch (Exception ex) { log.Error(ex); }
-#if !NETSTANDARD2_0
-#if !NETCOREAPP2_0
-            Microsoft.Win32.SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
-#endif
-#endif
-
-            // make sure new enough .net framework is installed
-            if (!MONO)
-            {
-                Microsoft.Win32.RegistryKey installed_versions =
-                    Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP");
-                string[] version_names = installed_versions.GetSubKeyNames();
-                //version names start with 'v', eg, 'v3.5' which needs to be trimmed off before conversion
-                double Framework = Convert.ToDouble(version_names[version_names.Length - 1].Remove(0, 1),
-                    CultureInfo.InvariantCulture);
-                int SP =
-                    Convert.ToInt32(installed_versions.OpenSubKey(version_names[version_names.Length - 1])
-                        .GetValue("SP", 0));
-
-                if (Framework < 4.0)
-                {
-                    DevComponents.DotNetBar.MessageBoxEx.Show("This program requires .NET Framework 4.0. You currently have " + Framework);
-                }
-            }
-
-            MenuArduPilot.Image = new Bitmap(Properties.Resources._0d92fed790a3a70170e61a86db103f399a595c70, (int)(200), 31);
-            MenuArduPilot.Width = MenuArduPilot.Image.Width;
-
-
-
-            Application.DoEvents();
-
-            Comports.Add(comPort);
-
-            MainV2.comPort.MavChanged += comPort_MavChanged;
-
-            SaveConfig();
+            finally { }
         }
+        #endregion
 
         void cmb_sysid_Click(object sender, EventArgs e)
         {

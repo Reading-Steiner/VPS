@@ -112,8 +112,6 @@ namespace VPS.Utilities
                     tfrs.AddRange(newtfrs);
                 }
 
-                if (GotTFRs != null)
-                    GotTFRs(tfrs, null);
             }
             catch
             {
