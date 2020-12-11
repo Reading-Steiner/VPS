@@ -39,10 +39,6 @@ namespace VPS
             get { return Application.ExecutablePath.Contains("WindowsApps"); }
         }
 
-
-
-        public static Splash Splash;
-
         internal static Thread Thread;
 
         public static string[] args = new string[] { };
@@ -95,21 +91,12 @@ namespace VPS
 
             name = "Visiontek Photogrammetry Simulation System";
 
-            Splash = new VPS.Splash();
-
-            string strVersion = File.Exists("version.txt")
-                ? File.ReadAllText("version.txt")
-                : System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Splash.Text = name + " V" + Application.ProductVersion;
-            Splash.Show();
-
-            if (Debugger.IsAttached)
-                Splash.TopMost = false;
+            InitSplash(name);
 
             Splash.SetDisplayInfo("初始化配置文件信息");
             Directory.SetCurrentDirectory(Settings.GetRunningDirectory());
 
-            var listener = new TextWriterTraceListener(Settings.GetDataDirectory() + Path.DirectorySeparatorChar + "trace.log",
+            var listener = new TextWriterTraceListener(Settings.GetUserDataDirectory() + Path.DirectorySeparatorChar + "trace.log",
                 "defaulttrace");
 
             if (args.Any(a=>a.Contains("trace")))
@@ -196,47 +183,7 @@ namespace VPS
 
             VPS.Utilities.Extensions.MessageLoop = new Action(() => Application.DoEvents());
 
-            Splash.SetDisplayInfo("初始化地图图源");
-            // set the cache provider to my custom version
-            GMap.NET.GMaps.Instance.PrimaryCache = new Maps.MyImageCache();
-            // add my custom map providers
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.WMSProvider.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Custom.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Earthbuilder.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Statkart_Topo2.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Eniro_Topo.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.MapBox.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.MapboxNoFly.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.MapboxUser.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Lake.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1974.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1979.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1984.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1988.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Relief.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Slopezone.Instance);
-            GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Sea.Instance);
-
-            GoogleMapProvider.APIKey = "AIzaSyA5nFp39fEHruCezXnG3r8rGyZtuAkmCug";
-            if (Settings.Instance["GoogleApiKey"] != null) GoogleMapProvider.APIKey = Settings.Instance["GoogleApiKey"];
-            
-            Tracking.productName = Application.ProductName;
-            Tracking.productVersion = Application.ProductVersion;
-            Tracking.currentCultureName = Application.CurrentCulture.Name;
-            Tracking.primaryScreenBitsPerPixel = Screen.PrimaryScreen.BitsPerPixel;
-            Tracking.boundsWidth = Screen.PrimaryScreen.Bounds.Width;
-            Tracking.boundsHeight = Screen.PrimaryScreen.Bounds.Height;
-
-            Settings.Instance.UserAgent = Application.ProductName + " " + Application.ProductVersion + " (" + Environment.OSVersion.VersionString + ")";
-
-            // optionally add gdal support
-            if (Directory.Exists(Application.StartupPath + Path.DirectorySeparatorChar + "gdal"))
-                GMap.NET.MapProviders.GMapProviders.List.Add(GDAL.GDALProvider.Instance);
-
-            // add proxy settings
-            GMap.NET.MapProviders.GMapProvider.WebProxy = WebRequest.GetSystemWebProxy();
-            GMap.NET.MapProviders.GMapProvider.WebProxy.Credentials = CredentialCache.DefaultCredentials;
+            InitMapSource();
 
             // generic status report screen
             MAVLinkInterface.CreateIProgressReporterDialogue += title =>
@@ -273,6 +220,7 @@ namespace VPS
             {
             }
             Splash.SetDisplayInfo("验证版本信息");
+
             Type type = Type.GetType("Mono.Runtime");
             if (type != null)
             {
@@ -294,32 +242,19 @@ namespace VPS
                 }
             }
 
-            Splash.SetDisplayInfo("加载主界面");
-            //try
-            //{
-                Thread.CurrentThread.Name = "Base Thread";
-                Application.Run(new MainV2());
-            //}
-            //catch (Exception ex)
-            //{
-            //    log.Fatal("Fatal app exception", ex);
-            //}
-
+            Splash.SetDisplayInfo("运行主程序");
+            log.Info("主程序运行");
             try
             {
-                // kill sim background process if its still running
-                GCSViews.SITL.simulator.ForEach(a =>
-                {
-                    try
-                    {
-                        a.Kill();
-                    }
-                    catch { }
-                });
+                Thread.CurrentThread.Name = "Base Thread";
+                Application.Run(new MainV2());
             }
-            catch
+            catch (Exception ex)
             {
+                log.Fatal("程序运行重大错误", ex);
             }
+
+            KillSimulatorProcess();
         }
 
         private static string SerialPort_GetDeviceName(string port)
@@ -339,6 +274,110 @@ namespace VPS
 
             return "";
         }
+
+        #region 加载 Splash 导入界面
+        public static Splash Splash;
+        public static void InitSplash(string name)
+        {
+            log.Info("创建导入界面");
+            try
+            {
+                Splash = new VPS.Splash();
+
+                string strVersion = File.Exists("version.txt")
+                    ? File.ReadAllText("version.txt")
+                    : System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                Splash.Text = name + " V" + Application.ProductVersion;
+                Splash.Show();
+
+                if (Debugger.IsAttached)
+                    Splash.TopMost = false;
+
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+        #endregion
+         
+        #region 加载 MapSource 地图源
+        public static void InitMapSource()
+        {
+            Splash.SetDisplayInfo("初始化地图图源");
+            log.Info("初始化地图图源");
+            try
+            {
+                // set the cache provider to my custom version
+                GMap.NET.GMaps.Instance.PrimaryCache = new Maps.MyImageCache();
+                // add my custom map providers
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.WMSProvider.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Custom.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Earthbuilder.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Statkart_Topo2.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Eniro_Topo.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.MapBox.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.MapboxNoFly.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.MapboxUser.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Lake.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1974.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1979.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1984.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_1988.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Relief.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Slopezone.Instance);
+                GMap.NET.MapProviders.GMapProviders.List.Add(Maps.Japan_Sea.Instance);
+
+                GoogleMapProvider.APIKey = "AIzaSyA5nFp39fEHruCezXnG3r8rGyZtuAkmCug";
+                if (Settings.Instance["GoogleApiKey"] != null) GoogleMapProvider.APIKey = Settings.Instance["GoogleApiKey"];
+
+                Tracking.productName = Application.ProductName;
+                Tracking.productVersion = Application.ProductVersion;
+                Tracking.currentCultureName = Application.CurrentCulture.Name;
+                Tracking.primaryScreenBitsPerPixel = Screen.PrimaryScreen.BitsPerPixel;
+                Tracking.boundsWidth = Screen.PrimaryScreen.Bounds.Width;
+                Tracking.boundsHeight = Screen.PrimaryScreen.Bounds.Height;
+
+                Settings.Instance.UserAgent = Application.ProductName + " " + Application.ProductVersion + " (" + Environment.OSVersion.VersionString + ")";
+
+                // optionally add gdal support
+                if (Directory.Exists(Application.StartupPath + Path.DirectorySeparatorChar + "gdal"))
+                    GMap.NET.MapProviders.GMapProviders.List.Add(GDAL.GDALProvider.Instance);
+
+                // add proxy settings
+                GMap.NET.MapProviders.GMapProvider.WebProxy = WebRequest.GetSystemWebProxy();
+                GMap.NET.MapProviders.GMapProvider.WebProxy.Credentials = CredentialCache.DefaultCredentials;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+        #endregion
+
+        #region Kill
+        private static void KillSimulatorProcess()
+        {
+            log.Info("撤销进程");
+            try
+            {
+                // kill sim background process if its still running
+                GCSViews.SITL.simulator.ForEach(a =>
+                {
+                    try
+                    {
+                        a.Kill();
+                    }
+                    catch { }
+                });
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+        #endregion
 
         private static void LoadDlls()
         {
