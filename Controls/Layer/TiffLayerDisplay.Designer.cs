@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TiffLayerDisplay));
-            VPS.Utilities.PointLatLngAlt pointLatLngAlt2 = new VPS.Utilities.PointLatLngAlt();
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
-            this.StateDisplay = new VPS.Controls.Layer.TiffLayerDisplay.CustomLayerVaildState();
-            this.IdDisplay = new DevComponents.DotNetBar.LabelX();
-            this.LayerDisplay = new DevComponents.DotNetBar.LabelX();
+            this.ProjectionDisplay = new VPS.Controls.CustomControls.ProjectionDisplay();
             this.ModifyTimeDisplay = new DevComponents.DotNetBar.LabelX();
             this.CreateTimeDisplay = new DevComponents.DotNetBar.LabelX();
             this.LayerRectDisplay = new VPS.Controls.CustomControls.RectDisplay();
             this.HomePositionDisplay = new VPS.Controls.CustomControls.PositionDisplay();
             this.panelEx2 = new DevComponents.DotNetBar.PanelEx();
+            this.IdDisplay = new DevComponents.DotNetBar.LabelX();
+            this.StateDisplay = new VPS.Controls.Layer.TiffLayerDisplay.CustomLayerVaildState();
+            this.LayerDisplay = new VPS.Controls.CustomControls.LayerDisplay();
             this.panelEx1.SuspendLayout();
             this.panelEx2.SuspendLayout();
             this.SuspendLayout();
@@ -48,6 +48,7 @@
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelEx1.Controls.Add(this.LayerDisplay);
+            this.panelEx1.Controls.Add(this.ProjectionDisplay);
             this.panelEx1.Controls.Add(this.ModifyTimeDisplay);
             this.panelEx1.Controls.Add(this.CreateTimeDisplay);
             this.panelEx1.Controls.Add(this.LayerRectDisplay);
@@ -66,40 +67,13 @@
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 0;
             // 
-            // StateDisplay
+            // ProjectionDisplay
             // 
-            this.StateDisplay.AutoSize = true;
-            this.StateDisplay.BackColor = System.Drawing.Color.Transparent;
-            this.StateDisplay.Location = new System.Drawing.Point(3, 0);
-            this.StateDisplay.Name = "StateDisplay";
-            this.StateDisplay.Size = new System.Drawing.Size(69, 24);
-            this.StateDisplay.TabIndex = 7;
-            // 
-            // IdDisplay
-            // 
-            // 
-            // 
-            // 
-            this.IdDisplay.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.IdDisplay.Location = new System.Drawing.Point(377, 3);
-            this.IdDisplay.Name = "IdDisplay";
-            this.IdDisplay.Size = new System.Drawing.Size(110, 16);
-            this.IdDisplay.TabIndex = 6;
-            this.IdDisplay.Text = "0";
-            this.IdDisplay.TextAlignment = System.Drawing.StringAlignment.Far;
-            // 
-            // LayerDisplay
-            // 
-            this.LayerDisplay.AutoSize = true;
-            // 
-            // 
-            // 
-            this.LayerDisplay.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.LayerDisplay.Location = new System.Drawing.Point(3, 3);
-            this.LayerDisplay.Name = "LayerDisplay";
-            this.LayerDisplay.Size = new System.Drawing.Size(44, 18);
-            this.LayerDisplay.TabIndex = 5;
-            this.LayerDisplay.Text = "图层：";
+            this.ProjectionDisplay.AutoSize = true;
+            this.ProjectionDisplay.Location = new System.Drawing.Point(3, 29);
+            this.ProjectionDisplay.Name = "ProjectionDisplay";
+            this.ProjectionDisplay.Size = new System.Drawing.Size(53, 24);
+            this.ProjectionDisplay.TabIndex = 10;
             // 
             // ModifyTimeDisplay
             // 
@@ -131,7 +105,7 @@
             // 
             this.LayerRectDisplay.AutoSize = true;
             this.LayerRectDisplay.IsReadOnly = true;
-            this.LayerRectDisplay.Location = new System.Drawing.Point(3, 32);
+            this.LayerRectDisplay.Location = new System.Drawing.Point(3, 59);
             this.LayerRectDisplay.MinimumSize = new System.Drawing.Size(209, 23);
             this.LayerRectDisplay.Name = "LayerRectDisplay";
             this.LayerRectDisplay.PositionName = "区域";
@@ -143,23 +117,12 @@
             // 
             this.HomePositionDisplay.AutoSize = true;
             this.HomePositionDisplay.IsReadOnly = true;
-            this.HomePositionDisplay.Location = new System.Drawing.Point(245, 32);
+            this.HomePositionDisplay.Location = new System.Drawing.Point(245, 59);
             this.HomePositionDisplay.MinimumSize = new System.Drawing.Size(100, 60);
             this.HomePositionDisplay.Name = "HomePositionDisplay";
             this.HomePositionDisplay.PositionName = "初始位置";
             this.HomePositionDisplay.Size = new System.Drawing.Size(206, 67);
             this.HomePositionDisplay.TabIndex = 0;
-            pointLatLngAlt2.Alt = 0D;
-            pointLatLngAlt2.color = System.Drawing.Color.White;
-            pointLatLngAlt2.Lat = 0D;
-            pointLatLngAlt2.Lng = 0D;
-            pointLatLngAlt2.Param1 = 0D;
-            pointLatLngAlt2.Param2 = 0D;
-            pointLatLngAlt2.Param3 = 0D;
-            pointLatLngAlt2.Param4 = 0D;
-            pointLatLngAlt2.Tag = "";
-            pointLatLngAlt2.Tag2 = "";
-            this.HomePositionDisplay.WGS84Position = pointLatLngAlt2;
             // 
             // panelEx2
             // 
@@ -190,6 +153,36 @@
             this.panelEx2.StyleMouseOver.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemHotText;
             this.panelEx2.TabIndex = 8;
             // 
+            // IdDisplay
+            // 
+            // 
+            // 
+            // 
+            this.IdDisplay.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.IdDisplay.Location = new System.Drawing.Point(377, 3);
+            this.IdDisplay.Name = "IdDisplay";
+            this.IdDisplay.Size = new System.Drawing.Size(110, 16);
+            this.IdDisplay.TabIndex = 6;
+            this.IdDisplay.Text = "0";
+            this.IdDisplay.TextAlignment = System.Drawing.StringAlignment.Far;
+            // 
+            // StateDisplay
+            // 
+            this.StateDisplay.AutoSize = true;
+            this.StateDisplay.BackColor = System.Drawing.Color.Transparent;
+            this.StateDisplay.Location = new System.Drawing.Point(3, 0);
+            this.StateDisplay.Name = "StateDisplay";
+            this.StateDisplay.Size = new System.Drawing.Size(69, 24);
+            this.StateDisplay.TabIndex = 7;
+            // 
+            // LayerDisplay
+            // 
+            this.LayerDisplay.AutoSize = true;
+            this.LayerDisplay.Location = new System.Drawing.Point(3, 3);
+            this.LayerDisplay.Name = "LayerDisplay";
+            this.LayerDisplay.Size = new System.Drawing.Size(51, 20);
+            this.LayerDisplay.TabIndex = 11;
+            // 
             // TiffLayerDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -212,9 +205,10 @@
         private CustomControls.RectDisplay LayerRectDisplay;
         private DevComponents.DotNetBar.LabelX ModifyTimeDisplay;
         private DevComponents.DotNetBar.LabelX CreateTimeDisplay;
-        private DevComponents.DotNetBar.LabelX LayerDisplay;
         private DevComponents.DotNetBar.LabelX IdDisplay;
         private CustomLayerVaildState StateDisplay;
         private DevComponents.DotNetBar.PanelEx panelEx2;
+        private CustomControls.ProjectionDisplay ProjectionDisplay;
+        private CustomControls.LayerDisplay LayerDisplay;
     }
 }

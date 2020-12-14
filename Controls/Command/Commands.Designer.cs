@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            VPS.Utilities.PointLatLngAlt pointLatLngAlt1 = new VPS.Utilities.PointLatLngAlt();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CommandsPanel));
             this.MainPanel = new DevComponents.DotNetBar.PanelEx();
             this.HomePositionDisplay = new VPS.Controls.CustomControls.PositionDisplay();
@@ -95,17 +94,6 @@
             this.HomePositionDisplay.PositionName = "初始位置";
             this.HomePositionDisplay.Size = new System.Drawing.Size(185, 67);
             this.HomePositionDisplay.TabIndex = 26;
-            pointLatLngAlt1.Alt = 0D;
-            pointLatLngAlt1.color = System.Drawing.Color.White;
-            pointLatLngAlt1.Lat = 0D;
-            pointLatLngAlt1.Lng = 0D;
-            pointLatLngAlt1.Param1 = 0D;
-            pointLatLngAlt1.Param2 = 0D;
-            pointLatLngAlt1.Param3 = 0D;
-            pointLatLngAlt1.Param4 = 0D;
-            pointLatLngAlt1.Tag = "";
-            pointLatLngAlt1.Tag2 = "";
-            this.HomePositionDisplay.WGS84Position = pointLatLngAlt1;
             // 
             // CommandDataList
             // 

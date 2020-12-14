@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            VPS.Utilities.PointLatLngAlt pointLatLngAlt1 = new VPS.Utilities.PointLatLngAlt();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LayerReader));
             this.textBoxItem1 = new DevComponents.DotNetBar.TextBoxItem();
             this.labelItem1 = new DevComponents.DotNetBar.LabelItem();
@@ -697,17 +696,6 @@
             this.OriginPosition.PositionName = "初始位置";
             this.OriginPosition.Size = new System.Drawing.Size(287, 67);
             this.OriginPosition.TabIndex = 37;
-            pointLatLngAlt1.Alt = 0D;
-            pointLatLngAlt1.color = System.Drawing.Color.White;
-            pointLatLngAlt1.Lat = 0D;
-            pointLatLngAlt1.Lng = 0D;
-            pointLatLngAlt1.Param1 = 0D;
-            pointLatLngAlt1.Param2 = 0D;
-            pointLatLngAlt1.Param3 = 0D;
-            pointLatLngAlt1.Param4 = 0D;
-            pointLatLngAlt1.Tag = "";
-            pointLatLngAlt1.Tag2 = "";
-            this.OriginPosition.WGS84Position = pointLatLngAlt1;
             // 
             // TransparentBox
             // 

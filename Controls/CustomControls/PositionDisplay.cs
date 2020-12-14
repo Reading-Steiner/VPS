@@ -19,7 +19,7 @@ namespace VPS.Controls.CustomControls
 
         #region 标题
         private string posName = "位置";
-        [Category("Value"),Description("标题")]
+        [Category("Value"), Description("标题")]
         public string PositionName
         {
             set
@@ -36,7 +36,7 @@ namespace VPS.Controls.CustomControls
 
         #region 坐标
         private Utilities.PointLatLngAlt Position = new Utilities.PointLatLngAlt();
-        [Category("Value"), Description("位置信息")]
+        [Browsable(false)]
         public Utilities.PointLatLngAlt WGS84Position
         {
             set

@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LeftMainInfo));
-            VPS.Utilities.PointLatLngAlt pointLatLngAlt1 = new VPS.Utilities.PointLatLngAlt();
-            VPS.Utilities.PointLatLngAlt pointLatLngAlt2 = new VPS.Utilities.PointLatLngAlt();
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
             this.panelEx10 = new DevComponents.DotNetBar.PanelEx();
             this.panelEx9 = new DevComponents.DotNetBar.PanelEx();
@@ -669,17 +667,6 @@
             this.CurrentPosition.PositionName = "当前位置";
             this.CurrentPosition.Size = new System.Drawing.Size(269, 67);
             this.CurrentPosition.TabIndex = 40;
-            pointLatLngAlt1.Alt = 0D;
-            pointLatLngAlt1.color = System.Drawing.Color.White;
-            pointLatLngAlt1.Lat = 0D;
-            pointLatLngAlt1.Lng = 0D;
-            pointLatLngAlt1.Param1 = 0D;
-            pointLatLngAlt1.Param2 = 0D;
-            pointLatLngAlt1.Param3 = 0D;
-            pointLatLngAlt1.Param4 = 0D;
-            pointLatLngAlt1.Tag = "";
-            pointLatLngAlt1.Tag2 = "";
-            this.CurrentPosition.WGS84Position = pointLatLngAlt1;
             // 
             // LastAZ
             // 
@@ -863,17 +850,6 @@
             this.HomePosition.PositionName = "初始位置";
             this.HomePosition.Size = new System.Drawing.Size(269, 67);
             this.HomePosition.TabIndex = 28;
-            pointLatLngAlt2.Alt = 0D;
-            pointLatLngAlt2.color = System.Drawing.Color.White;
-            pointLatLngAlt2.Lat = 0D;
-            pointLatLngAlt2.Lng = 0D;
-            pointLatLngAlt2.Param1 = 0D;
-            pointLatLngAlt2.Param2 = 0D;
-            pointLatLngAlt2.Param3 = 0D;
-            pointLatLngAlt2.Param4 = 0D;
-            pointLatLngAlt2.Tag = "";
-            pointLatLngAlt2.Tag2 = "";
-            this.HomePosition.WGS84Position = pointLatLngAlt2;
             // 
             // panelEx6
             // 

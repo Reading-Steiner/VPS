@@ -441,6 +441,18 @@
     <Compile Include="Controls\CustomControls\CustomState.Designer.cs">
       <DependentUpon>CustomState.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CustomControls\LayerDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomControls\LayerDisplay.Designer.cs">
+      <DependentUpon>LayerDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomControls\ProjectionDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomControls\ProjectionDisplay.Designer.cs">
+      <DependentUpon>ProjectionDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CustomControls\RectDisplay.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -464,6 +476,12 @@
     </Compile>
     <Compile Include="Controls\CustomForms\CustomFileSelecter.Designer.cs">
       <DependentUpon>CustomFileSelecter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomForms\CustomLayer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomForms\CustomLayer.Designer.cs">
+      <DependentUpon>CustomLayer.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\CustomForms\CustomMap.cs">
       <SubType>Form</SubType>
@@ -1003,6 +1021,12 @@
     <EmbeddedResource Include="Controls\CustomControls\CustomState.resx">
       <DependentUpon>CustomState.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CustomControls\LayerDisplay.resx">
+      <DependentUpon>LayerDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CustomControls\ProjectionDisplay.resx">
+      <DependentUpon>ProjectionDisplay.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomControls\RectDisplay.resx">
       <DependentUpon>RectDisplay.cs</DependentUpon>
     </EmbeddedResource>
@@ -1014,6 +1038,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomForms\CustomFileSelecter.resx">
       <DependentUpon>CustomFileSelecter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CustomForms\CustomLayer.resx">
+      <DependentUpon>CustomLayer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomForms\CustomMap.resx">
       <DependentUpon>CustomMap.cs</DependentUpon>

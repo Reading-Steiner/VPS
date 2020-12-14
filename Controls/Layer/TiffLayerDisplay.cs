@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DotSpatial.Projections;
 
 namespace VPS.Controls.Layer
 {
@@ -17,14 +18,14 @@ namespace VPS.Controls.Layer
             InitializeComponent();
         }
 
-        private string layer;
-        public string Layer
+        private CustomData.Layer.TiffLayerInfo layer;
+        public CustomData.Layer.TiffLayerInfo Layer
         {
             get { return layer; }
             set
             {
                 layer = value;
-                LayerDisplay.Text = "图层：" + layer;
+                LayerDisplay.SetLayer(layer);
             }
         }
 
@@ -79,20 +80,37 @@ namespace VPS.Controls.Layer
             }
         }
 
+        private ProjectionInfo projection = new ProjectionInfo();
+        public ProjectionInfo Projection
+        {
+            get { return projection; }
+            set
+            {
+                projection = value;
+                ProjectionDisplay.Projection = projection;
+            }
+        }
+
         public void SetLayer(CustomData.Layer.TiffLayerInfo info)
         {
-            Layer = info.Layer;
+            Layer = info;
             HomePosition = info.Home;
             CreateTime = info.CreateTime;
             ModifyTime = info.ModifyTime;
             IdDisplay.Text = info.GetOnlyCode();
+
             if (info.LayerInvaild())
                 StateDisplay.SetState("就绪");
             else
                 StateDisplay.SetState("无效");
             var bitmapInfo = GDAL.GDAL.LoadImageInfo(info.Layer);
-            if (bitmapInfo != null) {
+            if (bitmapInfo != null)
+            {
                 LayerRect = bitmapInfo.Rect;
+            }
+            using (var ds = OSGeo.GDAL.Gdal.Open(info.Layer, OSGeo.GDAL.Access.GA_ReadOnly))
+            {
+                Projection = ProjectionInfo.FromEsriString(ds.GetProjection());
             }
         }
 
