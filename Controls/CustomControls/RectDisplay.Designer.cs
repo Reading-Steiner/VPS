@@ -61,7 +61,7 @@
             this.labelX2.Size = new System.Drawing.Size(209, 22);
             this.labelX2.TabIndex = 5;
             this.labelX2.Text = "[0W , 0E]";
-            this.labelX2.TextAlignment = System.Drawing.StringAlignment.Center;
+            this.labelX2.TextChanged += new System.EventHandler(this.Display_TextChanged);
             this.labelX2.DoubleClick += new System.EventHandler(this.Display_DoubleClick);
             // 
             // labelX1
@@ -76,7 +76,7 @@
             this.labelX1.Size = new System.Drawing.Size(209, 23);
             this.labelX1.TabIndex = 4;
             this.labelX1.Text = "[0 N]";
-            this.labelX1.TextAlignment = System.Drawing.StringAlignment.Center;
+            this.labelX1.TextChanged += new System.EventHandler(this.Display_TextChanged);
             this.labelX1.DoubleClick += new System.EventHandler(this.Display_DoubleClick);
             // 
             // labelX3
@@ -91,7 +91,7 @@
             this.labelX3.Size = new System.Drawing.Size(209, 22);
             this.labelX3.TabIndex = 6;
             this.labelX3.Text = "[0 S]";
-            this.labelX3.TextAlignment = System.Drawing.StringAlignment.Center;
+            this.labelX3.TextChanged += new System.EventHandler(this.Display_TextChanged);
             this.labelX3.DoubleClick += new System.EventHandler(this.Display_DoubleClick);
             // 
             // RectDisplay

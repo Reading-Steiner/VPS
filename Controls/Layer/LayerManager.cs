@@ -480,7 +480,7 @@ namespace VPS.Controls.Layer
                 TiffLayerDisplay display = new TiffLayerDisplay();
                 display.Dock = DockStyle.Fill;
 
-                display.HomePosition = info.Home;
+                display.SetLayer(info as CustomData.Layer.TiffLayerInfo);
 
                 panelEx2.Controls.Clear();
                 panelEx2.Controls.Add(display);

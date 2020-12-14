@@ -435,6 +435,12 @@
       <DependentUpon>CustomMap.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\CustomControls\CustomPropertyControls.cs" />
+    <Compile Include="Controls\CustomControls\CustomState.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomControls\CustomState.Designer.cs">
+      <DependentUpon>CustomState.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CustomControls\RectDisplay.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -993,6 +999,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomControls\CustomMap.resx">
       <DependentUpon>CustomMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CustomControls\CustomState.resx">
+      <DependentUpon>CustomState.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomControls\RectDisplay.resx">
       <DependentUpon>RectDisplay.cs</DependentUpon>

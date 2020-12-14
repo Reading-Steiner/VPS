@@ -15,6 +15,7 @@ namespace VPS.Controls.CustomControls
         public RectDisplay()
         {
             InitializeComponent();
+            WGS84Rect = new GMap.NET.RectLatLng();
         }
 
         #region 标题
@@ -42,16 +43,15 @@ namespace VPS.Controls.CustomControls
             set
             {
                 Rect = new GMap.NET.RectLatLng(value.Lat, value.Lng, value.WidthLng, value.HeightLat);
-                SetControlMainThread(
-                    labelX1,
-                    "[ " + Rect.Top.ToString("0.######") + (Rect.Top >= 0 ? "N" : "S") + " ]");
-                SetControlMainThread(
-                    labelX2,
-                    "[ " + Rect.Left.ToString("0.######") + (Rect.Left > 0 ? "E" : "W") + " , " +
-                    Rect.Left.ToString("0.######") + (Rect.Left >= 0 ? "E" : "W") + " ]");
-                SetControlMainThread(
-                    labelX3,
-                    "[ " + Rect.Bottom.ToString("0.######") + (Rect.Bottom > 0 ? "N" : "S") + " ]");
+
+                string top = "[ " + Rect.Top.ToString("0.######") + (Rect.Top >= 0 ? "N" : "S") + " ]";
+                string mid = "[ " + Rect.Left.ToString("0.######") + (Rect.Left > 0 ? "E" : "W") + " , " +
+                    Rect.Left.ToString("0.######") + (Rect.Left >= 0 ? "E" : "W") + " ]";
+                string bot = "[ " + Rect.Bottom.ToString("0.######") + (Rect.Bottom > 0 ? "N" : "S") + " ]";
+                
+                SetControlMainThread(labelX1, top);
+                SetControlMainThread(labelX2, mid);
+                SetControlMainThread(labelX3, bot);
             }
             get
             {
@@ -140,5 +140,20 @@ namespace VPS.Controls.CustomControls
             }
         }
         #endregion
+
+        private void Display_TextChanged(object sender, EventArgs e)
+        {
+            Graphics g = this.CreateGraphics();
+            string top = labelX1.Text; var topSize = g.MeasureString(top, labelX1.Font);
+            string mid = labelX2.Text; var midSize = g.MeasureString(mid, labelX2.Font);
+            string bot = labelX3.Text; var botSize = g.MeasureString(bot, labelX3.Font);
+
+            labelX1.PaddingLeft = (int)(midSize.Width > topSize.Width ?
+                (midSize.Width - topSize.Width) / 2 : 0);
+
+            labelX3.PaddingLeft = (int)(midSize.Width > botSize.Width ?
+                (midSize.Width - botSize.Width) / 2 : 0);
+
+        }
     }
 }

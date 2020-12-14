@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace VPS.CustomData.Layer
 {
-    class TiffLayerInfo : LayerInfo
+    public class TiffLayerInfo : LayerInfo
     {
 
         #region LayerInfo 访问器
