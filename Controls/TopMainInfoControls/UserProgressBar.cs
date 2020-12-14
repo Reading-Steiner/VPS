@@ -20,6 +20,7 @@ namespace VPS.Controls.TopMainInfoControls
         private delegate void SetDataInThread(double data);
 
         #region 修改颜色
+        Color defaultProgressColor = Color.Transparent;
 
         #region 进度
         private delegate void SetColorInThread(Color color);
@@ -32,10 +33,14 @@ namespace VPS.Controls.TopMainInfoControls
             }
             else
             {
+                if (defaultProgressColor == Color.Transparent)
+                    defaultProgressColor = this.Progress.ForeColor;
                 this.Progress.ForeColor = color;
             }
         }
         #endregion
+
+        Color defaultLabelColor = Color.Transparent;
 
         #region 提示
         private void SetProgressTextColor(Color color)
@@ -47,6 +52,8 @@ namespace VPS.Controls.TopMainInfoControls
             }
             else
             {
+                if (defaultLabelColor == Color.Transparent)
+                    defaultLabelColor = this.Label.ForeColor;
                 this.Label.ForeColor = color;
             }
         }
@@ -68,6 +75,8 @@ namespace VPS.Controls.TopMainInfoControls
             else
             { 
                 this.Progress.Text = text;
+                if (defaultProgressColor != Color.Transparent)
+                    this.Progress.ForeColor = defaultProgressColor;
             }
         }
         #endregion
@@ -83,7 +92,8 @@ namespace VPS.Controls.TopMainInfoControls
             else
             {
                 this.Label.Text = text;
-                //this.SetProgressInfoColor(Color.Black);
+                if (defaultLabelColor != Color.Transparent)
+                    this.Label.ForeColor = defaultLabelColor;
             }
         }
         #endregion
@@ -108,7 +118,7 @@ namespace VPS.Controls.TopMainInfoControls
                 if (this.ProgressBox.Maximum != 10000)
                     this.ProgressBox.Maximum = 10000;
                 this.ProgressBox.Value = (int)(data * 10000);
-                this.Progress.Text = (data.ToString("0.## %"));
+                SetProgressInfo(data.ToString("0.## %"));
             }
         }
         #endregion

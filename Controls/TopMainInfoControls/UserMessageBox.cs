@@ -44,10 +44,14 @@ namespace VPS.Controls.TopMainInfoControls
             }
             else
             {
+                if (defaultColor == Color.Transparent)
+                    defaultColor = this.Info.ForeColor;
                 this.Info.ForeColor = color;
             }
         }
         #endregion
+
+        Color defaultColor = Color.Transparent;
 
         public void SetWarnMessage(string warn)
         {
@@ -58,7 +62,8 @@ namespace VPS.Controls.TopMainInfoControls
         public void SetInfoMessage(string info)
         {
             SetMessageInfo(info);
-            SetMessageColor(Color.Black);
+            if (defaultColor != Color.Transparent)
+                this.Info.ForeColor = defaultColor;
         }
     }
 }
