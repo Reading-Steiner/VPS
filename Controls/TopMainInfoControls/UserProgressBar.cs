@@ -47,7 +47,7 @@ namespace VPS.Controls.TopMainInfoControls
             }
             else
             {
-                this.Progress.ForeColor = color;
+                this.Label.ForeColor = color;
             }
         }
         #endregion
@@ -83,9 +83,7 @@ namespace VPS.Controls.TopMainInfoControls
             else
             {
                 this.Label.Text = text;
-                Random rd = new Random();
-                this.SetProgressTextColor(
-                    Color.FromArgb(255, rd.Next(0, 256), rd.Next(0, 256), rd.Next(0, 256)));
+                //this.SetProgressInfoColor(Color.Black);
             }
         }
         #endregion
