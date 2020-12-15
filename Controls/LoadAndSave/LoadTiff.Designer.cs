@@ -138,6 +138,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(404, 601);
             this.Controls.Add(this.panelEx1);
+            this.DoubleBuffered = true;
+            this.EnableGlass = false;
             this.Name = "LoadTiff";
             this.Text = "加载工作区";
             this.panelEx1.ResumeLayout(false);

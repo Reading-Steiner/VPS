@@ -119,6 +119,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(404, 601);
             this.Controls.Add(this.panelEx1);
+            this.DoubleBuffered = true;
+            this.EnableGlass = false;
             this.Name = "LoadProject";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "LoadProject";

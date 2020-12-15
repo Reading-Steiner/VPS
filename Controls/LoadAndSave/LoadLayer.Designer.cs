@@ -60,7 +60,7 @@
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 2;
             // 
-            // IsLocalFile
+            // LocalFile
             // 
             this.LocalFile.AutoSize = true;
             // 
@@ -72,7 +72,7 @@
             this.LocalFile.CheckState = System.Windows.Forms.CheckState.Checked;
             this.LocalFile.CheckValue = "Y";
             this.LocalFile.Location = new System.Drawing.Point(3, 3);
-            this.LocalFile.Name = "IsLocalFile";
+            this.LocalFile.Name = "LocalFile";
             this.LocalFile.Size = new System.Drawing.Size(76, 18);
             this.LocalFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.LocalFile.TabIndex = 10;
@@ -139,6 +139,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(404, 601);
             this.Controls.Add(this.panelEx1);
+            this.DoubleBuffered = true;
+            this.EnableGlass = false;
             this.Name = "LoadLayer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "LoadLayer";

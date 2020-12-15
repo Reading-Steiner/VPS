@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevComponents.DotNetBar;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +13,7 @@ using System.Windows.Forms;
 
 namespace VPS.Controls.LoadAndSave
 {
-    public partial class LoadLayer : Form
+    public partial class LoadLayer : Office2007Form
     {
         public LoadLayer()
         {

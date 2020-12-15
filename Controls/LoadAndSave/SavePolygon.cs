@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevComponents.DotNetBar;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,7 +15,7 @@ using VPS.Utilities;
 
 namespace VPS.Controls.LoadAndSave
 {
-    public partial class SavePolygon : DevComponents.DotNetBar.Office2007Form
+    public partial class SavePolygon : Office2007Form
     {
         public SavePolygon()
         {

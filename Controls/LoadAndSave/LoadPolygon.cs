@@ -14,7 +14,7 @@ using VPS.Utilities;
 
 namespace VPS.Controls.LoadAndSave
 {
-    public partial class LoadPolygon : DevComponents.DotNetBar.Office2007Form
+    public partial class LoadPolygon : Office2007Form
     {
         public LoadPolygon()
         {

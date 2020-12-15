@@ -15,7 +15,7 @@ using VPS.Utilities;
 
 namespace VPS.Controls.LoadAndSave
 {
-    public partial class SaveWP : DevComponents.DotNetBar.Office2007Form
+    public partial class SaveWP : Office2007Form
     {
         public SaveWP()
         {

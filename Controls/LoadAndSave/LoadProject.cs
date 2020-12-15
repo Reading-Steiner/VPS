@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace VPS.Controls.LoadAndSave
 {
-    public partial class LoadProject : Form
+    public partial class LoadProject : Office2007Form
     {
         public LoadProject()
         {
