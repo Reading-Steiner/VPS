@@ -95,8 +95,7 @@ namespace VPS.Controls.CustomControls
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        rect = dlg.GetWGS84Rect();
-                        Invaild();
+                        SetWGS84Rect(dlg.GetWGS84Rect());
                         RectChange?.Invoke(rect);
                     }
                 }

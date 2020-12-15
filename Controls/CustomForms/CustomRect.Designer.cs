@@ -79,6 +79,7 @@
             this.Default.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.Default.TabIndex = 79;
             this.Default.Text = "默认";
+            this.Default.Click += new System.EventHandler(this.Default_Click);
             // 
             // TopLatInput
             // 
@@ -101,6 +102,7 @@
             this.TopLatInput.Name = "TopLatInput";
             this.TopLatInput.Size = new System.Drawing.Size(123, 23);
             this.TopLatInput.TabIndex = 74;
+            this.TopLatInput.ValueChanged += new System.EventHandler(this.TopLatInput_ValueChanged);
             // 
             // BottomLatInput
             // 
@@ -123,6 +125,7 @@
             this.BottomLatInput.Name = "BottomLatInput";
             this.BottomLatInput.Size = new System.Drawing.Size(123, 23);
             this.BottomLatInput.TabIndex = 71;
+            this.BottomLatInput.ValueChanged += new System.EventHandler(this.BottomLatInput_ValueChanged);
             // 
             // LeftLngInput
             // 
@@ -145,6 +148,7 @@
             this.LeftLngInput.Name = "LeftLngInput";
             this.LeftLngInput.Size = new System.Drawing.Size(123, 23);
             this.LeftLngInput.TabIndex = 67;
+            this.LeftLngInput.ValueChanged += new System.EventHandler(this.LeftLngInput_ValueChanged);
             // 
             // RightLngInput
             // 
@@ -167,6 +171,7 @@
             this.RightLngInput.Name = "RightLngInput";
             this.RightLngInput.Size = new System.Drawing.Size(123, 23);
             this.RightLngInput.TabIndex = 69;
+            this.RightLngInput.ValueChanged += new System.EventHandler(this.RightLngInput_ValueChanged);
             // 
             // buttonX2
             // 
