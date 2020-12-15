@@ -1,6 +1,6 @@
 ﻿namespace VPS.Controls.CustomForms
 {
-    partial class CustomLayer
+    partial class CustomProjection
     {
         /// <summary>
         /// Required designer variable.
@@ -28,37 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.DisplayImage = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.DisplayImage)).BeginInit();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomProjection));
+            this.projectionSelectControl = new DotSpatial.Projections.Forms.ProjectionSelectControl();
             this.SuspendLayout();
             // 
-            // DisplayImage
+            // projectionSelectControl
             // 
-            this.DisplayImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.DisplayImage.Location = new System.Drawing.Point(2, 1);
-            this.DisplayImage.Name = "DisplayImage";
-            this.DisplayImage.Size = new System.Drawing.Size(300, 300);
-            this.DisplayImage.TabIndex = 3;
-            this.DisplayImage.TabStop = false;
+            resources.ApplyResources(this.projectionSelectControl, "projectionSelectControl");
+            this.projectionSelectControl.Name = "projectionSelectControl";
+            this.projectionSelectControl.SelectedCoordinateSystem = null;
             // 
-            // CustomLayer
+            // CustomProjection
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(303, 301);
-            this.Controls.Add(this.DisplayImage);
+            this.Controls.Add(this.projectionSelectControl);
             this.DoubleBuffered = true;
             this.EnableGlass = false;
-            this.Name = "CustomLayer";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "图层";
-            ((System.ComponentModel.ISupportInitialize)(this.DisplayImage)).EndInit();
+            this.Name = "CustomProjection";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox DisplayImage;
+        private DotSpatial.Projections.Forms.ProjectionSelectControl projectionSelectControl;
     }
 }

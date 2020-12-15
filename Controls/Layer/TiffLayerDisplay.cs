@@ -87,7 +87,7 @@ namespace VPS.Controls.Layer
             set
             {
                 projection = value;
-                ProjectionDisplay.Projection = projection;
+                ProjectionDisplay.SetProjection(projection);
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevComponents.DotNetBar;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,7 +12,7 @@ using VPS.Utilities;
 
 namespace VPS.Controls.CustomForms
 {
-    public partial class CustomMap : Form
+    public partial class CustomMap : Office2007Form
     {
         List<List<PointLatLngAlt>> lists = new List<List<PointLatLngAlt>>();
 

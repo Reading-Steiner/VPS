@@ -159,6 +159,8 @@
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(447, 143);
             this.Controls.Add(this.panelEx3);
+            this.DoubleBuffered = true;
+            this.EnableGlass = false;
             this.Name = "CustomFileSelecter";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "CustomFileSelecter";

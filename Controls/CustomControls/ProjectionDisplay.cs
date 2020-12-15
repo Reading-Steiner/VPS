@@ -20,20 +20,24 @@ namespace VPS.Controls.CustomControls
 
         private void Display_DoubleClick(object sender, EventArgs e)
         {
-            CustomForms.CustomContent content = new CustomForms.CustomContent(projection.ToEsriString());
-            content.ShowDialog();
+            using (CustomForms.CustomProjection content = new CustomForms.CustomProjection())
+            {
+                content.SetProjection(projection);
+                content.ShowDialog();
+            }
         }
 
         private ProjectionInfo projection = new ProjectionInfo();
-        [Browsable(false)]
-        public ProjectionInfo Projection
+
+        public void SetProjection(ProjectionInfo value)
         {
-            get { return projection; }
-            set
-            {
-                projection = value;
-                labelX1.Text = "投影：" + projection.ToString();
-            }
+            projection = value;
+            labelX1.Text = "投影：" + projection.ToString();
+        }
+
+        public ProjectionInfo GetProjection()
+        {
+            return projection;
         }
     }
 }

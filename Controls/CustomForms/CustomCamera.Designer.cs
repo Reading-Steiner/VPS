@@ -32,27 +32,27 @@
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.Camera = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.FocalLength = new VPS.Controls.CustomControls.CustomDoubleInput(this.components);
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.SensHeight = new VPS.Controls.CustomControls.CustomDoubleInput(this.components);
-            this.SensWidth = new VPS.Controls.CustomControls.CustomDoubleInput(this.components);
-            this.ImgHeight = new VPS.Controls.CustomControls.CustomIntegerInput(this.components);
-            this.ImgWidth = new VPS.Controls.CustomControls.CustomIntegerInput(this.components);
             this.labelX5 = new DevComponents.DotNetBar.LabelX();
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
             this.regularExpressionValidator1 = new DevComponents.DotNetBar.Validator.RegularExpressionValidator();
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.FocalLength = new VPS.Controls.CustomControls.CustomDoubleInput(this.components);
+            this.SensHeight = new VPS.Controls.CustomControls.CustomDoubleInput(this.components);
+            this.ImgWidth = new VPS.Controls.CustomControls.CustomIntegerInput(this.components);
+            this.SensWidth = new VPS.Controls.CustomControls.CustomDoubleInput(this.components);
+            this.ImgHeight = new VPS.Controls.CustomControls.CustomIntegerInput(this.components);
+            this.panelEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FocalLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SensHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImgWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SensWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ImgHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ImgWidth)).BeginInit();
-            this.panelEx1.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelX1
@@ -97,25 +97,6 @@
             this.Camera.Size = new System.Drawing.Size(150, 21);
             this.Camera.TabIndex = 2;
             // 
-            // FocalLength
-            // 
-            this.FocalLength.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.FocalLength.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.FocalLength.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.FocalLength.ButtonFreeText.Checked = true;
-            this.FocalLength.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.FocalLength.DisplayFormat = "0.##";
-            this.FocalLength.FreeTextEntryMode = true;
-            this.FocalLength.Increment = 0.01D;
-            this.FocalLength.Location = new System.Drawing.Point(111, 51);
-            this.FocalLength.Name = "FocalLength";
-            this.FocalLength.ShowUpDown = true;
-            this.FocalLength.Size = new System.Drawing.Size(80, 21);
-            this.FocalLength.TabIndex = 39;
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -159,84 +140,6 @@
             this.label5.Size = new System.Drawing.Size(21, 14);
             this.label5.TabIndex = 55;
             this.label5.Text = "高";
-            // 
-            // SensHeight
-            // 
-            this.SensHeight.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.SensHeight.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.SensHeight.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.SensHeight.ButtonFreeText.Checked = true;
-            this.SensHeight.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.SensHeight.DisplayFormat = "0.##";
-            this.SensHeight.FreeTextEntryMode = true;
-            this.SensHeight.Increment = 0D;
-            this.SensHeight.Location = new System.Drawing.Point(181, 208);
-            this.SensHeight.MaxValue = 1000000D;
-            this.SensHeight.MinValue = 0D;
-            this.SensHeight.Name = "SensHeight";
-            this.SensHeight.Size = new System.Drawing.Size(80, 21);
-            this.SensHeight.TabIndex = 54;
-            // 
-            // SensWidth
-            // 
-            this.SensWidth.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.SensWidth.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.SensWidth.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.SensWidth.ButtonFreeText.Checked = true;
-            this.SensWidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.SensWidth.DisplayFormat = "0.##";
-            this.SensWidth.FreeTextEntryMode = true;
-            this.SensWidth.Increment = 0D;
-            this.SensWidth.Location = new System.Drawing.Point(47, 208);
-            this.SensWidth.MaxValue = 1000000D;
-            this.SensWidth.MinValue = 0D;
-            this.SensWidth.Name = "SensWidth";
-            this.SensWidth.Size = new System.Drawing.Size(80, 21);
-            this.SensWidth.TabIndex = 53;
-            // 
-            // ImgHeight
-            // 
-            this.ImgHeight.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.ImgHeight.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.ImgHeight.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ImgHeight.ButtonFreeText.Checked = true;
-            this.ImgHeight.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.ImgHeight.FreeTextEntryMode = true;
-            this.ImgHeight.Increment = 0;
-            this.ImgHeight.Location = new System.Drawing.Point(181, 130);
-            this.ImgHeight.MaxValue = 1000000000;
-            this.ImgHeight.MinValue = 0;
-            this.ImgHeight.Name = "ImgHeight";
-            this.ImgHeight.Size = new System.Drawing.Size(80, 21);
-            this.ImgHeight.TabIndex = 52;
-            // 
-            // ImgWidth
-            // 
-            this.ImgWidth.AllowEmptyState = false;
-            // 
-            // 
-            // 
-            this.ImgWidth.BackgroundStyle.Class = "DateTimeInputBackground";
-            this.ImgWidth.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ImgWidth.ButtonFreeText.Checked = true;
-            this.ImgWidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.ImgWidth.FreeTextEntryMode = true;
-            this.ImgWidth.Increment = 0;
-            this.ImgWidth.Location = new System.Drawing.Point(47, 130);
-            this.ImgWidth.MaxValue = 1000000000;
-            this.ImgWidth.MinValue = 0;
-            this.ImgWidth.Name = "ImgWidth";
-            this.ImgWidth.Size = new System.Drawing.Size(80, 21);
-            this.ImgWidth.TabIndex = 51;
             // 
             // labelX5
             // 
@@ -330,6 +233,103 @@
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 61;
             // 
+            // FocalLength
+            // 
+            this.FocalLength.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.FocalLength.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.FocalLength.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.FocalLength.ButtonFreeText.Checked = true;
+            this.FocalLength.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.FocalLength.DisplayFormat = "0.##";
+            this.FocalLength.FreeTextEntryMode = true;
+            this.FocalLength.Increment = 0.01D;
+            this.FocalLength.Location = new System.Drawing.Point(111, 51);
+            this.FocalLength.Name = "FocalLength";
+            this.FocalLength.ShowUpDown = true;
+            this.FocalLength.Size = new System.Drawing.Size(80, 21);
+            this.FocalLength.TabIndex = 39;
+            // 
+            // SensHeight
+            // 
+            this.SensHeight.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.SensHeight.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.SensHeight.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.SensHeight.ButtonFreeText.Checked = true;
+            this.SensHeight.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.SensHeight.DisplayFormat = "0.##";
+            this.SensHeight.FreeTextEntryMode = true;
+            this.SensHeight.Increment = 0D;
+            this.SensHeight.Location = new System.Drawing.Point(181, 208);
+            this.SensHeight.MaxValue = 1000000D;
+            this.SensHeight.MinValue = 0D;
+            this.SensHeight.Name = "SensHeight";
+            this.SensHeight.Size = new System.Drawing.Size(80, 21);
+            this.SensHeight.TabIndex = 54;
+            // 
+            // ImgWidth
+            // 
+            this.ImgWidth.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.ImgWidth.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.ImgWidth.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.ImgWidth.ButtonFreeText.Checked = true;
+            this.ImgWidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.ImgWidth.FreeTextEntryMode = true;
+            this.ImgWidth.Increment = 0;
+            this.ImgWidth.Location = new System.Drawing.Point(47, 130);
+            this.ImgWidth.MaxValue = 1000000000;
+            this.ImgWidth.MinValue = 0;
+            this.ImgWidth.Name = "ImgWidth";
+            this.ImgWidth.Size = new System.Drawing.Size(80, 21);
+            this.ImgWidth.TabIndex = 51;
+            // 
+            // SensWidth
+            // 
+            this.SensWidth.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.SensWidth.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.SensWidth.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.SensWidth.ButtonFreeText.Checked = true;
+            this.SensWidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.SensWidth.DisplayFormat = "0.##";
+            this.SensWidth.FreeTextEntryMode = true;
+            this.SensWidth.Increment = 0D;
+            this.SensWidth.Location = new System.Drawing.Point(47, 208);
+            this.SensWidth.MaxValue = 1000000D;
+            this.SensWidth.MinValue = 0D;
+            this.SensWidth.Name = "SensWidth";
+            this.SensWidth.Size = new System.Drawing.Size(80, 21);
+            this.SensWidth.TabIndex = 53;
+            // 
+            // ImgHeight
+            // 
+            this.ImgHeight.AllowEmptyState = false;
+            // 
+            // 
+            // 
+            this.ImgHeight.BackgroundStyle.Class = "DateTimeInputBackground";
+            this.ImgHeight.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.ImgHeight.ButtonFreeText.Checked = true;
+            this.ImgHeight.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
+            this.ImgHeight.FreeTextEntryMode = true;
+            this.ImgHeight.Increment = 0;
+            this.ImgHeight.Location = new System.Drawing.Point(181, 130);
+            this.ImgHeight.MaxValue = 1000000000;
+            this.ImgHeight.MinValue = 0;
+            this.ImgHeight.Name = "ImgHeight";
+            this.ImgHeight.Size = new System.Drawing.Size(80, 21);
+            this.ImgHeight.TabIndex = 52;
+            // 
             // CustomCamera
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -338,16 +338,17 @@
             this.ClientSize = new System.Drawing.Size(288, 337);
             this.Controls.Add(this.panelEx1);
             this.DoubleBuffered = true;
+            this.EnableGlass = false;
             this.Name = "CustomCamera";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "相机参数";
-            ((System.ComponentModel.ISupportInitialize)(this.FocalLength)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SensHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SensWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ImgHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ImgWidth)).EndInit();
             this.panelEx1.ResumeLayout(false);
             this.panelEx1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FocalLength)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SensHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImgWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SensWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImgHeight)).EndInit();
             this.ResumeLayout(false);
 
         }

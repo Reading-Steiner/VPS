@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevComponents.DotNetBar;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,7 +11,7 @@ using System.Windows.Forms;
 
 namespace VPS.Controls.CustomForms
 {
-    public partial class CustomRect : Form
+    public partial class CustomRect : Office2007Form
     {
         public CustomRect()
         {

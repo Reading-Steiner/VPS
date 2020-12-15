@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevComponents.DotNetBar;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,7 +12,7 @@ using System.Windows.Forms;
 
 namespace VPS.Controls.CustomForms
 {
-    public partial class CustomFileSelecter : Form
+    public partial class CustomFileSelecter : Office2007Form
     {
         public CustomFileSelecter()
         {

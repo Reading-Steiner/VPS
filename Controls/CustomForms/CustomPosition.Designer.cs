@@ -261,6 +261,7 @@
             this.ClientSize = new System.Drawing.Size(226, 315);
             this.Controls.Add(this.panelEx1);
             this.DoubleBuffered = true;
+            this.EnableGlass = false;
             this.Name = "CustomPosition";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "坐标";

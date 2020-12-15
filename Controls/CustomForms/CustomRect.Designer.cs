@@ -198,6 +198,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(345, 180);
             this.Controls.Add(this.panelEx1);
+            this.DoubleBuffered = true;
+            this.EnableGlass = false;
             this.Name = "CustomRect";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "CustomRect";

@@ -52,6 +52,7 @@
             this.ClientSize = new System.Drawing.Size(332, 216);
             this.Controls.Add(this.richTextBoxEx1);
             this.DoubleBuffered = true;
+            this.EnableGlass = false;
             this.Name = "CustomContent";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "CustomContent";
