@@ -40,7 +40,7 @@ namespace VPS.Controls.CustomControls
 
         public void SetWGS84Rect(VPS.CustomData.WP.Rect value)
         {
-            rect = new VPS.CustomData.WP.Rect(value);
+            rect.FromRect(value);
 
             Invaild();
         }

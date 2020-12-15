@@ -257,6 +257,14 @@ namespace VPS.CustomData.WP
             Left = rect.Left;
             Right = rect.Right;
         }
+
+        public void FromRect(VPS.CustomData.WP.Rect rect)
+        {
+            Top = rect.Top;
+            Bottom = rect.Bottom;
+            Left = rect.Left;
+            Right = rect.Right;
+        }
         #endregion
 
         #region 比较函数
