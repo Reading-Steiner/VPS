@@ -57,7 +57,7 @@ namespace VPS.Controls.LoadAndSave
             data.wp = info.wpList.features;
             data.poly = info.polygon.features;
             data.layer = info.layer;
-            data.layerRect = info.layerRect.ToLocationRect();
+            data.layerRect = info.layerRect.ToWGS84();
             data.homePosition = info.homePosition.ToLocationPoint();
             data.isLeftHide = info.isLeftHide;
             data.isBottomHide = info.isBottomHide;
@@ -218,23 +218,40 @@ namespace VPS.Controls.LoadAndSave
         }
     }
 
-    public class Rect
+    public class Rect : VPS.CustomData.WP.Rect
     {
         [Category("区域"), DisplayName("\t\t\t\t上")]
-        public double Top { get; set; } = 0;
+        public new double Top { get; set; } = 0;
 
         [Category("区域"), DisplayName("\t\t\t下")]
-        public double Bottom { get; set; } = 0;
+        public new double Bottom { get; set; } = 0;
 
         [Category("区域"), DisplayName("\t\t左")]
-        public double Left { get; set; } = 0;
+        public new double Left { get; set; } = 0;
 
         [Category("区域"), DisplayName("\t右")]
-        public double Right { get; set; } = 0;
+        public new double Right { get; set; } = 0;
 
-
+        #region 构造函数
         public Rect()
         {
+        }
+
+        public Rect(double top, double bottom, double left, double right)
+        {
+            Top = top;
+            Bottom = bottom;
+            Left = left;
+            Right = right;
+        }
+
+        public Rect(Position TopLeft, Position BottomRight)
+        {
+            Top = TopLeft.Lat;
+            Left = TopLeft.Lng;
+
+            Bottom = BottomRight.Lat;
+            Right = BottomRight.Lng;
         }
 
         public Rect(GMap.NET.RectLatLng rect)
@@ -245,28 +262,21 @@ namespace VPS.Controls.LoadAndSave
             Right = rect.Right;
         }
 
-        public override string ToString()
-        {
-            return 
-                Math.Abs(Left).ToString("0.##") + (Left > 0 ? "E" : "W") + "-" +
-                Math.Abs(Right).ToString("0.##") + (Left > 0 ? "E" : "W") + "; " +
-                Math.Abs(Bottom).ToString("0.##") + (Bottom > 0 ? "N" : "S") + "-" +
-                Math.Abs(Top).ToString("0.##") + (Top > 0 ? "N" : "S") + "; ";
-        }
-
-        public GMap.NET.RectLatLng ToLocationRect()
-        {
-            GMap.NET.RectLatLng rect = GMap.NET.RectLatLng.FromLTRB(Left, Top, Right, Bottom);
-
-            return rect;
-        }
-
-        public void FromLocationRect(GMap.NET.RectLatLng rect)
+        public Rect(Rect rect)
         {
             Top = rect.Top;
             Bottom = rect.Bottom;
             Left = rect.Left;
             Right = rect.Right;
         }
+
+        public Rect(VPS.CustomData.WP.Rect rect)
+        {
+            Top = rect.Top;
+            Bottom = rect.Bottom;
+            Left = rect.Left;
+            Right = rect.Right;
+        }
+        #endregion
     }
 }

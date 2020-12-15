@@ -80,11 +80,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panelEx4 = new DevComponents.DotNetBar.PanelEx();
             this.BoundBox = new DevComponents.DotNetBar.PanelEx();
-            this.labelX4 = new DevComponents.DotNetBar.LabelX();
-            this.BoundTopText = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.BoundLeftText = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.BoundBottomText = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.BoundRightText = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.panelEx13 = new DevComponents.DotNetBar.PanelEx();
             this.ShowCoordinates = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.Projection = new DevComponents.DotNetBar.Controls.RichTextBoxEx();
@@ -102,6 +97,7 @@
             this.FromFile = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.panelEx6 = new DevComponents.DotNetBar.PanelEx();
             this.label6 = new System.Windows.Forms.Label();
+            this.BoundDisplay = new VPS.Controls.CustomControls.RectDisplay();
             this.panelEx2.SuspendLayout();
             this.panelEx9.SuspendLayout();
             this.panelEx5.SuspendLayout();
@@ -204,7 +200,7 @@
             this.panelEx2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx2.Location = new System.Drawing.Point(0, 0);
             this.panelEx2.Name = "panelEx2";
-            this.panelEx2.Size = new System.Drawing.Size(310, 1102);
+            this.panelEx2.Size = new System.Drawing.Size(310, 1117);
             this.panelEx2.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx2.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelEx2.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -220,7 +216,7 @@
             this.panelEx9.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelEx9.Controls.Add(this.Accept);
             this.panelEx9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx9.Location = new System.Drawing.Point(0, 1024);
+            this.panelEx9.Location = new System.Drawing.Point(0, 1039);
             this.panelEx9.Name = "panelEx9";
             this.panelEx9.Size = new System.Drawing.Size(310, 78);
             this.panelEx9.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -255,7 +251,7 @@
             this.panelEx5.Controls.Add(this.panelEx10);
             this.panelEx5.Controls.Add(this.panelEx11);
             this.panelEx5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx5.Location = new System.Drawing.Point(0, 835);
+            this.panelEx5.Location = new System.Drawing.Point(0, 850);
             this.panelEx5.Name = "panelEx5";
             this.panelEx5.Size = new System.Drawing.Size(310, 189);
             this.panelEx5.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -574,7 +570,7 @@
             this.panelEx3.Controls.Add(this.panelEx7);
             this.panelEx3.Controls.Add(this.panelEx12);
             this.panelEx3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEx3.Location = new System.Drawing.Point(0, 349);
+            this.panelEx3.Location = new System.Drawing.Point(0, 364);
             this.panelEx3.Name = "panelEx3";
             this.panelEx3.Size = new System.Drawing.Size(310, 486);
             this.panelEx3.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -828,7 +824,7 @@
             this.panelEx4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEx4.Location = new System.Drawing.Point(0, 106);
             this.panelEx4.Name = "panelEx4";
-            this.panelEx4.Size = new System.Drawing.Size(310, 243);
+            this.panelEx4.Size = new System.Drawing.Size(310, 258);
             this.panelEx4.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx4.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx4.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
@@ -842,15 +838,11 @@
             this.BoundBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BoundBox.CanvasColor = System.Drawing.SystemColors.Control;
             this.BoundBox.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.BoundBox.Controls.Add(this.labelX4);
-            this.BoundBox.Controls.Add(this.BoundTopText);
-            this.BoundBox.Controls.Add(this.BoundLeftText);
-            this.BoundBox.Controls.Add(this.BoundBottomText);
-            this.BoundBox.Controls.Add(this.BoundRightText);
+            this.BoundBox.Controls.Add(this.BoundDisplay);
             this.BoundBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.BoundBox.Location = new System.Drawing.Point(0, 163);
             this.BoundBox.Name = "BoundBox";
-            this.BoundBox.Size = new System.Drawing.Size(310, 80);
+            this.BoundBox.Size = new System.Drawing.Size(310, 95);
             this.BoundBox.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.BoundBox.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.BoundBox.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -858,76 +850,6 @@
             this.BoundBox.Style.GradientAngle = 90;
             this.BoundBox.TabIndex = 22;
             this.BoundBox.Visible = false;
-            // 
-            // labelX4
-            // 
-            this.labelX4.AutoSize = true;
-            // 
-            // 
-            // 
-            this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelX4.Location = new System.Drawing.Point(12, 5);
-            this.labelX4.Name = "labelX4";
-            this.labelX4.Size = new System.Drawing.Size(65, 20);
-            this.labelX4.TabIndex = 21;
-            this.labelX4.Text = "影像边界";
-            // 
-            // BoundTopText
-            // 
-            this.BoundTopText.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.BoundTopText.Border.Class = "TextBoxBorder";
-            this.BoundTopText.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.BoundTopText.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.BoundTopText.Location = new System.Drawing.Point(130, 2);
-            this.BoundTopText.Name = "BoundTopText";
-            this.BoundTopText.Size = new System.Drawing.Size(101, 21);
-            this.BoundTopText.TabIndex = 15;
-            // 
-            // BoundLeftText
-            // 
-            this.BoundLeftText.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.BoundLeftText.Border.Class = "TextBoxBorder";
-            this.BoundLeftText.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.BoundLeftText.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.BoundLeftText.Location = new System.Drawing.Point(72, 29);
-            this.BoundLeftText.Name = "BoundLeftText";
-            this.BoundLeftText.Size = new System.Drawing.Size(101, 21);
-            this.BoundLeftText.TabIndex = 20;
-            // 
-            // BoundBottomText
-            // 
-            this.BoundBottomText.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.BoundBottomText.Border.Class = "TextBoxBorder";
-            this.BoundBottomText.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.BoundBottomText.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.BoundBottomText.Location = new System.Drawing.Point(130, 56);
-            this.BoundBottomText.Name = "BoundBottomText";
-            this.BoundBottomText.Size = new System.Drawing.Size(101, 21);
-            this.BoundBottomText.TabIndex = 18;
-            // 
-            // BoundRightText
-            // 
-            this.BoundRightText.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.BoundRightText.Border.Class = "TextBoxBorder";
-            this.BoundRightText.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.BoundRightText.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.BoundRightText.Location = new System.Drawing.Point(196, 29);
-            this.BoundRightText.Name = "BoundRightText";
-            this.BoundRightText.Size = new System.Drawing.Size(101, 21);
-            this.BoundRightText.TabIndex = 19;
             // 
             // panelEx13
             // 
@@ -1229,13 +1151,24 @@
             this.label6.TabIndex = 26;
             this.label6.Text = "文件设置";
             // 
+            // BoundDisplay
+            // 
+            this.BoundDisplay.AutoSize = true;
+            this.BoundDisplay.IsReadOnly = true;
+            this.BoundDisplay.Location = new System.Drawing.Point(11, 3);
+            this.BoundDisplay.MinimumSize = new System.Drawing.Size(209, 23);
+            this.BoundDisplay.Name = "BoundDisplay";
+            this.BoundDisplay.PositionName = "影像边界";
+            this.BoundDisplay.Size = new System.Drawing.Size(288, 89);
+            this.BoundDisplay.TabIndex = 22;
+            // 
             // LayerReader
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
             this.Controls.Add(this.panelEx2);
             this.Name = "LayerReader";
-            this.Size = new System.Drawing.Size(310, 1102);
+            this.Size = new System.Drawing.Size(310, 1117);
             this.panelEx2.ResumeLayout(false);
             this.panelEx2.PerformLayout();
             this.panelEx9.ResumeLayout(false);
@@ -1307,11 +1240,6 @@
         private DevComponents.DotNetBar.Controls.TextBoxX SaveFilePath;
         private DevComponents.DotNetBar.PanelEx panelEx4;
         private DevComponents.DotNetBar.PanelEx BoundBox;
-        private DevComponents.DotNetBar.LabelX labelX4;
-        private DevComponents.DotNetBar.Controls.TextBoxX BoundTopText;
-        private DevComponents.DotNetBar.Controls.TextBoxX BoundLeftText;
-        private DevComponents.DotNetBar.Controls.TextBoxX BoundBottomText;
-        private DevComponents.DotNetBar.Controls.TextBoxX BoundRightText;
         private DevComponents.DotNetBar.PanelEx panelEx8;
         private DevComponents.DotNetBar.PanelEx FileReaderBox;
         private DevComponents.DotNetBar.LabelX labelX10;
@@ -1358,5 +1286,6 @@
         private DevComponents.DotNetBar.Controls.CheckBoxX FromTile;
         private DevComponents.DotNetBar.PanelEx panelEx16;
         private CustomControls.PositionDisplay OriginPosition;
+        private CustomControls.RectDisplay BoundDisplay;
     }
 }

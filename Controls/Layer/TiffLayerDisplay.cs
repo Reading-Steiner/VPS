@@ -43,18 +43,18 @@ namespace VPS.Controls.Layer
             }
         }
 
-        private GMap.NET.RectLatLng rect = new GMap.NET.RectLatLng();
+        private VPS.CustomData.WP.Rect rect = new VPS.CustomData.WP.Rect();
 
-        public GMap.NET.RectLatLng LayerRect
+        public VPS.CustomData.WP.Rect LayerRect
         {
             get
             {
-                return rect;
+                return new VPS.CustomData.WP.Rect(rect);
             }
             set
             {
-                rect = value;
-                LayerRectDisplay.WGS84Rect = value;
+                rect = new VPS.CustomData.WP.Rect(value);
+                LayerRectDisplay.CopyWGS84Rect(rect);
             }
         }
 
@@ -106,7 +106,7 @@ namespace VPS.Controls.Layer
             var bitmapInfo = GDAL.GDAL.LoadImageInfo(info.Layer);
             if (bitmapInfo != null)
             {
-                LayerRect = bitmapInfo.Rect;
+                LayerRect = new VPS.CustomData.WP.Rect(bitmapInfo.Rect);
             }
             using (var ds = OSGeo.GDAL.Gdal.Open(info.Layer, OSGeo.GDAL.Access.GA_ReadOnly))
             {

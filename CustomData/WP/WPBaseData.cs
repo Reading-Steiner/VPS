@@ -181,4 +181,130 @@ namespace VPS.CustomData.WP
                           BitConverter.DoubleToInt64Bits(Alt));
         }
     }
+
+    public class Rect
+    {
+        public double Top { get; set; } = 0;
+
+        public double Bottom { get; set; } = 0;
+
+        public double Left { get; set; } = 0;
+
+        public double Right { get; set; } = 0;
+
+
+
+        #region 构造函数
+        public Rect()
+        {
+        }
+
+        public Rect(double top, double bottom, double left, double right)
+        {
+            Top = top;
+            Bottom = bottom;
+            Left = left;
+            Right = right;
+        }
+
+        public Rect(Position TopLeft, Position BottomRight)
+        {
+            Top = TopLeft.Lat;
+            Left = TopLeft.Lng;
+
+            Bottom = BottomRight.Lat;
+            Right = BottomRight.Lng;
+        }
+
+        public Rect(RectLatLng rect)
+        {
+            Top = rect.Top;
+            Bottom = rect.Bottom;
+            Left = rect.Left;
+            Right = rect.Right;
+        }
+        
+        public Rect(Rect rect)
+        {
+            Top = rect.Top;
+            Bottom = rect.Bottom;
+            Left = rect.Left;
+            Right = rect.Right;
+        }
+        #endregion
+
+        public override string ToString()
+        {
+            return 
+                Math.Abs(Left).ToString("0.##") + (Left >= 0 ? "E; " : "W") + " - " +
+                Math.Abs(Right).ToString("0.##") + (Right >= 0 ? "E; " : "W") + "; " +
+                Math.Abs(Bottom).ToString("0.##") + (Bottom >= 0 ? "N;" : "S") + " - " +
+                Math.Abs(Top).ToString("0.##") + (Top >= 0 ? "N;" : "S");
+        }
+
+        #region 类型转换
+        public RectLatLng ToWGS84()
+        {
+            RectLatLng rect = RectLatLng.FromLTRB(Left, Top, Right, Bottom);
+
+            return rect;
+        }
+
+        public void FromWGS84(RectLatLng rect)
+        {
+            Top = rect.Top;
+            Bottom = rect.Bottom;
+            Left = rect.Left;
+            Right = rect.Right;
+        }
+        #endregion
+
+        #region 比较函数
+        public override bool Equals(Object pllaobj)
+        {
+            Rect plla = pllaobj as Rect;
+
+            if (plla == null)
+                return false;
+
+            if (this.Top == plla.Top &&
+            this.Bottom == plla.Bottom &&
+            this.Left == plla.Left &&
+            this.Right == plla.Right)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool operator ==(Rect p1, Rect p2)
+        {
+            if (p1 == null || p2 == null)
+                return false;
+
+            if (p1.Top == p2.Top &&
+            p1.Bottom == p2.Bottom &&
+            p1.Left == p2.Left &&
+            p1.Right == p2.Right)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool operator !=(Rect p1, Rect p2)
+        {
+            return !(p1 == p2);
+        }
+        #endregion
+
+        public override int GetHashCode()
+        {
+            return (int)(
+                BitConverter.DoubleToInt64Bits(Top) ^
+                BitConverter.DoubleToInt64Bits(Bottom) ^
+                BitConverter.DoubleToInt64Bits(Left) ^
+                BitConverter.DoubleToInt64Bits(Right));
+        }
+    }
 }

@@ -25,7 +25,7 @@ namespace VPS.Controls.Layer
         string FileName = "";
         string FullFileName = "";
         string FileExtend = "";
-        GMap.NET.RectLatLng LayerRect;
+        CustomData.WP.Rect LayerRect;
         long FileSize = 0;
         long RasterXSize = 0;
         long RasterYSize = 0;
@@ -210,14 +210,11 @@ namespace VPS.Controls.Layer
             FileName = "";
             FullFileName = "";
             FileExtend = "";
-            LayerRect = new GMap.NET.RectLatLng();
+            LayerRect = new CustomData.WP.Rect();
+            BoundDisplay.CopyWGS84Rect(LayerRect);
             FileSize = 0;
             RasterXSize = 0;
             RasterYSize = 0;
-            this.BoundLeftText.Text = "";
-            this.BoundRightText.Text = "";
-            this.BoundTopText.Text = "";
-            this.BoundBottomText.Text = "";
             this.Projection.Text = "";
             bitmap = null;
             ShowGeoBitmap();
@@ -299,13 +296,10 @@ namespace VPS.Controls.Layer
                     {
                         var info = GDAL.GDAL.LoadImageInfo(openFile.FileName);
                         {
-                            this.BoundLeftText.Text = info.Rect.Left.ToString("0.000000");
-                            this.BoundRightText.Text = info.Rect.Right.ToString("0.000000");
-                            this.BoundTopText.Text = info.Rect.Top.ToString("0.000000");
-                            this.BoundBottomText.Text = info.Rect.Bottom.ToString("0.000000");
                             RasterXSize = info.RasterXSize;
                             RasterYSize = info.RasterYSize;
-                            LayerRect = info.Rect;
+                            LayerRect = new CustomData.WP.Rect(info.Rect);
+                            BoundDisplay.CopyWGS84Rect(LayerRect);
 
                             PointLatLngAlt PointHome = info.Rect.LocationTopLeft;
                             PointHome.Tag = CustomData.WP.WPCommands.HomeCommand;
@@ -356,13 +350,10 @@ namespace VPS.Controls.Layer
                     {
                         var info = GDAL.GDAL.LoadImageInfo(openFile.FileName);
                         {
-                            this.BoundLeftText.Text = info.Rect.Left.ToString("0.000000");
-                            this.BoundRightText.Text = info.Rect.Right.ToString("0.000000");
-                            this.BoundTopText.Text = info.Rect.Top.ToString("0.000000");
-                            this.BoundBottomText.Text = info.Rect.Bottom.ToString("0.000000");
+                            LayerRect = new CustomData.WP.Rect(info.Rect);
+                            BoundDisplay.CopyWGS84Rect(LayerRect);
                             RasterXSize = info.RasterXSize;
                             RasterYSize = info.RasterYSize;
-                            LayerRect = info.Rect;
                         }
                     }
                     catch (Exception ex)
@@ -521,7 +512,8 @@ namespace VPS.Controls.Layer
             if (SettingDefaultMap.Checked)
             {
                 CustomData.WP.WPGlobalData.instance.SetLayer(openPath, SettingDefaultMap.Checked);
-                CustomData.WP.WPGlobalData.instance.SetLayerLimit(this.LayerRect, OriginPosition.GetWGS84Position(), SettingDefaultMap.Checked);
+                CustomData.WP.WPGlobalData.instance.SetLayerLimit(
+                    this.LayerRect, OriginPosition.GetWGS84Position(), SettingDefaultMap.Checked);
             }
         }
         #endregion

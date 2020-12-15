@@ -111,7 +111,7 @@ namespace VPS.Controls.LoadAndSave
                 var imageInfo = GDAL.GDAL.LoadImageInfo(file);
                 {
                     (info as LoadTiffLayerInfo).rect = new Rect();
-                    (info as LoadTiffLayerInfo).rect.FromLocationRect(imageInfo.Rect);
+                    (info as LoadTiffLayerInfo).rect.FromWGS84(imageInfo.Rect);
 
                     Utilities.PointLatLngAlt PointHome = imageInfo.Rect.LocationTopLeft;
                     PointHome.Tag = CustomData.WP.WPCommands.HomeCommand;
@@ -347,7 +347,7 @@ namespace VPS.Controls.LoadAndSave
                     openPath,
                     info.isDefaultFile);
                 CustomData.WP.WPGlobalData.instance.SetLayerLimit(
-                    info.rect.ToLocationRect(),
+                    info.rect,
                     info.home.ToLocationPoint(),
                     info.isDefaultFile);
             }

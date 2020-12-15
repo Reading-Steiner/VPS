@@ -3915,9 +3915,9 @@ namespace VPS
                 CustomData.WP.WPGlobalData.instance.SetLayer(
                     load.info.layer, load.info.defaultLayer);
                 CustomData.WP.WPGlobalData.instance.SetLayerLimit(
-                    load.info.layerRect.ToLocationRect(), load.info.homePosition.ToLocationPoint(), load.info.defaultLayer);
+                    load.info.layerRect, load.info.homePosition.ToLocationPoint(), load.info.defaultLayer);
 
-                GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(load.info.layerRect.ToLocationRect());
+                GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(load.info.layerRect.ToWGS84());
             }
         }
 

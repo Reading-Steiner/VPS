@@ -5123,7 +5123,7 @@ namespace VPS.GCSViews
         private void zoomToTiffToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MainMap.SetZoomToFitRect(
-                CustomData.WP.WPGlobalData.instance.GetLayerRect());
+                CustomData.WP.WPGlobalData.instance.GetLayerRect().ToWGS84());
         }
     }
 }

@@ -169,7 +169,6 @@
             this.LayerRect.PositionName = "工作区";
             this.LayerRect.Size = new System.Drawing.Size(269, 89);
             this.LayerRect.TabIndex = 0;
-            this.LayerRect.WGS84Rect = ((GMap.NET.RectLatLng)(resources.GetObject("LayerRect.WGS84Rect")));
             // 
             // panelEx2
             // 

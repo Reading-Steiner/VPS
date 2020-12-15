@@ -202,7 +202,7 @@
             this.EnableGlass = false;
             this.Name = "CustomRect";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "CustomRect";
+            this.Text = "范围";
             this.panelEx1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TopLatInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BottomLatInput)).EndInit();

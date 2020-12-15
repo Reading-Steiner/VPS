@@ -86,13 +86,13 @@ namespace VPS.Controls.MainInfo
         #endregion
 
         #region RECT 图层区域
-        private delegate void SetRectInThread(GMap.NET.RectLatLng rect);
-        private GMap.NET.RectLatLng workspace = new GMap.NET.RectLatLng();
+        private delegate void SetRectInThread(VPS.CustomData.WP.Rect rect);
+        private VPS.CustomData.WP.Rect workspace = new VPS.CustomData.WP.Rect();
 
-        private void SetWorkspace(GMap.NET.RectLatLng rect)
+        private void SetWorkspace(VPS.CustomData.WP.Rect rect)
         {
             workspace = rect;
-            LayerRect.WGS84Rect = workspace;
+            LayerRect.SetWGS84Rect(workspace);
 
             List<PointLatLngAlt> rectList = new List<PointLatLngAlt>() {
                 new PointLatLngAlt(rect.Left, rect.Top),
@@ -161,10 +161,9 @@ namespace VPS.Controls.MainInfo
         #region WPLIST 航线变化响应函数
         public void WorkspaceRectChangeHandle()
         {
-            GMap.NET.RectLatLng workspace = CustomData.WP.WPGlobalData.instance.GetLayerRect();
+            VPS.CustomData.WP.Rect workspace = CustomData.WP.WPGlobalData.instance.GetLayerRect();
 
-            SetWorkspace(
-                new GMap.NET.RectLatLng(workspace.Lat, workspace.Lng, workspace.WidthLng, workspace.HeightLat));
+            SetWorkspace(workspace);
 
         }
         #endregion

@@ -16,58 +16,57 @@ namespace VPS.Controls.CustomForms
         public CustomRect()
         {
             InitializeComponent();
+            defaultRect = new CustomData.WP.Rect();
         }
 
-        public CustomRect(GMap.NET.RectLatLng rect)
+        public CustomRect(VPS.CustomData.WP.Rect rect)
         {
             InitializeComponent();
 
-            LocationRect = rect;
-            defaultRect = LocationRect;
+            SetWGS84Rect(rect);
+            defaultRect = rect;
         }
 
-        private GMap.NET.RectLatLng defaultRect = new GMap.NET.RectLatLng();
-        private GMap.NET.RectLatLng rect = new GMap.NET.RectLatLng();
+        VPS.CustomData.WP.Rect defaultRect = new VPS.CustomData.WP.Rect();
+        VPS.CustomData.WP.Rect rect = new VPS.CustomData.WP.Rect();
 
-        public GMap.NET.RectLatLng LocationRect
+        public void SetWGS84Rect(VPS.CustomData.WP.Rect value)
         {
-            set
-            {
-                rect = new GMap.NET.RectLatLng(value.Lat, value.Lng, value.WidthLng, value.HeightLat);
-                TopLatInput.Value = rect.Top;
-                BottomLatInput.Value = rect.Bottom;
-                LeftLngInput.Value = rect.Left;
-                RightLngInput.Value = rect.Right;
-            }
-            get
-            {
-                return new GMap.NET.RectLatLng(rect.Lat, rect.Lng, rect.WidthLng, rect.HeightLat);
-            }
+            rect = new VPS.CustomData.WP.Rect(value);
+            TopLatInput.Value = rect.Top;
+            BottomLatInput.Value = rect.Bottom;
+            LeftLngInput.Value = rect.Left;
+            RightLngInput.Value = rect.Right;
+        }
+
+        public VPS.CustomData.WP.Rect GetWGS84Rect()
+        {
+            return new VPS.CustomData.WP.Rect(rect);
         }
 
         private void Default_Click(object sender, EventArgs e)
         {
-            LocationRect = defaultRect;
+            SetWGS84Rect(defaultRect);
         }
 
         private void RightLngInput_ValueChanged(object sender, EventArgs e)
         {
-            rect.WidthLng = RightLngInput.Value - LeftLngInput.Value;
+            rect.Right = RightLngInput.Value;
         }
 
         private void BottomLatInput_ValueChanged(object sender, EventArgs e)
         {
-            rect.HeightLat = BottomLatInput.Value - TopLatInput.Value;
+            rect.Bottom = BottomLatInput.Value;
         }
 
         private void TopLatInput_ValueChanged(object sender, EventArgs e)
         {
-            rect.Lat = TopLatInput.Value;
+            rect.Top = TopLatInput.Value;
         }
 
         private void LeftLngInput_ValueChanged(object sender, EventArgs e)
         {
-            rect.Lng = LeftLngInput.Value;
+            rect.Left = LeftLngInput.Value;
         }
     }
 }

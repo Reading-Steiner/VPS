@@ -10,12 +10,11 @@ using System.Windows.Forms;
 
 namespace VPS.Controls.CustomControls
 {
-    public partial class  RectDisplay : UserControl
+    public partial class RectDisplay : UserControl
     {
         public RectDisplay()
         {
             InitializeComponent();
-            WGS84Rect = new GMap.NET.RectLatLng();
         }
 
         #region 标题
@@ -36,27 +35,26 @@ namespace VPS.Controls.CustomControls
         #endregion
 
         #region 坐标
-        private GMap.NET.RectLatLng Rect = new GMap.NET.RectLatLng();
-        [Category("Value"), Description("区域信息")]
-        public GMap.NET.RectLatLng WGS84Rect
-        {
-            set
-            {
-                Rect = new GMap.NET.RectLatLng(value.Lat, value.Lng, value.WidthLng, value.HeightLat);
+        private VPS.CustomData.WP.Rect rect = new VPS.CustomData.WP.Rect();
+        
 
-                string top = "[ " + Rect.Top.ToString("0.######") + (Rect.Top >= 0 ? "N" : "S") + " ]";
-                string mid = "[ " + Rect.Left.ToString("0.######") + (Rect.Left > 0 ? "E" : "W") + " , " +
-                    Rect.Left.ToString("0.######") + (Rect.Left >= 0 ? "E" : "W") + " ]";
-                string bot = "[ " + Rect.Bottom.ToString("0.######") + (Rect.Bottom > 0 ? "N" : "S") + " ]";
-                
-                SetControlMainThread(labelX1, top);
-                SetControlMainThread(labelX2, mid);
-                SetControlMainThread(labelX3, bot);
-            }
-            get
-            {
-                return new GMap.NET.RectLatLng(Rect.Lat, Rect.Lng, Rect.WidthLng, Rect.HeightLat);
-            }
+        public void SetWGS84Rect(VPS.CustomData.WP.Rect value)
+        {
+            rect = new VPS.CustomData.WP.Rect(value);
+
+            Invaild();
+        }
+
+        public void CopyWGS84Rect(VPS.CustomData.WP.Rect value)
+        {
+            rect = value;
+
+            Invaild();
+        }
+
+        public VPS.CustomData.WP.Rect GetWGS84Rect()
+        {
+            return new VPS.CustomData.WP.Rect(rect);
         }
         #endregion
 
@@ -93,12 +91,13 @@ namespace VPS.Controls.CustomControls
         {
             if (isEndable)
             {
-                using (CustomForms.CustomRect dlg = new CustomForms.CustomRect(Rect))
+                using (CustomForms.CustomRect dlg = new CustomForms.CustomRect(rect))
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        Rect = dlg.LocationRect;
-                        RectChange?.Invoke(Rect);
+                        rect = dlg.GetWGS84Rect();
+                        Invaild();
+                        RectChange?.Invoke(rect);
                     }
                 }
             }
@@ -106,7 +105,7 @@ namespace VPS.Controls.CustomControls
         #endregion
 
         #region
-        public delegate void RectChangeHandle(GMap.NET.RectLatLng rect);
+        public delegate void RectChangeHandle(VPS.CustomData.WP.Rect rect);
         public RectChangeHandle RectChange;
         #endregion
 
@@ -154,6 +153,18 @@ namespace VPS.Controls.CustomControls
             labelX3.PaddingLeft = (int)(midSize.Width > botSize.Width ?
                 (midSize.Width - botSize.Width) / 2 : 0);
 
+        }
+
+        private void Invaild()
+        {
+            string top = "[ " + rect.Top.ToString("0.######") + (rect.Top >= 0 ? "N" : "S") + " ]";
+            string mid = "[ " + rect.Left.ToString("0.######") + (rect.Left > 0 ? "E" : "W") + " , " +
+                rect.Left.ToString("0.######") + (rect.Left >= 0 ? "E" : "W") + " ]";
+            string bot = "[ " + rect.Bottom.ToString("0.######") + (rect.Bottom > 0 ? "N" : "S") + " ]";
+
+            SetControlMainThread(labelX1, top);
+            SetControlMainThread(labelX2, mid);
+            SetControlMainThread(labelX3, bot);
         }
     }
 }

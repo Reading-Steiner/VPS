@@ -3493,7 +3493,7 @@ namespace VPS.GCSViews
                     geoBitmap.DisplayBitmap);
                 layerPolygonsOverlay.Polygons.Add(mark);
 
-                MainMap.SetZoomToFitRect(CustomData.WP.WPGlobalData.instance.GetLayerRect());
+                MainMap.SetZoomToFitRect(CustomData.WP.WPGlobalData.instance.GetLayerRect().ToWGS84());
 
                 Task.Run(
                     () =>
@@ -3517,7 +3517,7 @@ namespace VPS.GCSViews
         public void zoomToTiffLayer()
         {
             if (CustomData.WP.WPGlobalData.instance.GetLayer() != null)
-                MainMap.SetZoomToFitRect(CustomData.WP.WPGlobalData.instance.GetLayerRect());
+                MainMap.SetZoomToFitRect(CustomData.WP.WPGlobalData.instance.GetLayerRect().ToWGS84());
         }
 
 

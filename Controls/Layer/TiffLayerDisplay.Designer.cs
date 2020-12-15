@@ -121,7 +121,6 @@
             this.LayerRectDisplay.PositionName = "区域";
             this.LayerRectDisplay.Size = new System.Drawing.Size(209, 89);
             this.LayerRectDisplay.TabIndex = 1;
-            this.LayerRectDisplay.WGS84Rect = ((GMap.NET.RectLatLng)(resources.GetObject("LayerRectDisplay.WGS84Rect")));
             // 
             // HomePositionDisplay
             // 

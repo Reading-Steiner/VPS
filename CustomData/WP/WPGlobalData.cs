@@ -81,7 +81,7 @@ namespace VPS.CustomData.WP
             }
             if (!string.IsNullOrEmpty(defaultLayerPath))
                 SetLayerLimit(
-                    GMap.NET.RectLatLng.FromLTRB(defLeft, defTop, defRight, defBottom),
+                    new VPS.CustomData.WP.Rect(defTop, defBottom, defLeft, defRight),
                     defHome, true);
 
         }
@@ -757,10 +757,10 @@ namespace VPS.CustomData.WP
         #region LAYER 图层信息
         private string currentLayerPath = null;
         private PointLatLngAlt currentHome = new PointLatLngAlt();
-        private GMap.NET.RectLatLng currentRect = new GMap.NET.RectLatLng();
+        private VPS.CustomData.WP.Rect currentRect = new VPS.CustomData.WP.Rect();
         private string defaultLayerPath = null;
         private PointLatLngAlt defaultHome = null;
-        private GMap.NET.RectLatLng defaultRect = new GMap.NET.RectLatLng();
+        private VPS.CustomData.WP.Rect defaultRect = new VPS.CustomData.WP.Rect();
 
         //public GDAL.GDAL.GeoBitmap currentLayer;
         public ChangeHandle WorkspaceRectChange;
@@ -776,7 +776,7 @@ namespace VPS.CustomData.WP
                 defaultLayerPath = path;
         }
 
-        public void SetLayerLimit(GMap.NET.RectLatLng rect,PointLatLngAlt home, bool isDefault = true)
+        public void SetLayerLimit(VPS.CustomData.WP.Rect rect,PointLatLngAlt home, bool isDefault = true)
         {
             currentRect = rect;
             SetHomePosition(home);
@@ -830,12 +830,12 @@ namespace VPS.CustomData.WP
             return retHome;
         }
 
-        public GMap.NET.RectLatLng GetLayerRect()
+        public Rect GetLayerRect()
         {
             return currentRect;
         }
 
-        public GMap.NET.RectLatLng GetDefaultLayerRect()
+        public Rect GetDefaultLayerRect()
         {
             return defaultRect;
         }
