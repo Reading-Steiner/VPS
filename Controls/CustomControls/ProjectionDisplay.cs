@@ -20,16 +20,24 @@ namespace VPS.Controls.CustomControls
 
         private void Display_DoubleClick(object sender, EventArgs e)
         {
-            using (CustomForms.CustomProjection content = new CustomForms.CustomProjection())
+            using (CustomForms.CustomProjection content = new CustomForms.CustomProjection(projection))
             {
-                content.SetProjection(projection);
-                content.ShowDialog();
+                if(content.ShowDialog() == DialogResult.OK)
+                {
+                    SetProjection(content.GetProjection());
+                }
             }
         }
 
         private ProjectionInfo projection = new ProjectionInfo();
 
         public void SetProjection(ProjectionInfo value)
+        {
+            projection.CopyProperties(value);
+            labelX1.Text = "投影：" + projection.ToString();
+        }
+
+        public void CopyProjection(ProjectionInfo value)
         {
             projection = value;
             labelX1.Text = "投影：" + projection.ToString();

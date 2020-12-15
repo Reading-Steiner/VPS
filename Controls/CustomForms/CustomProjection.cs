@@ -14,14 +14,17 @@ namespace VPS.Controls.CustomForms
 {
     public partial class CustomProjection : Office2007Form
     {
-        public CustomProjection()
+        public CustomProjection(ProjectionInfo projection)
         {
             InitializeComponent();
+            SetProjection(projection);
         }
 
         public void SetProjection(ProjectionInfo value)
         {
-            projectionSelectControl.SelectedCoordinateSystem = value;
+            if (projectionSelectControl.SelectedCoordinateSystem == null)
+                projectionSelectControl.SelectedCoordinateSystem = new ProjectionInfo();
+            projectionSelectControl.SelectedCoordinateSystem.CopyProperties(value);
         }
 
         public ProjectionInfo GetProjection()

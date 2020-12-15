@@ -81,14 +81,15 @@ namespace VPS.Controls.Layer
         }
 
         private ProjectionInfo projection = new ProjectionInfo();
-        public ProjectionInfo Projection
+        public ProjectionInfo GetProjection()
         {
-            get { return projection; }
-            set
-            {
-                projection = value;
-                ProjectionDisplay.SetProjection(projection);
-            }
+            return projection;
+        }
+
+        public void SetProjection(ProjectionInfo value)
+        {
+            projection.CopyProperties(value);
+            ProjectionDisplay.CopyProjection(projection);
         }
 
         public void SetLayer(CustomData.Layer.TiffLayerInfo info)
@@ -110,7 +111,9 @@ namespace VPS.Controls.Layer
             }
             using (var ds = OSGeo.GDAL.Gdal.Open(info.Layer, OSGeo.GDAL.Access.GA_ReadOnly))
             {
-                Projection = ProjectionInfo.FromEsriString(ds.GetProjection());
+                var projection = ProjectionInfo.FromEsriString(ds.GetProjection());
+
+                SetProjection(projection);
             }
         }
 
