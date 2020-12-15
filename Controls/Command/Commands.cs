@@ -643,9 +643,9 @@ namespace VPS.Controls.Command
             if (home.Tag != CustomData.WP.WPCommands.HomeCommand)
                 home.Tag = CustomData.WP.WPCommands.HomeCommand;
 
-            if (!HomePositionDisplay.WGS84Position.Equals(home))
+            if (!HomePositionDisplay.GetWGS84Position().Equals(home))
             {
-                HomePositionDisplay.WGS84Position = new Utilities.PointLatLngAlt(home);
+                HomePositionDisplay.SetWGS84Position(home);
             }
         }
         #endregion
@@ -669,9 +669,9 @@ namespace VPS.Controls.Command
             if (home.Tag != CustomData.WP.WPCommands.HomeCommand)
                 home.Tag = CustomData.WP.WPCommands.HomeCommand;
 
-            if (!HomePositionDisplay.WGS84Position.Equals(home))
+            if (!HomePositionDisplay.GetWGS84Position().Equals(home))
             {
-                HomePositionDisplay.WGS84Position = new Utilities.PointLatLngAlt(home);
+                HomePositionDisplay.SetWGS84Position(home);
             }
         }
         #endregion

@@ -25,8 +25,8 @@ namespace VPS.Controls.CustomForms
             AltFrameSelecter.DataSource = 
                 Enum.GetValues(typeof(CustomData.EnumCollect.AltFrame.Mode));
 
-            WGS84Position = position;
-            defaultPosition = WGS84Position;
+            CopyWGS84Position(position);
+            defaultPosition = GetWGS84Position();
             
         }
 
@@ -37,8 +37,8 @@ namespace VPS.Controls.CustomForms
             AltFrameSelecter.DataSource = 
                 Enum.GetValues(typeof(CustomData.EnumCollect.AltFrame.Mode));
 
-            WGS84Position = position;
-            defaultPosition = WGS84Position;
+            CopyWGS84Position(position);
+            defaultPosition = GetWGS84Position();
         }
         #endregion
 
@@ -57,21 +57,29 @@ namespace VPS.Controls.CustomForms
         private Utilities.PointLatLngAlt defaultPosition = new Utilities.PointLatLngAlt();
         private Utilities.PointLatLngAlt Position = new Utilities.PointLatLngAlt();
 
-        public Utilities.PointLatLngAlt WGS84Position
+        public Utilities.PointLatLngAlt GetWGS84Position()
         {
-            set
-            {
-                Position = new Utilities.PointLatLngAlt(value);
-                this.LngInput.Value = value.Lng;
-                this.LatInput.Value = value.Lat;
-                this.AltInput.Value = (int)value.Alt;
-                this.AltFrameSelecter.SelectedItem = 
-                    CustomData.EnumCollect.AltFrame.GetAltFrame(Position.Tag2);
-            }
-            get
-            {
-                return new Utilities.PointLatLngAlt(Position);
-            }
+            return new Utilities.PointLatLngAlt(Position);
+        }
+
+        public void SetWGS84Position(Utilities.PointLatLngAlt value)
+        {
+            Position = new Utilities.PointLatLngAlt(value);
+            this.LngInput.Value = value.Lng;
+            this.LatInput.Value = value.Lat;
+            this.AltInput.Value = (int)value.Alt;
+            this.AltFrameSelecter.SelectedItem =
+                CustomData.EnumCollect.AltFrame.GetAltFrame(Position.Tag2);
+        }
+
+        public void CopyWGS84Position(Utilities.PointLatLngAlt value)
+        {
+            Position = value;
+            this.LngInput.Value = value.Lng;
+            this.LatInput.Value = value.Lat;
+            this.AltInput.Value = (int)value.Alt;
+            this.AltFrameSelecter.SelectedItem =
+                CustomData.EnumCollect.AltFrame.GetAltFrame(Position.Tag2);
         }
         #endregion
 
@@ -105,7 +113,7 @@ namespace VPS.Controls.CustomForms
         #region 数据还原函数
         private void Default_Click(object sender, EventArgs e)
         {
-            WGS84Position = defaultPosition;
+            Position.FromWGS84(defaultPosition);
         }
         #endregion
     }

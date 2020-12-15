@@ -746,6 +746,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CustomData\Markers\GMapMarkerCustom.cs" />
+    <Compile Include="CustomData\WP\WPBaseData.cs" />
     <Compile Include="CustomFile\KML.cs" />
     <Compile Include="CustomFile\SHP.cs" />
     <Compile Include="CustomFile\UniversalMethod.cs" />

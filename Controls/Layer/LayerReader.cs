@@ -310,7 +310,7 @@ namespace VPS.Controls.Layer
                             PointLatLngAlt PointHome = info.Rect.LocationTopLeft;
                             PointHome.Tag = CustomData.WP.WPCommands.HomeCommand;
                             PointHome.Tag2 = "Terrain";
-                            OriginPosition.WGS84Position = PointHome; 
+                            OriginPosition.CopyWGS84Position(PointHome); 
                         }
                     }
                     catch (Exception ex) {
@@ -509,19 +509,19 @@ namespace VPS.Controls.Layer
             if (UsingTransparent.Checked)
             {
                 CustomData.Layer.LayerInfo layerInfo =
-                    new CustomData.Layer.TiffLayerInfo(openPath, OriginPosition.WGS84Position, ColorPickerButton.SelectedColor);
+                    new CustomData.Layer.TiffLayerInfo(openPath, OriginPosition.GetWGS84Position(), ColorPickerButton.SelectedColor);
                 MainV2.instance.AddLayerOverlay(layerInfo);
             }
             else
             {
                 CustomData.Layer.LayerInfo layerInfo =
-                    new CustomData.Layer.TiffLayerInfo(openPath, OriginPosition.WGS84Position, Color.FromArgb(0, 255, 255, 255));
+                    new CustomData.Layer.TiffLayerInfo(openPath, OriginPosition.GetWGS84Position(), Color.FromArgb(0, 255, 255, 255));
                 MainV2.instance.AddLayerOverlay(layerInfo);
             }
             if (SettingDefaultMap.Checked)
             {
                 CustomData.WP.WPGlobalData.instance.SetLayer(openPath, SettingDefaultMap.Checked);
-                CustomData.WP.WPGlobalData.instance.SetLayerLimit(this.LayerRect, OriginPosition.WGS84Position, SettingDefaultMap.Checked);
+                CustomData.WP.WPGlobalData.instance.SetLayerLimit(this.LayerRect, OriginPosition.GetWGS84Position(), SettingDefaultMap.Checked);
             }
         }
         #endregion

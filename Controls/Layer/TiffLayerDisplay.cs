@@ -39,7 +39,7 @@ namespace VPS.Controls.Layer
             set
             {
                 home = value;
-                HomePositionDisplay.WGS84Position = value;
+                HomePositionDisplay.SetWGS84Position(home);
             }
         }
 

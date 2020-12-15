@@ -39,7 +39,7 @@ namespace VPS.Controls.MainInfo
         private void SetHomePosition(PointLatLngAlt position)
         {
             homePosition = position;
-            HomePosition.WGS84Position = homePosition;
+            HomePosition.CopyWGS84Position(homePosition);
 
             double grad = CustomData.WP.WPGlobalData.GetPointGrad(homePosition, currentPosition, baseAlt);
             double dist = CustomData.WP.WPGlobalData.GetPointDist(homePosition, currentPosition, baseAlt);
@@ -63,7 +63,7 @@ namespace VPS.Controls.MainInfo
                 currentPosition.Alt = (srtm.getAltitude(currentPosition.Lat, currentPosition.Lng).alt * CurrentState.multiplieralt);
             }
 
-            CurrentPosition.WGS84Position = currentPosition;
+            CurrentPosition.SetWGS84Position(currentPosition);
 
             double grad = CustomData.WP.WPGlobalData.GetPointGrad(homePosition, currentPosition, baseAlt);
             double distance = CustomData.WP.WPGlobalData.GetPointDist(homePosition, currentPosition, baseAlt);

@@ -37,25 +37,23 @@ namespace VPS.Controls.CustomControls
         #region 坐标
         private Utilities.PointLatLngAlt Position = new Utilities.PointLatLngAlt();
         [Browsable(false)]
-        public Utilities.PointLatLngAlt WGS84Position
+        public Utilities.PointLatLngAlt GetWGS84Position()
         {
-            set
-            {
-                Position = new Utilities.PointLatLngAlt(value);
-                SetControlMainThread(
-                    labelX1,
-                    "[ " + Position.Lng.ToString("0.######") + (Position.Lng > 0 ? "E" : "W") + " , " +
-                    Position.Lat.ToString("0.######") + (Position.Lat >= 0 ? "N" : "S") + " ]");
-                SetControlMainThread(
-                    labelX2,
-                    "[ " + Position.Tag2 + " , " + Position.Alt.ToString() + " ]");
-
-            }
-            get
-            {
-                return new Utilities.PointLatLngAlt(Position);
-            }
+            return new Utilities.PointLatLngAlt(Position);
         }
+
+        public void SetWGS84Position(Utilities.PointLatLngAlt value)
+        {
+            Position = value;
+            Invaild();
+        }
+
+        public void CopyWGS84Position(Utilities.PointLatLngAlt value)
+        {
+            Position = new Utilities.PointLatLngAlt(value);
+            Invaild();
+        }
+
         #endregion
 
         #region 是否可修改
@@ -95,8 +93,8 @@ namespace VPS.Controls.CustomControls
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        WGS84Position = dlg.WGS84Position;
-                        PositionChange?.Invoke(WGS84Position);
+                        Invaild();
+                        PositionChange?.Invoke(GetWGS84Position());
                     }
                 }
             }                                          
@@ -107,6 +105,17 @@ namespace VPS.Controls.CustomControls
         public delegate void PositionChangeHandle(Utilities.PointLatLngAlt position);
         public PositionChangeHandle PositionChange;
         #endregion
+
+        public void Invaild()
+        {
+            SetControlMainThread(
+                labelX1,
+                "[ " + Position.Lng.ToString("0.######") + (Position.Lng > 0 ? "E" : "W") + " , " +
+                Position.Lat.ToString("0.######") + (Position.Lat >= 0 ? "N" : "S") + " ]");
+            SetControlMainThread(
+                labelX2,
+                "[ " + Position.Tag2 + " , " + Position.Alt.ToString() + " ]");
+        }
 
         #region 设置控件数据
         private delegate void SetControlInMainThreadHandle(Control control, object data);

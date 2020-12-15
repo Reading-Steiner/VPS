@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TiffLayerDisplay));
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.LayerDisplay = new VPS.Controls.CustomControls.LayerDisplay();
             this.ProjectionDisplay = new VPS.Controls.CustomControls.ProjectionDisplay();
             this.ModifyTimeDisplay = new DevComponents.DotNetBar.LabelX();
             this.CreateTimeDisplay = new DevComponents.DotNetBar.LabelX();
@@ -38,7 +39,6 @@
             this.panelEx2 = new DevComponents.DotNetBar.PanelEx();
             this.IdDisplay = new DevComponents.DotNetBar.LabelX();
             this.StateDisplay = new VPS.Controls.Layer.TiffLayerDisplay.CustomLayerVaildState();
-            this.LayerDisplay = new VPS.Controls.CustomControls.LayerDisplay();
             this.panelEx1.SuspendLayout();
             this.panelEx2.SuspendLayout();
             this.SuspendLayout();
@@ -67,6 +67,14 @@
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 0;
             // 
+            // LayerDisplay
+            // 
+            this.LayerDisplay.AutoSize = true;
+            this.LayerDisplay.Location = new System.Drawing.Point(3, 3);
+            this.LayerDisplay.Name = "LayerDisplay";
+            this.LayerDisplay.Size = new System.Drawing.Size(53, 23);
+            this.LayerDisplay.TabIndex = 11;
+            // 
             // ProjectionDisplay
             // 
             this.ProjectionDisplay.AutoSize = true;
@@ -77,6 +85,7 @@
             // 
             // ModifyTimeDisplay
             // 
+            this.ModifyTimeDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ModifyTimeDisplay.AutoSize = true;
             // 
             // 
@@ -90,6 +99,7 @@
             // 
             // CreateTimeDisplay
             // 
+            this.CreateTimeDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CreateTimeDisplay.AutoSize = true;
             // 
             // 
@@ -174,14 +184,6 @@
             this.StateDisplay.Name = "StateDisplay";
             this.StateDisplay.Size = new System.Drawing.Size(69, 24);
             this.StateDisplay.TabIndex = 7;
-            // 
-            // LayerDisplay
-            // 
-            this.LayerDisplay.AutoSize = true;
-            this.LayerDisplay.Location = new System.Drawing.Point(3, 3);
-            this.LayerDisplay.Name = "LayerDisplay";
-            this.LayerDisplay.Size = new System.Drawing.Size(51, 20);
-            this.LayerDisplay.TabIndex = 11;
             // 
             // TiffLayerDisplay
             // 
