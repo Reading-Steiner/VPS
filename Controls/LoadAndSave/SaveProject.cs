@@ -158,23 +158,23 @@ namespace VPS.Controls.LoadAndSave
     {
         [Category("位置"), DisplayName("\t\t\t\t\t维度")]
         [NotifyParentProperty(true)]
-        public new double Lat { get; set; } = 0;
+        public override double Lat { get; set; } = 0;
 
         [Category("位置"), DisplayName("\t\t\t\t经度")]
         [NotifyParentProperty(true)]
-        public new double Lng { get; set; } = 0;
+        public override double Lng { get; set; } = 0;
 
         [Category("位置"), DisplayName("\t\t\t高度")]
         [NotifyParentProperty(true)]
-        public new double Alt { get; set; } = 0;
+        public override double Alt { get; set; } = 0;
 
         [Category("位置"), DisplayName("\t\t高度模块")]
         [NotifyParentProperty(true)]
-        public new string AltMode { get; set; } = "";
+        public override string AltMode { get; set; } = "";
 
         [Category("位置"), DisplayName("\t类型")]
         [NotifyParentProperty(true)]
-        public new string Command { get; set; } = "";
+        public override string Command { get; set; } = "";
 
         public Position()
         {
@@ -230,16 +230,16 @@ namespace VPS.Controls.LoadAndSave
     public class Rect : VPS.CustomData.WP.Rect
     {
         [Category("区域"), DisplayName("\t\t\t\t上")]
-        public new double Top { get; set; } = 0;
+        public override double Top { get; set; } = 0;
 
         [Category("区域"), DisplayName("\t\t\t下")]
-        public new double Bottom { get; set; } = 0;
+        public override double Bottom { get; set; } = 0;
 
         [Category("区域"), DisplayName("\t\t左")]
-        public new double Left { get; set; } = 0;
+        public override double Left { get; set; } = 0;
 
         [Category("区域"), DisplayName("\t右")]
-        public new double Right { get; set; } = 0;
+        public override double Right { get; set; } = 0;
 
         #region 构造函数
         public Rect()

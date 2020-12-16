@@ -14,15 +14,15 @@ namespace VPS.CustomData.WP
 {
     public class Position
     {
-        public double Lat { get; set; } = 0;
+        public virtual double Lat { get; set; } = 0;
 
-        public double Lng { get; set; } = 0;
+        public virtual double Lng { get; set; } = 0;
 
-        public double Alt { get; set; } = 0;
+        public virtual double Alt { get; set; } = 0;
 
-        public string AltMode { get; set; } = "";
+        public virtual string AltMode { get; set; } = "";
 
-        public string Command { get; set; } = "";
+        public virtual string Command { get; set; } = "";
 
 
         #region 构造函数
@@ -186,13 +186,13 @@ namespace VPS.CustomData.WP
 
     public class Rect
     {
-        public double Top { get; set; } = 0;
+        public virtual double Top { get; set; } = 0;
 
-        public double Bottom { get; set; } = 0;
+        public virtual double Bottom { get; set; } = 0;
 
-        public double Left { get; set; } = 0;
+        public virtual double Left { get; set; } = 0;
 
-        public double Right { get; set; } = 0;
+        public virtual double Right { get; set; } = 0;
 
 
 
