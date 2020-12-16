@@ -18,9 +18,9 @@ namespace VPS.Controls.CustomForms
         {
             InitializeComponent();
 
-            var position = new Utilities.PointLatLngAlt();
-            Position.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
-            Position.Tag2 = CustomData.EnumCollect.AltFrame.Relative;
+            var position = new VPS.CustomData.WP.Position();
+            Position.Command = CustomData.WP.WPCommands.DefaultWPCommand;
+            Position.AltMode = CustomData.EnumCollect.AltFrame.Relative;
 
             AltFrameSelecter.DataSource = 
                 Enum.GetValues(typeof(CustomData.EnumCollect.AltFrame.Mode));
@@ -30,7 +30,7 @@ namespace VPS.Controls.CustomForms
             
         }
 
-        public CustomPosition(Utilities.PointLatLngAlt position)
+        public CustomPosition(VPS.CustomData.WP.Position position)
         {
             InitializeComponent();
 
@@ -49,37 +49,37 @@ namespace VPS.Controls.CustomForms
             this.LatInput.Value = Position.Lat;
             this.AltInput.Value = (int)Position.Alt;
             this.AltFrameSelecter.SelectedItem = 
-                CustomData.EnumCollect.AltFrame.GetAltFrame(Position.Tag2);
+                CustomData.EnumCollect.AltFrame.GetAltFrame(Position.AltMode);
         }
         #endregion
 
         #region 数据
-        private Utilities.PointLatLngAlt defaultPosition = new Utilities.PointLatLngAlt();
-        private Utilities.PointLatLngAlt Position = new Utilities.PointLatLngAlt();
+        private VPS.CustomData.WP.Position defaultPosition = new VPS.CustomData.WP.Position();
+        private VPS.CustomData.WP.Position Position = new VPS.CustomData.WP.Position();
 
-        public Utilities.PointLatLngAlt GetWGS84Position()
+        public VPS.CustomData.WP.Position GetWGS84Position()
         {
-            return new Utilities.PointLatLngAlt(Position);
+            return new VPS.CustomData.WP.Position(Position);
         }
 
         public void SetWGS84Position(Utilities.PointLatLngAlt value)
         {
-            Position = new Utilities.PointLatLngAlt(value);
+            Position = new VPS.CustomData.WP.Position(value);
             this.LngInput.Value = value.Lng;
             this.LatInput.Value = value.Lat;
             this.AltInput.Value = (int)value.Alt;
             this.AltFrameSelecter.SelectedItem =
-                CustomData.EnumCollect.AltFrame.GetAltFrame(Position.Tag2);
+                CustomData.EnumCollect.AltFrame.GetAltFrame(Position.AltMode);
         }
 
-        public void CopyWGS84Position(Utilities.PointLatLngAlt value)
+        public void CopyWGS84Position(VPS.CustomData.WP.Position value)
         {
             Position = value;
             this.LngInput.Value = value.Lng;
             this.LatInput.Value = value.Lat;
             this.AltInput.Value = (int)value.Alt;
             this.AltFrameSelecter.SelectedItem =
-                CustomData.EnumCollect.AltFrame.GetAltFrame(Position.Tag2);
+                CustomData.EnumCollect.AltFrame.GetAltFrame(Position.AltMode);
         }
         #endregion
 
@@ -101,7 +101,7 @@ namespace VPS.Controls.CustomForms
 
         private void AltFrameSelecter_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Position.Tag2 = AltFrameSelecter.SelectedItem.ToString();
+            Position.AltMode = AltFrameSelecter.SelectedItem.ToString();
         }
 
         private void AltInput_ValueChanged(object sender, EventArgs e)
@@ -113,7 +113,7 @@ namespace VPS.Controls.CustomForms
         #region 数据还原函数
         private void Default_Click(object sender, EventArgs e)
         {
-            Position.FromWGS84(defaultPosition);
+            Position.FromPosition(defaultPosition);
         }
         #endregion
     }

@@ -373,12 +373,12 @@ namespace VPS.Controls.Grid
         #endregion
 
         #region 重要参数
-        public delegate void ListChangedHandle(List<PointLatLngAlt> wpList);
+        public delegate void ListChangedHandle(List<CustomData.WP.Position> wpList);
         public delegate void IntegerChangeHandler(int integer);
         public delegate void StateChangeHandler();
 
         #region 航线记录
-        List<List<PointLatLngAlt>> history = new List<List<PointLatLngAlt>>();
+        List<List<CustomData.WP.Position>> history = new List<List<CustomData.WP.Position>>();
 
         public IntegerChangeHandler historyChange;
 
@@ -435,8 +435,8 @@ namespace VPS.Controls.Grid
                     "终止位置: " + "[ " + 
                     wp[wp.Count - 1].Lat.ToString("0.######") + " , " + 
                     wp[wp.Count - 1].Lng.ToString("0.######") + " ]" + '\n' +
-                    "航线距离: " + CalcTotalDist(wp).ToString("0.##") + " m" + '\n' +
-                    "航摄基线: " + CalcBaseAlt(wp).ToString() + " m";
+                    "航线距离: " + CustomData.WP.WPGlobalData.GetTotalDist(wp).ToString("0.##") + " m" + '\n' +
+                    "航摄基线: " + CustomData.WP.WPGlobalData.GetBaseAlt(wp).ToString() + " m";
                 tip.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
                 tip.CustomSize = new Size(250, 110);
 
@@ -447,57 +447,23 @@ namespace VPS.Controls.Grid
         }
         #endregion
 
-        #region 参数计算
-        private int CalcBaseAlt(List<Utilities.PointLatLngAlt> wpList)
-        {
-            double totalAlt = 0.0;
-            double maxA = 0.0;
-            double minA = wpList.Count > 0 ?
-                Utilities.srtm.getAltitude(wpList[0].Lat, wpList[0].Lng).alt * CurrentState.multiplieralt : 0.0;
-            for (int index = 0; index < wpList.Count; index++)
-            {
-                double terrain = Utilities.srtm.getAltitude(wpList[index].Lat, wpList[index].Lng).alt * CurrentState.multiplieralt;
-                totalAlt += terrain;
-                if (terrain > maxA)
-                    maxA = terrain;
-                if (terrain < minA)
-                    minA = terrain;
-            }
-            return (int)(totalAlt / Math.Max(1, wpList.Count));
-
-        }
-
-        private double CalcTotalDist(List<Utilities.PointLatLngAlt> wpList)
-        {
-            double totalDist = 0.0;
-            for (int index = 1; index < wpList.Count; index++)
-            {
-                totalDist += Math.Sqrt(
-                    Math.Pow(wpList[index].GetDistance(wpList[index - 1]), 2) +
-                    Math.Pow(wpList[index].Alt - wpList[index - 1].Alt, 2)) *
-                    CurrentState.multiplierdist;
-            }
-            return totalDist;
-        }
-        #endregion
-
         #region 航线
-        List<PointLatLngAlt> grid = new List<PointLatLngAlt>();
-        List<PointLatLngAlt> wp = new List<PointLatLngAlt>();
+        List<CustomData.WP.Position> grid = new List<CustomData.WP.Position>();
+        List<CustomData.WP.Position> wp = new List<CustomData.WP.Position>();
 
         #region 设置航线
-        public void SetWPListHandle(List<PointLatLngAlt> wpList, bool history = true)
+        public void SetWPListHandle(List<CustomData.WP.Position> wpList, bool history = true)
         {
             if (history)
                 AddHistoryList();
 
             if (wpList.Count > 0)
             {
-                if (wpList[0].Tag == CustomData.WP.WPCommands.HomeCommand)
+                if (wpList[0].Command == CustomData.WP.WPCommands.HomeCommand)
                     wpList.RemoveAt(0);
             }
 
-            wp = new List<PointLatLngAlt>(wpList);
+            wp = new List<CustomData.WP.Position>(wpList);
             SetLockWPToolTips();
 
             DataTable set = new DataTable();
@@ -519,21 +485,21 @@ namespace VPS.Controls.Grid
         #endregion
 
         #region 获取航线
-        public List<PointLatLngAlt> GetWPList()
+        public List<CustomData.WP.Position> GetWPList()
         {
-            List<PointLatLngAlt> wpList;
+            List<CustomData.WP.Position> wpList;
             if ((bool)ReadControlMainThread(CHK_AppendWP))
             {
-                wpList = new List<PointLatLngAlt>(wp);
+                wpList = new List<CustomData.WP.Position>(wp);
                 wpList.AddRange(grid);
             }
             else
-                wpList = new List<PointLatLngAlt>(grid);
+                wpList = new List<CustomData.WP.Position>(grid);
 
             for (int i = 0; i < wpList.Count; i++)
             {
-                wpList[i].Tag = CustomData.WP.WPCommands.DefaultWPCommand;
-                wpList[i].Tag2 = CustomData.EnumCollect.AltFrame.Relative;
+                wpList[i].Command = CustomData.WP.WPCommands.DefaultWPCommand;
+                wpList[i].AltMode = CustomData.EnumCollect.AltFrame.Relative;
             }
             return wpList;
         }
@@ -542,15 +508,15 @@ namespace VPS.Controls.Grid
         #endregion
 
         #region 区域
-        List<PointLatLngAlt> poly = new List<PointLatLngAlt>();
+        List<CustomData.WP.Position> poly = new List<CustomData.WP.Position>();
 
         #region 设置区域
         public void SetPolygonList()
         {
             if (gridGrenate)
                 return;
-            List<PointLatLngAlt> polygons = CustomData.WP.WPGlobalData.instance.GetPolyList();
-            poly = new List<PointLatLngAlt>(polygons.ToArray());
+            var polygons = CustomData.WP.WPGlobalData.instance.GetPolyList();
+            poly = new List<CustomData.WP.Position>(polygons);
 
             DataTable set = new DataTable();
             set.Columns.Add("key");
@@ -760,14 +726,15 @@ namespace VPS.Controls.Grid
             float num_corridorwidth = (int)ReadControlMainThread(instance.num_corridorwidth);
             float num_landin = (int)ReadControlMainThread(instance.NUM_leadin);
 
-            PointLatLngAlt startPoint = instance.GetStartPoint();
+            PointLatLngAlt startPoint = instance.GetStartPoint().ToWGS84();
             if (startPoint != null)
                 Utilities.Grid.StartPointLatLngAlt = startPoint;
             List<PointLatLngAlt> wp = new List<PointLatLngAlt>();
             if (ch_Corridor)
             {
                 wp = await Utilities.Grid.CreateCorridorAsync(
-                    instance.poly, CurrentState.fromDistDisplayUnit(altitude),
+                    CustomData.WP.WPGlobalData.ToWGS84WPList(instance.poly), 
+                    CurrentState.fromDistDisplayUnit(altitude),
                     distance, spacing, angle,
                     overshoot, overshoot2,
                     (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), startfrom), false,
@@ -777,7 +744,8 @@ namespace VPS.Controls.Grid
             {
                 //生成螺旋航线
                 wp = await Utilities.Grid.CreateRotaryAsync(
-                    instance.poly, CurrentState.fromDistDisplayUnit(altitude),
+                    CustomData.WP.WPGlobalData.ToWGS84WPList(instance.poly), 
+                    CurrentState.fromDistDisplayUnit(altitude),
                     distance, spacing, angle,
                     overshoot, (double)instance.NUM_overshoot2.Value,
                     (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), startfrom), false,
@@ -787,7 +755,8 @@ namespace VPS.Controls.Grid
             {
 
                 wp = await Utilities.Grid.CreateGridAsync(
-                    instance.poly, CurrentState.fromDistDisplayUnit(altitude),
+                    CustomData.WP.WPGlobalData.ToWGS84WPList(instance.poly), 
+                    CurrentState.fromDistDisplayUnit(altitude),
                     distance, spacing, angle,
                     overshoot, overshoot2,
                     (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), startfrom), false,
@@ -807,7 +776,8 @@ namespace VPS.Controls.Grid
                 Utilities.Grid.StartPointLatLngAlt = wp[wp.Count - 1];
 
                 wp.AddRange(await Utilities.Grid.CreateGridAsync(
-                    instance.poly, CurrentState.fromDistDisplayUnit(altitude),
+                    CustomData.WP.WPGlobalData.ToWGS84WPList(instance.poly), 
+                    CurrentState.fromDistDisplayUnit(altitude),
                     distance, spacing, angle + 90.0,
                     overshoot, overshoot2,
                     Utilities.Grid.StartPosition.Point, false,
@@ -829,9 +799,9 @@ namespace VPS.Controls.Grid
             {
                 if (wp[index].Tag == "S" || wp[index].Tag == "E")
                 {
-                    PointLatLngAlt point = wp[index];
-                    point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
-                    point.Tag2 = CustomData.EnumCollect.AltFrame.Relative;
+                    var point = new CustomData.WP.Position(wp[index]);
+                    point.Command = CustomData.WP.WPCommands.DefaultWPCommand;
+                    point.AltMode = CustomData.EnumCollect.AltFrame.Relative;
 
                     instance.grid.Add(point);
                     a++;
@@ -842,9 +812,9 @@ namespace VPS.Controls.Grid
                         continue;
                     else
                     {
-                        PointLatLngAlt point = wp[index];
-                        point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
-                        point.Tag2 = CustomData.EnumCollect.AltFrame.Relative;
+                        var point = new CustomData.WP.Position(wp[index]);
+                        point.Command = CustomData.WP.WPCommands.DefaultWPCommand;
+                        point.AltMode = CustomData.EnumCollect.AltFrame.Relative;
 
                         instance.grid.Add(point);
                         a++;
@@ -857,9 +827,9 @@ namespace VPS.Controls.Grid
                         continue;
                     else
                     {
-                        PointLatLngAlt point = wp[index];
-                        point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
-                        point.Tag2 = CustomData.EnumCollect.AltFrame.Relative;
+                        var point = new CustomData.WP.Position(wp[index]);
+                        point.Command = CustomData.WP.WPCommands.DefaultWPCommand;
+                        point.AltMode = CustomData.EnumCollect.AltFrame.Relative;
 
                         instance.grid.Add(point);
                         a++;
@@ -869,9 +839,9 @@ namespace VPS.Controls.Grid
                 {
                     if (false)
                     {
-                        PointLatLngAlt point = wp[index];
-                        point.Tag = CustomData.WP.WPCommands.ClickWPCommand;
-                        point.Tag2 = CustomData.EnumCollect.AltFrame.Relative;
+                        var point = new CustomData.WP.Position(wp[index]);
+                        point.Command = CustomData.WP.WPCommands.ClickWPCommand;
+                        point.AltMode = CustomData.EnumCollect.AltFrame.Relative;
 
                         instance.grid.Add(point);
                     }
@@ -957,21 +927,21 @@ namespace VPS.Controls.Grid
         #region 参数计算
 
         #region 获取航飞角度
-        private double getAngleOfLongestSide(List<PointLatLngAlt> list)
+        private double getAngleOfLongestSide(List<CustomData.WP.Position> list)
         {
             if (list.Count == 0)
                 return 0;
             double angle = 0;
             double maxdist = 0;
-            PointLatLngAlt last = list[list.Count - 1];
+            PointLatLngAlt last = list[list.Count - 1].ToWGS84();
             foreach (var item in list)
             {
-                if (item.GetDistance(last) > maxdist)
+                if (item.ToWGS84().GetDistance(last) > maxdist)
                 {
-                    angle = item.GetBearing(last);
-                    maxdist = item.GetDistance(last);
+                    angle = item.ToWGS84().GetBearing(last);
+                    maxdist = item.ToWGS84().GetDistance(last);
                 }
-                last = item;
+                last = item.ToWGS84();
             }
 
             return (angle % 360 + 360) % 360;
@@ -1006,13 +976,13 @@ namespace VPS.Controls.Grid
         #endregion
 
         #region 获取航摄基线
-        private int GetBaseAlt(List<PointLatLngAlt> list)
+        private int GetBaseAlt(List<CustomData.WP.Position> list)
         {
             double totalWP = 0;
             int totalCount = 0;
             foreach (var wp in list)
             {
-                if (CustomData.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))
+                if (CustomData.WP.WPCommands.CoordsWPCommands.Contains(wp.Command))
                 {
                     totalWP += Utilities.srtm.getAltitude(wp.Lat, wp.Lng).alt * CurrentState.multiplieralt;
                     totalCount++;
@@ -1555,14 +1525,14 @@ namespace VPS.Controls.Grid
             TXT_PolygonInfo.Text = "   经度：null   纬度：null";
         }
 
-        private delegate PointLatLngAlt GetStartPointInThread();
-        public PointLatLngAlt GetStartPoint()
+        private delegate CustomData.WP.Position GetStartPointInThread();
+        public CustomData.WP.Position GetStartPoint()
         {
             if (this.InvokeRequired)
             {
                 GetStartPointInThread inThread = new GetStartPointInThread(GetStartPoint);
                 IAsyncResult iar = this.BeginInvoke(inThread);
-                return (PointLatLngAlt)this.EndInvoke(iar);
+                return (CustomData.WP.Position)this.EndInvoke(iar);
             }
             else
             {
@@ -1594,7 +1564,7 @@ namespace VPS.Controls.Grid
 
                 }
 
-                return new PointLatLng(0, 0);
+                return new CustomData.WP.Position();
             }
 
         }

@@ -679,8 +679,8 @@ namespace VPS
             log.Info("加载PlannedHomeLocation");
             try
             {
-                PointLatLngAlt home = new PointLatLngAlt();
-                home.Tag = VPS.CustomData.WP.WPCommands.HomeCommand;
+                CustomData.WP.Position home = new CustomData.WP.Position();
+                home.Command = VPS.CustomData.WP.WPCommands.HomeCommand;
                 if (Settings.Instance["Main_DefaultHomeLat"] != null)
                     home.Lat = Settings.Instance.GetDouble("Main_DefaultHomeLat");
 
@@ -691,13 +691,13 @@ namespace VPS
                     home.Alt = Settings.Instance.GetDouble("Main_DefaultHomeAlt");
 
                 if (Settings.Instance["Main_DefaultHomeAlt"] != null)
-                    home.Tag2 = Settings.Instance["TXT_homealt"].ToString();
+                    home.AltMode = Settings.Instance["TXT_homealt"].ToString();
 
                 // remove invalid entrys
                 if (Math.Abs(home.Lat) > 90 || Math.Abs(home.Lng) > 180)
                     MainV2.comPort.MAV.cs.PlannedHomeLocation = new PointLatLngAlt();
                 else
-                    MainV2.comPort.MAV.cs.PlannedHomeLocation = home;
+                    MainV2.comPort.MAV.cs.PlannedHomeLocation = home.ToWGS84();
             }
             catch(Exception ex)
             {
@@ -3915,7 +3915,7 @@ namespace VPS
                 CustomData.WP.WPGlobalData.instance.SetLayer(
                     load.info.layer, load.info.defaultLayer);
                 CustomData.WP.WPGlobalData.instance.SetLayerLimit(
-                    load.info.layerRect, load.info.homePosition.ToLocationPoint(), load.info.defaultLayer);
+                    load.info.layerRect, load.info.homePosition, load.info.defaultLayer);
 
                 GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(load.info.layerRect.ToWGS84());
             }
@@ -4548,7 +4548,7 @@ namespace VPS
             return SetLayerOverlay(layerInfo);
         }
 
-        public bool AddLayerOverlay(string path, PointLatLngAlt home, Color transparent)
+        public bool AddLayerOverlay(string path, VPS.CustomData.WP.Position home, Color transparent)
         {
             var layerInfo = new CustomData.Layer.TiffLayerInfo(path, home, transparent);
             CustomData.Layer.MemoryLayerCache.AddLayerToMemoryCache(layerInfo);

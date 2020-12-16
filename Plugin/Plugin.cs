@@ -182,7 +182,8 @@ namespace VPS.Plugin
 
         public void RedrawFPPolygon(List<PointLatLngAlt> list)
         {
-            CustomData.WP.WPGlobalData.instance.SetPolyListHandle(list);
+            CustomData.WP.WPGlobalData.instance.SetPolyListHandle(
+                CustomData.WP.WPGlobalData.FromWGS84WPList(list));
         }
 
         /// <summary>
@@ -215,16 +216,16 @@ namespace VPS.Plugin
         public int AddWPtoList(MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
             double z, object tag = null)
         {
-            var wp = new PointLatLngAlt(x, y, z);
-            wp.Tag = cmd.ToString();
+            var wp = new CustomData.WP.Position(x, y, z);
+            wp.Command = cmd.ToString();
             if (tag != null)
-                wp.Tag2 = tag.ToString();
+                wp.AltMode = tag.ToString();
             else
-                wp.Tag2 = "Relative";
-            wp.Param1 = p1;
-            wp.Param2 = p2;
-            wp.Param3 = p3;
-            wp.Param4 = p4;
+                wp.AltMode = "Relative";
+            //wp.Param1 = p1;
+            //wp.Param2 = p2;
+            //wp.Param3 = p3;
+            //wp.Param4 = p4;
 
             int index = CustomData.WP.WPGlobalData.instance.AddWPHandle(wp);
             return index;
@@ -234,16 +235,16 @@ namespace VPS.Plugin
             double y,
             double z, object tag = null)
         {
-            var wp = new PointLatLngAlt(x, y, z);
-            wp.Tag = cmd.ToString();
+            var wp = new CustomData.WP.Position(x, y, z);
+            wp.Command = cmd.ToString();
             if (tag != null)
-                wp.Tag2 = tag.ToString();
+                wp.AltMode = tag.ToString();
             else
-                wp.Tag2 = "Relative";
-            wp.Param1 = p1;
-            wp.Param2 = p2;
-            wp.Param3 = p3;
-            wp.Param4 = p4;
+                wp.AltMode = "Relative";
+            //wp.Param1 = p1;
+            //wp.Param2 = p2;
+            //wp.Param3 = p3;
+            //wp.Param4 = p4;
 
             CustomData.WP.WPGlobalData.instance.InsertWPHandle(idx, wp);
         }

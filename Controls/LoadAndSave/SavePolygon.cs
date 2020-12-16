@@ -136,7 +136,7 @@ namespace VPS.Controls.LoadAndSave
 
         private void savePolygonPointsSHP(string file)
         {
-            List<PointLatLngAlt> polygon = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
+            var polygon = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
             
             string porgressKey = VPS.Controls.MainInfo.TopMainInfo.instance.CreateProgressEnter("保存为 ShapeFile");
             string messageKey = VPS.Controls.MainInfo.TopMainInfo.instance.CreateMessageBoxEnter();
@@ -173,7 +173,7 @@ namespace VPS.Controls.LoadAndSave
             var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(porgressKey);
             var box = VPS.Controls.MainInfo.TopMainInfo.instance.GetMessageBox(messageKey);
 
-            List<PointLatLngAlt> polygon = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
+            var polygon = VPS.CustomData.WP.WPGlobalData.instance.GetPolyList();
 
             try
             {
@@ -358,11 +358,11 @@ namespace VPS.Controls.LoadAndSave
 
     public class PolygonInfo
     {
-        public List<PointLatLngAlt> features;
+        public List<CustomData.WP.Position> features;
 
-        public PolygonInfo(List<PointLatLngAlt> list)
+        public PolygonInfo(List<CustomData.WP.Position> list)
         {
-            features = new List<PointLatLngAlt>(list);
+            features = new List<CustomData.WP.Position>(list);
         }
 
         [Category("区域"), DisplayName("区域点数"), ReadOnly(true)]
@@ -378,9 +378,9 @@ namespace VPS.Controls.LoadAndSave
             return str;
         }
 
-        public void AddPolygon(List<PointLatLngAlt> list)
+        public void AddPolygon(List<CustomData.WP.Position> list)
         {
-            features = new List<PointLatLngAlt>(list);
+            features = new List<CustomData.WP.Position>(list);
         }
     }
 }

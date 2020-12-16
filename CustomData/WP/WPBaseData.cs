@@ -157,7 +157,9 @@ namespace VPS.CustomData.WP
 
         public static bool operator ==(Position p1, Position p2)
         {
-            if (p1 == null || p2 == null)
+            if (p1 is null && p2 is null)
+                return true;
+            else if(p1 is null || p2 is null)
                 return false;
 
             if (p1.Lat == p2.Lat &&

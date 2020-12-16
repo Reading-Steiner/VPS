@@ -38,21 +38,21 @@ namespace VPS.Controls.CustomControls
         private VPS.CustomData.WP.Rect rect = new VPS.CustomData.WP.Rect();
         
 
-        public void SetWGS84Rect(VPS.CustomData.WP.Rect value)
+        public void SetRect(VPS.CustomData.WP.Rect value)
         {
             rect.FromRect(value);
 
             Invaild();
         }
 
-        public void CopyWGS84Rect(VPS.CustomData.WP.Rect value)
+        public void CopyRect(VPS.CustomData.WP.Rect value)
         {
             rect = value;
 
             Invaild();
         }
 
-        public VPS.CustomData.WP.Rect GetWGS84Rect()
+        public VPS.CustomData.WP.Rect GetRect()
         {
             return new VPS.CustomData.WP.Rect(rect);
         }
@@ -95,7 +95,7 @@ namespace VPS.Controls.CustomControls
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        SetWGS84Rect(dlg.GetWGS84Rect());
+                        SetRect(dlg.GetWGS84Rect());
                         RectChange?.Invoke(rect);
                     }
                 }

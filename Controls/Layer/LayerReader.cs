@@ -211,7 +211,7 @@ namespace VPS.Controls.Layer
             FullFileName = "";
             FileExtend = "";
             LayerRect = new CustomData.WP.Rect();
-            BoundDisplay.CopyWGS84Rect(LayerRect);
+            BoundDisplay.CopyRect(LayerRect);
             FileSize = 0;
             RasterXSize = 0;
             RasterYSize = 0;
@@ -299,12 +299,12 @@ namespace VPS.Controls.Layer
                             RasterXSize = info.RasterXSize;
                             RasterYSize = info.RasterYSize;
                             LayerRect = new CustomData.WP.Rect(info.Rect);
-                            BoundDisplay.CopyWGS84Rect(LayerRect);
+                            BoundDisplay.CopyRect(LayerRect);
 
-                            PointLatLngAlt PointHome = info.Rect.LocationTopLeft;
-                            PointHome.Tag = CustomData.WP.WPCommands.HomeCommand;
-                            PointHome.Tag2 = "Terrain";
-                            OriginPosition.CopyWGS84Position(PointHome); 
+                            var PointHome = new CustomData.WP.Position(info.Rect.LocationTopLeft);
+                            PointHome.Command = CustomData.WP.WPCommands.HomeCommand;
+                            PointHome.AltMode = "Terrain";
+                            OriginPosition.CopyPosition(PointHome); 
                         }
                     }
                     catch (Exception ex) {
@@ -351,7 +351,7 @@ namespace VPS.Controls.Layer
                         var info = GDAL.GDAL.LoadImageInfo(openFile.FileName);
                         {
                             LayerRect = new CustomData.WP.Rect(info.Rect);
-                            BoundDisplay.CopyWGS84Rect(LayerRect);
+                            BoundDisplay.CopyRect(LayerRect);
                             RasterXSize = info.RasterXSize;
                             RasterYSize = info.RasterYSize;
                         }
@@ -500,20 +500,20 @@ namespace VPS.Controls.Layer
             if (UsingTransparent.Checked)
             {
                 CustomData.Layer.LayerInfo layerInfo =
-                    new CustomData.Layer.TiffLayerInfo(openPath, OriginPosition.GetWGS84Position(), ColorPickerButton.SelectedColor);
+                    new CustomData.Layer.TiffLayerInfo(openPath, OriginPosition.GetPosition(), ColorPickerButton.SelectedColor);
                 MainV2.instance.AddLayerOverlay(layerInfo);
             }
             else
             {
                 CustomData.Layer.LayerInfo layerInfo =
-                    new CustomData.Layer.TiffLayerInfo(openPath, OriginPosition.GetWGS84Position(), Color.FromArgb(0, 255, 255, 255));
+                    new CustomData.Layer.TiffLayerInfo(openPath, OriginPosition.GetPosition(), Color.FromArgb(0, 255, 255, 255));
                 MainV2.instance.AddLayerOverlay(layerInfo);
             }
             if (SettingDefaultMap.Checked)
             {
                 CustomData.WP.WPGlobalData.instance.SetLayer(openPath, SettingDefaultMap.Checked);
                 CustomData.WP.WPGlobalData.instance.SetLayerLimit(
-                    this.LayerRect, OriginPosition.GetWGS84Position(), SettingDefaultMap.Checked);
+                    this.LayerRect, OriginPosition.GetPosition(), SettingDefaultMap.Checked);
             }
         }
         #endregion

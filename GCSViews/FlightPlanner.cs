@@ -592,10 +592,10 @@ namespace VPS.GCSViews
                 }
                 else
                 {
-                    home = new PointLatLngAlt(lat, lng);
+                    home = new VPS.CustomData.WP.Position(lat, lng);
                     home.Alt = 0;
-                    home.Tag = CustomData.WP.WPCommands.HomeCommand;
-                    home.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
+                    home.Command = CustomData.WP.WPCommands.HomeCommand;
+                    home.AltMode = CustomData.EnumCollect.AltFrame.Terrain;
                 }
 
                 CustomData.WP.WPGlobalData.instance.SetHomePosition(home);
@@ -1390,7 +1390,7 @@ namespace VPS.GCSViews
             //set home
             try
             {
-                PointLatLngAlt home = CustomData.WP.WPGlobalData.instance.GetHomePosition();
+                VPS.CustomData.WP.Position home = CustomData.WP.WPGlobalData.instance.GetHomePosition();
                 if (home != null)
                 {
                     MainMap.Position = new PointLatLng(home.Lat, home.Lng);
@@ -2222,7 +2222,7 @@ namespace VPS.GCSViews
             // set home location
             if (MainV2.comPort.MAV.cs.HomeLocation.Lat != 0 && MainV2.comPort.MAV.cs.HomeLocation.Lng != 0)
             {
-                CustomData.WP.WPGlobalData.instance.SetHomePosition(new PointLatLngAlt(
+                CustomData.WP.WPGlobalData.instance.SetHomePosition(new VPS.CustomData.WP.Position(
                                 MainV2.comPort.MAV.cs.HomeLocation.Lat,
                                 MainV2.comPort.MAV.cs.HomeLocation.Lng,
                                 MainV2.comPort.MAV.cs.HomeLocation.Alt));
@@ -2230,7 +2230,7 @@ namespace VPS.GCSViews
             }
             else if (MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat != 0 && MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng != 0)
             {
-                CustomData.WP.WPGlobalData.instance.SetHomePosition(new PointLatLngAlt(
+                CustomData.WP.WPGlobalData.instance.SetHomePosition(new VPS.CustomData.WP.Position(
                                 MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat,
                                 MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng,
                                 MainV2.comPort.MAV.cs.PlannedHomeLocation.Alt));
@@ -2566,8 +2566,8 @@ namespace VPS.GCSViews
                     int no = polyMarkersGroup[index];
                     if (no >= 0 && no < CustomData.WP.WPGlobalData.instance.GetPolyCount())
                     {
-                        PointLatLngAlt poly = CustomData.WP.WPGlobalData.instance.GetPolyPoint(no);
-                        GPoint point = MainMap.FromLatLngToLocal(poly);
+                        var poly = CustomData.WP.WPGlobalData.instance.GetPolyPoint(no);
+                        GPoint point = MainMap.FromLatLngToLocal(poly.ToPoint());
                         int idx = 1;
                         while (true)
                         {
@@ -2630,8 +2630,8 @@ namespace VPS.GCSViews
                     int no = wpMarkersGroup[index];
                     if (no >= 0 && no < CustomData.WP.WPGlobalData.instance.GetWPCount())
                     {
-                        PointLatLngAlt wp = CustomData.WP.WPGlobalData.instance.GetWPPoint(no);
-                        GPoint point = MainMap.FromLatLngToLocal(wp);
+                        var wp = CustomData.WP.WPGlobalData.instance.GetWPPoint(no);
+                        GPoint point = MainMap.FromLatLngToLocal(wp.ToPoint());
                         int idx = 1;
                         while (true)
                         {
@@ -3703,7 +3703,7 @@ namespace VPS.GCSViews
         #region 定位到Polygon
         public void ZoomToCenterPolygon()
         {
-            List<PointLatLngAlt> list = CustomData.WP.WPGlobalData.instance.GetPolyList();
+            var list = CustomData.WP.WPGlobalData.instance.GetPolyList();
             if (list.Count > 0)
             {
                 double left = list[0].Lng; double right = list[0].Lng;
@@ -3783,7 +3783,7 @@ namespace VPS.GCSViews
             }
             double Scale = layer.Scale;
 
-            PointLatLngAlt Home = layer.Home;
+            PointLatLngAlt Home = layer.Home.ToWGS84();
 
             int OriginZone = Home.GetUTMZone();
             double[] OriginCoord = Home.ToUTM(OriginZone);
@@ -3837,7 +3837,7 @@ namespace VPS.GCSViews
             }
             double Scale = layer.Scale;
 
-            PointLatLngAlt Home = layer.Home;
+            PointLatLngAlt Home = layer.Home.ToWGS84();
 
             int OriginZone = Home.GetUTMZone();
             double[] OriginCoord = Home.ToUTM();
@@ -3888,12 +3888,12 @@ namespace VPS.GCSViews
         /// <param name="alt"></param>
         private void SetMouseDisplay(double lat, double lng, int alt)
         {
-            PointLatLngAlt mouseposdisplay = new PointLatLngAlt(lat, lng, alt);
+            var mouseposdisplay = new CustomData.WP.Position(lat, lng, alt);
 
 
-            PointLatLngAlt current = new PointLatLngAlt(lat, lng);
+            var current = new CustomData.WP.Position(lat, lng);
             current.Alt = defaultAlt;
-            current.Tag2 = altFrame.ToString();
+            current.AltMode = altFrame.ToString();
             CustomData.WP.WPGlobalData.instance.SetCurrentPosition(current);
         }
         #endregion
@@ -4515,7 +4515,7 @@ namespace VPS.GCSViews
         #region 刷新Polygon显示
         public void redrawPolygonSurvey()
         {
-            List<PointLatLngAlt> list = CustomData.WP.WPGlobalData.instance.GetPolyList();
+            var list = CustomData.WP.WPGlobalData.instance.GetPolyList();
             if (quickadd)
                 return;
             drawnpolygon.Points.Clear();
@@ -4524,7 +4524,7 @@ namespace VPS.GCSViews
             int tag = 0;
             list.ForEach(x =>
             {
-                drawnpolygon.Points.Add(x);
+                drawnpolygon.Points.Add(x.ToPoint());
                 Addpolygonmarkergrid(tag.ToString(), x.Lng, x.Lat, 0);
                 tag++;
             });
@@ -4568,12 +4568,12 @@ namespace VPS.GCSViews
 
 
             #region Home
-            PointLatLngAlt home = CustomData.WP.WPGlobalData.instance.GetHomePosition();
+            VPS.CustomData.WP.Position home = CustomData.WP.WPGlobalData.instance.GetHomePosition();
             if (home == null)
             {
-                home = new PointLatLngAlt();
-                home.Tag = CustomData.WP.WPCommands.HomeCommand;
-                home.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
+                home = new VPS.CustomData.WP.Position();
+                home.Command = CustomData.WP.WPCommands.HomeCommand;
+                home.AltMode = CustomData.EnumCollect.AltFrame.Terrain;
             }
             #endregion
 
@@ -4593,7 +4593,7 @@ namespace VPS.GCSViews
                     if (wpRad <= 0) wpRad = 5;
                     if (loiterRad <= 0) loiterRad = 30;
 
-                    overlay.CreateOverlay(home,
+                    overlay.CreateOverlay(home.ToWGS84(),
                         commandlist,
                         wpRad / CurrentState.multiplieralt,
                         loiterRad / CurrentState.multiplieralt);
@@ -4713,11 +4713,9 @@ namespace VPS.GCSViews
         #region SaveWP KML
         private void saveWaypointsKML(string file)
         {
-            List<PointLatLngAlt> wpList =
-                CustomData.WP.WPGlobalData.WPListChangeAltFrame(
-                    CustomData.WP.WPGlobalData.instance.GetWPList(),
-                    CustomData.EnumCollect.AltFrame.Terrain);
-            PointLatLngAlt home = wpList[0];
+            var wpList = CustomData.WP.WPGlobalData.WPListChangeAltFrame(
+                    CustomData.WP.WPGlobalData.instance.GetWPList(), CustomData.EnumCollect.AltFrame.Terrain);
+            var home = wpList[0];
             wpList.RemoveAt(0);
 
             FileStream fs = new FileStream(file, FileMode.Create);
@@ -4818,9 +4816,9 @@ namespace VPS.GCSViews
 
                 w.WriteStartElement("altitudeMode");
 
-                if (home.Tag2 == CustomData.EnumCollect.AltFrame.Absolute)
+                if (home.AltMode == CustomData.EnumCollect.AltFrame.Absolute)
                     w.WriteString("absolute");
-                else if (home.Tag2 == CustomData.EnumCollect.AltFrame.Terrain)
+                else if (home.AltMode == CustomData.EnumCollect.AltFrame.Terrain)
                     w.WriteString("relativeToGround");
                 else
                     w.WriteString("relativeToGround");
@@ -4840,16 +4838,16 @@ namespace VPS.GCSViews
             for (int i = 0; i < wpList.Count; i++)
             {
                 bool isVisbility = false;
-                if (CustomData.WP.WPCommands.CoordsWPCommands.Contains(wpList[i].Tag))
+                if (CustomData.WP.WPCommands.CoordsWPCommands.Contains(wpList[i].Command))
                     isVisbility = true;
                 w.WriteStartElement("Placemark");
 
                 // Write Point element
                 w.WriteStartElement("name");
                 if (isVisbility)
-                    w.WriteString(wpList[index].Tag + " " + (index).ToString());
+                    w.WriteString(wpList[index].Command + " " + (index).ToString());
                 else
-                    w.WriteString(wpList[index].Tag);
+                    w.WriteString(wpList[index].Command);
                 w.WriteEndElement();//name
 
                 w.WriteStartElement("visibility");
@@ -4861,7 +4859,7 @@ namespace VPS.GCSViews
                 w.WriteEndElement();//visibility
 
                 w.WriteStartElement("description");
-                w.WriteString(wpList[index].Tag);
+                w.WriteString(wpList[index].Command);
                 w.WriteEndElement();//description
 
                 if (isVisbility)
@@ -4871,29 +4869,29 @@ namespace VPS.GCSViews
                     w.WriteEndElement();//styleUrl
                 }
 
-                w.WriteStartElement("ExtendedData", "www.dji.com");
-                w.WriteStartElement("param1");
-                w.WriteString(wpList[i].Param1.ToString());
-                w.WriteEndElement();//param1
-                w.WriteStartElement("param2");
-                w.WriteString(wpList[i].Param2.ToString());
-                w.WriteEndElement();//param2
-                w.WriteStartElement("param3");
-                w.WriteString(wpList[i].Param3.ToString());
-                w.WriteEndElement();//param3
-                w.WriteStartElement("param4");
-                w.WriteString(wpList[i].Param4.ToString());
-                w.WriteEndElement();//param4
-                w.WriteEndElement();//ExtendedData
+                //w.WriteStartElement("ExtendedData", "www.dji.com");
+                //w.WriteStartElement("param1");
+                //w.WriteString(wpList[i].Param1.ToString());
+                //w.WriteEndElement();//param1
+                //w.WriteStartElement("param2");
+                //w.WriteString(wpList[i].Param2.ToString());
+                //w.WriteEndElement();//param2
+                //w.WriteStartElement("param3");
+                //w.WriteString(wpList[i].Param3.ToString());
+                //w.WriteEndElement();//param3
+                //w.WriteStartElement("param4");
+                //w.WriteString(wpList[i].Param4.ToString());
+                //w.WriteEndElement();//param4
+                //w.WriteEndElement();//ExtendedData
 
                 if (isVisbility)
                 {
                     w.WriteStartElement("Point");
                     w.WriteStartElement("altitudeMode");
 
-                    if (wpList[i].Tag2 == CustomData.EnumCollect.AltFrame.Absolute)
+                    if (wpList[i].AltMode == CustomData.EnumCollect.AltFrame.Absolute)
                         w.WriteString("absolute");
-                    else if (wpList[i].Tag2 == CustomData.EnumCollect.AltFrame.Terrain)
+                    else if (wpList[i].AltMode == CustomData.EnumCollect.AltFrame.Terrain)
                         w.WriteString("relativeToGround");
                     else
                         w.WriteString("relativeToGround");
@@ -5047,7 +5045,7 @@ namespace VPS.GCSViews
 
                                 XmlNode folder = doc.SelectSingleNode(@"./ns1:Folder", nsMgr);
 
-                                List<PointLatLngAlt> wpList = new List<PointLatLngAlt>();
+                                var wpList = new List<CustomData.WP.Position>();
                                 foreach (XmlNode point in folder.ChildNodes)
                                 {
                                     if (point.Name == "Placemark")
@@ -5123,19 +5121,19 @@ namespace VPS.GCSViews
                                         }
 
 
-                                        PointLatLngAlt wp = new PointLatLngAlt();
-                                        wp.Tag2 = altitudeMode;
+                                        var wp = new CustomData.WP.Position();
+                                        wp.AltMode = altitudeMode;
 
-                                        wp.Tag = cmd;
+                                        wp.Command = cmd;
 
                                         wp.Alt = z;
                                         wp.Lat = y;
                                         wp.Lng = x;
 
-                                        wp.Param1 = p1;
-                                        wp.Param2 = p2;
-                                        wp.Param3 = p3;
-                                        wp.Param4 = p4;
+                                        //wp.Param1 = p1;
+                                        //wp.Param2 = p2;
+                                        //wp.Param3 = p3;
+                                        //wp.Param4 = p4;
 
                                         wpList.Add(wp);
                                     }
@@ -5208,7 +5206,7 @@ namespace VPS.GCSViews
 
                     bool dosort = false;
 
-                    List<PointLatLngAlt> wplist = new List<PointLatLngAlt>();
+                    var wplist = new List<CustomData.WP.Position>();
 
                     for (int row = 0; row < dtOriginal.Rows.Count; row++)
                     {
@@ -5275,7 +5273,8 @@ namespace VPS.GCSViews
                             z = zarray[0];
                         }
 
-                        PointLatLngAlt pnt = new PointLatLngAlt(y, x, z, wp.ToString());
+                        var pnt = new CustomData.WP.Position(y, x, z);
+                        pnt.Command = wp.ToString();
 
                         wplist.Add(pnt);
                     }
@@ -5285,11 +5284,11 @@ namespace VPS.GCSViews
 
                     for (int index = 0; index < wplist.Count; index++)
                     {
-                        wplist[index].Tag = MAVLink.MAV_CMD.WAYPOINT.ToString();
-                        wplist[index].Param1 = 0;
-                        wplist[index].Param2 = 0;
-                        wplist[index].Param3 = 0;
-                        wplist[index].Param4 = 0;
+                        wplist[index].Command = MAVLink.MAV_CMD.WAYPOINT.ToString();
+                        //wplist[index].Param1 = 0;
+                        //wplist[index].Param2 = 0;
+                        //wplist[index].Param3 = 0;
+                        //wplist[index].Param4 = 0;
                         
                     }
                     CustomData.WP.WPGlobalData.instance.SetWPListHandle(wplist);
@@ -5492,7 +5491,7 @@ namespace VPS.GCSViews
                         sw.WriteLine(pll.Lat.ToString(CultureInfo.InvariantCulture) + " " + pll.Lng.ToString(CultureInfo.InvariantCulture));
                     }
 
-                    PointLatLng pll2 = CustomData.WP.WPGlobalData.instance.GetPolyPoint(0);
+                    var pll2 = CustomData.WP.WPGlobalData.instance.GetPolyPoint(0);
 
                     sw.WriteLine(pll2.Lat.ToString(CultureInfo.InvariantCulture) + " " + pll2.Lng.ToString(CultureInfo.InvariantCulture));
                 }
@@ -5544,7 +5543,7 @@ namespace VPS.GCSViews
         {
             StreamReader sr = new StreamReader(file);
 
-            List<PointLatLngAlt> poly = new List<PointLatLngAlt>();
+            var poly = new List<CustomData.WP.Position>();
 
             int a = 0;
 
@@ -5561,7 +5560,7 @@ namespace VPS.GCSViews
                     if (items.Length < 2)
                         continue;
 
-                    poly.Add(new PointLatLng(
+                    poly.Add(new CustomData.WP.Position(
                         double.Parse(items[0], CultureInfo.InvariantCulture),
                         double.Parse(items[1], CultureInfo.InvariantCulture)));
 
@@ -5589,7 +5588,7 @@ namespace VPS.GCSViews
             ProjectionInfo pESRIEnd = KnownCoordinateSystems.Geographic.World.WGS1984;
             bool reproject = false;
             // Poly Clear
-            List<PointLatLngAlt> poly = new List<PointLatLngAlt>();
+            var poly = new List<CustomData.WP.Position>();
 
             if (File.Exists(file))
             {
@@ -5630,7 +5629,7 @@ namespace VPS.GCSViews
                                 point.Y = xyarray[1];
                                 point.Z = zarray[0];
                             }
-                            poly.Add(new PointLatLng(point.Y, point.X));
+                            poly.Add(new CustomData.WP.Position(point.Y, point.X));
                         }
                         // remove loop close
                         if (poly.Count > 1 &&
@@ -5672,17 +5671,17 @@ namespace VPS.GCSViews
         #region 辅助函数
 
         #region GeneralWP
-        private Locationwp GeneralWP(PointLatLngAlt wp)
+        private Locationwp GeneralWP(CustomData.WP.Position wp)
         {
             Locationwp temp = new Locationwp();
 
-            if (wp.Tag.Contains("UNKNOWN"))
+            if (wp.Command.Contains("UNKNOWN"))
             {
                 temp.id = (ushort)16;
             }
             else
             {
-                if (Enum.TryParse(wp.Tag, out MAVLink.MAV_CMD id))
+                if (Enum.TryParse(wp.Command, out MAVLink.MAV_CMD id))
                 {
                     temp.id = (ushort)id;
                 }
@@ -5696,12 +5695,12 @@ namespace VPS.GCSViews
                 temp.lat = wp.Lat;
                 temp.lng = wp.Lng;
 
-                temp.frame = (byte)(short)CustomData.EnumCollect.AltFrame.GetAltFrame(wp.Tag2);
+                temp.frame = (byte)(short)CustomData.EnumCollect.AltFrame.GetAltFrame(wp.AltMode);
 
-                temp.p1 = (float)wp.Param1;
-                temp.p2 = (float)wp.Param2;
-                temp.p3 = (float)wp.Param3;
-                temp.p4 = (float)wp.Param4;
+                //temp.p1 = (float)wp.Param1;
+                //temp.p2 = (float)wp.Param2;
+                //temp.p3 = (float)wp.Param3;
+                //temp.p4 = (float)wp.Param4;
             }
             return temp;
         }
@@ -5737,23 +5736,23 @@ namespace VPS.GCSViews
         #region wpPoint
 
         #region GeneralWPPoint
-        private PointLatLngAlt GeneralWPPoint(double lat, double lng, int alt = -1)
+        private VPS.CustomData.WP.Position GeneralWPPoint(double lat, double lng, int alt = -1)
         {
             if (alt == -1)
             {
                 alt = GetDefaultAlt();
             }
 
-            PointLatLngAlt wp = new PointLatLngAlt(lat, lng, alt);
+            var wp = new VPS.CustomData.WP.Position(lat, lng, alt);
             if (splineMode)
             {
-                wp.Tag = CustomData.WP.WPCommands.SplineWPCommand;
-                wp.Tag2 = "Relative";
+                wp.Command = CustomData.WP.WPCommands.SplineWPCommand;
+                wp.AltMode = "Relative";
             }
             else
             {
-                wp.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
-                wp.Tag2 = "Relative";
+                wp.Command = CustomData.WP.WPCommands.DefaultWPCommand;
+                wp.AltMode = "Relative";
             }
             return wp;
         }
@@ -5828,7 +5827,7 @@ namespace VPS.GCSViews
         #region 添加区域点
         public void AddPolyPoint(double lat, double lng)
         {
-            PointLatLngAlt point = new PointLatLngAlt(lat, lng);
+            var point = new CustomData.WP.Position(lat, lng);
             CustomData.WP.WPGlobalData.instance.AddPolyHandle(point);
         }
         #endregion
@@ -5836,7 +5835,7 @@ namespace VPS.GCSViews
         #region 插入区域点
         public void InsertPolyPoint(int index,double lat, double lng)
         {
-            PointLatLngAlt point = new PointLatLngAlt(lat, lng);
+            var point = new CustomData.WP.Position(lat, lng);
             CustomData.WP.WPGlobalData.instance.InsertPolyHandle(index, point);
         }
         #endregion
@@ -5844,7 +5843,7 @@ namespace VPS.GCSViews
         #region 修改区域点
         public void SetPolyPoint(int index, double lat, double lng)
         {
-            PointLatLngAlt point = new PointLatLngAlt(lat, lng);
+            var point = new CustomData.WP.Position(lat, lng);
             CustomData.WP.WPGlobalData.instance.MovePolyHandle(index, point);
         }
         #endregion
@@ -6142,13 +6141,13 @@ namespace VPS.GCSViews
         #endregion
 
         #region 旧版接口
-        private List<Locationwp> GetCommandList(List<PointLatLngAlt> wpLists)
+        private List<Locationwp> GetCommandList(List<CustomData.WP.Position> wpLists)
         {
             List<Locationwp> commands = new List<Locationwp>();
 
             foreach (var wp in wpLists)
             {
-                if (wp.Tag == CustomData.WP.WPCommands.HomeCommand)
+                if (wp.Command == CustomData.WP.WPCommands.HomeCommand)
                     continue;
                 else /*if (VPS.WP.WPCommands.CoordsWPCommands.Contains(wp.Tag))*/
                     commands.Add(GeneralWP(wp));

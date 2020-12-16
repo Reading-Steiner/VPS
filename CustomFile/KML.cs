@@ -33,7 +33,7 @@ namespace VPS.CustomFile
         public event Meaasge OnWarnMessage;
 
 
-        public delegate void ListChange(List<PointLatLngAlt> list);
+        public delegate void ListChange(List<CustomData.WP.Position> list);
         public static event ListChange OnAddList;
 
         //[DllImport("gdal232.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -157,12 +157,12 @@ namespace VPS.CustomFile
                             altmode = CustomData.EnumCollect.AltFrame.Absolute;
                             break;
                     }
-                    List<PointLatLngAlt> list = new List<PointLatLngAlt>();
+                    var list = new List<CustomData.WP.Position>();
                     foreach (var loc in ls.Coordinates)
                     {
-                        PointLatLngAlt point = new PointLatLngAlt(loc.Latitude, loc.Longitude, (int)loc.Altitude);
-                        point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
-                        point.Tag2 = altmode;
+                        var point = new CustomData.WP.Position(loc.Latitude, loc.Longitude, (int)loc.Altitude);
+                        point.Command = CustomData.WP.WPCommands.DefaultWPCommand;
+                        point.AltMode = altmode;
                         list.Add(point);
                     }
                     OnAddList?.Invoke(list);
@@ -185,39 +185,39 @@ namespace VPS.CustomFile
         public class KMLDataSet
         {
             public string coordinates;
-            public List<List<PointLatLngAlt>> points;
+            public List<List<CustomData.WP.Position>> points;
 
             public KMLDataSet()
             {
                 this.coordinates = KnownCoordinateSystems.Geographic.World.WGS1984.ToEsriString();
 
-                points = new List<List<PointLatLngAlt>>();
+                points = new List<List<CustomData.WP.Position>>();
             }
 
-            public void AddPolygon(List<PointLatLngAlt> poly)
+            public void AddPolygon(List<CustomData.WP.Position> poly)
             {
                 points.Add(poly);
             }
 
-            public void AddPoint(PointLatLngAlt point)
+            public void AddPoint(CustomData.WP.Position point)
             {
                 if (points.Count > 0)
                     points[points.Count - 1].Add(point);
                 else
                 {
-                    points.Add(new List<PointLatLngAlt>());
+                    points.Add(new List<CustomData.WP.Position>());
                     points[points.Count - 1].Add(point);
                 }
 
             }
 
-            public void AddPoint(int indedx, PointLatLngAlt point)
+            public void AddPoint(int indedx, CustomData.WP.Position point)
             {
                 if (points.Count > 0)
                     points[points.Count - 1].Add(point);
                 else
                 {
-                    points.Add(new List<PointLatLngAlt>());
+                    points.Add(new List<CustomData.WP.Position>());
                     points[points.Count - 1].Add(point);
                 }
 

@@ -117,9 +117,9 @@ namespace VPS.CustomFile
                             Reproject.ReprojectPoints(
                                 arrayXY, arrayZ,
                                 pStart, pESRIEnd, 0, 1);
-                            var point = new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]);
-                            point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
-                            point.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
+                            var point = new CustomData.WP.Position(arrayXY[1], arrayXY[0], arrayZ[0]);
+                            point.Command = CustomData.WP.WPCommands.DefaultWPCommand;
+                            point.AltMode = CustomData.EnumCollect.AltFrame.Terrain;
                             data.AddPoint(point);
                             OnProgress?.Invoke(
                                 (double)(CurrentFeatureIndex + 1) / FeatrueCount);
@@ -128,7 +128,7 @@ namespace VPS.CustomFile
                         break;
                     case wkbGeometryType.wkbLineString:
                         {
-                            List<PointLatLngAlt> ls = new List<PointLatLngAlt>();
+                            var ls = new List<CustomData.WP.Position>();
                             var pointcount = geometry.GetPointCount();
                             for (int p = 0; p < pointcount; p++)
                             {
@@ -139,9 +139,9 @@ namespace VPS.CustomFile
                                 Reproject.ReprojectPoints(
                                     arrayXY, arrayZ,
                                     pStart, pESRIEnd, 0, 1);
-                                var point = new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]);
-                                point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
-                                point.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
+                                var point = new CustomData.WP.Position(arrayXY[1], arrayXY[0], arrayZ[0]);
+                                point.Command = CustomData.WP.WPCommands.DefaultWPCommand;
+                                point.AltMode = CustomData.EnumCollect.AltFrame.Terrain;
                                 ls.Add(point);
                                 OnProgress?.Invoke(
                                     (double)(CurrentFeatureIndex) / FeatrueCount + 
@@ -155,7 +155,7 @@ namespace VPS.CustomFile
                         {
                             for (int i = 0; i < geometry.GetGeometryCount(); i++)
                             {
-                                List<PointLatLngAlt> poly = new List<PointLatLngAlt>();
+                                var poly = new List<CustomData.WP.Position>();
 
                                 var geom = geometry.GetGeometryRef(i);
                                 var pointcount = geom.GetPointCount();
@@ -168,9 +168,9 @@ namespace VPS.CustomFile
                                     Reproject.ReprojectPoints(
                                         arrayXY, arrayZ,
                                         pStart, pESRIEnd, 0, 1);
-                                    var point = new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]);
-                                    point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
-                                    point.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
+                                    var point = new CustomData.WP.Position(arrayXY[1], arrayXY[0], arrayZ[0]);
+                                    point.Command = CustomData.WP.WPCommands.DefaultWPCommand;
+                                    point.AltMode = CustomData.EnumCollect.AltFrame.Terrain;
                                     poly.Add(point);
                                     OnProgress?.Invoke(
                                         (double)(CurrentFeatureIndex) / FeatrueCount + 
@@ -192,7 +192,7 @@ namespace VPS.CustomFile
                             int lineCount = geometry.GetGeometryCount();
                             for (int i = 0; i < lineCount; i++)
                             {
-                                List<PointLatLngAlt> list = new List<PointLatLngAlt>();
+                                var list = new List<CustomData.WP.Position>();
 
                                 var geom2 = geometry.GetGeometryRef(i);
                                 var pointcount = geom2.GetPointCount();
@@ -205,9 +205,9 @@ namespace VPS.CustomFile
                                     Reproject.ReprojectPoints(
                                         arrayXY, arrayZ,
                                         pStart, pESRIEnd, 0, 1);
-                                    var point = new PointLatLngAlt(arrayXY[1], arrayXY[0], arrayZ[0]);
-                                    point.Tag = CustomData.WP.WPCommands.DefaultWPCommand;
-                                    point.Tag2 = CustomData.EnumCollect.AltFrame.Terrain;
+                                    var point = new CustomData.WP.Position(arrayXY[1], arrayXY[0], arrayZ[0]);
+                                    point.Command = CustomData.WP.WPCommands.DefaultWPCommand;
+                                    point.AltMode = CustomData.EnumCollect.AltFrame.Terrain;
                                     list.Add(point);
                                     OnProgress?.Invoke(
                                         (double)(CurrentFeatureIndex) / FeatrueCount +
@@ -232,7 +232,7 @@ namespace VPS.CustomFile
             return data;
         }
 
-        public void SaveSHP(string file, List<PointLatLngAlt> list)
+        public void SaveSHP(string file, List<CustomData.WP.Position> list)
         {
             // 为了支持中文路径，请添加下面这句代码
             OSGeo.GDAL.Gdal.SetConfigOption("GDAL_FILENAME_IS_UTF8", "YES");
@@ -311,40 +311,40 @@ namespace VPS.CustomFile
         {
             public string coordinates;
             public string featureType;
-            public List<List<PointLatLngAlt>> points;
+            public List<List<CustomData.WP.Position>> points;
 
             public SHPDataSet(string featureType, string coordinates)
             {
                 this.coordinates = coordinates;
                 this.featureType = featureType;
 
-                points = new List<List<PointLatLngAlt>>();
+                points = new List<List<CustomData.WP.Position>>();
             }
 
-            public void AddPolygon(List<PointLatLngAlt> poly)
+            public void AddPolygon(List<CustomData.WP.Position> poly)
             {
                 points.Add(poly);
             }
 
-            public void AddPoint(PointLatLngAlt point)
+            public void AddPoint(CustomData.WP.Position point)
             {
                 if (points.Count > 0)
                     points[points.Count - 1].Add(point);
                 else
                 {
-                    points.Add(new List<PointLatLngAlt>());
+                    points.Add(new List<CustomData.WP.Position>());
                     points[points.Count - 1].Add(point);
                 }
 
             }
 
-            public void AddPoint(int indedx,PointLatLngAlt point)
+            public void AddPoint(int indedx, CustomData.WP.Position point)
             {
                 if (points.Count > 0)
                     points[points.Count - 1].Add(point);
                 else
                 {
-                    points.Add(new List<PointLatLngAlt>());
+                    points.Add(new List<CustomData.WP.Position>());
                     points[points.Count - 1].Add(point);
                 }
 

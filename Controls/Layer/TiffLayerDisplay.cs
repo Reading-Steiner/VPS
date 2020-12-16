@@ -29,8 +29,8 @@ namespace VPS.Controls.Layer
             }
         }
 
-        private Utilities.PointLatLngAlt home;
-        public Utilities.PointLatLngAlt HomePosition
+        private VPS.CustomData.WP.Position home;
+        public VPS.CustomData.WP.Position HomePosition
         {
             get
             {
@@ -39,7 +39,7 @@ namespace VPS.Controls.Layer
             set
             {
                 home = value;
-                HomePositionDisplay.SetWGS84Position(home);
+                HomePositionDisplay.SetPosition(home);
             }
         }
 
@@ -54,7 +54,7 @@ namespace VPS.Controls.Layer
             set
             {
                 rect = new VPS.CustomData.WP.Rect(value);
-                LayerRectDisplay.CopyWGS84Rect(rect);
+                LayerRectDisplay.CopyRect(rect);
             }
         }
 

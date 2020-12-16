@@ -5,7 +5,7 @@ namespace VPS.CustomData.Grid
 {
     public struct NewGridData
     {
-        public List<PointLatLngAlt> poly;
+        public List<CustomData.WP.Position> poly;
         //simple
         public string camera;
         public int alt;

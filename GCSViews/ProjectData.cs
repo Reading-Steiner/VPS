@@ -9,11 +9,11 @@ namespace VPS.GCSViews
 {
     public struct ProjectData
     {
-        public List<PointLatLngAlt> poly;
-        public List<PointLatLngAlt> wp;
+        public List<CustomData.WP.Position> poly;
+        public List<CustomData.WP.Position> wp;
         public string layer;
-        public GMap.NET.RectLatLng layerRect;
-        public PointLatLngAlt homePosition;
+        public CustomData.WP.Rect layerRect;
+        public CustomData.WP.Position homePosition;
 
         public bool isLeftHide;
         public bool isBottomHide;

@@ -32,7 +32,7 @@ namespace VPS.CustomData.Layer
 
         public TiffLayerInfo(
             string path,
-            Utilities.PointLatLngAlt home,
+            VPS.CustomData.WP.Position home,
             System.Drawing.Color transparent, double scale = 1,
             string create = null, string modify = null)
             : base(LayerTypes.tiff, path, home, scale, create, modify)
@@ -69,7 +69,7 @@ namespace VPS.CustomData.Layer
 
         private void SetLayerInfo(
         string path,
-        Utilities.PointLatLngAlt origin, System.Drawing.Color transparent, double scale = 1,
+        VPS.CustomData.WP.Position origin, System.Drawing.Color transparent, double scale = 1,
         string create = null, string modify = null)
         {
             this.transparent = transparent;
@@ -141,7 +141,7 @@ namespace VPS.CustomData.Layer
                 keyIndex.AppendChild(homeZ);
 
                 XmlElement homeFrame = xmlDoc.CreateElement("frameOfHomeAlt");
-                homeFrame.InnerText = this.Home.Tag2;
+                homeFrame.InnerText = this.Home.AltMode;
                 keyIndex.AppendChild(homeFrame);
 
                 XmlElement scale = xmlDoc.CreateElement("scale");
@@ -189,8 +189,8 @@ namespace VPS.CustomData.Layer
         public static TiffLayerInfo FromXMLToTiff(XmlNode LayerInfoKeys)
         {
             string path = "";
-            Utilities.PointLatLngAlt origin = new Utilities.PointLatLngAlt();
-            Utilities.PointLatLngAlt home = new Utilities.PointLatLngAlt();
+            VPS.CustomData.WP.Position origin = new VPS.CustomData.WP.Position();
+            VPS.CustomData.WP.Position home = new VPS.CustomData.WP.Position();
             double scale = 1;
             string createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");
             string modifyTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");
@@ -212,7 +212,7 @@ namespace VPS.CustomData.Layer
                         origin.Alt = System.Convert.ToDouble(Info.InnerText);
                         break;
                     case "frameOfOriginAlt":
-                        origin.Tag2 = Info.InnerText;
+                        origin.AltMode = Info.InnerText;
                         break;
                     case "homeLng":
                         home.Lng = System.Convert.ToDouble(Info.InnerText);
@@ -224,7 +224,7 @@ namespace VPS.CustomData.Layer
                         home.Alt = System.Convert.ToDouble(Info.InnerText);
                         break;
                     case "frameOfHomeAlt":
-                        home.Tag2 = Info.InnerText;
+                        home.AltMode = Info.InnerText;
                         break;
                     case "scale":
                         scale = System.Convert.ToDouble(Info.InnerText);

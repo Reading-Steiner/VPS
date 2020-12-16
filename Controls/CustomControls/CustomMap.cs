@@ -19,14 +19,14 @@ namespace VPS.Controls.CustomControls
 {
     public partial class CustomMap : UserControl
     {
-        public List<List<PointLatLngAlt>> lists = new List<List<PointLatLngAlt>>();
-        public List<List<PointLatLngAlt>> List
+        public List<List<CustomData.WP.Position>> lists = new List<List<CustomData.WP.Position>>();
+        public List<List<CustomData.WP.Position>> List
         {
             set
             {
                 if (value != null)
                 {
-                    lists = new List<List<PointLatLngAlt>>(value);
+                    lists = new List<List<CustomData.WP.Position>>(value);
                     List<int> indexs = new List<int>();
                     for(int index = 0; index < lists.Count; index++)
                         indexs.Add(index);
@@ -86,11 +86,11 @@ namespace VPS.Controls.CustomControls
             writeKML();
         }
 
-        public void AddList(List<PointLatLngAlt> list)
+        public void AddList(List<CustomData.WP.Position> list)
         {
             if (list != null)
             {
-                lists.Add(new List<PointLatLngAlt>(list));
+                lists.Add(new List<CustomData.WP.Position>(list));
                 List<int> indexs = new List<int>();
                 for (int index = 0; index < lists.Count; index++)
                     indexs.Add(index);
@@ -106,7 +106,7 @@ namespace VPS.Controls.CustomControls
         {
             if (currentIndex >=0 && currentIndex < lists.Count)
             {
-                List<PointLatLngAlt> list = lists[currentIndex];
+                List<CustomData.WP.Position> list = lists[currentIndex];
 
                 _polygon.Points.Clear();
                 _overlay.Clear();
@@ -114,7 +114,7 @@ namespace VPS.Controls.CustomControls
                 int tag = 0;
                 list.ForEach(x =>
                 {
-                    _polygon.Points.Add(x);
+                    _polygon.Points.Add(x.ToWGS84());
                     AddMarker(x, tag.ToString());
                     tag++;
                 });
@@ -125,13 +125,13 @@ namespace VPS.Controls.CustomControls
             }
         }
 
-        private void AddMarker(PointLatLngAlt point, string info)
+        private void AddMarker(CustomData.WP.Position point, string info)
         {
-            var marker = new CustomData.Markers.GMapMarkerCustom(point, info);
+            var marker = new CustomData.Markers.GMapMarkerCustom(point.ToWGS84(), info);
             _overlay.Markers.Add(marker);
         }
 
-        private static RectLatLng GetBoundingLayer(List<PointLatLngAlt> list)
+        private static RectLatLng GetBoundingLayer(List<CustomData.WP.Position> list)
         {
             RectLatLng ret = RectLatLng.Empty;
 

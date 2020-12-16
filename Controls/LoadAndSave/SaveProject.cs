@@ -57,8 +57,8 @@ namespace VPS.Controls.LoadAndSave
             data.wp = info.wpList.features;
             data.poly = info.polygon.features;
             data.layer = info.layer;
-            data.layerRect = info.layerRect.ToWGS84();
-            data.homePosition = info.homePosition.ToLocationPoint();
+            data.layerRect.FromRect(info.layerRect);
+            data.homePosition.FromPosition(info.homePosition);
             data.isLeftHide = info.isLeftHide;
             data.isBottomHide = info.isBottomHide;
             data.isConfigGridVisible = info.isConfigGrid;
@@ -88,14 +88,14 @@ namespace VPS.Controls.LoadAndSave
         [TypeConverter(typeof(ExpandableObjectConverter))]
         [Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
         public ProjectListInfo wpList { set; get; }
-            = new ProjectListInfo(new List<Utilities.PointLatLngAlt>());
+            = new ProjectListInfo(new List<CustomData.WP.Position>());
 
         [Category("要素集合"), DisplayName("区域")]
         [PropertyOrder(0b00000010)]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         [Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
         public ProjectListInfo polygon { set; get; }
-            = new ProjectListInfo(new List<Utilities.PointLatLngAlt>());
+            = new ProjectListInfo(new List<CustomData.WP.Position>());
 
         [Category("工作区"), DisplayName("区域数据源")]
         [PropertyOrder(0b00010001)]
@@ -128,12 +128,12 @@ namespace VPS.Controls.LoadAndSave
 
     public class ProjectListInfo
     {
-        public List<Utilities.PointLatLngAlt> features = new List<Utilities.PointLatLngAlt>();
+        public List<CustomData.WP.Position> features = new List<CustomData.WP.Position>();
 
 
-        public ProjectListInfo(List<Utilities.PointLatLngAlt> list)
+        public ProjectListInfo(List<CustomData.WP.Position> list)
         {
-            features = new List<Utilities.PointLatLngAlt>(list);
+            features = new List<CustomData.WP.Position>(list);
         }
 
         [Category("要素集合"), DisplayName("要素数量"), ReadOnly(true)]
@@ -148,33 +148,33 @@ namespace VPS.Controls.LoadAndSave
             return str;
         }
 
-        public void AddList(List<Utilities.PointLatLngAlt> list)
+        public void AddList(List<CustomData.WP.Position> list)
         {
-            features = new List<Utilities.PointLatLngAlt>(list);
+            features = new List<CustomData.WP.Position>(list);
         }
     }
 
-    public class Position
+    public class Position : VPS.CustomData.WP.Position
     {
         [Category("位置"), DisplayName("\t\t\t\t\t维度")]
         [NotifyParentProperty(true)]
-        public double Lat { get; set; } = 0;
+        public new double Lat { get; set; } = 0;
 
         [Category("位置"), DisplayName("\t\t\t\t经度")]
         [NotifyParentProperty(true)]
-        public double Lng { get; set; } = 0;
+        public new double Lng { get; set; } = 0;
 
         [Category("位置"), DisplayName("\t\t\t高度")]
         [NotifyParentProperty(true)]
-        public double Alt { get; set; } = 0;
+        public new double Alt { get; set; } = 0;
 
         [Category("位置"), DisplayName("\t\t高度模块")]
         [NotifyParentProperty(true)]
-        public string AltMode { get; set; } = "";
+        public new string AltMode { get; set; } = "";
 
         [Category("位置"), DisplayName("\t类型")]
         [NotifyParentProperty(true)]
-        public string Command { get; set; } = "";
+        public new string Command { get; set; } = "";
 
         public Position()
         {
@@ -189,10 +189,19 @@ namespace VPS.Controls.LoadAndSave
             AltMode = point.Tag2;
         }
 
+        public Position(CustomData.WP.Position point)
+        {
+            Lng = point.Lng;
+            Lat = point.Lat;
+            Alt = point.Alt;
+            Command = point.Command;
+            AltMode = point.AltMode;
+        }
+
         public override string ToString()
         {
-            return Math.Abs(Lng).ToString("0.##") + (Lng >= 0 ? "E; " : "W") + "; " +
-                Math.Abs(Lat).ToString("0.##") + (Lat >= 0 ? "N;" : "S") + "; " +
+            return Math.Abs(Lng).ToString("0.##") + (Lng >= 0 ? "E" : "W") + "; " +
+                Math.Abs(Lat).ToString("0.##") + (Lat >= 0 ? "N" : "S") + "; " +
                 (Alt).ToString("0.##");
         }
 
@@ -278,5 +287,14 @@ namespace VPS.Controls.LoadAndSave
             Right = rect.Right;
         }
         #endregion
+
+        public override string ToString()
+        {
+            return
+                Math.Abs(Left).ToString("0.##") + (Left >= 0 ? "E" : "W") + " - " +
+                Math.Abs(Right).ToString("0.##") + (Right >= 0 ? "E; " : "W; ") +
+                Math.Abs(Bottom).ToString("0.##") + (Bottom >= 0 ? "N" : "S") + " - " +
+                Math.Abs(Top).ToString("0.##") + (Top >= 0 ? "N" : "S");
+        }
     }
 }

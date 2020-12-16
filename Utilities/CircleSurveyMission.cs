@@ -25,12 +25,12 @@ namespace VPS.Utilities
             CustomData.WP.WPGlobalData.instance.BegionQuick();
 
             // set roi centerpoint
-            var roi = new PointLatLngAlt(centerPoint.Lat, centerPoint.Lng, centerPoint.Alt);
-            roi.Tag = MAVLink.MAV_CMD.DO_SET_ROI.ToString();
-            roi.Param1 = 0;
-            roi.Param2 = 0;
-            roi.Param3 = 0;
-            roi.Param4 = 0;
+            var roi = new CustomData.WP.Position(centerPoint.Lat, centerPoint.Lng, centerPoint.Alt);
+            roi.Command = MAVLink.MAV_CMD.DO_SET_ROI.ToString();
+            //roi.Param1 = 0;
+            //roi.Param2 = 0;
+            //roi.Param3 = 0;
+            //roi.Param4 = 0;
             CustomData.WP.WPGlobalData.instance.AddWPHandle(roi);
 
             // alts
@@ -42,20 +42,20 @@ namespace VPS.Utilities
                     MainV2.instance.FlightPlanner.EnterQuickADD();
                     var newpoint = centerPoint.newpos(heading, radius);
                     // add wp
-                    var wp = new PointLatLngAlt(newpoint.Lat, newpoint.Lng, alt);
-                    wp.Tag = MAVLink.MAV_CMD.WAYPOINT.ToString();
-                    wp.Param1 = 2;
-                    wp.Param2 = 0;
-                    wp.Param3 = 0;
-                    wp.Param4 = 0;
+                    var wp = new CustomData.WP.Position(newpoint.Lat, newpoint.Lng, alt);
+                    wp.Command = MAVLink.MAV_CMD.WAYPOINT.ToString();
+                    //wp.Param1 = 2;
+                    //wp.Param2 = 0;
+                    //wp.Param3 = 0;
+                    //wp.Param4 = 0;
                     CustomData.WP.WPGlobalData.instance.AddWPHandle(wp);
                     // trigger camera
-                    var trigger = new PointLatLngAlt(1, 0, 0);
-                    trigger.Tag = MAVLink.MAV_CMD.DO_DIGICAM_CONTROL.ToString();
-                    trigger.Param1 = 0;
-                    trigger.Param2 = 0;
-                    trigger.Param3 = 0;
-                    trigger.Param4 = 0;
+                    var trigger = new CustomData.WP.Position(1, 0, 0);
+                    trigger.Command = MAVLink.MAV_CMD.DO_DIGICAM_CONTROL.ToString();
+                    //trigger.Param1 = 0;
+                    //trigger.Param2 = 0;
+                    //trigger.Param3 = 0;
+                    //trigger.Param4 = 0;
                     CustomData.WP.WPGlobalData.instance.AddWPHandle(trigger);
                 }
             }

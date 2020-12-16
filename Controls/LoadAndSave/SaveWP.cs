@@ -159,11 +159,9 @@ namespace VPS.Controls.LoadAndSave
             var bar = VPS.Controls.MainInfo.TopMainInfo.instance.GetProgress(porgressKey);
             var box = VPS.Controls.MainInfo.TopMainInfo.instance.GetMessageBox(messageKey);
 
-            List<PointLatLngAlt> wpList =
-                CustomData.WP.WPGlobalData.WPListChangeAltFrame(
-                    CustomData.WP.WPGlobalData.instance.GetWPList(),
-                    CustomData.EnumCollect.AltFrame.Terrain);
-            PointLatLngAlt home = wpList[0];
+            var wpList = CustomData.WP.WPGlobalData.WPListChangeAltFrame(
+                CustomData.WP.WPGlobalData.instance.GetWPList(), CustomData.EnumCollect.AltFrame.Terrain);
+            var home = wpList[0];
             wpList.RemoveAt(0);
 
             try
@@ -264,16 +262,16 @@ namespace VPS.Controls.LoadAndSave
                     var marker = wpList[pointIndex];
 
                     bool isVisbility = false;
-                    if (CustomData.WP.WPCommands.CoordsWPCommands.Contains(marker.Tag))
+                    if (CustomData.WP.WPCommands.CoordsWPCommands.Contains(marker.Command))
                         isVisbility = true;
                     w.WriteStartElement("Placemark");
 
                     // Write Point element
                     w.WriteStartElement("name");
                     if (isVisbility)
-                        w.WriteString(marker.Tag + " " + (pointVisibleIndex).ToString());
+                        w.WriteString(marker.Command + " " + (pointVisibleIndex).ToString());
                     else
-                        w.WriteString(marker.Tag);
+                        w.WriteString(marker.Command);
                     w.WriteEndElement();//name
 
                     w.WriteStartElement("visibility");
@@ -281,7 +279,7 @@ namespace VPS.Controls.LoadAndSave
                     w.WriteEndElement();//visibility
 
                     w.WriteStartElement("description");
-                    w.WriteString(marker.Tag);
+                    w.WriteString(marker.Command);
                     w.WriteEndElement();//description
 
                     if (isVisbility)
@@ -291,20 +289,20 @@ namespace VPS.Controls.LoadAndSave
                         w.WriteEndElement();//styleUrl
                     }
 
-                    w.WriteStartElement("ExtendedData", "www.dji.com");
-                    w.WriteStartElement("param1");
-                    w.WriteString(wpList[pointIndex].Param1.ToString());
-                    w.WriteEndElement();//param1
-                    w.WriteStartElement("param2");
-                    w.WriteString(wpList[pointIndex].Param2.ToString());
-                    w.WriteEndElement();//param2
-                    w.WriteStartElement("param3");
-                    w.WriteString(wpList[pointIndex].Param3.ToString());
-                    w.WriteEndElement();//param3
-                    w.WriteStartElement("param4");
-                    w.WriteString(wpList[pointIndex].Param4.ToString());
-                    w.WriteEndElement();//param4
-                    w.WriteEndElement();//ExtendedData
+                    //w.WriteStartElement("ExtendedData", "www.dji.com");
+                    //w.WriteStartElement("param1");
+                    //w.WriteString(wpList[pointIndex].Param1.ToString());
+                    //w.WriteEndElement();//param1
+                    //w.WriteStartElement("param2");
+                    //w.WriteString(wpList[pointIndex].Param2.ToString());
+                    //w.WriteEndElement();//param2
+                    //w.WriteStartElement("param3");
+                    //w.WriteString(wpList[pointIndex].Param3.ToString());
+                    //w.WriteEndElement();//param3
+                    //w.WriteStartElement("param4");
+                    //w.WriteString(wpList[pointIndex].Param4.ToString());
+                    //w.WriteEndElement();//param4
+                    //w.WriteEndElement();//ExtendedData
 
                     if (isVisbility)
                     {
@@ -389,7 +387,7 @@ namespace VPS.Controls.LoadAndSave
                         var marker = wpList[pointLineIndex];
                         if (marker != null)
                         {
-                            if (CustomData.WP.WPCommands.CoordsWPCommands.Contains(marker.Tag))
+                            if (CustomData.WP.WPCommands.CoordsWPCommands.Contains(marker.Command))
                             {
                                 pointList += string.Format("{0},{1},{2} ", marker.Lng, marker.Lat, marker.Alt);
                             }
@@ -431,8 +429,7 @@ namespace VPS.Controls.LoadAndSave
 
         private void saveWaypointsSHP(string file)
         {
-            List<PointLatLngAlt> wpList = 
-                VPS.CustomData.WP.WPGlobalData.instance.GetWPList();
+            var wpList = VPS.CustomData.WP.WPGlobalData.instance.GetWPList();
             wpList = VPS.CustomData.WP.WPGlobalData.WPListChangeAltFrame(
                 wpList, VPS.CustomData.EnumCollect.AltFrame.Terrain);
             if (!info.saveAllowHome)
@@ -544,11 +541,11 @@ namespace VPS.Controls.LoadAndSave
     }
     class FeatureInfo
     {
-        public List<PointLatLngAlt> features;
+        public List<CustomData.WP.Position> features;
 
-        public FeatureInfo(List<PointLatLngAlt> list)
+        public FeatureInfo(List<CustomData.WP.Position> list)
         {
-            features = new List<PointLatLngAlt>(list);
+            features = new List<CustomData.WP.Position>(list);
             averAbsolute = VPS.CustomData.WP.WPGlobalData.GetAverAbsoluteAlt(list);
             ValidTerrain = new ValidAltPoint(
                 VPS.CustomData.WP.WPGlobalData.GetValidPoint(list));

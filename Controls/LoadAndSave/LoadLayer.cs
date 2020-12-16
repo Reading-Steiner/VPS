@@ -328,7 +328,7 @@ namespace VPS.Controls.LoadAndSave
                 CustomData.Layer.LayerInfo layerInfo =
                     new CustomData.Layer.TiffLayerInfo(
                         openPath, 
-                        info.home.ToLocationPoint(), 
+                        info.home, 
                         info.transparent);
                 MainV2.instance.AddLayerOverlay(layerInfo);
             }
@@ -337,7 +337,7 @@ namespace VPS.Controls.LoadAndSave
                 CustomData.Layer.LayerInfo layerInfo =
                     new CustomData.Layer.TiffLayerInfo(
                         openPath, 
-                        info.home.ToLocationPoint(), 
+                        info.home, 
                         Color.FromArgb(0, 255, 255, 255));
                 MainV2.instance.AddLayerOverlay(layerInfo);
             }
@@ -348,7 +348,7 @@ namespace VPS.Controls.LoadAndSave
                     info.isDefaultFile);
                 CustomData.WP.WPGlobalData.instance.SetLayerLimit(
                     info.rect,
-                    info.home.ToLocationPoint(),
+                    info.home,
                     info.isDefaultFile);
             }
         }

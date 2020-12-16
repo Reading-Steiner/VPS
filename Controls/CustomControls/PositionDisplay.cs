@@ -35,22 +35,22 @@ namespace VPS.Controls.CustomControls
         #endregion
 
         #region 坐标
-        private Utilities.PointLatLngAlt Position = new Utilities.PointLatLngAlt();
-        [Browsable(false)]
-        public Utilities.PointLatLngAlt GetWGS84Position()
+        private VPS.CustomData.WP.Position Position = new VPS.CustomData.WP.Position();
+
+        public VPS.CustomData.WP.Position GetPosition()
         {
-            return new Utilities.PointLatLngAlt(Position);
+            return new VPS.CustomData.WP.Position(Position);
         }
 
-        public void SetWGS84Position(Utilities.PointLatLngAlt value)
+        public void SetPosition(VPS.CustomData.WP.Position value)
         {
             Position = value;
             Invaild();
         }
 
-        public void CopyWGS84Position(Utilities.PointLatLngAlt value)
+        public void CopyPosition(VPS.CustomData.WP.Position value)
         {
-            Position = new Utilities.PointLatLngAlt(value);
+            Position = new VPS.CustomData.WP.Position(value);
             Invaild();
         }
 
@@ -94,7 +94,7 @@ namespace VPS.Controls.CustomControls
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
                         Invaild();
-                        PositionChange?.Invoke(GetWGS84Position());
+                        PositionChange?.Invoke(GetPosition());
                     }
                 }
             }                                          
@@ -102,7 +102,7 @@ namespace VPS.Controls.CustomControls
         #endregion
 
         #region
-        public delegate void PositionChangeHandle(Utilities.PointLatLngAlt position);
+        public delegate void PositionChangeHandle(VPS.CustomData.WP.Position position);
         public PositionChangeHandle PositionChange;
         #endregion
 
@@ -114,7 +114,7 @@ namespace VPS.Controls.CustomControls
                 Position.Lat.ToString("0.######") + (Position.Lat >= 0 ? "N" : "S") + " ]");
             SetControlMainThread(
                 labelX2,
-                "[ " + Position.Tag2 + " , " + Position.Alt.ToString() + " ]");
+                "[ " + Position.AltMode + " , " + Position.Alt.ToString() + " ]");
         }
 
         #region 设置控件数据

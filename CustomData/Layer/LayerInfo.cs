@@ -33,12 +33,13 @@
         private string frameOfHomeAlt;
 
         #region 访问器
-        public Utilities.PointLatLngAlt Home
+        public VPS.CustomData.WP.Position Home
         {
             get
             {
-                var origin = new Utilities.PointLatLngAlt(homeLat, homeLng, homeAlt, WP.WPCommands.HomeCommand);
-                origin.Tag2 = frameOfHomeAlt;
+                var origin = new VPS.CustomData.WP.Position(homeLat, homeLng, homeAlt);
+                origin.AltMode = frameOfHomeAlt;
+                origin.Command = WP.WPCommands.HomeCommand;
                 return origin;
             }
             set
@@ -46,8 +47,8 @@
                 homeLng = value.Lng;
                 homeLat = value.Lat;
                 homeAlt = value.Alt;
-                if (value.Tag2 == "Relative" || value.Tag2 == "Absolute" || value.Tag2 == "Terrain")
-                    frameOfHomeAlt = value.Tag2;
+                if (VPS.CustomData.EnumCollect.AltFrame.Modes.Contains(value.AltMode))
+                    frameOfHomeAlt = value.AltMode;
                 else
                     frameOfHomeAlt = "Relative";
             }
@@ -117,7 +118,7 @@
 
         protected LayerInfo(
             LayerTypes layerInfo, string url,
-            Utilities.PointLatLngAlt home,
+            VPS.CustomData.WP.Position home,
             double scale = 1, string create = null, string modify = null)
         {
             this.layerType = layerInfo;
@@ -188,12 +189,14 @@
 
         protected virtual void SetLayerInfo(
             LayerTypes layerInfo, string url,
-            Utilities.PointLatLngAlt home, double scale = 1,
+            VPS.CustomData.WP.Position home, double scale = 1,
             string create = null, string modify = null)
         {
             this.layerType = layerInfo;
 
             this.url = url;
+
+            this.Home = home;
 
             this.scale = scale;
 
@@ -236,7 +239,7 @@
                 keyIndex.AppendChild(homeZ);
 
                 XmlElement homeFrame = xmlDoc.CreateElement("frameOfHomeAlt");
-                homeFrame.InnerText = this.Home.Tag2;
+                homeFrame.InnerText = this.Home.AltMode;
                 keyIndex.AppendChild(homeFrame);
 
                 XmlElement scale = xmlDoc.CreateElement("scale");
@@ -305,8 +308,8 @@
         static public LayerInfo FromXMLToBase(XmlNode LayerInfoKeys)
         {
             string path = "";
-            Utilities.PointLatLngAlt origin = new Utilities.PointLatLngAlt();
-            Utilities.PointLatLngAlt home = new Utilities.PointLatLngAlt();
+            VPS.CustomData.WP.Position origin = new VPS.CustomData.WP.Position();
+            VPS.CustomData.WP.Position home = new VPS.CustomData.WP.Position();
             double scale = 1;
             string createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 HH:mm:ss");
             string modifyTime = DateTime.Now.ToString("yyyy年 MM月 dd日 HH:mm:ss");
@@ -328,7 +331,7 @@
                         origin.Alt = System.Convert.ToDouble(Info.InnerText);
                         break;
                     case "frameOfOriginAlt":
-                        origin.Tag2 = Info.InnerText;
+                        origin.AltMode = Info.InnerText;
                         break;
                     case "homeLng":
                         home.Lng = System.Convert.ToDouble(Info.InnerText);
@@ -340,7 +343,7 @@
                         home.Alt = System.Convert.ToDouble(Info.InnerText);
                         break;
                     case "frameOfHomeAlt":
-                        home.Tag2 = Info.InnerText;
+                        home.AltMode = Info.InnerText;
                         break;
                     case "scale":
                         scale = System.Convert.ToDouble(Info.InnerText);

@@ -280,7 +280,7 @@ namespace VPS.Controls.Layer
 
             fileRow[keyColumnName] = emp.GetOnlyCode();
             fileRow[homeColumnName] = emp.Home;
-            fileRow[frameColumnName] = emp.Home.Tag2;
+            fileRow[frameColumnName] = emp.Home.AltMode;
             fileRow[scaleColumnName] = emp.ScaleFormat;
             fileRow[transColumnName] = emp.Transparent;
 
