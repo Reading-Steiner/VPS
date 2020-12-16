@@ -4199,7 +4199,7 @@ namespace VPS
         #region ClearWP
         private void ClearWPButton_Click(object sender, EventArgs e)
         {
-            CustomData.WP.WPGlobalData.instance.ClearWPListHandle();
+            GCSViews.FlightPlanner.instance.ClearMission();
         }
         #endregion
 

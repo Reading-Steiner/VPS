@@ -382,6 +382,7 @@ namespace VPS.GCSViews
         {
             this.MainMap.Cursor = Cursors.Cross;
             this.polyicon.IsSelected = true;
+            this.WPicon.IsSelected = false;
             this.addPolygonToolStripMenuItem.Checked = true;
             this.addWPToolStripMenuItem.Checked = false;
             writeKML();
@@ -400,6 +401,7 @@ namespace VPS.GCSViews
         {
             this.MainMap.Cursor = Cursors.Cross;
             this.addWPToolStripMenuItem.Checked = true;
+            this.WPicon.IsSelected = true;
             this.polyicon.IsSelected = false;
             this.addPolygonToolStripMenuItem.Checked = false;
             writeKML();
@@ -409,6 +411,7 @@ namespace VPS.GCSViews
         private void LeaveDrawWPState()
         {
             this.MainMap.Cursor = Cursors.Default;
+            this.WPicon.IsSelected = false;
             this.addWPToolStripMenuItem.Checked = false;
             writeKML();
         }
@@ -2883,11 +2886,12 @@ namespace VPS.GCSViews
             {
                 if (polyicon.Rectangle.Contains(e.Location)) {
                     contextMenuStripMain.Visible = false;
-                    ClearPolygonToolStripMenuItem_Click(this, null);
+                    ClearPloygon();
                 }
                 if (WPicon.Rectangle.Contains(e.Location))
                 {
                     contextMenuStripMain.Visible = false;
+                    ClearMission();
                     //ClearMissionToolStripMenuItem_Click(this, null);
                 }
                 if (zoomicon.Rectangle.Contains(e.Location))
@@ -3586,6 +3590,11 @@ namespace VPS.GCSViews
         #endregion
 
         #region 清除航点
+        public void ClearMission()
+        {
+            clearMissionToolStripMenuItem_Click(this, null);
+        }
+
         private void clearMissionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CustomData.WP.WPGlobalData.instance.ClearWPListHandle();
