@@ -67,19 +67,34 @@ namespace VPS.Controls.LoadAndSave
 
                 if (File.Exists(ofd.FileName))
                 {
-                    using (StreamReader sr = new StreamReader(ofd.FileName))
+                    string messageKey = VPS.Controls.MainInfo.TopMainInfo.instance.CreateMessageBoxEnter();
+                    var box = VPS.Controls.MainInfo.TopMainInfo.instance.GetMessageBox(messageKey);
+                    try
                     {
-                        var data = (GCSViews.ProjectData)reader.Deserialize(sr);
-                        info.wpList = new ProjectListInfo(data.wp);
-                        info.polygon = new ProjectListInfo(data.poly);
-                        info.layer = data.layer;
-                        info.layerRect = new Rect(data.layerRect);
-                        info.homePosition = new Position(data.homePosition);
-                        info.isLeftHide = data.isLeftHide;
-                        info.isBottomHide = data.isBottomHide;
-                        info.isConfigGrid = data.isConfigGridVisible;
+                        using (StreamReader sr = new StreamReader(ofd.FileName))
+                        {
+                            var data = (GCSViews.ProjectData)reader.Deserialize(sr);
+                            info.wpList = new ProjectListInfo(data.wp);
+                            info.polygon = new ProjectListInfo(data.poly);
+                            info.layer = data.layer;
+                            info.layerRect = new Rect(data.layerRect);
+                            info.homePosition = new Position(data.homePosition);
+                            info.isLeftHide = data.isLeftHide;
+                            info.isBottomHide = data.isBottomHide;
+                            info.isConfigGrid = data.isConfigGridVisible;
 
-                        advPropertyGrid1.SelectedObject = info;
+                            advPropertyGrid1.SelectedObject = info;
+
+                            box.SetInfoMessage("加载成功！");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        box.SetWarnMessage("加载失败！VPS文件格式错误");
+                    }
+                    finally
+                    {
+                        VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(messageKey);
                     }
                 }
             }

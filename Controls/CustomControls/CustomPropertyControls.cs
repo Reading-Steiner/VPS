@@ -27,6 +27,8 @@ namespace VPS.Controls.CustomControls
                 Map.AddList(((LoadAndSave.FeatureInfo)value).features);
             if (value is LoadAndSave.PolygonInfo)
                 Map.AddList(((LoadAndSave.PolygonInfo)value).features);
+            if (value is LoadAndSave.ProjectListInfo)
+                Map.AddList(((LoadAndSave.ProjectListInfo)value).features);
             service.DropDownControl(Map);
             PropertyNode propertyNode = (PropertyNode)context;
             propertyNode.UpdateDisplayedValue();

@@ -51,30 +51,53 @@ namespace VPS.Controls.LoadAndSave
 
         public void SaveProjectToFile()
         {
-            System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(GCSViews.ProjectData));
-
-            var data = new GCSViews.ProjectData();
-            data.wp = info.wpList.features;
-            data.poly = info.polygon.features;
-            data.layer = info.layer;
-            data.layerRect.FromRect(info.layerRect);
-            data.homePosition.FromPosition(info.homePosition);
-            data.isLeftHide = info.isLeftHide;
-            data.isBottomHide = info.isBottomHide;
-            data.isConfigGridVisible = info.isConfigGrid;
-
-            using (SaveFileDialog sfd = new SaveFileDialog())
+            string messageKey = VPS.Controls.MainInfo.TopMainInfo.instance.CreateMessageBoxEnter();
+            var box = VPS.Controls.MainInfo.TopMainInfo.instance.GetMessageBox(messageKey);
+            try
             {
-                sfd.Filter = "项目工程(*.vps)|*.vps";
-                var result = sfd.ShowDialog();
-
-                if (sfd.FileName != "" && result == DialogResult.OK)
+                var data = new GCSViews.ProjectData();
+                try
                 {
-                    using (StreamWriter sw = new StreamWriter(sfd.FileName))
+                    data.wp = info.wpList.features;
+                    data.poly = info.polygon.features;
+                    data.layer = info.layer;
+                    data.layerRect = new CustomData.WP.Rect(info.layerRect);
+                    data.homePosition = new CustomData.WP.Position(info.homePosition);
+                    data.isLeftHide = info.isLeftHide;
+                    data.isBottomHide = info.isBottomHide;
+                    data.isConfigGridVisible = info.isConfigGrid;
+                }
+                catch (Exception ex)
+                {
+                    box.SetWarnMessage("保存失败！数据整合时出现问题");
+                }
+
+                var writer = new System.Xml.Serialization.XmlSerializer(typeof(GCSViews.ProjectData));
+                try
+                {
+                    using (SaveFileDialog sfd = new SaveFileDialog())
                     {
-                        writer.Serialize(sw, data);
+                        sfd.Filter = "项目工程(*.vps)|*.vps";
+                        var result = sfd.ShowDialog();
+
+                        if (sfd.FileName != "" && result == DialogResult.OK)
+                        {
+                            using (StreamWriter sw = new StreamWriter(sfd.FileName))
+                            {
+                                writer.Serialize(sw, data);
+                            }
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    box.SetWarnMessage("保存失败！数据序列化时出现问题");
+                }
+                box.SetInfoMessage("保存成功！");
+            }
+            finally
+            {
+                VPS.Controls.MainInfo.TopMainInfo.instance.DisposeControlEnter(messageKey);
             }
         }
     }

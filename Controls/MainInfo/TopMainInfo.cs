@@ -169,7 +169,7 @@ namespace VPS.Controls.MainInfo
                 var bar = CreateProgressBar();
                 bar.SetProgressText(info);
                 bar.SetProgress(0);
-                string key = bar.GetHashCode().ToString();
+                string key = (bar.GetHashCode() ^ System.DateTime.Now.GetHashCode()).ToString();
                 messageBarList.Add(key, bar);
 
                 return key;
@@ -208,7 +208,7 @@ namespace VPS.Controls.MainInfo
             else
             {
                 var box = CreateMessageBox();
-                string key = box.GetHashCode().ToString();
+                string key = (box.GetHashCode() ^ System.DateTime.Now.GetHashCode()).ToString();
                 messageBarList.Add(key, box);
 
                 return key;
