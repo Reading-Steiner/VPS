@@ -203,7 +203,7 @@ namespace VPS.Controls.Layer
 
             col = new DataColumn();
             col.ColumnName = "文件";
-            col.DataType = typeof(Utilities.PointLatLngAlt);
+            col.DataType = typeof(CustomData.WP.Position);
             table.Columns.Add(col);
 
             col = new DataColumn();
@@ -250,7 +250,7 @@ namespace VPS.Controls.Layer
 
             col = new DataColumn();
             col.ColumnName = homeColumnName;
-            col.DataType = typeof(Utilities.PointLatLngAlt);
+            col.DataType = typeof(CustomData.WP.Position);
             table.Columns.Add(col);
 
             col = new DataColumn();
