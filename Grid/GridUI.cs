@@ -72,8 +72,8 @@ namespace VPS.Grid
 
             loading = true;
 
-            map.MapProvider = plugin.Host.FDMapType;
-            map.MaxZoom = plugin.Host.FDGMapControl.MaxZoom;
+            map.MapProvider = plugin.Host.FPMapType;
+            map.MaxZoom = plugin.Host.FPGMapControl.MaxZoom;
             TRK_zoom.Maximum = map.MaxZoom;
 
             tiffoverlay = new GMapOverlay("layerpolygons");

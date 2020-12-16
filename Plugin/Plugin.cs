@@ -122,34 +122,34 @@ namespace VPS.Plugin
             get { return Settings.Instance; }
         }
 
-        /// <summary>
-        /// add things to flightdata map menu
-        /// </summary>
-        public ContextMenuStrip FDMenuMap
+        ///// <summary>
+        ///// add things to flightdata map menu
+        ///// </summary>
+        //public ContextMenuStrip FDMenuMap
+        //{
+        //    get { return MainV2.instance.FlightData.contextMenuStripMap; }
+        //}
+
+        ///// <summary>
+        ///// The point where the menu was drawn
+        ///// </summary>
+        //public PointLatLng FDMenuMapPosition
+        //{
+        //    get { return MainV2.instance.FlightData.MouseDownStart; }
+        //}
+
+        public GMapProvider FPMapType
         {
-            get { return MainV2.instance.FlightData.contextMenuStripMap; }
+            get { return FlightPlanner.myMap.MapProvider; }
         }
 
-        /// <summary>
-        /// The point where the menu was drawn
-        /// </summary>
-        public PointLatLng FDMenuMapPosition
-        {
-            get { return MainV2.instance.FlightData.MouseDownStart; }
-        }
-
-        public GMapProvider FDMapType
-        {
-            get { return FlightData.mymap.MapProvider; }
-        }
-
-        /// <summary>
-        /// add things to flightdata hud menu
-        /// </summary>
-        public ContextMenuStrip FDMenuHud
-        {
-            get { return MainV2.instance.FlightData.contextMenuStripHud; }
-        }
+        ///// <summary>
+        ///// add things to flightdata hud menu
+        ///// </summary>
+        //public ContextMenuStrip FDMenuHud
+        //{
+        //    get { return MainV2.instance.FlightData.contextMenuStripHud; }
+        //}
 
         /// <summary>
         /// add things to flightplanner map menu
@@ -194,13 +194,13 @@ namespace VPS.Plugin
             get { return MainV2.instance.FlightPlanner.MainMap; }
         }
 
-        /// <summary>
-        /// the map control in flightdata
-        /// </summary>
-        public GMapControl FDGMapControl
-        {
-            get { return MainV2.instance.FlightData.MainMap; }
-        }
+        ///// <summary>
+        ///// the map control in flightdata
+        ///// </summary>
+        //public GMapControl FDGMapControl
+        //{
+        //    get { return MainV2.instance.FlightData.MainMap; }
+        //}
 
         /// <summary>
         /// add wp to command queue - dont upload to mav

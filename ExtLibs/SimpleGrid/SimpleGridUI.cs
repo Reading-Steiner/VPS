@@ -34,7 +34,7 @@ namespace VPS.SimpleGrid
 
             InitializeComponent();
 
-            map.MapProvider = plugin.Host.FDMapType;
+            map.MapProvider = plugin.Host.FPMapType;
 
             layerpolygons = new GMapOverlay( "polygons");
             map.Overlays.Add(layerpolygons);

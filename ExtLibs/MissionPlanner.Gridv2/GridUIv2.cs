@@ -73,7 +73,7 @@ namespace VPS
 
             InitializeComponent();
 
-            map.MapProvider = plugin.Host.FDMapType;
+            map.MapProvider = plugin.Host.FPMapType;
 
             map.Position = plugin.Host.FPMenuMapPosition;
             map.Zoom = 16;

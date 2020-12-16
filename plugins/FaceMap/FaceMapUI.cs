@@ -135,7 +135,7 @@ namespace VPS
 
             loading = true;
 
-            map.MapProvider = plugin.Host.FDMapType;
+            map.MapProvider = plugin.Host.FPMapType;
 
             kmlpolygonsoverlay = new GMapOverlay("kmlpolygons");
             map.Overlays.Add(kmlpolygonsoverlay);
@@ -613,7 +613,7 @@ namespace VPS
             grid = FaceMap.CreateCorridor(list, CurrentState.fromDistDisplayUnit((double)NUM_BenchHeight.Value), (double)viewheight,
                      (double)camVerticalSpacing, (double)NUM_Distance.Value, (double)NUM_angle.Value, (double)NUM_cameraPitch.Value,
                      CHK_facedirection.Checked, (double)NUM_BermDepth.Value, (int)NUM_Benches.Value, (double)NUM_toeHeight.Value, (double)NUM_toepoint.Value, (double)NUM_toepoint_runs.Value,
-                     CHK_FollowPathHome.Checked, startalt, (FlightPlanner.altmode)plugin.Host.MainForm.FlightPlanner.CMB_altmode.SelectedValue);
+                     CHK_FollowPathHome.Checked, startalt, CustomData.EnumCollect.AltFrame.Mode.Absolute);
 
             if (grid.Count == 0)
                 return;
@@ -1265,7 +1265,7 @@ namespace VPS
 
             if (grid != null && grid.Count > 0)
             {
-                MainV2.instance.FlightPlanner.quickadd = true;
+                MainV2.instance.FlightPlanner.EnterQuickADD();
 
                 if (NUM_split.Value > 1 && CHK_toandland.Checked != true)
                 {
@@ -1284,13 +1284,6 @@ namespace VPS
                     int wpstart = wpsplit * splitno;
                     int wpend = wpsplit * (splitno + 1);
 
-                    // If planning in absolute mode.
-                    if ((FlightPlanner.altmode)plugin.Host.MainForm.FlightPlanner.CMB_altmode.SelectedValue == FlightPlanner.altmode.Absolute)
-                    {
-                        // TODO - Restore me!
-
-                        //exitAltitude = entryAltitude = plugin.Host.cs.HomeAlt + 10;
-                    }
 
                     while (wpstart != 0 && wpstart < grid.Count && grid[wpstart].Tag != "E")
                     {
@@ -1306,15 +1299,9 @@ namespace VPS
                        otherwise stay at the entry altitude. */
 
                     // If planning in absolute mode.
-                    if ((FlightPlanner.altmode)plugin.Host.MainForm.FlightPlanner.CMB_altmode.SelectedValue == FlightPlanner.altmode.Absolute)
-                    {
-                        if (plugin.Host.cs.HomeAlt < grid[wpstart].Alt) entryAltitude += grid[wpstart].Alt;
-                        else entryAltitude += plugin.Host.cs.HomeAlt;
-                    }
-                    else
-                    {
-                        if (grid[wpstart].Alt > 0) entryAltitude += grid[wpstart].Alt;
-                    }
+
+                    if (plugin.Host.cs.HomeAlt < grid[wpstart].Alt) entryAltitude += grid[wpstart].Alt;
+                    else entryAltitude += plugin.Host.cs.HomeAlt;
 
                     if (CHK_toandland.Checked)
                     {
@@ -1641,7 +1628,7 @@ namespace VPS
 
                 Savesettings();
 
-                MainV2.instance.FlightPlanner.quickadd = false;
+                MainV2.instance.FlightPlanner.LeaveQuickADD();
 
                 MainV2.instance.FlightPlanner.writeKML();
 

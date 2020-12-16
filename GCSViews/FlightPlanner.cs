@@ -59,7 +59,7 @@ namespace VPS.GCSViews
         }
 
 
-
+        static public Controls.myGMAP myMap;
         static public Object thisLock = new Object();
         
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
@@ -236,7 +236,7 @@ namespace VPS.GCSViews
         {
             instance = this;
 
-
+            myMap = MainMap;
 
             // config map             
             MainMap.CacheLocation = Settings.GetDataDirectory() +
