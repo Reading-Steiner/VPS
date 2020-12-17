@@ -6,6 +6,18 @@
 
     public class LayerInfo
     {
+        static string DefaultLayer
+        {
+            set
+            {
+                Utilities.Settings.Instance["Main_DefaultLayer"] = value;
+            }
+            get
+            {
+                return Utilities.Settings.Instance["Main_DefaultLayer"];
+            }
+        }
+
         protected enum LayerTypes
         {
             tiff,

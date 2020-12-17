@@ -490,7 +490,6 @@ namespace VPS.Controls.Layer
         private void DefaultLayer_Click(object sender, EventArgs e)
         {
             string key = LayerDataList.ActiveRow.GridPanel.GetCell(LayerDataList.ActiveRow.RowIndex, 0).Value.ToString();
-            Utilities.Settings.Instance[""]=
         }
     }
 

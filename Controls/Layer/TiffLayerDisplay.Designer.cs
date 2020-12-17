@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TiffLayerDisplay));
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.DefaultButton = new DevComponents.DotNetBar.ButtonX();
+            this.SaveButton = new DevComponents.DotNetBar.ButtonX();
+            this.checkBoxX1 = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.LayerDisplay = new VPS.Controls.CustomControls.LayerDisplay();
             this.ProjectionDisplay = new VPS.Controls.CustomControls.ProjectionDisplay();
             this.ModifyTimeDisplay = new DevComponents.DotNetBar.LabelX();
@@ -39,6 +41,7 @@
             this.panelEx2 = new DevComponents.DotNetBar.PanelEx();
             this.IdDisplay = new DevComponents.DotNetBar.LabelX();
             this.StateDisplay = new VPS.Controls.Layer.TiffLayerDisplay.CustomLayerVaildState();
+            this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.panelEx1.SuspendLayout();
             this.panelEx2.SuspendLayout();
             this.SuspendLayout();
@@ -47,6 +50,10 @@
             // 
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx1.Controls.Add(this.buttonX1);
+            this.panelEx1.Controls.Add(this.DefaultButton);
+            this.panelEx1.Controls.Add(this.SaveButton);
+            this.panelEx1.Controls.Add(this.checkBoxX1);
             this.panelEx1.Controls.Add(this.LayerDisplay);
             this.panelEx1.Controls.Add(this.ProjectionDisplay);
             this.panelEx1.Controls.Add(this.ModifyTimeDisplay);
@@ -57,7 +64,7 @@
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx1.Location = new System.Drawing.Point(0, 0);
             this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(500, 250);
+            this.panelEx1.Size = new System.Drawing.Size(500, 272);
             this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx1.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -66,6 +73,41 @@
             this.panelEx1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 0;
+            // 
+            // DefaultButton
+            // 
+            this.DefaultButton.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.DefaultButton.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.DefaultButton.Location = new System.Drawing.Point(412, 166);
+            this.DefaultButton.Name = "DefaultButton";
+            this.DefaultButton.Size = new System.Drawing.Size(75, 23);
+            this.DefaultButton.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.DefaultButton.TabIndex = 14;
+            this.DefaultButton.Text = "默认";
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.SaveButton.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.SaveButton.Location = new System.Drawing.Point(412, 195);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(75, 23);
+            this.SaveButton.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.SaveButton.TabIndex = 13;
+            this.SaveButton.Text = "保存修改";
+            // 
+            // checkBoxX1
+            // 
+            // 
+            // 
+            // 
+            this.checkBoxX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.checkBoxX1.Location = new System.Drawing.Point(245, 132);
+            this.checkBoxX1.Name = "checkBoxX1";
+            this.checkBoxX1.Size = new System.Drawing.Size(100, 23);
+            this.checkBoxX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.checkBoxX1.TabIndex = 12;
+            this.checkBoxX1.Text = "默认图层";
             // 
             // LayerDisplay
             // 
@@ -91,7 +133,7 @@
             // 
             // 
             this.ModifyTimeDisplay.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.ModifyTimeDisplay.Location = new System.Drawing.Point(245, 204);
+            this.ModifyTimeDisplay.Location = new System.Drawing.Point(245, 226);
             this.ModifyTimeDisplay.Name = "ModifyTimeDisplay";
             this.ModifyTimeDisplay.Size = new System.Drawing.Size(68, 18);
             this.ModifyTimeDisplay.TabIndex = 4;
@@ -105,7 +147,7 @@
             // 
             // 
             this.CreateTimeDisplay.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.CreateTimeDisplay.Location = new System.Drawing.Point(3, 204);
+            this.CreateTimeDisplay.Location = new System.Drawing.Point(3, 226);
             this.CreateTimeDisplay.Name = "CreateTimeDisplay";
             this.CreateTimeDisplay.Size = new System.Drawing.Size(68, 18);
             this.CreateTimeDisplay.TabIndex = 3;
@@ -140,7 +182,7 @@
             this.panelEx2.Controls.Add(this.IdDisplay);
             this.panelEx2.Controls.Add(this.StateDisplay);
             this.panelEx2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelEx2.Location = new System.Drawing.Point(0, 228);
+            this.panelEx2.Location = new System.Drawing.Point(0, 250);
             this.panelEx2.Name = "panelEx2";
             this.panelEx2.Size = new System.Drawing.Size(500, 22);
             this.panelEx2.Style.Alignment = System.Drawing.StringAlignment.Center;
@@ -184,13 +226,24 @@
             this.StateDisplay.Size = new System.Drawing.Size(69, 24);
             this.StateDisplay.TabIndex = 7;
             // 
+            // buttonX1
+            // 
+            this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX1.Location = new System.Drawing.Point(3, 195);
+            this.buttonX1.Name = "buttonX1";
+            this.buttonX1.Size = new System.Drawing.Size(75, 23);
+            this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.buttonX1.TabIndex = 15;
+            this.buttonX1.Text = "预览";
+            // 
             // TiffLayerDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panelEx1);
             this.Name = "TiffLayerDisplay";
-            this.Size = new System.Drawing.Size(500, 250);
+            this.Size = new System.Drawing.Size(500, 272);
             this.panelEx1.ResumeLayout(false);
             this.panelEx1.PerformLayout();
             this.panelEx2.ResumeLayout(false);
@@ -211,5 +264,9 @@
         private DevComponents.DotNetBar.PanelEx panelEx2;
         private CustomControls.ProjectionDisplay ProjectionDisplay;
         private CustomControls.LayerDisplay LayerDisplay;
+        private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX1;
+        private DevComponents.DotNetBar.ButtonX DefaultButton;
+        private DevComponents.DotNetBar.ButtonX SaveButton;
+        private DevComponents.DotNetBar.ButtonX buttonX1;
     }
 }
