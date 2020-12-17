@@ -32,7 +32,6 @@ namespace VPS.Controls.CustomControls
                 {
                     var tiff = info as TiffLayerInfo;
                     var bitInfo = GDAL.GDAL.LoadImageInfo(info.Layer);
-                    bitInfo.PreviewBitmap.MakeTransparent(tiff.Transparent);
                     layer.SetBitMap(bitInfo.PreviewBitmap, tiff.Transparent);
 
                 }
