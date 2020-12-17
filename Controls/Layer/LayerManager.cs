@@ -469,7 +469,7 @@ namespace VPS.Controls.Layer
 
         private void LayerDataList_RowActivated(object sender, GridRowActivatedEventArgs e)
         {
-            ExchangeInfo(LayerDataList.GetCell(e.NewActiveRow.RowIndex, 0).Value.ToString());
+            ExchangeInfo(e.NewActiveRow.GridPanel.GetCell(e.NewActiveRow.RowIndex, 0).Value.ToString());
         }
 
         private void ExchangeInfo(string hash)
@@ -485,6 +485,12 @@ namespace VPS.Controls.Layer
                 panelEx2.Controls.Clear();
                 panelEx2.Controls.Add(display);
             }
+        }
+
+        private void DefaultLayer_Click(object sender, EventArgs e)
+        {
+            string key = LayerDataList.ActiveRow.GridPanel.GetCell(LayerDataList.ActiveRow.RowIndex, 0).Value.ToString();
+            Utilities.Settings.Instance[""]=
         }
     }
 

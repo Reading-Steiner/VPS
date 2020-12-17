@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LayerManager));
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
-            this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
+            this.DefaultLayer = new DevComponents.DotNetBar.ButtonX();
             this.LayerDataList = new DevComponents.DotNetBar.SuperGrid.SuperGridControl();
             this.panelEx2 = new DevComponents.DotNetBar.PanelEx();
             this.ImageList = new System.Windows.Forms.ImageList(this.components);
@@ -42,7 +42,7 @@
             // 
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.panelEx1.Controls.Add(this.buttonX1);
+            this.panelEx1.Controls.Add(this.DefaultLayer);
             this.panelEx1.Controls.Add(this.LayerDataList);
             this.panelEx1.Controls.Add(this.panelEx2);
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -58,17 +58,18 @@
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 0;
             // 
-            // buttonX1
+            // DefaultLayer
             // 
-            this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.buttonX1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX1.Location = new System.Drawing.Point(797, 252);
-            this.buttonX1.Name = "buttonX1";
-            this.buttonX1.Size = new System.Drawing.Size(75, 23);
-            this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.buttonX1.TabIndex = 1;
-            this.buttonX1.Text = "设为默认";
+            this.DefaultLayer.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.DefaultLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.DefaultLayer.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.DefaultLayer.Location = new System.Drawing.Point(797, 252);
+            this.DefaultLayer.Name = "DefaultLayer";
+            this.DefaultLayer.Size = new System.Drawing.Size(75, 23);
+            this.DefaultLayer.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.DefaultLayer.TabIndex = 1;
+            this.DefaultLayer.Text = "设为默认";
+            this.DefaultLayer.Click += new System.EventHandler(this.DefaultLayer_Click);
             // 
             // LayerDataList
             // 
@@ -126,7 +127,7 @@
         private DevComponents.DotNetBar.PanelEx panelEx1;
         private DevComponents.DotNetBar.SuperGrid.SuperGridControl LayerDataList;
         private System.Windows.Forms.ImageList ImageList;
-        private DevComponents.DotNetBar.ButtonX buttonX1;
+        private DevComponents.DotNetBar.ButtonX DefaultLayer;
         private DevComponents.DotNetBar.PanelEx panelEx2;
     }
 }
