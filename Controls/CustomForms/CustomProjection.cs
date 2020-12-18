@@ -14,6 +14,11 @@ namespace VPS.Controls.CustomForms
 {
     public partial class CustomProjection : Office2007Form
     {
+        public CustomProjection()
+        {
+            InitializeComponent();
+        }
+
         public CustomProjection(ProjectionInfo projection)
         {
             InitializeComponent();

@@ -25,7 +25,7 @@ namespace VPS.Controls.Layer
             set
             {
                 layer = value;
-                LayerDisplay.SetLayer(layer);
+                LayerDisplay.CopyLayer(layer);
             }
         }
 
@@ -58,24 +58,18 @@ namespace VPS.Controls.Layer
             }
         }
 
-        private string createTime;
         public string CreateTime
         {
-            get { return createTime; }
             set
             {
-                createTime = value;
                 CreateTimeDisplay.Text = "创建时间：" + value;
             }
         }
 
-        private string modifyTime;
         public string ModifyTime
         {
-            get { return modifyTime; }
             set
             {
-                modifyTime = value;
                 ModifyTimeDisplay.Text = "修改时间：" + value;
             }
         }
@@ -94,7 +88,7 @@ namespace VPS.Controls.Layer
 
         public void SetLayer(CustomData.Layer.TiffLayerInfo info)
         {
-            Layer = info;
+            Layer = new CustomData.Layer.TiffLayerInfo(info);
             HomePosition = info.Home;
             CreateTime = info.CreateTime;
             ModifyTime = info.ModifyTime;

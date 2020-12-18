@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace VPS.Controls.CustomForms
 {
-    public partial class CustomLayer : Office2007Form
+    public partial class CustomTiffLayer : Office2007Form
     {
-        public CustomLayer()
+        public CustomTiffLayer()
         {
             InitializeComponent();
             DisplayImage.MouseMove += DisplayImage_MouseMove;
@@ -95,6 +95,21 @@ namespace VPS.Controls.CustomForms
         Color _defaultColor = Color.Transparent;
 
         public void SetBitMap(Bitmap bitmap, Color transparent)
+        {
+            _color = transparent;
+            _defaultColor = transparent;
+            _bitmap = bitmap;
+
+            colorPickerButton.SelectedColor = _color;
+            displayColor = _color;
+
+            checkBoxX1.Checked = ((_color == Color.Transparent) || (_color.A == 0));
+            checkBoxX1.Checked = !((_color == Color.Transparent) || (_color.A == 0));
+
+            ShowGeoBitmap();
+        }
+
+        public void CopyBitMap(Bitmap bitmap, Color transparent)
         {
             _color = transparent;
             _defaultColor = transparent;

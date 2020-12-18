@@ -18,28 +18,144 @@ namespace VPS.Controls.CustomControls
             InitializeComponent();
         }
 
-        public void SetLayer(LayerInfo layer)
+        #region 是否可修改
+        private bool isEndable = true;
+
+        [Category("Value"), Description("可修改的")]
+        public bool IsReadOnly
         {
-            info = layer;
-            this.labelX1.Text = "图层：" + info.Layer;
-        }
-
-        private void Display_Click(object sender, EventArgs e)
-        {
-            using (CustomForms.CustomLayer layer = new CustomForms.CustomLayer()) {
-
-                if (info is TiffLayerInfo)
-                {
-                    var tiff = info as TiffLayerInfo;
-                    var bitInfo = GDAL.GDAL.LoadImageInfo(info.Layer);
-                    layer.SetBitMap(bitInfo.PreviewBitmap, tiff.Transparent);
-
-                }
-                layer.ShowDialog();
+            set
+            {
+                isEndable = value;
+            }
+            get
+            {
+                return isEndable;
             }
         }
 
-        [Browsable(false)]
+        #region 接口函数
+        public void AllowClick()
+        {
+            isEndable = true;
+        }
+
+        public void ForbidClick()
+        {
+            isEndable = false;
+        }
+        #endregion
+
+        #endregion
+
+        #region 自定义数据访问器
         LayerInfo info = new LayerInfo();
+
+        #region Set
+        public void SetLayer(LayerInfo layer)
+        {
+            if (layer is TiffLayerInfo)
+            {
+                info = new TiffLayerInfo(layer as TiffLayerInfo);
+            }
+            else
+            {
+                info = new LayerInfo(layer);
+            }
+            Invaild();
+        }
+        #endregion
+
+        #region Copy
+        public void CopyLayer(LayerInfo layer)
+        {
+            info = layer;
+            Invaild();
+        }
+        #endregion
+
+        #region Get
+        public LayerInfo GetLayer()
+        {
+            return info;
+        }
+        #endregion
+
+        #region Delegate
+        public delegate void LayerChangeHandle(LayerInfo info);
+        public LayerChangeHandle LayerChange;
+        #endregion
+
+        #endregion
+
+        #region 自定义重绘函数
+        public void Invaild()
+        {
+            SetControlMainThread(this.labelX1, "图层：" + info.Layer);
+        }
+        #endregion
+
+        #region 修改响应函数
+        private void Display_Click(object sender, EventArgs e)
+        {
+            if (!isEndable)
+                return;
+            if (info is TiffLayerInfo)
+            {
+                //传值
+                using (CustomForms.CustomTiffLayer cusDlg = new CustomForms.CustomTiffLayer())
+                {
+
+                    if (info is TiffLayerInfo)
+                    {
+                        var tiff = info as TiffLayerInfo;
+                        var bitInfo = GDAL.GDAL.LoadImageInfo(info.Layer);
+                        cusDlg.SetBitMap(bitInfo.PreviewBitmap, tiff.Transparent);
+
+                    }
+                    if (cusDlg.ShowDialog() == DialogResult.OK)
+                    {
+                        if (info is TiffLayerInfo)
+                        {
+                            //赋值
+                            (info as TiffLayerInfo).Transparent = cusDlg.GetTransparent();
+                            Invaild();
+                            LayerChange?.Invoke(info);
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region 设置控件数据
+        private delegate void SetControlInMainThreadHandle(Control control, object data);
+
+        private static void SetControlMainThread(Control control, object data)
+        {
+            if (control.InvokeRequired)
+            {
+                SetControlInMainThreadHandle inThread = new SetControlInMainThreadHandle(SetControlMainThread);
+                control.Invoke(inThread, new object[] { control, data });
+            }
+            else
+            {
+                if (control is DevComponents.Editors.DoubleInput)
+                    ((DevComponents.Editors.DoubleInput)control).Value = (double)data;
+                if (control is DevComponents.Editors.IntegerInput)
+                    ((DevComponents.Editors.IntegerInput)control).Value = (int)data;
+                if (control is DevComponents.DotNetBar.Controls.CheckBoxX)
+                    ((DevComponents.DotNetBar.Controls.CheckBoxX)control).Checked = (bool)data;
+                if (control is DevComponents.DotNetBar.Controls.ComboBoxEx)
+                    ((DevComponents.DotNetBar.Controls.ComboBoxEx)control).Text = (string)data;
+                if (control is DevComponents.DotNetBar.LabelX)
+                    ((DevComponents.DotNetBar.LabelX)control).Text = (string)data;
+                if (control is DevComponents.DotNetBar.ButtonX)
+                    ((DevComponents.DotNetBar.ButtonX)control).Enabled = (bool)data;
+                if (control is DevComponents.DotNetBar.PanelEx)
+                    ((DevComponents.DotNetBar.PanelEx)control).Visible = (bool)data;
+            }
+        }
+        #endregion
     }
 }

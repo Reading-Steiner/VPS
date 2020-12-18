@@ -34,32 +34,9 @@ namespace VPS.Controls.CustomControls
         }
         #endregion
 
-        #region 坐标
-        private VPS.CustomData.WP.Rect rect = new VPS.CustomData.WP.Rect();
-        
-
-        public void SetRect(VPS.CustomData.WP.Rect value)
-        {
-            rect.FromRect(value);
-
-            Invaild();
-        }
-
-        public void CopyRect(VPS.CustomData.WP.Rect value)
-        {
-            rect = value;
-
-            Invaild();
-        }
-
-        public VPS.CustomData.WP.Rect GetRect()
-        {
-            return new VPS.CustomData.WP.Rect(rect);
-        }
-        #endregion
-
         #region 是否可修改
         private bool isEndable = true;
+
         [Category("Value"), Description("可修改的")]
         public bool IsReadOnly
         {
@@ -84,28 +61,90 @@ namespace VPS.Controls.CustomControls
             isEndable = false;
         }
         #endregion
+
+        #endregion
+
+        #region 自定义访问器
+        private VPS.CustomData.WP.Rect rect = new VPS.CustomData.WP.Rect();
+
+        #region Set
+        public void SetRect(VPS.CustomData.WP.Rect value)
+        {
+            rect.FromRect(value);
+
+            Invaild();
+        }
+        #endregion
+
+        #region Copy
+        public void CopyRect(VPS.CustomData.WP.Rect value)
+        {
+            rect = value;
+
+            Invaild();
+        }
+        #endregion
+
+        #region Get
+        public VPS.CustomData.WP.Rect GetRect()
+        {
+            return new VPS.CustomData.WP.Rect(rect);
+        }
+        #endregion
+
+        #region Delagate
+        public delegate void RectChangeHandle(VPS.CustomData.WP.Rect rect);
+        public RectChangeHandle RectChange;
+        #endregion
+
+        #endregion
+
+        #region 自定义重绘函数
+        private void Invaild()
+        {
+            SetControlMainThread(labelX1,
+                "[ " + rect.Top.ToString("0.######") + (rect.Top >= 0 ? "N" : "S") + " ]");
+            SetControlMainThread(labelX2,
+                "[ " + rect.Left.ToString("0.######") + (rect.Left > 0 ? "E" : "W") + " , " +
+                rect.Left.ToString("0.######") + (rect.Left >= 0 ? "E" : "W") + " ]");
+            SetControlMainThread(labelX3,
+                "[ " + rect.Bottom.ToString("0.######") + (rect.Bottom > 0 ? "N" : "S") + " ]");
+        }
         #endregion
 
         #region 修改响应函数
         private void Display_DoubleClick(object sender, EventArgs e)
         {
-            if (isEndable)
+            if (!isEndable)
+                return;
+            //传值
+            using (CustomForms.CustomRect cusDlg = new CustomForms.CustomRect(rect))
             {
-                using (CustomForms.CustomRect dlg = new CustomForms.CustomRect(rect))
+                if (cusDlg.ShowDialog() == DialogResult.OK)
                 {
-                    if (dlg.ShowDialog() == DialogResult.OK)
-                    {
-                        SetRect(dlg.GetWGS84Rect());
-                        RectChange?.Invoke(rect);
-                    }
+                    // 赋值
+                    rect.FromRect(cusDlg.GetWGS84Rect());
+                    Invaild();
+                    RectChange?.Invoke(rect);
                 }
             }
-        }
-        #endregion
 
-        #region
-        public delegate void RectChangeHandle(VPS.CustomData.WP.Rect rect);
-        public RectChangeHandle RectChange;
+        }
+
+        private void Display_TextChanged(object sender, EventArgs e)
+        {
+            Graphics g = this.CreateGraphics();
+            string top = labelX1.Text; var topSize = g.MeasureString(top, labelX1.Font);
+            string mid = labelX2.Text; var midSize = g.MeasureString(mid, labelX2.Font);
+            string bot = labelX3.Text; var botSize = g.MeasureString(bot, labelX3.Font);
+
+            labelX1.PaddingLeft = (int)(midSize.Width > topSize.Width ?
+                (midSize.Width - topSize.Width) / 2 : 0);
+
+            labelX3.PaddingLeft = (int)(midSize.Width > botSize.Width ?
+                (midSize.Width - botSize.Width) / 2 : 0);
+
+        }
         #endregion
 
         #region 设置控件数据
@@ -138,32 +177,5 @@ namespace VPS.Controls.CustomControls
             }
         }
         #endregion
-
-        private void Display_TextChanged(object sender, EventArgs e)
-        {
-            Graphics g = this.CreateGraphics();
-            string top = labelX1.Text; var topSize = g.MeasureString(top, labelX1.Font);
-            string mid = labelX2.Text; var midSize = g.MeasureString(mid, labelX2.Font);
-            string bot = labelX3.Text; var botSize = g.MeasureString(bot, labelX3.Font);
-
-            labelX1.PaddingLeft = (int)(midSize.Width > topSize.Width ?
-                (midSize.Width - topSize.Width) / 2 : 0);
-
-            labelX3.PaddingLeft = (int)(midSize.Width > botSize.Width ?
-                (midSize.Width - botSize.Width) / 2 : 0);
-
-        }
-
-        private void Invaild()
-        {
-            string top = "[ " + rect.Top.ToString("0.######") + (rect.Top >= 0 ? "N" : "S") + " ]";
-            string mid = "[ " + rect.Left.ToString("0.######") + (rect.Left > 0 ? "E" : "W") + " , " +
-                rect.Left.ToString("0.######") + (rect.Left >= 0 ? "E" : "W") + " ]";
-            string bot = "[ " + rect.Bottom.ToString("0.######") + (rect.Bottom > 0 ? "N" : "S") + " ]";
-
-            SetControlMainThread(labelX1, top);
-            SetControlMainThread(labelX2, mid);
-            SetControlMainThread(labelX3, bot);
-        }
     }
 }

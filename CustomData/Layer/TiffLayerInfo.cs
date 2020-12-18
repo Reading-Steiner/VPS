@@ -19,8 +19,11 @@ namespace VPS.CustomData.Layer
         #region 访问器
         public Color Transparent
         {
+            set { transparent = value; }
             get
             {
+                if (transparent.A == 0)
+                    return Color.Transparent;
                 return transparent;
             }
         }

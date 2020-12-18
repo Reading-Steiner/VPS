@@ -19,6 +19,7 @@ namespace VPS.Controls.CustomControls
 
         #region 标题
         private string posName = "位置";
+
         [Category("Value"), Description("标题")]
         public string PositionName
         {
@@ -34,30 +35,9 @@ namespace VPS.Controls.CustomControls
         }
         #endregion
 
-        #region 坐标
-        private VPS.CustomData.WP.Position Position = new VPS.CustomData.WP.Position();
-
-        public VPS.CustomData.WP.Position GetPosition()
-        {
-            return new VPS.CustomData.WP.Position(Position);
-        }
-
-        public void SetPosition(VPS.CustomData.WP.Position value)
-        {
-            Position = value;
-            Invaild();
-        }
-
-        public void CopyPosition(VPS.CustomData.WP.Position value)
-        {
-            Position = new VPS.CustomData.WP.Position(value);
-            Invaild();
-        }
-
-        #endregion
-
         #region 是否可修改
         private bool isEndable = true;
+
         [Category("Value"), Description("可修改的")]
         public bool IsReadOnly
         {
@@ -82,30 +62,43 @@ namespace VPS.Controls.CustomControls
             isEndable = false;
         }
         #endregion
+
         #endregion
 
-        #region 修改响应函数
-        private void Display_DoubleClick(object sender, EventArgs e)
+        #region 自定义访问器
+        private VPS.CustomData.WP.Position Position = new VPS.CustomData.WP.Position();
+
+        #region Set
+        public void SetPosition(VPS.CustomData.WP.Position value)
         {
-            if (isEndable)
-            {
-                using (CustomForms.CustomPosition dlg = new CustomForms.CustomPosition(Position))
-                {
-                    if (dlg.ShowDialog() == DialogResult.OK)
-                    {
-                        Invaild();
-                        PositionChange?.Invoke(GetPosition());
-                    }
-                }
-            }                                          
+            Position = new VPS.CustomData.WP.Position(value);
+            Invaild();
         }
         #endregion
 
-        #region
+        #region Copy
+        public void CopyPosition(VPS.CustomData.WP.Position value)
+        {
+            Position = value;
+            Invaild();
+        }
+        #endregion
+
+        #region Get
+        public VPS.CustomData.WP.Position GetPosition()
+        {
+            return Position;
+        }
+        #endregion
+
+        #region Delegate
         public delegate void PositionChangeHandle(VPS.CustomData.WP.Position position);
         public PositionChangeHandle PositionChange;
         #endregion
 
+        #endregion
+
+        #region 自定义重绘函数
         public void Invaild()
         {
             SetControlMainThread(
@@ -116,6 +109,27 @@ namespace VPS.Controls.CustomControls
                 labelX2,
                 "[ " + Position.AltMode + " , " + Position.Alt.ToString() + " ]");
         }
+        #endregion
+
+        #region 修改响应函数
+        private void Display_DoubleClick(object sender, EventArgs e)
+        {
+            if (!isEndable)
+                return;
+            //传值
+            using (CustomForms.CustomPosition cusDlg = new CustomForms.CustomPosition(Position))
+            {
+                if (cusDlg.ShowDialog() == DialogResult.OK)
+                {
+                    //赋值
+                    Position.FromPosition(cusDlg.GetWGS84Position());
+                    Invaild();
+                    PositionChange?.Invoke(GetPosition());
+                }
+            }
+
+        }
+        #endregion
 
         #region 设置控件数据
         private delegate void SetControlInMainThreadHandle(Control control, object data);

@@ -1,6 +1,6 @@
 ﻿namespace VPS.Controls.CustomForms
 {
-    partial class CustomLayer
+    partial class CustomTiffLayer
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomLayer));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomTiffLayer));
             this.colorPickerButton = new DevComponents.DotNetBar.ColorPickerButton();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();

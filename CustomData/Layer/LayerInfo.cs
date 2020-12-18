@@ -18,12 +18,12 @@
             }
         }
 
-        protected enum LayerTypes
+        public enum LayerTypes
         {
             tiff,
             none
         }
-        protected LayerTypes layerType;
+        public LayerTypes layerType;
 
         #region LayerType
 
@@ -128,7 +128,7 @@
         #region LayerInfo 构造函数
         public LayerInfo() { }
 
-        protected LayerInfo(
+        public LayerInfo(
             LayerTypes layerInfo, string url,
             VPS.CustomData.WP.Position home,
             double scale = 1, string create = null, string modify = null)
@@ -149,6 +149,26 @@
                 modifyTime = modify;
             else
                 modifyTime = createTime;
+        }
+
+        public LayerInfo(LayerInfo info)
+        {
+            this.layerType = info.layerType;
+
+            this.url = info.url;
+
+            this.Home = info.Home;
+
+            this.scale = info.scale;
+
+            if (info.createTime != null)
+                createTime = info.createTime;
+            else
+                createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 HH:mm:ss");
+            if (info.modifyTime != null)
+                modifyTime = info.modifyTime;
+            else
+                modifyTime = info.createTime;
         }
         #endregion
 
