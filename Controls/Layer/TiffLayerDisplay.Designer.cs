@@ -41,7 +41,6 @@
             this.panelEx2 = new DevComponents.DotNetBar.PanelEx();
             this.IdDisplay = new DevComponents.DotNetBar.LabelX();
             this.StateDisplay = new VPS.Controls.Layer.TiffLayerDisplay.CustomLayerVaildState();
-            this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.panelEx1.SuspendLayout();
             this.panelEx2.SuspendLayout();
             this.SuspendLayout();
@@ -50,7 +49,6 @@
             // 
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.panelEx1.Controls.Add(this.buttonX1);
             this.panelEx1.Controls.Add(this.DefaultButton);
             this.panelEx1.Controls.Add(this.SaveButton);
             this.panelEx1.Controls.Add(this.checkBoxX1);
@@ -84,6 +82,7 @@
             this.DefaultButton.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.DefaultButton.TabIndex = 14;
             this.DefaultButton.Text = "默认";
+            this.DefaultButton.Click += new System.EventHandler(this.DefaultButton_Click);
             // 
             // SaveButton
             // 
@@ -95,6 +94,7 @@
             this.SaveButton.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.SaveButton.TabIndex = 13;
             this.SaveButton.Text = "保存修改";
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // checkBoxX1
             // 
@@ -102,9 +102,9 @@
             // 
             // 
             this.checkBoxX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.checkBoxX1.Location = new System.Drawing.Point(245, 132);
+            this.checkBoxX1.Location = new System.Drawing.Point(321, 195);
             this.checkBoxX1.Name = "checkBoxX1";
-            this.checkBoxX1.Size = new System.Drawing.Size(100, 23);
+            this.checkBoxX1.Size = new System.Drawing.Size(75, 23);
             this.checkBoxX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.checkBoxX1.TabIndex = 12;
             this.checkBoxX1.Text = "默认图层";
@@ -112,6 +112,7 @@
             // LayerDisplay
             // 
             this.LayerDisplay.AutoSize = true;
+            this.LayerDisplay.IsReadOnly = true;
             this.LayerDisplay.Location = new System.Drawing.Point(3, 3);
             this.LayerDisplay.Name = "LayerDisplay";
             this.LayerDisplay.Size = new System.Drawing.Size(53, 23);
@@ -120,6 +121,7 @@
             // ProjectionDisplay
             // 
             this.ProjectionDisplay.AutoSize = true;
+            this.ProjectionDisplay.IsReadOnly = true;
             this.ProjectionDisplay.Location = new System.Drawing.Point(3, 29);
             this.ProjectionDisplay.Name = "ProjectionDisplay";
             this.ProjectionDisplay.Size = new System.Drawing.Size(53, 24);
@@ -226,17 +228,6 @@
             this.StateDisplay.Size = new System.Drawing.Size(69, 24);
             this.StateDisplay.TabIndex = 7;
             // 
-            // buttonX1
-            // 
-            this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX1.Location = new System.Drawing.Point(3, 195);
-            this.buttonX1.Name = "buttonX1";
-            this.buttonX1.Size = new System.Drawing.Size(75, 23);
-            this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.buttonX1.TabIndex = 15;
-            this.buttonX1.Text = "预览";
-            // 
             // TiffLayerDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -267,6 +258,5 @@
         private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX1;
         private DevComponents.DotNetBar.ButtonX DefaultButton;
         private DevComponents.DotNetBar.ButtonX SaveButton;
-        private DevComponents.DotNetBar.ButtonX buttonX1;
     }
 }

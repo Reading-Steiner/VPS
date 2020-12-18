@@ -477,10 +477,8 @@ namespace VPS.Controls.Layer
             CustomData.Layer.LayerInfo info = CustomData.Layer.MemoryLayerCache.GetLayerFromMemoryCacheWithHashCode(hash);
             if (info is CustomData.Layer.TiffLayerInfo)
             {
-                TiffLayerDisplay display = new TiffLayerDisplay();
+                TiffLayerDisplay display = new TiffLayerDisplay(info as CustomData.Layer.TiffLayerInfo);
                 display.Dock = DockStyle.Fill;
-
-                display.SetLayer(info as CustomData.Layer.TiffLayerInfo);
 
                 panelEx2.Controls.Clear();
                 panelEx2.Controls.Add(display);

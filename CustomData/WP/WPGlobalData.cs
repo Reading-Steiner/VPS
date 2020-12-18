@@ -829,6 +829,13 @@ namespace VPS.CustomData.WP
                 AddHistory();
             }
         }
+
+        public void SetDefaultLayer(string path, VPS.CustomData.WP.Rect rect, VPS.CustomData.WP.Position home)
+        {
+            defaultLayerPath = path;
+            defaultRect = rect;
+            defaultHome = home;
+        }
         #endregion
 
         #region 获取图层信息

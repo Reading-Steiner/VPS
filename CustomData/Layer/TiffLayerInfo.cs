@@ -33,6 +33,12 @@ namespace VPS.CustomData.Layer
 
         #region LayerInfo 构造函数
 
+        public TiffLayerInfo()
+            : base()
+        {
+            this.transparent = Color.Transparent;
+        }
+
         public TiffLayerInfo(
             string path,
             VPS.CustomData.WP.Position home,
@@ -40,7 +46,7 @@ namespace VPS.CustomData.Layer
             string create = null, string modify = null)
             : base(LayerTypes.tiff, path, home, scale, create, modify)
         {
-            this.transparent = transparent;
+           this.transparent = transparent;
         }
 
         public TiffLayerInfo(TiffLayerInfo info)

@@ -23,7 +23,7 @@
             tiff,
             none
         }
-        public LayerTypes layerType;
+        public LayerTypes layerType = LayerTypes.none;
 
         #region LayerType
 
@@ -39,10 +39,10 @@
         #endregion
 
         #region LayerHome
-        private double homeLng;
-        private double homeLat;
-        private double homeAlt;
-        private string frameOfHomeAlt;
+        private double homeLng = 0;
+        private double homeLat = 0;
+        private double homeAlt = 0;
+        private string frameOfHomeAlt = "";
 
         #region 访问器
         public VPS.CustomData.WP.Position Home
@@ -69,7 +69,7 @@
         #endregion
 
         #region LayerScale
-        private double scale;
+        private double scale = 0;
 
         #region 访问器
         public double Scale
@@ -95,7 +95,7 @@
         #endregion
 
         #region LayerUrl
-        private string url;
+        private string url = "";
 
         #region 访问器
         public string Layer
@@ -109,8 +109,8 @@
         #endregion
 
         #region LayerTime
-        protected string createTime;
-        protected string modifyTime;
+        protected string createTime = "";
+        protected string modifyTime = "";
 
         #region 访问器
 

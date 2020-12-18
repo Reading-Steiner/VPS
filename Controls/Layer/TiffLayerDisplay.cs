@@ -16,48 +16,82 @@ namespace VPS.Controls.Layer
         public TiffLayerDisplay()
         {
             InitializeComponent();
+
+            defaultLayer = new CustomData.Layer.TiffLayerInfo();
+            //SetLayer(defaultLayer);
         }
 
+        public TiffLayerDisplay(CustomData.Layer.TiffLayerInfo value)
+        {
+            InitializeComponent();
+            defaultLayer = value;
+            SetLayer(defaultLayer);
+        }
+
+        #region 图层信息
         private CustomData.Layer.TiffLayerInfo layer;
-        public CustomData.Layer.TiffLayerInfo Layer
+        private CustomData.Layer.TiffLayerInfo defaultLayer;
+
+        public CustomData.Layer.TiffLayerInfo GetLayerInfo()
         {
-            get { return layer; }
-            set
-            {
+            return layer;
+        }
+
+        public void SetLayerInfo(CustomData.Layer.TiffLayerInfo value)
+        {
+            if (layer is CustomData.Layer.TiffLayerInfo)
+                layer = new CustomData.Layer.TiffLayerInfo(value);
+            else
                 layer = value;
-                LayerDisplay.CopyLayer(layer);
-            }
+            LayerDisplay.CopyLayer(layer);
         }
+        #endregion
 
+        #region 初始位置
         private VPS.CustomData.WP.Position home;
-        public VPS.CustomData.WP.Position HomePosition
+
+        public VPS.CustomData.WP.Position GetHomePosition()
         {
-            get
-            {
-                return home;
-            }
-            set
-            {
-                home = value;
-                HomePositionDisplay.SetPosition(home);
-            }
+            return home;
         }
 
+        public void SetHomePosition(VPS.CustomData.WP.Position value)
+        {
+            home = new CustomData.WP.Position(value);
+            HomePositionDisplay.CopyPosition(home);
+        }
+        #endregion
+
+        #region 图层范围
         private VPS.CustomData.WP.Rect rect = new VPS.CustomData.WP.Rect();
 
-        public VPS.CustomData.WP.Rect LayerRect
+        public VPS.CustomData.WP.Rect GetLayerRect()
         {
-            get
-            {
-                return new VPS.CustomData.WP.Rect(rect);
-            }
-            set
-            {
-                rect = new VPS.CustomData.WP.Rect(value);
-                LayerRectDisplay.CopyRect(rect);
-            }
+            return rect;
         }
 
+        public void SetLayerRect(VPS.CustomData.WP.Rect value)
+        {
+            rect = new VPS.CustomData.WP.Rect(value);
+            LayerRectDisplay.CopyRect(rect);
+        }
+        #endregion
+
+        #region 投影信息
+        private ProjectionInfo projection = new ProjectionInfo();
+        public ProjectionInfo GetProjection()
+        {
+            return projection;
+        }
+
+        public void SetProjection(ProjectionInfo value)
+        {
+            projection.CopyProperties(value);
+            ProjectionDisplay.CopyProjection(projection);
+        }
+        #endregion
+
+        #region 时间信息
         public string CreateTime
         {
             set
@@ -73,23 +107,12 @@ namespace VPS.Controls.Layer
                 ModifyTimeDisplay.Text = "修改时间：" + value;
             }
         }
-
-        private ProjectionInfo projection = new ProjectionInfo();
-        public ProjectionInfo GetProjection()
-        {
-            return projection;
-        }
-
-        public void SetProjection(ProjectionInfo value)
-        {
-            projection.CopyProperties(value);
-            ProjectionDisplay.CopyProjection(projection);
-        }
+        #endregion
 
         public void SetLayer(CustomData.Layer.TiffLayerInfo info)
         {
-            Layer = new CustomData.Layer.TiffLayerInfo(info);
-            HomePosition = info.Home;
+            SetLayerInfo(info);
+            SetHomePosition(info.Home);
             CreateTime = info.CreateTime;
             ModifyTime = info.ModifyTime;
             IdDisplay.Text = info.GetOnlyCode();
@@ -98,15 +121,17 @@ namespace VPS.Controls.Layer
                 StateDisplay.SetState("就绪");
             else
                 StateDisplay.SetState("无效");
+
+            if (!info.LayerInvaild())
+                return;
             var bitmapInfo = GDAL.GDAL.LoadImageInfo(info.Layer);
             if (bitmapInfo != null)
             {
-                LayerRect = new VPS.CustomData.WP.Rect(bitmapInfo.Rect);
+                SetLayerRect(new VPS.CustomData.WP.Rect(bitmapInfo.Rect));
             }
             using (var ds = OSGeo.GDAL.Gdal.Open(info.Layer, OSGeo.GDAL.Access.GA_ReadOnly))
             {
                 var projection = ProjectionInfo.FromEsriString(ds.GetProjection());
-
                 SetProjection(projection);
             }
         }
@@ -120,6 +145,23 @@ namespace VPS.Controls.Layer
                 AddState("无效", Color.Red);
                 SetState("就绪");
             }
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            var value = new CustomData.Layer.TiffLayerInfo(
+                layer.Layer, 
+                home, layer.Transparent, layer.Scale, 
+                layer.CreateTime, DateTime.Now.ToString("yyyy年 MM月 dd日 HH:mm:ss"));
+            VPS.CustomData.Layer.MemoryLayerCache.AddLayerToMemoryCache(value);
+            if (checkBoxX1.Checked)
+                VPS.CustomData.WP.WPGlobalData.instance.SetDefaultLayer(layer.Layer, rect, home);
+
+        }
+
+        private void DefaultButton_Click(object sender, EventArgs e)
+        {
+            SetLayer(defaultLayer);
         }
     }
 }
