@@ -3908,14 +3908,12 @@ namespace VPS
                 CustomData.WP.WPGlobalData.instance.SetWPListHandle(load.info.wpList.features);
                 if (load.info.layer != CustomData.WP.WPGlobalData.instance.GetLayer())
                 {
-                    CustomData.WP.WPGlobalData.instance.SetLayer(load.info.layer);
+                    CustomData.WP.WPGlobalData.instance.SetLayer(
+                        load.info.layer, load.info.defaultLayer);
+                    CustomData.WP.WPGlobalData.instance.SetLayerLimit(
+                        load.info.layerRect, load.info.homePosition, load.info.defaultLayer);
                     ShowLayerOverlay(load.info.layer);
                 }
-
-                CustomData.WP.WPGlobalData.instance.SetLayer(
-                    load.info.layer, load.info.defaultLayer);
-                CustomData.WP.WPGlobalData.instance.SetLayerLimit(
-                    load.info.layerRect, load.info.homePosition, load.info.defaultLayer);
 
                 GCSViews.FlightPlanner.instance.MainMap.SetZoomToFitRect(load.info.layerRect.ToWGS84());
             }

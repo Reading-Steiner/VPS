@@ -323,6 +323,17 @@ namespace VPS.Controls.LoadAndSave
         #region Tiff 加载
         private void LoadTiff(string openPath, LoadTiffLayerInfo info)
         {
+            if (info.isDefaultFile)
+            {
+                CustomData.WP.WPGlobalData.instance.SetLayer(
+                    openPath,
+                    info.isDefaultFile);
+                CustomData.WP.WPGlobalData.instance.SetLayerLimit(
+                    info.rect,
+                    info.home,
+                    info.isDefaultFile);
+            }
+
             if ((info as LoadTiffLayerInfo).isUseTransparent)
             {
                 CustomData.Layer.LayerInfo layerInfo =
@@ -340,16 +351,6 @@ namespace VPS.Controls.LoadAndSave
                         info.home, 
                         Color.FromArgb(0, 255, 255, 255));
                 MainV2.instance.AddLayerOverlay(layerInfo);
-            }
-            if (info.isDefaultFile)
-            {
-                CustomData.WP.WPGlobalData.instance.SetLayer(
-                    openPath,
-                    info.isDefaultFile);
-                CustomData.WP.WPGlobalData.instance.SetLayerLimit(
-                    info.rect,
-                    info.home,
-                    info.isDefaultFile);
             }
         }
         #endregion

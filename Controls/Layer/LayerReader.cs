@@ -497,6 +497,13 @@ namespace VPS.Controls.Layer
                 openPath = SaveFilePath.Text;
             else
                 openPath = OpenFilePath.Text;
+            if (SettingDefaultMap.Checked)
+            {
+                CustomData.WP.WPGlobalData.instance.SetLayer(openPath, SettingDefaultMap.Checked);
+                CustomData.WP.WPGlobalData.instance.SetLayerLimit(
+                    this.LayerRect, OriginPosition.GetPosition(), SettingDefaultMap.Checked);
+            }
+
             if (UsingTransparent.Checked)
             {
                 CustomData.Layer.LayerInfo layerInfo =
@@ -508,12 +515,6 @@ namespace VPS.Controls.Layer
                 CustomData.Layer.LayerInfo layerInfo =
                     new CustomData.Layer.TiffLayerInfo(openPath, OriginPosition.GetPosition(), Color.FromArgb(0, 255, 255, 255));
                 MainV2.instance.AddLayerOverlay(layerInfo);
-            }
-            if (SettingDefaultMap.Checked)
-            {
-                CustomData.WP.WPGlobalData.instance.SetLayer(openPath, SettingDefaultMap.Checked);
-                CustomData.WP.WPGlobalData.instance.SetLayerLimit(
-                    this.LayerRect, OriginPosition.GetPosition(), SettingDefaultMap.Checked);
             }
         }
         #endregion
