@@ -25,23 +25,13 @@ namespace VPS.Controls.Layer
             InitializeComponent();
             EndEdit();
 
-            //CustomData.Layer.MemoryLayerCache.LayerInfosChange += BindingDataSource;
+            CustomData.Layer.MemoryLayerCache.LayerInfosChange += BindingDataSource;
         }
+
 
         private void LayerManager_Load(object sender, EventArgs e)
         {
-            MainDataTable = CreateMainTable();
-            TiffDataTable = CreateTiffTable();
-
-            BindingDataSource();
-            set.Tables.Add(MainDataTable);
-            set.Tables.Add(TiffDataTable);
-
-            set.Relations.Add("1", set.Tables[MainLayerHandle].Columns["识别码"],
-                               set.Tables[TiffLayerHandle].Columns["识别码"], false);
-
-            LayerDataList.PrimaryGrid.DataSource = set;
-            LayerDataList.PrimaryGrid.DataMember = MainLayerHandle;
+            InitGrid();
         }
 
         public static string GetDisplayName(PropertyInfo propertyInfo)
@@ -82,6 +72,29 @@ namespace VPS.Controls.Layer
             }
         }
 
+        #region InitGrid
+        DataSet set = new DataSet(MainHandle);
+
+        public void InitGrid()
+        {
+            set = new DataSet(MainHandle);
+
+            MainDataTable = CreateMainTable();
+            TiffDataTable = CreateTiffTable();
+
+            BindingDataSource();
+            set.Tables.Add(MainDataTable);
+            set.Tables.Add(TiffDataTable);
+
+            set.Relations.Add("1", set.Tables[MainLayerHandle].Columns["识别码"],
+                               set.Tables[TiffLayerHandle].Columns["识别码"], false);
+
+            LayerDataList.PrimaryGrid.DataSource = set;
+            LayerDataList.PrimaryGrid.DataMember = MainLayerHandle;
+        }
+
+        #endregion
+
         #region LayerManager 数据绑定
 
         #region 从数据源获取数据
@@ -104,10 +117,10 @@ namespace VPS.Controls.Layer
         #region 生成表格
 
         #region Main
-
-        #region 生成主表
-        const string MainLayerHandle = "MainLayer";
         DataTable MainDataTable = new DataTable(MainLayerHandle);
+
+        #region 生成Main表
+        const string MainLayerHandle = "MainLayer";
 
         public DataTable CreateMainTable()
         {
@@ -124,43 +137,15 @@ namespace VPS.Controls.Layer
             table.Columns.Add("删除", typeof(string));
             table.Columns.Add("默认", typeof(bool));
 
+            table.Constraints.Add(new UniqueConstraint("Key", table.Columns[0]));
+            table.PrimaryKey = new DataColumn[] { table.Columns[0] };
+
             return table;
-        }
-
-        public DataTable BindingMainTable(List<LayerMangerMainDataSource> items)
-        {
-            MainDataTable.Clear();
-
-            PropertyInfo[] props = typeof(LayerMangerMainDataSource).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-            foreach (var item in items)
-            {
-                var values = new object[props.Length + 2];
-
-                for (int i = 0; i < props.Length; i++)
-                {
-                    values[i] = props[i].GetValue(item, null);
-                }
-                values[props.Length] = "";
-                if (CustomData.WP.WPGlobalData.instance != null &&
-                    CustomData.WP.WPGlobalData.instance.IsDefaultLayer(values[1].ToString()))
-                {
-                    values[props.Length + 1] = "True";
-                }
-                else
-                {
-                    values[props.Length + 1] = "false";
-                }
-
-                MainDataTable.Rows.Add(values);
-            }
-
-            return MainDataTable;
         }
         #endregion
 
-        #region 生成主表行
-        private void FillMainTable(CustomData.Layer.LayerInfo emp)
+        #region 生成Main表行
+        private LayerMangerMainDataSource FillMainTable(CustomData.Layer.LayerInfo emp)
         {
             LayerMangerMainDataSource ds = new LayerMangerMainDataSource();
 
@@ -174,17 +159,56 @@ namespace VPS.Controls.Layer
                 ds.Type = "本地文件";
             }
 
-            MainDataSource.Add(ds);
+            return ds;
         }
         #endregion
 
-        #region 行默认填充单元
-        private void MainLayerPanelDefaultValue(GridPanel panel)
+        #region 绑定Main表数据
+        public DataTable BindingMainTable(List<LayerMangerMainDataSource> items)
         {
+            PropertyInfo[] props = typeof(LayerMangerMainDataSource).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var item in items)
+            {
+                DataRow row;
+                if (MainDataTable.Rows.Contains(item.Key))
+                {
+                    row = MainDataTable.Rows.Find(item.Key);
+
+                }
+                else
+                {
+                    row = MainDataTable.NewRow();
+                }
+
+
+                for (int i = 0; i < props.Length; i++)
+                {
+                    row[i] = props[i].GetValue(item, null);
+                }
+
+                row[props.Length] = "";
+                if (CustomData.WP.WPGlobalData.instance != null &&
+                    CustomData.WP.WPGlobalData.instance.IsDefaultLayer(row[1].ToString()))
+                {
+                    row[props.Length + 1] = "True";
+                }
+                else
+                {
+                    row[props.Length + 1] = "false";
+                }
+
+                if (!MainDataTable.Rows.Contains(item.Key))
+                {
+                    MainDataTable.Rows.Add(row);
+                }
+            }
+
+            return MainDataTable;
         }
         #endregion
 
-        #region 主表显示格式设置
+        #region 设置Main表显示格式
         private void CustomizeMainLayerPanel(GridPanel panel)
         {
             panel.FrozenColumnCount = 1;
@@ -267,11 +291,10 @@ namespace VPS.Controls.Layer
         #endregion
 
         #region Tiff
+        DataTable TiffDataTable = new DataTable(TiffLayerHandle);
 
         #region 生成Tiff表
-
         const string TiffLayerHandle = "TiffLayer";
-        DataTable TiffDataTable = new DataTable(TiffLayerHandle);
 
         public DataTable CreateTiffTable()
         {
@@ -285,33 +308,15 @@ namespace VPS.Controls.Layer
                 table.Columns.Add(GetDisplayName(prop), t);
             }
 
+            table.Constraints.Add(new UniqueConstraint("Key", table.Columns[0]));
+            table.PrimaryKey = new DataColumn[] { table.Columns[0] };
+
             return table;
-        }
-
-        public DataTable BindingLayerTable(List<LayerMangerTiffDataSource> items)
-        {
-            TiffDataTable.Clear();
-
-            PropertyInfo[] props = typeof(LayerMangerTiffDataSource).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-            foreach (var item in items)
-            {
-                var values = new object[props.Length];
-
-                for (int i = 0; i < props.Length; i++)
-                {
-                    values[i] = props[i].GetValue(item, null);
-                }
-
-                TiffDataTable.Rows.Add(values);
-            }
-
-            return TiffDataTable;
         }
         #endregion
 
         #region 生成Tiff行
-        private void FillLayerTable(CustomData.Layer.TiffLayerInfo emp)
+        private LayerMangerTiffDataSource FillLayerTable(CustomData.Layer.TiffLayerInfo emp)
         {
             LayerMangerTiffDataSource ds = new LayerMangerTiffDataSource();
 
@@ -321,11 +326,44 @@ namespace VPS.Controls.Layer
             ds.Scale = emp.ScaleFormat;
             ds.Transparent = emp.Transparent;
 
-            TiffDataSource.Add(ds);
+            return ds;
         }
         #endregion
 
-        #region Tiff表显示格式设置
+        #region 绑定Tiff表数据
+        public DataTable BindingLayerTable(List<LayerMangerTiffDataSource> items)
+        {
+            PropertyInfo[] props = typeof(LayerMangerTiffDataSource).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var item in items)
+            {
+                DataRow row;
+                if (TiffDataTable.Rows.Contains(item.Key))
+                {
+                    row = TiffDataTable.Rows.Find(item.Key);
+
+                }
+                else
+                {
+                    row = TiffDataTable.NewRow();
+                }
+
+                for (int i = 0; i < props.Length; i++)
+                {
+                    row[i] = props[i].GetValue(item, null);
+                }
+
+                if (!TiffDataTable.Rows.Contains(item.Key))
+                {
+                    TiffDataTable.Rows.Add(row);
+                }
+            }
+
+            return TiffDataTable;
+        }
+        #endregion
+
+        #region 设置Tiff表显示格式
         private void CustomizeTiffLayerPanel(GridPanel panel)
         {
             panel.FrozenColumnCount = 1;
@@ -358,19 +396,29 @@ namespace VPS.Controls.Layer
         #endregion
 
         #region 绑定数据源
-        DataSet set = new DataSet(MainHandle);
-
-        List<LayerMangerMainDataSource> MainDataSource = new List<LayerMangerMainDataSource>();
-        List<LayerMangerTiffDataSource> TiffDataSource = new List<LayerMangerTiffDataSource>();
-
         const string MainHandle = "LayerManager";
+
         public void BindingDataSource()
         {
             if (isEdit)
                 return;
             StartEdit();
 
-            LoadLayerInfoData();
+            List<LayerMangerMainDataSource> MainDataSource = new List<LayerMangerMainDataSource>();
+            List<LayerMangerTiffDataSource> TiffDataSource = new List<LayerMangerTiffDataSource>();
+
+            // Add 50 rows to fiddle with
+            List<CustomData.Layer.LayerInfo> emp = GetDataSource();
+            for (int i = 0; i < emp.Count; i++)
+            {
+                MainDataSource.Add(FillMainTable(emp[i]));
+
+                if (emp[i] is CustomData.Layer.TiffLayerInfo)
+                {
+                    TiffDataSource.Add(FillLayerTable(emp[i] as CustomData.Layer.TiffLayerInfo));
+                }
+
+            }
 
             BeginLoadData();
 
@@ -406,7 +454,8 @@ namespace VPS.Controls.Layer
             switch (panel.DataMember)
             {
                 case MainLayerHandle:
-                    MainLayerPanelDefaultValue(panel);
+                    break;
+                case TiffLayerHandle:
                     break;
             }
         }
@@ -429,28 +478,6 @@ namespace VPS.Controls.Layer
             }
         }
         #endregion
-
-        #region 绑定数据 入口函数
-        public void LoadLayerInfoData()
-        {
-            MainDataSource.Clear();
-            TiffDataSource.Clear();
-
-            // Add 50 rows to fiddle with
-            List<CustomData.Layer.LayerInfo> emp = GetDataSource();
-            for (int i = 0; i < emp.Count; i++)
-            {
-                FillMainTable(emp[i]);
-
-                if (emp[i] is CustomData.Layer.TiffLayerInfo)
-                {
-                    FillLayerTable(emp[i] as CustomData.Layer.TiffLayerInfo);
-                }
-
-            }
-        }
-        #endregion
-
 
         #endregion
 
