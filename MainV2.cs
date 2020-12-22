@@ -4741,5 +4741,15 @@ namespace VPS
         {
             VPS.Controls.Grid.GridConfig.instance.SaveGrid();
         }
+
+        private void ZoomToPolygonButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.ZoomToCenterPolygon();
+        }
+
+        private void ZoomToWPButton_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.ZoomToCenterWP();
+        }
     }
 }
