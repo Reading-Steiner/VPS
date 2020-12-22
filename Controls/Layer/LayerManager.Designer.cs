@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LayerManager));
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.InvalidGrid = new DevComponents.DotNetBar.ButtonX();
             this.LayerDataList = new DevComponents.DotNetBar.SuperGrid.SuperGridControl();
             this.panelEx2 = new DevComponents.DotNetBar.PanelEx();
             this.ImageList = new System.Windows.Forms.ImageList(this.components);
@@ -41,6 +42,7 @@
             // 
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx1.Controls.Add(this.InvalidGrid);
             this.panelEx1.Controls.Add(this.LayerDataList);
             this.panelEx1.Controls.Add(this.panelEx2);
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -56,6 +58,19 @@
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 0;
             // 
+            // InvalidGrid
+            // 
+            this.InvalidGrid.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.InvalidGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.InvalidGrid.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.InvalidGrid.Location = new System.Drawing.Point(716, 252);
+            this.InvalidGrid.Name = "InvalidGrid";
+            this.InvalidGrid.Size = new System.Drawing.Size(75, 23);
+            this.InvalidGrid.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.InvalidGrid.TabIndex = 4;
+            this.InvalidGrid.Text = "更新数据";
+            this.InvalidGrid.Click += new System.EventHandler(this.InvalidGrid_Click);
+            // 
             // LayerDataList
             // 
             this.LayerDataList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -63,7 +78,7 @@
             this.LayerDataList.FilterExprColors.SysFunction = System.Drawing.Color.DarkRed;
             this.LayerDataList.Location = new System.Drawing.Point(3, 3);
             this.LayerDataList.Name = "LayerDataList";
-            this.LayerDataList.Size = new System.Drawing.Size(788, 272);
+            this.LayerDataList.Size = new System.Drawing.Size(788, 243);
             this.LayerDataList.TabIndex = 0;
             this.LayerDataList.CellClick += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridCellClickEventArgs>(this.LayerDataList_CellClick);
             this.LayerDataList.DataBindingComplete += new System.EventHandler<DevComponents.DotNetBar.SuperGrid.GridDataBindingCompleteEventArgs>(this.LayerDataList_DataBindingComplete);
@@ -113,5 +128,6 @@
         private DevComponents.DotNetBar.SuperGrid.SuperGridControl LayerDataList;
         private System.Windows.Forms.ImageList ImageList;
         private DevComponents.DotNetBar.PanelEx panelEx2;
+        private DevComponents.DotNetBar.ButtonX InvalidGrid;
     }
 }

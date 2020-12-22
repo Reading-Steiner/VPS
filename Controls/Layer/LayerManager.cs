@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevComponents.DotNetBar.SuperGrid;
+using System.Reflection;
+using System.Collections;
 
 namespace VPS.Controls.Layer
 {
@@ -23,12 +25,61 @@ namespace VPS.Controls.Layer
             InitializeComponent();
             EndEdit();
 
-            CustomData.Layer.MemoryLayerCache.LayerInfosChange += BindingDataSource;
+            //CustomData.Layer.MemoryLayerCache.LayerInfosChange += BindingDataSource;
         }
 
         private void LayerManager_Load(object sender, EventArgs e)
         {
+            MainDataTable = CreateMainTable();
+            TiffDataTable = CreateTiffTable();
+
             BindingDataSource();
+            set.Tables.Add(MainDataTable);
+            set.Tables.Add(TiffDataTable);
+
+            set.Relations.Add("1", set.Tables[MainLayerHandle].Columns["识别码"],
+                               set.Tables[TiffLayerHandle].Columns["识别码"], false);
+
+            LayerDataList.PrimaryGrid.DataSource = set;
+            LayerDataList.PrimaryGrid.DataMember = MainLayerHandle;
+        }
+
+        public static string GetDisplayName(PropertyInfo propertyInfo)
+        {
+            var Attributes = propertyInfo.GetCustomAttributes(false);
+            if (Attributes.Count() > 0) {
+                var info = Attributes.OfType<DisplayNameAttribute>();
+                if (info != null && info.Count() > 0)
+                    return info.ElementAt(0).DisplayName;
+                else
+                    return propertyInfo.Name;
+            }
+            else
+                return propertyInfo.Name;
+        }
+
+        public static bool IsNullable(Type t)
+        {
+            return !t.IsValueType || (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>));
+        }
+
+        public static Type GetCoreType(Type t)
+        {
+            if (t != null && IsNullable(t))
+            {
+                if (!t.IsValueType)
+                {
+                    return t;
+                }
+                else
+                {
+                    return Nullable.GetUnderlyingType(t);
+                }
+            }
+            else
+            {
+                return t;
+            }
         }
 
         #region LayerManager 数据绑定
@@ -56,88 +107,74 @@ namespace VPS.Controls.Layer
 
         #region 生成主表
         const string MainLayerHandle = "MainLayer";
-        readonly string keyColumnName = "Key";
-        readonly string urlColumnName = "数据位置";
-        readonly string typeColumnName = "数据类型";
-        readonly string alterColumnName = "修改时间";
-        readonly string createColumnName = "创建时间";
-        readonly string deleteColumnName = "删除图层";
-        readonly string defaultColumnName = "默认图层";
+        DataTable MainDataTable = new DataTable(MainLayerHandle);
 
-        public DataTable GetMainTable()
+        public DataTable CreateMainTable()
         {
             DataTable table = new DataTable(MainLayerHandle);
 
-            DataColumn col = new DataColumn();
-            col.ColumnName = keyColumnName;
-            col.DataType = Type.GetType("System.String");
-            table.Columns.Add(col);
+            PropertyInfo[] props = typeof(LayerMangerMainDataSource).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-            col = new DataColumn();
-            col.ColumnName = urlColumnName;
-            col.DataType = Type.GetType("System.String");
-            table.Columns.Add(col);
+            foreach (PropertyInfo prop in props)
+            {
+                Type t = GetCoreType(prop.PropertyType);
+                table.Columns.Add(GetDisplayName(prop), t);
+            }
 
-            col = new DataColumn();
-            col.ColumnName = typeColumnName;
-            col.DataType = Type.GetType("System.String");
-            table.Columns.Add(col);
-
-            col = new DataColumn();
-            col.ColumnName = alterColumnName;
-            col.DataType = Type.GetType("System.String");
-            table.Columns.Add(col);
-
-            col = new DataColumn();
-            col.ColumnName = createColumnName;
-            col.DataType = Type.GetType("System.String");
-            table.Columns.Add(col);
-
-            col = new DataColumn();
-            col.ColumnName = deleteColumnName;
-            col.DataType = Type.GetType("System.String");
-            table.Columns.Add(col);
-
-            col = new DataColumn();
-            col.ColumnName = defaultColumnName;
-            col.DataType = Type.GetType("System.String");
-            table.Columns.Add(col);
+            table.Columns.Add("删除", typeof(string));
+            table.Columns.Add("默认", typeof(bool));
 
             return table;
+        }
+
+        public DataTable BindingMainTable(List<LayerMangerMainDataSource> items)
+        {
+            MainDataTable.Clear();
+
+            PropertyInfo[] props = typeof(LayerMangerMainDataSource).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var item in items)
+            {
+                var values = new object[props.Length + 2];
+
+                for (int i = 0; i < props.Length; i++)
+                {
+                    values[i] = props[i].GetValue(item, null);
+                }
+                values[props.Length] = "";
+                if (CustomData.WP.WPGlobalData.instance != null &&
+                    CustomData.WP.WPGlobalData.instance.IsDefaultLayer(values[1].ToString()))
+                {
+                    values[props.Length + 1] = "True";
+                }
+                else
+                {
+                    values[props.Length + 1] = "false";
+                }
+
+                MainDataTable.Rows.Add(values);
+            }
+
+            return MainDataTable;
         }
         #endregion
 
         #region 生成主表行
-        private void FillMainTable(DataTable table, CustomData.Layer.LayerInfo emp)
+        private void FillMainTable(CustomData.Layer.LayerInfo emp)
         {
-            DataRow row = table.NewRow();
+            LayerMangerMainDataSource ds = new LayerMangerMainDataSource();
 
-            row[keyColumnName] = emp.GetOnlyCode();
-            row[urlColumnName] = emp.Layer;
-            row[alterColumnName] = emp.ModifyTime;
-            row[createColumnName] = emp.CreateTime;
-
-            row[deleteColumnName] = "";
-
-
-            if (CustomData.WP.WPGlobalData.instance != null &&
-                CustomData.WP.WPGlobalData.instance.IsDefaultLayer(emp.Layer))
-            {
-                row[defaultColumnName] = "True";
-            }
-            else
-            {
-                row[defaultColumnName] = "false";
-            }
+            ds.Key = emp.GetOnlyCode();
+            ds.Layer = emp.Layer;
+            ds.ModifyTime = emp.ModifyTime;
+            ds.CreateTime = emp.CreateTime;
 
             if (emp is CustomData.Layer.TiffLayerInfo)
             {
-                row[typeColumnName] = "本地文件";
+                ds.Type = "本地文件";
             }
 
-            table.Rows.Add(row);
-
-            row.AcceptChanges();
+            MainDataSource.Add(ds);
         }
         #endregion
 
@@ -155,32 +192,33 @@ namespace VPS.Controls.Layer
             panel.MinRowHeight = 25;
 
             panel.ColumnAutoSizeMode = ColumnAutoSizeMode.None;
-            panel.Columns[keyColumnName].MinimumWidth = 80;
-            panel.Columns[keyColumnName].ReadOnly = true;
 
-            panel.Columns[urlColumnName].MinimumWidth = 400;
-            panel.Columns[urlColumnName].ReadOnly = true;
+            panel.Columns[0].MinimumWidth = 80;
+            panel.Columns[0].ReadOnly = true;
 
-            panel.Columns[typeColumnName].MinimumWidth = 80;
-            panel.Columns[typeColumnName].CellStyles.Default.Alignment = DevComponents.DotNetBar.SuperGrid.Style.Alignment.MiddleCenter;
-            panel.Columns[typeColumnName].ReadOnly = true;
+            panel.Columns[1].MinimumWidth = 400;
+            panel.Columns[1].ReadOnly = true;
 
-            panel.Columns[alterColumnName].MinimumWidth = 160;
-            panel.Columns[alterColumnName].ReadOnly = true;
+            panel.Columns[2].MinimumWidth = 80;
+            panel.Columns[2].CellStyles.Default.Alignment = DevComponents.DotNetBar.SuperGrid.Style.Alignment.MiddleCenter;
+            panel.Columns[2].ReadOnly = true;
 
-            panel.Columns[createColumnName].MinimumWidth = 160;
-            panel.Columns[createColumnName].ReadOnly = true;
+            panel.Columns[3].MinimumWidth = 160;
+            panel.Columns[3].ReadOnly = true;
 
-            panel.Columns[deleteColumnName].MinimumWidth = 25;
-            panel.Columns[deleteColumnName].Width = 25;
-            panel.Columns[deleteColumnName].EditorType = typeof(CustomControls.ImagePanel);
-            panel.Columns[deleteColumnName].EditorParams = new object[] { ImageList.Images["Delete.png"] };
+            panel.Columns[4].MinimumWidth = 160;
+            panel.Columns[4].ReadOnly = true;
 
-            panel.Columns[defaultColumnName].MinimumWidth = 25;
-            panel.Columns[defaultColumnName].Width = 25;
-            panel.Columns[defaultColumnName].EditorType = typeof(CustomControls.ImageCheckBox);
-            panel.Columns[defaultColumnName].EditorParams = new object[] { ImageList.Images["Default.png"] };
-            panel.Columns[defaultColumnName].ReadOnly = true;
+            panel.Columns[5].MinimumWidth = 25;
+            panel.Columns[5].Width = 25;
+            panel.Columns[5].EditorType = typeof(CustomControls.ImagePanel);
+            panel.Columns[5].EditorParams = new object[] { ImageList.Images["Delete.png"] };
+
+            panel.Columns[6].MinimumWidth = 25;
+            panel.Columns[6].Width = 25;
+            panel.Columns[6].EditorType = typeof(CustomControls.ImageCheckBox);
+            panel.Columns[6].EditorParams = new object[] { ImageList.Images["Default.png"] };
+            panel.Columns[6].ReadOnly = true;
         }
         #endregion
 
@@ -233,60 +271,57 @@ namespace VPS.Controls.Layer
         #region 生成Tiff表
 
         const string TiffLayerHandle = "TiffLayer";
-        readonly string homeColumnName = "初始位置";
-        readonly string frameColumnName = "高度框架";
-        readonly string scaleColumnName = "图层比例尺";
-        readonly string transColumnName = "图层透明色";
+        DataTable TiffDataTable = new DataTable(TiffLayerHandle);
 
-        public DataTable GetLayerTable()
+        public DataTable CreateTiffTable()
         {
             DataTable table = new DataTable(TiffLayerHandle);
 
-            DataColumn col = new DataColumn();
-            col.ColumnName = keyColumnName;
-            col.DataType = Type.GetType("System.String");
-            table.Columns.Add(col);
+            PropertyInfo[] props = typeof(LayerMangerTiffDataSource).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-
-            col = new DataColumn();
-            col.ColumnName = homeColumnName;
-            col.DataType = typeof(CustomData.WP.Position);
-            table.Columns.Add(col);
-
-            col = new DataColumn();
-            col.ColumnName = frameColumnName;
-            col.DataType = Type.GetType("System.String");
-            table.Columns.Add(col);
-
-            col = new DataColumn();
-            col.ColumnName = scaleColumnName;
-            col.DataType = Type.GetType("System.String");
-            table.Columns.Add(col);
-
-            col = new DataColumn();
-            col.ColumnName = transColumnName;
-            col.DataType = typeof(Color);
-            table.Columns.Add(col);
-
+            foreach (PropertyInfo prop in props)
+            {
+                Type t = GetCoreType(prop.PropertyType);
+                table.Columns.Add(GetDisplayName(prop), t);
+            }
 
             return table;
+        }
+
+        public DataTable BindingLayerTable(List<LayerMangerTiffDataSource> items)
+        {
+            TiffDataTable.Clear();
+
+            PropertyInfo[] props = typeof(LayerMangerTiffDataSource).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var item in items)
+            {
+                var values = new object[props.Length];
+
+                for (int i = 0; i < props.Length; i++)
+                {
+                    values[i] = props[i].GetValue(item, null);
+                }
+
+                TiffDataTable.Rows.Add(values);
+            }
+
+            return TiffDataTable;
         }
         #endregion
 
         #region 生成Tiff行
-        private void FillLayerTable(DataTable table, CustomData.Layer.TiffLayerInfo emp)
+        private void FillLayerTable(CustomData.Layer.TiffLayerInfo emp)
         {
-            DataRow fileRow = table.NewRow();
+            LayerMangerTiffDataSource ds = new LayerMangerTiffDataSource();
 
-            fileRow[keyColumnName] = emp.GetOnlyCode();
-            fileRow[homeColumnName] = emp.Home;
-            fileRow[frameColumnName] = emp.Home.AltMode;
-            fileRow[scaleColumnName] = emp.ScaleFormat;
-            fileRow[transColumnName] = emp.Transparent;
+            ds.Key = emp.GetOnlyCode();
+            ds.HomePosition = new LoadAndSave.Position(emp.Home);
+            ds.AltFrame = emp.Home.AltMode;
+            ds.Scale = emp.ScaleFormat;
+            ds.Transparent = emp.Transparent;
 
-            table.Rows.Add(fileRow);
-
-            fileRow.AcceptChanges();
+            TiffDataSource.Add(ds);
         }
         #endregion
 
@@ -312,7 +347,7 @@ namespace VPS.Controls.Layer
 
             panel.Columns[3].MinimumWidth = 80;
             panel.Columns[3].CellStyles.Default.Alignment = DevComponents.DotNetBar.SuperGrid.Style.Alignment.MiddleCenter;
-            panel.Columns[3].Visible = false;
+            //panel.Columns[3].Visible = false;
 
             panel.Columns[4].MinimumWidth = 200;
         }
@@ -324,42 +359,43 @@ namespace VPS.Controls.Layer
 
         #region 绑定数据源
         DataSet set = new DataSet(MainHandle);
-        DataTable table = new DataTable(MainLayerHandle);
-        DataTable layerTable = new DataTable(TiffLayerHandle);
+
+        List<LayerMangerMainDataSource> MainDataSource = new List<LayerMangerMainDataSource>();
+        List<LayerMangerTiffDataSource> TiffDataSource = new List<LayerMangerTiffDataSource>();
 
         const string MainHandle = "LayerManager";
         public void BindingDataSource()
         {
-            set = new DataSet(MainHandle);
+            if (isEdit)
+                return;
+            StartEdit();
 
-            table = GetMainTable();
-            layerTable = GetLayerTable();
+            LoadLayerInfoData();
 
-            BindingData();
+            BeginLoadData();
 
-            set.Tables.Add(table);
-            set.Tables.Add(layerTable);
+            BindingMainTable(MainDataSource);
+            BindingLayerTable(TiffDataSource);
 
-            set.Relations.Add("1", set.Tables[MainLayerHandle].Columns[keyColumnName],
-                               set.Tables[TiffLayerHandle].Columns[keyColumnName], false);
-            LayerDataList.PrimaryGrid.DataSource = set;
-            LayerDataList.PrimaryGrid.DataMember = MainLayerHandle;
+            EndLoadData();
+
+            EndEdit();
         }
         #endregion
 
         #region 绑定数据 BeginLoadData
         private void BeginLoadData()
         {
-            table.BeginLoadData();
-            layerTable.BeginLoadData();
+            MainDataTable.BeginLoadData();
+            TiffDataTable.BeginLoadData();
         }
         #endregion
 
         #region 绑定数据 EndLoadData
         private void EndLoadData()
         {
-            layerTable.EndLoadData();
-            table.EndLoadData();
+            TiffDataTable.EndLoadData();
+            MainDataTable.EndLoadData();
         }
         #endregion
 
@@ -374,6 +410,8 @@ namespace VPS.Controls.Layer
                     break;
             }
         }
+        #endregion
+
         #region 绑定成功后的响应函数（设置表格格式）
         private void LayerDataList_DataBindingComplete(object sender, DevComponents.DotNetBar.SuperGrid.GridDataBindingCompleteEventArgs e)
         {
@@ -393,33 +431,26 @@ namespace VPS.Controls.Layer
         #endregion
 
         #region 绑定数据 入口函数
-        public void BindingData()
+        public void LoadLayerInfoData()
         {
-            if (isEdit)
-                return;
-            StartEdit();
-
-            BeginLoadData();
+            MainDataSource.Clear();
+            TiffDataSource.Clear();
 
             // Add 50 rows to fiddle with
             List<CustomData.Layer.LayerInfo> emp = GetDataSource();
             for (int i = 0; i < emp.Count; i++)
             {
-                FillMainTable(table, emp[i]);
+                FillMainTable(emp[i]);
 
                 if (emp[i] is CustomData.Layer.TiffLayerInfo)
                 {
-                    FillLayerTable(layerTable, emp[i] as CustomData.Layer.TiffLayerInfo);
+                    FillLayerTable(emp[i] as CustomData.Layer.TiffLayerInfo);
                 }
 
             }
-            EndLoadData();
-
-            EndEdit();
         }
         #endregion
 
-        #endregion
 
         #endregion
 
@@ -489,6 +520,61 @@ namespace VPS.Controls.Layer
         {
             string key = LayerDataList.ActiveRow.GridPanel.GetCell(LayerDataList.ActiveRow.RowIndex, 0).Value.ToString();
         }
+
+        private void InvalidGrid_Click(object sender, EventArgs e)
+        {
+            BindingDataSource();
+        }
+    }
+
+    [TypeConverter(typeof(LoadAndSave.PropertySorter))]
+    public class LayerMangerMainDataSource
+    {
+        [Category("图层信息"), DisplayName("识别码"), ReadOnly(false)]
+        [LoadAndSave.PropertyOrder(0b00010001)]
+        //[Browsable(false)]
+        public string Key { get; set; }
+
+        [Category("图层信息"), DisplayName("图层"), ReadOnly(false)]
+        [LoadAndSave.PropertyOrder(0b00010010)]
+        public string Layer { get; set; }
+
+        [Category("图层信息"), DisplayName("图层类型"), ReadOnly(false)]
+        [LoadAndSave.PropertyOrder(0b00010011)]
+        public string Type { get; set; }
+
+        [Category("图层信息"), DisplayName("创建时间"), ReadOnly(false)]
+        [LoadAndSave.PropertyOrder(0b00010011)]
+        public string CreateTime { get; set; }
+
+        [Category("图层信息"), DisplayName("修改时间"), ReadOnly(false)]
+        [LoadAndSave.PropertyOrder(0b00010011)]
+        public string ModifyTime { get; set; }
+    }
+
+    [TypeConverter(typeof(LoadAndSave.PropertySorter))]
+    public class LayerMangerTiffDataSource
+    {
+        [Category("图层信息"), DisplayName("识别码"), ReadOnly(false)]
+        [LoadAndSave.PropertyOrder(0b00010001)]
+        //[Browsable(false)]
+        public string Key { get; set; }
+
+        [Category("图层信息"), DisplayName("初始位置"), ReadOnly(false)]
+        [LoadAndSave.PropertyOrder(0b00010010)]
+        public LoadAndSave.Position HomePosition { get; set; }
+
+        [Category("图层信息"), DisplayName("高度框架"), ReadOnly(false)]
+        [LoadAndSave.PropertyOrder(0b00010011)]
+        public string AltFrame { get; set; }
+
+        [Category("图层信息"), DisplayName("图层比例尺"), ReadOnly(false)]
+        [LoadAndSave.PropertyOrder(0b00010100)]
+        public string Scale { get; set; }
+
+        [Category("图层信息"), DisplayName("图层透明色"), ReadOnly(false)]
+        [LoadAndSave.PropertyOrder(0b00010101)]
+        public Color Transparent { get; set; }
     }
 
 }
