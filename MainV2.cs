@@ -4831,7 +4831,7 @@ namespace VPS
             GCSViews.FlightPlanner.instance.ZoomToCenterWP();
         }
 
-        private void PolygonMakerStyleButton_Click(object sender, EventArgs e)
+        private void MakerStyleButton_Click(object sender, EventArgs e)
         {
             using (var style = new VPS.Controls.CustomForms.CustomMarkerStyle(
                 VPS.Controls.Icon.Marker.Style.normal))
