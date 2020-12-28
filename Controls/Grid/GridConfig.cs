@@ -498,7 +498,8 @@ namespace VPS.Controls.Grid
 
             for (int i = 0; i < wpList.Count; i++)
             {
-                wpList[i].Command = CustomData.WP.WPCommands.DefaultWPCommand;
+                if (!CustomData.WP.WPCommands.CoordsWPCommands.Contains(wpList[i].Command))
+                    wpList[i].Command = CustomData.WP.WPCommands.DefaultWPCommand;
                 wpList[i].AltMode = CustomData.EnumCollect.AltFrame.Relative;
             }
             return wpList;
@@ -726,6 +727,8 @@ namespace VPS.Controls.Grid
             float num_corridorwidth = (int)ReadControlMainThread(instance.num_corridorwidth);
             float num_landin = (int)ReadControlMainThread(instance.NUM_leadin);
 
+            bool chk_withClick = (bool)ReadControlMainThread(instance.WithClick);
+
             PointLatLngAlt startPoint = instance.GetStartPoint().ToWGS84();
             if (startPoint != null)
                 Utilities.Grid.StartPointLatLngAlt = startPoint;
@@ -837,7 +840,7 @@ namespace VPS.Controls.Grid
                 }
                 else if (wp[index].Tag == "M")
                 {
-                    if (false)
+                    if (chk_withClick)
                     {
                         var point = new CustomData.WP.Position(wp[index]);
                         point.Command = CustomData.WP.WPCommands.ClickWPCommand;

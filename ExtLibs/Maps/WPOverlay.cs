@@ -25,6 +25,72 @@ namespace VPS.ArduPilot
         private static Color lineColor = Color.Yellow;
         private static int lineWidth = 4;
 
+        public void CreateOverlay(PointLatLngAlt home, List<PointLatLngAlt> wpLists, double wpradius, double loiterradius)
+        {
+            overlay.Clear();
+
+            double maxlat = -180;
+            double maxlong = -180;
+            double minlat = 180;
+            double minlong = 180;
+
+            if (home != PointLatLngAlt.Zero)
+            {
+                home.Tag = "H";
+                pointlist.Add(home);
+                fullpointlist.Add(pointlist[pointlist.Count - 1]);
+                addpolygonmarker("H", home, null, 0);
+            }
+
+            int a = 0;
+            foreach (var itemtuple in wpLists.PrevNowNext())
+            {
+                var itemprev = itemtuple.Item1;
+                var item = itemtuple.Item2;
+                var itemnext = itemtuple.Item3;
+                if (item == null)
+                    continue;
+
+                string command = item.Tag;
+
+                // invalid locationwp
+                if (!(command == "WAYPOINT" || command == "SPLINE_WAYPOINT" || command == "INTERNALS_WAYPOINT"))
+                    continue;
+
+                if (command == "SPLINE_WAYPOINT")
+                {
+                    PointLatLngAlt wp = new PointLatLngAlt(item);
+                    wp.Tag2 = "spline";
+                    pointlist.Add(wp);
+
+                    fullpointlist.Add(pointlist[pointlist.Count - 1]);
+
+                    addpolygonmarker((a).ToString(), wp, Color.Green, wpradius);
+                }
+                else if (command == "WAYPOINT" && item.Lat == 0 && item.Lng == 0)
+                {
+                    fullpointlist.Add(pointlist[pointlist.Count - 1]);
+                }
+                else
+                {
+                    PointLatLngAlt wp = new PointLatLngAlt(item);
+                    wp.Tag2 = "";
+                    pointlist.Add(wp);
+                    fullpointlist.Add(pointlist[pointlist.Count - 1]);
+
+                    addpolygonmarker((a).ToString(), wp, null, wpradius);
+                }
+                maxlong = Math.Max(item.Lng, maxlong);
+                maxlat = Math.Max(item.Lat, maxlat);
+                minlong = Math.Min(item.Lng, minlong);
+                minlat = Math.Min(item.Lat, minlat);
+
+                a++;
+            }
+
+            RegenerateWPRoute(fullpointlist, home);
+        }
+
         public void CreateOverlay(PointLatLngAlt home, List<Locationwp> missionitems, double wpradius, double loiterradius)
         {
             overlay.Clear();

@@ -135,6 +135,7 @@
             this.ConfigTitle = new DevComponents.DotNetBar.PanelEx();
             this.label3 = new System.Windows.Forms.Label();
             this.defaultTooltip = new DevComponents.DotNetBar.SuperTooltip();
+            this.WithClick = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.panelEx1.SuspendLayout();
             this.panelEx9.SuspendLayout();
             this.AdvanceAirLineBox.SuspendLayout();
@@ -1861,6 +1862,7 @@
             this.ConfigPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ConfigPanel.CanvasColor = System.Drawing.SystemColors.Control;
             this.ConfigPanel.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.ConfigPanel.Controls.Add(this.WithClick);
             this.ConfigPanel.Controls.Add(this.CHK_AutoGeneralWP);
             this.ConfigPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.ConfigPanel.Location = new System.Drawing.Point(0, 22);
@@ -1928,6 +1930,20 @@
             this.label3.Size = new System.Drawing.Size(35, 14);
             this.label3.TabIndex = 26;
             this.label3.Text = "设置";
+            // 
+            // WithClick
+            // 
+            this.WithClick.AutoSize = true;
+            // 
+            // 
+            // 
+            this.WithClick.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.WithClick.Location = new System.Drawing.Point(196, 6);
+            this.WithClick.Name = "WithClick";
+            this.WithClick.Size = new System.Drawing.Size(88, 18);
+            this.WithClick.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.WithClick.TabIndex = 60;
+            this.WithClick.Text = "生成航摄点";
             // 
             // GridConfig
             // 
@@ -2112,5 +2128,6 @@
         private DevComponents.DotNetBar.ButtonX LockWP;
         private DevComponents.DotNetBar.PanelEx panelEx3;
         private DevComponents.DotNetBar.Controls.CheckBoxX CHK_AppendWP;
+        private DevComponents.DotNetBar.Controls.CheckBoxX WithClick;
     }
 }

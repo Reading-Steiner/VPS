@@ -437,7 +437,8 @@ namespace VPS.CustomData.WP
 
         #region 航点列表求航摄基线
         public static double GetBaseAlt(
-            List<CustomData.WP.Position> wpLists)
+            List<CustomData.WP.Position> wpLists,
+            double defaultAlt = 0)
         {
             var wpList = WPListRemoveHome(wpLists);
             double totalAlt = 0;
@@ -452,7 +453,10 @@ namespace VPS.CustomData.WP
                     doubleWP++;
                 }
             }
-            return totalAlt / Math.Max(1, doubleWP);
+            if (doubleWP != 0)
+                return totalAlt / Math.Max(1, doubleWP);
+            else
+                return defaultAlt;
         }
         #endregion
 

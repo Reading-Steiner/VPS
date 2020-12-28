@@ -4568,23 +4568,36 @@ namespace VPS.GCSViews
             if (Disposing)
                 return;
 
-
-            #region Home
-            VPS.CustomData.WP.Position home = CustomData.WP.WPGlobalData.instance.GetHomePosition();
-            if (home == null)
-            {
-                home = new VPS.CustomData.WP.Position();
-                home.Command = CustomData.WP.WPCommands.HomeCommand;
-                home.AltMode = CustomData.EnumCollect.AltFrame.Terrain;
-            }
-            #endregion
-
             try
             {
-                var wpList = CustomData.WP.WPGlobalData.WPListRemoveHome(
-                    CustomData.WP.WPGlobalData.instance.GetWPList());
-                
-                var commandlist = GetCommandList(wpList);
+                var wpList = CustomData.WP.WPGlobalData.WPListChangeAltFrame(
+                    CustomData.WP.WPGlobalData.WPListRemoveHome(CustomData.WP.WPGlobalData.instance.GetWPList()), 
+                    CustomData.EnumCollect.AltFrame.Absolute);
+
+                List<PointLatLngAlt> commands = new List<PointLatLngAlt>();
+
+                foreach (var wp in wpList)
+                {
+                    if (wp.Command == CustomData.WP.WPCommands.HomeCommand)
+                        continue;
+                    else /*if (CustomData.WP.WPCommands.CoordsWPCommands.Contains(wp.Command))*/
+                        commands.Add(wp.ToWGS84());
+                }
+
+                #region Home
+                VPS.CustomData.WP.Position home = CustomData.WP.WPGlobalData.instance.GetHomePosition();
+                if (home == null)
+                {
+                    home = new VPS.CustomData.WP.Position();
+                    home.Command = CustomData.WP.WPCommands.HomeCommand;
+                    home.AltMode = CustomData.EnumCollect.AltFrame.Terrain;
+                }
+
+                PointLatLngAlt homePosition = CustomData.WP.WPGlobalData.WPChangeAltFrame(
+                    home,
+                    CustomData.WP.WPGlobalData.GetBaseAlt(wpList),
+                    CustomData.EnumCollect.AltFrame.Absolute).ToWGS84();
+                #endregion
 
                 #region CreateWPOverlay
                 overlay = new WPOverlay();
@@ -4595,8 +4608,9 @@ namespace VPS.GCSViews
                     if (wpRad <= 0) wpRad = 5;
                     if (loiterRad <= 0) loiterRad = 30;
 
-                    overlay.CreateOverlay(home.ToWGS84(),
-                        commandlist,
+                    overlay.CreateOverlay(
+                        homePosition,
+                        commands,
                         wpRad / CurrentState.multiplieralt,
                         loiterRad / CurrentState.multiplieralt);
 
