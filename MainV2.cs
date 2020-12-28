@@ -642,6 +642,8 @@ namespace VPS
 #endif
 #endif
 
+            LoadMarkerStyle();
+
             // make sure new enough .net framework is installed
             if (!MONO)
             {
@@ -794,6 +796,26 @@ namespace VPS
                 log.Error(ex);
             }
             finally { }
+        }
+
+        void LoadMarkerStyle()
+        {
+            Font font = SystemFonts.DefaultFont;
+            if (Settings.Instance["Marker_WPFont"] != null)
+                font = (new FontConverter()).ConvertFromString(Settings.Instance["Marker_WPFont"]) as Font;
+
+            Color color = Color.Red;
+            if (Settings.Instance["Marker_WPSelectedColor"] != null)
+                color = ColorTranslator.FromHtml(Settings.Instance["Marker_WPSelectedColor"]);
+
+            GMap.NET.WindowsForms.Markers.GMarkerGoogleType type = GMap.NET.WindowsForms.Markers.GMarkerGoogleType.green;
+            if (Settings.Instance["Marker_WPIcon"] != null)
+                type = (GMap.NET.WindowsForms.Markers.GMarkerGoogleType)
+                    Enum.Parse(typeof(GMap.NET.WindowsForms.Markers.GMarkerGoogleType),Settings.Instance["Marker_WPIcon"]);
+
+            VPS.Maps.GMapMarkerStyle.SetGMapMarkerStyle(
+                CustomData.WP.WPCommands.DefaultWPCommand,
+                new GMapMarkerStyle(color, font, type));
         }
         #endregion
 
@@ -1807,6 +1829,12 @@ namespace VPS
             } // i get alot of these errors, the port is still open, but not valid - user has unpluged usb
 
             CustomData.WP.WPGlobalData.instance.SaveConfig();
+
+            var style = VPS.Maps.GMapMarkerStyle.GetGMapMarkerStyle(CustomData.WP.WPCommands.DefaultWPCommand);
+            Settings.Instance["Marker_WPFont"] = new FontConverter().ConvertToString(style.TipFont);
+            Settings.Instance["Marker_WPSelectedColor"] = System.Drawing.ColorTranslator.ToHtml(style.SedColor);
+            Settings.Instance["Marker_WPIcon"] = style.Type.ToString();
+
             // save config
             SaveConfig();
 
@@ -4750,6 +4778,18 @@ namespace VPS
         private void ZoomToWPButton_Click(object sender, EventArgs e)
         {
             GCSViews.FlightPlanner.instance.ZoomToCenterWP();
+        }
+
+        private void PolygonMakerStyleButton_Click(object sender, EventArgs e)
+        {
+            using (var style = new VPS.Controls.CustomForms.CustomMarkerStyle(
+                VPS.Controls.Icon.Marker.Style.normal))
+            {
+                style.Name = "WP 风格";
+                if (style.ShowDialog() == DialogResult.OK)
+                {
+                }
+            }
         }
     }
 }

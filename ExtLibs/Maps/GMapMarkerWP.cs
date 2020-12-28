@@ -11,38 +11,49 @@ namespace VPS.Maps
     [Serializable]
     public class GMapMarkerWP : GMarkerGoogle
     {
-        string wpno = "";
-        public bool selected = false;
+        string tips = "";
         SizeF txtsize = SizeF.Empty;
-        static Dictionary<string, Bitmap> fontBitmaps = new Dictionary<string, Bitmap>();
-        static Font font;
 
-        public GMapMarkerWP(PointLatLng p, string wpno)
-            : base(p, GMarkerGoogleType.green)
+        public bool Selected = false;
+        public string Command = "WAYPOINT";
+        private static Dictionary<string, Bitmap> fontBitmaps = new Dictionary<string, Bitmap>();
+        private readonly static Font font = SystemFonts.DefaultFont;
+        private readonly static GMarkerGoogleType icon = GMarkerGoogleType.green;
+        private readonly static Color color = Color.Red;
+
+        public GMapMarkerWP(VPS.Utilities.PointLatLngAlt p, string wpno)
+            : base(p, GMapMarkerStyle.ExistGMapMarkerStyle(p.Tag) ? GMapMarkerStyle.GetGMapMarkerStyle(p.Tag).Type : icon)
         {
-            this.wpno = wpno;
-            if (font == null)
-                font = SystemFonts.DefaultFont;
+            tips = wpno;
 
-            if (!fontBitmaps.ContainsKey(wpno))
+            Command = p.Tag;
+
+            Font TipFont = font;
+            TipFont = GMapMarkerStyle.ExistGMapMarkerStyle(Command) ? GMapMarkerStyle.GetGMapMarkerStyle(Command).TipFont : font;
+
+            if (!fontBitmaps.ContainsKey(tips))
             {
                 Bitmap temp = new Bitmap(100,40, PixelFormat.Format32bppArgb);
                 using (Graphics g = Graphics.FromImage(temp))
                 {
-                    txtsize = g.MeasureString(wpno, font);
+                    txtsize = g.MeasureString(tips, TipFont);
 
-                    g.DrawString(wpno, font, Brushes.Black, new PointF(0, 0));
+                    g.DrawString(tips, SystemFonts.DefaultFont, Brushes.Black, new PointF(0, 0));
                 }
-                fontBitmaps[wpno] = temp;
+                fontBitmaps[tips] = temp;
             }
+
+            ToolTipFont = TipFont;
         }
 
         public override void OnRender(IGraphics g)
         {
-            if (selected)
+            if (Selected)
             {
-                g.FillEllipse(Brushes.Red, new Rectangle(this.LocalPosition, this.Size));
-                g.DrawArc(Pens.Red, new Rectangle(this.LocalPosition, this.Size), 0, 360);
+                Color SedColor = GMapMarkerStyle.ExistGMapMarkerStyle(Command) ? GMapMarkerStyle.GetGMapMarkerStyle(Command).SedColor : color;
+
+                g.FillEllipse(new SolidBrush(SedColor), new Rectangle(this.LocalPosition, this.Size));
+                g.DrawArc(new Pen(SedColor), new Rectangle(this.LocalPosition, this.Size), 0, 360);
             }
             
             base.OnRender(g);
@@ -54,7 +65,9 @@ namespace VPS.Maps
                 midw -= 4;
 
             if (Overlay.Control.Zoom > 16 || IsMouseOver)
-                g.DrawImageUnscaled(fontBitmaps[wpno], midw, midh);
+            {
+                g.DrawImageUnscaled(fontBitmaps[tips], midw, midh);
+            }
         }
     }
 }

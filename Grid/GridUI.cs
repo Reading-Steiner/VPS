@@ -1200,6 +1200,7 @@ namespace VPS.Grid
 
             marker = new GMapMarkerRect(point);
             marker.ToolTip = new GMapToolTip(marker);
+            marker.ToolTipFont = SystemFonts.DefaultFont;
             marker.ToolTipMode = MarkerTooltipMode.Always;
             marker.ToolTipText = "Line: " + dist;
             routesOverlay.Markers.Add(marker);

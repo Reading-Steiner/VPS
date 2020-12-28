@@ -441,6 +441,12 @@
     <Compile Include="Controls\CustomControls\CustomState.Designer.cs">
       <DependentUpon>CustomState.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CustomControls\FontDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomControls\FontDisplay.Designer.cs">
+      <DependentUpon>FontDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CustomControls\LayerDisplay.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -489,6 +495,12 @@
     <Compile Include="Controls\CustomForms\CustomMap.Designer.cs">
       <DependentUpon>CustomMap.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CustomForms\CustomMarkerStyle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomForms\CustomMarkerStyle.Designer.cs">
+      <DependentUpon>CustomMarkerStyle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CustomForms\CustomPosition.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -519,6 +531,7 @@
     <Compile Include="Controls\CustomGridControl\GridRect.Designer.cs">
       <DependentUpon>GridRect.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Icon\Marker.cs" />
     <Compile Include="Controls\Layer\TiffLayerDisplay.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1028,6 +1041,9 @@
     <EmbeddedResource Include="Controls\CustomControls\CustomState.resx">
       <DependentUpon>CustomState.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CustomControls\FontDisplay.resx">
+      <DependentUpon>FontDisplay.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomControls\LayerDisplay.resx">
       <DependentUpon>LayerDisplay.cs</DependentUpon>
     </EmbeddedResource>
@@ -1051,6 +1067,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomForms\CustomMap.resx">
       <DependentUpon>CustomMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CustomForms\CustomMarkerStyle.resx">
+      <DependentUpon>CustomMarkerStyle.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomForms\CustomPosition.resx">
       <DependentUpon>CustomPosition.cs</DependentUpon>

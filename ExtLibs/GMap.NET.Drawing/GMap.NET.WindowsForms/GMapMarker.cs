@@ -165,6 +165,8 @@ namespace GMap.NET.WindowsForms
 
       public GMapToolTip ToolTip;
 
+      public Font ToolTipFont = SystemFonts.DefaultFont;
+
       public MarkerTooltipMode ToolTipMode = MarkerTooltipMode.OnMouseOver;
 
       string toolTipText;
@@ -181,6 +183,7 @@ namespace GMap.NET.WindowsForms
             {
 #if !PocketPC
                ToolTip = new GMapRoundedToolTip(this);
+               ToolTip.Font = ToolTipFont;
 #else
                ToolTip = new GMapToolTip(this);
 #endif
@@ -317,7 +320,7 @@ namespace GMap.NET.WindowsForms
          
          this.ToolTip = Extensions.GetValue<GMapToolTip>(info, "ToolTip", null);
          if (this.ToolTip != null) this.ToolTip.Marker = this;
-
+            this.ToolTipFont = SystemFonts.DefaultFont;
          this.ToolTipMode = Extensions.GetStruct<MarkerTooltipMode>(info, "ToolTipMode", MarkerTooltipMode.OnMouseOver);
          this.ToolTipText = info.GetString("ToolTipText");
          this.IsVisible = info.GetBoolean("Visible");
