@@ -4524,7 +4524,10 @@ namespace VPS.GCSViews
             list.ForEach(x =>
             {
                 drawnpolygon.Points.Add(x.ToPoint());
-                Addpolygonmarkergrid(tag.ToString(), x.Lng, x.Lat, 0);
+                if (IsDrawPolygongridMode)
+                {
+                    Addpolygonmarkergrid(tag.ToString(), x.Lng, x.Lat, 0);
+                }
                 tag++;
             });
 
