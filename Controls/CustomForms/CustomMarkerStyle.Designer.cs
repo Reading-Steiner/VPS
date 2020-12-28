@@ -43,13 +43,13 @@
             this.panelEx5 = new DevComponents.DotNetBar.PanelEx();
             this.LineType = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.panelEx3 = new DevComponents.DotNetBar.PanelEx();
+            this.MarkerFont = new VPS.Controls.CustomControls.FontDisplay();
             this.MarkerStyle = new DevComponents.DotNetBar.Controls.ComboTree();
             this.MarkerSelectedColor = new DevComponents.DotNetBar.ColorPickerButton();
             this.labelX2 = new DevComponents.DotNetBar.LabelX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.panelEx2 = new DevComponents.DotNetBar.PanelEx();
             this.CommandType = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.MarkerFont = new VPS.Controls.CustomControls.FontDisplay();
             this.panelEx1.SuspendLayout();
             this.panelEx4.SuspendLayout();
             this.panelEx6.SuspendLayout();
@@ -170,7 +170,6 @@
             this.LineStyle.Size = new System.Drawing.Size(80, 32);
             this.LineStyle.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.LineStyle.TabIndex = 8;
-
             // 
             // labelX4
             // 
@@ -198,7 +197,6 @@
             this.LineWidth.ShowUpDown = true;
             this.LineWidth.Size = new System.Drawing.Size(80, 21);
             this.LineWidth.TabIndex = 6;
-            
             // 
             // LineColor
             // 
@@ -211,7 +209,6 @@
             this.LineColor.Size = new System.Drawing.Size(37, 23);
             this.LineColor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.LineColor.TabIndex = 5;
-            
             // 
             // labelX3
             // 
@@ -276,6 +273,16 @@
             this.panelEx3.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.panelEx3.Style.GradientAngle = 90;
             this.panelEx3.TabIndex = 2;
+            // 
+            // MarkerFont
+            // 
+            this.MarkerFont.AutoSize = true;
+            this.MarkerFont.IsReadOnly = true;
+            this.MarkerFont.Location = new System.Drawing.Point(12, 65);
+            this.MarkerFont.Name = "MarkerFont";
+            this.MarkerFont.PositionName = "字体";
+            this.MarkerFont.Size = new System.Drawing.Size(232, 66);
+            this.MarkerFont.TabIndex = 5;
             // 
             // MarkerStyle
             // 
@@ -360,16 +367,6 @@
             this.CommandType.Size = new System.Drawing.Size(95, 21);
             this.CommandType.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.CommandType.TabIndex = 1;
-            // 
-            // MarkerFont
-            // 
-            this.MarkerFont.AutoSize = true;
-            this.MarkerFont.IsReadOnly = true;
-            this.MarkerFont.Location = new System.Drawing.Point(12, 65);
-            this.MarkerFont.Name = "MarkerFont";
-            this.MarkerFont.PositionName = "字体";
-            this.MarkerFont.Size = new System.Drawing.Size(232, 66);
-            this.MarkerFont.TabIndex = 5;
             // 
             // CustomMarkerStyle
             // 

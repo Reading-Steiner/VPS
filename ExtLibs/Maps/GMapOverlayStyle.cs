@@ -19,8 +19,8 @@ namespace VPS.Maps
             lineColor = color;
         }
 
-        public readonly static GMapOverlayStyle DefaultWPStyle = new GMapOverlayStyle(Color.Blue, 3, DashStyle.Custom);
-        public readonly static GMapOverlayStyle DefaultHomeStyle = new GMapOverlayStyle(Color.Green, 2, DashStyle.Dash);
+        public readonly static GMapOverlayStyle DefaultWPStyle = new GMapOverlayStyle(Color.Yellow, 4, DashStyle.Custom);
+        public readonly static GMapOverlayStyle DefaultHomeStyle = new GMapOverlayStyle(Color.Yellow, 2, DashStyle.Dash);
 
 
         public static Dictionary<string, GMapOverlayStyle> OverlayStyleList = new Dictionary<string, GMapOverlayStyle>();

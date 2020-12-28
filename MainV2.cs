@@ -800,22 +800,59 @@ namespace VPS
 
         void LoadMarkerStyle()
         {
-            Font font = SystemFonts.DefaultFont;
-            if (Settings.Instance["Marker_WPFont"] != null)
-                font = (new FontConverter()).ConvertFromString(Settings.Instance["Marker_WPFont"]) as Font;
 
-            Color color = Color.Red;
-            if (Settings.Instance["Marker_WPSelectedColor"] != null)
-                color = ColorTranslator.FromHtml(Settings.Instance["Marker_WPSelectedColor"]);
+            try
+            {
+                if (Settings.Instance["Style_LineStyle"] != null &&
+                    Settings.Instance["Style_LineStyle"] != "")
+                {
+                    string LineStyle = Settings.Instance["Style_LineStyle"];
+                    if (LineStyle.Contains("}") && LineStyle.Contains("{") && LineStyle.Contains(";"))
+                    {
 
-            GMap.NET.WindowsForms.Markers.GMarkerGoogleType type = GMap.NET.WindowsForms.Markers.GMarkerGoogleType.green;
-            if (Settings.Instance["Marker_WPIcon"] != null)
-                type = (GMap.NET.WindowsForms.Markers.GMarkerGoogleType)
-                    Enum.Parse(typeof(GMap.NET.WindowsForms.Markers.GMarkerGoogleType),Settings.Instance["Marker_WPIcon"]);
 
-            VPS.Maps.GMapMarkerStyle.SetGMapMarkerStyle(
-                CustomData.WP.WPCommands.DefaultWPCommand,
-                new GMapMarkerStyle(color, font, type));
+
+                        LineStyle = LineStyle.Replace("{", "").Replace("}", "");
+                        var lines = LineStyle.Split(';');
+
+                        for (int i = 0; i < lines.Count(); i++)
+                        {
+                            if (lines[i].Contains(':'))
+                            {
+                                var value = lines[i].Split(':');
+                                var line = CustomData.WP.Convert.ToOverlayStyle(value[1]);
+                                if (line != null)
+                                    VPS.Maps.GMapOverlayStyle.SetGMapOverlayStyle(value[0], line);
+                            }
+                        }
+                    }
+                }
+
+                if (Settings.Instance["Style_MarkerStyle"] != null &&
+                    Settings.Instance["Style_MarkerStyle"] != "")
+                {
+                    string markerStyle = Settings.Instance["Style_MarkerStyle"];
+                    if (markerStyle.Contains("}") && markerStyle.Contains("{") && markerStyle.Contains(";"))
+                    {
+                        markerStyle = markerStyle.Replace("{", "").Replace("}", "");
+                        var markers = markerStyle.Split(';');
+
+                        for (int i = 0; i < markers.Count(); i++)
+                        {
+                            if (markers[i].Contains(':'))
+                            {
+                                var value = markers[i].Split(':');
+                                var marker = CustomData.WP.Convert.ToMarkerStyle(value[1]);
+                                VPS.Maps.GMapMarkerStyle.SetGMapMarkerStyle(value[0], marker);
+                            }
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                log.Error("配置文件参数错误", ex);
+            }
         }
         #endregion
 
@@ -1830,10 +1867,24 @@ namespace VPS
 
             CustomData.WP.WPGlobalData.instance.SaveConfig();
 
-            var style = VPS.Maps.GMapMarkerStyle.GetGMapMarkerStyle(CustomData.WP.WPCommands.DefaultWPCommand);
-            Settings.Instance["Marker_WPFont"] = new FontConverter().ConvertToString(style.TipFont);
-            Settings.Instance["Marker_WPSelectedColor"] = System.Drawing.ColorTranslator.ToHtml(style.SedColor);
-            Settings.Instance["Marker_WPIcon"] = style.Type.ToString();
+            var markers = VPS.Maps.GMapMarkerStyle.GetGMapMarkerStyles();
+
+            string MarkerStyle = "{";
+            for (int i = 0; i < markers.Count; i++)
+            {
+                MarkerStyle += markers[i].Key + ":" + CustomData.WP.Convert.ToString(markers[i].Value) + ";";
+            }
+            MarkerStyle += "}";
+            Settings.Instance["Style_MarkerStyle"] = MarkerStyle;
+
+            var lines = VPS.Maps.GMapOverlayStyle.GetGMapOverlayStyles();
+            string LineStyle = "{";
+            for (int i = 0; i < lines.Count; i++)
+            {
+                LineStyle += lines[i].Key + ":" + CustomData.WP.Convert.ToString(lines[i].Value) + ";";
+            }
+            LineStyle += "}";
+            Settings.Instance["Style_LineStyle"] = LineStyle;
 
             // save config
             SaveConfig();

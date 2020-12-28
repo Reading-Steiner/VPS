@@ -27,23 +27,23 @@ namespace VPS.CustomData.WP
         static public readonly string HomeWPLine = "HOME_WAYLINE";
     }
 
-    class Convert
+    public class Convert
     {
-        public string ToString(Maps.GMapMarkerStyle style)
+        static public string ToString(Maps.GMapMarkerStyle style)
         {
             if (style == null)
                 return "";
-            return string.Format("[{0},{1},{2}]", 
+            return string.Format("[{0}、{1}、{2}]", 
                 style.Type.ToString(), 
                 new System.Drawing.FontConverter().ConvertToString(style.TipFont), 
                 System.Drawing.ColorTranslator.ToHtml(style.SedColor));
         }
 
-        public Maps.GMapMarkerStyle ToMarkerStyle(string format)
+        static public Maps.GMapMarkerStyle ToMarkerStyle(string format)
         {
-            if (!System.Text.RegularExpressions.Regex.IsMatch(format, @"^([\[]\S+[,]\S+[,]\S+[\]]$"))
+            if (!(format.StartsWith("[") && format.EndsWith("]")))
                 return null;
-            string[] list = format.Replace("[", "").Replace("]", "").Split(',');
+            string[] list = format.Replace("[", "").Replace("]", "").Split('、');
             if (list.Count<string>() != 3)
                 return null;
             return new Maps.GMapMarkerStyle(
@@ -54,21 +54,21 @@ namespace VPS.CustomData.WP
 
         }
 
-        public string ToString(Maps.GMapOverlayStyle style)
+        static public string ToString(Maps.GMapOverlayStyle style)
         {
             if (style == null)
                 return "";
-            return string.Format("[{0},{1},{2}]", 
+            return string.Format("[{0}、{1}、{2}]", 
                 style.lineStyle.ToString(), 
                 style.lineWidth.ToString(), 
                 System.Drawing.ColorTranslator.ToHtml(style.lineColor));
         }
 
-        public Maps.GMapOverlayStyle ToOverlayStyle(string format)
+        static public Maps.GMapOverlayStyle ToOverlayStyle(string format)
         {
-            if (!System.Text.RegularExpressions.Regex.IsMatch(format, @"^([\[]\S+[,]\S+[,]\S+[\]]$"))
+            if (!(format.StartsWith("[") && format.EndsWith("]")))
                 return null;
-            string[] list = format.Replace("[", "").Replace("]", "").Split(',');
+            string[] list = format.Replace("[", "").Replace("]", "").Split('、');
             if (list.Count<string>() != 3)
                 return null;
             return new Maps.GMapOverlayStyle(

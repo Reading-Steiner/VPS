@@ -115,8 +115,9 @@ namespace VPS.Controls.CustomForms
             if (CommandType.SelectedValue != null &&
                 MarkerSelectedColor.SelectedColor != null && MarkerStyle.SelectedValue != null) 
             {
+                string selectedMarkerType = CommandType.SelectedValue.ToString();
                 VPS.Maps.GMapMarkerStyle.SetGMapMarkerStyle(
-                    CommandType.SelectedValue.ToString(),
+                    selectedMarkerType,
                     new VPS.Maps.GMapMarkerStyle(
                         MarkerSelectedColor.SelectedColor,
                         MarkerFont.GetFont(),
@@ -131,8 +132,9 @@ namespace VPS.Controls.CustomForms
             if (CommandType.SelectedValue != null &&
                 MarkerSelectedColor.SelectedColor != null && MarkerStyle.SelectedValue != null)
             {
+                string selectedMarkerType = CommandType.SelectedValue.ToString();
                 VPS.Maps.GMapMarkerStyle.SetGMapMarkerStyle(
-                    CommandType.SelectedValue.ToString(),
+                    selectedMarkerType,
                     new VPS.Maps.GMapMarkerStyle(
                         MarkerSelectedColor.SelectedColor,
                         MarkerFont.GetFont(),
@@ -147,8 +149,9 @@ namespace VPS.Controls.CustomForms
             if (CommandType.SelectedValue != null &&
                 MarkerSelectedColor.SelectedColor != null && MarkerStyle.SelectedValue != null)
             {
+                string selectedMarkerType = CommandType.SelectedValue.ToString();
                 VPS.Maps.GMapMarkerStyle.SetGMapMarkerStyle(
-                    CommandType.SelectedValue.ToString(),
+                    selectedMarkerType,
                     new VPS.Maps.GMapMarkerStyle(
                         MarkerSelectedColor.SelectedColor,
                         MarkerFont.GetFont(),
@@ -162,22 +165,23 @@ namespace VPS.Controls.CustomForms
         {
             if (CommandType.SelectedValue != null)
             {
-                if (!Maps.GMapMarkerStyle.ExistGMapMarkerStyle(CommandType.SelectedValue.ToString()))
+                string selectedMarkerType = CommandType.SelectedValue.ToString();
+                if (!Maps.GMapMarkerStyle.ExistGMapMarkerStyle(selectedMarkerType))
                 {
-                    if (CommandType.SelectedValue.ToString() == CustomData.WP.WPCommands.DefaultWPCommand)
-                        Maps.GMapMarkerStyle.SetGMapMarkerStyle(CommandType.SelectedValue.ToString(), 
+                    if (selectedMarkerType == CustomData.WP.WPCommands.DefaultWPCommand)
+                        Maps.GMapMarkerStyle.SetGMapMarkerStyle(selectedMarkerType, 
                             Maps.GMapMarkerStyle.DefaultWPStyle);
-                    else if (CommandType.SelectedValue.ToString() == CustomData.WP.WPCommands.HomeCommand)
-                        Maps.GMapMarkerStyle.SetGMapMarkerStyle(CommandType.SelectedValue.ToString(), 
+                    else if (selectedMarkerType == CustomData.WP.WPCommands.HomeCommand)
+                        Maps.GMapMarkerStyle.SetGMapMarkerStyle(selectedMarkerType, 
                             Maps.GMapMarkerStyle.DefaultHomeStyle);
-                    else if (CommandType.SelectedValue.ToString() == CustomData.WP.WPCommands.ClickWPCommand)
-                        Maps.GMapMarkerStyle.SetGMapMarkerStyle(CommandType.SelectedValue.ToString(), 
+                    else if (selectedMarkerType == CustomData.WP.WPCommands.ClickWPCommand)
+                        Maps.GMapMarkerStyle.SetGMapMarkerStyle(selectedMarkerType, 
                             Maps.GMapMarkerStyle.DefaultClickStyle);
                     else
-                        Maps.GMapMarkerStyle.SetGMapMarkerStyle(CommandType.SelectedValue.ToString(), 
+                        Maps.GMapMarkerStyle.SetGMapMarkerStyle(selectedMarkerType, 
                             Maps.GMapMarkerStyle.DefaultWPStyle);
                 }
-                var style = Maps.GMapMarkerStyle.GetGMapMarkerStyle(CommandType.SelectedValue.ToString());
+                var style = Maps.GMapMarkerStyle.GetGMapMarkerStyle(selectedMarkerType);
 
                 MarkerSelectedColor.SelectedColor = style.SedColor;
                 MarkerFont.SetFont(style.TipFont);
@@ -189,20 +193,21 @@ namespace VPS.Controls.CustomForms
         {
             if (LineType.SelectedValue != null)
             {
-                if (!Maps.GMapOverlayStyle.ExistGMapOverlayStyle(LineType.SelectedValue.ToString()))
+                string selectedLineType = LineType.SelectedValue.ToString();
+                if (!Maps.GMapOverlayStyle.ExistGMapOverlayStyle(selectedLineType))
                 {
-                    if (CommandType.SelectedValue.ToString() == CustomData.WP.WPLines.DefaultWPLine)
-                        Maps.GMapOverlayStyle.SetGMapOverlayStyle(LineType.SelectedValue.ToString(), 
+                    if (selectedLineType == CustomData.WP.WPLines.DefaultWPLine)
+                        Maps.GMapOverlayStyle.SetGMapOverlayStyle(selectedLineType, 
                             Maps.GMapOverlayStyle.DefaultWPStyle);
-                    else if (CommandType.SelectedValue.ToString() == CustomData.WP.WPLines.HomeWPLine)
-                        Maps.GMapOverlayStyle.SetGMapOverlayStyle(LineType.SelectedValue.ToString(), 
+                    else if (selectedLineType == CustomData.WP.WPLines.HomeWPLine)
+                        Maps.GMapOverlayStyle.SetGMapOverlayStyle(selectedLineType, 
                             Maps.GMapOverlayStyle.DefaultHomeStyle);
                     else
-                        Maps.GMapOverlayStyle.SetGMapOverlayStyle(LineType.SelectedValue.ToString(), 
+                        Maps.GMapOverlayStyle.SetGMapOverlayStyle(selectedLineType, 
                             Maps.GMapOverlayStyle.DefaultWPStyle);
                 }
 
-                var style = Maps.GMapOverlayStyle.GetGMapOverlayStyle(LineType.SelectedValue.ToString());
+                var style = Maps.GMapOverlayStyle.GetGMapOverlayStyle(selectedLineType);
 
                 LineColor.SelectedColor = style.lineColor;
                 LineWidth.Value = style.lineWidth;
@@ -215,8 +220,9 @@ namespace VPS.Controls.CustomForms
             if (LineType.SelectedValue != null &&
                 LineColor.SelectedColor != null && LineStyle.SelectedValue != null)
             {
+                string selectedLineType = LineType.SelectedValue.ToString();
                 VPS.Maps.GMapOverlayStyle.SetGMapOverlayStyle(
-                    LineType.SelectedValue.ToString(),
+                    selectedLineType,
                     new VPS.Maps.GMapOverlayStyle(
                         LineColor.SelectedColor,
                         LineWidth.Value,
@@ -231,8 +237,9 @@ namespace VPS.Controls.CustomForms
             if (LineType.SelectedValue != null &&
                 LineColor.SelectedColor != null && LineStyle.SelectedValue != null)
             {
+                string selectedLineType = LineType.SelectedValue.ToString();
                 VPS.Maps.GMapOverlayStyle.SetGMapOverlayStyle(
-                    LineType.SelectedValue.ToString(),
+                    selectedLineType,
                     new VPS.Maps.GMapOverlayStyle(
                         LineColor.SelectedColor,
                         LineWidth.Value,
@@ -247,8 +254,9 @@ namespace VPS.Controls.CustomForms
             if (LineType.SelectedValue != null &&
                 LineColor.SelectedColor != null && LineStyle.SelectedValue != null)
             {
+                string selectedLineType = LineType.SelectedValue.ToString();
                 VPS.Maps.GMapOverlayStyle.SetGMapOverlayStyle(
-                    LineType.SelectedValue.ToString(),
+                    selectedLineType,
                     new VPS.Maps.GMapOverlayStyle(
                         LineColor.SelectedColor,
                         LineWidth.Value,
