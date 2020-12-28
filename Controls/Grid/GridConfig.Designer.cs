@@ -131,11 +131,11 @@
             this.labelX21 = new DevComponents.DotNetBar.LabelX();
             this.NUM_WPDelayTime = new VPS.Controls.CustomControls.CustomDoubleInput(this.components);
             this.ConfigPanel = new DevComponents.DotNetBar.PanelEx();
+            this.WithClick = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.CHK_AutoGeneralWP = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.ConfigTitle = new DevComponents.DotNetBar.PanelEx();
             this.label3 = new System.Windows.Forms.Label();
             this.defaultTooltip = new DevComponents.DotNetBar.SuperTooltip();
-            this.WithClick = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.panelEx1.SuspendLayout();
             this.panelEx9.SuspendLayout();
             this.AdvanceAirLineBox.SuspendLayout();
@@ -596,6 +596,7 @@
             this.num_spacing.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.num_spacing.DisplayFormat = "0.## m";
             this.num_spacing.Increment = 0.01D;
+            this.num_spacing.IsInputReadOnly = true;
             this.num_spacing.Location = new System.Drawing.Point(237, 35);
             this.num_spacing.Name = "num_spacing";
             this.num_spacing.Size = new System.Drawing.Size(73, 21);
@@ -612,6 +613,7 @@
             this.Num_Distance.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.Num_Distance.DisplayFormat = "0.## m";
             this.Num_Distance.Increment = 0.01D;
+            this.Num_Distance.IsInputReadOnly = true;
             this.Num_Distance.Location = new System.Drawing.Point(237, 6);
             this.Num_Distance.Name = "Num_Distance";
             this.Num_Distance.Size = new System.Drawing.Size(73, 21);
@@ -1097,6 +1099,7 @@
             this.Num_GndeLev.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.Num_GndeLev.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.Num_GndeLev.DisplayFormat = "0 m";
+            this.Num_GndeLev.IsInputReadOnly = true;
             this.Num_GndeLev.Location = new System.Drawing.Point(237, 3);
             this.Num_GndeLev.MaxValue = 100000;
             this.Num_GndeLev.MinValue = -10000;
@@ -1224,6 +1227,7 @@
             this.TXT_FovH.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.TXT_FovH.DisplayFormat = "0.## m";
             this.TXT_FovH.Increment = 0D;
+            this.TXT_FovH.IsInputReadOnly = true;
             this.TXT_FovH.Location = new System.Drawing.Point(114, 30);
             this.TXT_FovH.MaxValue = 10000000D;
             this.TXT_FovH.MinValue = 0D;
@@ -1253,6 +1257,7 @@
             this.TXT_FovV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.TXT_FovV.DisplayFormat = "0.## m";
             this.TXT_FovV.Increment = 0D;
+            this.TXT_FovV.IsInputReadOnly = true;
             this.TXT_FovV.Location = new System.Drawing.Point(114, 57);
             this.TXT_FovV.MaxValue = 10000000D;
             this.TXT_FovV.MinValue = 0D;
@@ -1279,15 +1284,19 @@
             // 
             this.TXT_cmPixel.BackgroundStyle.Class = "DateTimeInputBackground";
             this.TXT_cmPixel.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.TXT_cmPixel.ButtonFreeText.Checked = true;
             this.TXT_cmPixel.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.TXT_cmPixel.DisplayFormat = "0.## m";
-            this.TXT_cmPixel.Increment = 0D;
+            this.TXT_cmPixel.FreeTextEntryMode = true;
+            this.TXT_cmPixel.Increment = 0.01D;
             this.TXT_cmPixel.Location = new System.Drawing.Point(114, 3);
             this.TXT_cmPixel.MaxValue = 10000000D;
             this.TXT_cmPixel.MinValue = 0D;
             this.TXT_cmPixel.Name = "TXT_cmPixel";
+            this.TXT_cmPixel.ShowUpDown = true;
             this.TXT_cmPixel.Size = new System.Drawing.Size(80, 21);
             this.TXT_cmPixel.TabIndex = 55;
+            this.TXT_cmPixel.ValueChanged += new System.EventHandler(this.TXT_cmPixel_ValueChanged);
             // 
             // labelX2
             // 
@@ -1417,6 +1426,7 @@
             this.TXT_SensHeight.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.TXT_SensHeight.DisplayFormat = "0.## mm";
             this.TXT_SensHeight.Increment = 0D;
+            this.TXT_SensHeight.IsInputReadOnly = true;
             this.TXT_SensHeight.Location = new System.Drawing.Point(192, 65);
             this.TXT_SensHeight.MaxValue = 100000D;
             this.TXT_SensHeight.MinValue = 0D;
@@ -1435,6 +1445,7 @@
             this.TXT_SensWidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.TXT_SensWidth.DisplayFormat = "0.## mm";
             this.TXT_SensWidth.Increment = 0D;
+            this.TXT_SensWidth.IsInputReadOnly = true;
             this.TXT_SensWidth.Location = new System.Drawing.Point(67, 65);
             this.TXT_SensWidth.MaxValue = 100000D;
             this.TXT_SensWidth.MinValue = 0D;
@@ -1453,6 +1464,7 @@
             this.TXT_ImgHeight.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.TXT_ImgHeight.DisplayFormat = "0";
             this.TXT_ImgHeight.Increment = 0;
+            this.TXT_ImgHeight.IsInputReadOnly = true;
             this.TXT_ImgHeight.Location = new System.Drawing.Point(192, 21);
             this.TXT_ImgHeight.MaxValue = 10000000;
             this.TXT_ImgHeight.MinValue = 0;
@@ -1471,6 +1483,7 @@
             this.TXT_ImgWidth.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
             this.TXT_ImgWidth.DisplayFormat = "0";
             this.TXT_ImgWidth.Increment = 0;
+            this.TXT_ImgWidth.IsInputReadOnly = true;
             this.TXT_ImgWidth.Location = new System.Drawing.Point(67, 21);
             this.TXT_ImgWidth.MaxValue = 10000000;
             this.TXT_ImgWidth.MinValue = 0;
@@ -1875,6 +1888,20 @@
             this.ConfigPanel.Style.GradientAngle = 90;
             this.ConfigPanel.TabIndex = 50;
             // 
+            // WithClick
+            // 
+            this.WithClick.AutoSize = true;
+            // 
+            // 
+            // 
+            this.WithClick.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.WithClick.Location = new System.Drawing.Point(196, 6);
+            this.WithClick.Name = "WithClick";
+            this.WithClick.Size = new System.Drawing.Size(88, 18);
+            this.WithClick.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.WithClick.TabIndex = 60;
+            this.WithClick.Text = "生成航摄点";
+            // 
             // CHK_AutoGeneralWP
             // 
             this.CHK_AutoGeneralWP.AutoSize = true;
@@ -1930,20 +1957,6 @@
             this.label3.Size = new System.Drawing.Size(35, 14);
             this.label3.TabIndex = 26;
             this.label3.Text = "设置";
-            // 
-            // WithClick
-            // 
-            this.WithClick.AutoSize = true;
-            // 
-            // 
-            // 
-            this.WithClick.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.WithClick.Location = new System.Drawing.Point(196, 6);
-            this.WithClick.Name = "WithClick";
-            this.WithClick.Size = new System.Drawing.Size(88, 18);
-            this.WithClick.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.WithClick.TabIndex = 60;
-            this.WithClick.Text = "生成航摄点";
             // 
             // GridConfig
             // 

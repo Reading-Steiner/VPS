@@ -900,7 +900,7 @@ namespace VPS.Controls.Grid
             //feet_fovV = (viewheight * 3.2808399f).ToString("#.#");
 
             //    mm  / pixels * 100
-            TXT_cmPixel.Value = ((viewheight / imageheight) * 100);
+            TXT_cmPixel.Value = (viewheight / imageheight);
             // Imperial
             //inchpixel = (((viewheight / imageheight) * 100) * 0.393701).ToString("0.00 inches");
 
@@ -1614,6 +1614,27 @@ namespace VPS.Controls.Grid
         private void CHK_AppendWP_CheckedChanged(object sender, EventArgs e)
         {
             panelEx7.Visible = CHK_AppendWP.Checked;
+        }
+
+        private void TXT_cmPixel_ValueChanged(object sender, EventArgs e)
+        {
+            if (!IsAllowEdit())
+                return;
+
+            CloseEditFun();
+
+            double gsd = (double)ReadControlMainThread(TXT_cmPixel);
+            double f = (double)ReadControlMainThread(NUM_FocalLength);
+
+            double sW = (double)ReadControlMainThread(TXT_SensWidth);
+            int iW = (int)ReadControlMainThread(TXT_ImgWidth);
+            double a = (sW == iW ? 1 : sW / iW);
+
+            int ra = (int)(f * gsd / a);
+
+            SetControlMainThread(NUM_altitude, ra);
+
+            OpenEditFun();
         }
     }
 }

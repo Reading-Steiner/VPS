@@ -106,6 +106,7 @@ namespace VPS.Controls.CustomControls
                 using (CustomForms.CustomTiffLayer cusDlg = new CustomForms.CustomTiffLayer())
                 {
 
+                    cusDlg.Text = "工作区 图层";
                     if (info is TiffLayerInfo)
                     {
                         var tiff = info as TiffLayerInfo;

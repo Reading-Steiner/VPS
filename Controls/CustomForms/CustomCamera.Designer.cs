@@ -38,15 +38,15 @@
             this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
             this.regularExpressionValidator1 = new DevComponents.DotNetBar.Validator.RegularExpressionValidator();
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.labelX8 = new DevComponents.DotNetBar.LabelX();
+            this.labelX7 = new DevComponents.DotNetBar.LabelX();
+            this.labelX6 = new DevComponents.DotNetBar.LabelX();
+            this.labelX3 = new DevComponents.DotNetBar.LabelX();
             this.FocalLength = new VPS.Controls.CustomControls.CustomDoubleInput(this.components);
             this.SensHeight = new VPS.Controls.CustomControls.CustomDoubleInput(this.components);
             this.ImgWidth = new VPS.Controls.CustomControls.CustomIntegerInput(this.components);
             this.SensWidth = new VPS.Controls.CustomControls.CustomDoubleInput(this.components);
             this.ImgHeight = new VPS.Controls.CustomControls.CustomIntegerInput(this.components);
-            this.labelX3 = new DevComponents.DotNetBar.LabelX();
-            this.labelX6 = new DevComponents.DotNetBar.LabelX();
-            this.labelX7 = new DevComponents.DotNetBar.LabelX();
-            this.labelX8 = new DevComponents.DotNetBar.LabelX();
             this.panelEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FocalLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SensHeight)).BeginInit();
@@ -85,7 +85,7 @@
             this.labelX2.Size = new System.Drawing.Size(56, 18);
             this.labelX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.labelX2.TabIndex = 1;
-            this.labelX2.Text = "焦距[mm]";
+            this.labelX2.Text = "焦距(mm)";
             // 
             // Camera
             // 
@@ -113,7 +113,7 @@
             this.labelX5.Size = new System.Drawing.Size(156, 23);
             this.labelX5.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.labelX5.TabIndex = 50;
-            this.labelX5.Text = "相机传感器尺寸[mm]";
+            this.labelX5.Text = "相机传感器尺寸(mm)";
             // 
             // labelX4
             // 
@@ -129,7 +129,7 @@
             this.labelX4.Size = new System.Drawing.Size(156, 23);
             this.labelX4.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.labelX4.TabIndex = 49;
-            this.labelX4.Text = "最高图像分辨率[pl]";
+            this.labelX4.Text = "最高图像分辨率(pl)";
             // 
             // buttonX1
             // 
@@ -192,6 +192,62 @@
             this.panelEx1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 61;
+            // 
+            // labelX8
+            // 
+            this.labelX8.AutoSize = true;
+            // 
+            // 
+            // 
+            this.labelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX8.Location = new System.Drawing.Point(147, 211);
+            this.labelX8.Name = "labelX8";
+            this.labelX8.Size = new System.Drawing.Size(19, 18);
+            this.labelX8.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.labelX8.TabIndex = 64;
+            this.labelX8.Text = "高";
+            // 
+            // labelX7
+            // 
+            this.labelX7.AutoSize = true;
+            // 
+            // 
+            // 
+            this.labelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX7.Location = new System.Drawing.Point(147, 132);
+            this.labelX7.Name = "labelX7";
+            this.labelX7.Size = new System.Drawing.Size(19, 18);
+            this.labelX7.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.labelX7.TabIndex = 63;
+            this.labelX7.Text = "高";
+            // 
+            // labelX6
+            // 
+            this.labelX6.AutoSize = true;
+            // 
+            // 
+            // 
+            this.labelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX6.Location = new System.Drawing.Point(17, 132);
+            this.labelX6.Name = "labelX6";
+            this.labelX6.Size = new System.Drawing.Size(19, 18);
+            this.labelX6.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.labelX6.TabIndex = 62;
+            this.labelX6.Text = "宽";
+            // 
+            // labelX3
+            // 
+            this.labelX3.AutoSize = true;
+            // 
+            // 
+            // 
+            this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.labelX3.Location = new System.Drawing.Point(17, 211);
+            this.labelX3.Name = "labelX3";
+            this.labelX3.Size = new System.Drawing.Size(19, 18);
+            this.labelX3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.labelX3.TabIndex = 61;
+            this.labelX3.Text = "宽";
             // 
             // FocalLength
             // 
@@ -289,62 +345,6 @@
             this.ImgHeight.Name = "ImgHeight";
             this.ImgHeight.Size = new System.Drawing.Size(80, 21);
             this.ImgHeight.TabIndex = 52;
-            // 
-            // labelX3
-            // 
-            this.labelX3.AutoSize = true;
-            // 
-            // 
-            // 
-            this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX3.Location = new System.Drawing.Point(17, 211);
-            this.labelX3.Name = "labelX3";
-            this.labelX3.Size = new System.Drawing.Size(19, 18);
-            this.labelX3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.labelX3.TabIndex = 61;
-            this.labelX3.Text = "宽";
-            // 
-            // labelX6
-            // 
-            this.labelX6.AutoSize = true;
-            // 
-            // 
-            // 
-            this.labelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX6.Location = new System.Drawing.Point(17, 132);
-            this.labelX6.Name = "labelX6";
-            this.labelX6.Size = new System.Drawing.Size(19, 18);
-            this.labelX6.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.labelX6.TabIndex = 62;
-            this.labelX6.Text = "宽";
-            // 
-            // labelX7
-            // 
-            this.labelX7.AutoSize = true;
-            // 
-            // 
-            // 
-            this.labelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX7.Location = new System.Drawing.Point(147, 132);
-            this.labelX7.Name = "labelX7";
-            this.labelX7.Size = new System.Drawing.Size(19, 18);
-            this.labelX7.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.labelX7.TabIndex = 63;
-            this.labelX7.Text = "高";
-            // 
-            // labelX8
-            // 
-            this.labelX8.AutoSize = true;
-            // 
-            // 
-            // 
-            this.labelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.labelX8.Location = new System.Drawing.Point(147, 211);
-            this.labelX8.Name = "labelX8";
-            this.labelX8.Size = new System.Drawing.Size(19, 18);
-            this.labelX8.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.labelX8.TabIndex = 64;
-            this.labelX8.Text = "高";
             // 
             // CustomCamera
             // 
