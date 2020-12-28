@@ -16,10 +16,10 @@ namespace VPS.Controls.CustomForms
         public CustomRect()
         {
             InitializeComponent();
-            defaultRect = new CustomData.WP.Rect();
+            defaultRect = new CustomData.WP.VPSRect();
         }
 
-        public CustomRect(VPS.CustomData.WP.Rect rect)
+        public CustomRect(VPS.CustomData.WP.VPSRect rect)
         {
             InitializeComponent();
 
@@ -27,21 +27,21 @@ namespace VPS.Controls.CustomForms
             defaultRect = rect;
         }
 
-        VPS.CustomData.WP.Rect defaultRect = new VPS.CustomData.WP.Rect();
-        VPS.CustomData.WP.Rect rect = new VPS.CustomData.WP.Rect();
+        VPS.CustomData.WP.VPSRect defaultRect = new VPS.CustomData.WP.VPSRect();
+        VPS.CustomData.WP.VPSRect rect = new VPS.CustomData.WP.VPSRect();
 
-        public void SetWGS84Rect(VPS.CustomData.WP.Rect value)
+        public void SetWGS84Rect(VPS.CustomData.WP.VPSRect value)
         {
-            rect = new VPS.CustomData.WP.Rect(value);
+            rect = new VPS.CustomData.WP.VPSRect(value);
             TopLatInput.Value = rect.Top;
             BottomLatInput.Value = rect.Bottom;
             LeftLngInput.Value = rect.Left;
             RightLngInput.Value = rect.Right;
         }
 
-        public VPS.CustomData.WP.Rect GetWGS84Rect()
+        public VPS.CustomData.WP.VPSRect GetWGS84Rect()
         {
-            return new VPS.CustomData.WP.Rect(rect);
+            return new VPS.CustomData.WP.VPSRect(rect);
         }
 
         private void Default_Click(object sender, EventArgs e)

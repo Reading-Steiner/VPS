@@ -8,7 +8,7 @@ namespace VPS
         {
             InitializeComponent();
         }
-
+          
 
         const int WS_EX_NOACTIVATE = 0x08000000;
         protected override CreateParams CreateParams

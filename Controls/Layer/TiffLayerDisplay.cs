@@ -48,31 +48,31 @@ namespace VPS.Controls.Layer
         #endregion
 
         #region 初始位置
-        private VPS.CustomData.WP.Position home;
+        private VPS.CustomData.WP.VPSPosition home;
 
-        public VPS.CustomData.WP.Position GetHomePosition()
+        public VPS.CustomData.WP.VPSPosition GetHomePosition()
         {
             return home;
         }
 
-        public void SetHomePosition(VPS.CustomData.WP.Position value)
+        public void SetHomePosition(VPS.CustomData.WP.VPSPosition value)
         {
-            home = new CustomData.WP.Position(value);
+            home = new CustomData.WP.VPSPosition(value);
             HomePositionDisplay.CopyPosition(home);
         }
         #endregion
 
         #region 图层范围
-        private VPS.CustomData.WP.Rect rect = new VPS.CustomData.WP.Rect();
+        private VPS.CustomData.WP.VPSRect rect = new VPS.CustomData.WP.VPSRect();
 
-        public VPS.CustomData.WP.Rect GetLayerRect()
+        public VPS.CustomData.WP.VPSRect GetLayerRect()
         {
             return rect;
         }
 
-        public void SetLayerRect(VPS.CustomData.WP.Rect value)
+        public void SetLayerRect(VPS.CustomData.WP.VPSRect value)
         {
-            rect = new VPS.CustomData.WP.Rect(value);
+            rect = new VPS.CustomData.WP.VPSRect(value);
             LayerRectDisplay.CopyRect(rect);
         }
         #endregion
@@ -127,7 +127,7 @@ namespace VPS.Controls.Layer
             var bitmapInfo = GDAL.GDAL.LoadImageInfo(info.Layer);
             if (bitmapInfo != null)
             {
-                SetLayerRect(new VPS.CustomData.WP.Rect(bitmapInfo.Rect));
+                SetLayerRect(new VPS.CustomData.WP.VPSRect(bitmapInfo.Rect));
             }
             using (var ds = OSGeo.GDAL.Gdal.Open(info.Layer, OSGeo.GDAL.Access.GA_ReadOnly))
             {

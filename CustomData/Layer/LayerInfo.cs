@@ -45,11 +45,11 @@
         private string frameOfHomeAlt = "";
 
         #region 访问器
-        public VPS.CustomData.WP.Position Home
+        public VPS.CustomData.WP.VPSPosition Home
         {
             get
             {
-                var origin = new VPS.CustomData.WP.Position(homeLat, homeLng, homeAlt);
+                var origin = new VPS.CustomData.WP.VPSPosition(homeLat, homeLng, homeAlt);
                 origin.AltMode = frameOfHomeAlt;
                 origin.Command = WP.WPCommands.HomeCommand;
                 return origin;
@@ -130,7 +130,7 @@
 
         public LayerInfo(
             LayerTypes layerInfo, string url,
-            VPS.CustomData.WP.Position home,
+            VPS.CustomData.WP.VPSPosition home,
             double scale = 1, string create = null, string modify = null)
         {
             this.layerType = layerInfo;
@@ -221,7 +221,7 @@
 
         protected virtual void SetLayerInfo(
             LayerTypes layerInfo, string url,
-            VPS.CustomData.WP.Position home, double scale = 1,
+            VPS.CustomData.WP.VPSPosition home, double scale = 1,
             string create = null, string modify = null)
         {
             this.layerType = layerInfo;
@@ -340,8 +340,8 @@
         static public LayerInfo FromXMLToBase(XmlNode LayerInfoKeys)
         {
             string path = "";
-            VPS.CustomData.WP.Position origin = new VPS.CustomData.WP.Position();
-            VPS.CustomData.WP.Position home = new VPS.CustomData.WP.Position();
+            VPS.CustomData.WP.VPSPosition origin = new VPS.CustomData.WP.VPSPosition();
+            VPS.CustomData.WP.VPSPosition home = new VPS.CustomData.WP.VPSPosition();
             double scale = 1;
             string createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 HH:mm:ss");
             string modifyTime = DateTime.Now.ToString("yyyy年 MM月 dd日 HH:mm:ss");

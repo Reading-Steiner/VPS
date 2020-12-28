@@ -11,19 +11,19 @@ namespace VPS.Maps
     [Serializable]
     public class GMapMarkerPolygon : GMarkerGoogle
     {
-
-        public bool selected = false;
-        SizeF txtsize = SizeF.Empty;
         static Dictionary<string, Bitmap> fontBitmaps = new Dictionary<string, Bitmap>();
-        static Font font;
+        private static Font font = SystemFonts.DefaultFont;
+        private static GMarkerGoogleType icon = GMarkerGoogleType.red;
+        private static Color color = Color.DeepSkyBlue;
+
         string no;
+        public bool selected = false;
+
+        SizeF txtsize = SizeF.Empty;
 
         public GMapMarkerPolygon(PointLatLng p, string tag)
             : base(p, GMarkerGoogleType.red)
         {
-            if (font == null)
-                font = SystemFonts.DefaultFont;
-
             no = tag;
             if (!fontBitmaps.ContainsKey(no))
             {
@@ -38,16 +38,24 @@ namespace VPS.Maps
             }
 
             IsVisible = true;
-            ToolTipText = "grid: " + tag;
+
             Tag = "grid" + tag;
+        }
+
+        public int GetNo()
+        {
+            if (int.TryParse(no, out int id))
+                return id;
+            else
+                return -1;
         }
 
         public override void OnRender(IGraphics g)
         {
             if (selected)
             {
-                g.FillEllipse(Brushes.DeepSkyBlue, new Rectangle(this.LocalPosition, this.Size));
-                g.DrawArc(Pens.DeepSkyBlue, new Rectangle(this.LocalPosition, this.Size), 0, 360);
+                g.FillEllipse(new SolidBrush(color), new Rectangle(this.LocalPosition, this.Size));
+                g.DrawArc(new Pen(color), new Rectangle(this.LocalPosition, this.Size), 0, 360);
             }
 
             base.OnRender(g);

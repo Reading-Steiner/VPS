@@ -35,6 +35,30 @@ namespace VPS
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainV2));
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo1 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo2 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo3 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo4 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo5 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo6 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo7 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo8 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo9 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo10 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo11 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo12 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo13 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo14 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo15 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo16 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo17 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo18 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo19 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo20 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo21 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo22 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo23 = new DevComponents.DotNetBar.SuperTooltipInfo();
+            DevComponents.DotNetBar.SuperTooltipInfo superTooltipInfo24 = new DevComponents.DotNetBar.SuperTooltipInfo();
             this.MenuConnect = new System.Windows.Forms.ToolStripButton();
             this.MenuInitConfig = new System.Windows.Forms.ToolStripButton();
             this.MenuConfigTune = new System.Windows.Forms.ToolStripButton();
@@ -61,6 +85,7 @@ namespace VPS
             this.LoadWPButton = new DevComponents.DotNetBar.ButtonItem();
             this.itemContainer12 = new DevComponents.DotNetBar.ItemContainer();
             this.ZoomToWPButton = new DevComponents.DotNetBar.ButtonItem();
+            this.buttonItem3 = new DevComponents.DotNetBar.ButtonItem();
             this.PolygonRibbonBar = new DevComponents.DotNetBar.RibbonBar();
             this.itemContainer7 = new DevComponents.DotNetBar.ItemContainer();
             this.AllPolygonButton = new DevComponents.DotNetBar.ButtonItem();
@@ -77,7 +102,6 @@ namespace VPS
             this.LoadPolygonButton = new DevComponents.DotNetBar.ButtonItem();
             this.itemContainer11 = new DevComponents.DotNetBar.ItemContainer();
             this.ZoomToPolygonButton = new DevComponents.DotNetBar.ButtonItem();
-            this.buttonItem3 = new DevComponents.DotNetBar.ButtonItem();
             this.FileRibbonPanel = new DevComponents.DotNetBar.RibbonPanel();
             this.ribbonBar1 = new DevComponents.DotNetBar.RibbonBar();
             this.LoadTiffButton = new DevComponents.DotNetBar.ButtonItem();
@@ -141,12 +165,11 @@ namespace VPS
             this.dockContainerItem4 = new DevComponents.DotNetBar.DockContainerItem();
             this.LeftDockSite = new DevComponents.DotNetBar.DockSite();
             this.LeftBar = new DevComponents.DotNetBar.Bar();
-            this.MainLeftBarPanel = new DevComponents.DotNetBar.PanelDockContainer();
-            this.MainLeftInfo = new VPS.Controls.MainInfo.LeftMainInfo();
-            this.AutoGridParamPanel = new DevComponents.DotNetBar.PanelDockContainer();
-            this.GridConfig = new VPS.Controls.Grid.GridConfig();
             this.LayerReaderPanel = new DevComponents.DotNetBar.PanelDockContainer();
             this.LayerReader = new VPS.Controls.Layer.LayerReader();
+            this.AutoGridParamPanel = new DevComponents.DotNetBar.PanelDockContainer();
+            this.MainLeftBarPanel = new DevComponents.DotNetBar.PanelDockContainer();
+            this.MainLeftInfo = new VPS.Controls.MainInfo.LeftMainInfo();
             this.LayerReaderDockContainerItem = new DevComponents.DotNetBar.DockContainerItem();
             this.AutoGridDockContainerItem = new DevComponents.DotNetBar.DockContainerItem();
             this.MainInfoDockContainerItem = new DevComponents.DotNetBar.DockContainerItem();
@@ -160,7 +183,6 @@ namespace VPS
             this.microChartItem2 = new DevComponents.DotNetBar.MicroChartItem();
             this.SuperTooltip = new DevComponents.DotNetBar.SuperTooltip();
             this.styleManager1 = new DevComponents.DotNetBar.StyleManager(this.components);
-            this.toolStripConnectionControl = new VPS.Controls.ToolStripConnectionControl();
             this.MinMenuBar.SuspendLayout();
             this.FuncRibbonPanel.SuspendLayout();
             this.FileRibbonPanel.SuspendLayout();
@@ -173,9 +195,8 @@ namespace VPS
             this.LeftDockSite.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).BeginInit();
             this.LeftBar.SuspendLayout();
-            this.MainLeftBarPanel.SuspendLayout();
-            this.AutoGridParamPanel.SuspendLayout();
             this.LayerReaderPanel.SuspendLayout();
+            this.MainLeftBarPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuConnect
@@ -193,7 +214,6 @@ namespace VPS
             this.MenuConnect.Text = "CONNECT";
             this.MenuConnect.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.MenuConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.MenuConnect.Click += new System.EventHandler(this.MenuConnect_Click);
             // 
             // MenuInitConfig
             // 
@@ -325,6 +345,7 @@ namespace VPS
             // 
             this.FuncRibbonPanel.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.FuncRibbonPanel.TabIndex = 2;
+            this.FuncRibbonPanel.Visible = true;
             // 
             // AutoWPRibbonBar
             // 
@@ -362,7 +383,11 @@ namespace VPS
             this.AutoWPButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.AutoWPButton.Name = "AutoWPButton";
             this.AutoWPButton.SubItemsExpandWidth = 14;
-            this.SuperTooltip.SetSuperTooltip(this.AutoWPButton, new DevComponents.DotNetBar.SuperTooltipInfo("自动航点", "Ctrl + G", "开启航点自动生成模式，根据当前区域，调整参数、设计航线。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo1.BodyText = "开启航点自动生成模式，根据当前区域，调整参数、设计航线。";
+            superTooltipInfo1.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo1.FooterText = "Ctrl + G";
+            superTooltipInfo1.HeaderText = "自动航点";
+            this.SuperTooltip.SetSuperTooltip(this.AutoWPButton, superTooltipInfo1);
             this.AutoWPButton.Text = "自动航点";
             this.AutoWPButton.Click += new System.EventHandler(this.AutoWPButton_Click);
             // 
@@ -419,7 +444,11 @@ namespace VPS
             // 
             this.AllWPButton.Image = ((System.Drawing.Image)(resources.GetObject("AllWPButton.Image")));
             this.AllWPButton.Name = "AllWPButton";
-            this.SuperTooltip.SetSuperTooltip(this.AllWPButton, new DevComponents.DotNetBar.SuperTooltipInfo("全部航点", "Ctrl + A", "选中全部航点。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo2.BodyText = "选中全部航点。";
+            superTooltipInfo2.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo2.FooterText = "Ctrl + A";
+            superTooltipInfo2.HeaderText = "全部航点";
+            this.SuperTooltip.SetSuperTooltip(this.AllWPButton, superTooltipInfo2);
             this.AllWPButton.Text = "全部选中";
             this.AllWPButton.Click += new System.EventHandler(this.AllWPButton_Click);
             // 
@@ -427,7 +456,11 @@ namespace VPS
             // 
             this.CancelWPButton.Image = ((System.Drawing.Image)(resources.GetObject("CancelWPButton.Image")));
             this.CancelWPButton.Name = "CancelWPButton";
-            this.SuperTooltip.SetSuperTooltip(this.CancelWPButton, new DevComponents.DotNetBar.SuperTooltipInfo("取消航点", "Ctrl + C", "取消所有被选中的航点的选中状态。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo3.BodyText = "取消所有被选中的航点的选中状态。";
+            superTooltipInfo3.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo3.FooterText = "Ctrl + C";
+            superTooltipInfo3.HeaderText = "取消航点";
+            this.SuperTooltip.SetSuperTooltip(this.CancelWPButton, superTooltipInfo3);
             this.CancelWPButton.Text = "取消选中";
             this.CancelWPButton.Click += new System.EventHandler(this.CancelWPButton_Click);
             // 
@@ -435,7 +468,11 @@ namespace VPS
             // 
             this.DeleteWPButton.Image = ((System.Drawing.Image)(resources.GetObject("DeleteWPButton.Image")));
             this.DeleteWPButton.Name = "DeleteWPButton";
-            this.SuperTooltip.SetSuperTooltip(this.DeleteWPButton, new DevComponents.DotNetBar.SuperTooltipInfo("删除航点", "Ctrl + Delete", "删除所有被选中的区域点。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo4.BodyText = "删除所有被选中的区域点。";
+            superTooltipInfo4.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo4.FooterText = "Ctrl + Delete";
+            superTooltipInfo4.HeaderText = "删除航点";
+            this.SuperTooltip.SetSuperTooltip(this.DeleteWPButton, superTooltipInfo4);
             this.DeleteWPButton.Text = "删除选中";
             this.DeleteWPButton.Click += new System.EventHandler(this.DeleteSelectedWPButton_Click);
             // 
@@ -466,7 +503,10 @@ namespace VPS
             // 
             this.FirstWPButton.Image = ((System.Drawing.Image)(resources.GetObject("FirstWPButton.Image")));
             this.FirstWPButton.Name = "FirstWPButton";
-            this.SuperTooltip.SetSuperTooltip(this.FirstWPButton, new DevComponents.DotNetBar.SuperTooltipInfo("第一个航点", "Ctrl + F", "选中第一个航点，该点为所有航点中序号最小的航点。", null, null, DevComponents.DotNetBar.eTooltipColor.Gray));
+            superTooltipInfo5.BodyText = "选中第一个航点，该点为所有航点中序号最小的航点。";
+            superTooltipInfo5.FooterText = "Ctrl + F";
+            superTooltipInfo5.HeaderText = "第一个航点";
+            this.SuperTooltip.SetSuperTooltip(this.FirstWPButton, superTooltipInfo5);
             this.FirstWPButton.Text = "First";
             this.FirstWPButton.Click += new System.EventHandler(this.FirstWPButton_Click);
             // 
@@ -474,7 +514,11 @@ namespace VPS
             // 
             this.NextWPButton.Image = ((System.Drawing.Image)(resources.GetObject("NextWPButton.Image")));
             this.NextWPButton.Name = "NextWPButton";
-            this.SuperTooltip.SetSuperTooltip(this.NextWPButton, new DevComponents.DotNetBar.SuperTooltipInfo("下一个航点", "Ctrl +  PageDown", "选中下一个航点，该点为所有已选中航点中序号最大的航点的下一个航点。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo6.BodyText = "选中下一个航点，该点为所有已选中航点中序号最大的航点的下一个航点。";
+            superTooltipInfo6.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo6.FooterText = "Ctrl +  PageDown";
+            superTooltipInfo6.HeaderText = "下一个航点";
+            this.SuperTooltip.SetSuperTooltip(this.NextWPButton, superTooltipInfo6);
             this.NextWPButton.Text = "Next>>";
             this.NextWPButton.Click += new System.EventHandler(this.NextWPButton_Click);
             // 
@@ -482,7 +526,11 @@ namespace VPS
             // 
             this.PrevWPButton.Image = ((System.Drawing.Image)(resources.GetObject("PrevWPButton.Image")));
             this.PrevWPButton.Name = "PrevWPButton";
-            this.SuperTooltip.SetSuperTooltip(this.PrevWPButton, new DevComponents.DotNetBar.SuperTooltipInfo("上一个", "Ctrl +  PageUp", "选中上一个航点，该点为所有已选中航点中序号最小的航点的上一个航点。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo7.BodyText = "选中上一个航点，该点为所有已选中航点中序号最小的航点的上一个航点。";
+            superTooltipInfo7.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo7.FooterText = "Ctrl +  PageUp";
+            superTooltipInfo7.HeaderText = "上一个";
+            this.SuperTooltip.SetSuperTooltip(this.PrevWPButton, superTooltipInfo7);
             this.PrevWPButton.Text = "Prev<<";
             this.PrevWPButton.Click += new System.EventHandler(this.PrevWPButton_Click);
             // 
@@ -492,7 +540,11 @@ namespace VPS
             this.DrawWPButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.DrawWPButton.Name = "DrawWPButton";
             this.DrawWPButton.SubItemsExpandWidth = 14;
-            this.SuperTooltip.SetSuperTooltip(this.DrawWPButton, new DevComponents.DotNetBar.SuperTooltipInfo("添加航点", "Ctrl + E", "开启添加航点模式，鼠标左键点击添加航点。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo8.BodyText = "开启添加航点模式，鼠标左键点击添加航点。";
+            superTooltipInfo8.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo8.FooterText = "Ctrl + E";
+            superTooltipInfo8.HeaderText = "添加航点";
+            this.SuperTooltip.SetSuperTooltip(this.DrawWPButton, superTooltipInfo8);
             this.DrawWPButton.Text = "添加航点";
             this.DrawWPButton.Click += new System.EventHandler(this.DrawWPButton_Click);
             // 
@@ -502,7 +554,11 @@ namespace VPS
             this.ClearWPButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.ClearWPButton.Name = "ClearWPButton";
             this.ClearWPButton.SubItemsExpandWidth = 14;
-            this.SuperTooltip.SetSuperTooltip(this.ClearWPButton, new DevComponents.DotNetBar.SuperTooltipInfo("清空航点", "Ctrl + D", "删除所有航点。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo9.BodyText = "删除所有航点。";
+            superTooltipInfo9.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo9.FooterText = "Ctrl + D";
+            superTooltipInfo9.HeaderText = "清空航点";
+            this.SuperTooltip.SetSuperTooltip(this.ClearWPButton, superTooltipInfo9);
             this.ClearWPButton.Text = "清空航点";
             this.ClearWPButton.Click += new System.EventHandler(this.ClearWPButton_Click);
             // 
@@ -512,7 +568,11 @@ namespace VPS
             this.SaveWPButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.SaveWPButton.Name = "SaveWPButton";
             this.SaveWPButton.SubItemsExpandWidth = 14;
-            this.SuperTooltip.SetSuperTooltip(this.SaveWPButton, new DevComponents.DotNetBar.SuperTooltipInfo("保存航点", "Ctrl + S", "将当前航点保存到文件。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo10.BodyText = "将当前航点保存到文件。";
+            superTooltipInfo10.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo10.FooterText = "Ctrl + S";
+            superTooltipInfo10.HeaderText = "保存航点";
+            this.SuperTooltip.SetSuperTooltip(this.SaveWPButton, superTooltipInfo10);
             this.SaveWPButton.Text = "保存航点";
             this.SaveWPButton.Click += new System.EventHandler(this.SaveWPButton_Click);
             // 
@@ -522,7 +582,11 @@ namespace VPS
             this.LoadWPButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.LoadWPButton.Name = "LoadWPButton";
             this.LoadWPButton.SubItemsExpandWidth = 14;
-            this.SuperTooltip.SetSuperTooltip(this.LoadWPButton, new DevComponents.DotNetBar.SuperTooltipInfo("加载航点", "Ctrl + O", "从文件中加载航点。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo11.BodyText = "从文件中加载航点。";
+            superTooltipInfo11.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo11.FooterText = "Ctrl + O";
+            superTooltipInfo11.HeaderText = "加载航点";
+            this.SuperTooltip.SetSuperTooltip(this.LoadWPButton, superTooltipInfo11);
             this.LoadWPButton.Text = "加载航点";
             this.LoadWPButton.Click += new System.EventHandler(this.LoadWPButton_Click);
             // 
@@ -535,7 +599,8 @@ namespace VPS
             this.itemContainer12.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical;
             this.itemContainer12.Name = "itemContainer12";
             this.itemContainer12.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.ZoomToWPButton});
+            this.ZoomToWPButton,
+            this.buttonItem3});
             // 
             // ZoomToWPButton
             // 
@@ -543,6 +608,13 @@ namespace VPS
             this.ZoomToWPButton.Name = "ZoomToWPButton";
             this.ZoomToWPButton.Text = "buttonItem4";
             this.ZoomToWPButton.Click += new System.EventHandler(this.ZoomToWPButton_Click);
+            // 
+            // buttonItem3
+            // 
+            this.buttonItem3.Image = ((System.Drawing.Image)(resources.GetObject("buttonItem3.Image")));
+            this.buttonItem3.Name = "buttonItem3";
+            this.buttonItem3.Text = "buttonItem3";
+            this.buttonItem3.Click += new System.EventHandler(this.MakerStyleButton_Click);
             // 
             // PolygonRibbonBar
             // 
@@ -597,7 +669,11 @@ namespace VPS
             // 
             this.AllPolygonButton.Image = ((System.Drawing.Image)(resources.GetObject("AllPolygonButton.Image")));
             this.AllPolygonButton.Name = "AllPolygonButton";
-            this.SuperTooltip.SetSuperTooltip(this.AllPolygonButton, new DevComponents.DotNetBar.SuperTooltipInfo("全部区域点", "Alt + A", "选中全部区域点。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo12.BodyText = "选中全部区域点。";
+            superTooltipInfo12.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo12.FooterText = "Alt + A";
+            superTooltipInfo12.HeaderText = "全部区域点";
+            this.SuperTooltip.SetSuperTooltip(this.AllPolygonButton, superTooltipInfo12);
             this.AllPolygonButton.Text = "全部选中";
             this.AllPolygonButton.Click += new System.EventHandler(this.AllPolygonButton_Click);
             // 
@@ -605,7 +681,11 @@ namespace VPS
             // 
             this.CancelPolygonButton.Image = ((System.Drawing.Image)(resources.GetObject("CancelPolygonButton.Image")));
             this.CancelPolygonButton.Name = "CancelPolygonButton";
-            this.SuperTooltip.SetSuperTooltip(this.CancelPolygonButton, new DevComponents.DotNetBar.SuperTooltipInfo("取消区域点", "Alt + C", "取消所有被选中的区域点的选中状态。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo13.BodyText = "取消所有被选中的区域点的选中状态。";
+            superTooltipInfo13.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo13.FooterText = "Alt + C";
+            superTooltipInfo13.HeaderText = "取消区域点";
+            this.SuperTooltip.SetSuperTooltip(this.CancelPolygonButton, superTooltipInfo13);
             this.CancelPolygonButton.Text = "取消选中";
             this.CancelPolygonButton.Click += new System.EventHandler(this.CancelPolygonButton_Click);
             // 
@@ -613,7 +693,11 @@ namespace VPS
             // 
             this.DeletePolygonButton.Image = ((System.Drawing.Image)(resources.GetObject("DeletePolygonButton.Image")));
             this.DeletePolygonButton.Name = "DeletePolygonButton";
-            this.SuperTooltip.SetSuperTooltip(this.DeletePolygonButton, new DevComponents.DotNetBar.SuperTooltipInfo("删除区域点", "Alt + Delete", "删除所有被选中的区域点。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo14.BodyText = "删除所有被选中的区域点。";
+            superTooltipInfo14.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo14.FooterText = "Alt + Delete";
+            superTooltipInfo14.HeaderText = "删除区域点";
+            this.SuperTooltip.SetSuperTooltip(this.DeletePolygonButton, superTooltipInfo14);
             this.DeletePolygonButton.Text = "删除选中";
             this.DeletePolygonButton.Click += new System.EventHandler(this.DeleteSelectedPolygonButton_Click);
             // 
@@ -644,7 +728,11 @@ namespace VPS
             // 
             this.FirstPolygonButton.Image = ((System.Drawing.Image)(resources.GetObject("FirstPolygonButton.Image")));
             this.FirstPolygonButton.Name = "FirstPolygonButton";
-            this.SuperTooltip.SetSuperTooltip(this.FirstPolygonButton, new DevComponents.DotNetBar.SuperTooltipInfo("第一个区域点", "Alt + F", "选中第一个区域点，该点为所有区域点中序号最小的区域点。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo15.BodyText = "选中第一个区域点，该点为所有区域点中序号最小的区域点。";
+            superTooltipInfo15.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo15.FooterText = "Alt + F";
+            superTooltipInfo15.HeaderText = "第一个区域点";
+            this.SuperTooltip.SetSuperTooltip(this.FirstPolygonButton, superTooltipInfo15);
             this.FirstPolygonButton.Text = "First";
             this.FirstPolygonButton.Click += new System.EventHandler(this.FirstPolygonButton_Click);
             // 
@@ -652,7 +740,11 @@ namespace VPS
             // 
             this.NextPolygonButton.Image = ((System.Drawing.Image)(resources.GetObject("NextPolygonButton.Image")));
             this.NextPolygonButton.Name = "NextPolygonButton";
-            this.SuperTooltip.SetSuperTooltip(this.NextPolygonButton, new DevComponents.DotNetBar.SuperTooltipInfo("下一个区域点", "Alt +  PageDown", "选中下一个区域点，该点为所有已选中区域点中序号最大的区域点的下一个区域点。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo16.BodyText = "选中下一个区域点，该点为所有已选中区域点中序号最大的区域点的下一个区域点。";
+            superTooltipInfo16.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo16.FooterText = "Alt +  PageDown";
+            superTooltipInfo16.HeaderText = "下一个区域点";
+            this.SuperTooltip.SetSuperTooltip(this.NextPolygonButton, superTooltipInfo16);
             this.NextPolygonButton.Text = "Next>>";
             this.NextPolygonButton.Click += new System.EventHandler(this.NextPolygonButton_Click);
             // 
@@ -660,7 +752,11 @@ namespace VPS
             // 
             this.PrevPolygonButton.Image = ((System.Drawing.Image)(resources.GetObject("PrevPolygonButton.Image")));
             this.PrevPolygonButton.Name = "PrevPolygonButton";
-            this.SuperTooltip.SetSuperTooltip(this.PrevPolygonButton, new DevComponents.DotNetBar.SuperTooltipInfo("上一个区域点", "Alt +  PageUp", "选中上一个区域点，该点为所有已选中区域点中序号最小的区域点的上一个区域点。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo17.BodyText = "选中上一个区域点，该点为所有已选中区域点中序号最小的区域点的上一个区域点。";
+            superTooltipInfo17.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo17.FooterText = "Alt +  PageUp";
+            superTooltipInfo17.HeaderText = "上一个区域点";
+            this.SuperTooltip.SetSuperTooltip(this.PrevPolygonButton, superTooltipInfo17);
             this.PrevPolygonButton.Text = "Prev<<";
             this.PrevPolygonButton.Click += new System.EventHandler(this.PrevPolygonButton_Click);
             // 
@@ -670,7 +766,11 @@ namespace VPS
             this.DrawPolygonButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.DrawPolygonButton.Name = "DrawPolygonButton";
             this.DrawPolygonButton.SubItemsExpandWidth = 14;
-            this.SuperTooltip.SetSuperTooltip(this.DrawPolygonButton, new DevComponents.DotNetBar.SuperTooltipInfo("划定区域", "Alt + E", "开启划定区域点模式，鼠标左键点击添加区域点。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo18.BodyText = "开启划定区域点模式，鼠标左键点击添加区域点。";
+            superTooltipInfo18.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo18.FooterText = "Alt + E";
+            superTooltipInfo18.HeaderText = "划定区域";
+            this.SuperTooltip.SetSuperTooltip(this.DrawPolygonButton, superTooltipInfo18);
             this.DrawPolygonButton.Text = "划定区域";
             this.DrawPolygonButton.Click += new System.EventHandler(this.DrawPolygonButton_Click);
             // 
@@ -680,7 +780,11 @@ namespace VPS
             this.ClearPolygonButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.ClearPolygonButton.Name = "ClearPolygonButton";
             this.ClearPolygonButton.SubItemsExpandWidth = 14;
-            this.SuperTooltip.SetSuperTooltip(this.ClearPolygonButton, new DevComponents.DotNetBar.SuperTooltipInfo("清空区域", "Alt + D", "删除所有区域点。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo19.BodyText = "删除所有区域点。";
+            superTooltipInfo19.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo19.FooterText = "Alt + D";
+            superTooltipInfo19.HeaderText = "清空区域";
+            this.SuperTooltip.SetSuperTooltip(this.ClearPolygonButton, superTooltipInfo19);
             this.ClearPolygonButton.Text = "清空区域";
             this.ClearPolygonButton.Click += new System.EventHandler(this.ClearPolygonButton_Click);
             // 
@@ -711,8 +815,7 @@ namespace VPS
             this.itemContainer11.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical;
             this.itemContainer11.Name = "itemContainer11";
             this.itemContainer11.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.ZoomToPolygonButton,
-            this.buttonItem3});
+            this.ZoomToPolygonButton});
             // 
             // ZoomToPolygonButton
             // 
@@ -720,13 +823,6 @@ namespace VPS
             this.ZoomToPolygonButton.Name = "ZoomToPolygonButton";
             this.ZoomToPolygonButton.Text = "buttonItem3";
             this.ZoomToPolygonButton.Click += new System.EventHandler(this.ZoomToPolygonButton_Click);
-            // 
-            // buttonItem3
-            // 
-            this.buttonItem3.Image = ((System.Drawing.Image)(resources.GetObject("buttonItem3.Image")));
-            this.buttonItem3.Name = "buttonItem3";
-            this.buttonItem3.Text = "buttonItem3";
-            this.buttonItem3.Click += new System.EventHandler(this.PolygonMakerStyleButton_Click);
             // 
             // FileRibbonPanel
             // 
@@ -791,7 +887,11 @@ namespace VPS
             this.LoadTiffButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.LoadTiffButton.Name = "LoadTiffButton";
             this.LoadTiffButton.SubItemsExpandWidth = 14;
-            this.SuperTooltip.SetSuperTooltip(this.LoadTiffButton, new DevComponents.DotNetBar.SuperTooltipInfo("加载工作区", "F5", "加载一幅Tiff栅格影像，做为项目的工作区。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo20.BodyText = "加载一幅Tiff栅格影像，做为项目的工作区。";
+            superTooltipInfo20.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo20.FooterText = "F5";
+            superTooltipInfo20.HeaderText = "加载工作区";
+            this.SuperTooltip.SetSuperTooltip(this.LoadTiffButton, superTooltipInfo20);
             this.LoadTiffButton.Text = "加载工作区";
             this.LoadTiffButton.Click += new System.EventHandler(this.LoadTiffButton_Click);
             // 
@@ -802,7 +902,11 @@ namespace VPS
             this.ZoomTiffButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.ZoomTiffButton.Name = "ZoomTiffButton";
             this.ZoomTiffButton.SubItemsExpandWidth = 14;
-            this.SuperTooltip.SetSuperTooltip(this.ZoomTiffButton, new DevComponents.DotNetBar.SuperTooltipInfo("定位工作区", "F6", "移动地图到达工作区所在位置。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo21.BodyText = "移动地图到达工作区所在位置。";
+            superTooltipInfo21.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo21.FooterText = "F6";
+            superTooltipInfo21.HeaderText = "定位工作区";
+            this.SuperTooltip.SetSuperTooltip(this.ZoomTiffButton, superTooltipInfo21);
             this.ZoomTiffButton.Text = "定位工作区";
             this.ZoomTiffButton.Click += new System.EventHandler(this.ZoomTiffButton_Click);
             // 
@@ -812,7 +916,11 @@ namespace VPS
             this.TiffManagerButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.TiffManagerButton.Name = "TiffManagerButton";
             this.TiffManagerButton.SubItemsExpandWidth = 14;
-            this.SuperTooltip.SetSuperTooltip(this.TiffManagerButton, new DevComponents.DotNetBar.SuperTooltipInfo("管理工作区", "F7", "管理历史工作区。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo22.BodyText = "管理历史工作区。";
+            superTooltipInfo22.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo22.FooterText = "F7";
+            superTooltipInfo22.HeaderText = "管理工作区";
+            this.SuperTooltip.SetSuperTooltip(this.TiffManagerButton, superTooltipInfo22);
             this.TiffManagerButton.Text = "管理工作区";
             this.TiffManagerButton.Click += new System.EventHandler(this.ManagerTiffButton_Click);
             // 
@@ -853,7 +961,11 @@ namespace VPS
             this.OpenProjectButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.OpenProjectButton.Name = "OpenProjectButton";
             this.OpenProjectButton.SubItemsExpandWidth = 14;
-            this.SuperTooltip.SetSuperTooltip(this.OpenProjectButton, new DevComponents.DotNetBar.SuperTooltipInfo("打开工程", "F1", "打开飞行计划的项目工程文件。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo23.BodyText = "打开飞行计划的项目工程文件。";
+            superTooltipInfo23.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo23.FooterText = "F1";
+            superTooltipInfo23.HeaderText = "打开工程";
+            this.SuperTooltip.SetSuperTooltip(this.OpenProjectButton, superTooltipInfo23);
             this.OpenProjectButton.Text = "打开工程";
             this.OpenProjectButton.Click += new System.EventHandler(this.LoadProjectButton_Click);
             // 
@@ -863,7 +975,11 @@ namespace VPS
             this.SaveProjectButton.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
             this.SaveProjectButton.Name = "SaveProjectButton";
             this.SaveProjectButton.SubItemsExpandWidth = 14;
-            this.SuperTooltip.SetSuperTooltip(this.SaveProjectButton, new DevComponents.DotNetBar.SuperTooltipInfo("保存工程", "F2", "将当前工作进度保存为项目工程文件。", null, null, DevComponents.DotNetBar.eTooltipColor.Office2003));
+            superTooltipInfo24.BodyText = "将当前工作进度保存为项目工程文件。";
+            superTooltipInfo24.Color = DevComponents.DotNetBar.eTooltipColor.Office2003;
+            superTooltipInfo24.FooterText = "F2";
+            superTooltipInfo24.HeaderText = "保存工程";
+            this.SuperTooltip.SetSuperTooltip(this.SaveProjectButton, superTooltipInfo24);
             this.SaveProjectButton.Text = "保存工程";
             this.SaveProjectButton.Click += new System.EventHandler(this.SaveProjectButton_Click);
             // 
@@ -1223,7 +1339,7 @@ namespace VPS
             this.RibbonClientPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RibbonClientPanel.Location = new System.Drawing.Point(340, 147);
             this.RibbonClientPanel.Name = "RibbonClientPanel";
-            this.RibbonClientPanel.Size = new System.Drawing.Size(988, 401);
+            this.RibbonClientPanel.Size = new System.Drawing.Size(988, 387);
             // 
             // 
             // 
@@ -1279,7 +1395,7 @@ namespace VPS
             this.BottomDockSite.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BottomDockSite.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
             ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.BottomBar, 988, 323)))}, DevComponents.DotNetBar.eOrientation.Vertical);
-            this.BottomDockSite.Location = new System.Drawing.Point(340, 548);
+            this.BottomDockSite.Location = new System.Drawing.Point(340, 534);
             this.BottomDockSite.Name = "BottomDockSite";
             this.BottomDockSite.Size = new System.Drawing.Size(988, 326);
             this.BottomDockSite.TabIndex = 5;
@@ -1311,7 +1427,6 @@ namespace VPS
             this.BottomBar.LayoutType = DevComponents.DotNetBar.eLayoutType.DockContainer;
             this.BottomBar.Location = new System.Drawing.Point(0, 3);
             this.BottomBar.Name = "BottomBar";
-            this.BottomBar.SelectedDockTab = 0;
             this.BottomBar.Size = new System.Drawing.Size(988, 323);
             this.BottomBar.Stretch = true;
             this.BottomBar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -1326,20 +1441,21 @@ namespace VPS
             this.CommandsPanel.Controls.Add(this.Commands);
             this.CommandsPanel.Location = new System.Drawing.Point(3, 23);
             this.CommandsPanel.Name = "CommandsPanel";
-            this.CommandsPanel.Size = new System.Drawing.Size(982, 272);
+            this.CommandsPanel.Size = new System.Drawing.Size(982, 297);
             this.CommandsPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.CommandsPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.CommandsPanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.CommandsPanel.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.CommandsPanel.Style.GradientAngle = 90;
             this.CommandsPanel.TabIndex = 0;
+            this.CommandsPanel.Visible = true;
             // 
             // Commands
             // 
             this.Commands.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Commands.Location = new System.Drawing.Point(0, 0);
             this.Commands.Name = "Commands";
-            this.Commands.Size = new System.Drawing.Size(982, 272);
+            this.Commands.Size = new System.Drawing.Size(982, 297);
             this.Commands.TabIndex = 0;
             // 
             // LayerManagerPanel
@@ -1348,13 +1464,14 @@ namespace VPS
             this.LayerManagerPanel.Controls.Add(this.layerManager1);
             this.LayerManagerPanel.Location = new System.Drawing.Point(3, 23);
             this.LayerManagerPanel.Name = "LayerManagerPanel";
-            this.LayerManagerPanel.Size = new System.Drawing.Size(982, 272);
+            this.LayerManagerPanel.Size = new System.Drawing.Size(982, 297);
             this.LayerManagerPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.LayerManagerPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.LayerManagerPanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.LayerManagerPanel.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.LayerManagerPanel.Style.GradientAngle = 90;
             this.LayerManagerPanel.TabIndex = 0;
+            this.LayerManagerPanel.Visible = true;
             // 
             // layerManager1
             // 
@@ -1369,13 +1486,14 @@ namespace VPS
             this.panelDockContainer1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelDockContainer1.Location = new System.Drawing.Point(3, 23);
             this.panelDockContainer1.Name = "panelDockContainer1";
-            this.panelDockContainer1.Size = new System.Drawing.Size(982, 272);
+            this.panelDockContainer1.Size = new System.Drawing.Size(982, 297);
             this.panelDockContainer1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelDockContainer1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelDockContainer1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.panelDockContainer1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.panelDockContainer1.Style.GradientAngle = 90;
             this.panelDockContainer1.TabIndex = 0;
+            this.panelDockContainer1.Visible = true;
             // 
             // CommandsDockContainerItem
             // 
@@ -1402,10 +1520,10 @@ namespace VPS
             this.LeftDockSite.Controls.Add(this.LeftBar);
             this.LeftDockSite.Dock = System.Windows.Forms.DockStyle.Left;
             this.LeftDockSite.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.LeftBar, 332, 729)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.LeftBar, 332, 713)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
             this.LeftDockSite.Location = new System.Drawing.Point(5, 147);
             this.LeftDockSite.Name = "LeftDockSite";
-            this.LeftDockSite.Size = new System.Drawing.Size(335, 727);
+            this.LeftDockSite.Size = new System.Drawing.Size(335, 713);
             this.LeftDockSite.TabIndex = 2;
             this.LeftDockSite.TabStop = false;
             // 
@@ -1423,9 +1541,9 @@ namespace VPS
             this.LeftBar.CanMove = false;
             this.LeftBar.CanUndock = false;
             this.LeftBar.CloseSingleTab = true;
-            this.LeftBar.Controls.Add(this.MainLeftBarPanel);
             this.LeftBar.Controls.Add(this.LayerReaderPanel);
             this.LeftBar.Controls.Add(this.AutoGridParamPanel);
+            this.LeftBar.Controls.Add(this.MainLeftBarPanel);
             this.LeftBar.Dock = System.Windows.Forms.DockStyle.Left;
             this.LeftBar.EqualButtonSize = true;
             this.LeftBar.FadeEffect = true;
@@ -1438,62 +1556,13 @@ namespace VPS
             this.LeftBar.LayoutType = DevComponents.DotNetBar.eLayoutType.DockContainer;
             this.LeftBar.Location = new System.Drawing.Point(0, 0);
             this.LeftBar.Name = "LeftBar";
-            this.LeftBar.SelectedDockTab = 2;
-            this.LeftBar.Size = new System.Drawing.Size(332, 727);
+            this.LeftBar.Size = new System.Drawing.Size(332, 713);
             this.LeftBar.Stretch = true;
             this.LeftBar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.LeftBar.TabIndex = 0;
             this.LeftBar.TabStop = false;
             this.LeftBar.Text = "主页";
             this.LeftBar.WrapItemsDock = true;
-            // 
-            // MainLeftBarPanel
-            // 
-            this.MainLeftBarPanel.AutoScroll = true;
-            this.MainLeftBarPanel.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.MainLeftBarPanel.Controls.Add(this.MainLeftInfo);
-            this.MainLeftBarPanel.Location = new System.Drawing.Point(3, 23);
-            this.MainLeftBarPanel.Name = "MainLeftBarPanel";
-            this.MainLeftBarPanel.Size = new System.Drawing.Size(326, 678);
-            this.MainLeftBarPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
-            this.MainLeftBarPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
-            this.MainLeftBarPanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
-            this.MainLeftBarPanel.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
-            this.MainLeftBarPanel.Style.GradientAngle = 90;
-            this.MainLeftBarPanel.TabIndex = 0;
-            // 
-            // MainLeftInfo
-            // 
-            this.MainLeftInfo.AutoSize = true;
-            this.MainLeftInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.MainLeftInfo.Location = new System.Drawing.Point(0, 0);
-            this.MainLeftInfo.Name = "MainLeftInfo";
-            this.MainLeftInfo.Size = new System.Drawing.Size(326, 549);
-            this.MainLeftInfo.TabIndex = 0;
-            // 
-            // AutoGridParamPanel
-            // 
-            this.AutoGridParamPanel.AutoScroll = true;
-            this.AutoGridParamPanel.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.AutoGridParamPanel.Controls.Add(this.GridConfig);
-            this.AutoGridParamPanel.Location = new System.Drawing.Point(3, 23);
-            this.AutoGridParamPanel.Name = "AutoGridParamPanel";
-            this.AutoGridParamPanel.Size = new System.Drawing.Size(326, 678);
-            this.AutoGridParamPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
-            this.AutoGridParamPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
-            this.AutoGridParamPanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
-            this.AutoGridParamPanel.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
-            this.AutoGridParamPanel.Style.GradientAngle = 90;
-            this.AutoGridParamPanel.TabIndex = 0;
-            // 
-            // GridConfig
-            // 
-            this.GridConfig.AutoSize = true;
-            this.GridConfig.Dock = System.Windows.Forms.DockStyle.Top;
-            this.GridConfig.Location = new System.Drawing.Point(0, 0);
-            this.GridConfig.Name = "GridConfig";
-            this.GridConfig.Size = new System.Drawing.Size(326, 603);
-            this.GridConfig.TabIndex = 0;
             // 
             // LayerReaderPanel
             // 
@@ -1502,13 +1571,14 @@ namespace VPS
             this.LayerReaderPanel.Controls.Add(this.LayerReader);
             this.LayerReaderPanel.Location = new System.Drawing.Point(3, 23);
             this.LayerReaderPanel.Name = "LayerReaderPanel";
-            this.LayerReaderPanel.Size = new System.Drawing.Size(326, 678);
+            this.LayerReaderPanel.Size = new System.Drawing.Size(326, 687);
             this.LayerReaderPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.LayerReaderPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.LayerReaderPanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.LayerReaderPanel.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.LayerReaderPanel.Style.GradientAngle = 90;
             this.LayerReaderPanel.TabIndex = 0;
+            this.LayerReaderPanel.Visible = true;
             // 
             // LayerReader
             // 
@@ -1519,6 +1589,46 @@ namespace VPS
             this.LayerReader.Name = "LayerReader";
             this.LayerReader.Size = new System.Drawing.Size(326, 547);
             this.LayerReader.TabIndex = 0;
+            // 
+            // AutoGridParamPanel
+            // 
+            this.AutoGridParamPanel.AutoScroll = true;
+            this.AutoGridParamPanel.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.AutoGridParamPanel.Location = new System.Drawing.Point(3, 23);
+            this.AutoGridParamPanel.Name = "AutoGridParamPanel";
+            this.AutoGridParamPanel.Size = new System.Drawing.Size(326, 687);
+            this.AutoGridParamPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.AutoGridParamPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
+            this.AutoGridParamPanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.AutoGridParamPanel.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
+            this.AutoGridParamPanel.Style.GradientAngle = 90;
+            this.AutoGridParamPanel.TabIndex = 0;
+            this.AutoGridParamPanel.Visible = true;
+            // 
+            // MainLeftBarPanel
+            // 
+            this.MainLeftBarPanel.AutoScroll = true;
+            this.MainLeftBarPanel.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.MainLeftBarPanel.Controls.Add(this.MainLeftInfo);
+            this.MainLeftBarPanel.Location = new System.Drawing.Point(3, 23);
+            this.MainLeftBarPanel.Name = "MainLeftBarPanel";
+            this.MainLeftBarPanel.Size = new System.Drawing.Size(326, 687);
+            this.MainLeftBarPanel.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.MainLeftBarPanel.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
+            this.MainLeftBarPanel.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.MainLeftBarPanel.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
+            this.MainLeftBarPanel.Style.GradientAngle = 90;
+            this.MainLeftBarPanel.TabIndex = 0;
+            this.MainLeftBarPanel.Visible = true;
+            // 
+            // MainLeftInfo
+            // 
+            this.MainLeftInfo.AutoSize = true;
+            this.MainLeftInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.MainLeftInfo.Location = new System.Drawing.Point(0, 0);
+            this.MainLeftInfo.Name = "MainLeftInfo";
+            this.MainLeftInfo.Size = new System.Drawing.Size(326, 549);
+            this.MainLeftInfo.TabIndex = 0;
             // 
             // LayerReaderDockContainerItem
             // 
@@ -1547,7 +1657,7 @@ namespace VPS
             this.RightDockSite.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
             this.RightDockSite.Location = new System.Drawing.Point(1328, 147);
             this.RightDockSite.Name = "RightDockSite";
-            this.RightDockSite.Size = new System.Drawing.Size(0, 727);
+            this.RightDockSite.Size = new System.Drawing.Size(0, 713);
             this.RightDockSite.TabIndex = 3;
             this.RightDockSite.TabStop = false;
             // 
@@ -1555,7 +1665,7 @@ namespace VPS
             // 
             this.ToolbarBottomDockSite.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.ToolbarBottomDockSite.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ToolbarBottomDockSite.Location = new System.Drawing.Point(5, 874);
+            this.ToolbarBottomDockSite.Location = new System.Drawing.Point(5, 860);
             this.ToolbarBottomDockSite.Name = "ToolbarBottomDockSite";
             this.ToolbarBottomDockSite.Size = new System.Drawing.Size(1323, 0);
             this.ToolbarBottomDockSite.TabIndex = 9;
@@ -1567,7 +1677,7 @@ namespace VPS
             this.ToolbarLeftDockSite.Dock = System.Windows.Forms.DockStyle.Left;
             this.ToolbarLeftDockSite.Location = new System.Drawing.Point(5, 147);
             this.ToolbarLeftDockSite.Name = "ToolbarLeftDockSite";
-            this.ToolbarLeftDockSite.Size = new System.Drawing.Size(0, 727);
+            this.ToolbarLeftDockSite.Size = new System.Drawing.Size(0, 713);
             this.ToolbarLeftDockSite.TabIndex = 6;
             this.ToolbarLeftDockSite.TabStop = false;
             // 
@@ -1577,7 +1687,7 @@ namespace VPS
             this.ToolbarRightDockSite.Dock = System.Windows.Forms.DockStyle.Right;
             this.ToolbarRightDockSite.Location = new System.Drawing.Point(1328, 147);
             this.ToolbarRightDockSite.Name = "ToolbarRightDockSite";
-            this.ToolbarRightDockSite.Size = new System.Drawing.Size(0, 727);
+            this.ToolbarRightDockSite.Size = new System.Drawing.Size(0, 713);
             this.ToolbarRightDockSite.TabIndex = 7;
             this.ToolbarRightDockSite.TabStop = false;
             // 
@@ -1615,23 +1725,11 @@ namespace VPS
             this.styleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Office2007Blue;
             this.styleManager1.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(163)))), ((int)(((byte)(26))))));
             // 
-            // toolStripConnectionControl
-            // 
-            this.toolStripConnectionControl.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripConnectionControl.AutoSize = false;
-            this.toolStripConnectionControl.BackColor = System.Drawing.Color.Transparent;
-            this.toolStripConnectionControl.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("toolStripConnectionControl.BackgroundImage")));
-            this.toolStripConnectionControl.ForeColor = System.Drawing.Color.Black;
-            this.toolStripConnectionControl.Margin = new System.Windows.Forms.Padding(0);
-            this.toolStripConnectionControl.Name = "toolStripConnectionControl";
-            this.toolStripConnectionControl.Padding = new System.Windows.Forms.Padding(0, 0, 200, 38);
-            this.toolStripConnectionControl.Size = new System.Drawing.Size(200, 38);
-            // 
             // MainV2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1333, 876);
+            this.ClientSize = new System.Drawing.Size(1333, 862);
             this.Controls.Add(this.RibbonClientPanel);
             this.Controls.Add(this.TopDockSite);
             this.Controls.Add(this.BottomDockSite);
@@ -1666,12 +1764,10 @@ namespace VPS
             this.LeftDockSite.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.LeftBar)).EndInit();
             this.LeftBar.ResumeLayout(false);
-            this.MainLeftBarPanel.ResumeLayout(false);
-            this.MainLeftBarPanel.PerformLayout();
-            this.AutoGridParamPanel.ResumeLayout(false);
-            this.AutoGridParamPanel.PerformLayout();
             this.LayerReaderPanel.ResumeLayout(false);
             this.LayerReaderPanel.PerformLayout();
+            this.MainLeftBarPanel.ResumeLayout(false);
+            this.MainLeftBarPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1682,7 +1778,6 @@ namespace VPS
         public System.Windows.Forms.ToolStripButton MenuSimulation;
         public System.Windows.Forms.ToolStripButton MenuConfigTune;
         public System.Windows.Forms.ToolStripButton MenuConnect;
-        private Controls.ToolStripConnectionControl toolStripConnectionControl;
         public System.Windows.Forms.ToolStripButton MenuHelp;
         public System.Windows.Forms.ToolStripButton MenuArduPilot;
         private DevComponents.DotNetBar.RibbonControl MinMenuBar;

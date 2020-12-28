@@ -800,7 +800,7 @@ namespace GMap.NET.WindowsForms
                                   var lt = new LoadTask(tilePoint.PosXY, Core.Zoom);
                                   if (Core.FailedLoads.ContainsKey(lt))
                                   {
-                                      var ex = Core.FailedLoads[lt];
+                                       var ex = Core.FailedLoads[lt];
 #if !PocketPC
                                       g.FillRectangle(EmptytileBrush,
                                           new RectangleF(Core.tileRect.X, Core.tileRect.Y, Core.tileRect.Width,

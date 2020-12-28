@@ -5,7 +5,6 @@ using log4net;
 using VPS.ArduPilot;
 using VPS.Comms;
 using VPS.Controls;
-using VPS.GCSViews.ConfigurationView;
 using VPS.Log;
 using VPS.Maps;
 using VPS.Utilities;
@@ -109,9 +108,6 @@ namespace VPS
                 if (_comPort == value)
                     return;
                 _comPort = value;
-                _comPort.MavChanged -= instance.comPort_MavChanged;
-                _comPort.MavChanged += instance.comPort_MavChanged;
-                instance.comPort_MavChanged(null, null);
             }
         }
 
@@ -165,34 +161,6 @@ namespace VPS
         public static ISpeech speechEngine { get; set; }
 
         /// <summary>
-        /// joystick static class
-        /// </summary>
-        public static Joystick.Joystick joystick { get; set; }
-
-        /// <summary>
-        /// track last joystick packet sent. used to control rate
-        /// </summary>
-        DateTime lastjoystick = DateTime.Now;
-
-        /// <summary>
-        /// determine if we are running sitl
-        /// </summary>
-        public static bool sitl
-        {
-            get
-            {
-                if (VPS.GCSViews.SITL.SITLSEND == null) return false;
-                if (VPS.GCSViews.SITL.SITLSEND.Client.Connected) return true;
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// hud background image grabber from a video stream - not realy that efficent. ie no hardware overlays etc.
-        /// </summary>
-        public static WebCamService.Capture cam { get; set; }
-
-        /// <summary>
         /// controls the main serial reader thread
         /// </summary>
         bool serialThread = false;
@@ -234,20 +202,14 @@ namespace VPS
         /// declared here if i want a "single" instance of the form
         /// ie configuration gets reloaded on every click
         /// </summary>
-        public GCSViews.FlightData FlightData;
         CustomData.Layer.MemoryLayerCache layerCache;
         public GCSViews.FlightPlanner FlightPlanner;
+        public GCSViews.MapControl_2D MainMap;
         //GCSViews.SITL Simulation;
 
         private Form connectionStatsForm;
         private ConnectionStats _connectionStats;
 
-        /// <summary>
-        /// This 'Control' is the toolstrip control that holds the comport combo, baudrate combo etc
-        /// Otiginally seperate controls, each hosted in a toolstip sqaure, combined into this custom
-        /// control for layout reasons.
-        /// </summary>
-        public static ConnectionControl _connectionControl;
 
         public static bool TerminalTheming = true;
 
@@ -257,109 +219,15 @@ namespace VPS
             MenuHelp.Visible = DisplayConfiguration.displayHelp;
             VPS.Controls.BackstageView.BackstageView.Advanced = DisplayConfiguration.isAdvancedMode;
 
-
-            //Flight data page
-            if (MainV2.instance.FlightData != null)
-            {
-                var t = MainV2.instance.FlightData.tabControlactions;
-                if (DisplayConfiguration.displayQuickTab && !t.TabPages.Contains(FlightData.tabQuick))
-                {
-                    t.TabPages.Add(FlightData.tabQuick);
-                }
-                else if (!DisplayConfiguration.displayQuickTab && t.TabPages.Contains(FlightData.tabQuick))
-                {
-                    t.TabPages.Remove(FlightData.tabQuick);
-                }
-                if (DisplayConfiguration.displayPreFlightTab && !t.TabPages.Contains(FlightData.tabPagePreFlight))
-                {
-                    t.TabPages.Add(FlightData.tabPagePreFlight);
-                }
-                else if (!DisplayConfiguration.displayPreFlightTab && t.TabPages.Contains(FlightData.tabPagePreFlight))
-                {
-                    t.TabPages.Remove(FlightData.tabPagePreFlight);
-                }
-                if (DisplayConfiguration.displayAdvActionsTab && !t.TabPages.Contains(FlightData.tabActions))
-                {
-                    t.TabPages.Add(FlightData.tabActions);
-                }
-                else if (!DisplayConfiguration.displayAdvActionsTab && t.TabPages.Contains(FlightData.tabActions))
-                {
-                    t.TabPages.Remove(FlightData.tabActions);
-                }
-                if (DisplayConfiguration.displaySimpleActionsTab && !t.TabPages.Contains(FlightData.tabActionsSimple))
-                {
-                    t.TabPages.Add(FlightData.tabActionsSimple);
-                }
-                else if (!DisplayConfiguration.displaySimpleActionsTab && t.TabPages.Contains(FlightData.tabActionsSimple))
-                {
-                    t.TabPages.Remove(FlightData.tabActionsSimple);
-                }
-                if (DisplayConfiguration.displayGaugesTab && !t.TabPages.Contains(FlightData.tabGauges))
-                {
-                    t.TabPages.Add(FlightData.tabGauges);
-                }
-                else if (!DisplayConfiguration.displayGaugesTab && t.TabPages.Contains(FlightData.tabGauges))
-                {
-                    t.TabPages.Remove(FlightData.tabGauges);
-                }
-                if (DisplayConfiguration.displayStatusTab && !t.TabPages.Contains(FlightData.tabStatus))
-                {
-                    t.TabPages.Add(FlightData.tabStatus);
-                }
-                else if (!DisplayConfiguration.displayStatusTab && t.TabPages.Contains(FlightData.tabStatus))
-                {
-                    t.TabPages.Remove(FlightData.tabStatus);
-                }
-                if (DisplayConfiguration.displayServoTab && !t.TabPages.Contains(FlightData.tabServo))
-                {
-                    t.TabPages.Add(FlightData.tabServo);
-                }
-                else if (!DisplayConfiguration.displayServoTab && t.TabPages.Contains(FlightData.tabServo))
-                {
-                    t.TabPages.Remove(FlightData.tabServo);
-                }
-                if (DisplayConfiguration.displayScriptsTab && !t.TabPages.Contains(FlightData.tabScripts))
-                {
-                    t.TabPages.Add(FlightData.tabScripts);
-                }
-                else if (!DisplayConfiguration.displayScriptsTab && t.TabPages.Contains(FlightData.tabScripts))
-                {
-                    t.TabPages.Remove(FlightData.tabScripts);
-                }
-                if (DisplayConfiguration.displayTelemetryTab && !t.TabPages.Contains(FlightData.tabTLogs))
-                {
-                    t.TabPages.Add(FlightData.tabTLogs);
-                }
-                else if (!DisplayConfiguration.displayTelemetryTab && t.TabPages.Contains(FlightData.tabTLogs))
-                {
-                    t.TabPages.Remove(FlightData.tabTLogs);
-                }
-                if (DisplayConfiguration.displayDataflashTab && !t.TabPages.Contains(FlightData.tablogbrowse))
-                {
-                    t.TabPages.Add(FlightData.tablogbrowse);
-                }
-                else if (!DisplayConfiguration.displayDataflashTab && t.TabPages.Contains(FlightData.tablogbrowse))
-                {
-                    t.TabPages.Remove(FlightData.tablogbrowse);
-                }
-                if (DisplayConfiguration.displayMessagesTab && !t.TabPages.Contains(FlightData.tabPagemessages))
-                {
-                    t.TabPages.Add(FlightData.tabPagemessages);
-                }
-                else if (!DisplayConfiguration.displayMessagesTab && t.TabPages.Contains(FlightData.tabPagemessages))
-                {
-                    t.TabPages.Remove(FlightData.tabPagemessages);
-                }
-                t.SelectedIndex = 0;
-
-                MainV2.instance.FlightData.loadTabControlActions();
-            }
-
             if (MainV2.instance.FlightPlanner != null)
             {
                 //hide menu items 
                 MainV2.instance.FlightPlanner.updateDisplayView();
             }
+            //if ( )
+            //{
+
+            //}
         }
 
 
@@ -433,13 +301,6 @@ namespace VPS
             comPort.BaseStream = new SerialPort();
             comPort.BaseStream.BaudRate = 115200;
 
-            _connectionControl = toolStripConnectionControl.ConnectionControl;
-            _connectionControl.CMB_baudrate.TextChanged += this.CMB_baudrate_TextChanged;
-            _connectionControl.CMB_serialport.SelectedIndexChanged += this.CMB_serialport_SelectedIndexChanged;
-            _connectionControl.CMB_serialport.Click += this.CMB_serialport_Click;
-            _connectionControl.cmb_sysid.Click += cmb_sysid_Click;
-
-            _connectionControl.ShowLinkStats += (sender, e) => ShowConnectionStatsForm();
             srtm.datadirectory = Settings.GetDataDirectory() +
                                  "srtm";
 
@@ -464,44 +325,10 @@ namespace VPS
             // proxy loader - dll load now instead of on config form load
             new Transition(new TransitionType_EaseInEaseOut(2000));
 
-            PopulateSerialportList();
-            if (_connectionControl.CMB_serialport.Items.Count > 0)
-            {
-                _connectionControl.CMB_baudrate.SelectedIndex = 8;
-                _connectionControl.CMB_serialport.SelectedIndex = 0;
-            }
             // ** Done
 
             splash?.Refresh();
             Application.DoEvents();
-
-            // load last saved connection settings
-            string temp = Settings.Instance.ComPort;
-            if (!string.IsNullOrEmpty(temp))
-            {
-                _connectionControl.CMB_serialport.SelectedIndex = _connectionControl.CMB_serialport.FindString(temp);
-                if (_connectionControl.CMB_serialport.SelectedIndex == -1)
-                {
-                    _connectionControl.CMB_serialport.Text = temp; // allows ports that dont exist - yet
-                }
-                comPort.BaseStream.PortName = temp;
-                comPortName = temp;
-            }
-            string temp2 = Settings.Instance.BaudRate;
-            if (!string.IsNullOrEmpty(temp2))
-            {
-                var idx = _connectionControl.CMB_baudrate.FindString(temp2);
-                if (idx == -1)
-                {
-                    _connectionControl.CMB_baudrate.Text = temp2;
-                }
-                else
-                {
-                    _connectionControl.CMB_baudrate.SelectedIndex = idx;
-                }
-
-                comPortBaud = int.Parse(temp2);
-            }
 
             VPS.Utilities.Tracking.cid = new Guid(Settings.Instance["guid"].ToString());
 
@@ -543,9 +370,9 @@ namespace VPS
 
             try
             {
-                log.Info("Create FlightData");
-                FlightData = new GCSViews.FlightData();
-                FlightData.Width = MyView.Width;
+                log.Info("Create 2D Map");
+                MainMap = new GCSViews.MapControl_2D();
+                MainMap.Width = MyView.Width;
 
                 log.Info("Create FlightPlanner");
                 FlightPlanner = new GCSViews.FlightPlanner();
@@ -636,12 +463,6 @@ namespace VPS
                 log.Error(ex);
             }
 
-#if !NETSTANDARD2_0
-#if !NETCOREAPP2_0
-            Microsoft.Win32.SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
-#endif
-#endif
-
             LoadMarkerStyle();
 
             // make sure new enough .net framework is installed
@@ -668,12 +489,9 @@ namespace VPS
 
             Comports.Add(comPort);
 
-            MainV2.comPort.MavChanged += comPort_MavChanged;
-
             CustomData.WP.WPGlobalData.instance.historyChange += this.historyChange;
             SaveConfig();
         }
-
 
         #region 加载参数
         void LoadPlannedHomeLocation()
@@ -681,7 +499,7 @@ namespace VPS
             log.Info("加载PlannedHomeLocation");
             try
             {
-                CustomData.WP.Position home = new CustomData.WP.Position();
+                CustomData.WP.VPSPosition home = new CustomData.WP.VPSPosition();
                 home.Command = VPS.CustomData.WP.WPCommands.HomeCommand;
                 if (Settings.Instance["Main_DefaultHomeLat"] != null)
                     home.Lat = Settings.Instance.GetDouble("Main_DefaultHomeLat");
@@ -856,67 +674,6 @@ namespace VPS
         }
         #endregion
 
-        void cmb_sysid_Click(object sender, EventArgs e)
-        {
-            MainV2._connectionControl.UpdateSysIDS();
-        }
-
-        void comPort_MavChanged(object sender, EventArgs e)
-        {
-            log.Info("Mav Changed " + MainV2.comPort.MAV.sysid);
-
-            HUD.Custom.src = MainV2.comPort.MAV.cs;
-
-            CustomWarning.defaultsrc = MainV2.comPort.MAV.cs;
-
-            VPS.Controls.PreFlight.CheckListItem.defaultsrc = MainV2.comPort.MAV.cs;
-
-            // when uploading a firmware we dont want to reload this screen.
-            if (instance.MyView.current.Control != null && instance.MyView.current.Control.GetType() == typeof(GCSViews.InitialSetup))
-            {
-                var page = ((GCSViews.InitialSetup)instance.MyView.current.Control).backstageView.SelectedPage;
-                if (page != null && page.Text.Contains("Install Firmware"))
-                {
-                    return;
-                }
-            }
-
-            if (this.InvokeRequired)
-            {
-                this.BeginInvoke((MethodInvoker)delegate
-               {
-                   //enable the payload control page if a mavlink gimbal is detected
-                   if (instance.FlightData != null)
-                   {
-                       instance.FlightData.updatePayloadTabVisible();
-                   }
-
-                   instance.MyView.Reload();
-               });
-            }
-            else
-            {
-                //enable the payload control page if a mavlink gimbal is detected
-                if (instance.FlightData != null)
-                {
-                    instance.FlightData.updatePayloadTabVisible();
-                }
-
-                instance.MyView.Reload();
-            }
-        }
-#if !NETSTANDARD2_0
-#if !NETCOREAPP2_0
-        void SystemEvents_PowerModeChanged(object sender, Microsoft.Win32.PowerModeChangedEventArgs e)
-        {
-            // try prevent crash on resume
-            if (e.Mode == Microsoft.Win32.PowerModes.Suspend)
-            {
-                doDisconnect(MainV2.comPort);
-            }
-        }
-#endif
-#endif
         private void BGLoadAirports(object nothing)
         {
             // read airport list
@@ -1039,26 +796,6 @@ namespace VPS
             ThemeManager.ApplyThemeTo(this.connectionStatsForm);
         }
 
-        private void CMB_serialport_Click(object sender, EventArgs e)
-        {
-            string oldport = _connectionControl.CMB_serialport.Text;
-            PopulateSerialportList();
-            if (_connectionControl.CMB_serialport.Items.Contains(oldport))
-                _connectionControl.CMB_serialport.Text = oldport;
-        }
-
-        private void PopulateSerialportList()
-        {
-            _connectionControl.CMB_serialport.Items.Clear();
-            _connectionControl.CMB_serialport.Items.Add("AUTO");
-            _connectionControl.CMB_serialport.Items.AddRange(SerialPort.GetPortNames());
-            _connectionControl.CMB_serialport.Items.Add("TCP");
-            _connectionControl.CMB_serialport.Items.Add("UDP");
-            _connectionControl.CMB_serialport.Items.Add("UDPCl");
-            _connectionControl.CMB_serialport.Items.Add("WS");
-        }
-
-
         public void MenuSetup_Click(object sender, EventArgs e)
         {
             if (Settings.Instance.GetBoolean("password_protect") == false)
@@ -1123,571 +860,6 @@ namespace VPS
             MyView.ShowScreen("Terminal");
         }
 
-        public void doDisconnect(MAVLinkInterface comPort)
-        {
-            log.Info("正在断开连接");
-            try
-            {
-                if (speechEngine != null) // cancel all pending speech
-                    speechEngine.SpeakAsyncCancelAll();
-
-                comPort.BaseStream.DtrEnable = false;
-                comPort.Close();
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-
-            // now that we have closed the connection, cancel the connection stats
-            // so that the 'time connected' etc does not grow, but the user can still
-            // look at the now frozen stats on the still open form
-            try
-            {
-                // if terminal is used, then closed using this button.... exception
-                if (this.connectionStatsForm != null)
-                    ((ConnectionStats)this.connectionStatsForm.Controls[0]).StopUpdates();
-            }
-            catch
-            {
-            }
-
-            // refresh config window if needed
-            if (MyView.current != null)
-            {
-                if (MyView.current.Name == "HWConfig")
-                    MyView.ShowScreen("HWConfig");
-                if (MyView.current.Name == "SWConfig")
-                    MyView.ShowScreen("SWConfig");
-            }
-
-            try
-            {
-                System.Threading.ThreadPool.QueueUserWorkItem((WaitCallback)delegate
-               {
-                   try
-                   {
-                       VPS.Log.LogSort.SortLogs(Directory.GetFiles(Settings.Instance.LogDir, "*.tlog"));
-                   }
-                   catch
-                   {
-                   }
-               }
-                    );
-            }
-            catch
-            {
-            }
-
-            this.MenuConnect.Image = global::VPS.Properties.Resources.light_connect_icon;
-        }
-
-        public void doConnect(MAVLinkInterface comPort, string portname, string baud, bool getparams = true)
-        {
-            bool skipconnectcheck = false;
-            log.Info("连接到 " + portname + " " + baud);
-            switch (portname)
-            {
-                case "preset":
-                    skipconnectcheck = true;
-                    if (comPort.BaseStream is TcpSerial)
-                        _connectionControl.CMB_serialport.Text = "TCP";
-                    if (comPort.BaseStream is UdpSerial)
-                        _connectionControl.CMB_serialport.Text = "UDP";
-                    if (comPort.BaseStream is UdpSerialConnect)
-                        _connectionControl.CMB_serialport.Text = "UDPCl";
-                    if (comPort.BaseStream is SerialPort)
-                    {
-                        _connectionControl.CMB_serialport.Text = comPort.BaseStream.PortName;
-                        _connectionControl.CMB_baudrate.Text = comPort.BaseStream.BaudRate.ToString();
-                    }
-                    break;
-                case "TCP":
-                    comPort.BaseStream = new TcpSerial();
-                    _connectionControl.CMB_serialport.Text = "TCP";
-                    break;
-                case "UDP":
-                    comPort.BaseStream = new UdpSerial();
-                    _connectionControl.CMB_serialport.Text = "UDP";
-                    break;
-                case "WS":
-                    comPort.BaseStream = new WebSocket();
-                    _connectionControl.CMB_serialport.Text = "WS";
-                    break;
-                case "UDPCl":
-                    comPort.BaseStream = new UdpSerialConnect();
-                    _connectionControl.CMB_serialport.Text = "UDPCl";
-                    break;
-                case "AUTO":
-                    // do autoscan
-                    Comms.CommsSerialScan.Scan(true);
-                    DateTime deadline = DateTime.Now.AddSeconds(50);
-                    while (Comms.CommsSerialScan.foundport == false || Comms.CommsSerialScan.run == 1)
-                    {
-                        System.Threading.Thread.Sleep(500);
-                        Console.WriteLine("wait for port " + CommsSerialScan.foundport + " or " + CommsSerialScan.run);
-                        if (DateTime.Now > deadline)
-                        {
-                            DevComponents.DotNetBar.MessageBoxEx.Show(Strings.Timeout);
-                            _connectionControl.IsConnected(false);
-                            return;
-                        }
-                    }
-                    return;
-                default:
-                    comPort.BaseStream = new SerialPort();
-                    break;
-            }
-
-            // Tell the connection UI that we are now connected.
-            _connectionControl.IsConnected(true);
-
-            // Here we want to reset the connection stats counter etc.
-            this.ResetConnectionStats();
-
-            comPort.MAV.cs.ResetInternals();
-
-            //cleanup any log being played
-            comPort.logreadmode = false;
-            if (comPort.logplaybackfile != null)
-                comPort.logplaybackfile.Close();
-            comPort.logplaybackfile = null;
-
-            try
-            {
-                log.Info("Set Portname");
-                // set port, then options
-                if (portname.ToLower() != "preset")
-                    comPort.BaseStream.PortName = portname;
-
-                log.Info("Set Baudrate");
-                try
-                {
-                    if (baud != "" && baud != "0")
-                        comPort.BaseStream.BaudRate = int.Parse(baud);
-                }
-                catch (Exception exp)
-                {
-                    log.Error(exp);
-                }
-
-                // prevent serialreader from doing anything
-                comPort.giveComport = true;
-
-                log.Info("About to do dtr if needed");
-                // reset on connect logic.
-                if (Settings.Instance.GetBoolean("CHK_resetapmonconnect") == true)
-                {
-                    log.Info("set dtr rts to false");
-                    comPort.BaseStream.DtrEnable = false;
-                    comPort.BaseStream.RtsEnable = false;
-
-                    comPort.BaseStream.toggleDTR();
-                }
-
-                comPort.giveComport = false;
-
-                // setup to record new logs
-                try
-                {
-                    Directory.CreateDirectory(Settings.Instance.LogDir);
-                    lock (this)
-                    {
-                        // create log names
-                        var dt = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
-                        var tlog = Settings.Instance.LogDir + Path.DirectorySeparatorChar +
-                                   dt + ".tlog";
-                        var rlog = Settings.Instance.LogDir + Path.DirectorySeparatorChar +
-                                   dt + ".rlog";
-
-                        // check if this logname already exists
-                        int a = 1;
-                        while (File.Exists(tlog))
-                        {
-                            Thread.Sleep(1000);
-                            // create new names with a as an index
-                            dt = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + "-" + a.ToString();
-                            tlog = Settings.Instance.LogDir + Path.DirectorySeparatorChar +
-                                   dt + ".tlog";
-                            rlog = Settings.Instance.LogDir + Path.DirectorySeparatorChar +
-                                   dt + ".rlog";
-                        }
-
-                        //open the logs for writing
-                        comPort.logfile =
-                            new BufferedStream(File.Open(tlog, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None));
-                        comPort.rawlogfile =
-                            new BufferedStream(File.Open(rlog, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None));
-                        log.Info("creating logfile " + dt + ".tlog");
-                    }
-                }
-                catch (Exception exp2)
-                {
-                    log.Error(exp2);
-                    DevComponents.DotNetBar.MessageBoxEx.Show(Strings.Failclog);
-                } // soft fail
-
-                // reset connect time - for timeout functions
-                connecttime = DateTime.Now;
-
-                // do the connect
-                comPort.Open(false, skipconnectcheck);
-
-                if (!comPort.BaseStream.IsOpen)
-                {
-                    log.Info("comport is closed. existing connect");
-                    try
-                    {
-                        _connectionControl.IsConnected(false);
-                        UpdateConnectIcon();
-                        comPort.Close();
-                    }
-                    catch
-                    {
-                    }
-                    return;
-                }
-
-                if (getparams)
-                {
-                    var ftpfile = false;
-                    if ((MainV2.comPort.MAV.cs.capabilities & (int)MAVLink.MAV_PROTOCOL_CAPABILITY.FTP) > 0)
-                    {
-                        var prd = new ProgressReporterDialogue();
-                        prd.DoWork += (IProgressReporterDialogue sender) =>
-                        {
-                            sender.UpdateProgressAndStatus(-1, "Checking for Param MAVFTP");
-                            var cancel = new CancellationTokenSource();
-                            var paramfileTask = Task.Run<MemoryStream>(() =>
-                            {
-                                return new MAVFtp(comPort, comPort.MAV.sysid, comPort.MAV.compid).GetFile(
-                                    "@PARAM/param.pck", cancel, false, 110);
-                            });
-                            while (!paramfileTask.IsCompleted)
-                            {
-                                if (sender.doWorkArgs.CancelRequested)
-                                {
-                                    cancel.Cancel();
-                                    sender.doWorkArgs.CancelAcknowledged = true;
-                                }
-                            }
-
-                            var paramfile = paramfileTask.Result;
-                            if (paramfile != null && paramfile.Length > 0)
-                            {
-                                var mavlist = parampck.unpack(paramfile.GetBuffer());
-                                if (mavlist != null)
-                                {
-                                    comPort.MAVlist[comPort.MAV.sysid, comPort.MAV.compid].param.Clear();
-                                    comPort.MAVlist[comPort.MAV.sysid, comPort.MAV.compid].param.TotalReported =
-                                        mavlist.Count;
-                                    comPort.MAVlist[comPort.MAV.sysid, comPort.MAV.compid].param.AddRange(mavlist);
-                                    var gen = new MAVLink.MavlinkParse();
-                                    mavlist.ForEach(a =>
-                                    {
-                                        comPort.MAVlist[comPort.MAV.sysid, comPort.MAV.compid].param_types[a.Name] =
-                                            a.Type;
-                                        MainV2.comPort.SaveToTlog(gen.GenerateMAVLinkPacket10(
-                                            MAVLink.MAVLINK_MSG_ID.PARAM_VALUE,
-                                            new MAVLink.mavlink_param_value_t(a.float_value, (ushort)mavlist.Count, 0,
-                                                a.Name.MakeBytesSize(16), (byte)a.Type)));
-                                    });
-
-                                    ftpfile = true;
-                                }
-                            }
-                        };
-
-                        prd.RunBackgroundOperationAsync();
-                    }
-
-                    if (!ftpfile)
-                    {
-                        if (Settings.Instance.GetBoolean("Params_BG", false))
-                            Task.Run(() => { comPort.getParamList(comPort.MAV.sysid, comPort.MAV.compid); });
-                        else
-                            comPort.getParamList();
-                    }
-                }
-
-                _connectionControl.UpdateSysIDS();
-
-                // check for newer firmware
-                var softwares = Firmware.LoadSoftwares();
-
-                if (softwares.Count > 0)
-                {
-                    try
-                    {
-                        string[] fields1 = comPort.MAV.VersionString.Split(' ');
-
-                        foreach (Firmware.software item in softwares)
-                        {
-                            string[] fields2 = item.name.Split(' ');
-
-                            // check primare firmware type. ie arudplane, arducopter
-                            if (fields1[0] == fields2[0])
-                            {
-                                Version ver1 = VersionDetection.GetVersion(comPort.MAV.VersionString);
-                                Version ver2 = VersionDetection.GetVersion(item.name);
-
-                                if (ver2 > ver1)
-                                {
-                                    Common.MessageShowAgain(Strings.NewFirmware + "-" + item.name,
-                                        Strings.NewFirmwareA + item.name + Strings.Pleaseup +
-                                        "[link;https://discuss.ardupilot.org/tags/stable-release;Release Notes]");
-                                    break;
-                                }
-
-                                // check the first hit only
-                                break;
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                    }
-                }
-
-                FlightData.CheckBatteryShow();
-
-                // save the baudrate for this port
-                Settings.Instance[_connectionControl.CMB_serialport.Text + "_BAUD"] = _connectionControl.CMB_baudrate.Text;
-
-                //this.Text = titlebar + " " + comPort.MAV.VersionString;
-
-                // refresh config window if needed
-                if (MyView.current != null)
-                {
-                    if (MyView.current.Name == "HWConfig")
-                        MyView.ShowScreen("HWConfig");
-                    if (MyView.current.Name == "SWConfig")
-                        MyView.ShowScreen("SWConfig");
-                }
-
-                // load wps on connect option.
-                if (Settings.Instance.GetBoolean("loadwpsonconnect") == true)
-                {
-                    // only do it if we are connected.
-                    if (comPort.BaseStream.IsOpen)
-                    {
-                        FlightPlannerShow();
-                    }
-                }
-
-                // get any rallypoints
-                if (MainV2.comPort.MAV.param.ContainsKey("RALLY_TOTAL") &&
-                    int.Parse(MainV2.comPort.MAV.param["RALLY_TOTAL"].ToString()) > 0)
-                {
-                    try
-                    {
-                        FlightPlanner.getRallyPointsToolStripMenuItem_Click(null, null);
-
-                        double maxdist = 0;
-
-                        foreach (var rally in comPort.MAV.rallypoints)
-                        {
-                            foreach (var rally1 in comPort.MAV.rallypoints)
-                            {
-                                var pnt1 = new PointLatLngAlt(rally.Value.y / 10000000.0f, rally.Value.x / 10000000.0f);
-                                var pnt2 = new PointLatLngAlt(rally1.Value.y / 10000000.0f,
-                                    rally1.Value.x / 10000000.0f);
-
-                                var dist = pnt1.GetDistance(pnt2);
-
-                                maxdist = Math.Max(maxdist, dist);
-                            }
-                        }
-
-                        if (comPort.MAV.param.ContainsKey("RALLY_LIMIT_KM") &&
-                            (maxdist / 1000.0) > (float)comPort.MAV.param["RALLY_LIMIT_KM"])
-                        {
-                            DevComponents.DotNetBar.MessageBoxEx.Show(Strings.Warningrallypointdistance + " " +
-                                                  (maxdist / 1000.0).ToString("0.00") + " > " +
-                                                  (float)comPort.MAV.param["RALLY_LIMIT_KM"]);
-                        }
-                    }
-                    catch (Exception ex) { log.Warn(ex); }
-                }
-
-                // get any fences
-                if (MainV2.comPort.MAV.param.ContainsKey("FENCE_TOTAL") &&
-                    int.Parse(MainV2.comPort.MAV.param["FENCE_TOTAL"].ToString()) > 1 &&
-                    MainV2.comPort.MAV.param.ContainsKey("FENCE_ACTION"))
-                {
-                    try
-                    {
-                        FlightPlanner.GeoFencedownloadToolStripMenuItem_Click(null, null);
-                    }
-                    catch (Exception ex) { log.Warn(ex); }
-                }
-                //Add HUD custom items source 
-                HUD.Custom.src = MainV2.comPort.MAV.cs;
-
-                // set connected icon
-            }
-            catch (Exception ex)
-            {
-                log.Warn(ex);
-                try
-                {
-                    _connectionControl.IsConnected(false);
-                    UpdateConnectIcon();
-                    comPort.Close();
-                }
-                catch (Exception ex2)
-                {
-                    log.Warn(ex2);
-                }
-                DevComponents.DotNetBar.MessageBoxEx.Show("Can not establish a connection\n\n" + ex.Message);
-                return;
-            }
-        }
-
-        private void MenuConnect_Click(object sender, EventArgs e)
-        {
-            Connect();
-        }
-
-        private void Connect()
-        {
-            comPort.giveComport = false;
-
-            log.Info("MenuConnect Start");
-
-            // sanity check
-            if (comPort.BaseStream.IsOpen && comPort.MAV.cs.groundspeed > 4)
-            {
-                if (DialogResult.No ==
-                    DevComponents.DotNetBar.MessageBoxEx.Show(Strings.Stillmoving, Strings.Disconnect, MessageBoxButtons.YesNo))
-                {
-                    return;
-                }
-            }
-
-            try
-            {
-                log.Info("Cleanup last logfiles");
-                // cleanup from any previous sessions
-                if (comPort.logfile != null)
-                    comPort.logfile.Close();
-
-                if (comPort.rawlogfile != null)
-                    comPort.rawlogfile.Close();
-            }
-            catch (Exception ex)
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.ErrorClosingLogFile + ex.Message, Strings.ERROR);
-            }
-
-            comPort.logfile = null;
-            comPort.rawlogfile = null;
-
-            // decide if this is a connect or disconnect
-            if (comPort.BaseStream.IsOpen)
-            {
-                doDisconnect(comPort);
-            }
-            else
-            {
-                doConnect(comPort, _connectionControl.CMB_serialport.Text, _connectionControl.CMB_baudrate.Text);
-            }
-
-            _connectionControl.UpdateSysIDS();
-
-            if (comPort.BaseStream.IsOpen)
-                loadph_serial();
-        }
-
-        void loadph_serial()
-        {
-            try
-            {
-                if (comPort.MAV.SerialString == "")
-                    return;
-
-                if (comPort.MAV.SerialString.Contains("CubeBlack") && !comPort.MAV.SerialString.Contains("CubeBlack+") &&
-                    comPort.MAV.param.ContainsKey("INS_ACC3_ID") && comPort.MAV.param["INS_ACC3_ID"].Value == 0 &&
-                    comPort.MAV.param.ContainsKey("INS_GYR3_ID") && comPort.MAV.param["INS_GYR3_ID"].Value == 0 &&
-                    comPort.MAV.param.ContainsKey("INS_ENABLE_MASK") && comPort.MAV.param["INS_ENABLE_MASK"].Value >= 7)
-                {
-                    VPS.Controls.SB.Show("Param Scan");
-                }
-            }
-            catch { }
-
-            try
-            {
-                if (comPort.MAV.SerialString == "")
-                    return;
-
-                // brd type should be 3
-                // devids show which sensor is not detected
-                // baro does not list a devid
-
-                //devop read spi lsm9ds0_ext_am 0 0 0x8f 1
-                if (comPort.MAV.SerialString.Contains("CubeBlack") && !comPort.MAV.SerialString.Contains("CubeBlack+"))
-                {
-                    Task.Run(() =>
-                        {
-                            bool bad1 = false;
-                            byte[] data = new byte[0];
-
-                            comPort.device_op(comPort.MAV.sysid, comPort.MAV.compid, out data,
-                                MAVLink.DEVICE_OP_BUSTYPE.SPI,
-                                "lsm9ds0_ext_g", 0, 0, 0x8f, 1);
-                            if (data.Length != 0 && (data[0] != 0xd4 && data[0] != 0xd7))
-                                bad1 = true;
-
-                            comPort.device_op(comPort.MAV.sysid, comPort.MAV.compid, out data,
-                                MAVLink.DEVICE_OP_BUSTYPE.SPI,
-                                "lsm9ds0_ext_am", 0, 0, 0x8f, 1);
-                            if (data.Length != 0 && data[0] != 0x49)
-                                bad1 = true;
-
-                            if (bad1)
-                                this.BeginInvoke(method: (Action)delegate
-                               {
-                                   VPS.Controls.SB.Show("SPI Scan");
-                               });
-                        });
-                }
-
-            }
-            catch { }
-        }
-
-        private void CMB_serialport_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (_connectionControl.CMB_serialport.SelectedItem == _connectionControl.CMB_serialport.Text)
-                return;
-
-            comPortName = _connectionControl.CMB_serialport.Text;
-            if (comPortName == "UDP" || comPortName == "UDPCl" || comPortName == "TCP" || comPortName == "AUTO")
-            {
-                _connectionControl.CMB_baudrate.Enabled = false;
-            }
-            else
-            {
-                _connectionControl.CMB_baudrate.Enabled = true;
-            }
-
-            try
-            {
-                // check for saved baud rate and restore
-                if (Settings.Instance[_connectionControl.CMB_serialport.Text + "_BAUD"] != null)
-                {
-                    _connectionControl.CMB_baudrate.Text =
-                        Settings.Instance[_connectionControl.CMB_serialport.Text + "_BAUD"];
-                }
-            }
-            catch
-            {
-            }
-        }
-
-
         /// <summary>
         /// overriding the OnCLosing is a bit cleaner than handling the event, since it 
         /// is this object.
@@ -1705,8 +877,6 @@ namespace VPS
             // speed up tile saving on exit
             GMap.NET.GMaps.Instance.CacheOnIdleRead = false;
             GMap.NET.GMaps.Instance.BoostCacheEngine = true;
-
-
 
             Settings.Instance["MainHeight"] = this.Height.ToString();
             Settings.Instance["MainWidth"] = this.Width.ToString();
@@ -1804,8 +974,6 @@ namespace VPS
 
             log.Info("closing httpthread");
 
-            // if we are waiting on a socket we need to force an abort
-            httpserver.Stop();
 
             log.Info("sorting tlogs");
             try
@@ -1831,14 +999,6 @@ namespace VPS
             // close all tabs
             MyView.Dispose();
 
-            log.Info("closing fd");
-            try
-            {
-                FlightData.Dispose();
-            }
-            catch
-            {
-            }
             log.Info("closing fp");
             try
             {
@@ -1912,13 +1072,7 @@ namespace VPS
 
             Console.WriteLine("MainV2_FormClosed");
 
-            if (joystick != null)
-            {
-                while (!joysendThreadExited)
-                    Thread.Sleep(10);
-
-                joystick.Dispose(); //proper clean up of joystick.
-            }
+            //处理其他线程未完成项目
         }
 
         private void LoadConfig()
@@ -1928,8 +1082,6 @@ namespace VPS
                 log.Info("Loading config");
 
                 Settings.Instance.Load();
-
-                comPortName = Settings.Instance.ComPort;
             }
             catch (Exception ex)
             {
@@ -1942,10 +1094,6 @@ namespace VPS
             try
             {
                 log.Info("Saving config");
-                Settings.Instance.ComPort = comPortName;
-
-                if (_connectionControl != null)
-                    Settings.Instance.BaudRate = _connectionControl.CMB_baudrate.Text;
 
                 Settings.Instance.APMFirmware = MainV2.comPort.MAV.cs.firmware.ToString();
 
@@ -1962,221 +1110,6 @@ namespace VPS
         /// </summary>
         volatile private bool joysendThreadExited = true;
 
-        /// <summary>
-        /// thread used to send joystick packets to the MAV
-        /// </summary>
-        private void joysticksend()
-        {
-            float rate = 50; // 1000 / 50 = 20 hz
-            int count = 0;
-
-            DateTime lastratechange = DateTime.Now;
-
-            joystickthreadrun = true;
-
-            while (joystickthreadrun)
-            {
-                joysendThreadExited = false;
-                //so we know this thread is stil alive.           
-                try
-                {
-                    if (MONO)
-                    {
-                        log.Error("Mono: closing joystick thread");
-                        break;
-                    }
-
-                    if (!MONO)
-                    {
-                        //joystick stuff
-
-                        if (joystick != null && joystick.enabled)
-                        {
-                            if (!joystick.manual_control)
-                            {
-                                MAVLink.mavlink_rc_channels_override_t rc = new MAVLink.mavlink_rc_channels_override_t();
-
-                                rc.target_component = comPort.MAV.compid;
-                                rc.target_system = comPort.MAV.sysid;
-
-                                if (joystick.getJoystickAxis(1) == Joystick.Joystick.joystickaxis.None) rc.chan1_raw = ushort.MaxValue;
-                                if (joystick.getJoystickAxis(2) == Joystick.Joystick.joystickaxis.None) rc.chan2_raw = ushort.MaxValue;
-                                if (joystick.getJoystickAxis(3) == Joystick.Joystick.joystickaxis.None) rc.chan3_raw = ushort.MaxValue;
-                                if (joystick.getJoystickAxis(4) == Joystick.Joystick.joystickaxis.None) rc.chan4_raw = ushort.MaxValue;
-                                if (joystick.getJoystickAxis(5) == Joystick.Joystick.joystickaxis.None) rc.chan5_raw = ushort.MaxValue;
-                                if (joystick.getJoystickAxis(6) == Joystick.Joystick.joystickaxis.None) rc.chan6_raw = ushort.MaxValue;
-                                if (joystick.getJoystickAxis(7) == Joystick.Joystick.joystickaxis.None) rc.chan7_raw = ushort.MaxValue;
-                                if (joystick.getJoystickAxis(8) == Joystick.Joystick.joystickaxis.None) rc.chan8_raw = ushort.MaxValue;
-                                if (joystick.getJoystickAxis(9) == Joystick.Joystick.joystickaxis.None) rc.chan9_raw = (ushort)0;
-                                if (joystick.getJoystickAxis(10) == Joystick.Joystick.joystickaxis.None) rc.chan10_raw = (ushort)0;
-                                if (joystick.getJoystickAxis(11) == Joystick.Joystick.joystickaxis.None) rc.chan11_raw = (ushort)0;
-                                if (joystick.getJoystickAxis(12) == Joystick.Joystick.joystickaxis.None) rc.chan12_raw = (ushort)0;
-                                if (joystick.getJoystickAxis(13) == Joystick.Joystick.joystickaxis.None) rc.chan13_raw = (ushort)0;
-                                if (joystick.getJoystickAxis(14) == Joystick.Joystick.joystickaxis.None) rc.chan14_raw = (ushort)0;
-                                if (joystick.getJoystickAxis(15) == Joystick.Joystick.joystickaxis.None) rc.chan15_raw = (ushort)0;
-                                if (joystick.getJoystickAxis(16) == Joystick.Joystick.joystickaxis.None) rc.chan16_raw = (ushort)0;
-                                if (joystick.getJoystickAxis(17) == Joystick.Joystick.joystickaxis.None) rc.chan17_raw = (ushort)0;
-                                if (joystick.getJoystickAxis(18) == Joystick.Joystick.joystickaxis.None) rc.chan18_raw = (ushort)0;
-
-                                if (joystick.getJoystickAxis(1) != Joystick.Joystick.joystickaxis.None) rc.chan1_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech1;
-                                if (joystick.getJoystickAxis(2) != Joystick.Joystick.joystickaxis.None) rc.chan2_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech2;
-                                if (joystick.getJoystickAxis(3) != Joystick.Joystick.joystickaxis.None) rc.chan3_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech3;
-                                if (joystick.getJoystickAxis(4) != Joystick.Joystick.joystickaxis.None) rc.chan4_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech4;
-                                if (joystick.getJoystickAxis(5) != Joystick.Joystick.joystickaxis.None) rc.chan5_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech5;
-                                if (joystick.getJoystickAxis(6) != Joystick.Joystick.joystickaxis.None) rc.chan6_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech6;
-                                if (joystick.getJoystickAxis(7) != Joystick.Joystick.joystickaxis.None) rc.chan7_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech7;
-                                if (joystick.getJoystickAxis(8) != Joystick.Joystick.joystickaxis.None) rc.chan8_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech8;
-                                if (joystick.getJoystickAxis(9) != Joystick.Joystick.joystickaxis.None) rc.chan9_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech9;
-                                if (joystick.getJoystickAxis(10) != Joystick.Joystick.joystickaxis.None) rc.chan10_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech10;
-                                if (joystick.getJoystickAxis(11) != Joystick.Joystick.joystickaxis.None) rc.chan11_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech11;
-                                if (joystick.getJoystickAxis(12) != Joystick.Joystick.joystickaxis.None) rc.chan12_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech12;
-                                if (joystick.getJoystickAxis(13) != Joystick.Joystick.joystickaxis.None) rc.chan13_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech13;
-                                if (joystick.getJoystickAxis(14) != Joystick.Joystick.joystickaxis.None) rc.chan14_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech14;
-                                if (joystick.getJoystickAxis(15) != Joystick.Joystick.joystickaxis.None) rc.chan15_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech15;
-                                if (joystick.getJoystickAxis(16) != Joystick.Joystick.joystickaxis.None) rc.chan16_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech16;
-                                if (joystick.getJoystickAxis(17) != Joystick.Joystick.joystickaxis.None) rc.chan17_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech17;
-                                if (joystick.getJoystickAxis(18) != Joystick.Joystick.joystickaxis.None) rc.chan18_raw = (ushort)MainV2.comPort.MAV.cs.rcoverridech18;
-
-                                if (lastjoystick.AddMilliseconds(rate) < DateTime.Now)
-                                {
-                                    /*
-                                if (MainV2.comPort.MAV.cs.rssi > 0 && MainV2.comPort.MAV.cs.remrssi > 0)
-                                {
-                                    if (lastratechange.Second != DateTime.Now.Second)
-                                    {
-                                        if (MainV2.comPort.MAV.cs.txbuffer > 90)
-                                        {
-                                            if (rate < 20)
-                                                rate = 21;
-                                            rate--;
-
-                                            if (MainV2.comPort.MAV.cs.linkqualitygcs < 70)
-                                                rate = 50;
-                                        }
-                                        else
-                                        {
-                                            if (rate > 100)
-                                                rate = 100;
-                                            rate++;
-                                        }
-
-                                        lastratechange = DateTime.Now;
-                                    }
-                                 
-                                }
-                                */
-                                    //                                Console.WriteLine(DateTime.Now.Millisecond + " {0} {1} {2} {3} {4}", rc.chan1_raw, rc.chan2_raw, rc.chan3_raw, rc.chan4_raw,rate);
-
-                                    //Console.WriteLine("Joystick btw " + comPort.BaseStream.BytesToWrite);
-
-                                    if (!comPort.BaseStream.IsOpen)
-                                        continue;
-
-                                    if (comPort.BaseStream.BytesToWrite < 50)
-                                    {
-                                        if (sitl)
-                                        {
-                                            VPS.GCSViews.SITL.rcinput();
-                                        }
-                                        else
-                                        {
-                                            comPort.sendPacket(rc, rc.target_system, rc.target_component);
-                                        }
-                                        count++;
-                                        lastjoystick = DateTime.Now;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                MAVLink.mavlink_manual_control_t rc = new MAVLink.mavlink_manual_control_t();
-
-                                rc.target = comPort.MAV.compid;
-
-                                if (joystick.getJoystickAxis(1) != Joystick.Joystick.joystickaxis.None)
-                                    rc.x = MainV2.comPort.MAV.cs.rcoverridech1;
-                                if (joystick.getJoystickAxis(2) != Joystick.Joystick.joystickaxis.None)
-                                    rc.y = MainV2.comPort.MAV.cs.rcoverridech2;
-                                if (joystick.getJoystickAxis(3) != Joystick.Joystick.joystickaxis.None)
-                                    rc.z = MainV2.comPort.MAV.cs.rcoverridech3;
-                                if (joystick.getJoystickAxis(4) != Joystick.Joystick.joystickaxis.None)
-                                    rc.r = MainV2.comPort.MAV.cs.rcoverridech4;
-
-                                if (lastjoystick.AddMilliseconds(rate) < DateTime.Now)
-                                {
-                                    if (!comPort.BaseStream.IsOpen)
-                                        continue;
-
-                                    if (comPort.BaseStream.BytesToWrite < 50)
-                                    {
-                                        if (sitl)
-                                        {
-                                            VPS.GCSViews.SITL.rcinput();
-                                        }
-                                        else
-                                        {
-                                            comPort.sendPacket(rc, comPort.MAV.sysid, comPort.MAV.compid);
-                                        }
-                                        count++;
-                                        lastjoystick = DateTime.Now;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    Thread.Sleep(20);
-                }
-                catch
-                {
-                } // cant fall out
-            }
-            joysendThreadExited = true; //so we know this thread exited.    
-        }
-
-        /// <summary>
-        /// Used to fix the icon status for unexpected unplugs etc...
-        /// </summary>
-        private void UpdateConnectIcon()
-        {
-            if ((DateTime.Now - connectButtonUpdate).Milliseconds > 500)
-            {
-                //                        Console.WriteLine(DateTime.Now.Millisecond);
-                if (comPort.BaseStream.IsOpen)
-                {
-                    if (this.MenuConnect.Image == null || (string)this.MenuConnect.Image.Tag != "Disconnect")
-                    {
-                        this.BeginInvoke((MethodInvoker)delegate
-                       {
-                           this.MenuConnect.Image.Tag = "Disconnect";
-                           this.MenuConnect.Text = Strings.DISCONNECTc;
-                           _connectionControl.IsConnected(true);
-                       });
-                    }
-                }
-                else
-                {
-                    if (this.MenuConnect.Image != null && (string)this.MenuConnect.Image.Tag != "Connect")
-                    {
-                        this.BeginInvoke((MethodInvoker)delegate
-                       {
-                           this.MenuConnect.Image.Tag = "Connect";
-                           this.MenuConnect.Text = Strings.CONNECTc;
-                           _connectionControl.IsConnected(false);
-                           if (_connectionStats != null)
-                           {
-                               _connectionStats.StopUpdates();
-                           }
-                       });
-                    }
-
-                    if (comPort.logreadmode)
-                    {
-                        this.BeginInvoke((MethodInvoker)delegate { _connectionControl.IsConnected(true); });
-                    }
-                }
-                connectButtonUpdate = DateTime.Now;
-            }
-        }
 
         ManualResetEvent PluginThreadrunner = new ManualResetEvent(false);
 
@@ -2284,32 +1217,6 @@ namespace VPS
                 try
                 {
                     Thread.Sleep(1); // was 5
-
-                    try
-                    {
-                        if (GCSViews.ConfigTerminal.comPort is MAVLinkSerialPort)
-                        {
-                        }
-                        else
-                        {
-                            if (GCSViews.ConfigTerminal.comPort != null && GCSViews.ConfigTerminal.comPort.IsOpen)
-                                continue;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                    }
-
-                    // update connect/disconnect button and info stats
-                    try
-                    {
-                        UpdateConnectIcon();
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                    }
 
                     // 30 seconds interval speech options
                     if (speechEnable && speechEngine != null && (DateTime.Now - speechcustomtime).TotalSeconds > 30 &&
@@ -2446,9 +1353,6 @@ namespace VPS
                         {
                             MainV2.comPort.MAV.cs.linkqualitygcs = (ushort)(MainV2.comPort.MAV.cs.linkqualitygcs * 0.8f);
                             linkqualitytime = DateTime.Now;
-
-                            // force redraw if there are no other packets are being read
-                            GCSViews.FlightData.myhud.Invalidate();
                         }
                     }
 
@@ -2930,7 +1834,7 @@ namespace VPS
                 Settings.Instance["language"] = ci.Name;
                 //System.Threading.Thread.CurrentThread.CurrentCulture = ci;
 
-                HashSet<Control> views = new HashSet<Control> { this, FlightData, FlightPlanner/*, Simulation*/ };
+                HashSet<Control> views = new HashSet<Control> { this, FlightPlanner, MainMap };
 
                 foreach (Control view in MyView.Controls)
                     views.Add(view);
@@ -3034,35 +1938,6 @@ namespace VPS
                 }
             }
             catch
-            {
-            }
-        }
-
-        private void CMB_baudrate_TextChanged(object sender, EventArgs e)
-        {
-            if (!int.TryParse(_connectionControl.CMB_baudrate.Text, out comPortBaud))
-            {
-                DevComponents.DotNetBar.MessageBoxEx.Show(Strings.InvalidBaudRate, Strings.ERROR);
-                return;
-            }
-            var sb = new StringBuilder();
-            int baud = 0;
-            for (int i = 0; i < _connectionControl.CMB_baudrate.Text.Length; i++)
-                if (char.IsDigit(_connectionControl.CMB_baudrate.Text[i]))
-                {
-                    sb.Append(_connectionControl.CMB_baudrate.Text[i]);
-                    baud = baud * 10 + _connectionControl.CMB_baudrate.Text[i] - '0';
-                }
-            if (_connectionControl.CMB_baudrate.Text != sb.ToString())
-            {
-                _connectionControl.CMB_baudrate.Text = sb.ToString();
-            }
-            try
-            {
-                if (baud > 0 && comPort.BaseStream.BaudRate != baud)
-                    comPort.BaseStream.BaudRate = baud;
-            }
-            catch (Exception)
             {
             }
         }
@@ -3248,14 +2123,9 @@ namespace VPS
         private void FlightPlannerShow()
         {
             //MyView.ShowScreen("FlightPlanner");
-            MyView.ShowScreen("FlightPlanner");
+            MyView.ShowScreen("MapControl_2D");
         }
 
-
-        private void FlightDataShow()
-        {
-            MyView.ShowScreen("FlightData");
-        }
         #endregion
 
         #region 自定义初始化
@@ -3350,13 +2220,7 @@ namespace VPS
         #region 入口函数
         protected override void OnLoad(EventArgs e)
         {
-
-            MyView.AddScreen(new MainSwitcher.Screen("FlightData", FlightData, true));
-            MyView.AddScreen(new MainSwitcher.Screen("FlightPlanner", FlightPlanner, true));
-            MyView.AddScreen(new MainSwitcher.Screen("HWConfig", typeof(GCSViews.InitialSetup), false));
-            MyView.AddScreen(new MainSwitcher.Screen("SWConfig", typeof(GCSViews.SoftwareConfig), false));
-            //MyView.AddScreen(new MainSwitcher.Screen("Simulation", Simulation, true));
-            MyView.AddScreen(new MainSwitcher.Screen("Help", typeof(GCSViews.Help), false));
+            MyView.AddScreen(new MainSwitcher.Screen("MapControl_2D", MainMap));
 
             // hide simulation under mono
             if (Program.MONO)
@@ -3390,33 +2254,6 @@ namespace VPS
             // for short use threadpool
 
             this.SuspendLayout();
-
-            // setup http server
-            try
-            {
-                log.Info("start http");
-                httpthread = new Thread(new httpserver().listernforclients)
-                {
-                    Name = "motion jpg stream-network kml",
-                    IsBackground = true
-                };
-                httpthread.Start();
-            }
-            catch (Exception ex)
-            {
-                log.Error("Error starting TCP listener thread: ", ex);
-                DevComponents.DotNetBar.MessageBoxEx.Show(ex.ToString());
-            }
-
-            log.Info("start joystick");
-            // setup joystick packet sender
-            joystickthread = new Thread(new ThreadStart(joysticksend))
-            {
-                IsBackground = true,
-                Priority = ThreadPriority.AboveNormal,
-                Name = "Main joystick sender"
-            };
-            joystickthread.Start();
 
             log.Info("start serialreader");
             // setup main serial reader
@@ -3456,80 +2293,6 @@ namespace VPS
             // update firmware version list - only once per day
             ThreadPool.QueueUserWorkItem(BGFirmwareCheck);
 
-            log.Info("start AutoConnect");
-            AutoConnect.NewMavlinkConnection += (sender, serial) =>
-            {
-                try
-                {
-                    log.Info("AutoConnect.NewMavlinkConnection " + serial.PortName);
-                    MainV2.instance.BeginInvoke((Action)delegate
-                    {
-                        if (MainV2.comPort.BaseStream.IsOpen)
-                        {
-                            var mav = new MAVLinkInterface();
-                            mav.BaseStream = serial;
-                            MainV2.instance.doConnect(mav, "preset", serial.PortName);
-
-                            MainV2.Comports.Add(mav);
-                        }
-                        else
-                        {
-                            MainV2.comPort.BaseStream = serial;
-                            MainV2.instance.doConnect(MainV2.comPort, "preset", serial.PortName);
-                        }
-                    });
-                }
-                catch (Exception ex) { log.Error(ex); }
-            };
-            //AutoConnect.NewVideoStream += (sender, gststring) =>
-            //{
-            //    try
-            //    {
-            //        log.Info("AutoConnect.NewVideoStream " + gststring);
-            //        GStreamer.gstlaunch = GStreamer.LookForGstreamer();
-
-            //        if (!File.Exists(GStreamer.gstlaunch))
-            //        {
-            //            if (DevComponents.DotNetBar.MessageBoxEx.Show(
-            //                    "A video stream has been detected, but gstreamer has not been configured/installed.\nDo you want to install/config it now?",
-            //                    "GStreamer", System.Windows.Forms.MessageBoxButtons.YesNo) ==
-            //                System.Windows.Forms.DialogResult.Yes)
-            //            {
-            //                {
-            //                    ProgressReporterDialogue prd = new ProgressReporterDialogue();
-            //                    ThemeManager.ApplyThemeTo(prd);
-            //                    prd.DoWork += sender2 =>
-            //                    {
-            //                        GStreamer.DownloadGStreamer(((i, s) =>
-            //                        {
-            //                            prd.UpdateProgressAndStatus(i, s);
-            //                            if (prd.doWorkArgs.CancelRequested) throw new Exception("User Request");
-            //                        }));
-            //                    };
-            //                    prd.RunBackgroundOperationAsync();
-
-            //                    GStreamer.gstlaunch = GStreamer.LookForGstreamer();
-            //                }
-            //                if (!File.Exists(GStreamer.gstlaunch))
-            //                {
-            //                    return;
-            //                }
-            //            }
-            //            else
-            //            {
-            //                return;
-            //            }
-            //        }
-
-            //        GStreamer.StartA(gststring);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        log.Error(ex);
-            //    }
-            //};
-            //AutoConnect.Start();
-
             BinaryLog.onFlightMode += (firmware, modeno) =>
             {
                 try
@@ -3557,60 +2320,6 @@ namespace VPS
                 }
             };
 
-            GStreamer.onNewImage += (sender, image) =>
-            {
-                if (image == null)
-                {
-                    GCSViews.FlightData.myhud.bgimage = null;
-                    return;
-                }
-
-                if (!(image is Drawing::System.Drawing.Bitmap bmp))
-                    return;
-                var old = GCSViews.FlightData.myhud.bgimage;
-                GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
-                    PixelFormat.Format32bppPArgb,
-                    bmp.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888)
-                    .Scan0);
-                if (old != null)
-                    old.Dispose();
-            };
-
-            vlcrender.onNewImage += (sender, image) =>
-            {
-                if (image == null)
-                {
-                    GCSViews.FlightData.myhud.bgimage = null;
-                    return;
-                }
-                if (!(image is Drawing::System.Drawing.Bitmap bmp))
-                    return;
-                var old = GCSViews.FlightData.myhud.bgimage;
-                GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width,
-                                                               image.Height,
-                                                               4 * image.Width,
-                                                               PixelFormat.Format32bppPArgb,
-                                                               bmp.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888).Scan0);
-                if (old != null)
-                    old.Dispose();
-            };
-
-            CaptureMJPEG.onNewImage += (sender, image) =>
-            {
-                if (image == null)
-                {
-                    GCSViews.FlightData.myhud.bgimage = null;
-                    return;
-                }
-                if (!(image is Drawing::System.Drawing.Bitmap bmp))
-                    return;
-                var old = GCSViews.FlightData.myhud.bgimage;
-                GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
-                                                               PixelFormat.Format32bppPArgb,
-                                                               bmp.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888).Scan0);
-                if (old != null)
-                    old.Dispose();
-            };
 
             try
             {
@@ -3619,31 +2328,6 @@ namespace VPS
             catch
             {
             }
-
-            CommsSerialScan.doConnect += port =>
-            {
-                if (MainV2.instance.InvokeRequired)
-                {
-                    log.Info("CommsSerialScan.doConnect invoke");
-                    MainV2.instance.BeginInvoke(
-                        (Action)delegate ()
-                        {
-                            MAVLinkInterface mav = new MAVLinkInterface();
-                            mav.BaseStream = port;
-                            MainV2.instance.doConnect(mav, "preset", "0");
-                            MainV2.Comports.Add(mav);
-                        });
-                }
-                else
-                {
-
-                    log.Info("CommsSerialScan.doConnect NO invoke");
-                    MAVLinkInterface mav = new MAVLinkInterface();
-                    mav.BaseStream = port;
-                    MainV2.instance.doConnect(mav, "preset", "0");
-                    MainV2.Comports.Add(mav);
-                }
-            };
 
             try
             {
@@ -3714,177 +2398,15 @@ namespace VPS
             {
                 var cmds = ProcessCommandLine(Program.args);
 
-                if (cmds.ContainsKey("file") && File.Exists(cmds["file"]) && cmds["file"].ToLower().EndsWith(".tlog"))
-                {
-                    FlightData.LoadLogFile(Program.args[0]);
-                    FlightData.BUT_playlog_Click(null, null);
-                }
-                else if (cmds.ContainsKey("file") && File.Exists(cmds["file"]) &&
-                         (cmds["file"].ToLower().EndsWith(".log") || cmds["file"].ToLower().EndsWith(".bin")))
-                {
-                    LogBrowse logbrowse = new LogBrowse();
-                    ThemeManager.ApplyThemeTo(logbrowse);
-                    logbrowse.logfilename = Program.args[0];
-                    logbrowse.Show(this);
-                    logbrowse.BringToFront();
-                }
-
-                if (cmds.ContainsKey("script") && File.Exists(cmds["script"]))
-                {
-                    // invoke for after onload finished
-                    this.BeginInvoke((Action)delegate ()
-                    {
-                        try
-                        {
-                            FlightData.selectedscript = cmds["script"];
-
-                            FlightData.BUT_run_script_Click(null, null);
-                        }
-                        catch (Exception ex)
-                        {
-                            DevComponents.DotNetBar.MessageBoxEx.Show("Start script failed: " + ex.ToString(), Strings.ERROR);
-                        }
-                    });
-                }
-
-                if (cmds.ContainsKey("joy") && cmds.ContainsKey("type"))
-                {
-                    if (cmds["type"].ToLower() == "plane")
-                    {
-                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduPlane;
-                    }
-                    else if (cmds["type"].ToLower() == "copter")
-                    {
-                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduCopter2;
-                    }
-                    else if (cmds["type"].ToLower() == "rover")
-                    {
-                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduRover;
-                    }
-                    else if (cmds["type"].ToLower() == "sub")
-                    {
-                        MainV2.comPort.MAV.cs.firmware = Firmwares.ArduSub;
-                    }
-
-                    var joy = new Joystick.Joystick(() => MainV2.comPort);
-
-                    if (joy.start(cmds["joy"]))
-                    {
-                        MainV2.joystick = joy;
-                        MainV2.joystick.enabled = true;
-                    }
-                    else
-                    {
-                        DevComponents.DotNetBar.MessageBoxEx.Show("Failed to start joystick");
-                    }
-                }
-
-                if (cmds.ContainsKey("rtk"))
-                {
-                    var inject = new ConfigSerialInjectGPS();
-                    if (cmds["rtk"].ToLower().Contains("http"))
-                    {
-                        inject.CMB_serialport.Text = "NTRIP";
-                        var nt = new CommsNTRIP();
-                        ConfigSerialInjectGPS.comPort = nt;
-                        Task.Run(() =>
-                        {
-                            try
-                            {
-                                nt.Open(cmds["rtk"]);
-                                nt.lat = MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat;
-                                nt.lng = MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng;
-                                nt.alt = MainV2.comPort.MAV.cs.PlannedHomeLocation.Alt;
-                                this.BeginInvokeIfRequired(() => { inject.DoConnect(); });
-                            }
-                            catch (Exception ex)
-                            {
-                                this.BeginInvokeIfRequired(() => { DevComponents.DotNetBar.MessageBoxEx.Show(ex.ToString()); });
-                            }
-                        });
-                    }
-                }
-
-                if (cmds.ContainsKey("cam"))
+                if (cmds.ContainsKey("arg"))
                 {
                     try
                     {
-                        MainV2.cam = new WebCamService.Capture(int.Parse(cmds["cam"]), null);
-
-                        MainV2.cam.Start();
                     }
                     catch (Exception ex)
                     {
                         DevComponents.DotNetBar.MessageBoxEx.Show(ex.ToString());
                     }
-                }
-
-                //if (cmds.ContainsKey("gstream"))
-                //{
-                //    GStreamer.gstlaunch = GStreamer.LookForGstreamer();
-
-                //    if (!File.Exists(GStreamer.gstlaunch))
-                //    {
-                //        if (DevComponents.DotNetBar.MessageBoxEx.Show(
-                //                "A video stream has been detected, but gstreamer has not been configured/installed.\nDo you want to install/config it now?",
-                //                "GStreamer", System.Windows.Forms.MessageBoxButtons.YesNo) ==
-                //            System.Windows.Forms.DialogResult.Yes)
-                //        {
-                //            GStreamerUI.DownloadGStreamer();
-                //        }
-                //    }
-
-                //    try
-                //    {
-                //        new Thread(delegate ()
-                //        {
-                //            // 36 retrys
-                //            for (int i = 0; i < 36; i++)
-                //            {
-                //                try
-                //                {
-                //                    var st = GStreamer.StartA(cmds["gstream"]);
-                //                    if (st == null)
-                //                    {
-                //                        // prevent spam
-                //                        Thread.Sleep(5000);
-                //                    }
-                //                    else
-                //                    {
-                //                        while (st.IsAlive)
-                //                        {
-                //                            Thread.Sleep(1000);
-                //                        }
-                //                    }
-                //                }
-                //                catch (BadImageFormatException ex)
-                //                {
-                //                    // not running on x64
-                //                    log.Error(ex);
-                //                    return;
-                //                }
-                //                catch (DllNotFoundException ex)
-                //                {
-                //                    // missing or failed download
-                //                    log.Error(ex);
-                //                    return;
-                //                }
-                //            }
-                //        })
-                //        { IsBackground = true, Name = "Gstreamer cli" }.Start();
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        log.Error(ex);
-                //    }
-                //}
-
-                if (cmds.ContainsKey("port") && cmds.ContainsKey("baud"))
-                {
-                    _connectionControl.CMB_serialport.Text = cmds["port"];
-                    _connectionControl.CMB_baudrate.Text = cmds["baud"];
-
-                    doConnect(MainV2.comPort, cmds["port"], cmds["baud"]);
                 }
             }
 
@@ -4625,7 +3147,7 @@ namespace VPS
             return SetLayerOverlay(layerInfo);
         }
 
-        public bool AddLayerOverlay(string path, VPS.CustomData.WP.Position home, Color transparent)
+        public bool AddLayerOverlay(string path, VPS.CustomData.WP.VPSPosition home, Color transparent)
         {
             var layerInfo = new CustomData.Layer.TiffLayerInfo(path, home, transparent);
             CustomData.Layer.MemoryLayerCache.AddLayerToMemoryCache(layerInfo);
@@ -4831,7 +3353,7 @@ namespace VPS
             GCSViews.FlightPlanner.instance.ZoomToCenterWP();
         }
 
-        private void PolygonMakerStyleButton_Click(object sender, EventArgs e)
+        private void MakerStyleButton_Click(object sender, EventArgs e)
         {
             using (var style = new VPS.Controls.CustomForms.CustomMarkerStyle(
                 VPS.Controls.Icon.Marker.Style.normal))

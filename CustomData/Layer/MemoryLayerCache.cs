@@ -172,7 +172,7 @@
 
         internal static string GetHashCode(string data)
         {
-            if (data != null || data != "")
+            if (data != null && data != "")
             {
                 return ((uint)data.GetHashCode()).ToString("X");
             }

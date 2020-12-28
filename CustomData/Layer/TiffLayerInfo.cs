@@ -41,7 +41,7 @@ namespace VPS.CustomData.Layer
 
         public TiffLayerInfo(
             string path,
-            VPS.CustomData.WP.Position home,
+            VPS.CustomData.WP.VPSPosition home,
             System.Drawing.Color transparent, double scale = 1,
             string create = null, string modify = null)
             : base(LayerTypes.tiff, path, home, scale, create, modify)
@@ -78,7 +78,7 @@ namespace VPS.CustomData.Layer
 
         private void SetLayerInfo(
         string path,
-        VPS.CustomData.WP.Position origin, System.Drawing.Color transparent, double scale = 1,
+        VPS.CustomData.WP.VPSPosition origin, System.Drawing.Color transparent, double scale = 1,
         string create = null, string modify = null)
         {
             this.transparent = transparent;
@@ -198,8 +198,8 @@ namespace VPS.CustomData.Layer
         public static TiffLayerInfo FromXMLToTiff(XmlNode LayerInfoKeys)
         {
             string path = "";
-            VPS.CustomData.WP.Position origin = new VPS.CustomData.WP.Position();
-            VPS.CustomData.WP.Position home = new VPS.CustomData.WP.Position();
+            VPS.CustomData.WP.VPSPosition origin = new VPS.CustomData.WP.VPSPosition();
+            VPS.CustomData.WP.VPSPosition home = new VPS.CustomData.WP.VPSPosition();
             double scale = 1;
             string createTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");
             string modifyTime = DateTime.Now.ToString("yyyy年 MM月 dd日 hh:mm:ss");

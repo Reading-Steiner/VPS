@@ -850,44 +850,6 @@ namespace VPS.Utilities
                     log.Error(ex);
                 }
             }
-
-            if (MainV2.comPort.BaseStream is SerialPort)
-            {
-                try
-                {
-                    updateProgress(-1, "Look for HeartBeat");
-                    var task = Task.Run(() =>
-                    {
-                        // check if we are seeing heartbeats
-                        MainV2.comPort.BaseStream.Open();
-                        MainV2.comPort.giveComport = true;
-
-                        if (MainV2.comPort.getHeartBeat().Length > 0)
-                        {
-                            MainV2.comPort.doReboot(true, false);
-                            MainV2.comPort.Close();
-                        }
-                        else
-                        {
-                            MainV2.comPort.BaseStream.Close();
-                            throw new Exception("No HeartBeat found");
-                        }
-                    });
-                    if (task.Wait(TimeSpan.FromSeconds(3)))
-                    {
-                        updateProgress(-1, "Reboot to Bootloader");
-                    }
-                    else
-                    {
-                        CustomMessageBox.Show(Strings.PleaseUnplugTheBoardAnd);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
-                    CustomMessageBox.Show(Strings.PleaseUnplugTheBoardAnd);
-                }
-            }
         }
 
         /// <summary>
@@ -907,36 +869,6 @@ namespace VPS.Utilities
             {
                 CustomMessageBox.Show(Strings.ErrorFirmwareFile + "\n\n" + ex.ToString(), Strings.ERROR);
                 return false;
-            }
-
-            try
-            {
-                // check if we are seeing heartbeats
-                MainV2.comPort.BaseStream.Open();
-                MainV2.comPort.giveComport = true;
-
-                if (MainV2.comPort.getHeartBeat().Length > 0)
-                {
-                    MainV2.comPort.doReboot(true, false);
-                    MainV2.comPort.Close();
-
-                    //specific action for VRBRAIN4 board that needs to be manually disconnected before uploading
-                    if (board == BoardDetect.boards.vrbrainv40)
-                    {
-                        CustomMessageBox.Show(
-                            "VRBRAIN 4 detected. Please unplug the board, and then press OK and plug back in.\n");
-                    }
-                }
-                else
-                {
-                    MainV2.comPort.BaseStream.Close();
-                    CustomMessageBox.Show(Strings.PleaseUnplugTheBoardAnd);
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-                CustomMessageBox.Show(Strings.PleaseUnplugTheBoardAnd);
             }
 
             DateTime DEADLINE = DateTime.Now.AddSeconds(30);
@@ -1541,7 +1473,6 @@ namespace VPS.Utilities
                 }
                 return false;
             }
-            MainV2.comPort.giveComport = false;
             return true;
         }
 

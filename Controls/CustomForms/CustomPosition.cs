@@ -18,7 +18,7 @@ namespace VPS.Controls.CustomForms
         {
             InitializeComponent();
 
-            var position = new VPS.CustomData.WP.Position();
+            var position = new VPS.CustomData.WP.VPSPosition();
             Position.Command = CustomData.WP.WPCommands.DefaultWPCommand;
             Position.AltMode = CustomData.EnumCollect.AltFrame.Relative;
 
@@ -30,7 +30,7 @@ namespace VPS.Controls.CustomForms
             
         }
 
-        public CustomPosition(VPS.CustomData.WP.Position position)
+        public CustomPosition(VPS.CustomData.WP.VPSPosition position)
         {
             InitializeComponent();
 
@@ -54,17 +54,17 @@ namespace VPS.Controls.CustomForms
         #endregion
 
         #region 数据
-        private VPS.CustomData.WP.Position defaultPosition = new VPS.CustomData.WP.Position();
-        private VPS.CustomData.WP.Position Position = new VPS.CustomData.WP.Position();
+        private VPS.CustomData.WP.VPSPosition defaultPosition = new VPS.CustomData.WP.VPSPosition();
+        private VPS.CustomData.WP.VPSPosition Position = new VPS.CustomData.WP.VPSPosition();
 
-        public VPS.CustomData.WP.Position GetWGS84Position()
+        public VPS.CustomData.WP.VPSPosition GetWGS84Position()
         {
-            return new VPS.CustomData.WP.Position(Position);
+            return new VPS.CustomData.WP.VPSPosition(Position);
         }
 
         public void SetWGS84Position(Utilities.PointLatLngAlt value)
         {
-            Position = new VPS.CustomData.WP.Position(value);
+            Position = new VPS.CustomData.WP.VPSPosition(value);
             this.LngInput.Value = value.Lng;
             this.LatInput.Value = value.Lat;
             this.AltInput.Value = (int)value.Alt;
@@ -72,7 +72,7 @@ namespace VPS.Controls.CustomForms
                 CustomData.EnumCollect.AltFrame.GetAltFrame(Position.AltMode);
         }
 
-        public void CopyWGS84Position(VPS.CustomData.WP.Position value)
+        public void CopyWGS84Position(VPS.CustomData.WP.VPSPosition value)
         {
             Position = value;
             this.LngInput.Value = value.Lng;

@@ -25,7 +25,7 @@ namespace VPS.Utilities
             CustomData.WP.WPGlobalData.instance.BegionQuick();
 
             // set roi centerpoint
-            var roi = new CustomData.WP.Position(centerPoint.Lat, centerPoint.Lng, centerPoint.Alt);
+            var roi = new CustomData.WP.VPSPosition(centerPoint.Lat, centerPoint.Lng, centerPoint.Alt);
             roi.Command = MAVLink.MAV_CMD.DO_SET_ROI.ToString();
             //roi.Param1 = 0;
             //roi.Param2 = 0;
@@ -42,7 +42,7 @@ namespace VPS.Utilities
                     MainV2.instance.FlightPlanner.EnterQuickADD();
                     var newpoint = centerPoint.newpos(heading, radius);
                     // add wp
-                    var wp = new CustomData.WP.Position(newpoint.Lat, newpoint.Lng, alt);
+                    var wp = new CustomData.WP.VPSPosition(newpoint.Lat, newpoint.Lng, alt);
                     wp.Command = MAVLink.MAV_CMD.WAYPOINT.ToString();
                     //wp.Param1 = 2;
                     //wp.Param2 = 0;
@@ -50,7 +50,7 @@ namespace VPS.Utilities
                     //wp.Param4 = 0;
                     CustomData.WP.WPGlobalData.instance.AddWPHandle(wp);
                     // trigger camera
-                    var trigger = new CustomData.WP.Position(1, 0, 0);
+                    var trigger = new CustomData.WP.VPSPosition(1, 0, 0);
                     trigger.Command = MAVLink.MAV_CMD.DO_DIGICAM_CONTROL.ToString();
                     //trigger.Param1 = 0;
                     //trigger.Param2 = 0;

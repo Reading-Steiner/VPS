@@ -113,15 +113,6 @@ namespace VPS.Grid
             map.MapScaleInfoEnabled = true;
             map.ScalePen = new Pen(Color.Orange);
 
-            foreach (var temp in FlightData.kmlpolygons.Polygons)
-            {
-                kmlpolygonsoverlay.Polygons.Add(new GMapPolygon(temp.Points, "") { Fill = Brushes.Transparent });
-            }
-            foreach (var temp in FlightData.kmlpolygons.Routes)
-            {
-                kmlpolygonsoverlay.Routes.Add(new GMapRoute(temp.Points, ""));
-            }
-
             xmlcamera(false, Settings.GetRunningDirectory() + "camerasBuiltin.xml");
 
             xmlcamera(false, Settings.GetUserDataDirectory() + "cameras.xml");
@@ -661,7 +652,7 @@ namespace VPS.Grid
                     (double)NUM_Distance.Value, (double)NUM_spacing.Value, (double)NUM_angle.Value,
                     (double)NUM_overshoot.Value, (double)NUM_overshoot2.Value,
                     (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), CMB_startfrom.Text), false,
-                    (float)NUM_Lane_Dist.Value, (float)NUM_leadin.Value, MainV2.comPort.MAV.cs.PlannedHomeLocation).ConfigureAwait(true);
+                    (float)NUM_Lane_Dist.Value, (float)NUM_leadin.Value, new PointLatLngAlt()).ConfigureAwait(true);
             }
             else
             {
@@ -669,7 +660,7 @@ namespace VPS.Grid
                     (double)NUM_Distance.Value, (double)NUM_spacing.Value, (double)NUM_angle.Value,
                     (double)NUM_overshoot.Value, (double)NUM_overshoot2.Value,
                     (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), CMB_startfrom.Text), false,
-                    (float)NUM_Lane_Dist.Value, (float)NUM_leadin.Value, MainV2.comPort.MAV.cs.PlannedHomeLocation).ConfigureAwait(true);
+                    (float)NUM_Lane_Dist.Value, (float)NUM_leadin.Value, new PointLatLngAlt()).ConfigureAwait(true);
             }
 
             map.HoldInvalidation = true;
@@ -695,7 +686,7 @@ namespace VPS.Grid
                     (double)NUM_Distance.Value, (double)NUM_spacing.Value, (double)NUM_angle.Value + 90.0,
                     (double)NUM_overshoot.Value, (double)NUM_overshoot2.Value,
                     Utilities.Grid.StartPosition.Point, false,
-                    (float)NUM_Lane_Dist.Value, (float)NUM_leadin.Value, MainV2.comPort.MAV.cs.PlannedHomeLocation).ConfigureAwait(true));
+                    (float)NUM_Lane_Dist.Value, (float)NUM_leadin.Value, new PointLatLngAlt()).ConfigureAwait(true));
             }
 
             if (CHK_boundary.Checked)
@@ -713,8 +704,9 @@ namespace VPS.Grid
             PointLatLngAlt prevprevpoint = grid[0];
             PointLatLngAlt prevpoint = grid[0];
             // distance to/from home
-            double routetotal = grid.First().GetDistance(MainV2.comPort.MAV.cs.PlannedHomeLocation) / 1000.0 +
-                               grid.Last().GetDistance(MainV2.comPort.MAV.cs.PlannedHomeLocation) / 1000.0;
+            //MainV2.comPort.MAV.cs.PlannedHomeLocation
+            double routetotal = grid.First().GetDistance(new PointLatLngAlt()) / 1000.0 +
+                               grid.Last().GetDistance(new PointLatLngAlt()) / 1000.0;
             List<PointLatLng> segment = new List<PointLatLng>();
             double maxgroundelevation = double.MinValue;
             double mingroundelevation = double.MaxValue;
@@ -1851,12 +1843,12 @@ namespace VPS.Grid
 
                     if (CHK_usespeed.Checked)
                     {
-                        if (MainV2.comPort.MAV.param["WPNAV_SPEED"] != null)
-                        {
-                            double speed = MainV2.comPort.MAV.param["WPNAV_SPEED"].Value;
-                            speed = speed / 100;
-                            plugin.Host.AddWPtoList(MAVLink.MAV_CMD.DO_CHANGE_SPEED, 0, speed, 0, 0, 0, 0, 0, gridobject);
-                        }
+                        //if (MainV2.comPort.MAV.param["WPNAV_SPEED"] != null)
+                        //{
+                        //    double speed = MainV2.comPort.MAV.param["WPNAV_SPEED"].Value;
+                        //    speed = speed / 100;
+                        //    plugin.Host.AddWPtoList(MAVLink.MAV_CMD.DO_CHANGE_SPEED, 0, speed, 0, 0, 0, 0, 0, gridobject);
+                        //}
                     }
 
                     if (CHK_toandland.Checked)

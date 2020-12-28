@@ -83,12 +83,7 @@ namespace VPS.Utilities
         }
 
         public string UserAgent { get; set; } = "MissionPlanner";
-        
-        public string ComPort
-        {
-            get { return this["comport"]; }
-            set { this["comport"] = value; }
-        }
+       
 
         public string APMFirmware
         {
@@ -96,21 +91,6 @@ namespace VPS.Utilities
             set { this["APMFirmware"] = value; }
         }
 
-        public string BaudRate
-        {
-            get
-            {
-                try
-                {
-                    return this[ComPort + "_BAUD"];
-                }
-                catch
-                {
-                    return "";
-                }
-            }
-            set { this[ComPort + "_BAUD"] = value; }
-        }
 
         public string LogDir
         {

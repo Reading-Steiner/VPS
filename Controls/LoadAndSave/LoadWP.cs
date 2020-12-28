@@ -169,7 +169,7 @@ namespace VPS.Controls.LoadAndSave
 
         LoadWPInfo info;
 
-        public List<CustomData.WP.Position> GetWPList()
+        public List<CustomData.WP.VPSPosition> GetWPList()
         {
             if (info is LoadSHPWPInfo) {
                 var data = info as LoadSHPWPInfo;
@@ -188,7 +188,7 @@ namespace VPS.Controls.LoadAndSave
                 }
             }
 
-            return new List<CustomData.WP.Position>();
+            return new List<CustomData.WP.VPSPosition>();
         }
     }
 
@@ -264,14 +264,14 @@ namespace VPS.Controls.LoadAndSave
 
     public class FeaturesInfo
     {
-        public List<List<CustomData.WP.Position>> features;
+        public List<List<CustomData.WP.VPSPosition>> features;
         int current = -1;
-        public FeaturesInfo(List<List<CustomData.WP.Position>> list)
+        public FeaturesInfo(List<List<CustomData.WP.VPSPosition>> list)
         {
-            features = new List<List<CustomData.WP.Position>>();
+            features = new List<List<CustomData.WP.VPSPosition>>();
             for (int i = 0; i < list.Count; i++)
             {
-                var feature = new List<CustomData.WP.Position>(list[i]);
+                var feature = new List<CustomData.WP.VPSPosition>(list[i]);
                 features.Add(feature);
             }
             if (Count > 0)
@@ -280,10 +280,10 @@ namespace VPS.Controls.LoadAndSave
                 Current = -1;
         }
 
-        public FeaturesInfo(List<CustomData.WP.Position> list)
+        public FeaturesInfo(List<CustomData.WP.VPSPosition> list)
         {
-            features = new List<List<CustomData.WP.Position>>();
-            var feature = new List<CustomData.WP.Position>(list);
+            features = new List<List<CustomData.WP.VPSPosition>>();
+            var feature = new List<CustomData.WP.VPSPosition>(list);
             features.Add(feature);
             if (Count > 0)
                 Current = 0;
@@ -309,18 +309,18 @@ namespace VPS.Controls.LoadAndSave
         }
 
         [Category("要素集合"), DisplayName("要素")]
-        public List<CustomData.WP.Position> this[int index]
+        public List<CustomData.WP.VPSPosition> this[int index]
         {
             set
             {
                 if (value == null)
                     return;
                 if (index >= features.Count)
-                    features.Add(new List<CustomData.WP.Position>(value));
+                    features.Add(new List<CustomData.WP.VPSPosition>(value));
                 else if (index < 0)
-                    features.Insert(0, new List<CustomData.WP.Position>(value));
+                    features.Insert(0, new List<CustomData.WP.VPSPosition>(value));
                 else
-                    features[index] = new List<CustomData.WP.Position>(value);
+                    features[index] = new List<CustomData.WP.VPSPosition>(value);
                 if (value.Count > 0 && Current == -1)
                     Current = 0;
 
@@ -339,9 +339,9 @@ namespace VPS.Controls.LoadAndSave
             return str;
         }
 
-        public void AddFeature(List<CustomData.WP.Position> list)
+        public void AddFeature(List<CustomData.WP.VPSPosition> list)
         {
-            var feature = new List<CustomData.WP.Position>(list);
+            var feature = new List<CustomData.WP.VPSPosition>(list);
             features.Add(feature);
             if (Count > 0 && Current == -1)
                 Current = 0;

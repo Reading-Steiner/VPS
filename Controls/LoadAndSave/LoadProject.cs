@@ -127,14 +127,14 @@ namespace VPS.Controls.LoadAndSave
         [TypeConverter(typeof(ExpandableObjectConverter))]
         [Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
         public ProjectListInfo wpList { set; get; } = 
-            new ProjectListInfo(new List<CustomData.WP.Position>());
+            new ProjectListInfo(new List<CustomData.WP.VPSPosition>());
 
         [Category("要素集合"), DisplayName("区域")]
         [PropertyOrder(0b00000010)]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         [Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
         public ProjectListInfo polygon { set; get; } =
-            new ProjectListInfo(new List<CustomData.WP.Position>());
+            new ProjectListInfo(new List<CustomData.WP.VPSPosition>());
 
         [Category("工作区"), DisplayName("默认工作区")]
         [PropertyOrder(0b00010001)]

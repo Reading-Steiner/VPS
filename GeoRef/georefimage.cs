@@ -35,9 +35,9 @@ namespace VPS.GeoRef
 
             VPS.Utilities.Tracking.AddPage(this.GetType().ToString(), this.Text);
 
-            myGMAP1.MapProvider = MainV2.instance.FlightData.MainMap.MapProvider;
-            myGMAP1.MinZoom = MainV2.instance.FlightData.MainMap.MinZoom;
-            myGMAP1.MaxZoom = MainV2.instance.FlightData.MainMap.MaxZoom;
+            //myGMAP1.MapProvider = MainV2.instance.FlightData.MainMap.MapProvider;
+            //myGMAP1.MinZoom = MainV2.instance.FlightData.MainMap.MinZoom;
+            //myGMAP1.MaxZoom = MainV2.instance.FlightData.MainMap.MaxZoom;
 
             GMapOverlay overlay = new GMapOverlay();
             myGMAP1.Overlays.Add(overlay);
@@ -235,8 +235,8 @@ namespace VPS.GeoRef
 
         private void httpGeoRefKML(string obj)
         {
-            httpserver.georefimagepath = TXT_jpgdir.Text + Path.DirectorySeparatorChar;
-            httpserver.georefkml = obj;
+            //httpserver.georefimagepath = TXT_jpgdir.Text + Path.DirectorySeparatorChar;
+            //httpserver.georefkml = obj;
         }
 
         private void BUT_estoffset_Click(object sender, EventArgs e)

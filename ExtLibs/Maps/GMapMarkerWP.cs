@@ -11,39 +11,49 @@ namespace VPS.Maps
     [Serializable]
     public class GMapMarkerWP : GMarkerGoogle
     {
-        string tips = "";
+        private static Dictionary<string, Bitmap> fontBitmaps = new Dictionary<string, Bitmap>();
+        private static Font font = SystemFonts.DefaultFont;
+        private static GMarkerGoogleType icon = GMarkerGoogleType.green;
+        private static Color color = Color.Red;
+
+        string no = "";
         SizeF txtsize = SizeF.Empty;
 
         public bool Selected = false;
         public string Command = "WAYPOINT";
-        private static Dictionary<string, Bitmap> fontBitmaps = new Dictionary<string, Bitmap>();
-        private readonly static Font font = SystemFonts.DefaultFont;
-        private readonly static GMarkerGoogleType icon = GMarkerGoogleType.green;
-        private readonly static Color color = Color.Red;
 
-        public GMapMarkerWP(VPS.Utilities.PointLatLngAlt p, string wpno)
+
+        public GMapMarkerWP(VPS.Utilities.PointLatLngAlt p, string tag)
             : base(p, GMapMarkerStyle.ExistGMapMarkerStyle(p.Tag) ? GMapMarkerStyle.GetGMapMarkerStyle(p.Tag).Type : icon)
         {
-            tips = wpno;
+            no = tag;
 
             Command = p.Tag;
 
             Font TipFont = font;
             TipFont = GMapMarkerStyle.ExistGMapMarkerStyle(Command) ? GMapMarkerStyle.GetGMapMarkerStyle(Command).TipFont : font;
 
-            if (!fontBitmaps.ContainsKey(tips))
+            if (!fontBitmaps.ContainsKey(no))
             {
                 Bitmap temp = new Bitmap(100,40, PixelFormat.Format32bppArgb);
                 using (Graphics g = Graphics.FromImage(temp))
                 {
-                    txtsize = g.MeasureString(tips, TipFont);
+                    txtsize = g.MeasureString(no, TipFont);
 
-                    g.DrawString(tips, SystemFonts.DefaultFont, Brushes.Black, new PointF(0, 0));
+                    g.DrawString(no, SystemFonts.DefaultFont, Brushes.Black, new PointF(0, 0));
                 }
-                fontBitmaps[tips] = temp;
+                fontBitmaps[no] = temp;
             }
 
             ToolTipFont = TipFont;
+        }
+
+        public int GetNo()
+        {
+            if (int.TryParse(no, out int id))
+                return id;
+            else
+                return -1;
         }
 
         public override void OnRender(IGraphics g)
@@ -66,7 +76,7 @@ namespace VPS.Maps
 
             if (Overlay.Control.Zoom > 16 || IsMouseOver)
             {
-                g.DrawImageUnscaled(fontBitmaps[tips], midw, midh);
+                g.DrawImageUnscaled(fontBitmaps[no], midw, midh);
             }
         }
     }

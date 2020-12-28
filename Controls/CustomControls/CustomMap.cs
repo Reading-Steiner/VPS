@@ -19,14 +19,14 @@ namespace VPS.Controls.CustomControls
 {
     public partial class CustomMap : UserControl
     {
-        public List<List<CustomData.WP.Position>> lists = new List<List<CustomData.WP.Position>>();
-        public List<List<CustomData.WP.Position>> List
+        public List<List<CustomData.WP.VPSPosition>> lists = new List<List<CustomData.WP.VPSPosition>>();
+        public List<List<CustomData.WP.VPSPosition>> List
         {
             set
             {
                 if (value != null)
                 {
-                    lists = new List<List<CustomData.WP.Position>>(value);
+                    lists = new List<List<CustomData.WP.VPSPosition>>(value);
                     List<int> indexs = new List<int>();
                     for(int index = 0; index < lists.Count; index++)
                         indexs.Add(index);
@@ -86,11 +86,11 @@ namespace VPS.Controls.CustomControls
             writeKML();
         }
 
-        public void AddList(List<CustomData.WP.Position> list)
+        public void AddList(List<CustomData.WP.VPSPosition> list)
         {
             if (list != null)
             {
-                lists.Add(new List<CustomData.WP.Position>(list));
+                lists.Add(new List<CustomData.WP.VPSPosition>(list));
                 List<int> indexs = new List<int>();
                 for (int index = 0; index < lists.Count; index++)
                     indexs.Add(index);
@@ -106,7 +106,7 @@ namespace VPS.Controls.CustomControls
         {
             if (currentIndex >=0 && currentIndex < lists.Count)
             {
-                List<CustomData.WP.Position> list = lists[currentIndex];
+                List<CustomData.WP.VPSPosition> list = lists[currentIndex];
 
                 _polygon.Points.Clear();
                 _overlay.Clear();
@@ -125,13 +125,13 @@ namespace VPS.Controls.CustomControls
             }
         }
 
-        private void AddMarker(CustomData.WP.Position point, string info)
+        private void AddMarker(CustomData.WP.VPSPosition point, string info)
         {
             var marker = new CustomData.Markers.GMapMarkerCustom(point.ToWGS84(), info);
             _overlay.Markers.Add(marker);
         }
 
-        private static RectLatLng GetBoundingLayer(List<CustomData.WP.Position> list)
+        private static RectLatLng GetBoundingLayer(List<CustomData.WP.VPSPosition> list)
         {
             RectLatLng ret = RectLatLng.Empty;
 

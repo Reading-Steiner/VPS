@@ -160,7 +160,7 @@ namespace VPS.Controls.LoadAndSave
 
         LoadPolygonInfo info;
 
-        public List<CustomData.WP.Position> GetWPList()
+        public List<CustomData.WP.VPSPosition> GetWPList()
         {
             if (info is LoadSHPPolygonInfo)
             {
@@ -180,7 +180,7 @@ namespace VPS.Controls.LoadAndSave
                 }
             }
 
-            return new List<CustomData.WP.Position>();
+            return new List<CustomData.WP.VPSPosition>();
         }
     }
 

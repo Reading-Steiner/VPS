@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1209
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VPS", "VPS.csproj", "{A2E22272-95FE-47B6-B050-9AE7E2055BF5}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -13,8 +13,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wix", "wix\wix.csproj", "{76374F95-C343-4ACC-B86F-7ECFDD668F46}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{9B3AC501-5FCB-4A2A-A628-BE0985DB2BD4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MissionPlanner.Stats", "ExtLibs\MissionPlanner.Stats\MissionPlanner.Stats.csproj", "{6A6F4345-0A45-413E-B6D6-FD73660DAD4C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExtLibs", "ExtLibs", "{7E264F12-9EC3-4CDC-A187-6879C2B2BFCF}"
 EndProject
@@ -135,13 +133,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UAVCANFlasher", "ExtLibs\UA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "test", "ExtLibs\test\test.csproj", "{9BA6FC55-148D-4481-B9E6-B31A1D4BCD0F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MavlinkMessagePlugin", "ExtLibs\MavlinkMessagePlugin\MavlinkMessagePlugin.csproj", "{DFCB0240-50CF-4F56-92C7-05941569231D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mock", "ExtLibs\Mock\Mock.csproj", "{183631BD-EC15-47AD-9ABE-CD8DB748C066}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "7zip", "ExtLibs\7zip\7zip.csproj", "{1117EFD6-3A46-47F7-9BEB-02792D213B8D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shortcuts", "Plugins\Shortcuts\Shortcuts.csproj", "{E634EFE6-FEA0-4BB9-A7B9-D8809C33BCC8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interfaces", "ExtLibs\Interfaces\Interfaces.csproj", "{FD4D2994-9BEA-41A1-8C51-2E02D1E8503E}"
 EndProject
@@ -178,10 +172,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAndroid", "..\TestAndro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetDFULib", "ExtLibs\NetDFULib\NetDFULib.csproj", "{DC7BAD19-540A-4407-8E89-C15C899D74DF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UIStore", "UIStore", "{87567DFF-8F91-4155-B323-48B5AB53A7C2}"
+	ProjectSection(SolutionItems) = preProject
+		DotNetBar\DevComponents.DotNetBar.Keyboard.dll = DotNetBar\DevComponents.DotNetBar.Keyboard.dll
+		DotNetBar\DevComponents.DotNetBar.Schedule.dll = DotNetBar\DevComponents.DotNetBar.Schedule.dll
+		DotNetBar\DevComponents.DotNetBar.SuperGrid.dll = DotNetBar\DevComponents.DotNetBar.SuperGrid.dll
+		DotNetBar\DevComponents.DotNetBar.SuperGrid.XML = DotNetBar\DevComponents.DotNetBar.SuperGrid.XML
+		DotNetBar\DevComponents.DotNetBar.xml = DotNetBar\DevComponents.DotNetBar.xml
+		DotNetBar\DevComponents.DotNetBar2.dll = DotNetBar\DevComponents.DotNetBar2.dll
+		DotNetBar\DevComponents.DotNetBar2.xml = DotNetBar\DevComponents.DotNetBar2.xml
+		DotNetBar\DevComponents.Instrumentation.dll = DotNetBar\DevComponents.Instrumentation.dll
+		DotNetBar\DevComponents.Instrumentation.XML = DotNetBar\DevComponents.Instrumentation.XML
+		DotNetBar\DevComponents.SuperGrid.Design.dll = DotNetBar\DevComponents.SuperGrid.Design.dll
+		DotNetBar\DevComponents.TreeGX.dll = DotNetBar\DevComponents.TreeGX.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ExtLibs\uno\UnoUI\UnoUI.Shared\UnoUI.Shared.projitems*{06b132f9-524b-44c0-9ed6-e0348641ab3d}*SharedItemsImports = 5
-		ExtLibs\uno\UnoUI\UnoUI.Shared\UnoUI.Shared.projitems*{0850aafc-2b90-4d47-821b-f009eb099940}*SharedItemsImports = 4
 		ExtLibs\uno\UnoUI\UnoUI.Shared\UnoUI.Shared.projitems*{61874fb1-9803-4ccb-bc90-70b4222b44c0}*SharedItemsImports = 4
 		ExtLibs\uno\UnoUI\UnoUI.Shared\UnoUI.Shared.projitems*{6279c845-92f8-4333-ab99-3d213163593c}*SharedItemsImports = 13
 		ExtLibs\uno\UnoUI\UnoUI.Shared\UnoUI.Shared.projitems*{e5f612de-3136-4f34-9144-2a202c46a91b}*SharedItemsImports = 4
@@ -201,10 +209,6 @@ Global
 		{76374F95-C343-4ACC-B86F-7ECFDD668F46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76374F95-C343-4ACC-B86F-7ECFDD668F46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76374F95-C343-4ACC-B86F-7ECFDD668F46}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6A6F4345-0A45-413E-B6D6-FD73660DAD4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6A6F4345-0A45-413E-B6D6-FD73660DAD4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6A6F4345-0A45-413E-B6D6-FD73660DAD4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6A6F4345-0A45-413E-B6D6-FD73660DAD4C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ABB32A29-AF50-47FA-B243-5FD75A5ABA54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ABB32A29-AF50-47FA-B243-5FD75A5ABA54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABB32A29-AF50-47FA-B243-5FD75A5ABA54}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -411,10 +415,6 @@ Global
 		{EECDFE74-6CDC-45E0-AA39-34FF55FFB49F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BA6FC55-148D-4481-B9E6-B31A1D4BCD0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9BA6FC55-148D-4481-B9E6-B31A1D4BCD0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFCB0240-50CF-4F56-92C7-05941569231D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFCB0240-50CF-4F56-92C7-05941569231D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFCB0240-50CF-4F56-92C7-05941569231D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFCB0240-50CF-4F56-92C7-05941569231D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{183631BD-EC15-47AD-9ABE-CD8DB748C066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{183631BD-EC15-47AD-9ABE-CD8DB748C066}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{183631BD-EC15-47AD-9ABE-CD8DB748C066}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -423,10 +423,6 @@ Global
 		{1117EFD6-3A46-47F7-9BEB-02792D213B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1117EFD6-3A46-47F7-9BEB-02792D213B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1117EFD6-3A46-47F7-9BEB-02792D213B8D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E634EFE6-FEA0-4BB9-A7B9-D8809C33BCC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E634EFE6-FEA0-4BB9-A7B9-D8809C33BCC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E634EFE6-FEA0-4BB9-A7B9-D8809C33BCC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E634EFE6-FEA0-4BB9-A7B9-D8809C33BCC8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FD4D2994-9BEA-41A1-8C51-2E02D1E8503E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FD4D2994-9BEA-41A1-8C51-2E02D1E8503E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD4D2994-9BEA-41A1-8C51-2E02D1E8503E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -466,7 +462,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{6A6F4345-0A45-413E-B6D6-FD73660DAD4C} = {9B3AC501-5FCB-4A2A-A628-BE0985DB2BD4}
 		{ABB32A29-AF50-47FA-B243-5FD75A5ABA54} = {7E264F12-9EC3-4CDC-A187-6879C2B2BFCF}
 		{59129078-7B12-4198-B93E-0AA08D0BB7ED} = {7E264F12-9EC3-4CDC-A187-6879C2B2BFCF}
 		{29976BA4-A04D-4A80-A866-098C879C2FDE} = {7E264F12-9EC3-4CDC-A187-6879C2B2BFCF}
@@ -518,10 +513,8 @@ Global
 		{B57854C8-5C63-4D79-96ED-ACD31815CB91} = {7E264F12-9EC3-4CDC-A187-6879C2B2BFCF}
 		{D773ACCD-9C2D-4E94-A967-FAA7EA2D21CB} = {7E264F12-9EC3-4CDC-A187-6879C2B2BFCF}
 		{EECDFE74-6CDC-45E0-AA39-34FF55FFB49F} = {7E264F12-9EC3-4CDC-A187-6879C2B2BFCF}
-		{DFCB0240-50CF-4F56-92C7-05941569231D} = {9B3AC501-5FCB-4A2A-A628-BE0985DB2BD4}
 		{183631BD-EC15-47AD-9ABE-CD8DB748C066} = {7E264F12-9EC3-4CDC-A187-6879C2B2BFCF}
 		{1117EFD6-3A46-47F7-9BEB-02792D213B8D} = {7E264F12-9EC3-4CDC-A187-6879C2B2BFCF}
-		{E634EFE6-FEA0-4BB9-A7B9-D8809C33BCC8} = {9B3AC501-5FCB-4A2A-A628-BE0985DB2BD4}
 		{FD4D2994-9BEA-41A1-8C51-2E02D1E8503E} = {7E264F12-9EC3-4CDC-A187-6879C2B2BFCF}
 		{6279C845-92F8-4333-AB99-3D213163593C} = {F8765B28-2339-4E94-9F12-180AB4B19EEB}
 		{E5F612DE-3136-4F34-9144-2A202C46A91B} = {F8765B28-2339-4E94-9F12-180AB4B19EEB}
@@ -539,6 +532,7 @@ Global
 		{DC7BAD19-540A-4407-8E89-C15C899D74DF} = {7E264F12-9EC3-4CDC-A187-6879C2B2BFCF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		VisualSVNWorkingCopyRoot = .
 		SolutionGuid = {F7AF94B5-83B0-46CD-B258-67F2404F82FC}
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution

@@ -265,7 +265,7 @@ namespace VPS.Controls.Layer
 
             col = new DataColumn();
             col.ColumnName = "文件";
-            col.DataType = typeof(CustomData.WP.Position);
+            col.DataType = typeof(CustomData.WP.VPSPosition);
             table.Columns.Add(col);
 
             col = new DataColumn();

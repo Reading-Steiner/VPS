@@ -358,11 +358,11 @@ namespace VPS.Controls.LoadAndSave
 
     public class PolygonInfo
     {
-        public List<CustomData.WP.Position> features;
+        public List<CustomData.WP.VPSPosition> features;
 
-        public PolygonInfo(List<CustomData.WP.Position> list)
+        public PolygonInfo(List<CustomData.WP.VPSPosition> list)
         {
-            features = new List<CustomData.WP.Position>(list);
+            features = new List<CustomData.WP.VPSPosition>(list);
         }
 
         [Category("区域"), DisplayName("区域点数"), ReadOnly(true)]
@@ -378,9 +378,9 @@ namespace VPS.Controls.LoadAndSave
             return str;
         }
 
-        public void AddPolygon(List<CustomData.WP.Position> list)
+        public void AddPolygon(List<CustomData.WP.VPSPosition> list)
         {
-            features = new List<CustomData.WP.Position>(list);
+            features = new List<CustomData.WP.VPSPosition>(list);
         }
     }
 }

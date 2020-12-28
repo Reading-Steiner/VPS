@@ -12,7 +12,7 @@ using VPS.Utilities;
 
 namespace VPS.CustomData.WP
 {
-    public class Position
+    public class VPSPosition
     {
         public virtual double Lat { get; set; } = 0;
 
@@ -26,24 +26,20 @@ namespace VPS.CustomData.WP
 
 
         #region 构造函数
-        public Position()
+        public VPSPosition()
         {
         }
 
-        public Position(double lat, double lng)
-        {
-            Lat = lat;
-            Lng = lng;
-        }
-
-        public Position(double lat, double lng, double alt)
+        public VPSPosition(double lat, double lng, double alt = -1, string altMode = "Terrain", string command = "")
         {
             Lat = lat;
             Lng = lng;
             Alt = alt;
+            AltMode = altMode;
+            Command = command;
         }
 
-        public Position(Position point)
+        public VPSPosition(VPSPosition point)
         {
             Lng = point.Lng;
             Lat = point.Lat;
@@ -52,20 +48,25 @@ namespace VPS.CustomData.WP
             AltMode = point.AltMode;
         }
 
-        public Position(PointLatLng point)
+        public VPSPosition(PointLatLng point)
         {
             this.Lat = point.Lat;
             this.Lng = point.Lng;
+            Alt = -1;
+            Command = "";
+            AltMode = "Terrain";
         }
 
-        public Position(Locationwp point)
+        public VPSPosition(Locationwp point)
         {
             this.Lat = point.lat;
             this.Lng = point.lng;
             this.Alt = point.alt;
+            Command = "WAYPOINT";
+            AltMode = "Terrain";
         }
 
-        public Position(PointLatLngAlt point)
+        public VPSPosition(PointLatLngAlt point)
         {
             Lng = point.Lng;
             Lat = point.Lat;
@@ -75,12 +76,7 @@ namespace VPS.CustomData.WP
         }
         #endregion
 
-        public override string ToString()
-        {
-            return Math.Abs(Lng).ToString("0.##") + (Lng >= 0 ? "E; " : "W") + "; " +
-                Math.Abs(Lat).ToString("0.##") + (Lat >= 0 ? "N;" : "S") + "; " +
-                (Alt).ToString("0.##");
-        }
+        public static readonly VPSPosition InvaildPosition = new VPSPosition(-1, -1, -1, "", "");
 
         #region 类型转换
         public PointLatLngAlt ToWGS84()
@@ -126,7 +122,7 @@ namespace VPS.CustomData.WP
             this.Alt = point.alt;
         }
 
-        public void FromPosition(Position point)
+        public void FromPosition(VPSPosition point)
         {
             Lng = point.Lng;
             Lat = point.Lat;
@@ -139,7 +135,7 @@ namespace VPS.CustomData.WP
         #region 比较函数
         public override bool Equals(Object pllaobj)
         {
-            Position plla = pllaobj as Position;
+            VPSPosition plla = pllaobj as VPSPosition;
 
             if (plla == null)
                 return false;
@@ -155,11 +151,11 @@ namespace VPS.CustomData.WP
             return false;
         }
 
-        public static bool operator ==(Position p1, Position p2)
+        public static bool operator ==(VPSPosition p1, VPSPosition p2)
         {
             if (p1 is null && p2 is null)
                 return true;
-            else if(p1 is null || p2 is null)
+            else if (p1 is null || p2 is null)
                 return false;
 
             if (p1.Lat == p2.Lat &&
@@ -170,11 +166,18 @@ namespace VPS.CustomData.WP
             return false;
         }
 
-        public static bool operator !=(Position p1, Position p2)
+        public static bool operator !=(VPSPosition p1, VPSPosition p2)
         {
             return !(p1 == p2);
         }
         #endregion
+
+        public override string ToString()
+        {
+            return Math.Abs(Lng).ToString("0.##") + (Lng >= 0 ? "E; " : "W") + "; " +
+                Math.Abs(Lat).ToString("0.##") + (Lat >= 0 ? "N;" : "S") + "; " +
+                (Alt).ToString("0.##");
+        }
 
         public override int GetHashCode()
         {
@@ -182,9 +185,59 @@ namespace VPS.CustomData.WP
                           BitConverter.DoubleToInt64Bits(Lng) ^
                           BitConverter.DoubleToInt64Bits(Alt));
         }
+
+        #region 航点高度框架转换
+        public static CustomData.WP.VPSPosition ChangeAltFrame(CustomData.WP.VPSPosition cur, double baseAlt, string altitudeMode = "Terrain")
+        {
+            var point = new CustomData.WP.VPSPosition(cur);
+
+            double alt = srtm.getAltitude(cur.Lat, cur.Lng).alt * CurrentState.multiplieralt;
+            if (altitudeMode == EnumCollect.AltFrame.Relative)
+            {
+                if (point.AltMode == EnumCollect.AltFrame.Relative)
+                    point.Alt = cur.Alt;
+                else if (point.AltMode == EnumCollect.AltFrame.Absolute)
+                    point.Alt = cur.Alt - baseAlt;
+                else if (point.AltMode == EnumCollect.AltFrame.Terrain)
+                    point.Alt = cur.Alt + alt - baseAlt;
+                else
+                    point.Alt = cur.Alt + alt - baseAlt;
+
+                point.AltMode = EnumCollect.AltFrame.Relative;
+            }
+            else if (altitudeMode == EnumCollect.AltFrame.Absolute)
+            {
+                if (point.AltMode == EnumCollect.AltFrame.Relative)
+                    point.Alt = cur.Alt + baseAlt;
+                else if (point.AltMode == EnumCollect.AltFrame.Absolute)
+                    point.Alt = cur.Alt;
+                else if (point.AltMode == EnumCollect.AltFrame.Terrain)
+                    point.Alt = cur.Alt + alt;
+                else
+                    point.Alt = cur.Alt + alt;
+
+                point.AltMode = EnumCollect.AltFrame.Absolute;
+            }
+            else if (altitudeMode == EnumCollect.AltFrame.Terrain)
+            {
+                if (point.AltMode == EnumCollect.AltFrame.Relative)
+                    point.Alt = cur.Alt + baseAlt - alt;
+                else if (point.AltMode == EnumCollect.AltFrame.Absolute)
+                    point.Alt = cur.Alt - alt;
+                else if (point.AltMode == EnumCollect.AltFrame.Terrain)
+                    point.Alt = cur.Alt;
+                else
+                    point.Alt = cur.Alt;
+                point.AltMode = EnumCollect.AltFrame.Terrain;
+            }
+            else
+                point.Alt = cur.Alt;
+            return point;
+        }
+        #endregion
     }
 
-    public class Rect
+    public class VPSRect
     {
         public virtual double Top { get; set; } = 0;
 
@@ -195,13 +248,12 @@ namespace VPS.CustomData.WP
         public virtual double Right { get; set; } = 0;
 
 
-
         #region 构造函数
-        public Rect()
+        public VPSRect()
         {
         }
 
-        public Rect(double top, double bottom, double left, double right)
+        public VPSRect(double top, double bottom, double left, double right)
         {
             Top = top;
             Bottom = bottom;
@@ -209,7 +261,7 @@ namespace VPS.CustomData.WP
             Right = right;
         }
 
-        public Rect(Position TopLeft, Position BottomRight)
+        public VPSRect(VPSPosition TopLeft, VPSPosition BottomRight)
         {
             Top = TopLeft.Lat;
             Left = TopLeft.Lng;
@@ -218,15 +270,15 @@ namespace VPS.CustomData.WP
             Right = BottomRight.Lng;
         }
 
-        public Rect(RectLatLng rect)
+        public VPSRect(RectLatLng rect)
         {
             Top = rect.Top;
             Bottom = rect.Bottom;
             Left = rect.Left;
             Right = rect.Right;
         }
-        
-        public Rect(Rect rect)
+
+        public VPSRect(VPSRect rect)
         {
             Top = rect.Top;
             Bottom = rect.Bottom;
@@ -234,15 +286,6 @@ namespace VPS.CustomData.WP
             Right = rect.Right;
         }
         #endregion
-
-        public override string ToString()
-        {
-            return 
-                Math.Abs(Left).ToString("0.##") + (Left >= 0 ? "E; " : "W") + " - " +
-                Math.Abs(Right).ToString("0.##") + (Right >= 0 ? "E; " : "W") + "; " +
-                Math.Abs(Bottom).ToString("0.##") + (Bottom >= 0 ? "N;" : "S") + " - " +
-                Math.Abs(Top).ToString("0.##") + (Top >= 0 ? "N;" : "S");
-        }
 
         #region 类型转换
         public RectLatLng ToWGS84()
@@ -260,7 +303,7 @@ namespace VPS.CustomData.WP
             Right = rect.Right;
         }
 
-        public void FromRect(VPS.CustomData.WP.Rect rect)
+        public void FromRect(VPS.CustomData.WP.VPSRect rect)
         {
             Top = rect.Top;
             Bottom = rect.Bottom;
@@ -272,7 +315,7 @@ namespace VPS.CustomData.WP
         #region 比较函数
         public override bool Equals(Object pllaobj)
         {
-            Rect plla = pllaobj as Rect;
+            VPSRect plla = pllaobj as VPSRect;
 
             if (plla == null)
                 return false;
@@ -287,7 +330,7 @@ namespace VPS.CustomData.WP
             return false;
         }
 
-        public static bool operator ==(Rect p1, Rect p2)
+        public static bool operator ==(VPSRect p1, VPSRect p2)
         {
             if (p1 == null || p2 == null)
                 return false;
@@ -302,11 +345,20 @@ namespace VPS.CustomData.WP
             return false;
         }
 
-        public static bool operator !=(Rect p1, Rect p2)
+        public static bool operator !=(VPSRect p1, VPSRect p2)
         {
             return !(p1 == p2);
         }
         #endregion
+
+        public override string ToString()
+        {
+            return
+                Math.Abs(Left).ToString("0.##") + (Left >= 0 ? "E; " : "W") + " - " +
+                Math.Abs(Right).ToString("0.##") + (Right >= 0 ? "E; " : "W") + "; " +
+                Math.Abs(Bottom).ToString("0.##") + (Bottom >= 0 ? "N;" : "S") + " - " +
+                Math.Abs(Top).ToString("0.##") + (Top >= 0 ? "N;" : "S");
+        }
 
         public override int GetHashCode()
         {
@@ -315,6 +367,288 @@ namespace VPS.CustomData.WP
                 BitConverter.DoubleToInt64Bits(Bottom) ^
                 BitConverter.DoubleToInt64Bits(Left) ^
                 BitConverter.DoubleToInt64Bits(Right));
+        }
+
+    }
+
+
+    public class VPSGeometry
+    {
+        private object obj = new object();
+        private List<VPSPosition> mPositionList;
+        private List<bool> mPositionSelected;
+        private List<bool> mPositionVisible;
+        public delegate void ChangeHandle();
+        public ChangeHandle GeometryChange;
+
+        private int mSelectedCount = 0;
+
+        public VPSGeometry()
+        {
+            mPositionList = new List<VPSPosition>();
+            mPositionSelected = new List<bool>();
+            mPositionVisible = new List<bool>();
+
+            mSelectedCount = 0;
+        }
+
+        public VPSGeometry(List<VPSPosition> posList)
+        {
+            mPositionList = new List<VPSPosition>();
+            mPositionSelected = new List<bool>();
+            mPositionVisible = new List<bool>();
+            foreach (VPSPosition pos in posList)
+            {
+                mPositionList.Add(pos);
+                mPositionSelected.Add(false);
+                mPositionVisible.Add(false);
+            }
+
+            mSelectedCount = 0;
+        }
+
+        public VPSGeometry(VPSGeometry geom)
+        {
+            mPositionList = new List<VPSPosition>(geom.mPositionList);
+            mPositionSelected = new List<bool>(geom.mPositionSelected);
+            mPositionVisible = new List<bool>(geom.mPositionVisible);
+
+            mSelectedCount = geom.mSelectedCount;
+        }
+
+        public void SetGeometryHandle(List<VPSPosition> posList)
+        {
+            lock (obj)
+            {
+                mPositionList.Clear();
+                mPositionSelected.Clear();
+                mPositionVisible.Clear();
+                foreach (VPSPosition pos in posList)
+                {
+                    mPositionList.Add(pos);
+                    mPositionSelected.Add(false);
+                    mPositionVisible.Add(false);
+                }
+
+                mSelectedCount = 0;
+            }
+        }
+
+        public void AppendGeometryHandle(List<VPSPosition> posList)
+        {
+            lock (obj)
+            {
+                foreach (VPSPosition pos in posList)
+                {
+                    mPositionList.Add(pos);
+                    mPositionSelected.Add(false);
+                    mPositionVisible.Add(false);
+                }
+            }
+        }
+
+        public void InsertGeometryHandle(int index, List<VPSPosition> posList)
+        {
+            lock (obj)
+            {
+                if (index < 0)
+                    index = 0;
+                if (index >= mPositionList.Count)
+                {
+                    AppendGeometryHandle(posList);
+                }
+                else
+                {
+                    foreach (VPSPosition pos in posList)
+                    {
+                        mPositionList.Insert(index, pos);
+                        mPositionSelected.Insert(index, false);
+                        mPositionVisible.Insert(index, false);
+                        ++index;
+                    }
+                }
+            }
+        }
+
+        public void ClearGeometryHandle()
+        {
+            lock (obj)
+            {
+                mPositionList.Clear();
+                mPositionSelected.Clear();
+                mPositionVisible.Clear();
+
+                mSelectedCount = 0;
+            }
+        }
+
+        public List<VPSPosition> GetGeometry()
+        {
+            lock (obj)
+            {
+                var posList = new List<VPSPosition>(mPositionList);
+                return posList;
+            }
+        }
+
+        public int AppendPositionHandle(VPSPosition pos)
+        {
+            lock (obj)
+            {
+                int index = mPositionList.Count;
+                mPositionList.Add(pos);
+                mPositionSelected.Add(false);
+                mPositionVisible.Add(false);
+
+                return index;
+            }
+        }
+
+        public int InsertPositionHandle(int index, VPSPosition pos)
+        {
+            lock (obj)
+            {
+                var position = new VPSPosition(pos);
+                if (index < 0)
+                    index = 0;
+                if (index >= mPositionList.Count)
+                {
+                    index = mPositionList.Count;
+
+                    mPositionList.Add(pos);
+                    mPositionSelected.Add(false);
+                    mPositionVisible.Add(false);
+                }
+                else
+                {
+                    mPositionList.Insert(index, position);
+                    mPositionSelected.Insert(index, false);
+                    mPositionVisible.Insert(index, false);
+                }
+                return index;
+            }
+        }
+
+        public int MovePositionHandle(int index, VPSPosition pos)
+        {
+            lock (obj)
+            {
+                if (index < 0 || index >= mPositionList.Count)
+                    return -1;
+                mPositionList[index] = pos;
+                return index;
+            }
+        }
+
+        public void DeletePositionHandle(int index)
+        {
+            lock (obj)
+            {
+                mPositionList.RemoveAt(index);
+                mPositionSelected.RemoveAt(index);
+                mPositionVisible.RemoveAt(index);
+            }
+        }
+
+        public VPSPosition GetPosition(int index)
+        {
+            lock (obj)
+            {
+                if (mPositionList.Count < 0)
+                    return VPSPosition.InvaildPosition;
+
+                if (index < 0)
+                    index = (index % mPositionList.Count + mPositionList.Count) % mPositionList.Count;
+                if (index >= mPositionList.Count)
+                    index = index % mPositionList.Count;
+
+                return new VPSPosition(mPositionList[index]);
+            }
+        }
+
+        public VPSPosition this[int index]
+        {
+            get
+            {
+                lock (obj)
+                {
+                    if (mPositionList.Count < 0)
+                        return VPSPosition.InvaildPosition;
+
+                    if (index < 0)
+                        index = (index % mPositionList.Count + mPositionList.Count) % mPositionList.Count;
+                    if (index >= mPositionList.Count)
+                        index = index % mPositionList.Count;
+                    return mPositionList[index];
+                }
+            }
+        }
+
+        public int GeometryCount
+        {
+            get
+            {
+                lock (obj)
+                {
+                    return mPositionList.Count;
+                }
+            }
+        }
+
+        public bool IsSelected(int index)
+        {
+            lock (obj)
+            {
+                if (mPositionSelected.Count != mPositionList.Count)
+                    throw (new Exception("VPSGeometry 数据源对齐异常"));
+                if (index < 0 || index >= mPositionList.Count)
+                    return false;
+
+                return mPositionSelected[index];
+            }
+        }
+
+        public bool Selected(int index, bool isSelected = true)
+        {
+            lock (obj)
+            {
+                if (mPositionSelected.Count != mPositionList.Count)
+                    throw (new Exception("VPSGeometry 数据源对齐异常"));
+                if (index < 0 || index >= mPositionList.Count)
+                    return false;
+
+                if (mPositionSelected[index] != isSelected)
+                {
+                    if (isSelected)
+                        mSelectedCount += 1;
+                    else
+                        mSelectedCount -= 1;
+                    mPositionSelected[index] = isSelected;
+                }
+                return true;
+            }
+        }
+
+        public void ClearSelected()
+        {
+            lock (obj)
+            {
+                mPositionSelected.Clear();
+                foreach(VPSPosition pos in mPositionList)
+                {
+                    mPositionSelected.Add(false);
+                }
+
+                mSelectedCount = 0;
+            }
+        }
+
+        public bool ExistSelected()
+        {
+            if (mSelectedCount > 0)
+                return true;
+            else
+                return false;
         }
     }
 }

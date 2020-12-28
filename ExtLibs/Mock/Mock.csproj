@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MavlinkMessagePlugin\MavlinkMessagePlugin.csproj" />
     <ProjectReference Include="..\Mavlink\MAVLink.csproj" />
   </ItemGroup>
 

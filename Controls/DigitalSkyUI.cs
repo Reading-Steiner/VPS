@@ -157,7 +157,7 @@ namespace VPS.Controls
 
         public void Activate()
         {
-            myGMAP1.MapProvider = GCSViews.FlightData.mymap.MapProvider;
+            //myGMAP1.MapProvider = GCSViews.FlightData.mymap.MapProvider;
             myGMAP1.MaxZoom = 20;
             myGMAP1.Zoom = 5;
             myGMAP1.DisableFocusOnMouseEnter = true;
@@ -266,13 +266,6 @@ namespace VPS.Controls
             var destlocalfile = artifactdir + Path.DirectorySeparatorChar + id + ".xml";
 
             File.WriteAllText(destlocalfile, xmlfile);
-
-            MAVFtp ftp = new MAVFtp(MainV2.comPort, (byte)MainV2.comPort.sysidcurrent,
-                (byte)MainV2.comPort.compidcurrent);
-
-            ftp.UploadFile(id + ".xml", destlocalfile, null);
-
-            ftp = null;
         }
 
         private async void But_uploadflightlog_Click(object sender, EventArgs e)

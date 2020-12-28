@@ -216,7 +216,7 @@ namespace VPS.Plugin
         public int AddWPtoList(MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
             double z, object tag = null)
         {
-            var wp = new CustomData.WP.Position(x, y, z);
+            var wp = new CustomData.WP.VPSPosition(x, y, z);
             wp.Command = cmd.ToString();
             if (tag != null)
                 wp.AltMode = tag.ToString();
@@ -235,7 +235,7 @@ namespace VPS.Plugin
             double y,
             double z, object tag = null)
         {
-            var wp = new CustomData.WP.Position(x, y, z);
+            var wp = new CustomData.WP.VPSPosition(x, y, z);
             wp.Command = cmd.ToString();
             if (tag != null)
                 wp.AltMode = tag.ToString();

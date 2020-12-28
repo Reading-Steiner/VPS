@@ -33,10 +33,10 @@ namespace VPS.Controls.MainInfo
         }
 
         #region HOME 初始位置
-        private delegate void SetPositionInThread(VPS.CustomData.WP.Position position);
-        private VPS.CustomData.WP.Position homePosition = null;
+        private delegate void SetPositionInThread(VPS.CustomData.WP.VPSPosition position);
+        private VPS.CustomData.WP.VPSPosition homePosition = null;
 
-        private void SetHomePosition(VPS.CustomData.WP.Position position)
+        private void SetHomePosition(VPS.CustomData.WP.VPSPosition position)
         {
             homePosition = position;
             HomePosition.CopyPosition(homePosition);
@@ -55,11 +55,11 @@ namespace VPS.Controls.MainInfo
         #endregion
 
         #region CURRENT 当前位置
-        private VPS.CustomData.WP.Position currentPosition = null;
+        private VPS.CustomData.WP.VPSPosition currentPosition = null;
 
-        public void SetCurrentPosition(VPS.CustomData.WP.Position position)
+        public void SetCurrentPosition(VPS.CustomData.WP.VPSPosition position)
         {
-            currentPosition = new VPS.CustomData.WP.Position(position);
+            currentPosition = new VPS.CustomData.WP.VPSPosition(position);
             if (!CustomData.EnumCollect.AltFrame.Modes.Contains(position.AltMode))
             {
                 currentPosition.AltMode = CustomData.EnumCollect.AltFrame.Absolute;
@@ -91,23 +91,23 @@ namespace VPS.Controls.MainInfo
         #endregion
 
         #region LAST 最后位置
-        private VPS.CustomData.WP.Position lastPosition = null;
+        private VPS.CustomData.WP.VPSPosition lastPosition = null;
         #endregion
 
         #region RECT 图层区域
-        private delegate void SetRectInThread(VPS.CustomData.WP.Rect rect);
-        private VPS.CustomData.WP.Rect workspace = new VPS.CustomData.WP.Rect();
+        private delegate void SetRectInThread(VPS.CustomData.WP.VPSRect rect);
+        private VPS.CustomData.WP.VPSRect workspace = new VPS.CustomData.WP.VPSRect();
 
-        private void SetWorkspace(VPS.CustomData.WP.Rect rect)
+        private void SetWorkspace(VPS.CustomData.WP.VPSRect rect)
         {
             workspace = rect;
             LayerRect.SetRect(workspace);
 
-            var rectList = new List<CustomData.WP.Position>() {
-                new CustomData.WP.Position(rect.Left, rect.Top),
-                new CustomData.WP.Position(rect.Right, rect.Top),
-                new CustomData.WP.Position(rect.Right, rect.Bottom),
-                new CustomData.WP.Position(rect.Left, rect.Bottom)
+            var rectList = new List<CustomData.WP.VPSPosition>() {
+                new CustomData.WP.VPSPosition(rect.Left, rect.Top),
+                new CustomData.WP.VPSPosition(rect.Right, rect.Top),
+                new CustomData.WP.VPSPosition(rect.Right, rect.Bottom),
+                new CustomData.WP.VPSPosition(rect.Left, rect.Bottom)
             };
             SetControlMainThread(LayerArea, 
                 (VPS.CustomData.WP.WPGlobalData.instance.GetPolygonArea(rectList)).ToString("0.##"));
@@ -117,7 +117,7 @@ namespace VPS.Controls.MainInfo
         #region HOME 初始位置变化响应函数
         public void HomeChangeHandle()
         {
-            VPS.CustomData.WP.Position home = CustomData.WP.WPGlobalData.instance.GetHomePosition();
+            VPS.CustomData.WP.VPSPosition home = CustomData.WP.WPGlobalData.instance.GetHomePosition();
             SetHomePosition(home);
         }
         #endregion
@@ -125,7 +125,7 @@ namespace VPS.Controls.MainInfo
         #region WPLIST 航线变化响应函数
         public void WPChangeHandle()
         {
-            List<VPS.CustomData.WP.Position> wpLists = CustomData.WP.WPGlobalData.instance.GetWPList();
+            List<VPS.CustomData.WP.VPSPosition> wpLists = CustomData.WP.WPGlobalData.instance.GetWPList();
             //去除Home点
             if (wpLists.Count > 0 && wpLists[0].Command == CustomData.WP.WPCommands.HomeCommand)
             {
@@ -176,7 +176,7 @@ namespace VPS.Controls.MainInfo
         #region WPLIST 航线变化响应函数
         public void WorkspaceRectChangeHandle()
         {
-            VPS.CustomData.WP.Rect workspace = CustomData.WP.WPGlobalData.instance.GetLayerRect();
+            VPS.CustomData.WP.VPSRect workspace = CustomData.WP.WPGlobalData.instance.GetLayerRect();
 
             SetWorkspace(workspace);
 

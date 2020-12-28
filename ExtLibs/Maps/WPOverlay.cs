@@ -29,12 +29,18 @@ namespace VPS.ArduPilot
         {
             overlay.Clear();
 
+            GMapPolygon fencepoly = null;
+
             double maxlat = -180;
             double maxlong = -180;
             double minlat = 180;
             double minlong = 180;
 
-            if (home != PointLatLngAlt.Zero)
+            Func<MAVLink.MAV_FRAME, double, double, double> gethomealt = (altmode, lat, lng) =>
+                GetHomeAlt(altmode, home.Alt, lat, lng);
+
+
+            if (home != null &&home != PointLatLngAlt.Zero )
             {
                 home.Tag = "H";
                 pointlist.Add(home);
@@ -48,8 +54,9 @@ namespace VPS.ArduPilot
                 var itemprev = itemtuple.Item1;
                 var item = itemtuple.Item2;
                 var itemnext = itemtuple.Item3;
+
                 if (item == null)
-                    continue;
+                    break;
 
                 string command = item.Tag;
 
@@ -60,21 +67,27 @@ namespace VPS.ArduPilot
                 if (command == "SPLINE_WAYPOINT")
                 {
                     PointLatLngAlt wp = new PointLatLngAlt(item);
-                    wp.Tag2 = "spline";
+                    wp.Tag2 = "SPLINE_WAYPOINT";
                     pointlist.Add(wp);
 
                     fullpointlist.Add(pointlist[pointlist.Count - 1]);
 
                     addpolygonmarker((a).ToString(), wp, Color.Green, wpradius);
                 }
-                else if (command == "WAYPOINT" && item.Lat == 0 && item.Lng == 0)
-                {
-                    fullpointlist.Add(pointlist[pointlist.Count - 1]);
-                }
-                else
+                else if (command == "WAYPOINT")
                 {
                     PointLatLngAlt wp = new PointLatLngAlt(item);
-                    wp.Tag2 = "";
+                    wp.Tag2 = "WAYPOINT";
+                    pointlist.Add(wp);
+
+                    fullpointlist.Add(pointlist[pointlist.Count - 1]);
+
+                    addpolygonmarker((a).ToString(), wp, Color.Green, wpradius);
+                }
+                else if(command == "INTERNALS_WAYPOINT")
+                {
+                    PointLatLngAlt wp = new PointLatLngAlt(item);
+                    wp.Tag2 = "INTERNALS_WAYPOINT";
                     pointlist.Add(wp);
                     fullpointlist.Add(pointlist[pointlist.Count - 1]);
 
@@ -87,7 +100,6 @@ namespace VPS.ArduPilot
 
                 a++;
             }
-
             RegenerateWPRoute(fullpointlist, home);
         }
 

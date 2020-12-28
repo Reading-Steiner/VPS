@@ -66,18 +66,18 @@ namespace VPS.Controls.CustomControls
         #endregion
 
         #region 自定义访问器
-        private VPS.CustomData.WP.Position Position = new VPS.CustomData.WP.Position();
+        private VPS.CustomData.WP.VPSPosition Position = new VPS.CustomData.WP.VPSPosition();
 
         #region Set
-        public void SetPosition(VPS.CustomData.WP.Position value)
+        public void SetPosition(VPS.CustomData.WP.VPSPosition value)
         {
-            Position = new VPS.CustomData.WP.Position(value);
+            Position = new VPS.CustomData.WP.VPSPosition(value);
             Invaild();
         }
         #endregion
 
         #region Copy
-        public void CopyPosition(VPS.CustomData.WP.Position value)
+        public void CopyPosition(VPS.CustomData.WP.VPSPosition value)
         {
             Position = value;
             Invaild();
@@ -85,14 +85,14 @@ namespace VPS.Controls.CustomControls
         #endregion
 
         #region Get
-        public VPS.CustomData.WP.Position GetPosition()
+        public VPS.CustomData.WP.VPSPosition GetPosition()
         {
             return Position;
         }
         #endregion
 
         #region Delegate
-        public delegate void PositionChangeHandle(VPS.CustomData.WP.Position position);
+        public delegate void PositionChangeHandle(VPS.CustomData.WP.VPSPosition position);
         public PositionChangeHandle PositionChange;
         #endregion
 

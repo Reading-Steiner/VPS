@@ -65,10 +65,10 @@ namespace VPS.Controls.CustomControls
         #endregion
 
         #region 自定义访问器
-        private VPS.CustomData.WP.Rect rect = new VPS.CustomData.WP.Rect();
+        private VPS.CustomData.WP.VPSRect rect = new VPS.CustomData.WP.VPSRect();
 
         #region Set
-        public void SetRect(VPS.CustomData.WP.Rect value)
+        public void SetRect(VPS.CustomData.WP.VPSRect value)
         {
             rect.FromRect(value);
 
@@ -77,7 +77,7 @@ namespace VPS.Controls.CustomControls
         #endregion
 
         #region Copy
-        public void CopyRect(VPS.CustomData.WP.Rect value)
+        public void CopyRect(VPS.CustomData.WP.VPSRect value)
         {
             rect = value;
 
@@ -86,14 +86,14 @@ namespace VPS.Controls.CustomControls
         #endregion
 
         #region Get
-        public VPS.CustomData.WP.Rect GetRect()
+        public VPS.CustomData.WP.VPSRect GetRect()
         {
-            return new VPS.CustomData.WP.Rect(rect);
+            return new VPS.CustomData.WP.VPSRect(rect);
         }
         #endregion
 
         #region Delagate
-        public delegate void RectChangeHandle(VPS.CustomData.WP.Rect rect);
+        public delegate void RectChangeHandle(VPS.CustomData.WP.VPSRect rect);
         public RectChangeHandle RectChange;
         #endregion
 

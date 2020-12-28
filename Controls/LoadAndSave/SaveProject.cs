@@ -61,8 +61,8 @@ namespace VPS.Controls.LoadAndSave
                     data.wp = info.wpList.features;
                     data.poly = info.polygon.features;
                     data.layer = info.layer;
-                    data.layerRect = new CustomData.WP.Rect(info.layerRect);
-                    data.homePosition = new CustomData.WP.Position(info.homePosition);
+                    data.layerRect = new CustomData.WP.VPSRect(info.layerRect);
+                    data.homePosition = new CustomData.WP.VPSPosition(info.homePosition);
                     data.isLeftHide = info.isLeftHide;
                     data.isBottomHide = info.isBottomHide;
                     data.isConfigGridVisible = info.isConfigGrid;
@@ -111,14 +111,14 @@ namespace VPS.Controls.LoadAndSave
         [TypeConverter(typeof(ExpandableObjectConverter))]
         [Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
         public ProjectListInfo wpList { set; get; }
-            = new ProjectListInfo(new List<CustomData.WP.Position>());
+            = new ProjectListInfo(new List<CustomData.WP.VPSPosition>());
 
         [Category("要素集合"), DisplayName("区域")]
         [PropertyOrder(0b00000010)]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         [Editor(typeof(CustomControls.PositionListUITypeEditor), typeof(UITypeEditor))]
         public ProjectListInfo polygon { set; get; }
-            = new ProjectListInfo(new List<CustomData.WP.Position>());
+            = new ProjectListInfo(new List<CustomData.WP.VPSPosition>());
 
         [Category("工作区"), DisplayName("区域数据源")]
         [PropertyOrder(0b00010001)]
@@ -151,12 +151,12 @@ namespace VPS.Controls.LoadAndSave
 
     public class ProjectListInfo
     {
-        public List<CustomData.WP.Position> features = new List<CustomData.WP.Position>();
+        public List<CustomData.WP.VPSPosition> features = new List<CustomData.WP.VPSPosition>();
 
 
-        public ProjectListInfo(List<CustomData.WP.Position> list)
+        public ProjectListInfo(List<CustomData.WP.VPSPosition> list)
         {
-            features = new List<CustomData.WP.Position>(list);
+            features = new List<CustomData.WP.VPSPosition>(list);
         }
 
         [Category("要素集合"), DisplayName("要素数量"), ReadOnly(true)]
@@ -171,13 +171,13 @@ namespace VPS.Controls.LoadAndSave
             return str;
         }
 
-        public void AddList(List<CustomData.WP.Position> list)
+        public void AddList(List<CustomData.WP.VPSPosition> list)
         {
-            features = new List<CustomData.WP.Position>(list);
+            features = new List<CustomData.WP.VPSPosition>(list);
         }
     }
 
-    public class Position : VPS.CustomData.WP.Position
+    public class Position : VPS.CustomData.WP.VPSPosition
     {
         [Category("位置"), DisplayName("\t\t\t\t\t维度")]
         [NotifyParentProperty(true)]
@@ -212,7 +212,7 @@ namespace VPS.Controls.LoadAndSave
             AltMode = point.Tag2;
         }
 
-        public Position(CustomData.WP.Position point)
+        public Position(CustomData.WP.VPSPosition point)
         {
             Lng = point.Lng;
             Lat = point.Lat;
@@ -250,7 +250,7 @@ namespace VPS.Controls.LoadAndSave
         }
     }
 
-    public class Rect : VPS.CustomData.WP.Rect
+    public class Rect : VPS.CustomData.WP.VPSRect
     {
         [Category("区域"), DisplayName("\t\t\t\t上")]
         public override double Top { get; set; } = 0;
@@ -302,7 +302,7 @@ namespace VPS.Controls.LoadAndSave
             Right = rect.Right;
         }
 
-        public Rect(VPS.CustomData.WP.Rect rect)
+        public Rect(VPS.CustomData.WP.VPSRect rect)
         {
             Top = rect.Top;
             Bottom = rect.Bottom;

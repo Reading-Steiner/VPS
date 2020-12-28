@@ -33,7 +33,7 @@ namespace VPS.CustomFile
         public event Meaasge OnWarnMessage;
 
 
-        public delegate void ListChange(List<CustomData.WP.Position> list);
+        public delegate void ListChange(List<CustomData.WP.VPSPosition> list);
         public static event ListChange OnAddList;
 
         //[DllImport("gdal232.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -157,10 +157,10 @@ namespace VPS.CustomFile
                             altmode = CustomData.EnumCollect.AltFrame.Absolute;
                             break;
                     }
-                    var list = new List<CustomData.WP.Position>();
+                    var list = new List<CustomData.WP.VPSPosition>();
                     foreach (var loc in ls.Coordinates)
                     {
-                        var point = new CustomData.WP.Position(loc.Latitude, loc.Longitude, (int)loc.Altitude);
+                        var point = new CustomData.WP.VPSPosition(loc.Latitude, loc.Longitude, (int)loc.Altitude);
                         point.Command = CustomData.WP.WPCommands.DefaultWPCommand;
                         point.AltMode = altmode;
                         list.Add(point);
@@ -185,39 +185,39 @@ namespace VPS.CustomFile
         public class KMLDataSet
         {
             public string coordinates;
-            public List<List<CustomData.WP.Position>> points;
+            public List<List<CustomData.WP.VPSPosition>> points;
 
             public KMLDataSet()
             {
                 this.coordinates = KnownCoordinateSystems.Geographic.World.WGS1984.ToEsriString();
 
-                points = new List<List<CustomData.WP.Position>>();
+                points = new List<List<CustomData.WP.VPSPosition>>();
             }
 
-            public void AddPolygon(List<CustomData.WP.Position> poly)
+            public void AddPolygon(List<CustomData.WP.VPSPosition> poly)
             {
                 points.Add(poly);
             }
 
-            public void AddPoint(CustomData.WP.Position point)
+            public void AddPoint(CustomData.WP.VPSPosition point)
             {
                 if (points.Count > 0)
                     points[points.Count - 1].Add(point);
                 else
                 {
-                    points.Add(new List<CustomData.WP.Position>());
+                    points.Add(new List<CustomData.WP.VPSPosition>());
                     points[points.Count - 1].Add(point);
                 }
 
             }
 
-            public void AddPoint(int indedx, CustomData.WP.Position point)
+            public void AddPoint(int indedx, CustomData.WP.VPSPosition point)
             {
                 if (points.Count > 0)
                     points[points.Count - 1].Add(point);
                 else
                 {
-                    points.Add(new List<CustomData.WP.Position>());
+                    points.Add(new List<CustomData.WP.VPSPosition>());
                     points[points.Count - 1].Add(point);
                 }
 

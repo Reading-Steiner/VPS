@@ -541,11 +541,11 @@ namespace VPS.Controls.LoadAndSave
     }
     class FeatureInfo
     {
-        public List<CustomData.WP.Position> features;
+        public List<CustomData.WP.VPSPosition> features;
 
-        public FeatureInfo(List<CustomData.WP.Position> list)
+        public FeatureInfo(List<CustomData.WP.VPSPosition> list)
         {
-            features = new List<CustomData.WP.Position>(list);
+            features = new List<CustomData.WP.VPSPosition>(list);
             averAbsolute = VPS.CustomData.WP.WPGlobalData.GetAverAbsoluteAlt(list);
             ValidTerrain = new ValidAltPoint(
                 VPS.CustomData.WP.WPGlobalData.GetValidPoint(list));

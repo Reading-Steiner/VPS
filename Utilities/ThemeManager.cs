@@ -117,15 +117,6 @@ namespace VPS.Utilities
 
             MainV2.TerminalTheming = terminalTheming;
             Settings.Instance["terminaltheming"] = terminalTheming.ToString();
-            //HUD Color setting
-            if (GCSViews.FlightData.myhud != null)
-            {
-                GCSViews.FlightData.myhud.groundColor1 = ThemeManager.HudGroundTop;
-                GCSViews.FlightData.myhud.groundColor2 = ThemeManager.HudGroundBot;
-                GCSViews.FlightData.myhud.skyColor1 = ThemeManager.HudSkyTop;
-                GCSViews.FlightData.myhud.skyColor2 = ThemeManager.HudSkyBot;
-                GCSViews.FlightData.myhud.hudcolor = ThemeManager.HudText;
-            }
         }
     }
 
@@ -365,7 +356,7 @@ namespace VPS.Utilities
                                  (x + ctl.Location.X) + ";' >");
                 }
 
-                if (ctl.GetType() == typeof(ComboBox) || ctl.GetType() == typeof(MavlinkComboBox))
+                if (ctl.GetType() == typeof(ComboBox))
                 {
                     st.WriteLine(@"<select name='{0}'>", ctl.Name);
                     (ctl as ComboBox).Items.ForEach(a => st.WriteLine(@"<option value='{0}'>{1}</option>", a, a));
@@ -497,10 +488,9 @@ mc:Ignorable=""d""
         {
             foreach (Control ctl in control.Controls)
             {
-                if (ctl is QuickView || ctl is ServoOptions || ctl is ModifyandSet
+                if (ctl is QuickView || ctl is ModifyandSet
                     || ctl is Coords /*|| ctl is AGaugeApp.AGauge*/|| ctl is VPS.Controls.HUD
-                    || ctl is ImageLabel || ctl is RelayOptions || ctl is CheckListControl
-                    || ctl is MavlinkCheckBox)
+                    || ctl is ImageLabel|| ctl is CheckListControl)
                 {
                     //   st.WriteLine(@"<WindowsFormsHost HorizontalAlignment=""Left"" VerticalAlignment=""Top"" Margin=""" + ctl.Location.X + "," + ctl.Location.Y + @",0,0"" Width=""" + ctl.Width + @""" Height=""" + ctl.Height + @""">");
 
@@ -923,21 +913,21 @@ mc:Ignorable=""d""
 
                     dgv.AlternatingRowsDefaultCellStyle.BackColor = BGColor;
                 }
-                else if (ctl.GetType() == typeof(CheckBox) || ctl.GetType() == typeof(MavlinkCheckBox))
+                else if (ctl.GetType() == typeof(CheckBox))
                 {
                     ctl.BackColor = BGColor;
                     ctl.ForeColor = TextColor;
                     CheckBox CHK = (CheckBox)ctl;
                     // CHK.FlatStyle = FlatStyle.Flat;
                 }
-                else if (ctl.GetType() == typeof(ComboBox) || ctl.GetType() == typeof(MavlinkComboBox))
+                else if (ctl.GetType() == typeof(ComboBox))
                 {
                     ctl.BackColor = ControlBGColor;
                     ctl.ForeColor = TextColor;
                     ComboBox CMB = (ComboBox)ctl;
                     CMB.FlatStyle = FlatStyle.Flat;
                 }
-                else if (ctl.GetType() == typeof(NumericUpDown) || ctl.GetType() == typeof(MavlinkNumericUpDown))
+                else if (ctl.GetType() == typeof(NumericUpDown))
                 {
                     ctl.BackColor = ControlBGColor;
                     ctl.ForeColor = TextColor;
@@ -1216,7 +1206,7 @@ mc:Ignorable=""d""
                     dgv.ColumnHeadersDefaultCellStyle = hs;
                     dgv.RowHeadersDefaultCellStyle = hs;
                 }
-                else if (ctl.GetType() == typeof(CheckBox) || ctl.GetType() == typeof(MavlinkCheckBox))
+                else if (ctl.GetType() == typeof(CheckBox))
                 {
                     if (!(ctl.Tag is string && (string)ctl.Tag == "custom"))
                     {
@@ -1226,14 +1216,14 @@ mc:Ignorable=""d""
                     CheckBox CHK = (CheckBox)ctl;
                     // CHK.FlatStyle = FlatStyle.Flat;
                 }
-                else if (ctl.GetType() == typeof(ComboBox) || ctl.GetType() == typeof(MavlinkComboBox))
+                else if (ctl.GetType() == typeof(ComboBox))
                 {
                     ctl.BackColor = ControlBGColor;
                     ctl.ForeColor = TextColor;
                     ComboBox CMB = (ComboBox)ctl;
                     CMB.FlatStyle = FlatStyle.Flat;
                 }
-                else if (ctl.GetType() == typeof(NumericUpDown) || ctl.GetType() == typeof(MavlinkNumericUpDown))
+                else if (ctl.GetType() == typeof(NumericUpDown))
                 {
                     ctl.BackColor = BGColorTextBox;
                     ctl.ForeColor = TextColor;

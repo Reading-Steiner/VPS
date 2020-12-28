@@ -373,12 +373,12 @@ namespace VPS.Controls.Grid
         #endregion
 
         #region 重要参数
-        public delegate void ListChangedHandle(List<CustomData.WP.Position> wpList);
+        public delegate void ListChangedHandle(List<CustomData.WP.VPSPosition> wpList);
         public delegate void IntegerChangeHandler(int integer);
         public delegate void StateChangeHandler();
 
         #region 航线记录
-        List<List<CustomData.WP.Position>> history = new List<List<CustomData.WP.Position>>();
+        List<List<CustomData.WP.VPSPosition>> history = new List<List<CustomData.WP.VPSPosition>>();
 
         public IntegerChangeHandler historyChange;
 
@@ -448,11 +448,11 @@ namespace VPS.Controls.Grid
         #endregion
 
         #region 航线
-        List<CustomData.WP.Position> grid = new List<CustomData.WP.Position>();
-        List<CustomData.WP.Position> wp = new List<CustomData.WP.Position>();
+        List<CustomData.WP.VPSPosition> grid = new List<CustomData.WP.VPSPosition>();
+        List<CustomData.WP.VPSPosition> wp = new List<CustomData.WP.VPSPosition>();
 
         #region 设置航线
-        public void SetWPListHandle(List<CustomData.WP.Position> wpList, bool history = true)
+        public void SetWPListHandle(List<CustomData.WP.VPSPosition> wpList, bool history = true)
         {
             if (history)
                 AddHistoryList();
@@ -463,7 +463,7 @@ namespace VPS.Controls.Grid
                     wpList.RemoveAt(0);
             }
 
-            wp = new List<CustomData.WP.Position>(wpList);
+            wp = new List<CustomData.WP.VPSPosition>(wpList);
             SetLockWPToolTips();
 
             DataTable set = new DataTable();
@@ -485,16 +485,16 @@ namespace VPS.Controls.Grid
         #endregion
 
         #region 获取航线
-        public List<CustomData.WP.Position> GetWPList()
+        public List<CustomData.WP.VPSPosition> GetWPList()
         {
-            List<CustomData.WP.Position> wpList;
+            List<CustomData.WP.VPSPosition> wpList;
             if ((bool)ReadControlMainThread(CHK_AppendWP))
             {
-                wpList = new List<CustomData.WP.Position>(wp);
+                wpList = new List<CustomData.WP.VPSPosition>(wp);
                 wpList.AddRange(grid);
             }
             else
-                wpList = new List<CustomData.WP.Position>(grid);
+                wpList = new List<CustomData.WP.VPSPosition>(grid);
 
             for (int i = 0; i < wpList.Count; i++)
             {
@@ -509,7 +509,7 @@ namespace VPS.Controls.Grid
         #endregion
 
         #region 区域
-        List<CustomData.WP.Position> poly = new List<CustomData.WP.Position>();
+        List<CustomData.WP.VPSPosition> poly = new List<CustomData.WP.VPSPosition>();
 
         #region 设置区域
         public void SetPolygonList()
@@ -517,7 +517,7 @@ namespace VPS.Controls.Grid
             if (gridGrenate)
                 return;
             var polygons = CustomData.WP.WPGlobalData.instance.GetPolyList();
-            poly = new List<CustomData.WP.Position>(polygons);
+            poly = new List<CustomData.WP.VPSPosition>(polygons);
 
             DataTable set = new DataTable();
             set.Columns.Add("key");
@@ -752,7 +752,7 @@ namespace VPS.Controls.Grid
                     distance, spacing, angle,
                     overshoot, (double)instance.NUM_overshoot2.Value,
                     (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), startfrom), false,
-                    num_lane_dist, num_landin, MainV2.comPort.MAV.cs.PlannedHomeLocation).ConfigureAwait(true);
+                    num_lane_dist, num_landin, new PointLatLngAlt()).ConfigureAwait(true);
             }
             else
             {
@@ -763,7 +763,7 @@ namespace VPS.Controls.Grid
                     distance, spacing, angle,
                     overshoot, overshoot2,
                     (Utilities.Grid.StartPosition)Enum.Parse(typeof(Utilities.Grid.StartPosition), startfrom), false,
-                    num_lane_dist, num_landin, MainV2.comPort.MAV.cs.PlannedHomeLocation).ConfigureAwait(true);
+                    num_lane_dist, num_landin, new PointLatLngAlt()).ConfigureAwait(true);
             }
 
             if (wp.Count == 0)
@@ -784,7 +784,7 @@ namespace VPS.Controls.Grid
                     distance, spacing, angle + 90.0,
                     overshoot, overshoot2,
                     Utilities.Grid.StartPosition.Point, false,
-                    num_lane_dist, num_landin, MainV2.comPort.MAV.cs.PlannedHomeLocation).ConfigureAwait(true));
+                    num_lane_dist, num_landin, new PointLatLngAlt()).ConfigureAwait(true));
             }
 
             if (wp.Count == 0)
@@ -802,7 +802,7 @@ namespace VPS.Controls.Grid
             {
                 if (wp[index].Tag == "S" || wp[index].Tag == "E")
                 {
-                    var point = new CustomData.WP.Position(wp[index]);
+                    var point = new CustomData.WP.VPSPosition(wp[index]);
                     point.Command = CustomData.WP.WPCommands.DefaultWPCommand;
                     point.AltMode = CustomData.EnumCollect.AltFrame.Relative;
 
@@ -815,7 +815,7 @@ namespace VPS.Controls.Grid
                         continue;
                     else
                     {
-                        var point = new CustomData.WP.Position(wp[index]);
+                        var point = new CustomData.WP.VPSPosition(wp[index]);
                         point.Command = CustomData.WP.WPCommands.DefaultWPCommand;
                         point.AltMode = CustomData.EnumCollect.AltFrame.Relative;
 
@@ -830,7 +830,7 @@ namespace VPS.Controls.Grid
                         continue;
                     else
                     {
-                        var point = new CustomData.WP.Position(wp[index]);
+                        var point = new CustomData.WP.VPSPosition(wp[index]);
                         point.Command = CustomData.WP.WPCommands.DefaultWPCommand;
                         point.AltMode = CustomData.EnumCollect.AltFrame.Relative;
 
@@ -842,7 +842,7 @@ namespace VPS.Controls.Grid
                 {
                     if (chk_withClick)
                     {
-                        var point = new CustomData.WP.Position(wp[index]);
+                        var point = new CustomData.WP.VPSPosition(wp[index]);
                         point.Command = CustomData.WP.WPCommands.ClickWPCommand;
                         point.AltMode = CustomData.EnumCollect.AltFrame.Relative;
 
@@ -930,7 +930,7 @@ namespace VPS.Controls.Grid
         #region 参数计算
 
         #region 获取航飞角度
-        private double getAngleOfLongestSide(List<CustomData.WP.Position> list)
+        private double getAngleOfLongestSide(List<CustomData.WP.VPSPosition> list)
         {
             if (list.Count == 0)
                 return 0;
@@ -979,7 +979,7 @@ namespace VPS.Controls.Grid
         #endregion
 
         #region 获取航摄基线
-        private int GetBaseAlt(List<CustomData.WP.Position> list)
+        private int GetBaseAlt(List<CustomData.WP.VPSPosition> list)
         {
             double totalWP = 0;
             int totalCount = 0;
@@ -1528,14 +1528,14 @@ namespace VPS.Controls.Grid
             TXT_PolygonInfo.Text = "   经度：null   纬度：null";
         }
 
-        private delegate CustomData.WP.Position GetStartPointInThread();
-        public CustomData.WP.Position GetStartPoint()
+        private delegate CustomData.WP.VPSPosition GetStartPointInThread();
+        public CustomData.WP.VPSPosition GetStartPoint()
         {
             if (this.InvokeRequired)
             {
                 GetStartPointInThread inThread = new GetStartPointInThread(GetStartPoint);
                 IAsyncResult iar = this.BeginInvoke(inThread);
-                return (CustomData.WP.Position)this.EndInvoke(iar);
+                return (CustomData.WP.VPSPosition)this.EndInvoke(iar);
             }
             else
             {
@@ -1567,7 +1567,7 @@ namespace VPS.Controls.Grid
 
                 }
 
-                return new CustomData.WP.Position();
+                return new CustomData.WP.VPSPosition();
             }
 
         }

@@ -142,7 +142,7 @@ namespace VPS.Controls.Command
         #region 绑定数据源格式
 
         const string MainHandle = "Command";
-        private DataSet BindingDataSource(VPS.CustomData.WP.Position home, List<VPS.CustomData.WP.Position> wpList)
+        private DataSet BindingDataSource(VPS.CustomData.WP.VPSPosition home, List<VPS.CustomData.WP.VPSPosition> wpList)
         {
             DataSet set = new DataSet(MainHandle);
 
@@ -162,7 +162,7 @@ namespace VPS.Controls.Command
 
         #region 绑定数据
         private void BindingData(
-            DataTable table, VPS.CustomData.WP.Position home, List<VPS.CustomData.WP.Position> wpList)
+            DataTable table, VPS.CustomData.WP.VPSPosition home, List<VPS.CustomData.WP.VPSPosition> wpList)
         {
             if (isEdit)
                 return;
@@ -184,7 +184,7 @@ namespace VPS.Controls.Command
                 table.BeginLoadData();
                 table.Rows.Clear();
 
-                VPS.CustomData.WP.Position wpLast = home;
+                VPS.CustomData.WP.VPSPosition wpLast = home;
                 foreach (var wp in wpList)
                 {
                     if (CustomData.WP.WPCommands.CoordsWPCommands.Contains(wp.Command))
@@ -304,7 +304,7 @@ namespace VPS.Controls.Command
 
         #region 添加数据
         private void SetCommandParam(
-            VPS.CustomData.WP.Position wp, VPS.CustomData.WP.Position wpLast, ref DataRow row)
+            VPS.CustomData.WP.VPSPosition wp, VPS.CustomData.WP.VPSPosition wpLast, ref DataRow row)
         {
             if (wp == null || wpLast == null)
                 return;
@@ -351,11 +351,9 @@ namespace VPS.Controls.Command
                 row[MGRSColumnName] = ((MGRS)new Geographic(wp.Lng, wp.Lat)).ToString();
 
 
-                CustomData.WP.WPGlobalData.WPChangeAltFrame(
-                    wpLast, baseAlt, CustomData.EnumCollect.AltFrame.Absolute);
+                VPS.CustomData.WP.VPSPosition.ChangeAltFrame(wpLast, baseAlt, CustomData.EnumCollect.AltFrame.Absolute);
 
-                CustomData.WP.WPGlobalData.WPChangeAltFrame(
-                    wp, baseAlt, CustomData.EnumCollect.AltFrame.Absolute);
+                VPS.CustomData.WP.VPSPosition.ChangeAltFrame(wp, baseAlt, CustomData.EnumCollect.AltFrame.Absolute);
 
                 double height = wp.Alt - wpLast.Alt;
                 double distance = wp.ToWGS84().GetDistance(wpLast.ToWGS84());
@@ -603,7 +601,7 @@ namespace VPS.Controls.Command
         #endregion
 
         #region SetWP 方法
-        private void SetWP(int index, VPS.CustomData.WP.Position wp)
+        private void SetWP(int index, VPS.CustomData.WP.VPSPosition wp)
         {
             CustomData.WP.WPGlobalData.instance.SetWPHandle(index, wp);
         }
@@ -621,9 +619,9 @@ namespace VPS.Controls.Command
         #region 航点变化响应函数
         public void WPChangeHandle()
         {
-            List<VPS.CustomData.WP.Position> wpLists = CustomData.WP.WPGlobalData.instance.GetWPList();
+            List<VPS.CustomData.WP.VPSPosition> wpLists = CustomData.WP.WPGlobalData.instance.GetWPList();
 
-            VPS.CustomData.WP.Position home = null;
+            VPS.CustomData.WP.VPSPosition home = null;
             if (wpLists[0].Command == CustomData.WP.WPCommands.HomeCommand)
             {
                 home = wpLists[0];
@@ -641,7 +639,7 @@ namespace VPS.Controls.Command
         #region 初始位置变化响应函数
         public void HomeChangeHandle()
         {
-            CustomData.WP.Position home = CustomData.WP.WPGlobalData.instance.GetHomePosition();
+            CustomData.WP.VPSPosition home = CustomData.WP.WPGlobalData.instance.GetHomePosition();
             if (home.Command != CustomData.WP.WPCommands.HomeCommand)
                 home.Command = CustomData.WP.WPCommands.HomeCommand;
 
@@ -653,7 +651,7 @@ namespace VPS.Controls.Command
         #endregion
 
         #region 更改初始位置函数
-        private void ChangeHomeHandle(VPS.CustomData.WP.Position home)
+        private void ChangeHomeHandle(VPS.CustomData.WP.VPSPosition home)
         {
             if (home.Command != CustomData.WP.WPCommands.HomeCommand)
                 home.Command = CustomData.WP.WPCommands.HomeCommand;
@@ -666,7 +664,7 @@ namespace VPS.Controls.Command
         #endregion
 
         #region 设置初始位置
-        public void SetHomePosition(VPS.CustomData.WP.Position home)
+        public void SetHomePosition(VPS.CustomData.WP.VPSPosition home)
         {
             if (home.Command != CustomData.WP.WPCommands.HomeCommand)
                 home.Command = CustomData.WP.WPCommands.HomeCommand;
@@ -968,7 +966,7 @@ namespace VPS.Controls.Command
             baseAlt = BaseAlt.Value;
         }
 
-        private void GeneralBaseAlt(List<VPS.CustomData.WP.Position> wpLists)
+        private void GeneralBaseAlt(List<VPS.CustomData.WP.VPSPosition> wpLists)
         {
             double totalAlt = 0.0;
             double maxAlt = 0.0;

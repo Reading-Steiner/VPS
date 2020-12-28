@@ -25,7 +25,7 @@ namespace VPS.Controls.Layer
         string FileName = "";
         string FullFileName = "";
         string FileExtend = "";
-        CustomData.WP.Rect LayerRect;
+        CustomData.WP.VPSRect LayerRect;
         long FileSize = 0;
         long RasterXSize = 0;
         long RasterYSize = 0;
@@ -210,7 +210,7 @@ namespace VPS.Controls.Layer
             FileName = "";
             FullFileName = "";
             FileExtend = "";
-            LayerRect = new CustomData.WP.Rect();
+            LayerRect = new CustomData.WP.VPSRect();
             BoundDisplay.CopyRect(LayerRect);
             FileSize = 0;
             RasterXSize = 0;
@@ -298,10 +298,10 @@ namespace VPS.Controls.Layer
                         {
                             RasterXSize = info.RasterXSize;
                             RasterYSize = info.RasterYSize;
-                            LayerRect = new CustomData.WP.Rect(info.Rect);
+                            LayerRect = new CustomData.WP.VPSRect(info.Rect);
                             BoundDisplay.CopyRect(LayerRect);
 
-                            var PointHome = new CustomData.WP.Position(info.Rect.LocationTopLeft);
+                            var PointHome = new CustomData.WP.VPSPosition(info.Rect.LocationTopLeft);
                             PointHome.Command = CustomData.WP.WPCommands.HomeCommand;
                             PointHome.AltMode = "Terrain";
                             OriginPosition.CopyPosition(PointHome); 
@@ -350,7 +350,7 @@ namespace VPS.Controls.Layer
                     {
                         var info = GDAL.GDAL.LoadImageInfo(openFile.FileName);
                         {
-                            LayerRect = new CustomData.WP.Rect(info.Rect);
+                            LayerRect = new CustomData.WP.VPSRect(info.Rect);
                             BoundDisplay.CopyRect(LayerRect);
                             RasterXSize = info.RasterXSize;
                             RasterYSize = info.RasterYSize;

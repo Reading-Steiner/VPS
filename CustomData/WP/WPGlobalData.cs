@@ -21,7 +21,7 @@ namespace VPS.CustomData.WP
         #region 参数
         private void LoadConfig()
         {
-            VPS.CustomData.WP.Position defHome = new VPS.CustomData.WP.Position();
+            VPS.CustomData.WP.VPSPosition defHome = new VPS.CustomData.WP.VPSPosition();
             double defLeft = 0; double defRight = 0;
             double defTop = 0; double defBottom = 0;
 
@@ -81,7 +81,7 @@ namespace VPS.CustomData.WP
             }
             if (!string.IsNullOrEmpty(defaultLayerPath))
                 SetLayerLimit(
-                    new VPS.CustomData.WP.Rect(defTop, defBottom, defLeft, defRight),
+                    new VPS.CustomData.WP.VPSRect(defTop, defBottom, defLeft, defRight),
                     defHome, true);
 
         }
@@ -150,18 +150,18 @@ namespace VPS.CustomData.WP
         #endregion
 
         public delegate void ChangeHandle();
-        public delegate void PositionChangeHandle(VPS.CustomData.WP.Position position);
-        public delegate void RectChangeHandle(VPS.CustomData.WP.Rect rect);
+        public delegate void PositionChangeHandle(VPS.CustomData.WP.VPSPosition position);
+        public delegate void RectChangeHandle(VPS.CustomData.WP.VPSRect rect);
         public delegate void CountChangeHandle(int count);
 
         #region WPLIST 航点
-        private List<VPS.CustomData.WP.Position> wpList = new List<VPS.CustomData.WP.Position>();
+        private List<VPS.CustomData.WP.VPSPosition> wpList = new List<VPS.CustomData.WP.VPSPosition>();
         public ChangeHandle WPListChange;
 
         #region 获取航点
-        public List<VPS.CustomData.WP.Position> GetWPList()
+        public List<VPS.CustomData.WP.VPSPosition> GetWPList()
         {
-            List<VPS.CustomData.WP.Position> retList = new List<VPS.CustomData.WP.Position>(wpList);
+            List<VPS.CustomData.WP.VPSPosition> retList = new List<VPS.CustomData.WP.VPSPosition>(wpList);
 
             if ((retList.Count <= 0) || retList[0].Command != WP.WPCommands.HomeCommand)
                 retList.Insert(0, GetHomePosition());
@@ -171,7 +171,7 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 类别转换
-        static public List<PointLatLngAlt> ToWGS84WPList(List<VPS.CustomData.WP.Position> wpList)
+        static public List<PointLatLngAlt> ToWGS84WPList(List<VPS.CustomData.WP.VPSPosition> wpList)
         {
             List<PointLatLngAlt> retList = new List<PointLatLngAlt>();
             foreach(var wp in wpList)
@@ -182,12 +182,12 @@ namespace VPS.CustomData.WP
             return retList;
         }
 
-        static public List<VPS.CustomData.WP.Position> FromWGS84WPList(List<PointLatLngAlt>  wpList)
+        static public List<VPS.CustomData.WP.VPSPosition> FromWGS84WPList(List<PointLatLngAlt>  wpList)
         {
-            List<VPS.CustomData.WP.Position> retList = new List<VPS.CustomData.WP.Position>();
+            List<VPS.CustomData.WP.VPSPosition> retList = new List<VPS.CustomData.WP.VPSPosition>();
             foreach (var wp in wpList)
             {
-                retList.Add(new VPS.CustomData.WP.Position(wp));
+                retList.Add(new VPS.CustomData.WP.VPSPosition(wp));
             }
 
             return retList;
@@ -195,13 +195,13 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 设置航点
-        public void SetWPListHandle(List<CustomData.WP.Position> list)
+        public void SetWPListHandle(List<CustomData.WP.VPSPosition> list)
         {
             if (IsExecuteOverSetting())
             {
                 AddHistory();
             }
-            wpList = new List<CustomData.WP.Position>(list);
+            wpList = new List<CustomData.WP.VPSPosition>(list);
             if (wpList.Count > 0)
             {
                 if (wpList[0].Command == WPCommands.HomeCommand)
@@ -221,13 +221,13 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 扩充航点
-        public void AppendWPListHandle(List<CustomData.WP.Position> list)
+        public void AppendWPListHandle(List<CustomData.WP.VPSPosition> list)
         {
             if (IsExecuteOverSetting())
             {
                 AddHistory();
             }
-            var apWPList = new List<CustomData.WP.Position>(list);
+            var apWPList = new List<CustomData.WP.VPSPosition>(list);
             if (apWPList.Count > 0)
             {
                 if (apWPList[0].Command == WPCommands.HomeCommand)
@@ -263,7 +263,7 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 添加航点
-        public int AddWPHandle(VPS.CustomData.WP.Position wp)
+        public int AddWPHandle(VPS.CustomData.WP.VPSPosition wp)
         {
             if (IsExecuteOverSetting())
             {
@@ -271,7 +271,7 @@ namespace VPS.CustomData.WP
             }
 
             int index = wpList.Count;
-            wpList.Add(new VPS.CustomData.WP.Position(wp));
+            wpList.Add(new VPS.CustomData.WP.VPSPosition(wp));
 
             if (IsExecuteOverSetting())
             {
@@ -283,7 +283,7 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 插入航点
-        public void InsertWPHandle(int index, VPS.CustomData.WP.Position wp)
+        public void InsertWPHandle(int index, VPS.CustomData.WP.VPSPosition wp)
         {
             if (IsExecuteOverSetting())
             {
@@ -293,9 +293,9 @@ namespace VPS.CustomData.WP
             if (index < 0)
                 index = 0;
             if (index >= wpList.Count)
-                wpList.Add(new VPS.CustomData.WP.Position(wp));
+                wpList.Add(new VPS.CustomData.WP.VPSPosition(wp));
             else
-                wpList.Insert(index, new VPS.CustomData.WP.Position(wp));
+                wpList.Insert(index, new VPS.CustomData.WP.VPSPosition(wp));
 
             if (IsExecuteOverSetting())
             {
@@ -305,7 +305,7 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 修改航点
-        public void SetWPHandle(int index, VPS.CustomData.WP.Position wp)
+        public void SetWPHandle(int index, VPS.CustomData.WP.VPSPosition wp)
         {
             if (IsExecuteOverSetting())
             {
@@ -316,9 +316,9 @@ namespace VPS.CustomData.WP
                 index = 0;
 
             if (index >= wpList.Count)
-                wpList.Add(new VPS.CustomData.WP.Position(wp));
+                wpList.Add(new VPS.CustomData.WP.VPSPosition(wp));
             else
-                wpList[index] = new VPS.CustomData.WP.Position(wp);
+                wpList[index] = new VPS.CustomData.WP.VPSPosition(wp);
 
             if (IsExecuteOverSetting())
             {
@@ -347,13 +347,13 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 摘取航点
-        public VPS.CustomData.WP.Position GetWPPoint(int index)
+        public VPS.CustomData.WP.VPSPosition GetWPPoint(int index)
         {
             if (index < 0)
                 index = (index % wpList.Count + wpList.Count) % wpList.Count;
             if (index >= wpList.Count)
                 index = index % wpList.Count;
-            return new VPS.CustomData.WP.Position(wpList[index]);
+            return new VPS.CustomData.WP.VPSPosition(wpList[index]);
         }
         #endregion
 
@@ -367,13 +367,13 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region WPList 历史记录
-        private List<List<VPS.CustomData.WP.Position>> history = new List<List<VPS.CustomData.WP.Position>>();
+        private List<List<VPS.CustomData.WP.VPSPosition>> history = new List<List<VPS.CustomData.WP.VPSPosition>>();
         public CountChangeHandle historyChange;
 
         #region 添加记录
         public void AddHistory()
         {
-            var wpHistory = new List<VPS.CustomData.WP.Position>(GetWPList());
+            var wpHistory = new List<VPS.CustomData.WP.VPSPosition>(GetWPList());
 
             history.Add(wpHistory);
 
@@ -408,10 +408,10 @@ namespace VPS.CustomData.WP
         #region WPLIST 计算数据
 
         #region 航点列表去Home
-        public static List<CustomData.WP.Position> WPListRemoveHome(
-            List<CustomData.WP.Position> list)
+        public static List<CustomData.WP.VPSPosition> WPListRemoveHome(
+            List<CustomData.WP.VPSPosition> list)
         {
-            List<CustomData.WP.Position> wpList = new List<CustomData.WP.Position>(list);
+            List<CustomData.WP.VPSPosition> wpList = new List<CustomData.WP.VPSPosition>(list);
             if (wpList.Count > 0 && wpList[0].Command == WP.WPCommands.HomeCommand)
                 wpList.RemoveAt(0);
             return wpList;
@@ -419,11 +419,11 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 航点列表高度框架统一
-        public static List<CustomData.WP.Position> WPListChangeAltFrame(
-            List<CustomData.WP.Position> list, string altitudeMode = "")
+        public static List<CustomData.WP.VPSPosition> WPListChangeAltFrame(
+            List<CustomData.WP.VPSPosition> list, string altitudeMode = "")
         {
-            List<CustomData.WP.Position> wpList = new List<CustomData.WP.Position>(list);
-            List<CustomData.WP.Position> retWPList = new List<CustomData.WP.Position>();
+            List<CustomData.WP.VPSPosition> wpList = new List<CustomData.WP.VPSPosition>(list);
+            List<CustomData.WP.VPSPosition> retWPList = new List<CustomData.WP.VPSPosition>();
 
             double baseAlt = GetBaseAlt(wpList);
             foreach (var wp in wpList)
@@ -437,7 +437,7 @@ namespace VPS.CustomData.WP
 
         #region 航点列表求航摄基线
         public static double GetBaseAlt(
-            List<CustomData.WP.Position> wpLists,
+            List<CustomData.WP.VPSPosition> wpLists,
             double defaultAlt = 0)
         {
             var wpList = WPListRemoveHome(wpLists);
@@ -461,7 +461,7 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 航点列表求最大地面高程
-        public static double GetMaxGroundAlt(List<CustomData.WP.Position> wpLists)
+        public static double GetMaxGroundAlt(List<CustomData.WP.VPSPosition> wpLists)
         {
             var wpList = WPListRemoveHome(wpLists);
             double MaxAlt = double.MinValue;
@@ -483,7 +483,7 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 航点列表求最小地面高程
-        public static double GetMinGroundAlt(List<CustomData.WP.Position> wpLists)
+        public static double GetMinGroundAlt(List<CustomData.WP.VPSPosition> wpLists)
         {
             var wpList = WPListRemoveHome(wpLists);
             double MinAlt = double.MaxValue;
@@ -505,7 +505,7 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 获取平均绝对高度
-        public static double GetAverAbsoluteAlt(List<CustomData.WP.Position> wpLists)
+        public static double GetAverAbsoluteAlt(List<CustomData.WP.VPSPosition> wpLists)
         {
             var wpList = WPListChangeAltFrame(
                 WPListRemoveHome(wpLists), VPS.CustomData.EnumCollect.AltFrame.Absolute);
@@ -526,7 +526,7 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 获取不合格节点
-        public static List<double[]> GetValidPoint(List<CustomData.WP.Position> wpLists)
+        public static List<double[]> GetValidPoint(List<CustomData.WP.VPSPosition> wpLists)
         {
             var wpList = WPListChangeAltFrame(
                 WPListRemoveHome(wpLists), VPS.CustomData.EnumCollect.AltFrame.Terrain);
@@ -544,7 +544,7 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 航点列表求航程
-        public static double GetTotalDist(List<CustomData.WP.Position> wpLists)
+        public static double GetTotalDist(List<CustomData.WP.VPSPosition> wpLists)
         {
             var wpList = WPListRemoveHome(wpLists);
             wpList = WPListChangeAltFrame(wpLists, EnumCollect.AltFrame.Absolute);
@@ -562,9 +562,9 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 航点高度框架转换
-        public static CustomData.WP.Position WPChangeAltFrame(
-            CustomData.WP.Position cur, double baseAlt, string altitudeMode = "") {
-            var point = new CustomData.WP.Position(cur);
+        public static CustomData.WP.VPSPosition WPChangeAltFrame(
+            CustomData.WP.VPSPosition cur, double baseAlt, string altitudeMode = "") {
+            var point = new CustomData.WP.VPSPosition(cur);
             double alt = srtm.getAltitude(point.Lat, point.Lng).alt * CurrentState.multiplieralt;
             if (altitudeMode == EnumCollect.AltFrame.Relative)
             {
@@ -609,13 +609,13 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 计算航点坡度
-        public static double GetPointGrad(CustomData.WP.Position prev, CustomData.WP.Position cur, double baseAlt = -1)
+        public static double GetPointGrad(CustomData.WP.VPSPosition prev, CustomData.WP.VPSPosition cur, double baseAlt = -1)
         {
             if (prev != null && cur != null)
             {
                 double baseAltCopy = baseAlt;
-                var prevPoint = new CustomData.WP.Position(prev);
-                var curPoint = new CustomData.WP.Position(cur);
+                var prevPoint = new CustomData.WP.VPSPosition(prev);
+                var curPoint = new CustomData.WP.VPSPosition(cur);
                 if (baseAltCopy == -1)
                 {
                     baseAltCopy = 0;
@@ -633,13 +633,13 @@ namespace VPS.CustomData.WP
 
         #region 计算航点距离
         public static double GetPointDist(
-            CustomData.WP.Position prev, CustomData.WP.Position cur, double baseAlt = -1)
+            CustomData.WP.VPSPosition prev, CustomData.WP.VPSPosition cur, double baseAlt = -1)
         {
             if (prev != null && cur != null)
             {
                 double baseAltCopy = baseAlt;
-                var prevPoint = new CustomData.WP.Position(prev);
-                var curPoint = new CustomData.WP.Position(cur);
+                var prevPoint = new CustomData.WP.VPSPosition(prev);
+                var curPoint = new CustomData.WP.VPSPosition(cur);
                 if (baseAltCopy == -1)
                 {
                     baseAltCopy = 0;
@@ -660,13 +660,13 @@ namespace VPS.CustomData.WP
 
         #region 计算航点方位
         public static double GetPointAZ(
-            CustomData.WP.Position prev, CustomData.WP.Position cur, double baseAlt = -1)
+            CustomData.WP.VPSPosition prev, CustomData.WP.VPSPosition cur, double baseAlt = -1)
         {
             if (prev != null && cur != null)
             {
                 double baseAltCopy = baseAlt;
-                var prevPoint = new CustomData.WP.Position(prev);
-                var curPoint = new CustomData.WP.Position(cur);
+                var prevPoint = new CustomData.WP.VPSPosition(prev);
+                var curPoint = new CustomData.WP.VPSPosition(cur);
                 if (baseAltCopy == -1)
                 {
                     baseAltCopy = 0;
@@ -690,7 +690,7 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 计算区域面积
-        public double GetPolygonArea(List<CustomData.WP.Position> polygon)
+        public double GetPolygonArea(List<CustomData.WP.VPSPosition> polygon)
         {
             // should be a closed polygon
             // coords are in lat long
@@ -746,11 +746,11 @@ namespace VPS.CustomData.WP
         public ChangeHandle HomeChange;
 
         #region 获取初始位置
-        public VPS.CustomData.WP.Position GetHomePosition()
+        public VPS.CustomData.WP.VPSPosition GetHomePosition()
         {
             if (currentHome == null)
                 return null;
-            var retHome = new VPS.CustomData.WP.Position(currentHome);
+            var retHome = new VPS.CustomData.WP.VPSPosition(currentHome);
             if (retHome.Command != WPCommands.HomeCommand)
                 retHome.Command = WPCommands.HomeCommand;
             return retHome;
@@ -758,15 +758,15 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 设置初始位置
-        public void SetHomePosition(VPS.CustomData.WP.Position position)
+        public void SetHomePosition(VPS.CustomData.WP.VPSPosition position)
         {
-            currentHome = new VPS.CustomData.WP.Position(position);
+            currentHome = new VPS.CustomData.WP.VPSPosition(position);
 
             if(!string.IsNullOrEmpty(defaultLayerPath) &&
                 !string.IsNullOrEmpty(currentLayerPath) &&
                 defaultLayerPath == currentLayerPath)
             {
-                defaultHome = new VPS.CustomData.WP.Position(position);
+                defaultHome = new VPS.CustomData.WP.VPSPosition(position);
             }
 
 
@@ -782,7 +782,7 @@ namespace VPS.CustomData.WP
 
         #region CURRENT 当前位置
         public PositionChangeHandle CurrentChange;
-        public void SetCurrentPosition(VPS.CustomData.WP.Position position)
+        public void SetCurrentPosition(VPS.CustomData.WP.VPSPosition position)
         {
             CurrentChange?.Invoke(position);
         }
@@ -790,11 +790,11 @@ namespace VPS.CustomData.WP
 
         #region LAYER 图层信息
         private string currentLayerPath = null;
-        private VPS.CustomData.WP.Position currentHome = new VPS.CustomData.WP.Position();
-        private VPS.CustomData.WP.Rect currentRect = new VPS.CustomData.WP.Rect();
+        private VPS.CustomData.WP.VPSPosition currentHome = new VPS.CustomData.WP.VPSPosition();
+        private VPS.CustomData.WP.VPSRect currentRect = new VPS.CustomData.WP.VPSRect();
         private string defaultLayerPath = null;
-        private VPS.CustomData.WP.Position defaultHome = null;
-        private VPS.CustomData.WP.Rect defaultRect = new VPS.CustomData.WP.Rect();
+        private VPS.CustomData.WP.VPSPosition defaultHome = null;
+        private VPS.CustomData.WP.VPSRect defaultRect = new VPS.CustomData.WP.VPSRect();
 
         //public GDAL.GDAL.GeoBitmap currentLayer;
         public ChangeHandle WorkspaceRectChange;
@@ -811,14 +811,14 @@ namespace VPS.CustomData.WP
         }
 
         public void SetLayerLimit(
-            VPS.CustomData.WP.Rect rect, VPS.CustomData.WP.Position home, bool isDefault = true)
+            VPS.CustomData.WP.VPSRect rect, VPS.CustomData.WP.VPSPosition home, bool isDefault = true)
         {
             currentRect = rect;
             SetHomePosition(home);
             if (isDefault || defaultHome == null)
             {
                 defaultRect = rect;
-                defaultHome = new VPS.CustomData.WP.Position(home);
+                defaultHome = new VPS.CustomData.WP.VPSPosition(home);
                 if (defaultHome.Command != WPCommands.HomeCommand)
                     defaultHome.Command = WPCommands.HomeCommand;
                 if (IsExecuteOverSetting())
@@ -834,7 +834,7 @@ namespace VPS.CustomData.WP
             }
         }
 
-        public void SetDefaultLayer(string path, VPS.CustomData.WP.Rect rect, VPS.CustomData.WP.Position home)
+        public void SetDefaultLayer(string path, VPS.CustomData.WP.VPSRect rect, VPS.CustomData.WP.VPSPosition home)
         {
             defaultLayerPath = path;
             defaultRect = rect;
@@ -857,27 +857,27 @@ namespace VPS.CustomData.WP
             return defaultLayerPath;
         }
 
-        public VPS.CustomData.WP.Position GetLayerHome()
+        public VPS.CustomData.WP.VPSPosition GetLayerHome()
         {
             return GetHomePosition();
         }
 
-        public VPS.CustomData.WP.Position GetDefaultLayerHome()
+        public VPS.CustomData.WP.VPSPosition GetDefaultLayerHome()
         {
             if (defaultHome == null)
                 return null;
-            VPS.CustomData.WP.Position retHome = new VPS.CustomData.WP.Position(defaultHome);
+            VPS.CustomData.WP.VPSPosition retHome = new VPS.CustomData.WP.VPSPosition(defaultHome);
             if (retHome.Command != WPCommands.HomeCommand)
                 retHome.Command = WPCommands.HomeCommand;
             return retHome;
         }
 
-        public Rect GetLayerRect()
+        public VPSRect GetLayerRect()
         {
             return currentRect;
         }
 
-        public Rect GetDefaultLayerRect()
+        public VPSRect GetDefaultLayerRect()
         {
             return defaultRect;
         }
@@ -902,13 +902,13 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region POLYGON 区域点
-        private List<CustomData.WP.Position> polyList = new List<CustomData.WP.Position>();
+        private List<CustomData.WP.VPSPosition> polyList = new List<CustomData.WP.VPSPosition>();
         public ChangeHandle PolygonListChange;
 
         #region 设置区域点
-        public void SetPolyListHandle(List<CustomData.WP.Position> polygonList)
+        public void SetPolyListHandle(List<CustomData.WP.VPSPosition> polygonList)
         {
-            polyList = new List<CustomData.WP.Position>(polygonList);
+            polyList = new List<CustomData.WP.VPSPosition>(polygonList);
 
             if (IsExecuteOverSetting())
             {
@@ -918,17 +918,17 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 获取区域点
-        public List<CustomData.WP.Position> GetPolyList()
+        public List<CustomData.WP.VPSPosition> GetPolyList()
         {
-            var polygonList = new List<CustomData.WP.Position>(polyList);
+            var polygonList = new List<CustomData.WP.VPSPosition>(polyList);
             return polygonList;
         }
         #endregion
 
         #region 添加区域点
-        public void AddPolyHandle(CustomData.WP.Position poly)
+        public void AddPolyHandle(CustomData.WP.VPSPosition poly)
         {
-            var polygon = new CustomData.WP.Position(poly);
+            var polygon = new CustomData.WP.VPSPosition(poly);
             polyList.Add(polygon);
 
             if (IsExecuteOverSetting())
@@ -939,9 +939,9 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 插入区域点
-        public void InsertPolyHandle(int index, CustomData.WP.Position poly)
+        public void InsertPolyHandle(int index, CustomData.WP.VPSPosition poly)
         {
-            var polygon = new CustomData.WP.Position(poly);
+            var polygon = new CustomData.WP.VPSPosition(poly);
             polyList.Insert(index, polygon);
 
             if (IsExecuteOverSetting())
@@ -952,9 +952,9 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 移动区域点
-        public void MovePolyHandle(int index, CustomData.WP.Position poly)
+        public void MovePolyHandle(int index, CustomData.WP.VPSPosition poly)
         {
-            var polygon = new CustomData.WP.Position(poly);
+            var polygon = new CustomData.WP.VPSPosition(poly);
             polyList[index] =  polygon;
 
             if (IsExecuteOverSetting())
@@ -977,13 +977,13 @@ namespace VPS.CustomData.WP
         #endregion
 
         #region 抽取区域点
-        public CustomData.WP.Position GetPolyPoint(int index)
+        public CustomData.WP.VPSPosition GetPolyPoint(int index)
         {
             if (index < 0)
                 index = (index % polyList.Count + polyList.Count) % polyList.Count;
             if (index >= polyList.Count)
                 index = index % polyList.Count;
-            return new CustomData.WP.Position(polyList[index]);
+            return new CustomData.WP.VPSPosition(polyList[index]);
         }
         #endregion
 
